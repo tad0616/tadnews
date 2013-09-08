@@ -64,15 +64,15 @@ if($start <= 0 )$start=0;
     $total++;
   }
 
-$b_button=($b < 0)?"<a href='#' data-role='button' data-inline='true' class='back ui-disabled'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$b}' data-role='button' data-inline='true' class='back'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>";
+$b_button=($b < 0)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back ui-disabled'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$b}' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>";
 
-$n_button=($total < $num)?"<a href='#' data-role='button' data-inline='true' class='next ui-disabled'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$n}' data-role='button' data-inline='true' class='next'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>";
+$n_button=($total < $num)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next ui-disabled'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$n}' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>";
 
 $button="{$b_button}{$n_button}";
 
   $all_news="
 
-  <ul data-role='listview' data-filter='true' data-filter-placeholder='Headline search' class='listview'>$all_news</ul></br>
+  <ul data-role='listview' data-filter='true' data-filter-placeholder='Headline search' class='listview'>$all_news</ul><br>
   <div style='clear:both;text-align:center;padding:8px;' class='navigation'>$button</div>
   ";
 
@@ -564,11 +564,11 @@ $login_m=login_m();
 
 echo "
 <!DOCTYPE HTML>
-<html>
+<html lang='zh-TW'>
 <head>
 <meta charset='"._CHARSET."'>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;' name='viewport'/>
-<meta name='apple-mobile-web-app-capable'content='yes'/>
+<meta name='apple-mobile-web-app-capable' content='yes'/>
 <title>$cate</title>
 <link href='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' rel='stylesheet' type='text/css'/>
 <link href='".XOOPS_URL."/modules/tadtools/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css'/>
@@ -581,7 +581,7 @@ $(document).bind('mobileinit', function()
 });
 </script>
 <script>
-$(document).bind('pageshow', function(){
+$(document).bind('pagebeforeshow', function(){
 var str=getUrlVars()['op'];
 $('.nav li a.ui-btn-active').removeClass('ui-btn-active');
 if (str == 'month_list' || str == 'archive')
@@ -611,7 +611,6 @@ function getUrlVars()
 }
 </script>
 <script src='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js' type='text/javascript'></script>
-</head>
 <style>
 .ui-btn-right {
   /*top: -4px !important;*/
@@ -674,6 +673,7 @@ input.ui-input-text {
 }
 }
 </style>
+</head>
 <body>
 <div data-role='page' id='page_{$nsn}' data-add-back-btn='true'>
   <div data-role='header' data-id='header' data-theme='a' data-position='fixed'>
