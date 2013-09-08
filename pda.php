@@ -72,7 +72,7 @@ $button="{$b_button}{$n_button}";
 
   $all_news="
 
-  <ul data-role='listview' data-filter='true' data-filter-placeholder='Headline search' class='listview'>$all_news</ul></br>
+  <ul data-role='listview' data-filter='true' data-filter-placeholder='Headline search' class='listview'>$all_news</ul><br>
   <div style='clear:both;text-align:center;padding:8px;' class='navigation'>$button</div>
   ";
 
