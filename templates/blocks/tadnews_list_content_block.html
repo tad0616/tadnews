@@ -1,0 +1,37 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadnews/iconize.css" />
+
+<{$block.bootstrap}>
+<style>
+#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
+</style>
+
+<p>
+<{$block.toolbar}>
+</p>
+<{$block.syntaxhighlighter_code}>
+
+<{if $block.page}>
+<div class="row-fluid">
+<div id="tadnews_save_msg"></div>
+<form action="<{$action}>" method="post">
+<{$block.cate_select}>
+<{$block.author_select}>
+<ul>
+  <{foreach item=page from=$block.page}>
+    <li>
+      <{$page.post_date}>
+      <{$page.pic}>
+      <{$page.prefix_tag}>
+      <{if $page.need_sign}>
+        <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
+      <{/if}>
+      <{$page.enable_txt}>
+      <{$page.today_pic}>
+      <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
+      <{$page.content}>
+    </li>
+  <{/foreach}>
+</ul>
+</div>
+
+<{/if}>

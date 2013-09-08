@@ -1,0 +1,34 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<{$block.xoops_url}>/modules/tadnews/iconize.css" />
+<{$block.bootstrap}>
+<style>
+#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
+</style>
+<{$block.syntaxhighlighter_code}>
+
+<!--TadNews Start-->
+<table class="<{$block.show_line}>">
+  <{foreach item=all_news from=$block.all_news}>
+    <{if $all_news.news}>
+      <tr>
+        <{if $all_news.show_pic}>
+          <td class="span2" rowspan="<{$all_news.rowspan}>">
+          <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" class="thumbnail" onClick="window.location.href='<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>'">
+          </td>
+          <td colspan=2>
+          <h4><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
+          </td>
+        <{/if}>
+      </tr>
+      <{foreach  item=news from=$all_news.news}>
+        <tr>
+          <td class="span1"><{$news.post_date}></td>
+          <td><{$news.always_top_pic}><{$news.prefix_tag}>
+          <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+          <{$news.content}>
+          </td>
+        </tr>
+      <{/foreach}>
+    <{/if}>
+  <{/foreach}>
+</table>
+<!--TadNews End-->

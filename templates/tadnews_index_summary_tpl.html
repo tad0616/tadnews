@@ -1,0 +1,39 @@
+<!--TadNews Start-->
+<{if $ncsn}>
+<link rel="alternate" type="application/rss+xml" title="tadnews rss" href="<{$xoops_url}>/modules/tadnews/rss.php?ncsn=<{$ncsn}>" />
+<{/if}>
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadnews/iconize.css" />
+<{$bootstrap}>
+<p>
+<{$toolbar}>
+</p>
+<{$syntaxhighlighter_code}>
+<{$rating_js}>
+<{$del_js}>
+
+
+<{if $page}>
+  <{foreach item=page from=$page}>
+  <div class="row-fluid">
+    <div class="news_head well" <{if $page.need_sign}>style="background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;"<{/if}>>
+      <div style="float:right"><{$page.star}></div>
+      <div style="font-size: 16px;font-weight: bolder;border: none;	color:rgb(153,0,0);"><{$page.prefix_tag}>
+        <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size:16px;color:rgb(153,0,0);font-weight:bold;"><{$page.news_title}></a><{$page.enable_txt}><div style="float:right"><{$page.files}></div>
+      </div>
+
+      <div style="font-size:12px;">
+        <div style="float:right"><{$page.fun}></div>
+        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+      </div>
+    </div>
+
+    <div style="margin:10px auto;	line-height: 2em;	font-weight:normal;"><{$page.pic}><{$page.content}></div>
+    <div style="clear:both;height:10px;"></div>
+  </div>
+  <{/foreach}>
+<{else}>
+
+<{/if}>
+<div style="text-align:center;"><{$bar}></div>
+<div style="clear:both;"></div>
+<!--TadNews End-->
