@@ -564,11 +564,11 @@ $login_m=login_m();
 
 echo "
 <!DOCTYPE HTML>
-<html>
+<html lang='zh-TW'>
 <head>
 <meta charset='"._CHARSET."'>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;' name='viewport'/>
-<meta name='apple-mobile-web-app-capable'content='yes'/>
+<meta name='apple-mobile-web-app-capable' content='yes'/>
 <title>$cate</title>
 <link href='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' rel='stylesheet' type='text/css'/>
 <link href='".XOOPS_URL."/modules/tadtools/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css'/>
@@ -581,7 +581,7 @@ $(document).bind('mobileinit', function()
 });
 </script>
 <script>
-$(document).bind('pageshow', function(){
+$(document).bind('pagebeforeshow', function(){
 var str=getUrlVars()['op'];
 $('.nav li a.ui-btn-active').removeClass('ui-btn-active');
 if (str == 'month_list' || str == 'archive')
@@ -611,7 +611,6 @@ function getUrlVars()
 }
 </script>
 <script src='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js' type='text/javascript'></script>
-</head>
 <style>
 .ui-btn-right {
   /*top: -4px !important;*/
@@ -674,6 +673,7 @@ input.ui-input-text {
 }
 }
 </style>
+</head>
 <body>
 <div data-role='page' id='page_{$nsn}' data-add-back-btn='true'>
   <div data-role='header' data-id='header' data-theme='a' data-position='fixed'>
