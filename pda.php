@@ -64,9 +64,9 @@ if($start <= 0 )$start=0;
     $total++;
   }
 
-$b_button=($b < 0)?"<a href='#' data-role='button' data-inline='true' class='back ui-disabled'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$b}' data-role='button' data-inline='true' class='back'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>";
+$b_button=($b < 0)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back ui-disabled'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$b}' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>";
 
-$n_button=($total < $num)?"<a href='#' data-role='button' data-inline='true' class='next ui-disabled'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$n}' data-role='button' data-inline='true' class='next'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>";
+$n_button=($total < $num)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next ui-disabled'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$n}' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>";
 
 $button="{$b_button}{$n_button}";
 
