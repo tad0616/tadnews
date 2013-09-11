@@ -211,7 +211,8 @@ function show_news($nsn="",$m_ncsn=""){
     font-size: 100%;
   }
   #news_content img {
-    max-width: 99%;
+    max-width: 100%;
+    height:auto;
     overflow: hidden;
   }
   .t1 {
