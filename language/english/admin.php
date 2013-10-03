@@ -9,8 +9,8 @@ include_once "global.php";
 
 include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
 
-define("_MD_TADNEWS_TO_MOD","Back to Module");
-define("_MD_TADNEWS_TO_ADMIN","Admin");
+define("_MA_TADNEWS_TO_MOD","Back to Module");
+define("_MA_TADNEWS_TO_ADMIN","Admin");
 define("_MA_TADNEWS_SAVE_CATE","Save");
 define("_MA_TADNEWS_FUNCTION","Function");
 define("_MA_TADNEWS_MOVE","Move");
@@ -32,10 +32,9 @@ define("_MA_TADNEWS_LIST","The List of Published News");
 
 
 //post.php
-define("_MD_TADNEWS_NO_POST_POWER","Please login first for posting news.");
+define("_MA_TADNEWS_NO_POST_POWER","Please login first for posting news.");
 define("_MA_TADNEWS_ADD_NEWS","Post");
 define("_MA_TADNEWS_NEWS_TITLE","Title");
-define("_MA_TADNEWS_PREFIX_TAG","Prefix");
 define("_MA_TADNEWS_ALWAYS_TOP","Sticky");
 define("_MA_TADNEWS_NEWS_CONTENT","Content");
 define("_MA_TADNEWS_START_DATE","Start Date");
@@ -60,7 +59,7 @@ define("_MA_TADNEWS_NEWS_ENABLE1_TEXT","'Public' for publishing immediatelly.");
 define("_MA_TADNEWS_NEWS_ENABLE0_TEXT","'Draft' for saving as a draft without showing in newslist.");
 define("_MA_TADNEWS_NEWS_FILES","Upload files:");
 define("_MA_TADNEWS_NEWS_FILES_LIST","Attachments");
-define("_MD_CAT_CANT_FIND_FILE","Can't download the file");
+define("_MA_CAT_CANT_FIND_FILE","Can't download the file");
 define("_MA_TADNEWS_MON","(Month)");
 define("_MA_TADNEWS_1","Mon");
 define("_MA_TADNEWS_2","Tue");
@@ -71,10 +70,8 @@ define("_MA_TADNEWS_6","Sat");
 define("_MA_TADNEWS_7","Sun");
 define("_MA_TADNEWS_WEEK","Week");
 define("_MA_TADNEWS_TODAY","Today");
-define("_MA_TADNEWS_ALL_NO","None");
 define("_MA_TADNEWS_NEWS_HAVE_READ","Must read Groups");
 define("_MA_NEED_TADTOOLS","Need modules/tadtools. You can download tadtools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
-define("_MA_TADNEWS_CREAT_NEWS_CATE","Creat a sub-category from left category:");
 
 
 
@@ -88,7 +85,6 @@ define("_MA_TADNEWS_CAN_POST_CATE_GROUP","Available groups to <font color='red'>
 define("_MA_TADNEWS_CAN_READ_CATE_GROUP_TXT","Non-select = All Free");
 define("_MA_TADNEWS_CAN_POST_CATE_GROUP_TXT","Non-select = Administrator Only");
 define("_MA_TADNEWS_CATE_SN","Serial Number");
-define("_MA_TADNEWS_DB_ADD_ERROR1","Failed to add data to tad_news_cate");
 define("_MA_TADNEWS_DB_SELECT_ERROR1","Failed to get data from tad_news_cate");
 define("_MA_TADNEWS_DB_UPDATE_ERROR1","Failed to update data of tad_news_cate");
 define("_MA_TADNEWS_DB_DEL_ERROR1","can't delete tad_news_cate's news");
@@ -150,10 +146,10 @@ define("_MA_TADNEWS_NP_FOOT_CONTENT","<div class=\"foot\"><h1>[About] </h1>
 <p>All rights reserved by \"<a href='%s' target='_blank'>%s</a>\", and published in <a href='http://creativecommons.org/licenses/by-sa/2.5/tw/deed.zh_TW' target='_blank'>Creative Common CC\"Attribution licensing-Attribution-NoDerivs-Noncommercial\"article of authority Taiwan 2.5 version </a>. <a href='http://creativecommons.org/licenses/by-sa/2.5/tw/legalcode' target='_blank'>(Full Article of Authority)</a></p>
 <p>To use any content of newspaper out of authorized range, please contact \"%s\"(<a href='mailto:%s'>%s</a>) </p>
 <p>To subscribe or cancel newspaper, please go to :<a href='%s' target='_blank'>%s</a></p></div>");
-define("_MD_TADNEWS_SEND_NOW","Submit");
-define("_MD_TADNEWS_SEND_OK","Submit successfully!");
-define("_MD_TADNEWS_SEND_ERROR","Submit failed!");
-define("_MD_TADNEWS_MAIL_LIST","Receiver (total: %s):");
+define("_MA_TADNEWS_SEND_NOW","Submit");
+define("_MA_TADNEWS_SEND_OK","Submit successfully!");
+define("_MA_TADNEWS_SEND_ERROR","Submit failed!");
+define("_MA_TADNEWS_MAIL_LIST","Receiver (total: %s):");
 define("_MA_TADNEWS_NP_LIST","Manage Newspaper");
 define("_MA_TADNEWS_NP_THEMES","Theme");
 define("_MA_TADNEWS_NP_ADD","Add to newspaper");
@@ -161,11 +157,11 @@ define("_MA_TADNEWS_NP_REMOVE","Remove from newspaper");
 define("_MA_TADNEWS_NP_EMAIL","Manage Email");
 define("_MA_TADNEWS_NP_EMAIL_NUM","total: %s");
 define("_MA_TADNEWS_NP_EMAIL_IMPORT","Import email");
-define("_MD_TADNEWS_NEVER_SEND","Has not been sent");
-define("_MD_TADNEWS_SEND_LOG","View log");
-define("_MD_TADNEWS_EMPTY_LOG","on log");
-define("_MD_TADNEWS_LOGS","logs");
-define("_MD_TADNEWS_BACK_TO","back to %s");
+define("_MA_TADNEWS_NEVER_SEND","Has not been sent");
+define("_MA_TADNEWS_SEND_LOG","View log");
+define("_MA_TADNEWS_EMPTY_LOG","on log");
+define("_MA_TADNEWS_LOGS","logs");
+define("_MA_TADNEWS_BACK_TO","back to %s");
 define("_MA_TADNEWS_NP_SUB_TITLE","Newspaper title: ");
 
 //update

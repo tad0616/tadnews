@@ -1,4 +1,5 @@
 <?php
+define("_TADNEWS_NAME","本站消息");
 define("_TADNEWS_ALWAYS_TOP","置頂文章");
 define("_TADNEWS_TODAY_NEWS","今日文章");
 define("_TADNEWS_MORE","觀看完整文章");
@@ -27,4 +28,9 @@ define("_TADNEWS_BLOCK_BACK","上 %s 則");
 define("_TADNEWS_EDIT_CATE","編輯此分類");
 define("_TADNEWS_EMPTY","尚無任何文章");
 define("_TADNEWS_DIGN_LIST","簽收紀錄");
+define("_TADNEWS_DB_ADD_ERROR1","無法新增資料到tad_news_cate中");
+define("_TADNEWS_ALL_NO","不需簽收");
+define("_TADNEWS_CREAT_FIRST_CATE","建立新分類");
+define("_TADNEWS_CREAT_NEWS_CATE","在左邊分類下建立新分類");
+define("_TADNEWS_PREFIX_TAG","標籤");
 ?>

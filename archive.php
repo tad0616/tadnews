@@ -59,7 +59,7 @@ function archive($date=""){
 	$tadnews->get_news();
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
-  $date_title=to_utf8(str_replace("-",""._MD_TADNEWS_YEAR." ",$date)._MD_TADNEWS_MONTH._MA_TADNEWS_NEWS_TITLE);
+  $date_title=to_utf8(str_replace("-",""._MD_TADNEWS_YEAR." ",$date)._MD_TADNEWS_MONTH._MD_TADNEWS_NEWS_TITLE);
 	$xoopsTpl->assign( "date_title" , $date_title) ;
 
 }

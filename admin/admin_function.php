@@ -54,11 +54,11 @@ function list_tad_news_cate($of_ncsn=0,$level=0,$not_news='0',$i=0,$catearr=""){
     $pic=(empty($cate_pic))?"../images/no_cover.png":_TADNEWS_CATE_URL."/{$cate_pic}";
 		$g_txt=tadnews::txt_to_group_name($enable_group,_TADNEWS_ALL_OK," , ");
 		$gp_txt=tadnews::txt_to_group_name($enable_post_group,_MA_TADNEWS_ONLY_ROOT," , ");
-		
+
 		$new_kind=($not_news=='1')?0:1;
 		$change_text=($not_news=='1')?_MA_TADNEWS_CHANGE_TO_NEWS:_MA_TADNEWS_CHANGE_TO_PAGE;
 
-    
+
 		$catearr[$i]['left']=$left;
 		$catearr[$i]['pic']=$pic;
 		$catearr[$i]['nc_title']=$nc_title;
@@ -70,17 +70,17 @@ function list_tad_news_cate($of_ncsn=0,$level=0,$not_news='0',$i=0,$catearr=""){
 		$catearr[$i]['new_kind']=$new_kind;
 		$catearr[$i]['change_text']=$change_text;
 		$catearr[$i]['offset']=empty($old_level)?"":"offset{$old_level}";
-		
+
 		$i++;
-		
+
 		/*
 		echo "<div>\$catearr[$i]['nc_title']=$nc_title;</div>";
 		echo "<div>\$catearr[$i]['sort']=$sort;</div>";
 		echo "<div>\$catearr[$i]['ncsn']=$ncsn;</div>";
 		echo "<hr>";
 		*/
-		
-		
+
+
     $sub=list_tad_news_cate($ncsn,$level,$not_news,$i,$catearr);
     $i=$sub['i'];
     if(!empty($sub['arr']))$catearr=$sub['arr'];
@@ -133,7 +133,7 @@ function insert_tad_news_cate(){
 		$enable_group=implode(",",$_POST['enable_group']);
 	}
 	$enable_post_group=implode(",",$_POST['enable_post_group']);
-	
+
 	foreach($_POST['setup'] as $key=>$val){
 		$setup.="{$key}=$val;";
 	}
@@ -141,10 +141,10 @@ function insert_tad_news_cate(){
 
   $myts =MyTextSanitizer::getInstance();
   $nc_title=$myts->addSlashes($_POST['nc_title']);
-	
-	
+
+
 	$sql = "insert into ".$xoopsDB->prefix("tad_news_cate")." (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$_POST['of_ncsn']}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$_POST['sort']}','{$_POST['not_news']}','{$setup}')";
-	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_ADD_ERROR1);
+	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _TADNEWS_DB_ADD_ERROR1);
 	//取得最後新增資料的流水編號
 	$ncsn=$xoopsDB->getInsertId();
 
@@ -165,12 +165,12 @@ function update_tad_news_cate($ncsn=""){
 		$enable_group=implode(",",$_POST['enable_group']);
 	}
 	$enable_post_group=implode(",",$_POST['enable_post_group']);
-	
+
 	foreach($_POST['setup'] as $key=>$val){
 		$setup.="{$key}=$val;";
 	}
 	$setup=substr($setup,0,-1);
-	
+
 	$sql = "update ".$xoopsDB->prefix("tad_news_cate")." set  of_ncsn = '{$_POST['of_ncsn']}', nc_title = '{$_POST['nc_title']}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}', sort = '{$_POST['sort']}',not_news='{$_POST['not_news']}',setup='{$setup}' where ncsn='$ncsn'";
 	$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_UPDATE_ERROR1."<br>$sql");
 
@@ -186,7 +186,7 @@ function update_tad_news_cate($ncsn=""){
 //刪除tad_news_cate某筆資料資料
 function delete_tad_news_cate($ncsn=""){
 	global $xoopsDB;
-	
+
 	$cate_org=tadnews::get_tad_news_cate($ncsn);
 
 	//先找看看底下有無分類，若有將其父分類變成原分類之父分類
@@ -202,10 +202,10 @@ function delete_tad_news_cate($ncsn=""){
 //轉換分類類型
 function change_kind($ncsn="",$not_news=""){
 	global $xoopsDB,$xoopsModuleConfig;
-	
+
   $sql = "update ".$xoopsDB->prefix("tad_news_cate")." set not_news='{$not_news}' , of_ncsn='0' where ncsn ='{$ncsn}'";
 	$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_UPDATE_ERROR1."<br>$sql");
-	
+
 	//先找看看底下有無分類，若有將其也一起變
   $sub_cate=get_sub_cate($ncsn);
   $where=empty($sub_cate)?"where ncsn ='{$ncsn}'":"where ncsn in ($sub_cate)";

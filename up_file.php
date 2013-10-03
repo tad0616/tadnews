@@ -245,7 +245,7 @@ function list_del_file($col_name="",$col_sn=""){
 	global $xoopsDB,$xoopsUser,$xoopsModule;
 
   $files="
-  <label>"._MB_TADNEWS_DEL_FILE."</label>
+  <label>"._MD_TADNEWS_DEL_FILE."</label>
   ";
 
 	$sql = "select * from ".$xoopsDB->prefix("tadnews_files_center")." where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";

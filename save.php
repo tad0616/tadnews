@@ -17,7 +17,7 @@ function add_tad_news_cate($title="",$no_news='0'){
   
 	$sql = "insert into ".$xoopsDB->prefix("tad_news_cate")." (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('0','{$title}','{$enable_group}','{$enable_post_group}','{$sort}','{$no_news}','{$setup}')";
 
-	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_ADD_ERROR1);
+	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADNEWS_DB_ADD_ERROR1);
 	//取得最後新增資料的流水編號
 	$ncsn=$xoopsDB->getInsertId();
 	return $ncsn;

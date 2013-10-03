@@ -337,7 +337,7 @@ function pda_news_format($nsn="",$title="",$news_content="",$fun="",$fun2="",$pr
 /*function get_tad_news_cate_option_m($v=""){
 	global $xoopsDB;
 
-	//$option="<option>"._MA_TADNEWS_NEWS_CATE."</option>";
+	//$option="<option>"._MD_TADNEWS_NEWS_CATE."</option>";
 	$option="<option value='0'>"._MD_TADNEWS_ALL_CATE."</option>";
 	//$option=="";
 	$sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where not_news!='1' order by sort";
@@ -410,7 +410,7 @@ function archive_m($date=""){
 
   $tnews=$tadnews->get_news('return');
 
-  $date_title=to_utf8(str_replace("-",""._MD_TADNEWS_YEAR." ",$date)._MD_TADNEWS_MONTH._MA_TADNEWS_NEWS_TITLE);
+  $date_title=to_utf8(str_replace("-",""._MD_TADNEWS_YEAR." ",$date)._MD_TADNEWS_MONTH._MD_TADNEWS_NEWS_TITLE);
 
   foreach($tnews['page'] as $news){
 
@@ -439,7 +439,7 @@ function list_newspaper_m(){
 
   while(list($allnpsn,$number,$title,$np_date)=$xoopsDB->fetchRow($result)){
 
-      $np_title=$title.sprintf(_MA_TADNEWS_NP_TITLE,$number);
+      $np_title=$title.sprintf(_MD_TADNEWS_NP_TITLE,$number);
       $np_date=substr($np_date,0,10);
       $main.="<li><a href='pda.php?op=preview&npsn={$allnpsn}'>{$np_date} {$np_title}</a></li>";
 

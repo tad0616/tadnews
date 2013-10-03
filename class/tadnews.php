@@ -1541,7 +1541,7 @@ class tadnews{
 
 
   	$SelectGroup_name2 = new XoopsFormSelectGroup("", "have_read_group", false, $have_read_group, 4, true);
-  	$SelectGroup_name2->addOption("", _MA_TADNEWS_ALL_NO, false);
+  	$SelectGroup_name2->addOption("", _TADNEWS_ALL_NO, false);
   	$have_read_group = $SelectGroup_name2->render();
 
   	//標籤選單
@@ -1586,8 +1586,8 @@ class tadnews{
     $use_pic_css=empty($pic_css)?"":"true";
 
     //creat_cate_group
-    $new_cate_input=empty($cate_num)?_MD_TADNEWS_NAME:"";
-    $creat_new_cate=empty($cate_num)?_MA_TADNEWS_CREAT_FIRST_CATE:_MA_TADNEWS_CREAT_NEWS_CATE;
+    $new_cate_input=empty($cate_num)?_TADNEWS_NAME:"";
+    $creat_new_cate=empty($cate_num)?_TADNEWS_CREAT_FIRST_CATE:_TADNEWS_CREAT_NEWS_CATE;
     $creat_cate_tool=(tadnews::chk_news_power(implode(",",$xoopsModuleConfig['creat_cate_group']),$User_Groups))?
     "<input type='text' name='new_cate' id='new_cate_input' class='span2' value='$new_cate_input' placeholder='$creat_new_cate'>":"";
 
@@ -1598,7 +1598,7 @@ class tadnews{
     $pic_css_set_hide=empty($pic_css)?"$('#pic_css_set').hide();":"";
 
 
-    $cate_menu=empty($cate_num)?"<div class='span2 text-right'>"._MA_TADNEWS_CREAT_FIRST_CATE._MD_TADNEWS_FOR."</div>":"<select name='ncsn' id='ncsn' class='span2'>$cate_select</select>";
+    $cate_menu=empty($cate_num)?"<div class='span2 text-right'>"._TADNEWS_CREAT_FIRST_CATE._TAD_FOR."</div>":"<select name='ncsn' id='ncsn' class='span2'>$cate_select</select>";
 
 
 
@@ -1789,7 +1789,7 @@ class tadnews{
       $option.="<option value='{$tag_sn}' $selected>{$tag}</option>";
     }
 
-    $select = "<select name='prefix_tag' class='span2'><option value=''>"._MA_TADNEWS_PREFIX_TAG."</option>$option</select>";
+    $select = "<select name='prefix_tag' class='span2'><option value=''>"._TADNEWS_PREFIX_TAG."</option>$option</select>";
     return $select;
   }
   
@@ -1945,7 +1945,7 @@ class tadnews{
     $new_cate=$myts->addSlashes($new_cate);
 
   	$sql = "insert into ".$xoopsDB->prefix("tad_news_cate")." (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$new_cate}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
-  	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_ADD_ERROR1);
+  	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _TADNEWS_DB_ADD_ERROR1);
   	//取得最後新增資料的流水編號
   	$ncsn=$xoopsDB->getInsertId();
   	return $ncsn;
