@@ -49,7 +49,7 @@
     <{foreach item=page from=$page}>
       <tr id="tr_<{$page.nsn}>">
         <td>
-          <{$page.chkbox}><a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>
+          <{$page.chkbox}><a href="main.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>
           <div><{$page.post_date}></div>
         </td>
         <td>
@@ -59,7 +59,7 @@
           <{/if}>
           <{$page.enable_txt}><{$page.today_pic}>
           <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-          <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.content}>
+          <span style="color:gray;font-size:12px;"> (<a href="main.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.content}>
         </td>
         <{if $page.show_admin_tool}>
           <td><{$page.passwd}></td>
