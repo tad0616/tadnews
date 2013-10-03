@@ -11,13 +11,13 @@ function list_tad_my_news(){
 
   $tadnews=new tadnews();
   $uid=$xoopsUser->uid();
+  $tadnews->set_show_enable(0);
   $tadnews->set_view_uid($uid);
   $tadnews->set_news_kind($kind);
   $tadnews->set_summary(0);
   $tadnews->set_show_mode("list");
   $tadnews->set_admin_tool(true);
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
-  $tadnews->set_show_enable(0);
 
   if(!empty($the_ncsn)){
     $tadnews->set_view_ncsn($the_ncsn);

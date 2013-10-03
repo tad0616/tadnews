@@ -555,7 +555,7 @@ class tadnews{
     		$sql=$PageBar['sql'];
       }
     }
-    
+    //die($sql);
 		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
 
 

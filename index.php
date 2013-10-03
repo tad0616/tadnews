@@ -84,9 +84,11 @@ function list_tad_cate_news($show_ncsn=0,$the_level=0){
 
 //顯示單一新聞
 function show_news($nsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$xoopsUser;
 
   $tadnews=new tadnews();
+  $uid=$xoopsUser->uid();
+  $tadnews->set_show_enable(0);
   $tadnews->set_view_nsn($nsn);
   $tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
@@ -94,6 +96,7 @@ function show_news($nsn=""){
     $tadnews->set_use_star_rating(true);
   }
   $tadnews->get_news();
+  $xoopsTpl->assign( "uid" ,$uid) ;
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 

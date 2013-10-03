@@ -10,7 +10,7 @@
 <{$del_js}>
 
 <{foreach item=page from=$page}>
-  <{if $page.enable=="1"}>
+  <{if $page.enable=="1" or $page.uid==$uid}>
     <div class="row-fluid">
 
     <{if $cate_set_title}>
