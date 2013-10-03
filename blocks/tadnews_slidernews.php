@@ -5,7 +5,6 @@
 // $Id: tadnews_newspaper_list.php,v 1.1 2008/04/10 05:29:56 tad Exp $
 // ------------------------------------------------------------------------- //
 
-
 include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 
 //區塊主函式 (滑動新聞)
