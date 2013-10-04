@@ -79,9 +79,15 @@
 
           <div class="span3">
             <div class="row-fluid">
+              <label>
               <{$smarty.const._MD_TADNEWS_NEWS_ENABLE}><{$smarty.const._MD_TADNEWS_FOR}>
-                <input type="radio" name="enable" value="1" id="enable1" <{$enable_checked1}>><{$smarty.const._MD_TADNEWS_NEWS_ENABLE_OK}>
-                <input type="radio" name="enable" value="0" id="enable0" <{$enable_checked0}>><{$smarty.const._TADNEWS_NEWS_UNABLE}>
+              </label>
+                <label class="radio inline">
+                  <input type="radio" name="enable" value="1" id="enable1" <{$enable_checked1}>><{$smarty.const._MD_TADNEWS_NEWS_ENABLE_OK}>
+                </label>
+                <label class="radio inline">
+                  <input type="radio" name="enable" value="0" id="enable0" <{$enable_checked0}>><{$smarty.const._TADNEWS_NEWS_UNABLE}>
+                </label>
             </div>
           </div>
 
