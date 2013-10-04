@@ -154,4 +154,5 @@ define("_MD_TADNEWS_NEWSPIC_DEMO","<p>所謂「封面圖」指的就是替每一
 define("_MD_TADNEWS_TABLE_CONTENT_WIDTH","呈現寬度");
 define("_MD_TADNEWS_MORE","觀看完整文章");
 define("_MD_TADNEWS_DEL_FILE","選擇要刪除的檔案：");
+define("_MD_TADNEWS_COUNTER","人氣");
 ?>

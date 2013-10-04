@@ -154,4 +154,5 @@ define("_MD_TADNEWS_NEWSPIC_DEMO","<p>Each article could have a cover picture, t
 define("_MD_TADNEWS_TABLE_CONTENT_WIDTH","Width");
 define("_MD_TADNEWS_MORE","Read More");
 define("_MD_TADNEWS_DEL_FILE","Select files to delete:");
+define("_MD_TADNEWS_COUNTER","Count");
 ?>
