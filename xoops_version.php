@@ -292,14 +292,6 @@ $modversion['config'][8]['valuetype'] = 'text';
 $modversion['config'][8]['default'] = "summary";
 $modversion['config'][8]['options']	= array('_MI_TADNEWS_SHOW_MODE_OPT1' => 'summary','_MI_TADNEWS_SHOW_MODE_OPT2' => 'list');
 
-/*
-$modversion['config'][5]['name'] = 'prefix_tag';
-$modversion['config'][5]['title'] = '_MI_TADNEWS_PREFIX_TAG';
-$modversion['config'][5]['description'] = '_MI_TADNEWS_PREFIX_TAG_DESC';
-$modversion['config'][5]['formtype'] = 'textarea';
-$modversion['config'][5]['valuetype'] = 'text';
-$modversion['config'][5]['default'] = _MI_TADNEWS_PREFIX_TAG_VAL;
-*/
 
 $modversion['config'][6]['name'] = 'show_bbcode';
 $modversion['config'][6]['title'] = '_MI_TADNEWS_SHOW_BB';

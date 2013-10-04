@@ -225,7 +225,7 @@ switch($op){
     include XOOPS_ROOT_PATH."/header.php";
     list_tad_tag_news($tag_sn);
   }elseif(!empty($ncsn)){
-    if($xoopsModuleConfig['show_mode']=="summary"){
+    if($xoopsModuleConfig['cate_show_mode']=="summary"){
       $xoopsOption['template_main'] = "tadnews_index_summary_tpl.html";
       include XOOPS_ROOT_PATH."/header.php";
       list_tad_summary_news($ncsn);
