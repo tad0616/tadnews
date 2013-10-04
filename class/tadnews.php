@@ -80,8 +80,8 @@ tadnews::get_all_groups();
 //取得分類下拉選單
 tadnews::get_tad_news_cate_option($of_ncsn=0,$level=0,$v="",$this_ncsn="",$no_self="0",$not_news="null");
 
-//判斷目前登入者在哪些類別中有發表的權利
-tadnews::chk_cate_post_power($kind="post");
+//判斷目前登入者在哪些類別中有發表的權利 post,pass,read
+tadnews::chk_user_cate_power($kind="post");
 
 //以流水號取得某筆tad_news資料 $mode=full （不經過xlanguage）
 tadnews::get_tad_news($nsn="",$uid_chk=false,$pass_xlanguage='');
@@ -112,6 +112,7 @@ tadnews::update_tad_news($nsn="");
 
 //刪除tad_news某筆資料資料
 tadnews::delete_tad_news($nsn="");
+
 
 */
 class tadnews{
@@ -356,6 +357,8 @@ class tadnews{
     $where_news="";
 		
 		//看目前是列出所有文章？還是指定目錄文章？還是單獨一頁？還是一堆指定文章
+    
+    //秀出單一篇文章
 		if(!empty($this->view_nsn) and is_numeric($this->view_nsn)){
       //完整內容
       //$this->set_summary('full');
@@ -387,8 +390,11 @@ class tadnews{
 
       $where_cate=" and ncsn='{$this->view_ncsn}'";
     	$where_news=" and nsn='{$this->view_nsn}'";
+      
+      
+    //秀出一堆指定文章  
     }elseif(!empty($this->view_nsn) and is_array($this->view_nsn)){
-    //die(var_export($this->view_nsn));
+      //die(var_export($this->view_nsn));
       //完整內容
       $this->set_summary(0);
       //不限篇數
@@ -406,6 +412,8 @@ class tadnews{
   	  $kind_chk='';
       $where_cate=empty($all_ncsn)?"":" and ncsn in($all_ncsn)";
     	$where_news=" and nsn in($all_nsn)";
+      
+    //秀出分類或不指定  
     }else{
       //die(var_export($this->view_nsn));
 
@@ -555,7 +563,9 @@ class tadnews{
     		$sql=$PageBar['sql'];
       }
     }
+    
     //die($sql);
+    
 		$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
 
 
@@ -982,7 +992,7 @@ class tadnews{
 			}
 
 			foreach($User_Groups as $gid){
-				if(in_array($gid,$cate_enable_group)){
+				if(in_array($gid,$cate_enable_group) or $gid==1){
 					return true;
 				}
 			}
@@ -1141,7 +1151,7 @@ class tadnews{
       $isAdmin=false;
   	}
 
-  	$ok_cat = tadnews::chk_cate_post_power();
+  	$ok_cat = tadnews::chk_user_cate_power();
 
   	$left=$level*10;
   	$level+=1;
@@ -1166,7 +1176,7 @@ class tadnews{
   }
 
   //判斷目前登入者在哪些類別中有發表的權利
-  public function chk_cate_post_power($kind="post"){
+  public function chk_user_cate_power($kind="post"){
   	global $xoopsDB,$xoopsUser,$xoopsModule;
   	if(empty($xoopsUser))return false;
 		if(!$xoopsModule){
@@ -1189,7 +1199,7 @@ class tadnews{
   	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
 
   	while(list($ncsn,$power)=$xoopsDB->fetchRow($result)){
-  	  if($isAdmin){
+  	  if($isAdmin or $kind=="pass"){
         $ok_cat[]=$ncsn;
   		}else{
   			$power_array=explode(",",$power);
@@ -1501,7 +1511,7 @@ class tadnews{
   		$User_Groups=array();
   	}
 
-  	$nscn_arr=tadnews::chk_cate_post_power("post");
+  	$nscn_arr=tadnews::chk_user_cate_power("post");
   	if(empty($nscn_arr)) redirect_header("index.php",3, _TADNEWS_NO_ADMIN_POWER."<br>".implode(";",$nscn_arr));
 
   	//抓取預設值

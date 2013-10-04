@@ -9,6 +9,7 @@ function list_tad_news($the_ncsn="0",$kind="news",$show_uid=""){
 	if(!empty($show_uid)){
 	 $tadnews->set_view_uid($show_uid);
 	}
+  
 	$tadnews->set_news_kind($kind);
   $tadnews->set_summary(0);
 	$tadnews->set_show_mode("list");
@@ -18,8 +19,9 @@ function list_tad_news($the_ncsn="0",$kind="news",$show_uid=""){
 	$tadnews->set_news_cate_select(1);
 	$tadnews->set_news_author_select(1);
 	$tadnews->set_news_check_mode(1);
-
-	if(!empty($the_ncsn)){
+	$tadnews->chk_user_cate_power("pass");
+	
+  if(!empty($the_ncsn)){
 		$tadnews->set_view_ncsn($the_ncsn);
     if($kind=="page"){
 		  $tadnews->set_sort_tool(1);

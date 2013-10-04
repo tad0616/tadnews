@@ -28,7 +28,7 @@ if($xoopsModuleConfig['use_archive']=='1')  $interface_menu[_MD_TADNEWS_ARCHIVE]
 if($xoopsModuleConfig['use_newspaper']=='1')  $interface_menu[_MD_TADNEWS_NEWSPAPER]="newspaper.php";
 
 
-$p=tadnews::chk_cate_post_power();
+$p=tadnews::chk_user_cate_power();
 if(sizeof($p)>0 and $xoopsUser){
   $and_ncsn=empty($_REQUEST['ncsn'])?"":"?ncsn={$_REQUEST['ncsn']}";
 	$interface_menu[_MD_TADNEWS_POST]="post.php{$and_ncsn}";
@@ -36,7 +36,7 @@ if(sizeof($p)>0 and $xoopsUser){
 }
 
 if($isAdmin){
-  $interface_menu[_MD_TADNEWS_TO_ADMIN]="admin/index.php";
+  $interface_menu[_MD_TADNEWS_TO_ADMIN]="admin/main.php";
 }
 
 ?>
