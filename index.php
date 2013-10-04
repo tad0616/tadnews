@@ -72,6 +72,7 @@ function list_tad_cate_news($show_ncsn=0,$the_level=0){
   $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->get_cate_news();
+  $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 }
 
@@ -176,7 +177,7 @@ function list_user_sign($uid=""){
 $op=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
 
 $nsn=(isset($_REQUEST['nsn']))?intval($_REQUEST['nsn']) : 0;
-$ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : 0;
+$ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : NULL;
 $fsn=(isset($_REQUEST['fsn']))?intval($_REQUEST['fsn']) : 0;
 $uid=(isset($_REQUEST['uid']))?intval($_REQUEST['uid']) : "";
 $kind=(empty($_REQUEST['kind']))?"":$_REQUEST['kind'];
@@ -224,7 +225,7 @@ switch($op){
     $xoopsOption['template_main'] = "tadnews_list_tpl.html";
     include XOOPS_ROOT_PATH."/header.php";
     list_tad_tag_news($tag_sn);
-  }elseif(!empty($ncsn)){
+  }elseif(!is_null($ncsn)){
     if($xoopsModuleConfig['cate_show_mode']=="summary"){
       $xoopsOption['template_main'] = "tadnews_index_summary_tpl.html";
       include XOOPS_ROOT_PATH."/header.php";
