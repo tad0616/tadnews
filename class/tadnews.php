@@ -1153,26 +1153,40 @@ class tadnews{
 
   	$ok_cat = tadnews::chk_user_cate_power();
 
-  	$left=$level*10;
-  	$level+=1;
+    if($isAdmin){
+    	$left=$level*10;
+    	$level+=1;
 
-  	$and_not_news=($not_news!="null")?"and not_news='{$not_news}'":"";
+    	$and_not_news=($not_news!="null")?"and not_news='{$not_news}'":"";
 
 
-  	$option=($of_ncsn or !$isAdmin)?"":"<option value='0'></option>";
+    	$option=($of_ncsn or !$isAdmin)?"":"<option value='0'></option>";
 
-  	$option=="";
-  	$sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
-  	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
+    	$option=="";
+    	$sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
+    	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
 
-  	while(list($ncsn,$nc_title,$not_news)=$xoopsDB->fetchRow($result)){
-  	  if(!in_array($ncsn,$ok_cat))continue;
-  	  if($no_self=='1' and $this_ncsn==$ncsn)continue;
-  		$selected=($v==$ncsn)?"selected":"";
-  		$color=($not_news=='1')?"red":"black";
-  		$option.="<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
-  		$option.= tadnews::get_tad_news_cate_option($ncsn,$level,$v,$this_ncsn,$no_self,$not_news);
-  	}
+    	while(list($ncsn,$nc_title,$not_news)=$xoopsDB->fetchRow($result)){
+    	  if(!in_array($ncsn,$ok_cat))continue;
+    	  if($no_self=='1' and $this_ncsn==$ncsn)continue;
+    		$selected=($v==$ncsn)?"selected":"";
+    		$color=($not_news=='1')?"red":"black";
+    		$option.="<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
+    		$option.= tadnews::get_tad_news_cate_option($ncsn,$level,$v,$this_ncsn,$no_self,$not_news);
+    	}
+    }else{
+      $all_ncsn=implode(",",$ok_cat);
+      $sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where ncsn in($all_ncsn) $and_not_news order by sort";
+      $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
+      while(list($ncsn,$nc_title,$not_news)=$xoopsDB->fetchRow($result)){
+        if(!in_array($ncsn,$ok_cat))continue;
+        if($no_self=='1' and $this_ncsn==$ncsn)continue;
+        $selected=($v==$ncsn)?"selected":"";
+        $color=($not_news=='1')?"red":"black";
+        $option.="<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
+      }
+
+    }
   	return $option;
   }
 
