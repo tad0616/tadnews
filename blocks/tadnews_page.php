@@ -13,8 +13,9 @@ function tadnews_page($options){
   }
   
   include_once XOOPS_ROOT_PATH."/modules/tadtools/dtree.php";
-
-	$sql="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$options[0]}'";
+  if(empty($options[0]))return;
+	
+  $sql="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$options[0]}'";
 	$result=$xoopsDB->query($sql);
 	list($ncsn,$of_ncsn,$nc_title)=$xoopsDB->fetchRow($result);
 	
@@ -23,6 +24,7 @@ function tadnews_page($options){
 	$home['url']=XOOPS_URL."/modules/tadnews/index.php?ncsn={$ncsn}";
 
   $page=block_get_page_cate($options[0]);
+
   $dtree=new dtree("tadnews_mypage_tree{$ncsn}",$home,$page['title'],$page['of_ncsn'],$page['url']);
   $block=$dtree->render();
 	return $block;
@@ -94,7 +96,6 @@ if(!function_exists("block_get_page_cate")){
         $i++;
   		}
 		}
-		
 		return $page;
 	}
 }
