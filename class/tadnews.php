@@ -144,12 +144,23 @@ class tadnews{
 
   //建構函數
   function __construct(){
-    global $xoopsConfig;
+    global $xoopsConfig,$xoopsModuleConfig;
     include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
     include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
     include_once XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
     $this->now =date("Y-m-d",xoops_getUserTimestamp(time()));
     $this->today=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+
+    if(empty($xoopsModuleConfig)){
+      $modhandler = &xoops_gethandler('module');
+      $xoopsModule = &$modhandler->getByDirname("tadnews");
+      $config_handler =& xoops_gethandler('config');
+      $xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    }
+
+    if($xoopsModuleConfig['use_star_rating']=='1'){
+      $this->set_use_star_rating(true);
+    }
   }
 
   //設定種類
@@ -800,14 +811,13 @@ class tadnews{
         }
       }
 
-
       if($this->use_star_rating){
         $all_news[$i]['star']="<div id='rating_nsn_{$nsn}'></div>";
       }else{
         $all_news[$i]['star']="";
       }
-      $i++;
 
+      $i++;
     }
 
     $jquery=get_jquery();
@@ -824,7 +834,9 @@ class tadnews{
       $main['author_select']=$author_select;
       $main['bar']=$bar;
       $main['syntaxhighlighter_code']=$syntaxhighlighter_code;
-      $main['rating_js']=$rating_js;
+      if($this->use_star_rating){
+        $main['rating_js']=$rating_js;
+      }
       if(is_numeric($this->view_ncsn))$main['show_cate_title']=$show_cate_title;
       return $main;
     }else{
@@ -839,7 +851,9 @@ class tadnews{
       $xoopsTpl->assign( "author_select" , $author_select) ;
       $xoopsTpl->assign( "bar" , $bar) ;
       $xoopsTpl->assign( "syntaxhighlighter_code" , $syntaxhighlighter_code) ;
-      $xoopsTpl->assign( "rating_js" , $rating_js) ;
+      if($this->use_star_rating){
+        $xoopsTpl->assign( "rating_js" , $rating_js) ;
+      }
       if(is_numeric($this->view_ncsn))$xoopsTpl->assign( "show_cate_title" , $show_cate_title) ;
 
       if(isset($all_news[0]['news_title'])){

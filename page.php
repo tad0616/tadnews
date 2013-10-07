@@ -18,9 +18,9 @@ function show_news($nsn=""){
 	$tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
 
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
 	$tadnews->get_news();
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;

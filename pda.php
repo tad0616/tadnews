@@ -38,9 +38,9 @@ if($start <= 0 )$start=0;
 	$tadnews->set_title_length(20);
 	$tadnews->set_cover(true,"db");
 
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
 
 	$tnews=$tadnews->get_news('return');
 
@@ -120,9 +120,9 @@ function show_news($nsn="",$m_ncsn=""){
 	$tadnews->set_view_nsn($nsn);
 	$tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
 	$news=$tadnews->get_news('return');
 
 	$back_news="";

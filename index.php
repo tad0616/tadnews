@@ -20,9 +20,9 @@ function list_tad_summary_news($the_ncsn=""){
   }
   $tadnews->set_cover(true,"db");
 
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
   $tadnews->get_news();
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "ncsn" , $the_ncsn) ;
@@ -88,9 +88,9 @@ function show_news($nsn=""){
   $tadnews->set_view_nsn($nsn);
   $tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
   $tadnews->get_news();
   $xoopsTpl->assign( "uid" ,$uid) ;
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
