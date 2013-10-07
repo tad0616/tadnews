@@ -7,8 +7,11 @@ CREATE TABLE `tadnews_files_center` (
   `file_name` varchar(255) NOT NULL default '',
   `file_type` varchar(255) NOT NULL default '',
   `file_size` int(10) unsigned NOT NULL default 0,
-  `description` text NOT NULL default '',
+  `description` text NOT NULL,
   `counter` mediumint(8) unsigned NOT NULL default 0,
+  `original_filename` varchar(255) NOT NULL,
+  `hash_filename` varchar(255) NOT NULL,
+  `sub_dir` varchar(255) NOT NULL,
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM;
 
@@ -18,7 +21,7 @@ CREATE TABLE `tad_news` (
   `nsn` smallint(5) unsigned NOT NULL auto_increment,
   `ncsn` smallint(5) unsigned NOT NULL default 0,
   `news_title` varchar(255) NOT NULL default '',
-  `news_content` text NOT NULL default '',
+  `news_content` text NOT NULL,
   `start_day` datetime NOT NULL default '0000-00-00 00:00:00',
   `end_day` datetime default NULL default '0000-00-00 00:00:00',
   `enable` enum('1','0') NOT NULL default '1',
@@ -56,8 +59,8 @@ CREATE TABLE `tad_news_paper` (
   `nps_sn` mediumint(8) unsigned NOT NULL default 0,
   `number` smallint(5) unsigned NOT NULL default 0,
   `np_title` varchar(255)  NOT NULL default '',
-  `nsn_array` text NOT NULL default '',
-  `np_content` text NOT NULL default '',
+  `nsn_array` text NOT NULL,
+  `np_content` text NOT NULL,
   `np_date` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`npsn`)
 ) ;
@@ -74,8 +77,8 @@ CREATE TABLE `tad_news_paper_email` (
 CREATE TABLE `tad_news_paper_setup` (
   `nps_sn` mediumint(8) unsigned NOT NULL auto_increment,
   `title` varchar(255) NOT NULL default '',
-  `head` text NOT NULL default '',
-  `foot` text NOT NULL default '',
+  `head` text NOT NULL,
+  `foot` text NOT NULL,
   `themes` varchar(255) NOT NULL default '',
   `status` enum('1','0') NOT NULL default '1',
   PRIMARY KEY  (`nps_sn`)

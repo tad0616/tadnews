@@ -43,6 +43,15 @@ $kind=(empty($_REQUEST['kind']))?"":$_REQUEST['kind'];
 $tag_sn=(isset($_REQUEST['tag_sn']))?intval($_REQUEST['tag_sn']) : "";
 
 switch($op){
+
+  //下載檔案
+  case "tufdl":
+  $files_sn=isset($_GET['files_sn'])?intval($_GET['files_sn']):"";
+  $TadUpFiles->add_file_counter($files_sn,$hash=false);
+  exit;
+  break;
+  
+  
   //刪除資料
   case "delete_tad_news":
   tadnews::delete_tad_news($nsn);

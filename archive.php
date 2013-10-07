@@ -70,6 +70,15 @@ $date= (!isset($_REQUEST['date']))? date("Y-m"):substr($_REQUEST['date'],0,7);
 switch($op){
 
 
+  //¤U¸üÀÉ®×
+  case "tufdl":
+  $files_sn=isset($_GET['files_sn'])?intval($_GET['files_sn']):"";
+  $TadUpFiles->add_file_counter($files_sn,$hash=false);
+  exit;
+  break;
+  
+  
+
 	default:
   month_list($date);
 	archive($date);

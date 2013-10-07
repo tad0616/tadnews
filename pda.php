@@ -5,7 +5,7 @@ if(file_exists("mainfile.php")){
 }elseif("../../mainfile.php"){
   include_once "../../mainfile.php";
 }
-include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
+//include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
 include_once XOOPS_ROOT_PATH."/modules/tadnews/function.php";
@@ -522,6 +522,15 @@ $date= (!isset($_REQUEST['date']))? date("Y-m"):substr($_REQUEST['date'],0,7);
 $npsn=(empty($_GET['npsn']))?"":intval($_GET['npsn']);
 
 switch($_REQUEST['op']){
+
+  //下載檔案
+  case "tufdl":
+  $files_sn=isset($_GET['files_sn'])?intval($_GET['files_sn']):"";
+  $TadUpFiles->add_file_counter($files_sn,$hash=false);
+  exit;
+  break;
+  
+  
 
   case "month_list":
     $main=month_list_m($date);

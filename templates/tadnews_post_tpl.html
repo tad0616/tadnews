@@ -110,7 +110,7 @@
         <div class="row-fluid">
           <div class="span6">
             <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
-            <input type="file" name="upfile2[]" maxlength="1" accept="gif|jpg|png">
+            <{$upfile2}>
           </div>
           
           <{if $pic}>
@@ -229,15 +229,8 @@
       </div>
 
       <div id="fragment-4">
-        <div class="row-fluid">
-          <div class="span6">
-             <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>
-             <input type="file" name="upfile[]" class="multi" multiple="multiple">
-          </div>
-          <div class="span6">
-            <{$list_del_file}>
-          </div>
-        </div>
+        <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>
+        <{$upform}>
       </div>
     </div>
   </div>

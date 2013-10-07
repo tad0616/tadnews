@@ -63,6 +63,15 @@ $ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : 0;
 $fsn=(isset($_REQUEST['fsn']))?intval($_REQUEST['fsn']) : 0;
 
 switch($_REQUEST['op']){
+
+  //下載檔案
+  case "tufdl":
+  $files_sn=isset($_GET['files_sn'])?intval($_GET['files_sn']):"";
+  $TadUpFiles->add_file_counter($files_sn,$hash=false);
+  exit;
+  break;
+  
+  
 	//刪除資料
 	case "delete_tad_news";
 	tadnews::delete_tad_news($nsn);
