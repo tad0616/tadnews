@@ -83,7 +83,7 @@ function show_news($nsn=""){
   global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$xoopsUser;
 
   $tadnews=new tadnews();
-  $uid=$xoopsUser->uid();
+  $uid=($xoopsUser)?$xoopsUser->uid():"";
   $tadnews->set_show_enable(0);
   $tadnews->set_view_nsn($nsn);
   $tadnews->set_cover(true,"db");

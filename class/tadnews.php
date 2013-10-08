@@ -1753,13 +1753,14 @@ class tadnews{
       $form['pic_css_background_size_cover']=chk($css["background_size"],"cover",0,"selected");
       $form['pic']=$pic;
       
-      $this->TadUpFiles->set_col("nsn",$nsn);
-      $list_del_file=$this->TadUpFiles->list_del_file(true);
-      $form['list_del_file']=$list_del_file;
+      $this->TadUpFiles->set_col("nsn",$nsn);       
       $upform=$this->TadUpFiles->upform(true,'upfile',NULL,true);
       $form['upform']=$upform;
-      $upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
-      $form['upform2']=$upform2;
+      
+      //$this->TadUpFiles->set_col("news_pic",$nsn);   
+      //$upform2=$this->TadUpFiles->js_upform('upfile2');      
+      //$upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
+      //$form['upform2']=$upform2;
       
       
       $form['bootstrap']=get_bootstrap();
@@ -1827,14 +1828,15 @@ class tadnews{
       $xoopsTpl->assign("pic" , $pic);
       
       $this->TadUpFiles->set_col("nsn",$nsn);
-      $list_del_file=$this->TadUpFiles->list_del_file(true);
-
-      $xoopsTpl->assign("list_del_file" , $list_del_file);
-      
       $upform=$this->TadUpFiles->upform(true,'upfile',NULL,true);
       $xoopsTpl->assign( "upform" , $upform) ;
-      $upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
-      $xoopsTpl->assign( "upform2" , $upform2) ;
+      
+      
+      //$this->TadUpFiles->set_col("news_pic",$nsn);   
+      //$upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
+      
+      //$upform2=$this->TadUpFiles->js_upform('upfile2');    
+      //$xoopsTpl->assign( "upform2" , $upform2) ;
       
       $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
       $xoopsTpl->assign( "formValidator_code" , $formValidator_code) ;

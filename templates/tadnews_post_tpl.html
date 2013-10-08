@@ -110,7 +110,48 @@
         <div class="row-fluid">
           <div class="span6">
             <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
-            <{$upfile2}>
+            
+            <script src='<{$xoops_url}>/modules/tadtools/jquery.form/jquery.form.js'></script>
+            <input id="upfile2" type="file" name="upfile2[]" multiple>
+            
+            <div class="progress">
+              <div class="bar"></div >
+              <div class="percent">0%</div >
+            </div>
+            
+            <div id="status"></div>
+            
+            <script>
+            (function() {
+                
+            var bar = $('.bar');
+            var percent = $('.percent');
+            var status = $('#status');
+               
+            $('form').ajaxForm({
+                beforeSend: function() {
+                    status.empty();
+                    var percentVal = '0%';
+                    bar.width(percentVal)
+                    percent.html(percentVal);
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar.width(percentVal)
+                    percent.html(percentVal);
+                },
+                success: function() {
+                    var percentVal = '100%';
+                    bar.width(percentVal)
+                    percent.html(percentVal);
+                },
+              complete: function(xhr) {
+                status.html(xhr.responseText);
+              }
+            }); 
+
+            })();       
+            </script>
           </div>
           
           <{if $pic}>
