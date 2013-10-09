@@ -164,7 +164,7 @@ class tadnews{
       $this->set_use_star_rating(true);
     }
     $this->TadUpFiles=new TadUpFiles("tadnews");
-    
+
   }
 
   //設定種類
@@ -868,7 +868,7 @@ class tadnews{
           $xoopsTpl->assign('xoops_meta_keywords','keywords',$all_news[0]['news_title']);
           $xoopsTpl->assign('xoops_meta_description',  strip_tags($all_news[0]['content']));
         }
-        $xoopsTpl->assign('xoops_module_header', "<meta property='og:image' content='{$all_news[0]['image_thumb']}'/>  <meta property='og:title' content='{$all_news[0]['news_title']}'/>");
+        $xoopsTpl->assign('xoops_module_header', "<meta property='og:image' content='{$all_news[0]['image_big']}'/>  <meta property='og:title' content='{$all_news[0]['news_title']}'/>");
       }
 
 
@@ -1347,7 +1347,7 @@ class tadnews{
       $reader_uid="";
     }
     //$files=show_files("nsn",$nsn,true,$mode);
-    
+
     $this->TadUpFiles->set_col('nsn',$nsn);
     $files=$this->TadUpFiles->show_files('upfile',true,$mode,false,false);  //是否縮圖,顯示模式 filename、small,顯示描述,顯示下載次數
 
@@ -1752,17 +1752,17 @@ class tadnews{
       $form['pic_css_background_size_contain']=chk($css["background_size"],"contain",0,"selected");
       $form['pic_css_background_size_cover']=chk($css["background_size"],"cover",0,"selected");
       $form['pic']=$pic;
-      
-      $this->TadUpFiles->set_col("nsn",$nsn);       
+
+      $this->TadUpFiles->set_col("nsn",$nsn);
       $upform=$this->TadUpFiles->upform(true,'upfile',NULL,true);
       $form['upform']=$upform;
-      
-      //$this->TadUpFiles->set_col("news_pic",$nsn);   
-      //$upform2=$this->TadUpFiles->js_upform('upfile2');      
+
+      //$this->TadUpFiles->set_col("news_pic",$nsn);
+      //$upform2=$this->TadUpFiles->js_upform('upfile2');
       //$upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
       //$form['upform2']=$upform2;
-      
-      
+
+
       $form['bootstrap']=get_bootstrap();
       $form['formValidator_code']=$formValidator_code;
 
@@ -1826,18 +1826,18 @@ class tadnews{
       $xoopsTpl->assign("pic_css_background_size_contain" , chk($css["background_size"],"contain",0,"selected"));
       $xoopsTpl->assign("pic_css_background_size_cover" , chk($css["background_size"],"cover",0,"selected"));
       $xoopsTpl->assign("pic" , $pic);
-      
+
       $this->TadUpFiles->set_col("nsn",$nsn);
       $upform=$this->TadUpFiles->upform(true,'upfile',NULL,true);
       $xoopsTpl->assign( "upform" , $upform) ;
-      
-      
-      //$this->TadUpFiles->set_col("news_pic",$nsn);   
+
+
+      //$this->TadUpFiles->set_col("news_pic",$nsn);
       //$upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
-      
-      //$upform2=$this->TadUpFiles->js_upform('upfile2');    
+
+      //$upform2=$this->TadUpFiles->js_upform('upfile2');
       //$xoopsTpl->assign( "upform2" , $upform2) ;
-      
+
       $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
       $xoopsTpl->assign( "formValidator_code" , $formValidator_code) ;
     }
@@ -1980,6 +1980,7 @@ class tadnews{
     $news_content=$myts->addSlashes($_POST['news_content']);
     $always_top=(empty($_POST['always_top']))?"0":"1";
     $pic_css=tadnews::mk_pic_css($_POST['pic_css']);
+    die($pic_css);
     if(!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']){
       $pic_css=$xoopsModuleConfig['cover_pic_css'];
     }
@@ -1994,11 +1995,11 @@ class tadnews{
     //upload_file('upfile',"nsn",$nsn);
     $this->TadUpFiles->set_col('nsn',$nsn);
     $this->TadUpFiles->upload_file('upfile',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width']);
-    
+
     //upload_file('upfile2',"news_pic",$nsn,null,1,$pic_css);
     $this->TadUpFiles->set_col('news_pic',$nsn);
     $this->TadUpFiles->upload_file('upfile2',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,$pic_css);
-    
+
 
     $xoopsUser->incrementPost();
 
@@ -2106,6 +2107,7 @@ class tadnews{
     $news_content=$myts->addSlashes($_POST['news_content']);
     $always_top=(empty($_POST['always_top']))?"0":"1";
     $pic_css=$this->mk_pic_css($_POST['pic_css']);
+    //die($pic_css);
     if(!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']){
       $pic_css=$xoopsModuleConfig['cover_pic_css'];
     }
@@ -2116,11 +2118,12 @@ class tadnews{
     //處理上傳的檔案
     //upload_file('upfile',"nsn",$nsn);
     $this->TadUpFiles->set_col('nsn',$nsn);
-    $this->TadUpFiles->upload_file('upfile',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,$pic_css);
-    
+    $this->TadUpFiles->upload_file('upfile',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,NULL,true);
+
     //upload_file('upfile2',"news_pic",$nsn,null,1,$pic_css);
     $this->TadUpFiles->set_col('news_pic',$nsn);
-    $this->TadUpFiles->upload_file('upfile2',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,$pic_css);
+    //die($pic_css);
+    $this->TadUpFiles->upload_file('upfile2',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,$pic_css,true);
 
     $cate=$this->get_tad_news_cate($_POST['ncsn']);
     $page=($cate['not_news']=='1')?"page":"index";
@@ -2163,7 +2166,7 @@ class tadnews{
 
     //刪除檔案
     //del_files("","nsn",$nsn);
-    
+
     $this->TadUpFiles->set_col("nsn",$nsn);
     $this->TadUpFiles->del_files();
   }

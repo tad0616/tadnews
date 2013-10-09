@@ -106,28 +106,28 @@
 
 
       <div id="fragment-3">
-      
+
         <div class="row-fluid">
           <div class="span6">
             <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
-            
-            <script src='<{$xoops_url}>/modules/tadtools/jquery.form/jquery.form.js'></script>
             <input id="upfile2" type="file" name="upfile2[]" multiple>
-            
+            <!--script src='<{$xoops_url}>/modules/tadtools/jquery.form/jquery.form.js'></script>
+
+
             <div class="progress">
               <div class="bar"></div >
               <div class="percent">0%</div >
             </div>
-            
+
             <div id="status"></div>
-            
+
             <script>
             (function() {
-                
+
             var bar = $('.bar');
             var percent = $('.percent');
             var status = $('#status');
-               
+
             $('form').ajaxForm({
                 beforeSend: function() {
                     status.empty();
@@ -148,12 +148,12 @@
               complete: function(xhr) {
                 status.html(xhr.responseText);
               }
-            }); 
+            });
 
-            })();       
-            </script>
+            })();
+            </script-->
           </div>
-          
+
           <{if $pic}>
             <div class="span6">
               <label><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC}></label>
@@ -164,7 +164,7 @@
             </div>
           <{/if}>
         </div>
-        
+
         <div class="row-fluid">
           <{if $pic}>
             <div id="pic_css_set" class="well">
@@ -198,7 +198,7 @@
                   <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER}><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_WIDTH}></label>
                   <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width}>" class="span4" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');"> px
                 </div>
-                
+
                 <div class="span3">
                   <label><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}></label>
                   <select class="span12" name="pic_css[float]" onChange="$('#demo_cover_pic').css('float',this.value);">
