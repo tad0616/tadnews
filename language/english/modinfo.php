@@ -31,24 +31,6 @@ define("_MI_TADNEWS_ADMENU9", "Customized Page categories");
 define("_MI_TADNEWS_NEWSPAPER","Newspaper List");
 define("_MI_TADNEWS_ARCHIVE","Archive");
 
-define("_MI_TADNEWS_TEMPLATE_DESC1", "The index template ");
-define("_MI_TADNEWS_TEMPLATE_DESC2", "The news template ");
-define("_MI_TADNEWS_TEMPLATE_DESC3", "The RSS template ");
-define("_MI_TADNEWS_TEMPLATE_DESC4", "The post form template ");
-define("_MI_TADNEWS_TEMPLATE_DESC5", "The archive template ");
-define("_MI_TADNEWS_TEMPLATE_DESC6", "The customized page template ");
-define("_MI_TADNEWS_TEMPLATE_DESC7", "The index template (Summary news)");
-define("_MI_TADNEWS_TEMPLATE_DESC8", "The index template (Categories news )");
-define("_MI_TADNEWS_TEMPLATE_DESC9", "The newspaper template");
-define("_MI_TADNEWS_TEMPLATE_DESC10", "The admin index template");
-define("_MI_TADNEWS_TEMPLATE_DESC11", "The admin custom page template");
-define("_MI_TADNEWS_TEMPLATE_DESC12", "The admin categories management template");
-define("_MI_TADNEWS_TEMPLATE_DESC13", "The admin newsapaer management template");
-define("_MI_TADNEWS_TEMPLATE_DESC14", "The admin tag management template");
-define("_MI_TADNEWS_TEMPLATE_DESC15", "The customized page categories management template");
-define("_MI_TADNEWS_TEMPLATE_DESC16", "The customized page categories template");
-define("_MI_TADNEWS_TEMPLATE_DESC17", "List sign status template");
-
 define("_MI_TADNEWS_BNAME1","Categories");
 define("_MI_TADNEWS_BDESC1","Show All Categories");
 define("_MI_TADNEWS_BNAME2","Last News");

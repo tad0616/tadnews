@@ -7,7 +7,7 @@
 <{$block.del_js}>
 
 <{foreach item=page from=$block.page}>
-  <{if $page.enable=="1"}>
+  <{if $page.enable=="1" or $page.uid==$uid}>
   <div class="row-fluid">
     <div class="news_head well" <{if $page.need_sign}>style="background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;"<{/if}>>
       <div style="float:right"><{$page.star}></div>

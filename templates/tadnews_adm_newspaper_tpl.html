@@ -177,7 +177,7 @@
     </table>
       <input type="hidden" name="op" value="send_now">
       <input type="hidden" name="npsn" value="<{$npsn}>">
-      <div class="text-center"><button type="submit"><{$smarty.const._MD_TADNEWS_SEND_NOW}></button></div>
+      <div class="text-center"><button type="submit"><{$smarty.const._MA_TADNEWS_SEND_NOW}></button></div>
 
   </form>
 
@@ -257,7 +257,7 @@
   <div class="row-fluid"><a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a></div>
 
   <{if $empty}>
-    <div class="well"><{$smarty.const._MD_TADNEWS_EMPTY_LOG}></div>
+    <div class="well"><{$smarty.const._MA_TADNEWS_EMPTY_LOG}></div>
   <{else}>
     <table class="table table-striped">
       <{assign var="i" value=0}>
@@ -304,8 +304,8 @@
           <td>
             <a href="newspaper.php?op=edit_newspaper&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-warning"><{$smarty.const._TADNEWS_EDIT}></a>
             <a href="javascript:delete_tad_newspaper(<{$np.allnpsn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
-            <a href="newspaper.php?op=sendmail_log&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-info"><{$smarty.const._MD_TADNEWS_SEND_LOG}></a>
-            <a href="newspaper.php?op=sendmail&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-primary"><{$smarty.const._MD_TADNEWS_SEND_NOW}></a>
+            <a href="newspaper.php?op=sendmail_log&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-info"><{$smarty.const._MA_TADNEWS_SEND_LOG}></a>
+            <a href="newspaper.php?op=sendmail&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-primary"><{$smarty.const._MA_TADNEWS_SEND_NOW}></a>
           </td>
         </tr>
       <{/foreach}>

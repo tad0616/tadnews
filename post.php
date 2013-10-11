@@ -1,10 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: post.php,v 1.2 2008/06/25 06:36:09 tad Exp $
-// ------------------------------------------------------------------------- //
-
 /*-----------引入檔案區--------------*/
 include_once "header.php";
 $xoopsOption['template_main'] = "tadnews_post_tpl.html";
@@ -21,27 +15,27 @@ $tadnews=new tadnews();
 
 switch($op){
 
-	//新增資料
-	case "insert_tad_news":
-	$nsn=$tadnews->insert_tad_news();
-	break;
-	
-	//輸入表格
-	case "tad_news_form";
+  //新增資料
+  case "insert_tad_news":
+  $nsn=$tadnews->insert_tad_news();
+  break;
+
+  //輸入表格
+  case "tad_news_form";
   $tadnews->set_news_editor($xoopsModuleConfig['editor']);
-	$tadnews->tad_news_form($nsn);
-	//$main.=list_tad_news(1);
-	break;
-		
-	//更新資料
-	case "update_tad_news";
-	$tadnews->update_tad_news($nsn);
-	break;
-	
-	default:
+  $tadnews->tad_news_form($nsn);
+  //$main.=list_tad_news(1);
+  break;
+
+  //更新資料
+  case "update_tad_news";
+  $tadnews->update_tad_news($nsn);
+  break;
+
+  default:
   $tadnews->set_news_editor($xoopsModuleConfig['editor']);
-	$tadnews->tad_news_form($nsn,$ncsn);
-	break;
+  $tadnews->tad_news_form($nsn,$ncsn);
+  break;
 }
 
 

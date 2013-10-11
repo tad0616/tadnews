@@ -1,7 +1,4 @@
 <!--TadNews Start-->
-<{if $ncsn}>
-<link rel="alternate" type="application/rss+xml" title="tadnews rss" href="<{$xoops_url}>/modules/tadnews/rss.php?ncsn=<{$ncsn}>" />
-<{/if}>
 <link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadnews/iconize.css" />
 
 <{$bootstrap}>
@@ -27,8 +24,8 @@
   });
 </script>
 <{/if}>
-    
-    
+
+
 <{if $page}>
 <div class="row-fluid">
 <div id="tadnews_save_msg"></div>
@@ -36,18 +33,12 @@
 <{$author_select}>
 <table class="table table-striped">
   <tr>
-      <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_TITLE}></th>
-      <{if $show_admin_tool_title}>
-      <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_PASSWD}></th>
-      <th nowrap><{$smarty.const._MD_TADNEWS_CAN_READ_NEWS_GROUP}></th>
-      <th nowrap><{$smarty.const._MD_TADNEWS_FUNCTION}></th>
-      <{/if}>
+    <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_TITLE}></th>
   </tr>
   <tbody id="sort">
     <{foreach item=page from=$page}>
       <tr id="tr_<{$page.nsn}>">
         <td>
-          <{$page.chkbox}>
           <{$page.post_date}>
 
           <{$page.prefix_tag}>

@@ -32,7 +32,7 @@ function list_newspaper(){
 	while(list($allnpsn,$number,$title,$np_date)=$xoopsDB->fetchRow($result)){
       $title=$myts->htmlSpecialChars($title);
       $main[$i]['allnpsn']=$allnpsn;
-      $main[$i]['title']=$title.sprintf(_MA_TADNEWS_NP_TITLE,$number);
+      $main[$i]['title']=$title.sprintf(_MD_TADNEWS_NP_TITLE,$number);
       $main[$i]['np_date']=$np_date;
       $i++;
 	}

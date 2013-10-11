@@ -48,11 +48,11 @@ if(empty($show_col))$show_col=array('start_day','news_title','uid','ncsn','count
 $block="";
 
 
-$tt['start_day']="<th style='width:80px;'>".to_utf8(_MB_TADNEWS_START_DATE)."</th>";
-$tt['news_title']="<th>".to_utf8(_MB_TADNEWS_NEWS_TITLE)."</th>";
-$tt['uid']="<th style='width:80px;'>".to_utf8(_MB_TADNEWS_POSTER)."</th>";
-$tt['ncsn']="<th style='width:80px;'>".to_utf8(_MB_TADNEWS_NEWS_CATE)."</th>";
-$tt['counter']="<th>".to_utf8(_MB_TADNEWS_COUNTER)."</th>";
+$tt['start_day']="<th style='width:80px;'>".to_utf8(_MD_TADNEWS_START_DATE)."</th>";
+$tt['news_title']="<th>".to_utf8(_MD_TADNEWS_NEWS_TITLE)."</th>";
+$tt['uid']="<th style='width:80px;'>".to_utf8(_MD_TADNEWS_POSTER)."</th>";
+$tt['ncsn']="<th style='width:80px;'>".to_utf8(_MD_TADNEWS_NEWS_CATE)."</th>";
+$tt['counter']="<th>".to_utf8(_MD_TADNEWS_COUNTER)."</th>";
 $blockTitle="";
 foreach($show_col as $colname){
   $blockTitle.=$tt[$colname];

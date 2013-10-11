@@ -9,9 +9,9 @@ include_once "global.php";
 
 include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
 
-define("_MD_TADNEWS_TO_MOD","回模組首頁");
-define("_MD_TADNEWS_TO_ADMIN","管理介面");
-define("_MD_TADNEWS_TOOLBAR","共 %s 頁，目前在第 %s 頁：");
+define("_MA_TADNEWS_TO_MOD","回模組首頁");
+define("_MA_TADNEWS_TO_ADMIN","管理介面");
+define("_MA_TADNEWS_TOOLBAR","共 %s 頁，目前在第 %s 頁：");
 define("_MA_TADNEWS_SAVE_CATE","儲存");
 define("_MA_TADNEWS_FUNCTION","功能");
 define("_MA_TADNEWS_MOVE","搬移文章");
@@ -33,10 +33,9 @@ define("_MA_TADNEWS_LIST","已發佈的文章列表");
 
 
 //post.php
-define("_MD_TADNEWS_NO_POST_POWER","尚未登入，無法發表文章。");
+define("_MA_TADNEWS_NO_POST_POWER","尚未登入，無法發表文章。");
 define("_MA_TADNEWS_ADD_NEWS","新增一篇文章");
 define("_MA_TADNEWS_NEWS_TITLE","文章標題");
-define("_MA_TADNEWS_PREFIX_TAG","標籤");
 define("_MA_TADNEWS_ALWAYS_TOP","置頂");
 define("_MA_TADNEWS_NEWS_CONTENT","文章內容");
 define("_MA_TADNEWS_START_DATE","發佈時間");
@@ -61,7 +60,7 @@ define("_MA_TADNEWS_NEWS_ENABLE1_TEXT","選擇「公開」則會立即看見該文章");
 define("_MA_TADNEWS_NEWS_ENABLE0_TEXT","選擇「草稿」則不會在文章列表中看見該文章");
 define("_MA_TADNEWS_NEWS_FILES","上傳附檔：");
 define("_MA_TADNEWS_NEWS_FILES_LIST","附檔列表");
-define("_MD_CAT_CANT_FIND_FILE","無法下載該檔");
+define("_MA_CAT_CANT_FIND_FILE","無法下載該檔");
 define("_MA_TADNEWS_MON","月");
 define("_MA_TADNEWS_1","一");
 define("_MA_TADNEWS_2","二");
@@ -72,10 +71,8 @@ define("_MA_TADNEWS_6","六");
 define("_MA_TADNEWS_7","日");
 define("_MA_TADNEWS_WEEK","週");
 define("_MA_TADNEWS_TODAY","今日");
-define("_MA_TADNEWS_ALL_NO","不需簽收");
 define("_MA_TADNEWS_NEWS_HAVE_READ","需簽收群組");
 define("_MA_NEED_TADTOOLS","需要 modules/tadtools，可至<a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad教材網</a>下載。");
-define("_MA_TADNEWS_CREAT_NEWS_CATE","在左邊分類下建立新分類");
 
 
 
@@ -89,7 +86,6 @@ define("_MA_TADNEWS_CAN_POST_CATE_GROUP","可<font color='red'>發文章</font>群組"
 define("_MA_TADNEWS_CAN_READ_CATE_GROUP_TXT","不選=全部可讀");
 define("_MA_TADNEWS_CAN_POST_CATE_GROUP_TXT","不選=僅站長可發");
 define("_MA_TADNEWS_CATE_SN","分類編號");
-define("_MA_TADNEWS_DB_ADD_ERROR1","無法新增資料到tad_news_cate中");
 define("_MA_TADNEWS_DB_SELECT_ERROR1","無法取得tad_news_cate資料");
 define("_MA_TADNEWS_DB_UPDATE_ERROR1","無法更新tad_news_cate資料");
 define("_MA_TADNEWS_DB_DEL_ERROR1","無法刪除tad_news_cate資料");
@@ -151,10 +147,10 @@ define("_MA_TADNEWS_NP_FOOT_CONTENT","<div class=\"foot\"><h1>【關於本報】</h1>
 <p>本電子報智慧財產權屬於「<a href='%s' target='_blank'>%s</a>」，採用<a href='http://creativecommons.org/licenses/by-sa/2.5/tw/deed.zh_TW' target='_blank'>創用 CC「姓名標示－禁止改作－非商業性」授權條款臺灣 2.5 版授權</a>散布。<a href='http://creativecommons.org/licenses/by-sa/2.5/tw/legalcode' target='_blank'>《授權條款全文》</a></p>
 <p>若欲為上述授權範圍以外之利用，請與「%s」（<a href='mailto:%s'>%s</a>） 聯絡。</p>
 <p>若欲訂閱或取消本電子報，請至以下網址：<a href='%s' target='_blank'>%s</a></p></div>");
-define("_MD_TADNEWS_SEND_NOW","立即寄出");
-define("_MD_TADNEWS_SEND_OK","發送成功！");
-define("_MD_TADNEWS_SEND_ERROR","發送失敗！");
-define("_MD_TADNEWS_MAIL_LIST","郵寄清單：（共 %s 筆）");
+define("_MA_TADNEWS_SEND_NOW","立即寄出");
+define("_MA_TADNEWS_SEND_OK","發送成功！");
+define("_MA_TADNEWS_SEND_ERROR","發送失敗！");
+define("_MA_TADNEWS_MAIL_LIST","郵寄清單：（共 %s 筆）");
 define("_MA_TADNEWS_NP_LIST","管理現有電子報");
 define("_MA_TADNEWS_NP_THEMES","選擇電子報佈景");
 define("_MA_TADNEWS_NP_ADD","將本文章加入電子報");
@@ -162,11 +158,11 @@ define("_MA_TADNEWS_NP_REMOVE","從電子報中移除");
 define("_MA_TADNEWS_NP_EMAIL","Email管理");
 define("_MA_TADNEWS_NP_EMAIL_NUM","共有 %s 人訂閱 ");
 define("_MA_TADNEWS_NP_EMAIL_IMPORT","匯入Email，請用 , 隔開");
-define("_MD_TADNEWS_NEVER_SEND","尚未寄過");
-define("_MD_TADNEWS_SEND_LOG","觀看寄送紀錄");
-define("_MD_TADNEWS_EMPTY_LOG","查無寄送紀錄");
-define("_MD_TADNEWS_LOGS","寄送紀錄");
-define("_MD_TADNEWS_BACK_TO","回「%s」");
+define("_MA_TADNEWS_NEVER_SEND","尚未寄過");
+define("_MA_TADNEWS_SEND_LOG","觀看寄送紀錄");
+define("_MA_TADNEWS_EMPTY_LOG","查無寄送紀錄");
+define("_MA_TADNEWS_LOGS","寄送紀錄");
+define("_MA_TADNEWS_BACK_TO","回「%s」");
 define("_MA_TADNEWS_NP_SUB_TITLE","本期電子報標題：");
 
 //update

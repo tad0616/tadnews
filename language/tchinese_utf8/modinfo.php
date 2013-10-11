@@ -31,24 +31,6 @@ define("_MI_TADNEWS_ADMENU9", "自訂頁面分類");
 define("_MI_TADNEWS_NEWSPAPER","電子報列表");
 define("_MI_TADNEWS_ARCHIVE","分月文章");
 
-define("_MI_TADNEWS_TEMPLATE_DESC1", "模組首頁的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC2", "單一文章頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC3", "RSS頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC4", "發佈頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC5", "分月文章的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC6", "自訂頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC7", "模組首頁的樣板檔(本文或摘要模式)。");
-define("_MI_TADNEWS_TEMPLATE_DESC8", "模組首頁的樣板檔(分類新聞模式)。");
-define("_MI_TADNEWS_TEMPLATE_DESC9", "電子報的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC10", "後台文章頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC11", "後台自訂頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC12", "後台分類管理的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC13", "後台電子報管理的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC14", "後台標籤頁面的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC15", "後台自訂頁面分類的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC16", "前台自訂頁面分類的樣板檔。");
-define("_MI_TADNEWS_TEMPLATE_DESC17", "前台簽收狀況的樣板檔。");
-
 define("_MI_TADNEWS_BNAME1","文章類別");
 define("_MI_TADNEWS_BDESC1","顯示所有文章的類別");
 define("_MI_TADNEWS_BNAME2","本站最新消息");

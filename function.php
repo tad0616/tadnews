@@ -5,7 +5,7 @@
 // $Id: function.php,v 1.5 2008/07/03 07:15:41 tad Exp $
 // ------------------------------------------------------------------------- //
 
-include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
+//include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 include_once "block_function.php";
 

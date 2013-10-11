@@ -12,6 +12,7 @@ function xoops_module_update_tadnews(&$module, $old_version) {
 		if(!chk_chk15()) go_update15();
 		if(!chk_chk16()) go_update16();
 		if(!chk_chk17()) go_update17();
+		if(!chk_chk18()) go_update18();
 
 		$old_fckeditor=XOOPS_ROOT_PATH."/modules/tadnews/fckeditor";
 		if(is_dir($old_fckeditor)){
@@ -265,6 +266,30 @@ function go_update17(){
 	global $xoopsDB;
 	$sql="ALTER TABLE ".$xoopsDB->prefix("tad_news_paper")." ADD `np_title` varchar(255)  NOT NULL default ''";
 	$xoopsDB->queryF($sql);
+}
+
+
+//·s¼Woriginal_filenameÄæ¦ì
+function chk_chk18(){
+  global $xoopsDB;
+  $sql="select count(`original_filename`) from ".$xoopsDB->prefix("tadnews_files_center");
+  $result=$xoopsDB->query($sql);
+  if(empty($result)) return false;
+  return true;
+}
+
+
+function go_update18(){
+  global $xoopsDB;
+  $sql="ALTER TABLE ".$xoopsDB->prefix("tadnews_files_center")."
+  ADD `original_filename` varchar(255) NOT NULL default '',
+  ADD `hash_filename` varchar(255) NOT NULL default '',
+  ADD `sub_dir` varchar(255) NOT NULL default ''";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL."/modules/system/admin.php?fct=modulesadmin",30,  mysql_error());
+
+  $sql="update ".$xoopsDB->prefix("tadnews_files_center")." set
+  `original_filename`=`description`";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL."/modules/system/admin.php?fct=modulesadmin",30,  mysql_error());
 }
 
 

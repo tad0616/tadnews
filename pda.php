@@ -5,7 +5,7 @@ if(file_exists("mainfile.php")){
 }elseif("../../mainfile.php"){
   include_once "../../mainfile.php";
 }
-include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
+//include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
 include_once XOOPS_ROOT_PATH."/modules/tadnews/function.php";
@@ -38,9 +38,9 @@ if($start <= 0 )$start=0;
 	$tadnews->set_title_length(20);
 	$tadnews->set_cover(true,"db");
 
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
 
 	$tnews=$tadnews->get_news('return');
 
@@ -120,9 +120,9 @@ function show_news($nsn="",$m_ncsn=""){
 	$tadnews->set_view_nsn($nsn);
 	$tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
-  if($xoopsModuleConfig['use_star_rating']=='1'){
-    $tadnews->set_use_star_rating(true);
-  }
+  //if($xoopsModuleConfig['use_star_rating']=='1'){
+  //  $tadnews->set_use_star_rating(true);
+  //}
 	$news=$tadnews->get_news('return');
 
 	$back_news="";
@@ -338,7 +338,7 @@ function pda_news_format($nsn="",$title="",$news_content="",$fun="",$fun2="",$pr
 /*function get_tad_news_cate_option_m($v=""){
 	global $xoopsDB;
 
-	//$option="<option>"._MA_TADNEWS_NEWS_CATE."</option>";
+	//$option="<option>"._MD_TADNEWS_NEWS_CATE."</option>";
 	$option="<option value='0'>"._MD_TADNEWS_ALL_CATE."</option>";
 	//$option=="";
 	$sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where not_news!='1' order by sort";
@@ -411,7 +411,7 @@ function archive_m($date=""){
 
   $tnews=$tadnews->get_news('return');
 
-  $date_title=to_utf8(str_replace("-",""._MD_TADNEWS_YEAR." ",$date)._MD_TADNEWS_MONTH._MA_TADNEWS_NEWS_TITLE);
+  $date_title=to_utf8(str_replace("-",""._MD_TADNEWS_YEAR." ",$date)._MD_TADNEWS_MONTH._MD_TADNEWS_NEWS_TITLE);
 
   foreach($tnews['page'] as $news){
 
@@ -440,7 +440,7 @@ function list_newspaper_m(){
 
   while(list($allnpsn,$number,$title,$np_date)=$xoopsDB->fetchRow($result)){
 
-      $np_title=$title.sprintf(_MA_TADNEWS_NP_TITLE,$number);
+      $np_title=$title.sprintf(_MD_TADNEWS_NP_TITLE,$number);
       $np_date=substr($np_date,0,10);
       $main.="<li><a href='pda.php?op=preview&npsn={$allnpsn}'>{$np_date} {$np_title}</a></li>";
 
@@ -523,6 +523,15 @@ $date= (!isset($_REQUEST['date']))? date("Y-m"):substr($_REQUEST['date'],0,7);
 $npsn=(empty($_GET['npsn']))?"":intval($_GET['npsn']);
 
 switch($_REQUEST['op']){
+
+  //下載檔案
+  case "tufdl":
+  $files_sn=isset($_GET['files_sn'])?intval($_GET['files_sn']):"";
+  $TadUpFiles->add_file_counter($files_sn,$hash=false);
+  exit;
+  break;
+  
+  
 
   case "month_list":
     $main=month_list_m($date);
