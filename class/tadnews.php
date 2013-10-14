@@ -111,7 +111,8 @@ tadnews::get_tad_news_cate($ncsn="");
 tadnews::update_tad_news($nsn="");
 
 //刪除tad_news某筆資料資料
-tadnews::delete_tad_news($nsn="");
+$tadnews=new tadnews();
+$tadnews->delete_tad_news($nsn);
 
 
 */

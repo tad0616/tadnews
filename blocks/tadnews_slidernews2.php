@@ -1,13 +1,6 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: tadnews_newspaper_list.php,v 1.1 2008/04/10 05:29:56 tad Exp $
-// ------------------------------------------------------------------------- //
-
 include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 
-//區塊主函式 (滑動新聞)
 function tadnews_slidernews2_show($options){
   global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption;
 
@@ -49,7 +42,6 @@ function tadnews_slidernews2_show($options){
   return $block;
 }
 
-//區塊編輯函式
 function tadnews_slidernews2_edit($options){
 
   $ResponsiveSlides=$options[2]=="ResponsiveSlides"?"selected":"";

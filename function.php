@@ -1,11 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: function.php,v 1.5 2008/07/03 07:15:41 tad Exp $
-// ------------------------------------------------------------------------- //
-
-//include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 include_once "block_function.php";
 
@@ -42,7 +35,7 @@ function preview_newspaper($npsn=""){
   $title=$myts->htmlSpecialChars($title);
   $np['np_title']=$myts->htmlSpecialChars($np['np_title']);
   $np['np_content']=$myts->displayTarea($np['np_content'],1,1,1,1,0);
-      
+
 	$head=str_replace('{N}',$np['number'],$head);
 	$head=str_replace('{D}',substr($np['np_date'],0,10),$head);
 	$head=str_replace('{T}',$np['np_title'],$head);

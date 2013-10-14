@@ -1,11 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: tadnews_content_block.php,v 1.4 2008/06/25 06:36:39 tad Exp $
-// ------------------------------------------------------------------------- //
-
-
 include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 
 
@@ -28,7 +21,7 @@ function tadnews_content_block_show($options){
   $tadnews->set_skip_news($options[6]);
   //$tadnews->set_use_star_rating(true);
   $block=$tadnews->get_news('return');
-  if(empty($block['all_news']))return;
+  if(empty($block['page']))return;
 
   $block['bootstrap']=get_bootstrap();
   $block['width']=empty($options[8])?"span12":$options[8];

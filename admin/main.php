@@ -22,7 +22,8 @@ switch($op){
 
 	//§R°£¸ê®Æ
 	case "delete_tad_news":
-	tadnews::delete_tad_news($nsn);
+  $tadnews=new tadnews();
+	$tadnews->delete_tad_news($nsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
 	

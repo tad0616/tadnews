@@ -21,7 +21,7 @@ function tadnews_list_content_block_show($options){
   $tadnews->set_cover($options[4],$options[5]);
   $tadnews->set_skip_news($options[6]);
   $block=$tadnews->get_news('return');
-  if(empty($block['all_news']))return;
+  if(empty($block['page']))return;
   $block['bootstrap']=get_bootstrap();
 
   return $block;
