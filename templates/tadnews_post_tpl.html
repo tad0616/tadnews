@@ -97,12 +97,8 @@
               <input type="text" name="passwd" id="passwd"  class="span12" value="<{$passwd}>">
             </div>
           </div>
-
         </div>
-
       </div>
-
-
 
 
       <div id="fragment-3">
@@ -113,21 +109,32 @@
               $('#show_pic_css_setup').show();
             });
           </script>
+
         <{else}>
+
+          <{assign var=pic value="<div id='demo_cover_pic' style='width:200px; height:150px; border:1px solid #909090; background-position:left top; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;'></div>"}>
+
           <script type="text/javascript">
             $(function() {
               $('#show_pic_css_setup').hide();
               $('#upfile2').change(function() {
-                $(this).upload('demo_upload.php',{nsn:'<{$nsn}>'}, function(res) {
+                $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn}>'}, function(res) {
                   $('#show_pic_css_setup').show();
                   $('#files_sn').val(res);
+
+                  $.post("demo_upload.php", { op: "get_pic", files_sn: res }, function(data) {
+                    $('#demo_cover_pic').css('background-image','url('+data+')');
+                  });
                 }, 'html');
               });
             });
           </script>
+
         <{/if}>
 
-        <input type="text" name="files_sn" id="files_sn">
+        <{if $nsn==""}>
+          <input type="hidden" name="files_sn" id="files_sn">
+        <{/if}>
 
         <div class="row-fluid">
           <div class="span6">

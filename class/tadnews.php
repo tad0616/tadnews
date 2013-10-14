@@ -1624,6 +1624,7 @@ class tadnews{
     $pic=$pic_css="";
     if(!empty($nsn)){
       $pic=$this->get_news_doc_pic("news_pic",$nsn,"big",'db',null,'demo_cover_pic');
+      //die($pic);
       if(!empty($pic)){
         $sql = "select description from ".$xoopsDB->prefix("tadnews_files_center")." where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
         $result=$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
@@ -2013,12 +2014,11 @@ class tadnews{
       }
       $new_name="news_pic_{$nsn}_1.{$ext}";
       $this->TadUpFiles->rename_file($files_sn,$new_name);
-
     }
 
     $xoopsUser->incrementPost();
 
-    $cate=tadnews::get_tad_news_cate($_POST['ncsn']);
+    $cate=$this->get_tad_news_cate($_POST['ncsn']);
     $page=($cate['not_news']=='1')?"page":"index";
     header("location: ".XOOPS_URL."/modules/tadnews/{$page}.php?nsn={$nsn}");
     exit;
@@ -2136,9 +2136,12 @@ class tadnews{
       $pic_css=$xoopsModuleConfig['cover_pic_css'];
     }
 
-    $this->TadUpFiles->set_col('news_pic',$nsn);
-    //die($pic_css);
-    $this->TadUpFiles->upload_file('upfile2',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,$pic_css,true);
+    if($_FILES['upfile2']['name']){
+      $this->TadUpFiles->set_col('news_pic' , $nsn , 1);
+
+      $files_sn=$this->TadUpFiles->upload_one_file($_FILES['upfile2']['name'],$_FILES['upfile2']['tmp_name'],$_FILES['upfile2']['type'],$_FILES['upfile2']['size'],$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL ,$pic_css ,true);
+    }
+
 
     $cate=$this->get_tad_news_cate($_POST['ncsn']);
     $page=($cate['not_news']=='1')?"page":"index";
