@@ -22,6 +22,8 @@ function tadnews_cate_news($options){
 	$tadnews->set_cover($options[2]);
 	$tadnews->set_view_ncsn($ncsn_arr);
 	$block=$tadnews->get_cate_news('return');
+  if(empty($block['all_news']))return;
+
   $block['bootstrap']=get_bootstrap();
   $block['show_line']=($options[3]=='1')?"table":"";
 

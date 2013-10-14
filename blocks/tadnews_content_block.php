@@ -28,6 +28,7 @@ function tadnews_content_block_show($options){
   $tadnews->set_skip_news($options[6]);
   //$tadnews->set_use_star_rating(true);
   $block=$tadnews->get_news('return');
+  if(empty($block['all_news']))return;
 
   $block['bootstrap']=get_bootstrap();
   $block['width']=empty($options[8])?"span12":$options[8];
@@ -86,7 +87,7 @@ function tadnews_content_block_edit($options){
   "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM5."
   </th><td>
   <textarea name='options[5]' style='width:400px;height:40px;font-family:Arial;font-size:13px;'>{$options[5]}</textarea>
-  <div>ex: <span style='color:#0066CC;font-size:11px;'>width:60px;height:30px;float:left;border:1px solid #9999CC;margin:0px 4px 4px 0px;</span></div>
+  <div>ex: <span style='color:#0066CC;font-size:11px;'>width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;</span></div>
   </td></tr>
   <tr><th>
   "._MB_TADNEWS_START_FROM."

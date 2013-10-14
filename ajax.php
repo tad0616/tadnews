@@ -33,6 +33,8 @@ $tadnews->set_cover(false);
 $tadnews->set_skip_news($start);
 $all_news=$tadnews->get_news('return');
 
+if(empty($all_news['all_news']))die(_TADNEWS_EMPTY);
+
 $show_col='';
 
 

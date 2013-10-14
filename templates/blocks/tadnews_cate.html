@@ -1,4 +1,6 @@
-<style>
-#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
-</style>
-<{$block}>
+<{if $block}>
+  <style>
+  #centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
+  </style>
+  <{$block}>
+<{/if}>
