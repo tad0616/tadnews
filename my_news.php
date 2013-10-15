@@ -21,9 +21,6 @@ function list_tad_my_news(){
 
   if(!empty($the_ncsn)){
     $tadnews->set_view_ncsn($the_ncsn);
-    if($kind=="page"){
-      $tadnews->set_sort_tool(1);
-    }
   }
   $tadnews->get_news();
 
@@ -50,11 +47,12 @@ switch($op){
   $TadUpFiles->add_file_counter($files_sn,$hash=false);
   exit;
   break;
-  
-  
+
+
   //刪除資料
-  case "delete_tad_news":
-  tadnews::delete_tad_news($nsn);
+  case "delete_tad_news":  
+  $tadnews=new tadnews();
+	$tadnews->delete_tad_news($nsn);
   header("location: ".$_SERVER['PHP_SELF']);
   break;
 

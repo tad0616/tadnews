@@ -97,64 +97,54 @@
               <input type="text" name="passwd" id="passwd"  class="span12" value="<{$passwd}>">
             </div>
           </div>
-
         </div>
-
       </div>
 
 
-
-
       <div id="fragment-3">
+        <script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/jquery.upload-1.0.2.min.js"></script>
+        <{if $pic}>
+          <script type="text/javascript">
+            $(function() {
+              $('#show_pic_css_setup').show();
+            });
+          </script>
+
+        <{else}>
+
+          <{assign var=pic value="<div id='demo_cover_pic' style='width:200px; height:150px; border:1px solid #909090; background-position:left top; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;'></div>"}>
+
+          <script type="text/javascript">
+            $(function() {
+              $('#show_pic_css_setup').hide();
+              $('#upfile2').change(function() {
+                $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn}>'}, function(res) {
+                  $('#show_pic_css_setup').show();
+                  $('#files_sn').val(res);
+
+                  $.post("demo_upload.php", { op: "get_pic", files_sn: res }, function(data) {
+                    $('#demo_cover_pic').css('background-image','url('+data+')');
+                  });
+                }, 'html');
+              });
+            });
+          </script>
+
+        <{/if}>
+
+        <{if $nsn==""}>
+          <input type="hidden" name="files_sn" id="files_sn">
+        <{/if}>
 
         <div class="row-fluid">
           <div class="span6">
             <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
-            <input id="upfile2" type="file" name="upfile2[]" multiple>
-            <!--script src='<{$xoops_url}>/modules/tadtools/jquery.form/jquery.form.js'></script>
-
-
-            <div class="progress">
-              <div class="bar"></div >
-              <div class="percent">0%</div >
-            </div>
-
-            <div id="status"></div>
-
-            <script>
-            (function() {
-
-            var bar = $('.bar');
-            var percent = $('.percent');
-            var status = $('#status');
-
-            $('form').ajaxForm({
-                beforeSend: function() {
-                    status.empty();
-                    var percentVal = '0%';
-                    bar.width(percentVal)
-                    percent.html(percentVal);
-                },
-                uploadProgress: function(event, position, total, percentComplete) {
-                    var percentVal = percentComplete + '%';
-                    bar.width(percentVal)
-                    percent.html(percentVal);
-                },
-                success: function() {
-                    var percentVal = '100%';
-                    bar.width(percentVal)
-                    percent.html(percentVal);
-                },
-              complete: function(xhr) {
-                status.html(xhr.responseText);
-              }
-            });
-
-            })();
-            </script-->
+            <input id="upfile2" type="file" name="upfile2" multiple>
           </div>
+        </div>
 
-          <{if $pic}>
+        <div id="show_pic_css_setup" class="row-fluid">
+          <div class="row-fluid">
             <div class="span6">
               <label><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC}></label>
               <select class="span12" name="pic_css[use_pic_css]" id="pic_css">
@@ -162,111 +152,109 @@
                 <option value="true" <{$use_pic_css_true}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
               </select>
             </div>
-          <{/if}>
-        </div>
+          </div>
 
-        <div class="row-fluid">
-          <{if $pic}>
-            <div id="pic_css_set" class="well">
-              <div class="row-fluid">
+          <div id="pic_css_set" class="well">
+            <div class="row-fluid">
 
-                <div class="span3">
-                  <label>
-                  <{$smarty.const._MD_TADNEWS_NEWSPIC_WIDTH}>
-                  </label>
-                  <input type="text" name="pic_css[width]" value="<{$pic_css_width}>" class="span3" onChange="$('#demo_cover_pic').css('width',this.value+'px');"> x
-                  <input type="text" name="pic_css[height]" value="<{$pic_css_height}>" class="span3" onChange="$('#demo_cover_pic').css('height',this.value+'px');"> px
-                </div>
-
-                <div class="span2">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_STYTLE}></label>
-                  <select class="span12" name="pic_css[border_style]" onChange="$('#demo_cover_pic').css('border-style',this.value);">
-
-                    <option value="solid" <{$pic_css_border_style_solid}>><{$smarty.const._MD_TADNEWS_NEWSPIC_SOLID}> </option>
-                    <option value="dashed" <{$pic_css_border_style_dashed}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DASHED}></option>
-                    <option value="double" <{$pic_css_border_style_double}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOUBLE}></option>
-                    <option value="dotted" <{$pic_css_border_style_dotted}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOTTED}></option>
-                    <option value="groove" <{$pic_css_border_style_groove}>><{$smarty.const._MD_TADNEWS_NEWSPIC_GROOVE}></option>
-                    <option value="ridge" <{$pic_css_border_style_ridge}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIDGE}></option>
-                    <option value="inset" <{$pic_css_border_style_inset}>><{$smarty.const._MD_TADNEWS_NEWSPIC_INSET}></option>
-                    <option value="outset" <{$pic_css_border_style_outset}>><{$smarty.const._MD_TADNEWS_NEWSPIC_OUTSET}></option>
-                    <option value="none" <{$pic_css_border_style_none}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NONE}></option>
-                  </select>
-                </div>
-
-                <div class="span3">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER}><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_WIDTH}></label>
-                  <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width}>" class="span4" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');"> px
-                </div>
-
-                <div class="span3">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}></label>
-                  <select class="span12" name="pic_css[float]" onChange="$('#demo_cover_pic').css('float',this.value);">
-                    <option value="left" <{$pic_css_float_left}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_LEFT}></option>
-                    <option value="right" <{$pic_css_float_right}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_RIGHT}></option>
-                    <option value="none" <{$pic_css_float_none}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_NONE}></option>
-                  </select>
-                </div>
-
-                <div class="span1">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}></label>
-                  <input type="color" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height:20px;width:20px;" onChange="$('#demo_cover_pic').css('border-color',this.value);" />
-                </div>
+              <div class="span3">
+                <label>
+                <{$smarty.const._MD_TADNEWS_NEWSPIC_WIDTH}>
+                </label>
+                <input type="text" name="pic_css[width]" value="<{$pic_css_width}>" class="span3" onChange="$('#demo_cover_pic').css('width',this.value+'px');"> x
+                <input type="text" name="pic_css[height]" value="<{$pic_css_height}>" class="span3" onChange="$('#demo_cover_pic').css('height',this.value+'px');"> px
               </div>
 
-              <div class="row-fluid">
-                <div class="span3">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC}></label>
-                  <select class="span12" name="pic_css[background_repeat]" onChange="$('#demo_cover_pic').css('background-repeat',this.value);">
-                    <option value="no-repeat" <{$pic_css_background_repeat_no_repeat}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_REPEAT}></option>
-                    <option value="repeat" <{$pic_css_background_repeat_repeat}>><{$smarty.const._MD_TADNEWS_NEWSPIC_REPEAT}></option>
-                    <option value="repeat-x" <{$pic_css_background_repeat_x}>><{$smarty.const._MD_TADNEWS_NEWSPIC_X_REPEAT}></option>
-                    <option value="repeat-y" <{$pic_css_background_repeat_y}>><{$smarty.const._MD_TADNEWS_NEWSPIC_Y_REPEAT}></option>
-                  </select>
-                </div>
+              <div class="span2">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_STYTLE}></label>
+                <select class="span12" name="pic_css[border_style]" onChange="$('#demo_cover_pic').css('border-style',this.value);">
 
-                <div class="span2">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_SHOW}></label>
-                  <select class="span12" name="pic_css[background_position]" onChange="$('#demo_cover_pic').css('background-position',this.value);">
-                    <option value="left top" <{$pic_css_background_position_left_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_TOP}></option>
-                    <option value="left center" <{$pic_css_background_position_left_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_CENTER}></option>
-                    <option value="left bottom" <{$pic_css_background_position_left_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_BOTTOM}></option>
-                    <option value="right top" <{$pic_css_background_position_right_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_TOP}></option>
-                    <option value="right center" <{$pic_css_background_position_right_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_CENTER}></option>
-                    <option value="right bottom" <{$pic_css_background_position_right_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_BOTTOM}></option>
-                    <option value="center top" <{$pic_css_background_position_center_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_TOP}></option>
-                    <option value="center center" <{$pic_css_background_position_center_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_CENTER}></option>
-                    <option value="center bottom" <{$pic_css_background_position_center_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_BOTTOM}></option>
-                  </select>
-                </div>
-
-                <div class="span5">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_AND}></label>
-                  <select class="span12" name="pic_css[background_size]" onChange="$('#demo_cover_pic').css('background-size',this.value);">
-                    <option value="" <{$pic_css_background_size}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_RESIZE}></option>
-                    <option value="contain" <{$pic_css_background_size_contain}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CONTAIN}></option>
-                    <option value="cover" <{$pic_css_background_size_cover}>><{$smarty.const._MD_TADNEWS_NEWSPIC_COVER}></option>
-                  </select>
-                </div>
-
-
-                <div class="span2">
-                  <label><{$smarty.const._MD_TADNEWS_NEWSPIC_MARGIN}></label>
-                  <input type="text" name="pic_css[margin]" value="<{$pic_css_margin}>" class="span6" onChange="$('#demo_cover_pic').css('margin',this.value + 'px');"> px
-                </div>
-
-
+                  <option value="solid" <{$pic_css_border_style_solid}>><{$smarty.const._MD_TADNEWS_NEWSPIC_SOLID}> </option>
+                  <option value="dashed" <{$pic_css_border_style_dashed}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DASHED}></option>
+                  <option value="double" <{$pic_css_border_style_double}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOUBLE}></option>
+                  <option value="dotted" <{$pic_css_border_style_dotted}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOTTED}></option>
+                  <option value="groove" <{$pic_css_border_style_groove}>><{$smarty.const._MD_TADNEWS_NEWSPIC_GROOVE}></option>
+                  <option value="ridge" <{$pic_css_border_style_ridge}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIDGE}></option>
+                  <option value="inset" <{$pic_css_border_style_inset}>><{$smarty.const._MD_TADNEWS_NEWSPIC_INSET}></option>
+                  <option value="outset" <{$pic_css_border_style_outset}>><{$smarty.const._MD_TADNEWS_NEWSPIC_OUTSET}></option>
+                  <option value="none" <{$pic_css_border_style_none}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NONE}></option>
+                </select>
               </div>
 
-              <div class="row-fluid">
-                <div class="span12 well">
-                 <{$pic}>
-                 <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
-                </div>
+              <div class="span3">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER}><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_WIDTH}></label>
+                <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width}>" class="span4" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');"> px
+              </div>
+
+              <div class="span3">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}></label>
+                <select class="span12" name="pic_css[float]" onChange="$('#demo_cover_pic').css('float',this.value);">
+                  <option value="left" <{$pic_css_float_left}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_LEFT}></option>
+                  <option value="right" <{$pic_css_float_right}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_RIGHT}></option>
+                  <option value="none" <{$pic_css_float_none}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_NONE}></option>
+                </select>
+              </div>
+
+              <div class="span1">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}></label>
+                <input type="color" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height:20px;width:20px;" onChange="$('#demo_cover_pic').css('border-color',this.value);" />
               </div>
             </div>
-          <{/if}>
+
+            <div class="row-fluid">
+              <div class="span3">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC}></label>
+                <select class="span12" name="pic_css[background_repeat]" onChange="$('#demo_cover_pic').css('background-repeat',this.value);">
+                  <option value="no-repeat" <{$pic_css_background_repeat_no_repeat}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_REPEAT}></option>
+                  <option value="repeat" <{$pic_css_background_repeat_repeat}>><{$smarty.const._MD_TADNEWS_NEWSPIC_REPEAT}></option>
+                  <option value="repeat-x" <{$pic_css_background_repeat_x}>><{$smarty.const._MD_TADNEWS_NEWSPIC_X_REPEAT}></option>
+                  <option value="repeat-y" <{$pic_css_background_repeat_y}>><{$smarty.const._MD_TADNEWS_NEWSPIC_Y_REPEAT}></option>
+                </select>
+              </div>
+
+              <div class="span2">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_SHOW}></label>
+                <select class="span12" name="pic_css[background_position]" onChange="$('#demo_cover_pic').css('background-position',this.value);">
+                  <option value="left top" <{$pic_css_background_position_left_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_TOP}></option>
+                  <option value="left center" <{$pic_css_background_position_left_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_CENTER}></option>
+                  <option value="left bottom" <{$pic_css_background_position_left_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_BOTTOM}></option>
+                  <option value="right top" <{$pic_css_background_position_right_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_TOP}></option>
+                  <option value="right center" <{$pic_css_background_position_right_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_CENTER}></option>
+                  <option value="right bottom" <{$pic_css_background_position_right_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_BOTTOM}></option>
+                  <option value="center top" <{$pic_css_background_position_center_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_TOP}></option>
+                  <option value="center center" <{$pic_css_background_position_center_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_CENTER}></option>
+                  <option value="center bottom" <{$pic_css_background_position_center_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_BOTTOM}></option>
+                </select>
+              </div>
+
+              <div class="span5">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_AND}></label>
+                <select class="span12" name="pic_css[background_size]" onChange="$('#demo_cover_pic').css('background-size',this.value);">
+                  <option value="" <{$pic_css_background_size}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_RESIZE}></option>
+                  <option value="contain" <{$pic_css_background_size_contain}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CONTAIN}></option>
+                  <option value="cover" <{$pic_css_background_size_cover}>><{$smarty.const._MD_TADNEWS_NEWSPIC_COVER}></option>
+                </select>
+              </div>
+
+
+              <div class="span2">
+                <label><{$smarty.const._MD_TADNEWS_NEWSPIC_MARGIN}></label>
+                <input type="text" name="pic_css[margin]" value="<{$pic_css_margin}>" class="span6" onChange="$('#demo_cover_pic').css('margin',this.value + 'px');"> px
+              </div>
+
+
+            </div>
+
+            <div class="row-fluid">
+              <div class="span12 well">
+               <{$pic}>
+               <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
+              </div>
+            </div>
+          </div>
         </div>
+
+
       </div>
 
       <div id="fragment-4">

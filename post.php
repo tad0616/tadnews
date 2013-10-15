@@ -17,6 +17,7 @@ switch($op){
 
   //新增資料
   case "insert_tad_news":
+  //die(var_export($_REQUEST));
   $nsn=$tadnews->insert_tad_news();
   break;
 
@@ -31,6 +32,7 @@ switch($op){
   case "update_tad_news";
   $tadnews->update_tad_news($nsn);
   break;
+
 
   default:
   $tadnews->set_news_editor($xoopsModuleConfig['editor']);
