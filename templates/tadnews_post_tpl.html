@@ -105,8 +105,17 @@
         <script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/jquery.upload-1.0.2.min.js"></script>
         <{if $pic}>
           <script type="text/javascript">
+            d = new Date();
             $(function() {
               $('#show_pic_css_setup').show();
+              $('#upfile2').change(function() {
+                $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn}>'}, function(res) {
+                  $('#files_sn').val(res);
+                  $.post("demo_upload.php", { op: "get_pic", files_sn: res }, function(data) {
+                    $('#demo_cover_pic').css('background-image','url('+data+'?'+d.getTime()+')');
+                  });
+                }, 'html');
+              });
             });
           </script>
 
@@ -115,6 +124,7 @@
           <{assign var=pic value="<div id='demo_cover_pic' style='width:200px; height:150px; border:1px solid #909090; background-position:left top; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;'></div>"}>
 
           <script type="text/javascript">
+            d = new Date();
             $(function() {
               $('#show_pic_css_setup').hide();
               $('#upfile2').change(function() {
@@ -123,7 +133,7 @@
                   $('#files_sn').val(res);
 
                   $.post("demo_upload.php", { op: "get_pic", files_sn: res }, function(data) {
-                    $('#demo_cover_pic').css('background-image','url('+data+')');
+                    $('#demo_cover_pic').css('background-image','url('+data+'?'+d.getTime()+')');
                   });
                 }, 'html');
               });
@@ -132,10 +142,7 @@
 
         <{/if}>
 
-        <{if $nsn==""}>
-          <input type="hidden" name="files_sn" id="files_sn">
-        <{/if}>
-
+        <input type="hidden" name="files_sn" id="files_sn" value="<{$files_sn}>">
         <div class="row-fluid">
           <div class="span6">
             <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>

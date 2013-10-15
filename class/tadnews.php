@@ -1626,9 +1626,9 @@ class tadnews{
       $pic=$this->get_news_doc_pic("news_pic",$nsn,"big",'db',null,'demo_cover_pic');
       //die($pic);
       if(!empty($pic)){
-        $sql = "select description from ".$xoopsDB->prefix("tadnews_files_center")." where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
+        $sql = "select files_sn,description from ".$xoopsDB->prefix("tadnews_files_center")." where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
         $result=$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
-        list($pic_css)=$xoopsDB->fetchRow($result);
+        list($files_sn,$pic_css)=$xoopsDB->fetchRow($result);
       }
     }
     $use_pic_css=empty($pic_css)?"":"true";
@@ -1753,6 +1753,8 @@ class tadnews{
       $form['pic_css_background_size_contain']=chk($css["background_size"],"contain",0,"selected");
       $form['pic_css_background_size_cover']=chk($css["background_size"],"cover",0,"selected");
       $form['pic']=$pic;
+      $form['files_sn']=$files_sn;
+
 
       $this->TadUpFiles->set_col("nsn",$nsn);
       $upform=$this->TadUpFiles->upform(true,'upfile',NULL,true);
@@ -1827,17 +1829,12 @@ class tadnews{
       $xoopsTpl->assign("pic_css_background_size_contain" , chk($css["background_size"],"contain",0,"selected"));
       $xoopsTpl->assign("pic_css_background_size_cover" , chk($css["background_size"],"cover",0,"selected"));
       $xoopsTpl->assign("pic" , $pic);
+      $xoopsTpl->assign("files_sn" , $files_sn);
 
       $this->TadUpFiles->set_col("nsn",$nsn);
       $upform=$this->TadUpFiles->upform(true,'upfile',NULL,true);
       $xoopsTpl->assign( "upform" , $upform) ;
 
-
-      //$this->TadUpFiles->set_col("news_pic",$nsn);
-      //$upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
-
-      //$upform2=$this->TadUpFiles->js_upform('upfile2');
-      //$xoopsTpl->assign( "upform2" , $upform2) ;
 
       $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
       $xoopsTpl->assign( "formValidator_code" , $formValidator_code) ;
@@ -2131,17 +2128,15 @@ class tadnews{
     $this->TadUpFiles->set_col('nsn',$nsn);
     $this->TadUpFiles->upload_file('upfile',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,NULL,true);
 
-    $pic_css=$this->mk_pic_css($_POST['pic_css']);
-    if(!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']){
-      $pic_css=$xoopsModuleConfig['cover_pic_css'];
+    //修改暫存封面圖
+    if($_POST['files_sn']){
+      $pic_css=$this->mk_pic_css($_POST['pic_css']);
+
+      $files_sn=intval($_POST['files_sn']);
+      $sql="update ".$xoopsDB->prefix("tadnews_files_center")." set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
+      $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
+
     }
-
-    if($_FILES['upfile2']['name']){
-      $this->TadUpFiles->set_col('news_pic' , $nsn , 1);
-
-      $files_sn=$this->TadUpFiles->upload_one_file($_FILES['upfile2']['name'],$_FILES['upfile2']['tmp_name'],$_FILES['upfile2']['type'],$_FILES['upfile2']['size'],$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL ,$pic_css ,true);
-    }
-
 
     $cate=$this->get_tad_news_cate($_POST['ncsn']);
     $page=($cate['not_news']=='1')?"page":"index";
