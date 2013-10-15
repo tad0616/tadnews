@@ -16,9 +16,9 @@ $(document).ready(function() {
 
 
 function delete_tad_news_cate_func(ncsn){
-	var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-	if (!sure)	return;
-	location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
+  var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
+  if (!sure)  return;
+  location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
 }
 
 function move_cate(ncsn){
@@ -30,7 +30,7 @@ function move_cate(ncsn){
 
 <{if $ncsn==""}>
   <div class="row-fluid">
-  <div class="well span10" style="background-color:#EEFFCC;">
+  <div class="well span12" style="background-color:#EEFFCC;">
     <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
       <div class="span3">
         <label><{$smarty.const._MA_TADNEWS_CATE_PIC}></label>
@@ -58,7 +58,7 @@ function move_cate(ncsn){
         <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
         <{$enable_post_group}>
         <input type="hidden" name="not_news" value="<{$not_news}>">
-      	<input type="hidden" name="ncsn" value="<{$ncsn}>">
+        <input type="hidden" name="ncsn" value="<{$ncsn}>">
         <input type="hidden" name="op" value="<{$op}>">
         <button type="submit" class="btn btn-mini btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
       </div>
@@ -108,7 +108,7 @@ function move_cate(ncsn){
               <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
               <{$enable_post_group}>
               <input type="hidden" name="not_news" value="0">
-            	<input type="hidden" name="ncsn" value="<{$ncsn}>">
+              <input type="hidden" name="ncsn" value="<{$ncsn}>">
               <input type="hidden" name="op" value="<{$op}>">
               <button type="submit" class="btn btn-mini btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
             </div>
@@ -131,31 +131,31 @@ function move_cate(ncsn){
               <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$cate.ncsn}>" style="font-size:11pt;"><{$cate.nc_title}></a>
             </div>
 
-        		<div style="margin:6px 0px;">
+            <div style="margin:6px 0px;">
 
               <a href="<{$php_self}>?ncsn=<{$cate.ncsn}>" class="btn btn-mini btn-info"><{$smarty.const._TADNEWS_EDIT}></a>
               <{if $cate.counter==0}>
-          		<a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
-          		<{/if}>
-          		<a href="<{$php_self}>?not_news=<{$cate.new_kind}>&op=change_kind&ncsn=<{$cate.ncsn}>" class="btn btn-mini btn-success"><{$cate.change_text}></a>
+              <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
+              <{/if}>
+              <a href="<{$php_self}>?not_news=<{$cate.new_kind}>&op=change_kind&ncsn=<{$cate.ncsn}>" class="btn btn-mini btn-success"><{$cate.change_text}></a>
             </div>
-        		<div style="margin:6px 0px;"><b><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP_S}></b>: <{$cate.g_txt}></div>
+            <div style="margin:6px 0px;"><b><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP_S}></b>: <{$cate.g_txt}></div>
             <div><b><{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_S}></b>: <{$cate.gp_txt}></div>
-        		<{if $cate.counter}>
-          		<div style="margin:6px 0px;">
+            <{if $cate.counter}>
+              <div style="margin:6px 0px;">
                 <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
-            		  <a class="btn btn-mini btn-warning" id="move_button<{$cate.ncsn}>" onClick="move_cate(<{$cate.ncsn}>)"><{$smarty.const._MA_TADNEWS_MOVE}></a>
-            		  <span id="move_form<{$cate.ncsn}>" style="display:none;">
-                		<select name="to_ncsn" size=1>
+                  <a class="btn btn-mini btn-warning" id="move_button<{$cate.ncsn}>" onClick="move_cate(<{$cate.ncsn}>)"><{$smarty.const._MA_TADNEWS_MOVE}></a>
+                  <span id="move_form<{$cate.ncsn}>" style="display:none;">
+                    <select name="to_ncsn" size=1>
                     <{$cate_select}>
                     </select>
-                  	<input type="hidden" name="ncsn" value="<{$cate.ncsn}>">
+                    <input type="hidden" name="ncsn" value="<{$cate.ncsn}>">
                     <input type="hidden" name="op" value="move_to">
                     <button type="submit" class="btn btn-mini btn-info"><{$smarty.const._TADNEWS_MOVE_TO}></button>
                   </span>
                 </form>
-          		</div>
-        		<{/if}>
+              </div>
+            <{/if}>
           </div>
 
         </div>

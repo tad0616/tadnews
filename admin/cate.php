@@ -23,7 +23,7 @@ function tad_news_cate_form($ncsn=""){
 	}
 
 	//預設值設定
-	
+
 	$ncsn=(!isset($DBV['ncsn']))?"":$DBV['ncsn'];
 	$of_ncsn=(!isset($DBV['of_ncsn']))?"":$DBV['of_ncsn'];
 	$nc_title=(!isset($DBV['nc_title']))?"":$DBV['nc_title'];
@@ -33,24 +33,25 @@ function tad_news_cate_form($ncsn=""){
 	$not_news=(!isset($DBV['not_news']))?"":$DBV['not_news'];
 	$cate_pic=(!isset($DBV['cate_pic']))?"":$DBV['cate_pic'];
 	$pic=(empty($cate_pic))?"../images/no_cover.png":_TADNEWS_CATE_URL."/{$cate_pic}";
-	
+
 	$op=(empty($ncsn))?"insert_tad_news_cate":"update_tad_news_cate";
 	//$op="replace_tad_news_cate";
-	
+
 	$cate_select=tadnews::get_tad_news_cate_option(0,0,$of_ncsn,$ncsn,"1","0");
-	
+
 	$SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false,$enable_group, 3, true);
 	$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-	
+	$SelectGroup_name->setExtra("class='span12'");
 	$enable_group = $SelectGroup_name->render();
-	
+
 	$SelectGroup_name = new XoopsFormSelectGroup("", "enable_post_group", false,$enable_post_group, 3, true);
 	//$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
+	$SelectGroup_name->setExtra("class='span12'");
 	$enable_post_group = $SelectGroup_name->render();
-	
-	
+
+
   $thumb_pic=(empty($nc_title))?"":"<img src='{$pic}' width=50 align=absmiddle hspace=4 alt='{$nc_title}' title='{$nc_title}'>";
-  
+
   $catearr=list_tad_news_cate(0);
 
   $cate_pic_width=$xoopsModuleConfig['cate_pic_width']+10;
@@ -83,19 +84,19 @@ switch($op){
 	$ncsn=insert_tad_news_cate();
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 	//更新資料
 	case "update_tad_news_cate";
 	update_tad_news_cate($ncsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 	//刪除資料
 	case "delete_tad_news_cate";
 	delete_tad_news_cate($ncsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 
 
 	//搬移資料
@@ -103,13 +104,13 @@ switch($op){
 	move_to_cate($ncsn,$to_ncsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 	//分類類型互轉
 	case "change_kind":
 	change_kind($ncsn,$not_news);
 	break;
-	
-	
+
+
 	default:
 	tad_news_cate_form($ncsn);
 	break;

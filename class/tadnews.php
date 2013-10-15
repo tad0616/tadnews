@@ -763,7 +763,7 @@ class tadnews{
 
       $facebook_comments=facebook_comments($xoopsModuleConfig['facebook_comments_width'],'tadnews','index.php','nsn',$nsn);
       $push=push_url($xoopsModuleConfig['use_social_tools']);
-
+      $pluralink=$this->get_pluralink_path($ncsn);
 
       $all_news[$i]['nsn']=$nsn;
       $all_news[$i]['facebook_comments']=$facebook_comments;
@@ -771,6 +771,7 @@ class tadnews{
       $all_news[$i]['pic']=$pic;
       $all_news[$i]['chkbox']=$chkbox;
       $all_news[$i]['ncsn']=$ncsn;
+      $all_news[$i]['pluralink']=$pluralink;
       $all_news[$i]['cate_name']=$cate_name;
       $all_news[$i]['post_date']=$post_date;
       $all_news[$i]['prefix_tag']=$prefix_tag;
@@ -873,6 +874,46 @@ class tadnews{
 
 
     }
+  }
+
+
+  //取得分類路徑
+  function get_cate_path($ncsn="",$sub=false){
+    global $xoopsDB;
+
+    if(!$sub){
+      $home[_TAD_TO_MOD]=XOOPS_URL."/modules/tadnews/index.php";
+    }else{
+      $home=array();
+    }
+
+    $sql = "select nc_title,of_ncsn from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$ncsn}'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    list($nc_title,$of_ncsn)=$xoopsDB->fetchRow($result);
+
+    $opt_sub=(!empty($of_ncsn))?$this->get_cate_path($of_ncsn,true):"";
+
+    $opt=$path="";
+
+    if(!empty($nc_title)){
+      $opt[$nc_title]=XOOPS_URL."/modules/tadnews/index.php?ncsn=$ncsn";
+    }
+    if(is_array($opt_sub)){
+      $path=array_merge($home,$opt_sub,$opt);
+    }elseif(is_array($opt)){
+      $path=array_merge($home,$opt);
+    }else{
+      $path=$home;
+    }
+    return $path;
+  }
+
+  //將路徑轉換為多網址路徑
+  function get_pluralink_path($ncsn=""){
+    $path=$this->get_cate_path($ncsn);
+    $pluralink['title']=implode("||",array_keys($path));
+    $pluralink['url']=implode("||",$path);
+    return $pluralink;
   }
 
   //取得分類新聞
@@ -1584,11 +1625,13 @@ class tadnews{
 
     $SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false, $enable_group, 4, true);
     $SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
+    $SelectGroup_name->setExtra("class='span12'");
     $enable_group = $SelectGroup_name->render();
 
 
     $SelectGroup_name2 = new XoopsFormSelectGroup("", "have_read_group", false, $have_read_group, 4, true);
     $SelectGroup_name2->addOption("", _TADNEWS_ALL_NO, false);
+    $SelectGroup_name2->setExtra("class='span12'");
     $have_read_group = $SelectGroup_name2->render();
 
     //標籤選單

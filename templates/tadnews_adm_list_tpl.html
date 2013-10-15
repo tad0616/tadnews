@@ -30,6 +30,16 @@
     
     
 <{if $page}>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
+<![endif]-->
+
+<script type="text/javascript">
+  pluralink.pluralinkOptions.blank = true;
+</script>
+
 <div class="row-fluid">
 <div id="tadnews_save_msg"></div>
 <form action="<{$action}>" method="post">
@@ -49,7 +59,7 @@
     <{foreach item=page from=$page}>
       <tr id="tr_<{$page.nsn}>">
         <td>
-          <{$page.chkbox}><a href="main.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>
+          <{$page.chkbox}><a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a>
           <div><{$page.post_date}></div>
         </td>
         <td>

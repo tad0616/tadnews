@@ -3,6 +3,18 @@
 <style>
 #centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
 </style>
+
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
+<![endif]-->
+
+<script type="text/javascript">
+  pluralink.pluralinkOptions.blank = true;
+</script>
+
+
 <table class="table table-striped">
 <tr>
 	<th><{$smarty.const._MB_TADNEWS_NEWS_CATE}></th>
@@ -11,7 +23,7 @@
 </tr>
 <{foreach item=page from=$block.page}>
 	<tr>
-		<td><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a></td>
+		<td><a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a></td>
 		<td>
       <{$page.prefix_tag}>
       <{if $page.need_sign}>

@@ -27,6 +27,16 @@
 
 
 <{if $page}>
+
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
+<![endif]-->
+
+<script type="text/javascript">
+  pluralink.pluralinkOptions.blank = true;
+</script>
 <div class="row-fluid">
 <div id="tadnews_save_msg"></div>
 <{$cate_select}>
@@ -47,7 +57,7 @@
           <{/if}>
           <{$page.enable_txt}><{$page.today_pic}>
           <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-          <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
+          <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a>)</span> <{$page.content}>
         </td>
       </tr>
     <{/foreach}>

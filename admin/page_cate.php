@@ -43,11 +43,13 @@ function tad_news_cate_form($ncsn=""){
 
 	$SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false,$enable_group, 3, true);
 	$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
+  $SelectGroup_name->setExtra("class='span12'");
 
 	$enable_group = $SelectGroup_name->render();
 	
 	$SelectGroup_name = new XoopsFormSelectGroup("", "enable_post_group", false,$enable_post_group, 3, true);
 	//$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
+  $SelectGroup_name->setExtra("class='span12'");
 	$enable_post_group = $SelectGroup_name->render();
 
 

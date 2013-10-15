@@ -49,7 +49,7 @@
     <{foreach item=page from=$page}>
       <tr id="tr_<{$page.nsn}>">
         <td>
-          <{$page.chkbox}><a href="page.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>
+          <{$page.chkbox}><a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a>
           <div><{$page.post_date}></div>
         </td>
         <td>
