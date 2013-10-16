@@ -16,7 +16,7 @@ function tadnews_page($options){
 
   $home['sn']=$ncsn;
   $home['title']=$nc_title;
-  $home['url']=XOOPS_URL."/modules/tadnews/index.php?ncsn={$ncsn}";
+  $home['url']=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
 
   $page=block_get_page_cate($options[0]);
 
@@ -79,7 +79,7 @@ if(!function_exists("block_get_page_cate")){
       if($the_ncsn!=$ncsn){
         $page['title'][$ncsn]=$nc_title;
         $page['of_ncsn'][$ncsn]=$of_ncsn;
-        $page['url'][$ncsn]=XOOPS_URL."/modules/tadnews/index.php?ncsn={$ncsn}";
+        $page['url'][$ncsn]=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
       }
       $sql2="select nsn,ncsn,news_title from ".$xoopsDB->prefix("tad_news")." where ncsn='$ncsn' order by page_sort";
       $result2=$xoopsDB->query($sql2);

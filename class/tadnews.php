@@ -887,16 +887,17 @@ class tadnews{
       $home=array();
     }
 
-    $sql = "select nc_title,of_ncsn from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$ncsn}'";
+    $sql = "select nc_title,of_ncsn,not_news from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$ncsn}'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-    list($nc_title,$of_ncsn)=$xoopsDB->fetchRow($result);
+    list($nc_title,$of_ncsn,$not_news)=$xoopsDB->fetchRow($result);
 
     $opt_sub=(!empty($of_ncsn))?$this->get_cate_path($of_ncsn,true):"";
 
     $opt=$path="";
 
     if(!empty($nc_title)){
-      $opt[$nc_title]=XOOPS_URL."/modules/tadnews/index.php?ncsn=$ncsn";
+      $page=($not_news=='1')?"page.php":"index.php";
+      $opt[$nc_title]=XOOPS_URL."/modules/tadnews/{$page}?ncsn=$ncsn";
     }
     if(is_array($opt_sub)){
       $path=array_merge($home,$opt_sub,$opt);
@@ -1231,7 +1232,7 @@ class tadnews{
         $color=($not_news=='1')?"red":"black";
         $option.="<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
         $option.= tadnews::get_tad_news_cate_option($ncsn,$level,$v,true,$this_ncsn,$no_self,$not_news);
-        
+
 
       }
     }else{
