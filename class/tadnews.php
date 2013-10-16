@@ -78,7 +78,7 @@ tadnews::txt_to_group_name($enable_group="",$default_txt="",$syb="<br />");
 tadnews::get_all_groups();
 
 //取得分類下拉選單
-tadnews::get_tad_news_cate_option($of_ncsn=0,$level=0,$v="",$this_ncsn="",$no_self="0",$not_news="null");
+tadnews::get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL);
 
 //判斷目前登入者在哪些類別中有發表的權利 post,pass,read
 tadnews::chk_user_cate_power($kind="post");
@@ -1186,7 +1186,7 @@ class tadnews{
 
   //列出分類篩選工具
   private function news_cate_select($not_news=""){
-    $cate_select=$this->get_tad_news_cate_option(0,0,$this->view_ncsn,0,"1",$not_news);
+    $cate_select=$this->get_tad_news_cate_option(0,0,$this->view_ncsn,true,0,"1",$not_news);
     $form=_TADNEWS_SHOW_CATE_NEWS."
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?ncsn='+this.value\">
       $cate_select
@@ -1195,7 +1195,7 @@ class tadnews{
   }
 
   //取得分類下拉選單
-  public function get_tad_news_cate_option($of_ncsn=0,$level=0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news="null"){
+  public function get_tad_news_cate_option($of_ncsn=0,$level=0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL){
     global $xoopsDB,$xoopsUser,$xoopsModule;
     if(!$xoopsModule){
       $modhandler = &xoops_gethandler('module');
@@ -1215,7 +1215,7 @@ class tadnews{
       $left=$level*10;
       $level+=1;
 
-      $and_not_news=($not_news!="null")?"and not_news='{$not_news}'":"";
+      $and_not_news=($not_news!=NULL)?"and not_news='{$not_news}'":"";
 
 
       $option=($of_ncsn or !$isAdmin)?"":"<option value='0'></option>";
@@ -1230,7 +1230,9 @@ class tadnews{
         $selected=($v==$ncsn)?"selected":"";
         $color=($not_news=='1')?"red":"black";
         $option.="<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
-        $option.= tadnews::get_tad_news_cate_option($ncsn,$level,$v,$this_ncsn,$no_self,$not_news);
+        $option.= tadnews::get_tad_news_cate_option($ncsn,$level,$v,true,$this_ncsn,$no_self,$not_news);
+        
+
       }
     }else{
       $all_ncsn=implode(",",$ok_cat);
@@ -1298,8 +1300,7 @@ class tadnews{
     $move="<label class='radio'>
     <input type='radio' name='act' value='move_news'>"._TADNEWS_MOVE_TO."
     </label>
-    <select name='ncsn'>".$this->get_tad_news_cate_option(0,0,"","","1")."</select>";
-
+    <select name='ncsn'>".$this->get_tad_news_cate_option(0,0,"",true,"","1")."</select>";
     $del="<label class='radio'><input type='radio' name='act' value='del_news'>"._TADNEWS_DEL."</label>";
 
     $tool="

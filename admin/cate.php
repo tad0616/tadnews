@@ -37,7 +37,7 @@ function tad_news_cate_form($ncsn=""){
 	$op=(empty($ncsn))?"insert_tad_news_cate":"update_tad_news_cate";
 	//$op="replace_tad_news_cate";
 
-	$cate_select=tadnews::get_tad_news_cate_option(0,0,$of_ncsn,$ncsn,"1","0");
+	$cate_select=tadnews::get_tad_news_cate_option(0,0,$of_ncsn,true,$ncsn,"1","0");
 
 	$SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false,$enable_group, 3, true);
 	$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);

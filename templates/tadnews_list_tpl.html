@@ -9,26 +9,28 @@
 <p>
 <{$toolbar}>
 </p>
+
+
 <{$syntaxhighlighter_code}>
 
 <{if $show_sort_tool}>
 <{$jquery}>
 <script language="JavaScript">
   $().ready(function(){
-      $(function() {
-          $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
-              var order = $(this).sortable("serialize") + "&action=updateRecordsListings";
-              $.post("save_sort.php", order, function(theResponse){
-                  $("#tadnews_save_msg").html(theResponse);
-              });
-          }
-          });
-    });
+    $(function() {
+      $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
+        var order = $(this).sortable("serialize") + "&action=updateRecordsListings";
+        $.post("save_sort.php", order, function(theResponse){
+          $("#tadnews_save_msg").html(theResponse);
+        });
+      }
+      });
+  });
   });
 </script>
 <{/if}>
-    
-    
+
+
 <{if $page}>
 
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>

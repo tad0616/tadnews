@@ -16,10 +16,10 @@ $modversion['dirname'] = basename(dirname(__FILE__));
 
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/5/27';
+$modversion['release_date'] = '2013/10/16';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
-$modversion['module_status'] = 'RC5';
+$modversion['module_status'] = 'release';
 $modversion['author_website_url'] = 'http://tad0616.net/';
 $modversion['author_website_name'] = 'Tad';
 $modversion['min_php']='5.2';
@@ -31,7 +31,7 @@ $modversion ['paypal'] = array();
 $modversion ['paypal']['business'] = 'tad0616@gmail.com';
 $modversion ['paypal']['item_name'] = 'Donation : ' . _MI_TADNEWS_DESC;
 $modversion ['paypal']['amount'] = 0;
-$modversion ['paypal']['currency_code'] = 'TWD';
+$modversion ['paypal']['currency_code'] = 'USD';
 
 
 //---資料表架構---//
