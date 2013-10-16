@@ -487,6 +487,8 @@ class tadnews{
         $$k=$v;
       }
 
+      $not_news_arr[$ncsn]=$not_news;
+
       //只有可讀的分類才納入
       $cate_read_poewr=$this->chk_cate_power($ncsn,$User_Groups,$enable_group,"read");
       if($cate_read_poewr){
@@ -708,7 +710,7 @@ class tadnews{
 
       $show_admin_tool=($this->admin_tool)?1:0;
 
-      $link_page=($this->kind=='page')?"page.php":"index.php";
+      $link_page=($not_news_arr[$ncsn]=='1')?"page.php":"index.php";
 
       $chkbox=($this->news_check_mode)?"<input type='checkbox' name='nsn_arr[]' value='$nsn'> ":"";
 
@@ -797,6 +799,7 @@ class tadnews{
       $all_news[$i]['next_news_title']=$next_news_title;
       $all_news[$i]['image_big']=$image_big;
       $all_news[$i]['image_thumb']=$image_thumb;
+      $all_news[$i]['not_news']=$not_news_arr[$ncsn];
 
       if($this->kind==="page"){
       //die(var_dump($cate_setup[$ncsn]));
@@ -825,7 +828,8 @@ class tadnews{
       $i++;
     }
 
-    $jquery=get_jquery();
+    $ui=$this->sort_tool==1?true:false;
+    $jquery=get_jquery($ui);
 
     if($mode=='return'){
       $main['jquery']=$jquery;

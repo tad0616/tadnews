@@ -6,64 +6,49 @@
 <p>
 <{$toolbar}>
 </p>
-<{$syntaxhighlighter_code}>
-
-<{if $show_sort_tool}>
-<{$jquery}>
-<script language="JavaScript">
-  $().ready(function(){
-      $(function() {
-          $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
-              var order = $(this).sortable("serialize") + "&action=updateRecordsListings";
-              $.post("save_sort.php", order, function(theResponse){
-                  $("#tadnews_save_msg").html(theResponse);
-              });
-          }
-          });
-    });
-  });
-</script>
-<{/if}>
-
 
 <{if $page}>
 
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
-<![endif]-->
+  <script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
+  <link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
+  <!--[if lte IE 7]>
+  <link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
+  <![endif]-->
 
-<script type="text/javascript">
-  pluralink.pluralinkOptions.blank = true;
-</script>
-<div class="row-fluid">
-<div id="tadnews_save_msg"></div>
-<{$cate_select}>
-<{$author_select}>
-<table class="table table-striped">
-  <tr>
-    <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_TITLE}></th>
-  </tr>
-  <tbody id="sort">
-    <{foreach item=page from=$page}>
-      <tr id="tr_<{$page.nsn}>">
-        <td>
-          <{$page.post_date}>
+  <script type="text/javascript">
+    pluralink.pluralinkOptions.blank = true;
+  </script>
 
-          <{$page.prefix_tag}>
-          <{if $page.need_sign}>
-            <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
-          <{/if}>
-          <{$page.enable_txt}><{$page.today_pic}>
-          <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-          <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a>)</span> <{$page.content}>
-        </td>
-      </tr>
-    <{/foreach}>
-  </tbody>
-</table>
-</div>
-<{$bar}>
+  <div class="row-fluid">
+  <div id="tadnews_save_msg"></div>
+  <{$cate_select}>
+  <{$author_select}>
+  <table class="table table-striped">
+    <tr>
+      <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_TITLE}></th>
+    </tr>
+    <tbody id="sort">
+      <{foreach item=page from=$page}>
+        <tr id="tr_<{$page.nsn}>">
+          <td>
+            <{$page.post_date}>
+            <{if $page.not_news!='1'}>
+              <{$page.prefix_tag}>
+              <{if $page.need_sign}>
+                <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
+              <{/if}>
+            <{else}>
+              <i class="icon-book"></i>
+            <{/if}>
+            <{$page.enable_txt}><{$page.today_pic}>
+            <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
+            <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a>)</span> <{$page.content}>
+          </td>
+        </tr>
+      <{/foreach}>
+    </tbody>
+  </table>
+  </div>
+  <{$bar}>
 
 <{/if}>

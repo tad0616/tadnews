@@ -14,17 +14,15 @@
 
 <{$jquery}>
 <script language="JavaScript">
-
-    $(function() {
-        $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
-            var order = $(this).sortable("serialize") + "&action=updateRecordsListings";
-            $.post("save_sort.php", order, function(theResponse){
-                $("#tadnews_save_msg").html(theResponse);
-            });
-        }
-        });
+  $(function() {
+    $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
+      var order = $(this).sortable("serialize") + "&action=updateRecordsListings";
+      $.post("save_sort.php", order, function(theResponse){
+        $("#tadnews_save_msg").html(theResponse);
+      });
+    }
     });
-
+  });
 	</script>
 
 <{$jquery}>
@@ -49,7 +47,7 @@
     <{foreach item=page from=$page}>
       <tr id="tr_<{$page.nsn}>">
         <td>
-          <{$page.chkbox}><a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a>
+          <{$page.chkbox}><a href="page.php?ncsn=<{$page.ncsn}>" title="<{$page.cate_name}>"><{$page.cate_name}></a>
           <div><{$page.post_date}></div>
         </td>
         <td>

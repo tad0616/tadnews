@@ -16,8 +16,6 @@ function show_news($nsn=""){
   //  $tadnews->set_use_star_rating(true);
   //}
   $tadnews->get_news();
-  $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
-  $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 
 }
 
@@ -25,27 +23,13 @@ function show_news($nsn=""){
 //列出所有tad_news資料
 function list_tad_all_news($the_ncsn=""){
   global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+
   $tadnews=new tadnews();
   $tadnews->set_news_kind("page");
   $tadnews->set_show_num('none');
   $tadnews->set_view_ncsn($the_ncsn);
   $tadnews->get_cate_news();
-  $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 
-/*
-  $tadnews=new tadnews();
-  $tadnews->set_show_num($xoopsModuleConfig['show_num']);
-  $tadnews->set_news_kind("page");
-  if($the_ncsn>0){
-    $tadnews->set_view_ncsn($the_ncsn);
-    $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
-  }else{
-    $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
-  }
-  $tadnews->get_cate_news();
-  $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
-  $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
-  */
 }
 
 
