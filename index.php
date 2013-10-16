@@ -108,8 +108,6 @@ function have_read($nsn="",$uid=""){
 }
 
 
-
-
 //檢查置頂時間
 function chk_always_top(){
   global $xoopsDB,$xoopsUser;
@@ -193,7 +191,7 @@ switch($op){
   break;
 
   //刪除資料
-  case "delete_tad_news":  
+  case "delete_tad_news":
   $tadnews=new tadnews();
 	$tadnews->delete_tad_news($nsn);
   header("location: ".$_SERVER['PHP_SELF']);
@@ -264,7 +262,6 @@ switch($op){
 }
 
 /*-----------秀出結果區--------------*/
-
 include_once XOOPS_ROOT_PATH.'/include/comment_view.php';
 include_once XOOPS_ROOT_PATH.'/footer.php';
 
