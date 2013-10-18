@@ -1393,14 +1393,16 @@ class tadnews{
     }else{
       $reader_uid="";
     }
-    //$files=show_files("nsn",$nsn,true,$mode);
+
+    //show_files($upname="",$thumb=true,$show_mode="",$show_description=false,$show_dl=false,$limit=null,$path=null)
 
     $this->TadUpFiles->set_col('nsn',$nsn);
-    $files=$this->TadUpFiles->show_files('upfile',true,$mode,false,false);  //是否縮圖,顯示模式 filename、small,顯示描述,顯示下載次數
-
+    $files=$this->TadUpFiles->show_files('upfile',true,$mode,true,false,NULL,XOOPS_URL."/modules/tadnews/index.php");  //是否縮圖,顯示模式 filename、small,顯示描述,顯示下載次數
 
     $news=$this->get_tad_news($nsn);
+
     if($xoopsModuleConfig['download_after_read']=='1' and !empty($news['have_read_group'])){
+
       $time=$this->chk_sign_status($reader_uid,$nsn);
       if(empty($time) and !empty($files)){
 

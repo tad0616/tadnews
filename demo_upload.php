@@ -1,7 +1,5 @@
 <?php
 include_once "header.php";
-include_once XOOPS_ROOT_PATH."/modules/tadtools/TadUpFiles.php" ;
-$TadUpFiles=new TadUpFiles("tadnews");
 
 $op=isset($_POST['op'])?$_POST['op']:'';
 

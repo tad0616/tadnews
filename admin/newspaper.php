@@ -339,7 +339,7 @@ function sendmail_form($npsn=""){
 
     $checked=empty($mailData[$email])?"checked":"";
 
-    $data=empty($mailData[$email])?_MD_TADNEWS_NEVER_SEND." <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn btn-mini btn-danger'>"._TADNEWS_DEL."</a>":$mailData[$email];
+    $data=empty($mailData[$email])?_MA_TADNEWS_NEVER_SEND." <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn btn-mini btn-danger'>"._TADNEWS_DEL."</a>":$mailData[$email];
 
     $logdata[$i]['checkbox']="<input type='checkbox' name='mail_array[]' value='$email' $checked>";
     $logdata[$i]['email']=$email;
@@ -350,7 +350,7 @@ function sendmail_form($npsn=""){
 
   $xoopsTpl->assign("npsn" , $npsn) ;
   $xoopsTpl->assign("log" , $logdata) ;
-  $xoopsTpl->assign("total" , sprintf(_MD_TADNEWS_MAIL_LIST,$total)) ;
+  $xoopsTpl->assign("total" , sprintf(_MA_TADNEWS_MAIL_LIST,$total)) ;
   $xoopsTpl->assign("np_content" , $newspaper['np_content']) ;
   $xoopsTpl->assign("nps_sn" , $newspaper['nps_sn']) ;
   
@@ -450,7 +450,7 @@ function newspaper_email($nps_sn=""){
   $xoopsTpl->assign("bar" , $bar) ;
   $xoopsTpl->assign("nps_sn" , $nps_sn) ;
   $xoopsTpl->assign("title" , $np['title']) ;
-  $xoopsTpl->assign("back" , sprintf(_MD_TADNEWS_BACK_TO,$np['title'])) ;
+  $xoopsTpl->assign("back" , sprintf(_MA_TADNEWS_BACK_TO,$np['title'])) ;
 
 }
 
@@ -542,7 +542,7 @@ function sendmail_log($npsn=""){
   $xoopsTpl->assign("empty" , $empty) ;
   $xoopsTpl->assign("nps_sn" , $newspaper['nps_sn']) ;
   $xoopsTpl->assign("npsn" , $npsn) ;
-  $xoopsTpl->assign("back" , sprintf(_MD_TADNEWS_BACK_TO,$newspaper_title)) ;
+  $xoopsTpl->assign("back" , sprintf(_MA_TADNEWS_BACK_TO,$newspaper_title)) ;
   
 }
 /*-----------執行動作判斷區----------*/

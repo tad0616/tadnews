@@ -85,8 +85,6 @@ switch($op){
 }
 
 /*-----------秀出結果區--------------*/
-
 include_once XOOPS_ROOT_PATH.'/include/comment_view.php';
 include_once XOOPS_ROOT_PATH.'/footer.php';
-
 ?>
