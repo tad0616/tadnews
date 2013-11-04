@@ -84,7 +84,7 @@ $modversion['onUninstall'] = "include/onUninstall.php";
 
 
 //---樣板設定---//
-//$i=0;
+$i=0;
 $modversion['templates'][$i]['file'] = 'tadnews_list_tpl.html';
 $modversion['templates'][$i]['description'] = 'tadnews_list_tpl.html';
 $i++;

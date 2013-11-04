@@ -2033,8 +2033,11 @@ class tadnews{
     if(!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']){
       $pic_css=$xoopsModuleConfig['cover_pic_css'];
     }
+    
+    if(empty($_POST['end_day']))$_POST['end_day']="0000-00-00 00:00:00";
 
     $sql = "insert into ".$xoopsDB->prefix("tad_news")." (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$_POST['start_day']}','{$_POST['end_day']}','{$_POST['enable']}','{$uid}','{$_POST['passwd']}','{$enable_group}','{$_POST['prefix_tag']}','{$always_top}','{$_POST['always_top_date']}','{$have_read_group}')";
+    //die($sql);
     $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
     //取得最後新增資料的流水編號
@@ -2082,10 +2085,10 @@ class tadnews{
 
     $myts =MyTextSanitizer::getInstance();
     $new_cate=$myts->addSlashes($new_cate);
-
+    if(empty($of_ncsn))$of_ncsn=0;
     $sql = "insert into ".$xoopsDB->prefix("tad_news_cate")." (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$new_cate}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
     //die($sql);
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _TADNEWS_DB_ADD_ERROR1);
+    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _TADNEWS_DB_ADD_ERROR1);
     //取得最後新增資料的流水編號
     $ncsn=$xoopsDB->getInsertId();
     return $ncsn;
@@ -2170,6 +2173,7 @@ class tadnews{
     $news_content=$myts->addSlashes($_POST['news_content']);
     $always_top=(empty($_POST['always_top']))?"0":"1";
 
+    if(empty($_POST['end_day']))$_POST['end_day']="0000-00-00 00:00:00";
 
     $sql = "update ".$xoopsDB->prefix("tad_news")." set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$_POST['end_day']}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}',prefix_tag='{$_POST['prefix_tag']}',always_top='{$always_top}',always_top_date='{$_POST['always_top_date']}',have_read_group='{$have_read_group}' where nsn='$nsn'";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));

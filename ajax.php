@@ -5,7 +5,7 @@ include_once "block_function.php";
 // { num: "<{$block.num}>", p: p , show_button:"<{$block.show_button}>",  "cell[]": ["<{$block.cell1}>", "<{$block.cell2}>", "<{$block.cell3}>", "<{$block.cell4}>", "<{$block.cell5}>"],start_from:"<{$block.start_from}>",show_ncsn: "<{$block.show_ncsn}>"}
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
-include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig[language]}/blocks.php");
+include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php");
 $op=isset($_REQUEST['op'])?$_REQUEST['op']:"";
 
 $num=!empty($_POST['num'])?intval($_POST['num']):10;
@@ -91,9 +91,9 @@ foreach($all_news['page'] as $news){
 }
 
 
-$b_button=($b < 0)?"":"<button onClick='view_content({$b})' class='btn'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</button>";
+$b_button=($b < 0)?"":"<button onClick='view_content{$_POST['randStr']}({$b})' class='btn'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</button>";
 
-$n_button=($total < $num)?"":"<button style='float:right;' onClick='view_content({$n})' class='btn'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</button>";
+$n_button=($total < $num)?"":"<button style='float:right;' onClick='view_content{$_POST['randStr']}({$n})' class='btn'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</button>";
 
 $button=($show_button)?"{$n_button}{$b_button}":"";
 //$button="{$n_button}{$b_button}";

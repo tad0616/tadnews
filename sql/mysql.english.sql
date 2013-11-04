@@ -41,7 +41,7 @@ CREATE TABLE `tad_news` (
 
 CREATE TABLE `tad_news_cate` (
   `ncsn` smallint(5) unsigned NOT NULL auto_increment,
-  `of_ncsn` smallint(5) unsigned NOT NULL,
+  `of_ncsn` smallint(5) unsigned NOT NULL default 0,
   `nc_title` varchar(255) NOT NULL default '',
   `enable_group` varchar(255) NOT NULL default '',
   `enable_post_group` varchar(255) NOT NULL default '',
