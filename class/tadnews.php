@@ -765,7 +765,7 @@ class tadnews{
 
       $facebook_comments=facebook_comments($xoopsModuleConfig['facebook_comments_width'],'tadnews','index.php','nsn',$nsn);
       $push=push_url($xoopsModuleConfig['use_social_tools']);
-      $pluralink=$this->get_pluralink_path($ncsn);
+      $mutilink=$this->get_mutilink_path($ncsn);
 
       $all_news[$i]['nsn']=$nsn;
       $all_news[$i]['facebook_comments']=$facebook_comments;
@@ -773,7 +773,7 @@ class tadnews{
       $all_news[$i]['pic']=$pic;
       $all_news[$i]['chkbox']=$chkbox;
       $all_news[$i]['ncsn']=$ncsn;
-      $all_news[$i]['pluralink']=$pluralink;
+      $all_news[$i]['mutilink']=$mutilink;
       $all_news[$i]['cate_name']=$cate_name;
       $all_news[$i]['post_date']=$post_date;
       $all_news[$i]['prefix_tag']=$prefix_tag;
@@ -830,7 +830,7 @@ class tadnews{
 
     $ui=$this->sort_tool==1?true:false;
     $jquery=get_jquery($ui);
-
+    
     if($mode=='return'){
       $main['jquery']=$jquery;
       $main['page']=$all_news;
@@ -843,6 +843,7 @@ class tadnews{
       $main['author_select']=$author_select;
       $main['bar']=$bar;
       $main['syntaxhighlighter_code']=$syntaxhighlighter_code;
+      $main['MutiLinkConfig']=$this->get_mutilink_path_config();
       if($this->use_star_rating){
         $main['rating_js']=$rating_js;
       }
@@ -860,6 +861,7 @@ class tadnews{
       $xoopsTpl->assign( "author_select" , $author_select) ;
       $xoopsTpl->assign( "bar" , $bar) ;
       $xoopsTpl->assign( "syntaxhighlighter_code" , $syntaxhighlighter_code) ;
+      $xoopsTpl->assign( "MutiLinkConfig" , $this->get_mutilink_path_config()) ;
       if($this->use_star_rating){
         $xoopsTpl->assign( "rating_js" , $rating_js) ;
       }
@@ -914,11 +916,38 @@ class tadnews{
   }
 
   //將路徑轉換為多網址路徑
-  function get_pluralink_path($ncsn=""){
+  function get_mutilink_path($ncsn=""){
     $path=$this->get_cate_path($ncsn);
-    $pluralink['title']=implode("||",array_keys($path));
-    $pluralink['url']=implode("||",$path);
-    return $pluralink;
+    $mutilink=implode(",",array_keys($path));
+    return $mutilink;
+  }
+
+  //將路徑轉換為多網址路徑設定檔
+  function get_mutilink_path_config(){
+  global $xoopsDB;
+    $sql = "select ncsn,nc_title,of_ncsn,not_news from ".$xoopsDB->prefix("tad_news_cate")."";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    
+    $arr[]="
+    \""._TAD_TO_MOD."\": {
+      \"label\"	: \""._TAD_TO_MOD."\",
+      \"url\"	: \"".XOOPS_URL."/modules/tadnews/index.php\",
+      \"tags\"	: [\""._TAD_TO_MOD."\"]
+    }";
+    while(list($ncsn,$nc_title,$of_ncsn,$not_news)=$xoopsDB->fetchRow($result)){
+      $page=($not_news=='1')?"page.php":"index.php";
+      $arr[]="
+      \"{$nc_title}\": {
+        \"label\"	: \"{$nc_title}\",
+        \"url\"	: \"".XOOPS_URL."/modules/tadnews/{$page}?ncsn={$ncsn}\",
+        \"tags\"	: [\"{$nc_title}\"]
+      }";
+    }
+    
+    
+    $mutilink=implode(",",$arr);
+    //die($mutilink);
+    return $mutilink;
   }
 
   //取得分類新聞
@@ -1035,11 +1064,13 @@ class tadnews{
 
     if($mode=='return'){
       $main['all_news']=$all_news;
-      $main['syntaxhighlighter_code']=$syntaxhighlighter_code;
+      $main['syntaxhighlighter_code']=$syntaxhighlighter_code;      
+      $main['MutiLinkConfig']=$this->get_mutilink_path_config();
       return $main;
     }else{
       $xoopsTpl->assign( "all_news" , $all_news) ;
       $xoopsTpl->assign( "syntaxhighlighter_code" , $syntaxhighlighter_code) ;
+      $xoopsTpl->assign( "MutiLinkConfig" , $this->get_mutilink_path_config()) ;
     }
 
   }

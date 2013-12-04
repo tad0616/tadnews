@@ -5,16 +5,6 @@
 <{$block.syntaxhighlighter_code}>
 <{$block.rating_js}>
 <{$block.del_js}>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
-<![endif]-->
-
-<script type="text/javascript">
-  pluralink.pluralinkOptions.blank = true;
-</script>
-
 <{foreach item=page from=$block.page}>
   <{if $page.enable=="1" or $page.uid==$uid}>
   <div class="row-fluid">
@@ -26,7 +16,7 @@
 
       <div style="font-size:12px;">
         <div style="float:right"><{$page.fun}></div>
-        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
       </div>
     </div>
 
@@ -48,4 +38,3 @@
     </div>
   <{/if}>
 <{/foreach}>
-

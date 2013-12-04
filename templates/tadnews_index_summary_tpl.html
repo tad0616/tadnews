@@ -11,14 +11,16 @@
 <{$rating_js}>
 <{$del_js}>
 
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
-<![endif]-->
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/MultiLink/css/MultiLink.css" type="text/css" media="screen" />
 
+<{$jquery}>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/MultiLink/js/MultiLink.js"></script>
 <script type="text/javascript">
-  pluralink.pluralinkOptions.blank = true;
+ML.Config = {
+	"allLinks" : {
+    <{$MutiLinkConfig}>
+	}
+}
 </script>
 
 <{if $page}>
@@ -32,7 +34,7 @@
 
       <div style="font-size:12px;">
         <div style="float:right"><{$page.fun}></div>
-        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a class="multilink" id="index_summary_<{$page.nsn}>" data-dls-links="<{$page.mutilink}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
       </div>
     </div>
 
@@ -40,6 +42,11 @@
     <div style="clear:both;height:10px;"></div>
   </div>
   <{/foreach}>
+  <script type='text/javascript'>
+    if($('#linkdiv').text() == '') {
+      document.write("<div id=\"linkdiv\" class=\"hideme\">I get replaced with the listing of links...<\/div>");
+    }
+  </script>
 <{else}>
 
 <{/if}>

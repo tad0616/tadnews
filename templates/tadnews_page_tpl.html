@@ -8,15 +8,16 @@
 <{$syntaxhighlighter_code}>
 <{$rating_js}>
 <{$del_js}>
-
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.js"></script>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink.css" type="text/css" media="screen" />
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/pluralink/pluralink_ie6.css" type="text/css" />
-<![endif]-->
+<{$jquery}>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/MultiLink/js/MultiLink.js"></script>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/MultiLink/css/MultiLink.css" type="text/css" media="screen" />
 
 <script type="text/javascript">
-  pluralink.pluralinkOptions.blank = true;
+ML.Config = {
+	"allLinks" : {
+    <{$MutiLinkConfig}>
+	}
+}
 </script>
 
 <{foreach item=page from=$page}>
@@ -27,8 +28,8 @@
       <div class="news_head">
 
         <div style="font-size:12px;">
-          <div style="float:right"><{$page.fun}></div>
-          <a href="<{$page.pluralink.url}>" title="<{$page.pluralink.title}>" class="label" style="color:white;"><{$page.cate_name}></a>
+          <div style="float:right"><{$page.fun}></div>          
+          <a class="multilink" id="page_<{$page.nsn}>" data-dls-links="<{$page.mutilink}>"><{$page.cate_name}></a>
 
         </div>
 
@@ -96,3 +97,8 @@
   <{/if}>
 <{/foreach}>
 
+<script type='text/javascript'>
+  if($('#linkdiv').text() == '') {
+    document.write("<div id=\"linkdiv\" class=\"hideme\">I get replaced with the listing of links...<\/div>");
+  }
+</script>
