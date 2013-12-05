@@ -1,11 +1,12 @@
-/** 
+/**
 * Copyright 2008 massimocorner.com
 * License: http://www.massimocorner.com/license.htm
 * @author      Massimo Foti (massimo@massimocorner.com)
 * @version     0.5.1, 2008-05-11
 * @require     tmt_core.js
  */
- 
+
+
 if((typeof(tmt) == "undefined")){
 	alert("Error: tmt.core JavaScript library missing");
 }
@@ -52,7 +53,7 @@ tmt.spry.linkedselect.factory = function(selectNode){
 		obj.autoLoad = eval(obj.selectNode.getAttribute("tmt:autoload"));
 	}
 	// By default any call to the update method overwrite any <option> available inside the XHTML
-	// This behavior can be prevented by using tmt:overwrite="false" 
+	// This behavior can be prevented by using tmt:overwrite="false"
 	obj.overwrite = true;
 	if(obj.selectNode.getAttribute("tmt:overwrite")){
 		obj.overwrite = eval(obj.selectNode.getAttribute("tmt:overwrite"));
@@ -84,7 +85,7 @@ tmt.spry.linkedselect.factory = function(selectNode){
 		if(!indexesArray){
 			indexesArray = obj.getSelectedIndexes();
 		}
-		var offset = 0;	
+		var offset = 0;
 		for(var i=0; i<indexesArray.length; i++){
 			obj.selectNode.options[indexesArray[i]-offset] = null;
 			offset++;
@@ -366,7 +367,7 @@ tmt.spry.linkedselect.util.copyOptions = function(sourceId, destinationId){
 
 /**
 * Private method. Given a <select> id or node, return its linkedselect object
-*/ 
+*/
 tmt.spry.linkedselect.util.getObjFromId = function(selectId){
 	var targetNode = tmt.get(selectId);
 	if(!targetNode){
@@ -405,14 +406,14 @@ tmt.spry.linkedselect.util.moveOptionUp = function(selectId){
 
 /**
 * Remove currently selected options
-*/ 
+*/
 tmt.spry.linkedselect.util.removeOption = function(selectId){
 	tmt.spry.linkedselect.util.getObjFromId(selectId).deleteOptions();
 }
 
 /**
 * Reset a sprylinkedselect loading only its hardcoded options
-*/ 
+*/
 tmt.spry.linkedselect.util.resetSelect = function(selectId){
 	tmt.spry.linkedselect.util.getObjFromId(selectId).resetDefault();
 }
@@ -423,7 +424,7 @@ tmt.spry.linkedselect.util.resetSelect = function(selectId){
 tmt.spry.linkedselect.util.setBinding = function(selectId, dsName){
 	var dynObj = tmt.spry.linkedselect.util.getObjFromId(selectId);
 	newDataset = eval(dsName);
-	if(newDataset){	
+	if(newDataset){
 		dynObj.setBinding(newDataset);
 	}
 	else{
@@ -433,7 +434,7 @@ tmt.spry.linkedselect.util.setBinding = function(selectId, dsName){
 
 /**
 * Sort the options of a given linkedselect based on their text
-*/ 
+*/
 tmt.spry.linkedselect.util.sortSelect = function(selectId){
 	tmt.spry.linkedselect.util.getObjFromId(selectId).sortOptions();
 }

@@ -45,9 +45,6 @@ if(!function_exists("randStr")){
 }
 
 
-
-
-
 //取得所有類別標題
 if(!function_exists("block_news_cate")){
   function block_news_cate($selected=""){
@@ -114,6 +111,4 @@ if(!function_exists("show_error")){
     return;
   }
 }
-
-
 ?>
