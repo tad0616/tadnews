@@ -1,9 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// Editor: tad 
-// Datetime:2007-11-04
-// $Id: admin.php,v 1.4 2008/06/25 06:40:09 tad Exp $
-// ------------------------------------------------------------------------- //
 //global.php
 include_once "global.php";
 
@@ -19,10 +14,6 @@ define("_MA_TADNEWS_ADD","Post");
 define("_MA_TADNEWS_STATUS","Status");
 define("_MA_TADNEWS_OUT_DATE","Overdue");
 define("_TAD_NEED_TADTOOLS","This module need tadtools module. You can download tadtools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
-
-//define("_MA_TADNEWS_NO_DIRNAME","No Directory Name");
-//define("_MA_TADNEWS_MKDIR_ERROR","Can't make %s directory. Please make directory manually, and set network access permission(777)");
-
 
 //index.php
 define("_MA_TADNEWS_SAVE_NEWS_SN","Serial Number");

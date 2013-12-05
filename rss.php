@@ -66,6 +66,4 @@ if (!$tpl->is_cached('db:tadnews_rss.html')) {
   }
 }
 $tpl->display('db:tadnews_rss.html');
-
-
 ?>

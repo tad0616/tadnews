@@ -48,6 +48,4 @@ switch($_REQUEST['op']){
   update_mail();
   break;
 }
-
-
 ?>

@@ -1,9 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: modinfo.php,v 1.4 2008/06/25 06:40:09 tad Exp $
-// ------------------------------------------------------------------------- //
 include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 
 //Version XXX

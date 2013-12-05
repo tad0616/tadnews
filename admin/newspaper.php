@@ -1,9 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: newspaper.php,v 1.3 2008/06/25 06:35:58 tad Exp $
-// ------------------------------------------------------------------------- //
 
 /*-----------引入檔案區--------------*/
 include_once "admin_header.php";
@@ -27,12 +22,12 @@ function newspaper_set_table($sel_nps_sn=""){
     }
     $option.="<option value='{$nps_sn}' $selected>$title</option>";
   }
-  
+
   if(empty($option)){
     header("location:{$_SERVER['PHP_SELF']}?op=creat_newspaper");
   }
-  
-  
+
+
   $sql = "select a.npsn,a.number,b.title,a.np_date from ".$xoopsDB->prefix("tad_news_paper")." as a ,".$xoopsDB->prefix("tad_news_paper_setup")." as b where a.nps_sn=b.nps_sn and b.nps_sn='{$sel_nps_sn}' order by a.np_date desc";
 
   $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
@@ -69,7 +64,7 @@ function newspaper_set_table($sel_nps_sn=""){
   if(!empty($sel_nps_sn)){
     $edit_btn="
     <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=modify&nps_sn={$sel_nps_sn}'\" class='btn btn-info'>"._MA_TADNEWS_NP_MODIFY."</button>
-    
+
     <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn={$sel_nps_sn}'\" class='btn btn-success'>"._MA_TADNEWS_NP_EMAIL."</button>
 
     <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$sel_nps_sn}'\" class='btn btn-warning'>"._MA_TADNEWS_NP_SELECT."</button>";
@@ -93,7 +88,7 @@ function newspaper_set_table($sel_nps_sn=""){
   $xoopsTpl->assign("create_btn" , $create_btn) ;
   $xoopsTpl->assign("newspaper" , $newspaper) ;
   $xoopsTpl->assign("nps_sn" , $sel_nps_sn) ;
-  
+
   $xoopsTpl->assign("option" , $option) ;
 
 }
@@ -158,7 +153,7 @@ function save_newspaper_set($nps_sn=""){
   $head=$myts->addSlashes($_POST['head']);
   $foot=$myts->addSlashes($_POST['foot']);
   $themes=$myts->addSlashes($_POST['themes']);
-  
+
   if(empty($nps_sn)){
     $sql = "insert into ".$xoopsDB->prefix("tad_news_paper_setup")." (title,head,foot,themes,status) values('{$title}','{$head}','{$foot}','{$themes}','1')";
   }else{
@@ -220,7 +215,7 @@ function save_newspaper(){
   $all_news=substr($_POST['all_news'],1);
 
   $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
-  
+
   $sql = "insert into ".$xoopsDB->prefix("tad_news_paper")." (`nps_sn`, `number`, `nsn_array`, `np_date`) values('{$_POST['nps_sn']}','{$_POST['number']}','{$all_news}','$now')";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
@@ -252,12 +247,12 @@ function edit_newspaper($npsn=""){
 
    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
    while(list($nsn,$ncsn,$news_title,$news_content,$start_day,$end_day,$enable,$uid,$passwd,$enable_group)=$xoopsDB->fetchRow($result)){
-   
-   
+
+
       $news_title=$myts->htmlSpecialChars($news_title);
       $news_content=$myts->displayTarea($news_content,1,1,1,1,0);
-       
-   
+
+
       if(preg_match("/"._SEPARTE2."/",$news_content)){
         //支援xlanguage
         if(function_exists('xlanguage_ml')){
@@ -279,7 +274,7 @@ $content=explode(_SEPARTE2,$news_content);
  }else{
    $html=$newspaper['np_content'];
  }
- 
+
   if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/fck.php")){
     redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50",3, _TAD_NEED_TADTOOLS);
   }
@@ -300,7 +295,7 @@ function save_all($npsn=""){
 	$myts =MyTextSanitizer::getInstance();
 	$np_content=$myts->addSlashes($_POST['np_content']);
 	$np_title=$myts->addSlashes($_POST['np_title']);
-  	
+
   $sql = "update ".$xoopsDB->prefix("tad_news_paper")." set np_content='{$np_content}',np_title='{$np_title}' where npsn='{$npsn}'";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
@@ -321,7 +316,7 @@ function sendmail_form($npsn=""){
     if(empty($email))continue;
     $emailArr[]=$email;
   }
-  
+
   //取得已寄名單
 	$sql = "select * from ".$xoopsDB->prefix("tad_news_paper_send_log")." where `npsn`='$npsn' order by send_time";
  	$result=$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
@@ -353,7 +348,7 @@ function sendmail_form($npsn=""){
   $xoopsTpl->assign("total" , sprintf(_MA_TADNEWS_MAIL_LIST,$total)) ;
   $xoopsTpl->assign("np_content" , $newspaper['np_content']) ;
   $xoopsTpl->assign("nps_sn" , $newspaper['nps_sn']) ;
-  
+
 }
 
 
@@ -381,9 +376,9 @@ function send_now($npsn=""){
 
   //$xoopsMailer->setSubject($subject);
   //$xoopsMailer->setBody($content);
-  
+
   $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
-  
+
   foreach($mail_array as $email){
     if(empty($email))continue;
     if($xoopsMailer->sendMail($email, $subject, $content)){
@@ -422,12 +417,12 @@ function newspaper_email($nps_sn=""){
 
   //取得郵寄名單
   $sql = "select email,order_date from ".$xoopsDB->prefix("tad_news_paper_email")." where nps_sn='{$nps_sn}' order by email";
-  
+
   $PageBar=getPageBar($sql,30,10);
   $bar=$PageBar['bar'];
   $sql=$PageBar['sql'];
   $total=$PageBar['total'];
-  
+
   $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
   $main="";
@@ -543,7 +538,7 @@ function sendmail_log($npsn=""){
   $xoopsTpl->assign("nps_sn" , $newspaper['nps_sn']) ;
   $xoopsTpl->assign("npsn" , $npsn) ;
   $xoopsTpl->assign("back" , sprintf(_MA_TADNEWS_BACK_TO,$newspaper_title)) ;
-  
+
 }
 /*-----------執行動作判斷區----------*/
 $op = (!isset($_REQUEST['op']))? "":$_REQUEST['op'];
@@ -601,7 +596,7 @@ switch($op){
   send_now($npsn);
   header("location: {$_SERVER['PHP_SELF']}?op=sendmail_log&npsn={$npsn}");
   break;
-  
+
   case "sendmail_log":
   sendmail_log($npsn);
   break;
@@ -621,7 +616,7 @@ switch($op){
   case "newspaper_email":
   newspaper_email($nps_sn);
   break;
-  
+
   //刪除電子郵件
   case "delete_tad_news_email":
   delete_tad_news_email($_GET['email'],$nps_sn);
@@ -633,19 +628,19 @@ switch($op){
   delete_tad_news_email($_GET['email'],$nps_sn);
   header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn=$npsn");
   break;
-  
+
   //更新電子郵件
   case "update_email":
   update_email($_POST['old_email'],$_POST['new_email'],$nps_sn);
   header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
   break;
-  
+
   //匯入電子郵件
   case "email_import":
   email_import($_POST['email_import'],$nps_sn);
   header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn");
   break;
-  
+
 
   default:
   newspaper_set_table($nps_sn);

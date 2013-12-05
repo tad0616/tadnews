@@ -1,13 +1,6 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期:2007-11-04
-// $Id: blocks.php,v 1.4 2008/06/25 06:40:09 tad Exp $
-// ------------------------------------------------------------------------- //
-//global.php
+
 include_once "global.php";
-
-
 
 define("_MB_TADNEWS_EXPAND_ALL","Expand");
 define("_MB_TADNEWS_CONTACT_ALL","Close");

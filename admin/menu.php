@@ -1,9 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: menu.php,v 1.2 2008/06/25 06:35:58 tad Exp $
-// ------------------------------------------------------------------------- //
 $adminmenu = array();
 $i = 1;
 $icon_dir=substr(XOOPS_VERSION,6,3)=='2.6'?"":"images/";
@@ -20,12 +15,7 @@ $adminmenu[$i]['link'] = "admin/main.php";
 $adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU1 ;
 $adminmenu[$i]['icon'] = "images/admin/folder_txt.png";
 $i++;
-/*
-$adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU2;
-$adminmenu[$i]['link'] = "admin/post.php";
-$adminmenu[$i]['icon'] = "{$icon_dir}translations.png";
-$i++;
-*/
+
 $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU3;
 $adminmenu[$i]['link'] = "admin/cate.php";
 $adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU3 ;

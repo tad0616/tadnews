@@ -1,9 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: admin.php,v 1.4 2008/06/25 06:40:09 tad Exp $
-// ------------------------------------------------------------------------- //
 //global
 include_once "global.php";
 
@@ -20,10 +15,6 @@ define("_MA_TADNEWS_ADD","新增文章");
 define("_MA_TADNEWS_STATUS","狀態");
 define("_MA_TADNEWS_OUT_DATE","過期");
 define("_TAD_NEED_TADTOOLS"," 需要 modules/tadtools，可至<a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad教材網</a>下載。");
-
-//define("_MA_TADNEWS_NO_DIRNAME","無目錄名稱");
-//define("_MA_TADNEWS_MKDIR_ERROR","無法建立 %s 目錄，請手動建立，並開啟匿名寫入權限（777）");
-
 
 //index.php
 define("_MA_TADNEWS_SAVE_NEWS_SN","文章編號");

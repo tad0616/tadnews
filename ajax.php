@@ -1,8 +1,6 @@
 <?php
 include_once "header.php";
 include_once "block_function.php";
-//include_once "function.php";
-// { num: "<{$block.num}>", p: p , show_button:"<{$block.show_button}>",  "cell[]": ["<{$block.cell1}>", "<{$block.cell2}>", "<{$block.cell3}>", "<{$block.cell4}>", "<{$block.cell5}>"],start_from:"<{$block.start_from}>",show_ncsn: "<{$block.show_ncsn}>"}
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php");
@@ -69,7 +67,7 @@ $i=2;
 //$total=0;
 foreach($all_news['page'] as $news){
 
-	$need_sign=(!empty($news['need_sign']))?"<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>":"";
+  $need_sign=(!empty($news['need_sign']))?"<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>":"";
 
   $start_day="<td nowrap>{$news['post_date']}</td>";
   $news_title="<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='".XOOPS_URL."/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>";
@@ -80,13 +78,13 @@ foreach($all_news['page'] as $news){
   $news_title=to_utf8($news_title);
   $uid=to_utf8($uid);
   $ncsn=to_utf8($ncsn);
-	$block.="<tr>";
+  $block.="<tr>";
   foreach($show_col as $colname){
     $block.=$$colname;
   }
 
   $block.="</tr>";
-	$i++;
+  $i++;
   $total++;
 }
 

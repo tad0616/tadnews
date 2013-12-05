@@ -74,14 +74,6 @@ function list_tad_news_cate($of_ncsn=0,$level=0,$not_news='0',$i=0,$catearr=""){
 
     $i++;
 
-    /*
-    echo "<div>\$catearr[$i]['nc_title']=$nc_title;</div>";
-    echo "<div>\$catearr[$i]['sort']=$sort;</div>";
-    echo "<div>\$catearr[$i]['ncsn']=$ncsn;</div>";
-    echo "<hr>";
-    */
-
-
     $sub=list_tad_news_cate($ncsn,$level,$not_news,$i,$catearr);
     $i=$sub['i'];
     if(!empty($sub['arr']))$catearr=$sub['arr'];

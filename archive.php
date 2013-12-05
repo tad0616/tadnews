@@ -83,5 +83,4 @@ switch($op){
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 include_once XOOPS_ROOT_PATH.'/footer.php';
-
 ?>
