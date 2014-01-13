@@ -17,7 +17,7 @@
   <{foreach item=page from=$block.page}>
 
     <{php}>
-    if($i % $col_num==0){
+    if($col_num==0 or $i % $col_num==0){
       echo '
       <!-----start------>
       <div class="row-fluid" style="margin:10px 0px;">
@@ -69,7 +69,7 @@
     </div>
 
     <{php}>
-    if(($i % $col_num)==$end){
+    if($col_num==0 or ($i % $col_num)==$end){
       echo "
       </div>
       <!-----end------>

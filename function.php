@@ -1,5 +1,6 @@
 <?php
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
+$tadnews=new tadnews();
 include_once "block_function.php";
 
 

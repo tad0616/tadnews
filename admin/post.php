@@ -11,23 +11,23 @@ switch($op){
 
   //新增資料
   case "insert_tad_news":
-  $nsn=tadnews::insert_tad_news();
+  $nsn=$tadnews->insert_tad_news();
   break;
 
   //輸入表格
   case "tad_news_form";
-  tadnews::tad_news_form($nsn);
+  $tadnews->tad_news_form($nsn);
   break;
 
   //更新資料
   case "update_tad_news";
-  tadnews::update_tad_news($nsn);
+  $tadnews->update_tad_news($nsn);
   header("location: ../index.php?nsn={$nsn}");
   break;
 
 
   default:
-  tadnews::tad_news_form($nsn);
+  $tadnews->tad_news_form($nsn);
   break;
 }
 

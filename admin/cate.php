@@ -12,12 +12,12 @@ $xoopsOption['template_main'] = "tadnews_adm_cate_tpl.html";
 /*-----------function區--------------*/
 //tad_news_cate編輯表單
 function tad_news_cate_form($ncsn=""){
-	global $xoopsDB , $xoopsTpl,$xoopsOption,$xoopsModuleConfig;
+	global $xoopsDB , $xoopsTpl,$xoopsOption,$xoopsModuleConfig,$tadnews;
 	include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
 
 	//抓取預設值
 	if(!empty($ncsn)){
-		$DBV=tadnews::get_tad_news_cate($ncsn);
+		$DBV=$tadnews->get_tad_news_cate($ncsn);
 	}else{
 		$DBV=array();
 	}
@@ -27,7 +27,7 @@ function tad_news_cate_form($ncsn=""){
 	$ncsn=(!isset($DBV['ncsn']))?"":$DBV['ncsn'];
 	$of_ncsn=(!isset($DBV['of_ncsn']))?"":$DBV['of_ncsn'];
 	$nc_title=(!isset($DBV['nc_title']))?"":$DBV['nc_title'];
-	$sort=(!isset($DBV['sort']))?tadnews::get_max_sort():$DBV['sort'];
+	$sort=(!isset($DBV['sort']))?$tadnews->get_max_sort():$DBV['sort'];
 	$enable_group=(!isset($DBV['enable_group']))?"":explode(",",$DBV['enable_group']);
 	$enable_post_group=(!isset($DBV['enable_post_group']))?"":explode(",",$DBV['enable_post_group']);
 	$not_news=(!isset($DBV['not_news']))?"":$DBV['not_news'];
@@ -37,7 +37,7 @@ function tad_news_cate_form($ncsn=""){
 	$op=(empty($ncsn))?"insert_tad_news_cate":"update_tad_news_cate";
 	//$op="replace_tad_news_cate";
 
-	$cate_select=tadnews::get_tad_news_cate_option(0,0,$of_ncsn,true,$ncsn,"1","0");
+	$cate_select=$tadnews->get_tad_news_cate_option(0,0,$of_ncsn,true,$ncsn,"1","0");
 
 	$SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false,$enable_group, 3, true);
 	$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);

@@ -3,112 +3,112 @@
 /*
 
 //設定種類（news , page ,mixed）
-tadnews::set_news_kind($new_kind="news");
+$this->set_news_kind($new_kind="news");
 
 //設定是否開啟選擇模式（應該只用在 list 模式）
-tadnews::set_news_check_mode($mode="0");
+$this->set_news_check_mode($mode="0");
 
 //設定編輯器( elrte , ck)
-tadnews::set_news_editor($editor="ck");
+$this->set_news_editor($editor="ck");
 
 //設定是否使用拉動排序工具（應該只用在 list 模式）
-tadnews::set_sort_tool($mode="0");
+$this->set_sort_tool($mode="0");
 
 //設定是否秀出草稿
-tadnews::set_show_enable($enable="1");
+$this->set_show_enable($enable="1");
 
 //設定欲觀看分類（指定編號、陣列或不指定）
-tadnews::set_view_ncsn($ncsn="");
+$this->set_view_ncsn($ncsn="");
 
 //設定欲觀看標籤（指定編號、陣列或不指定）
-tadnews::set_view_tag($tag_sn="");
+$this->set_view_tag($tag_sn="");
 
 //設定欲觀看文章（指定編號、陣列或不指定）
-tadnews::set_view_nsn($nsn="");
+$this->set_view_nsn($nsn="");
 
 //取得欲觀看文章（指定編號、陣列或不指定）
-tadnews::get_view_nsn();
+$this->get_view_nsn();
 
 //設定欲觀看文章
-tadnews::set_show_month($ym="");
+$this->set_show_month($ym="");
 
 //設定欲觀看作者
-tadnews::set_view_uid($uid="");
+$this->set_view_uid($uid="");
 
 //設定顯示方式（summary,list,one）
-tadnews::set_show_mode($show_mode="summary");
+$this->set_show_mode($show_mode="summary");
 
 //設定顯示資料數(int , none)
-tadnews::set_show_num($show_num="10");
+$this->set_show_num($show_num="10");
 
 //設定管理工具
-tadnews::set_admin_tool($admin_tool=false);
+$this->set_admin_tool($admin_tool=false);
 
 //設定是否列出分類篩選工具
-tadnews::set_news_cate_select($show='0');
+$this->set_news_cate_select($show='0');
 
 //設定是否列出作者篩選工具
-tadnews::set_news_author_select($show='0');
+$this->set_news_author_select($show='0');
 
 //裁切標題
-tadnews::set_title_length($length=0);
+$this->set_title_length($length=0);
 
 //封面圖片設定
-tadnews::set_cover($show=false,$css="");
+$this->set_cover($show=false,$css="");
 
 //顯示摘要文字（$num=int or "page_break" 根據摘要符號來裁切 or "full"全文 or ''不要）
-tadnews::set_summary($num="",$css="");
+$this->set_summary($num="",$css="");
 
 //略過文章設定
-tadnews::set_skip_news($num=0);
+$this->set_skip_news($num=0);
 
 //設定是否使用評分機制
-tadnews::set_use_star_rating($val=false);
+$this->set_use_star_rating($val=false);
 
 //取得新聞（assign=直接套入樣板，array=傳回陣列）
-tadnews::get_news($mode='assign');
+$this->get_news($mode='assign');
 
 //取得分類新聞（assign=直接套入樣板，array=傳回陣列）
-tadnews::get_cate_news($mode='assign');
+$this->get_cate_news($mode='assign');
 
 //把字串換成群組
-tadnews::txt_to_group_name($enable_group="",$default_txt="",$syb="<br />");
+$this->txt_to_group_name($enable_group="",$default_txt="",$syb="<br />");
 
 //取得所有群組
-tadnews::get_all_groups();
+$this->get_all_groups();
 
 //取得分類下拉選單
-tadnews::get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL);
+$this->get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL);
 
 //判斷目前登入者在哪些類別中有發表的權利 post,pass,read
-tadnews::chk_user_cate_power($kind="post");
+$this->chk_user_cate_power($kind="post");
 
 //以流水號取得某筆tad_news資料 $mode=full （不經過xlanguage）
-tadnews::get_tad_news($nsn="",$uid_chk=false,$pass_xlanguage='');
+$this->get_tad_news($nsn="",$uid_chk=false,$pass_xlanguage='');
 
 //前置字串 ($mode='all' 不管啟動或關閉，一律顯示，適用於管理界面)
-tadnews::mk_prefix_tag($tag_sn,$mode='');
+$this->mk_prefix_tag($tag_sn,$mode='');
 
 //計數器
-tadnews::add_counter($nsn);
+$this->add_counter($nsn);
 
 //解析分類的設定檔
-tadnews::get_setup($setup="");
+$this->get_setup($setup="");
 
 //tad_news編輯表單
-tadnews::tad_news_form($nsn="",$ncsn="");
+$this->tad_news_form($nsn="",$ncsn="");
 
 //新增資料到tad_news中
-tadnews::insert_tad_news();
+$this->insert_tad_news();
 
 //自動取得新排序
-tadnews::get_max_sort($of_ncsn="",$not_news=0);
+$this->get_max_sort($of_ncsn="",$not_news=0);
 
 //以流水號取得某筆tad_news_cate資料
-tadnews::get_tad_news_cate($ncsn="");
+$this->get_tad_news_cate($ncsn="");
 
 //更新tad_news某一筆資料
-tadnews::update_tad_news($nsn="");
+$this->update_tad_news($nsn="");
 
 //刪除tad_news某筆資料資料
 $tadnews=new tadnews();
@@ -143,10 +143,13 @@ class tadnews{
   var $view_month="";
   var $editor="ck";
   var $TadUpFiles;
+  var $tadnewsConfig;
+  var $tadnewsModule;
+  var $module_id;
 
   //建構函數
   function __construct(){
-    global $xoopsConfig,$xoopsModuleConfig;
+    global $xoopsConfig;
     include_once XOOPS_ROOT_PATH."/modules/tadtools/TadUpFiles.php" ;
     //include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
     include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
@@ -154,14 +157,14 @@ class tadnews{
     $this->now =date("Y-m-d",xoops_getUserTimestamp(time()));
     $this->today=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
 
-    if(empty($xoopsModuleConfig)){
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tadnews");
-      $config_handler =& xoops_gethandler('config');
-      $xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
-    }
+    $modhandler = &xoops_gethandler('module');
+    $this->tadnewsModule = &$modhandler->getByDirname("tadnews");
+    $this->module_id = $this->tadnewsModule->getVar('mid');
+    $config_handler =& xoops_gethandler('config');
+    $this->tadnewsConfig =& $config_handler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
 
-    if($xoopsModuleConfig['use_star_rating']=='1'){
+
+    if($this->tadnewsConfig['use_star_rating']=='1'){
       $this->set_use_star_rating(true);
     }
     $this->TadUpFiles=new TadUpFiles("tadnews");
@@ -291,7 +294,7 @@ class tadnews{
 
   //取得圖片
   private function get_news_cover($col_name="",$col_sn="",$mode="big",$style="db",$only_url=false,$id='cover_pic'){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
+    global $xoopsDB,$xoopsUser;
 
     $sql = "select * from ".$xoopsDB->prefix("tadnews_files_center")." where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
 
@@ -353,7 +356,7 @@ class tadnews{
 
   //取得新聞
   public function get_news($mode='assign'){
-    global $xoopsDB,$xoopsUser,$xoopsModuleConfig,$isAdmin,$xoopsTpl,$xoTheme;
+    global $xoopsDB,$xoopsUser,$isAdmin,$xoopsTpl,$xoTheme;
     //die(var_export($this->get_view_nsn()));
     $rating_js="";
 
@@ -763,8 +766,8 @@ class tadnews{
         $next_news_title=($this->kind==="page")?$title:"{$date} {$title}";
       }
 
-      $facebook_comments=facebook_comments($xoopsModuleConfig['facebook_comments_width'],'tadnews','index.php','nsn',$nsn);
-      $push=push_url($xoopsModuleConfig['use_social_tools']);
+      $facebook_comments=facebook_comments($this->tadnewsConfig['facebook_comments_width'],'tadnews','index.php','nsn',$nsn);
+      $push=push_url($this->tadnewsConfig['use_social_tools']);
       $mutilink=$this->get_mutilink_path($ncsn);
 
       $all_news[$i]['nsn']=$nsn;
@@ -830,7 +833,7 @@ class tadnews{
 
     $ui=$this->sort_tool==1?true:false;
     $jquery=get_jquery($ui);
-    
+
     if($mode=='return'){
       $main['jquery']=$jquery;
       $main['page']=$all_news;
@@ -927,7 +930,7 @@ class tadnews{
   global $xoopsDB;
     $sql = "select ncsn,nc_title,of_ncsn,not_news from ".$xoopsDB->prefix("tad_news_cate")."";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-    
+
     $arr[]="
     \""._TAD_TO_MOD."\": {
       \"label\"	: \""._TAD_TO_MOD."\",
@@ -943,8 +946,8 @@ class tadnews{
         \"tags\"	: [\"{$nc_title}\"]
       }";
     }
-    
-    
+
+
     $mutilink=implode(",",$arr);
     //die($mutilink);
     return $mutilink;
@@ -952,7 +955,9 @@ class tadnews{
 
   //取得分類新聞
   public function get_cate_news($mode='assign'){
-    global $xoopsDB,$xoopsTpl,$xoopsUser,$xoopsModuleConfig;
+    global $xoopsDB,$xoopsTpl,$xoopsUser;
+
+    $pic_w=$this->tadnewsConfig['cate_pic_width']+10;
 
     $syntaxhighlighter_code=$this->get_syntaxhighlighter();
 
@@ -986,10 +991,9 @@ class tadnews{
     }
 
     $sql="select ncsn,nc_title,enable_group,enable_post_group,cate_pic from ".$xoopsDB->prefix("tad_news_cate")." where 1  $and_cate $kind_chk order by sort";
-//die($sql);
+
     $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
 
-    $pic_w=$xoopsModuleConfig['cate_pic_width']+10;
     $i=0;
 
     while(list($ncsn,$nc_title,$enable_group,$enable_post_group,$cate_pic)=$xoopsDB->fetchRow($result)){
@@ -1064,7 +1068,7 @@ class tadnews{
 
     if($mode=='return'){
       $main['all_news']=$all_news;
-      $main['syntaxhighlighter_code']=$syntaxhighlighter_code;      
+      $main['syntaxhighlighter_code']=$syntaxhighlighter_code;
       $main['MutiLinkConfig']=$this->get_mutilink_path_config();
       return $main;
     }else{
@@ -1116,16 +1120,11 @@ class tadnews{
 
   //新聞編輯工具
   private function admin_tool($uid,$nsn,$counter="",$ncsn="",$have_read_group=""){
-    global $xoopsUser,$xoopsModuleConfig,$xoopsModule;
-    if(!$xoopsModule){
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tadnews");
-    }
+    global $xoopsUser;
 
     if($xoopsUser){
       $uuid=$xoopsUser->getVar('uid');
-      $module_id = $xoopsModule->getVar('mid');
-      $isAdmin=$xoopsUser->isAdmin($module_id);
+      $isAdmin=$xoopsUser->isAdmin($this->module_id);
     }else{
       $uuid=$isAdmin="";
     }
@@ -1147,8 +1146,7 @@ class tadnews{
     $edit_cate
     <a href='".XOOPS_URL."/modules/tadnews/post.php?op=tad_news_form&nsn=$nsn' class='btn btn-mini' style='font-weight:normal;'><i class='icon-pencil'></i> "._TADNEWS_EDIT."</a>":"";
 
-
-    $bbcode=($xoopsModuleConfig['show_bbcode']=='1')?"<a href='".XOOPS_URL."/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-mini' style='font-weight:normal;'>BBCode</a>":"";
+    $bbcode=(isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode']=='1')?"<a href='".XOOPS_URL."/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-mini' style='font-weight:normal;'>BBCode</a>":"";
 
 
     $fun="
@@ -1177,7 +1175,7 @@ class tadnews{
 
   //把字串換成群組
   public function txt_to_group_name($enable_group="",$default_txt="",$syb="<br />"){
-    $groups_array= tadnews::get_all_groups();
+    $groups_array= $this->get_all_groups();
     if(empty($enable_group)){
       $g_txt=$default_txt;
     }else{
@@ -1232,20 +1230,14 @@ class tadnews{
 
   //取得分類下拉選單
   public function get_tad_news_cate_option($of_ncsn=0,$level=0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
-    if(!$xoopsModule){
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tadnews");
-    }
-
+    global $xoopsDB,$xoopsUser;
     if ($xoopsUser) {
-      $module_id = $xoopsModule->getVar('mid');
-      $isAdmin=$xoopsUser->isAdmin($module_id);
+      $isAdmin=$xoopsUser->isAdmin($this->module_id);
     }else{
       $isAdmin=false;
     }
 
-    $ok_cat = tadnews::chk_user_cate_power();
+    $ok_cat = $this->chk_user_cate_power();
 
     if($isAdmin){
       $left=$level*10;
@@ -1266,7 +1258,7 @@ class tadnews{
         $selected=($v==$ncsn)?"selected":"";
         $color=($not_news=='1')?"red":"black";
         $option.="<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
-        $option.= tadnews::get_tad_news_cate_option($ncsn,$level,$v,true,$this_ncsn,$no_self,$not_news);
+        $option.= $this->get_tad_news_cate_option($ncsn,$level,$v,true,$this_ncsn,$no_self,$not_news);
 
 
       }
@@ -1288,14 +1280,10 @@ class tadnews{
 
   //判斷目前登入者在哪些類別中有發表的權利
   public function chk_user_cate_power($kind="post"){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
+    global $xoopsDB,$xoopsUser;
     if(empty($xoopsUser))return false;
-    if(!$xoopsModule){
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tadnews");
-    }
-    $module_id = $xoopsModule->getVar('mid');
-    $isAdmin=$xoopsUser->isAdmin($module_id);
+
+    $isAdmin=$xoopsUser->isAdmin($this->module_id);
     if($isAdmin){
       $ok_cat[]="";
     }
@@ -1410,13 +1398,8 @@ class tadnews{
 
   //取得附檔
   private function get_news_files($nsn="",$mode=""){
-    global $xoopsUser,$xoopsDB,$xoopsModule;
-    if(!$xoopsModule){
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tadnews");
-    }
-    $config_handler =& xoops_gethandler('config');
-    $xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    global $xoopsUser,$xoopsDB;
+
 
     //取得目前使用者的所屬群組
     if($xoopsUser){
@@ -1432,7 +1415,7 @@ class tadnews{
 
     $news=$this->get_tad_news($nsn);
 
-    if($xoopsModuleConfig['download_after_read']=='1' and !empty($news['have_read_group'])){
+    if($this->tadnewsConfig['download_after_read']=='1' and !empty($news['have_read_group'])){
 
       $time=$this->chk_sign_status($reader_uid,$nsn);
       if(empty($time) and !empty($files)){
@@ -1446,12 +1429,9 @@ class tadnews{
 
   //以流水號取得某筆tad_news資料
   public function get_tad_news($nsn="",$uid_chk=false,$xlanguage=true){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
+    global $xoopsDB,$xoopsUser;
     if(empty($nsn))return;
-    if(!$xoopsModule){
-      $modhandler = xoops_gethandler('module');
-      $xoopsModule = $modhandler->getByDirname("tadnews");
-    }
+
     $sql = "select * from ".$xoopsDB->prefix("tad_news")." where nsn='$nsn'";
     $result = $xoopsDB->query($sql) or redirect_header("index.php",3,show_error($sql));
     $data=$xoopsDB->fetchArray($result);
@@ -1460,15 +1440,14 @@ class tadnews{
     $news_content=strip_tags($data['news_content']);
 
     //支援xlanguage
-    $news_content=tadnews::xlang($news_content,$xlanguage);
+    $news_content=$this->xlang($news_content,$xlanguage);
 
     //$data['news_description']=xoops_substr($news_content, 0, 300);
     $data['news_description']=mb_substr ($news_content , 0 , 300 , _CHARSET);
 
     if($uid_chk){
       if(empty($xoopsUser)) redirect_header("index.php",3,_TADNEWS_NO_ADMIN_POWER);
-      $module_id = $xoopsModule->getVar('mid');
-      $isAdmin=$xoopsUser->isAdmin($module_id);
+      $isAdmin=$xoopsUser->isAdmin($this->module_id);
       $uid=$xoopsUser->getVar('uid');
       if(!$isAdmin and $uid!=$data['uid']){
          redirect_header("index.php",3,_TADNEWS_NO_ADMIN_POWER);
@@ -1613,7 +1592,7 @@ class tadnews{
 
   //tad_news編輯表單
   public function tad_news_form($nsn="",$ncsn="",$mode=''){
-    global $xoopsDB,$xoopsUser,$isAdmin,$xoopsModuleConfig,$xoopsTpl;
+    global $xoopsDB,$xoopsUser,$isAdmin,$xoopsTpl;
 
     include_once XOOPS_ROOT_PATH."/modules/tadtools/formValidator.php";
     $formValidator= new formValidator("#myForm",false);
@@ -1628,7 +1607,7 @@ class tadnews{
       $User_Groups=array();
     }
 
-    $nscn_arr=tadnews::chk_user_cate_power("post");
+    $nscn_arr=$this->chk_user_cate_power("post");
     if(empty($nscn_arr)) redirect_header("index.php",3, _TADNEWS_NO_ADMIN_POWER."<br>".implode(";",$nscn_arr));
 
     //抓取預設值
@@ -1674,12 +1653,12 @@ class tadnews{
     $have_read_group = $SelectGroup_name2->render();
 
     //標籤選單
-    $prefix_tag_menu=tadnews::prefix_tag_menu($prefix_tag);
+    $prefix_tag_menu=$this->prefix_tag_menu($prefix_tag);
 
     //類別選單
-    $cate_select=tadnews::get_tad_news_cate_option(0,0,$ncsn);
+    $cate_select=$this->get_tad_news_cate_option(0,0,$ncsn);
     //取得分類數
-    $cate_num=tadnews::get_cate_num();
+    $cate_num=$this->get_cate_num();
 
     if($this->editor=="elrte"){
       if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/elrte.php")){
@@ -1718,13 +1697,13 @@ class tadnews{
     //creat_cate_group
     $new_cate_input=empty($cate_num)?_TADNEWS_NAME:"";
     $creat_new_cate=empty($cate_num)?_TADNEWS_CREAT_FIRST_CATE:_TADNEWS_CREAT_NEWS_CATE;
-    $creat_cate_tool=(tadnews::chk_news_power(implode(",",$xoopsModuleConfig['creat_cate_group']),$User_Groups))?
+    $creat_cate_tool=($this->chk_news_power(implode(",",$this->tadnewsConfig['creat_cate_group']),$User_Groups))?
     "<input type='text' name='new_cate' id='new_cate_input' class='span2' value='$new_cate_input' placeholder='$creat_new_cate'>":"";
 
     $now=time();
     $jquery_path=get_jquery(true);
 
-    $css=tadnews::get_pic_css($pic_css);
+    $css=$this->get_pic_css($pic_css);
     $pic_css_set_hide=empty($pic_css)?"$('#pic_css_set').hide();":"";
 
 
@@ -1927,7 +1906,7 @@ class tadnews{
 
   //標籤下拉選單
   private function prefix_tag_menu($prefix_tag=""){
-    global $xoopsDB,$xoopsModuleConfig;
+    global $xoopsDB;
 
     $sql="select tag_sn,color,tag from ".$xoopsDB->prefix("tad_news_tags")." where `enable`='1'";
     $result=$xoopsDB->query($sql);
@@ -1955,7 +1934,7 @@ class tadnews{
 
   //取得新聞封面圖片檔案
   private function get_news_doc_pic($col_name="",$col_sn="",$mode="big",$style="db",$only_url=false,$id='cover_pic'){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
+    global $xoopsDB,$xoopsUser;
 
     $sql = "select * from ".$xoopsDB->prefix("tadnews_files_center")." where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
 
@@ -2032,7 +2011,7 @@ class tadnews{
 
   //新增資料到tad_news中
   public function insert_tad_news(){
-    global $xoopsDB,$xoopsUser,$isAdmin,$xoopsModuleConfig;
+    global $xoopsDB,$xoopsUser,$isAdmin;
     $uid=$xoopsUser->getVar('uid');
 
     if(empty($_POST['enable_group']) or in_array("",$_POST['enable_group'])){
@@ -2059,12 +2038,12 @@ class tadnews{
     $news_title=$myts->addSlashes($_POST['news_title']);
     $news_content=$myts->addSlashes($_POST['news_content']);
     $always_top=(empty($_POST['always_top']))?"0":"1";
-    $pic_css=tadnews::mk_pic_css($_POST['pic_css']);
+    $pic_css=$this->mk_pic_css($_POST['pic_css']);
     //die($pic_css);
     if(!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']){
-      $pic_css=$xoopsModuleConfig['cover_pic_css'];
+      $pic_css=$this->tadnewsConfig['cover_pic_css'];
     }
-    
+
     if(empty($_POST['end_day']))$_POST['end_day']="0000-00-00 00:00:00";
 
     $sql = "insert into ".$xoopsDB->prefix("tad_news")." (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$_POST['start_day']}','{$_POST['end_day']}','{$_POST['enable']}','{$uid}','{$_POST['passwd']}','{$enable_group}','{$_POST['prefix_tag']}','{$always_top}','{$_POST['always_top_date']}','{$have_read_group}')";
@@ -2077,7 +2056,7 @@ class tadnews{
     //處理上傳的檔案
     //upload_file('upfile',"nsn",$nsn);
     $this->TadUpFiles->set_col('nsn',$nsn);
-    $this->TadUpFiles->upload_file('upfile',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width']);
+    $this->TadUpFiles->upload_file('upfile',$this->tadnewsConfig['pic_width'],$this->tadnewsConfig['thumb_width']);
 
 
     //修改暫存封面圖
@@ -2110,7 +2089,7 @@ class tadnews{
 
   //新增資料到tad_news_cate中
   private function creat_tad_news_cate($of_ncsn="",$new_cate="",$not_news='0'){
-    global $xoopsDB,$xoopsModuleConfig;
+    global $xoopsDB;
     $enable_group=$enable_post_group=$setup="";
     $sort=$this->get_max_sort($of_ncsn);
 
@@ -2128,7 +2107,7 @@ class tadnews{
 
   //自動取得新排序
   public function get_max_sort($of_ncsn="",$not_news=0){
-    global $xoopsDB,$xoopsModule;
+    global $xoopsDB;
     $sql = "select max(sort) from ".$xoopsDB->prefix("tad_news_cate")." where of_ncsn='$of_ncsn' and not_news='$not_news'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
     list($sort)=$xoopsDB->fetchRow($result);
@@ -2170,7 +2149,7 @@ class tadnews{
 
   //更新tad_news某一筆資料
   public function update_tad_news($nsn=""){
-    global $xoopsDB,$xoopsUser,$xoopsModuleConfig;
+    global $xoopsDB,$xoopsUser;
     $uid=$xoopsUser->getVar('uid');
 
     //確認有管理員或本人才能管理
@@ -2210,9 +2189,8 @@ class tadnews{
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
     //處理上傳的檔案
-    //upload_file('upfile',"nsn",$nsn);
     $this->TadUpFiles->set_col('nsn',$nsn);
-    $this->TadUpFiles->upload_file('upfile',$xoopsModuleConfig['pic_width'],$xoopsModuleConfig['thumb_width'],NULL,NULL,true);
+    $this->TadUpFiles->upload_file('upfile',$this->tadnewsConfig['pic_width'],$this->tadnewsConfig['thumb_width'],NULL,NULL,true);
 
     //修改暫存封面圖
     if($_POST['files_sn']){
@@ -2233,14 +2211,10 @@ class tadnews{
 
   //身份查核
   private function chk_who($author_id=""){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
+    global $xoopsDB,$xoopsUser;
     if(empty($xoopsUser))return false;
-    if(!$xoopsModule){
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tadnews");
-    }
-    $module_id = $xoopsModule->getVar('mid');
-    $isAdmin=$xoopsUser->isAdmin($module_id);
+
+    $isAdmin=$xoopsUser->isAdmin($this->module_id);
     if($isAdmin)return true;
 
     $uid=$xoopsUser->getVar('uid');
@@ -2252,11 +2226,11 @@ class tadnews{
 
   //刪除tad_news某筆資料資料
   public function delete_tad_news($nsn=""){
-    global $xoopsDB,$xoopsUser,$xoopsModule;
+    global $xoopsDB,$xoopsUser;
 
     //確認有管理員或本人才能管理
-    $news=tadnews::get_tad_news($nsn);
-    if(!tadnews::chk_who($news['uid'])){
+    $news=$this->get_tad_news($nsn);
+    if(!$this->chk_who($news['uid'])){
       redirect_header($_SERVER['PHP_SELF'],3, _TADNEWS_NO_ADMIN_POWER);
     }
 

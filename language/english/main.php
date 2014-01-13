@@ -7,11 +7,7 @@ include_once "global.php";
 define("_MD_TADNEWS_TO_MOD","Back to Module");
 define("_MD_TADNEWS_TO_ADMIN","Admin");
 define("_MD_TADNEWS_MY","My News");
-define("_MD_TADNEWS_ADD_FIRST","No News! Add a new one right now！");
-define("_MD_TADNEWS_NO_NEWS","No News!");
 define("_MD_TADNEWS_HIDDEN","No public access for this news so far!");
-define("_MD_TADNEWS_OVERDUE","Overdue News!");
-define("_MD_TADNEWS_NOT_GROUP","You are NOT authorized to read this news!");
 define("_MD_TADNEWS_ALL_CATE","All Categories");
 define("_MD_TADNEWS_FILES","Attachments");
 define("_MD_TADNEWS_POSTER","Poster");
@@ -23,62 +19,29 @@ define("_MD_TADNEWS_ORDER_ERROR","Scbscribe to 「%s」 failed!");
 define("_TADNEWS_DEL_SUCCESS","Subscription to 「%s」 cancelled!");
 define("_TADNEWS_DEL_ERROR","Failed to cancel 「%s」 subscription!");
 define("_MD_TADNEWS_NP_TITLE","NO: %s ");
-define("_MD_TADNEWS_FILE_DL_NUM","（Downloaded: %s ）");
 define("_MD_TADNEWS_ERROR_EMAIL","Illegal Email: %s");
 
 define("_MD_TADNEWS_POST","Post");
-define("_MD_TADNEWS_HAVE_READ_NUM","%s users have read");
-define("_MD_TADNEWS_UID_NAME","User name");
-define("_MD_TADNEWS_SIGN_TIME","Read time");
 define("_MD_TADNEWS_SIGN_LOG","\"%s\" read log");
 
 //post.php
 define("_MD_TADNEWS_NO_POST_POWER","Please login first for posting news.");
 define("_MD_TADNEWS_ADD_NEWS","Edit News");
 define("_MD_TADNEWS_NEWS_TITLE","Title");
-define("_MD_TADNEWS_PREFIX_TAG","Prefix");
 define("_MD_TADNEWS_ALWAYS_TOP","Sticky");
-define("_MD_TADNEWS_NEWS_CONTENT","Content");
 define("_MD_TADNEWS_START_DATE","Start Date");
 define("_MD_TADNEWS_END_DATE","End Date");
 define("_MD_TADNEWS_NEWS_PASSWD","Password");
 define("_MD_TADNEWS_ADV_SETUP","Advance Settings");
 define("_MD_TADNEWS_SAVE_NEWS","Save");
-define("_MD_TADNEWS_CAN_READ_NEWS_GROUP","Available Groups");
-define("_MD_TADNEWS_DB_ADD_ERROR2","Failed to add data to tad_news");
-define("_MD_TADNEWS_DB_SELECT_ERROR2","Failed to get data from tad_news");
-define("_MD_TADNEWS_DB_UPDATE_ERROR2","Failed to update data of tad_news");
-define("_MD_TADNEWS_DB_DELETE_ERROR2","Failed to delete data from tad_news");
-define("_MD_TADNEWS_NEWS_CATE_TEXT","Choose a category.<br>Red means 「Customized Category」");
-define("_MD_TADNEWS_NEWS_TITLE_TEXT","Input News Title");
-define("_MD_TADNEWS_START_DATE_TEXT","Publish date of news,<br>News will be published on appointed date;<br>Non-select for publishing immediatelly.");
-define("_MD_TADNEWS_END_DATE_TEXT","End date of news;<br>Non-select for forever visible.");
-define("_MD_TADNEWS_NEWS_PASSWD_TEXT","Passowrd will be required to read this news if you input password here.");
-define("_MD_TADNEWS_CAN_READ_NEWS_GROUP_TEXT","Non-select or 'All' means everyone can read this news<br>you can press 'Ctrl' and select the available groups to read too.");
+define("_MD_TADNEWS_CAN_READ_NEWS_GROUP","Available Groups");<br>Non-select for publishing immediatelly.");<br>Non-select for forever visible.");
 define("_MD_TADNEWS_NEWS_CATE","Category");
-define("_MD_TADNEWS_SELECT_NEWS_CATE","Choose a category");
 define("_MD_TADNEWS_NEWS_ENABLE","Save as");
-define("_MD_TADNEWS_NEWS_ENABLE1_TEXT","'Public' for publishing immediatelly.");
-define("_MD_TADNEWS_NEWS_ENABLE0_TEXT","'Draft' for saving as a draft without showing in newslist.");
 define("_MD_TADNEWS_NEWS_ENABLE_OK","Public");
 
 define("_MD_TADNEWS_NEWS_FILES","Upload files:");
-define("_MD_TADNEWS_NEWS_FILES_LIST","Attachments");
-define("_MD_CAT_CANT_FIND_FILE","Can't download the file");
 define("_MD_TADNEWS_MON","(Month)");
-define("_MD_TADNEWS_1","Mon");
-define("_MD_TADNEWS_2","Tue");
-define("_MD_TADNEWS_3","Wed");
-define("_MD_TADNEWS_4","Thu");
-define("_MD_TADNEWS_5","Fri");
-define("_MD_TADNEWS_6","Sat");
-define("_MD_TADNEWS_7","Sun");
-define("_MD_TADNEWS_WEEK","Week");
-define("_MD_TADNEWS_TODAY","Today");
-define("_MD_TADNEWS_ALL_NO","None");
 define("_MD_TADNEWS_NEWS_HAVE_READ","Must read Groups");
-define("_MD_NEED_TADTOOLS","Need modules/tadtools. You can download tadtools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
-define("_MD_TADNEWS_CREAT_NEWS_CATE","Creat a sub-category from left category:");
 
 //archive.php
 define("_MD_TADNEWS_ARCHIVE","Archive");
@@ -87,12 +50,6 @@ define("_MD_TADNEWS_MONTH","Month");
 
 
 define("_MD_TADNEWS_NEWSPAPER","Newspaper List");
-define("_MD_TADNEWS_NEWSPAPER_LIST","==== Select Newspaper ====");
-define("_MD_TADNEWS_NP_DATE","Date");
-define("_MD_TADNEWS_NP_NUMBER","Numbers");
-
-define("_MD_TADNEWS_ALWAYS_TOP","Sticky");
-define("_MD_TADNEWS_TODAY_NEWS","Today");
 
 
 
@@ -103,7 +60,6 @@ define("_MD_TADNEWS_FILES_TAB","files");
 define("_MD_TADNEWS_ENABLE_NEWSPIC","display in artical?");
 define("_MD_TADNEWS_ENABLE_NEWSPIC_NO","NO");
 define("_MD_TADNEWS_ENABLE_NEWSPIC_YES","YES");
-define("_MD_TADNEWS_NEWSPIC_SIZE","size");
 define("_MD_TADNEWS_NEWSPIC_WIDTH","width and height");
 define("_MD_TADNEWS_NEWSPIC_BORDER","border");
 define("_MD_TADNEWS_NEWSPIC_BORDER_WIDTH","width:");
@@ -145,9 +101,5 @@ define("_MD_TADNEWS_NEWSPIC_COVER","cover");
 define("_MD_TADNEWS_NEWSPIC_DEMO","<p>Each article could have a cover picture, this picture can be used for some block. Each block can set its size and appearance. If you want to use cover picture in the artical, then you can use this interface to make setting.</p><p>You can upload any size image for cover picture , we recommend that  cover picture size is large than  slide news block width.  The  slide news block size  is 670x250. Therefore, we recommend that cover picture is large than  670x250.</p>");
 
 //define("_MD_TADNEWS_EMBED","embed");
-
-define("_MD_TADNEWS_TABLE_CONTENT_WIDTH","Width");
-define("_MD_TADNEWS_MORE","Read More");
-define("_MD_TADNEWS_DEL_FILE","Select files to delete:");
 define("_MD_TADNEWS_COUNTER","Count");
 ?>

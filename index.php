@@ -6,8 +6,7 @@ include_once "header.php";
 
 //列出所有tad_news資料(summary模式)
 function list_tad_summary_news($the_ncsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
-  $tadnews=new tadnews();
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
@@ -32,9 +31,8 @@ function list_tad_summary_news($the_ncsn=""){
 
 //列出所有tad_news資料
 function list_tad_all_news($the_ncsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
-  $tadnews=new tadnews();
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
   if($the_ncsn>0){
@@ -51,9 +49,8 @@ function list_tad_all_news($the_ncsn=""){
 
 //列出所有tad_news資料
 function list_tad_tag_news($tag_sn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
-  $tadnews=new tadnews();
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
   $tadnews->set_view_tag($tag_sn);
@@ -66,8 +63,8 @@ function list_tad_tag_news($tag_sn=""){
 
 //列出所有tad_news資料
 function list_tad_cate_news($show_ncsn=0,$the_level=0){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
-  $tadnews=new tadnews();
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
+
   $tadnews->set_news_kind("news");
   $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
@@ -80,9 +77,8 @@ function list_tad_cate_news($show_ncsn=0,$the_level=0){
 
 //顯示單一新聞
 function show_news($nsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$xoopsUser;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$xoopsUser,$tadnews;
 
-  $tadnews=new tadnews();
   $uid=($xoopsUser)?$xoopsUser->uid():"";
   $tadnews->set_show_enable(0);
   $tadnews->set_view_nsn($nsn);
@@ -119,8 +115,8 @@ function chk_always_top(){
 
 //列出簽收狀況
 function list_sign($nsn=""){
-  global $xoopsDB,$xoopsUser,$xoopsOption,$xoopsTpl,$interface_menu;
-   $news=tadnews::get_tad_news($nsn);
+  global $xoopsDB,$xoopsUser,$xoopsOption,$xoopsTpl,$interface_menu,$tadnews;
+   $news=$tadnews->get_tad_news($nsn);
 
    $sql="select uid,sign_time from ".$xoopsDB->prefix("tad_news_sign")." where nsn='$nsn' order by sign_time";
    $sign="";
@@ -144,8 +140,8 @@ function list_sign($nsn=""){
 
 //列出某人狀況
 function list_user_sign($uid=""){
-  global $xoopsDB,$xoopsUser,$xoopsOption,$xoopsTpl;
-  $news=tadnews::get_tad_news($nsn);
+  global $xoopsDB,$xoopsUser,$xoopsOption,$xoopsTpl,$tadnews;
+  $news=$tadnews->get_tad_news($nsn);
 
   $uid_name=XoopsUser::getUnameFromId($uid,1);
   $uid_name=(empty($uid_name))?XoopsUser::getUnameFromId($uid,0):$uid_name;
@@ -192,7 +188,6 @@ switch($op){
 
   //刪除資料
   case "delete_tad_news":
-  $tadnews=new tadnews();
 	$tadnews->delete_tad_news($nsn);
   header("location: ".$_SERVER['PHP_SELF']);
   break;

@@ -7,7 +7,7 @@ $xoopsOption['template_main'] = "tadnews_adm_tag_tpl.html";
 /*-----------function區--------------*/
 //tad_news_tagss編輯表單
 function list_tad_news_tags($def_tag_sn=""){
-  global $xoopsDB,$xoopsTpl;
+  global $xoopsDB,$xoopsTpl,$tadnews;
 
   $sql = "select * from ".$xoopsDB->prefix("tad_news_tags")."";
   $result = $xoopsDB->query($sql) or redirect_header("index.php",3,mysql_error());
@@ -20,7 +20,7 @@ function list_tad_news_tags($def_tag_sn=""){
 
     $del=($enable!='1' and empty($tag_amount))?"<a href='javascript:delete_tag($tag_sn);' class='btn btn-danger'>"._TADNEWS_DEL."</a>":"";
 
-    $tagarr[$i]['prefix_tag']=tadnews::mk_prefix_tag($tag_sn,'all');
+    $tagarr[$i]['prefix_tag']=$tadnews->mk_prefix_tag($tag_sn,'all');
     $tagarr[$i]['tag']=$tag;
     $tagarr[$i]['color']=$color;
     $tagarr[$i]['enable_txt']=($enable=='1')?_YES:_NO;

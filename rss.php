@@ -19,7 +19,6 @@ $tpl->xoops_setCaching(2);
 $tpl->xoops_setCacheTime(10);
 if (!$tpl->is_cached('db:tadnews_rss.html')) {
 
-  $tadnews=new tadnews();
   $tadnews->set_show_num(20);
   $tadnews->set_view_ncsn($ncsn);
   $tadnews->set_show_mode('summary');

@@ -6,9 +6,6 @@ include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language
 define('_MI_TADNEWS_ADMIN_HOME',"首頁");
 define("_MI_TADNEWS_ADMIN_HOME_DESC","回首頁");
 
-define("_MI_TADNEWS_ADMIN_ABOUT" , "關於");
-define("_MI_TADNEWS_ADMIN_ABOUT_DESC" , "關於此模組");
-
 
 
 define("_MI_TADNEWS_NAME","本站消息");
@@ -19,7 +16,6 @@ define("_MI_TADNEWS_ADMENU2", "發佈文章");
 define("_MI_TADNEWS_ADMENU3", "分類管理");
 define("_MI_TADNEWS_ADMENU4", "資料轉移");
 define("_MI_TADNEWS_ADMENU5", "電子報管理");
-define("_MI_TADNEWS_ADMENU6", "模組升級");
 define("_MI_TADNEWS_ADMENU7", "自訂頁面");
 define("_MI_TADNEWS_ADMENU8", "標籤管理");
 define("_MI_TADNEWS_ADMENU9", "自訂頁面分類");
@@ -45,10 +41,6 @@ define("_MI_TADNEWS_BDESC8","可以自訂要播放哪些新聞");
 
 define("_MI_TADNEWS_TITLE1","<b>每頁要秀出幾篇文章？</b>");
 define("_MI_TADNEWS_DESC1","設定模組頁面出現的文章數");
-define("_MI_TADNEWS_TITLE2","<b>設定附檔下載方式</b>");
-define("_MI_TADNEWS_DESC2","方法一就是預設方式；方法二下載需要較多記憶體，不適用於太大的檔案（幾十MB那種），但中文一定正常。（預設）");
-define("_MI_TADNEWS_DL_METHOD1","方法一：以「編號_原始檔名.副檔名」為下載檔名");
-define("_MI_TADNEWS_DL_METHOD2","方法二：讓系統製作附檔");
 
 define("_MI_TADNEWS_SHOW_MODE","<b>設定模組首頁的呈現方式</b>");
 define("_MI_TADNEWS_SHOW_MODE_DESC","可自由選擇要秀出文章摘要（原有模式），或者只秀出文章標題（較快，較簡潔）");
@@ -58,10 +50,6 @@ define("_MI_TADNEWS_SHOW_MODE_OPT3","顯示各個分類的新聞標題");
 
 define("_MI_TADNEWS_CATE_SHOW_MODE","<b>設定秀出分類新聞的呈現方式</b>");
 define("_MI_TADNEWS_CATE_SHOW_MODE_DESC","點選分類後，新聞要呈現的模式，可自由選擇要秀出文章摘要（原有模式），或者只秀出文章標題（較快，較簡潔）");
-
-define("_MI_TADNEWS_PREFIX_TAG","<b>設定標題的標籤</b>");
-define("_MI_TADNEWS_PREFIX_TAG_DESC","可用來替標題加上標籤，以凸顯該文性質。（選項請用「;」隔開）");
-define("_MI_TADNEWS_PREFIX_TAG_VAL","<font color='red'>[緊急]</font>;<font color='blue'>[公告]</font>;<font color='#CC33CC'>[調查]</font>;<font color='#00CC33'>[好消息]</font>");
 
 define("_MI_TADNEWS_SHOW_BB","<b>是否顯示出「BB Code」的連結</b>");
 define("_MI_TADNEWS_SHOW_BB_DESC","一般為「否」。早期的 news 模組內容會用 BB Code 來設定文字外觀，例如顏色、大小等。若是您的新聞是早期從 news 轉移過來的，而且有用大量的 BB Code，那麼可選「是」。");

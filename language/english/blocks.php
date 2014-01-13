@@ -1,16 +1,7 @@
 <?php
 
 include_once "global.php";
-
-define("_MB_TADNEWS_EXPAND_ALL","Expand");
-define("_MB_TADNEWS_CONTACT_ALL","Close");
-
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM0","Numbers");
 define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM1","How many columns in a row?");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM6","number of words in title");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM3","number of words in summary");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM4","Text Style");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM5","Image Style");
 
 define("_MB_TADNEWS_RE_EDIT_BITEM0","Numbers");
 define("_MB_TADNEWS_RE_EDIT_BITEM1","Length");
@@ -22,17 +13,11 @@ define("_MB_TADNEWS_CATE_NEWS_EDIT_BITEM3","Show underline?");
 
 define("_MB_TADNEWS_NP_EDIT_BITEM0","Numbers of Newspaper");
 define("_MB_TADNEWS_FOCUS_EDIT_BITEM0","Select the News");
-define("_MB_TADNEWS_YES","Yes");
 define("_MB_TADNEWS_NO","No");
 
 define("_MB_TADNEWS_NEWS_TITLE","Title");
-define("_MB_TADNEWS_START_DATE","Date");
-define("_MB_TADNEWS_POSTER","Poster");
 define("_MB_TADNEWS_NEWS_CATE","Category");
 define("_MB_TADNEWS_COUNTER","Count");
-define("_MB_TADNEWS_LESS","Show Summary");
-define("_MB_TADNEWS_SHOW_TABLE","Table");
-define("_MB_TADNEWS_SHOW_LIST","List");
 define("_MB_TADNEWS_SHOW_ALL","Full Content");
 
 define("_MB_TADNEWS_SUBMIT","Submit");
@@ -51,7 +36,6 @@ define("_MB_TADNEWS_PAGE_EDIT_BITEM1","Length of Title");
 //tadnews 1.3.1
 define("_MB_TADNEWS_MY_PAGE","Please select the articles.");
 define("_MB_TADNEWS_NO_CATE","NO Category");
-define("_MB_TADNEWS_NO_TITLE","No Title");
 
 //tadnews 2.0
 define("_MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM0","List news numbers?");

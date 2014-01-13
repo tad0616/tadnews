@@ -9,9 +9,8 @@ $xoopsOption['template_main'] = "tadnews_adm_page_cate_tpl.html";
 
 //tad_news_cate編輯表單
 function tad_news_cate_form($ncsn=""){
-  global $xoopsDB,$xoopsTpl,$xoopsOption,$xoopsModuleConfig;
+  global $xoopsDB,$xoopsTpl,$xoopsOption,$xoopsModuleConfig,$tadnews;
   include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-  $tadnews=new tadnews();
   //抓取預設值
   if(!empty($ncsn)){
     $DBV=$tadnews->get_tad_news_cate($ncsn);
@@ -34,7 +33,7 @@ function tad_news_cate_form($ncsn=""){
   $set=$tadnews->get_setup($setup);
 
   $op=(empty($ncsn))?"insert_tad_news_cate":"update_tad_news_cate";
-  
+
   $cate_select=$tadnews->get_tad_news_cate_option(0,0,$of_ncsn,true,$ncsn,"1","1");
 
   $SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false,$enable_group, 3, true);

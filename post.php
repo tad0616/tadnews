@@ -11,7 +11,6 @@ $op = (!isset($_REQUEST['op']))? "":$_REQUEST['op'];
 $nsn = (!isset($_REQUEST['nsn']))? "":intval($_REQUEST['nsn']);
 $ncsn = (!isset($_REQUEST['ncsn']))? "":intval($_REQUEST['ncsn']);
 
-$tadnews=new tadnews();
 
 switch($op){
 

@@ -24,9 +24,12 @@ function tadnews_content_block_show($options){
   if(empty($block['page']))return;
 
   $block['bootstrap']=get_bootstrap();
+  $options[8]=isset($options[8])?$options[8]:"";
   $block['width']=empty($options[8])?"span12":$options[8];
 
   $span=intval(substr($options[8],4));
+  if(empty($span))$span=12;
+
   $col_num=12/$span;
   $block['col_num']=$col_num;
 

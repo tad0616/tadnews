@@ -137,7 +137,7 @@
         <button type="submit"><{$smarty.const._TADNEWS_SUBMIT}></button>
       </div>
     </div>
-  
+
 
   </form>
 
@@ -204,7 +204,7 @@
 
   <{foreach item=log from=$log }>
     <{if !$i}><tr><{/if}>
-      <{if $memail}>
+      <{if $log.edit}>
         <td colspan=5>
           <form action="newspaper.php" method="post">
           <input type="text" name="new_email" value="<{$log.email}>" style="width:100%;background-color:#FFFF99;color:black;"></td><td>

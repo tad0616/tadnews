@@ -2,9 +2,8 @@
 
 //列出所有tad_news資料（$kind="news","page"）
 function list_tad_news($the_ncsn="0",$kind="news",$show_uid=""){
-  global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig;
+  global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig,$tadnews;
 
-  $tadnews=new tadnews();
   if(!empty($show_uid)){
    $tadnews->set_view_uid($show_uid);
   }
@@ -33,7 +32,7 @@ function list_tad_news($the_ncsn="0",$kind="news",$show_uid=""){
 
 //列出所有tad_news_cate資料
 function list_tad_news_cate($of_ncsn=0,$level=0,$not_news='0',$i=0,$catearr=""){
-  global $xoopsDB,$xoopsModule,$xoopsTpl;
+  global $xoopsDB,$xoopsModule,$xoopsTpl,$tadnews;
   $old_level=$level;
   $left=$level*18+4;
   $level++;
@@ -53,8 +52,8 @@ function list_tad_news_cate($of_ncsn=0,$level=0,$not_news='0',$i=0,$catearr=""){
     list($counter)=$xoopsDB->fetchRow($result2);
 
     $pic=(empty($cate_pic))?"../images/no_cover.png":_TADNEWS_CATE_URL."/{$cate_pic}";
-    $g_txt=tadnews::txt_to_group_name($enable_group,_TADNEWS_ALL_OK," , ");
-    $gp_txt=tadnews::txt_to_group_name($enable_post_group,_MA_TADNEWS_ONLY_ROOT," , ");
+    $g_txt=$tadnews->txt_to_group_name($enable_group,_TADNEWS_ALL_OK," , ");
+    $gp_txt=$tadnews->txt_to_group_name($enable_post_group,_MA_TADNEWS_ONLY_ROOT," , ");
 
     $new_kind=($not_news=='1')?0:1;
     $change_text=($not_news=='1')?_MA_TADNEWS_CHANGE_TO_NEWS:_MA_TADNEWS_CHANGE_TO_PAGE;
@@ -178,9 +177,9 @@ function update_tad_news_cate($ncsn=""){
 
 //刪除tad_news_cate某筆資料資料
 function delete_tad_news_cate($ncsn=""){
-  global $xoopsDB;
+  global $xoopsDB,$tadnews;
 
-  $cate_org=tadnews::get_tad_news_cate($ncsn);
+  $cate_org=$tadnews->get_tad_news_cate($ncsn);
 
   //先找看看底下有無分類，若有將其父分類變成原分類之父分類
   $sql = "update ".$xoopsDB->prefix("tad_news_cate")."  set  of_ncsn = '{$cate_org['of_ncsn']}' where of_ncsn='$ncsn'";

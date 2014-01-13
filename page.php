@@ -5,16 +5,12 @@ include_once "header.php";
 
 //顯示單一新聞
 function show_news($nsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
-  $tadnews=new tadnews();
   $tadnews->set_view_nsn($nsn);
   $tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
 
-  //if($xoopsModuleConfig['use_star_rating']=='1'){
-  //  $tadnews->set_use_star_rating(true);
-  //}
   $tadnews->get_news();
 
 }
@@ -22,9 +18,8 @@ function show_news($nsn=""){
 
 //列出所有tad_news資料
 function list_tad_all_news($the_ncsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
-  $tadnews=new tadnews();
   $tadnews->set_news_kind("page");
   $tadnews->set_show_num('none');
   $tadnews->set_view_ncsn($the_ncsn);
@@ -52,7 +47,6 @@ switch($_REQUEST['op']){
 
   //刪除資料
   case "delete_tad_news";
-  $tadnews=new tadnews();
   $tadnews->delete_tad_news($nsn);
   header("location: ".$_SERVER['PHP_SELF']);
   break;

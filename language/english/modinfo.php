@@ -5,9 +5,6 @@ include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language
 define('_MI_TADNEWS_ADMIN_HOME',"Home");
 define("_MI_TADNEWS_ADMIN_HOME_DESC","Back to Home");
 
-define("_MI_TADNEWS_ADMIN_ABOUT" , "About");
-define("_MI_TADNEWS_ADMIN_ABOUT_DESC" , "About this module");
-
 
 
 
@@ -19,7 +16,6 @@ define("_MI_TADNEWS_ADMENU2", "Post");
 define("_MI_TADNEWS_ADMENU3", "Categories");
 define("_MI_TADNEWS_ADMENU4", "Data Transfer");
 define("_MI_TADNEWS_ADMENU5", "Newspaper");
-define("_MI_TADNEWS_ADMENU6", "Upgrade");
 define("_MI_TADNEWS_ADMENU7", "Customized Page");
 define("_MI_TADNEWS_ADMENU8", "Tags");
 define("_MI_TADNEWS_ADMENU9", "Customized Page categories");
@@ -45,10 +41,6 @@ define("_MI_TADNEWS_BDESC8","Content could be appointed");
 
 define("_MI_TADNEWS_TITLE1","<b>News numbers in each page?</b>");
 define("_MI_TADNEWS_DESC1","Set the news numbers in each page");
-define("_MI_TADNEWS_TITLE2","<b>Downloading method of attachment</b>");
-define("_MI_TADNEWS_DESC2","Method 1: Common; Method 2: (More memories required. Not appropriate for big files, but Chinese is working.(default)");
-define("_MI_TADNEWS_DL_METHOD1","Method 1: Use \"SN_original.XXX\" as filename");
-define("_MI_TADNEWS_DL_METHOD2","Method 2: System makes up attachments");
 
 define("_MI_TADNEWS_SHOW_MODE","<b>Performing method of Index</b>");
 define("_MI_TADNEWS_SHOW_MODE_DESC","Digest(Default) or news titles (faster, clear)");
@@ -58,10 +50,6 @@ define("_MI_TADNEWS_SHOW_MODE_OPT3","News titles of each category");
 
 define("_MI_TADNEWS_CATE_SHOW_MODE","<b>Performing method in single category</b>");
 define("_MI_TADNEWS_CATE_SHOW_MODE_DESC","Digest(Default) or news titles (faster, clear)");
-
-define("_MI_TADNEWS_PREFIX_TAG","<b>Prefix Tags</b>");
-define("_MI_TADNEWS_PREFIX_TAG_DESC","Add prefix tags to show the news type. (items divided by \";\")");
-define("_MI_TADNEWS_PREFIX_TAG_VAL","<font color='red'>[emergency]</font>;<font color='blue'>[announcement]</font>;<font color='#CC33CC'>[investigate]</font>;<font color='#00CC33'>[good news]</font>");
 
 define("_MI_TADNEWS_SHOW_BB","<b>\"BB Code\" available?</b>");
 define("_MI_TADNEWS_SHOW_BB_DESC","\"No\" in default. Old news modules use BB Code to set the font style.<br/>For example: color, size. Choose \"yes\" if you have news content from old modules.");
@@ -120,4 +108,3 @@ define("_MI_COVER_PIC_CSS_DESC","The default CSS of the cover image in the artic
 define("_MI_TADNEWS_EDITOR","Select editor");
 define("_MI_TADNEWS_EDITOR_DESC","elRTE can be used in mobile device.");
 ?>
-

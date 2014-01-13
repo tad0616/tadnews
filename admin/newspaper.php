@@ -425,17 +425,19 @@ function newspaper_email($nps_sn=""){
 
   $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
+  $memail=isset($_GET['memail'])?htmlspecialchars($_GET['memail']):"";
+
   $main="";
   $i=0;
   while(list($email,$order_date)=$xoopsDB->fetchRow($result)){
 
+    $email=htmlspecialchars($email);
     $ok=(check_email_mx($email))?"ok":"<span style='color:red;'>error</span>";
 
-    $log[$i]['memail']=(!empty($_GET['memail']) and $_GET['memail']==$email)?true:false;
+    $log[$i]['edit']=$memail==$email?true:false;
     $log[$i]['email']=$email;
     $log[$i]['order_date']=$order_date;
     $log[$i]['ok']=$ok;
-    $log[$i]['email']=$email;
     $i++;
 
   }
@@ -496,7 +498,11 @@ function email_import($email_import="",$nps_sn=""){
 
   $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
   foreach($emails as $email){
+
     $email=trim($email);
+    $email=str_replace("'", "", $email);
+    $email=str_replace('"', "", $email);
+
     if(!empty($email)){
       $sql = "replace into ".$xoopsDB->prefix("tad_news_paper_email")." (`nps_sn`,`email`,`order_date`) values('$nps_sn','$email','{$now}')";
       $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));

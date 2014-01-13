@@ -1,6 +1,5 @@
 <?php
 include_once "header.php";
-include_once "block_function.php";
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php");
@@ -20,7 +19,6 @@ $start=$p*$num+$start_from;
 if($start <= 0 )$start=0;
 //echo "<p>strat:{$start},p:{$p},b:{$b},n:{$n},start_from:{$start_from},num:{$num}</p>";
 
-$tadnews=new tadnews();
 
 $tadnews->set_show_num($num);
 $tadnews->set_view_ncsn($ncsn_arr);

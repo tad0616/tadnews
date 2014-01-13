@@ -7,9 +7,8 @@ include_once XOOPS_ROOT_PATH."/header.php";
 
 //列出某人所有新聞
 function list_tad_my_news(){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$xoopsUser;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$xoopsUser,$tadnews;
 
-  $tadnews=new tadnews();
   $uid=$xoopsUser->uid();
   $tadnews->set_show_enable(0);
   $tadnews->set_view_uid($uid);
@@ -51,7 +50,6 @@ switch($op){
 
   //刪除資料
   case "delete_tad_news":
-  $tadnews=new tadnews();
   $tadnews->delete_tad_news($nsn);
   header("location: ".$_SERVER['PHP_SELF']);
   break;

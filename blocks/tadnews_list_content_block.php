@@ -5,9 +5,10 @@ include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 //區塊主函式 (顯示新聞內容)
 function tadnews_list_content_block_show($options){
   global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig,$xoopsTpl;
-
-  $ncsn_arr=explode(',',$options[7]);
-
+  $ncsn_arr=array();
+  if(isset($options[7])){
+    $ncsn_arr=explode(',',$options[7]);
+  }
   include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 
   $tadnews=new tadnews();

@@ -1,21 +1,7 @@
 <?php
-
 //global
 include_once "global.php";
-
-
-
-define("_MB_TADNEWS_EXPAND_ALL","全部展開");
-define("_MB_TADNEWS_CONTACT_ALL","全部收合");
-
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM0","文章數");
 define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM1","一橫列放幾則新聞");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM6","標題字數");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM6_DESC","（設0，代表完整出現標題。）");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM3","摘要字數");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM3_DESC","（設0，代表不秀出摘要。）");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM4","摘要文字樣式");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM5","封面圖樣式");
 
 define("_MB_TADNEWS_RE_EDIT_BITEM0","列出回應數");
 define("_MB_TADNEWS_RE_EDIT_BITEM1","秀出回應內容長度");
@@ -27,30 +13,22 @@ define("_MB_TADNEWS_CATE_NEWS_EDIT_BITEM3","是否秀出分隔線？");
 
 define("_MB_TADNEWS_NP_EDIT_BITEM0","秀出電子報數");
 define("_MB_TADNEWS_FOCUS_EDIT_BITEM0","請選擇要秀出的新聞");
-define("_MB_TADNEWS_YES","是");
 define("_MB_TADNEWS_NO","否");
 
 define("_MB_TADNEWS_NEWS_TITLE","文章標題");
-define("_MB_TADNEWS_START_DATE","發佈時間");
-define("_MB_TADNEWS_POSTER","發佈者");
 define("_MB_TADNEWS_NEWS_CATE","所屬分類");
 define("_MB_TADNEWS_COUNTER","人氣");
-define("_MB_TADNEWS_LESS","摘要顯示");
-define("_MB_TADNEWS_SHOW_TABLE","表格佈告欄式");
-define("_MB_TADNEWS_SHOW_LIST","文章標題條列式");
 define("_MB_TADNEWS_SHOW_ALL","全文");
 
 define("_MB_TADNEWS_SUBMIT","送出");
 define("_MB_TADNEWS_TITLE","電子報：");
 define("_MB_TADNEWS_NO_NEWSPAPER","尚未建立電子報，無法提供訂閱。");
 define("_MB_TADNEWS_EMAIL","Email ：");
-define("_MB_TADNEWS_ORDER","訂閱 ");
+define("_MB_TADNEWS_ORDER","訂閱");
 define("_MB_TADNEWS_CANCEL","取消");
 define("_MB_TADNEWS_ORDER_COUNT","目前訂閱人數： %s 人");
 
 define("_MB_TADNEWS_NP_TITLE","第 %s 期");
-
-
 
 define("_MB_TADNEWS_PAGE_EDIT_BITEM0","選擇要秀出哪一個分類的所有文章");
 define("_MB_TADNEWS_PAGE_EDIT_BITEM1","標題長度限制");
@@ -58,7 +36,6 @@ define("_MB_TADNEWS_PAGE_EDIT_BITEM1","標題長度限制");
 //tadnews 1.3.1
 define("_MB_TADNEWS_MY_PAGE","請選擇文章");
 define("_MB_TADNEWS_NO_CATE","不分類");
-define("_MB_TADNEWS_NO_TITLE","無標題");
 
 //tadnews 2.0
 define("_MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM0","列出文章數");

@@ -13,62 +13,60 @@ include_once XOOPS_ROOT_PATH."/modules/tadnews/function.php";
 /*-----------function區--------------*/
 
 function list_tadnews($the_ncsn='',$p){
-	global $xoopsDB,$xoopsUser,$xoopsOption,$xoopsTpl,$isAdmin,$xoopsModuleConfig;
+  global $xoopsDB,$xoopsUser,$xoopsOption,$xoopsTpl,$isAdmin,$xoopsModuleConfig,$tadnews;
 
-$num=10;
-$p=!empty($_REQUEST['p'])?intval($_REQUEST['p']):0;
-$b=$p-1;
-$n=$p+1;
-$start=$p*$num;
+  $num=10;
+  $p=!empty($_REQUEST['p'])?intval($_REQUEST['p']):0;
+  $b=$p-1;
+  $n=$p+1;
+  $start=$p*$num;
 
-if($start <= 0 )$start=0;
+  if($start <= 0 )$start=0;
 
-	$tadnews=new tadnews();
+    $tadnews->set_show_num($num);
+    $tadnews->set_skip_news($start);
+    $tadnews->set_news_kind("news");
+    $tadnews->set_summary("page_break");
+    if($the_ncsn>0){
+      $tadnews->set_view_ncsn($the_ncsn);
+      $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
+    }else{
+      $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
+    }
+    $tadnews->set_title_length(20);
+    $tadnews->set_cover(true,"db");
 
-	$tadnews->set_show_num($num);
-  $tadnews->set_skip_news($start);
-	$tadnews->set_news_kind("news");
-	$tadnews->set_summary("page_break");
-  if($the_ncsn>0){
-		$tadnews->set_view_ncsn($the_ncsn);
-		$tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
-	}else{
-		$tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
-	}
-	$tadnews->set_title_length(20);
-	$tadnews->set_cover(true,"db");
+    //if($xoopsModuleConfig['use_star_rating']=='1'){
+    //  $tadnews->set_use_star_rating(true);
+    //}
 
-  //if($xoopsModuleConfig['use_star_rating']=='1'){
-  //  $tadnews->set_use_star_rating(true);
-  //}
+    $tnews=$tadnews->get_news('return');
 
-	$tnews=$tadnews->get_news('return');
+    $i=2;
 
-  $i=2;
+    foreach($tnews['page'] as $news){
+      //$pic=get_news_doc_pic_m("news_pic",$news['nsn'],"thumb","height:80px;width:80px");
 
-  foreach($tnews['page'] as $news){
-    //$pic=get_news_doc_pic_m("news_pic",$news['nsn'],"thumb","height:80px;width:80px");
+      $all_news.=(empty($the_ncsn))?"
+      <li><a href='{$_SERVER['PHP_SELF']}?nsn={$news['nsn']}'>
+      <h3 style='white-space:normal;'>{$news['news_title']}</h3>
+      <p>{$news['post_date']} | {$news['cate_name']}</p>
+      <span class='ui-li-count'>{$news['counter']}</span>
+      </a></li>":"
+      <li><a href='{$_SERVER['PHP_SELF']}?nsn={$news['nsn']}&ncsn={$news['ncsn']}'>
+      <h3 style='white-space:normal;'>{$news['news_title']}</h3>
+      <p>{$news['post_date']} | {$news['cate_name']}</p>
+      <span class='ui-li-count'>{$news['counter']}</span>
+      </a></li>";
+      $i++;
+      $total++;
+    }
 
-    $all_news.=(empty($the_ncsn))?"
-    <li><a href='{$_SERVER['PHP_SELF']}?nsn={$news['nsn']}'>
-    <h3 style='white-space:normal;'>{$news['news_title']}</h3>
-    <p>{$news['post_date']} | {$news['cate_name']}</p>
-    <span class='ui-li-count'>{$news['counter']}</span>
-    </a></li>":"
-    <li><a href='{$_SERVER['PHP_SELF']}?nsn={$news['nsn']}&ncsn={$news['ncsn']}'>
-    <h3 style='white-space:normal;'>{$news['news_title']}</h3>
-    <p>{$news['post_date']} | {$news['cate_name']}</p>
-    <span class='ui-li-count'>{$news['counter']}</span>
-    </a></li>";
-    $i++;
-    $total++;
-  }
+  $b_button=($b < 0)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back ui-disabled'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$b}' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>";
 
-$b_button=($b < 0)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back ui-disabled'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$b}' data-role='button' data-inline='true' data-icon='arrow-l' data-iconpos='left' class='back'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</a>";
+  $n_button=($total < $num)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next ui-disabled'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$n}' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>";
 
-$n_button=($total < $num)?"<a href='#' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next ui-disabled'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>":"<a href='{$_SERVER['PHP_SELF']}?ncsn={$the_ncsn}&p={$n}' data-role='button' data-inline='true' data-icon='arrow-r' data-iconpos='right' class='next'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</a>";
-
-$button="{$b_button}{$n_button}";
+  $button="{$b_button}{$n_button}";
 
   $all_news="
 
@@ -114,25 +112,24 @@ function get_news_doc_pic_m($col_name="",$col_sn="",$mode="big",$style="db",$onl
 
 //顯示單一新聞
 function show_news($nsn="",$m_ncsn=""){
-	global $xoopsUser,$xoopsOption,$xoopsTpl,$isAdmin,$xoopsModuleConfig;
+  global $xoopsUser,$xoopsOption,$xoopsTpl,$isAdmin,$xoopsModuleConfig,$tadnews;
 
-	$tadnews=new tadnews();
-	$tadnews->set_view_nsn($nsn);
-	$tadnews->set_cover(true,"db");
+  $tadnews->set_view_nsn($nsn);
+  $tadnews->set_cover(true,"db");
   $tadnews->set_summary('full');
   //if($xoopsModuleConfig['use_star_rating']=='1'){
   //  $tadnews->set_use_star_rating(true);
   //}
-	$news=$tadnews->get_news('return');
+  $news=$tadnews->get_news('return');
 
-	$back_news="";
-	if(!empty($news['page'][0]['back_news_link'])){
+  $back_news="";
+  if(!empty($news['page'][0]['back_news_link'])){
     $back_news_link=str_replace("index.php","pda.php",$news['page'][0]['back_news_link']);
     $back_news="<a href='{$back_news_link}' class='nav' data-icon='arrow-u'>{$news['page'][0]['back_news_title']}</a>";
   }
 
-	$next_news="";
-	if(!empty($news['page'][0]['next_news_link'])){
+  $next_news="";
+  if(!empty($news['page'][0]['next_news_link'])){
     $next_news_link=str_replace("index.php","pda.php",$news['page'][0]['next_news_link']);
     $next_news="<a href='{$next_news_link}' class='nav' data-icon='arrow-d'>{$news['page'][0]['next_news_title']}</a>";
   }
@@ -257,24 +254,24 @@ function show_news($nsn="",$m_ncsn=""){
 ";
 
 
-	$all=pda_news_format($nsn , $news['page'][0]['news_title'] , $news['page'][0]['content'],$news['page'][0]['fun'] , $news['page'][0]['fun'] ,$news['page'][0]['prefix_tag'] , $news['page'][0]['uid'] ,  $news['page'][0]['ncsn'] , $news['page'][0]['cate_name'] , $news['page'][0]['post_date'], $news['page'][0]['files'] ,$news['page'][0]['g_txt'] , $news['page'][0]['have_read_chk'] , $news['page'][0]['counter']);
+  $all=pda_news_format($nsn , $news['page'][0]['news_title'] , $news['page'][0]['content'],$news['page'][0]['fun'] , $news['page'][0]['fun'] ,$news['page'][0]['prefix_tag'] , $news['page'][0]['uid'] ,  $news['page'][0]['ncsn'] , $news['page'][0]['cate_name'] , $news['page'][0]['post_date'], $news['page'][0]['files'] ,$news['page'][0]['g_txt'] , $news['page'][0]['have_read_chk'] , $news['page'][0]['counter']);
 
   $home="<a href='{$_SERVER['PHP_SELF']}' class='nav'>&#x21E7;"._MD_TADNEWS_TO_MOD."</a>";
 
   $nav="<div data-role='navbar' data-iconpos='left' style='margin-top:10px;margin-bottom:20px'>
   <ul>
-	 <li>$back_news</li>
-	 <li>$next_news</li>
+   <li>$back_news</li>
+   <li>$next_news</li>
    </ul>
   </div>";
 
   $facebook_comments=facebook_comments($xoopsModuleConfig['facebook_comments_width'],'tadnews','index.php','nsn',$nsn);
 
-	$main=$style.$syntaxhighlighter_code.$all.$nav.$facebook_comments;
+  $main=$style.$syntaxhighlighter_code.$all.$nav.$facebook_comments;
 
-	tadnews::add_counter($nsn);
+  $tadnews->add_counter($nsn);
 
-	return $main;
+  return $main;
 }
 
 
@@ -310,7 +307,7 @@ function pda_news_format($nsn="",$title="",$news_content="",$fun="",$fun2="",$pr
   });
   $('#page_{$nsn}').bind('pageshow', function(){
       try{
-          FB.XFBML.parse(); 
+          FB.XFBML.parse();
       }catch(ex){}
   });
   </script>
@@ -327,29 +324,29 @@ function pda_news_format($nsn="",$title="",$news_content="",$fun="",$fun2="",$pr
     $files
     <div style='clear:both;height:10px;'></div>
     <div id='news_toolbar'>{$fun2}</div>
-	$push
+  $push
   </div>
   <div style='clear:both;'></div>";
-	return $main;
+  return $main;
 }
 
 
 //取得分類下拉選單
 /*function get_tad_news_cate_option_m($v=""){
-	global $xoopsDB;
+  global $xoopsDB;
 
-	//$option="<option>"._MD_TADNEWS_NEWS_CATE."</option>";
-	$option="<option value='0'>"._MD_TADNEWS_ALL_CATE."</option>";
-	//$option=="";
-	$sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where not_news!='1' order by sort";
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
+  //$option="<option>"._MD_TADNEWS_NEWS_CATE."</option>";
+  $option="<option value='0'>"._MD_TADNEWS_ALL_CATE."</option>";
+  //$option=="";
+  $sql = "select ncsn,nc_title,not_news from ".$xoopsDB->prefix("tad_news_cate")." where not_news!='1' order by sort";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 
-	while(list($ncsn,$nc_title,$not_news)=$xoopsDB->fetchRow($result)){
+  while(list($ncsn,$nc_title,$not_news)=$xoopsDB->fetchRow($result)){
 
-		$selected=($v==$ncsn)?"selected":"";
-		$option.="<option value='{$ncsn}' $selected>{$nc_title}</option>";
-	}
-	return $option;
+    $selected=($v==$ncsn)?"selected":"";
+    $option.="<option value='{$ncsn}' $selected>{$nc_title}</option>";
+  }
+  return $option;
 }*/
 
 //取得分類下拉選單2
@@ -394,14 +391,12 @@ function month_list_m($now_date=""){
 
 //分月新聞
 function archive_m($date=""){
-  global $xoopsModuleConfig;
+  global $xoopsModuleConfig,$tadnews;
 
   if(empty($date)){
     $date=date("Y-m");
   }
 
-
-  $tadnews=new tadnews();
   //$tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
   $tadnews->set_show_mode('list');
@@ -432,7 +427,7 @@ function archive_m($date=""){
 //列出newspaper資料
 function list_newspaper_m(){
   global $xoopsDB,$xoopsOption;
-  
+
   $sql = "select a.npsn,a.number,b.title,a.np_date from ".$xoopsDB->prefix("tad_news_paper")." as a ,".$xoopsDB->prefix("tad_news_paper_setup")." as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc";
 
 
@@ -451,7 +446,7 @@ function list_newspaper_m(){
   $main
   </ul>
   ";
-  
+
   return $main;
 
 }
@@ -530,8 +525,8 @@ switch($_REQUEST['op']){
   $TadUpFiles->add_file_counter($files_sn,$hash=false);
   exit;
   break;
-  
-  
+
+
 
   case "month_list":
     $main=month_list_m($date);
@@ -553,16 +548,16 @@ switch($_REQUEST['op']){
     $cate="ePaper";
   break;
 
-	default:
+  default:
   $title=$xoopsModule->getVar('name');
   $cates=get_all_news_cate();
   $cate=(empty($cates[$ncsn]))?"$title":"$title-$cates[$ncsn]";
-	if(!empty($nsn)){
-		$main=show_news($nsn,$ncsn);
-	}else{
-		$main=list_tadnews($ncsn,$p);
-	}
-	break;
+  if(!empty($nsn)){
+    $main=show_news($nsn,$ncsn);
+  }else{
+    $main=list_tadnews($ncsn,$p);
+  }
+  break;
 }
 
 
@@ -687,11 +682,11 @@ input.ui-input-text {
 <body>
 <div data-role='page' id='page_{$nsn}' data-add-back-btn='true'>
   <div data-role='header' data-id='header' data-theme='a' data-position='fixed'>
-	<h1>$cate</h1>
+  <h1>$cate</h1>
   <a href='#category' data-icon='bars' data-iconpos='notext' class='ui-btn-right'>Menu</a>
   </div>
   <div data-role='content' id='content'>
-	$main
+  $main
   </div>
 <div data-role='footer' data-id='footer' data-position='fixed'>
   <div data-role='navbar' class='nav'>

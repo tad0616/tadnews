@@ -37,14 +37,12 @@ function month_list($now_date=""){
 
 //¤À¤ë·s»D
 function archive($date=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu;
+  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
   if(empty($date)){
     $date=date("Y-m");
   }
 
-
-  $tadnews=new tadnews();
   //$tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
   $tadnews->set_show_mode('list');
