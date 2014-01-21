@@ -60,15 +60,4 @@ function preview_newspaper($npsn=""){
   return $main;
 }
 
-
-//¿é¥X¬°UTF8
-function to_utf8($buffer=""){
-  if(_CHARSET=="UTF-8"){
-    return $buffer;
-  }else{
-    $buffer=iconv(_CHARSET,"UTF-8",$buffer);
-    return $buffer;
-  }
-}
-
 ?>
