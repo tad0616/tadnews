@@ -16,10 +16,12 @@ function update_mail(){
   if($_POST['mode']=="add"){
     $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
     $sql = "replace into ".$xoopsDB->prefix("tad_news_paper_email")." (nps_sn,email,order_date) values('{$_POST['nps_sn']}','{$_POST['newspaper_email']}','{$now}')";
+    die($sql);
     $xoopsDB->query($sql) or redirect_header(XOOPS_URL,3, sprintf(_MD_TADNEWS_ORDER_ERROR,$newspaper_set['title']));
     redirect_header(XOOPS_URL,3, sprintf(_MD_TADNEWS_ORDER_SUCCESS,$newspaper_set['title']));
   }elseif($_POST['mode']=="del"){
     $sql = "delete from ".$xoopsDB->prefix("tad_news_paper_email")." where email='{$_POST['newspaper_email']}'";
+    die($sql);
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3, sprintf(_TADNEWS_DEL_ERROR,$newspaper_set['title']));
     redirect_header(XOOPS_URL,3, sprintf(_TADNEWS_DEL_SUCCESS,$newspaper_set['title']));
   }
@@ -41,11 +43,6 @@ function check_email_mx($email) {
 
 
 /*-----------執行動作判斷區----------*/
-$_REQUEST['op']=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
-switch($_REQUEST['op']){
+update_mail();
 
-  default:
-  update_mail();
-  break;
-}
 ?>
