@@ -749,7 +749,7 @@ class tadnews{
         //$title=xoops_substr($nsnsort['back']['title'], 0, 30);
         $title=mb_substr ($nsnsort['back']['title'], 0, 20 , _CHARSET)."...";
         $date=substr($nsnsort['back']['date'],5);
-        $back_news_link=XOOPS_URL."/modules/tadnews/index.php?nsn={$nsnsort['back']['nsn']}";
+        $back_news_link=XOOPS_URL."/modules/tadnews/{$link_page}?nsn={$nsnsort['back']['nsn']}";
         $back_news_title=($this->kind==="page")?$title:"{$date} {$title}";
       }
 
@@ -762,7 +762,7 @@ class tadnews{
         $title=mb_substr ($nsnsort['next']['title'], 0, 20 , _CHARSET)."...";
         $date=substr($nsnsort['next']['date'],5);
 
-        $next_news_link=XOOPS_URL."/modules/tadnews/index.php?nsn={$nsnsort['next']['nsn']}";
+        $next_news_link=XOOPS_URL."/modules/tadnews/{$link_page}?nsn={$nsnsort['next']['nsn']}";
         $next_news_title=($this->kind==="page")?$title:"{$date} {$title}";
       }
 
