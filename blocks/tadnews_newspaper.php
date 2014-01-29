@@ -21,7 +21,7 @@ function tadnews_newspaper($options){
 
   $block['counter']=sprintf(_MB_TADNEWS_ORDER_COUNT,$counter);
   $block['option']=$option;
-  $block['email']=isset($xoopsUser)?$xoopsUser->email():"";
+  $block['email']=$xoopsUser?$xoopsUser->email():"";
   return $block;
 }
 
