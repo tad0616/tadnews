@@ -73,4 +73,6 @@ define("_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4","使用的滑動圖文外掛")
 define("_MB_TADNEWS_FOCUS_EDIT_BITEM1","顯示全文或摘要？");
 define("_MB_TADNEWS_FOCUS_FULL","全文");
 define("_MB_TADNEWS_FOCUS_SUMMARY","摘要");
+define("_MB_TADNEWS_LOADING","新聞載入中，請稍後...");
+
 ?>

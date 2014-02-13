@@ -70,4 +70,5 @@ define("_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4","Responsive Slider:");
 define("_MB_TADNEWS_FOCUS_EDIT_BITEM1","Does show full content or summary?");
 define("_MB_TADNEWS_FOCUS_FULL","full content");
 define("_MB_TADNEWS_FOCUS_SUMMARY","summary");
+define("_MB_TADNEWS_LOADING","News Loading...");
 ?>
