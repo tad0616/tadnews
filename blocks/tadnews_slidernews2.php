@@ -11,7 +11,7 @@ function tadnews_slidernews2_show($options){
   }
   include_once XOOPS_ROOT_PATH."/modules/tadtools/{$options[2]}.php";
 
-  $ncsn_arr=explode(',',$options[4]);
+  $ncsn_arr=explode(',',$options[3]);
 
   include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 

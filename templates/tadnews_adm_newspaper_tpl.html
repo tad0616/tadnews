@@ -5,13 +5,13 @@
 
 
 <{if $op=="creat_newspaper" or $op=="modify"}>
-	<script type="text/javascript" src="../class/nicEdit.js"></script>
+  <script type="text/javascript" src="../class/nicEdit.js"></script>
   <script type="text/javascript">
-  	//bkLib.onDomLoaded(function() { nicEditors.allTextAreas()});
-  	bkLib.onDomLoaded(function() {
-    	new nicEditor({fullPanel : true}).panelInstance('head');
-    	new nicEditor({fullPanel : true}).panelInstance('foot');
-  	});
+    //bkLib.onDomLoaded(function() { nicEditors.allTextAreas()});
+    bkLib.onDomLoaded(function() {
+      new nicEditor({fullPanel : true}).panelInstance('head');
+      new nicEditor({fullPanel : true}).panelInstance('foot');
+    });
   </script>
   <h2><{$smarty.const._MA_TADNEWS_NP_STEP1}></h2>
 
@@ -57,20 +57,20 @@
 
 <{elseif $op=="add_newspaper"}>
 
-	<script type="text/javascript" src="../class/tmt_core.js"></script>
-	<script type="text/javascript" src="../class/tmt_spry_linkedselect.js"></script>
-	<script type="text/javascript">
-	function getOptions()
-	  {
-	  var x=document.getElementById("destination");
-	  txt="";
-	  for (i=0;i<x.length;i++)
-	    {
-	    txt=txt + "," + x.options[i].value;
-	    }
-	  document.getElementById("all_news").value=txt;
-	  }
-	</script>
+  <script type="text/javascript" src="../class/tmt_core.js"></script>
+  <script type="text/javascript" src="../class/tmt_spry_linkedselect.js"></script>
+  <script type="text/javascript">
+  function getOptions()
+    {
+    var x=document.getElementById("destination");
+    txt="";
+    for (i=0;i<x.length;i++)
+      {
+      txt=txt + "," + x.options[i].value;
+      }
+    document.getElementById("all_news").value=txt;
+    }
+  </script>
 
   <h2><{$smarty.const._MA_TADNEWS_NP_STEP2}></h2>
   <form action="newspaper.php" method="post" id="myForm" class="form-horizontal">
@@ -87,21 +87,21 @@
     <div class="control-group">
       <label class="control-label"><{$smarty.const._MA_TADNEWS_NP_CONTENT}></label>
       <div class="controls controls-row">
-        <select name="repository" id="repository" size="12" multiple="multiple"	tmt:linkedselect="true" class="span4">
+        <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="span4">
           <{$opt}>
         </select>
 
         <div class="span1">
-      		<img src="../images/right.png" onclick="tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();"><br>
-      		<img src="../images/left.png" onclick="tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();"><br><br>
+          <img src="../images/right.png" onclick="tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();"><br>
+          <img src="../images/left.png" onclick="tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();"><br><br>
 
           <img src="../images/up.png" onclick="tmt.spry.linkedselect.util.moveOptionUp('destination');getOptions();"><br>
-        	<img src="../images/down.png" onclick="tmt.spry.linkedselect.util.moveOptionDown('destination');getOptions();">
-    		</div>
+          <img src="../images/down.png" onclick="tmt.spry.linkedselect.util.moveOptionDown('destination');getOptions();">
+        </div>
 
         <select id="destination" size="12" multiple="multiple" tmt:linkedselect="true" class="span4">
-  			 <{$opt2}>
-  			</select>
+         <{$opt2}>
+        </select>
       </div>
     </div>
 
@@ -144,12 +144,12 @@
 <{elseif $op=="sendmail"}>
 
   <script>
-		function delete_tad_news_email_func(email){
-			var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-			if (!sure)	return;
-			location.href="newspaper.php?op=delete_tad_news_email_npsn&npsn=<{$npsn}>&nps_sn=<{$nps_sn}>&email=" + email;
-		}
-	</script>
+    function delete_tad_news_email_func(email){
+      var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
+      if (!sure)  return;
+      location.href="newspaper.php?op=delete_tad_news_email_npsn&npsn=<{$npsn}>&nps_sn=<{$nps_sn}>&email=" + email;
+    }
+  </script>
 
   <h2><{$smarty.const._MA_TADNEWS_NP_STEP4}></h2>
 
@@ -185,12 +185,12 @@
 
 <{elseif $op=="newspaper_email"}>
   <script>
-		function delete_tad_news_email_func(email){
-		var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-			if (!sure)	return;
-			location.href="newspaper.php?op=delete_tad_news_email&nps_sn=<{$nps_sn}>&g2p=<{$g2p}>&email=" + email;
-		}
-	</script>
+    function delete_tad_news_email_func(email){
+    var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
+      if (!sure)  return;
+      location.href="newspaper.php?op=delete_tad_news_email&nps_sn=<{$nps_sn}>&g2p=<{$g2p}>&email=" + email;
+    }
+  </script>
   <h2><{$title}><{$smarty.const._MA_TADNEWS_NP_EMAIL}></h2>
 
   <div class="row-fluid"><a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a></div>
@@ -213,7 +213,7 @@
           <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
           <input type="hidden" name="g2p" value="<{$g2p}>">
           <input type="submit" value="<{$smarty.const._MA_TADNEWS_SAVE_CATE}>">
-      		</form>
+          </form>
         </td>
       <{else}>
         <td><{$log.email}></td>
@@ -227,7 +227,7 @@
         <td><{$log.order_date}></td>
         <td>
           <a href="newspaper.php?op=newspaper_email&nps_sn=<{$nps_sn}>&memail=<{$log.email}>&g2p=<{$g2p}>" class="btn btn-mini btn-warning"><{$smarty.const._TADNEWS_EDIT}></a>
-    			<a href="javascript:delete_tad_news_email_func('<{$log.email}>');" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
+          <a href="javascript:delete_tad_news_email_func('<{$log.email}>');" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
         </td>
         <td>
           <{$log.data}>
