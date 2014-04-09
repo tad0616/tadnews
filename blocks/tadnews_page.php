@@ -19,7 +19,7 @@ function tadnews_page($options){
   $home['url']=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
 
   $page=block_get_page_cate($options[0]);
-
+//die(var_export($page));
   $dtree=new dtree("tadnews_mypage_tree{$ncsn}",$home,$page['title'],$page['of_ncsn'],$page['url']);
   $block=$dtree->render();
   return $block;
@@ -68,19 +68,47 @@ if(!function_exists("block_get_all_not_news_cate")){
 
 //樹狀選項
 if(!function_exists("block_get_page_cate")){
-  function block_get_page_cate($the_ncsn=0){
+  function block_get_page_cate($the_ncsn=0,$i=10000){
     global $xoopsDB;
 
     $sql="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
+    //die($sql);
     $result=$xoopsDB->query($sql);
-    $i=10000;
     $myts =MyTextSanitizer::getInstance();
     while(list($ncsn,$of_ncsn,$nc_title)=$xoopsDB->fetchRow($result)){
+      //第一層底下的目錄
       if($the_ncsn!=$ncsn){
         $page['title'][$ncsn]=$nc_title;
         $page['of_ncsn'][$ncsn]=$of_ncsn;
         $page['url'][$ncsn]=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
+
+        $the_ncsn=$ncsn;
+        $sql3="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
+        $result3=$xoopsDB->query($sql3);
+        while(list($ncsn,$of_ncsn,$nc_title)=$xoopsDB->fetchRow($result3)){
+          //第二層底下的目錄
+          if($the_ncsn!=$ncsn){
+            $page['title'][$ncsn]=$nc_title;
+            $page['of_ncsn'][$ncsn]=$of_ncsn;
+            $page['url'][$ncsn]=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
+          }
+
+          //第二層底下的文章
+          $sql4="select nsn,ncsn,news_title from ".$xoopsDB->prefix("tad_news")." where ncsn='$ncsn' order by page_sort";
+          $result4=$xoopsDB->query($sql4);
+          $j=$ncsn*10000;
+          while(list($nsn,$ncsn,$news_title)=$xoopsDB->fetchRow($result4)){
+            $myts->htmlSpecialChars($news_title);
+            $page['title'][$j]=$news_title;
+            $page['of_ncsn'][$j]=$ncsn;
+            $page['url'][$j]=XOOPS_URL."/modules/tadnews/page.php?nsn={$nsn}";
+            $j++;
+          }
+
+        }
       }
+
+      //第一層底下的文章
       $sql2="select nsn,ncsn,news_title from ".$xoopsDB->prefix("tad_news")." where ncsn='$ncsn' order by page_sort";
       $result2=$xoopsDB->query($sql2);
       while(list($nsn,$ncsn,$news_title)=$xoopsDB->fetchRow($result2)){
@@ -89,8 +117,11 @@ if(!function_exists("block_get_page_cate")){
         $page['of_ncsn'][$i]=$ncsn;
         $page['url'][$i]=XOOPS_URL."/modules/tadnews/page.php?nsn={$nsn}";
         $i++;
+
       }
+
     }
+
     return $page;
   }
 }

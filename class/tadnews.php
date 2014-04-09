@@ -569,6 +569,7 @@ class tadnews{
 
     $and_enable=($this->show_enable==1)?"and enable='1'":"";
 
+    //die($this->view_month);
 
     if(!empty($this->skip_news)){
       $limit=(empty($this->show_num) or $this->show_num==='none')?"":"limit {$this->skip_news} , {$this->show_num}";
@@ -576,14 +577,13 @@ class tadnews{
     }else{
       $limit=empty($this->show_num)?"10":$this->show_num;
       $sql = "select * from ".$xoopsDB->prefix("tad_news")." where 1 $where_news $and_enable $where_uid $where_tag $where_cate  $date_chk  $desc";
-      if(empty($this->view_month) or $this->show_num!='none'){
+      if(empty($this->view_month) and $this->show_num!='none'){
         //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
         $PageBar=getPageBar($sql,$limit);
         $bar=$PageBar['bar'];
         $sql=$PageBar['sql'];
       }
     }
-
     //die($sql);
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
