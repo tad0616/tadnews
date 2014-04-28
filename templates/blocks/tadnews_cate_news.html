@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<{$block.xoops_url}>/modules/tadnews/iconize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
 <{$block.bootstrap}>
 <style>
 #centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
@@ -16,10 +16,10 @@
         </a>
       </div>
       <div class="span10">
-      <{else}>  
+      <{else}>
       <div class="span12">
       <{/if}>
-      <h4><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>    
+      <h4><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
       <ul>
       <{foreach from=$all_news.news item=news}>
         <li>

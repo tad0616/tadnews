@@ -570,7 +570,7 @@ class tadnews{
     $and_enable=($this->show_enable==1)?"and enable='1'":"";
 
     //die($this->view_month);
-
+    $bar="";
     if(!empty($this->skip_news)){
       $limit=(empty($this->show_num) or $this->show_num==='none')?"":"limit {$this->skip_news} , {$this->show_num}";
       $sql = "select * from ".$xoopsDB->prefix("tad_news")." where 1 $where_news $and_enable $where_uid $where_tag $where_cate  $date_chk  $desc $limit";
@@ -1408,10 +1408,12 @@ class tadnews{
       $reader_uid="";
     }
 
+    $speed=is_null($this->tadnewsConfig['fancybox_playspeed'])?NULL:$this->tadnewsConfig['fancybox_playspeed'];
     //show_files($upname="",$thumb=true,$show_mode="",$show_description=false,$show_dl=false,$limit=null,$path=null)
 
     $this->TadUpFiles->set_col('nsn',$nsn);
-    $files=$this->TadUpFiles->show_files('upfile',true,$mode,true,false,NULL,XOOPS_URL."/modules/tadnews/index.php");  //是否縮圖,顯示模式 filename、small,顯示描述,顯示下載次數
+    $files=$this->TadUpFiles->show_files('upfile',true,$mode,true,false,NULL,XOOPS_URL."/modules/tadnews/index.php",NULL,$speed);
+    //上傳表單name, 是否縮圖, 顯示模式 (filename、small), 顯示描述, 顯示下載次數, 數量限制, 自訂路徑, 加密, 自動播放時間(0 or 3000)
 
     $news=$this->get_tad_news($nsn);
 
@@ -1465,12 +1467,12 @@ class tadnews{
 
     $and_enable=($mode=="all")?"":"and enable='1'";
 
-    $sql="select color,tag from ".$xoopsDB->prefix("tad_news_tags")." where `tag_sn`='$tag_sn' {$and_enable}";
+    $sql="select font_color,color,tag from ".$xoopsDB->prefix("tad_news_tags")." where `tag_sn`='$tag_sn' {$and_enable}";
     $result=$xoopsDB->query($sql);
-    list($color,$tag)=$xoopsDB->fetchRow($result);
+    list($font_color,$color,$tag)=$xoopsDB->fetchRow($result);
 
 
-    $prefix_tag="<span class=\"label\" style='background-color:$color;font-weight:normal;cursor:pointer;' onClick=\"location.href='".XOOPS_URL."/modules/tadnews/index.php?tag_sn=$tag_sn'\" >$tag</span>";
+    $prefix_tag="<span class=\"label\" style='background-color:$color;font-weight:normal;cursor:pointer;color:$font_color;text-shadow:none;' onClick=\"location.href='".XOOPS_URL."/modules/tadnews/index.php?tag_sn=$tag_sn'\" >$tag</span>";
     return $prefix_tag;
   }
 

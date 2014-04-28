@@ -96,6 +96,7 @@ define("_MA_TADNEWS_CATE_SHOW_NAV","Show Navigation Button");
 
 //tag.php
 define('_MA_TADNEWS_TAG_TITLE' , 'Tag');
+define('_MA_TADNEWS_TAG_FONTCOLOR' , 'Text color');
 define('_MA_TADNEWS_TAG_COLOR' , 'Color');
 define('_MA_TADNEWS_TAG_ENABLE' , 'Enable?');
 define('_MA_TADNEWS_TAG_DEMO' , 'Demo');

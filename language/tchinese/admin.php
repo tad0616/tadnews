@@ -96,6 +96,7 @@ define("_MA_TADNEWS_CATE_SHOW_NAV","使用上下頁鈕");
 
 //tag.php
 define('_MA_TADNEWS_TAG_TITLE' , '標籤');
+define('_MA_TADNEWS_TAG_FONTCOLOR' , '文字顏色');
 define('_MA_TADNEWS_TAG_COLOR' , '顏色');
 define('_MA_TADNEWS_TAG_ENABLE' , '是否使用');
 define('_MA_TADNEWS_TAG_DEMO' , '範例');

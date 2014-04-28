@@ -62,7 +62,7 @@ $block.="<table class='table table-striped'><tr>{$blockTitle}</tr>";
 
 $i=2;
 
-//$total=0;
+$total=0;
 foreach($all_news['page'] as $news){
 
   $need_sign=(!empty($news['need_sign']))?"<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>":"";

@@ -105,18 +105,19 @@ CREATE TABLE `tad_news_paper_send_log` (
 CREATE TABLE `tad_news_tags` (
   `tag_sn` smallint(5) UNSIGNED NOT NULL auto_increment,
   `tag` varchar(255) NOT NULL default '',
+  `font_color` varchar(255) NOT NULL default '',
   `color` varchar(255) NOT NULL default '',
   `enable` enum('0','1') NOT NULL default '1',
   PRIMARY KEY  (`tag_sn`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `tad_news_tags` (`tag_sn`, `tag`, `color`, `enable`) VALUES
-(1, '公告', 'blue', '1'),
-(2, '緊急', 'red', '1'),
-(3, '調查', '#993333', '1'),
-(4, '活動', '#99CC33', '1'),
-(5, '注意', '#999900', '1'),
-(6, '重要', '#0066CC', '1');
+INSERT INTO `tad_news_tags` (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
+(1, '公告', 'white', 'blue', '1'),
+(2, '緊急', 'white', 'red', '1'),
+(3, '調查', 'white', '#993333', '1'),
+(4, '活動', 'white', '#99CC33', '1'),
+(5, '注意', 'white', '#999900', '1'),
+(6, '重要', 'white', '#0066CC', '1');
 
 
 CREATE TABLE `tadnews_rank` (

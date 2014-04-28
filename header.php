@@ -2,9 +2,11 @@
 include_once "../../mainfile.php";
 
 if($xoopsModuleConfig['use_pda']=='1'){
+  $nsn=(isset($_REQUEST['nsn']))?intval($_REQUEST['nsn']) : 0;
+  $ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : 0;
   if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/mobile_device_detect.php")){
     include_once XOOPS_ROOT_PATH."/modules/tadtools/mobile_device_detect.php";
-    mobile_device_detect(true,false,true,true,true,true,true,'pda.php',false);
+    mobile_device_detect(true,false,true,true,true,true,true,"pda.php?nsn={$nsn}&ncsn={$ncsn}",false);
   }
 }
 

@@ -13,12 +13,13 @@ function xoops_module_update_tadnews(&$module, $old_version) {
     if(!chk_chk16()) go_update16();
     if(!chk_chk17()) go_update17();
     if(!chk_chk18()) go_update18();
+    if(!chk_chk19()) go_update19();
+
 
     $old_fckeditor=XOOPS_ROOT_PATH."/modules/tadnews/fckeditor";
     if(is_dir($old_fckeditor)){
       delete_directory($old_fckeditor);
       delete_directory(XOOPS_ROOT_PATH."/modules/tadnews/dhtmlgoodies_calendar");
-
     }
     return true;
 }
@@ -289,6 +290,28 @@ function go_update18(){
 
   $sql="update ".$xoopsDB->prefix("tadnews_files_center")." set
   `original_filename`=`description`";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL."/modules/system/admin.php?fct=modulesadmin",30,  mysql_error());
+}
+
+
+//·s¼W font_color Äæ¦ì
+function chk_chk19(){
+  global $xoopsDB;
+  $sql="select count(`font_color`) from ".$xoopsDB->prefix("tad_news_tags");
+  $result=$xoopsDB->query($sql);
+  if(empty($result)) return false;
+  return true;
+}
+
+
+function go_update19(){
+  global $xoopsDB;
+  $sql="ALTER TABLE ".$xoopsDB->prefix("tad_news_tags")."
+  ADD `font_color` varchar(255) NOT NULL default '' after `tag`";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL."/modules/system/admin.php?fct=modulesadmin",30,  mysql_error());
+
+  $sql="update ".$xoopsDB->prefix("tad_news_tags")." set
+  `font_color`='#ffffff'";
   $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL."/modules/system/admin.php?fct=modulesadmin",30,  mysql_error());
 }
 

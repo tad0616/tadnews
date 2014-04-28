@@ -80,8 +80,6 @@ define("_MI_TADNEWS_DOWNLOAD_AFTER_READ","簽收後始能下載檔案");
 define("_MI_TADNEWS_DOWNLOAD_AFTER_READ_DESC","若該新聞是需要簽收的，必須簽收後才能下載附檔。");
 define("_MI_TADNEWS_CREAT_CATE_GROUP","可直接開設分類的群組");
 define("_MI_TADNEWS_CREAT_CATE_GROUP_DESC","設定可以發文直接開設分類的群組");
-//define("_MI_TADNEWS_USE_KCFINDER","是否使用KCFinder檔案管理員？");
-//define("_MI_TADNEWS_USE_KCFINDER_DESC","進階的FCK編輯器外掛，需要PHP5以上才支援。");
 define("_MI_TADNEWS_BNAME10","條列式新聞");
 define("_MI_TADNEWS_BDESC10","文章標題條列式");
 define("_MI_TADNEWS_BNAME11","表格式新聞");
@@ -98,13 +96,16 @@ define("_MI_TADNEWS_BNAME14","自動縮放的滑動新聞");
 define("_MI_TADNEWS_BDESC14","以文章封面圖為底的滑動新聞（可視裝置自動縮放）");
 
 
-//define("_MI_TADNEWS_USE_EMBED","是否開啟嵌入語法");
-//define("_MI_TADNEWS_USE_EMBED_DESC","若選是，將會出現嵌入語法的設定按鈕及頁面");
-
 define("_MI_COVER_PIC_CSS","內文封面圖的CSS預設值");
 define("_MI_COVER_PIC_CSS_DESC","將封面圖插入內文時的外觀CSS預設值");
 
 
 define("_MI_TADNEWS_EDITOR","請選擇欲使用的編輯器");
 define("_MI_TADNEWS_EDITOR_DESC","elRTE 可用於手機等行動裝置，CKEditor則不行");
+
+define("_MI_TADNEWS_FANCYBOX_SPEED","設定附檔的自動播放速度");
+define("_MI_TADNEWS_FANCYBOX_SPEED_DESC","預設為 5000（5秒）自動播放，設成 0 即不自動播放。");
+
+define("_MI_TADNEWS_MARQUEE","跑馬燈區塊");
+define("_MI_TADNEWS_MARQUEE_DESC","相當於條列新聞做成跑馬燈之意");
 ?>

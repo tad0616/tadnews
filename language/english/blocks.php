@@ -71,4 +71,16 @@ define("_MB_TADNEWS_FOCUS_EDIT_BITEM1","Does show full content or summary?");
 define("_MB_TADNEWS_FOCUS_FULL","full content");
 define("_MB_TADNEWS_FOCUS_SUMMARY","summary");
 define("_MB_TADNEWS_LOADING","News Loading...");
+
+define('_MB_TADNEWS_MARQUEE_DIRECTION','Direction');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_LEFT','left');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_RIGHT','right');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_UP','up');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_DOWN','down');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_DESC','');
+define('_MB_TADNEWS_MARQUEE_DURATION','Duration');
+define('_MB_TADNEWS_MARQUEE_CSS','Marquee CSS Style');
+define('_MB_TADNEWS_MARQUEE_CSS_DEFAULT','Default CSS:');
+define('_MB_TADNEWS_MARQUEE_ITEM_CSS','Marquee item CSS Style');
+
 ?>
