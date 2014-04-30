@@ -4,7 +4,7 @@
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/multiple-file-upload/jquery.MultiFile.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
 
 <{$jquery_code}>
 <{$toolbar}>
@@ -203,7 +203,7 @@
 
               <div class="span1">
                 <label><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}></label>
-                <input type="color" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height:20px;width:20px;" onChange="$('#demo_cover_pic').css('border-color',this.value);" />
+                <input type="text" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height:20px;width:20px;" onChange="$('#demo_cover_pic').css('border-color',this.value);" />
               </div>
             </div>
 

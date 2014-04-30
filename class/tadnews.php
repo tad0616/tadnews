@@ -1716,7 +1716,7 @@ class tadnews{
     $jquery_code="
     <script type=\"text/javascript\">
     $('#color').mColorPicker({
-    imageFolder: '".XOOPS_URL."/modules/tadnews/class/mColorPicker/images/'
+    imageFolder: '".XOOPS_URL."/modules/tadtools/mColorPicker/images/'
     });
 
     $(document).ready(function() {

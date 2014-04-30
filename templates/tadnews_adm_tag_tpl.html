@@ -8,11 +8,11 @@
 <{$jquery}>
 
 
-<script type="text/javascript" src="../class/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
 
 <script type="text/JavaScript">
   $(".color").mColorPicker({
-    imageFolder: "../class/mColorPicker/images/"
+    imageFolder: "<{$xoops_url}>/modules/tadtools/mColorPicker/images/"
   });
 
   function delete_tag(tag_sn){
@@ -40,17 +40,17 @@
         <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
         <td><input type="text" name="tag" value="<{$tag}>" class="span2"></td>
         <td>
-          <input type="color" name="font_color" class="span2 color" value="<{$font_color}>" id="font_color" data-hex="true">
+          <input type="text" name="font_color" class="span2 color" value="<{$font_color}>" id="font_color" data-hex="true">
         </td>
         <td>
-          <input type="color" name="color" class="span2 color" value="<{$color}>" id="color" data-hex="true">
+          <input type="text" name="color" class="span2 color" value="<{$color}>" id="color" data-hex="true">
         </td>
         <td>
           <label class="radio inline">
-            <input type="radio" name="enable" value="1" <{$tag.enable_1}>><{$smarty.const._YES}>
+            <input type="radio" name="enable" value="1" checked><{$smarty.const._YES}>
           </label>
           <label class="radio inline">
-            <input type="radio" name="enable" value="0" <{$tag.enable_0}>><{$smarty.const._NO}>
+            <input type="radio" name="enable" value="0" ><{$smarty.const._NO}>
           </label>
         </td>
         <td>
@@ -67,18 +67,18 @@
           <td><input type="text" name="tag" value="<{$tag.tag}>" class="span2"></td>
 
           <td>
-            <input type="color" name="font_color" class="span2 color" value="<{$tag.font_color}>" id="font_color" data-hex="true">
+            <input type="text" name="font_color" class="span2 color" value="<{$tag.font_color}>" id="font_color" data-hex="true">
           </td>
           <td>
-            <input type="color" name="color" class="span2 color" value="<{$tag.color}>" id="color" data-hex="true">
+            <input type="text" name="color" class="span2 color" value="<{$tag.color}>" id="color" data-hex="true">
           </td>
 
           <td>
             <label class="radio inline">
-              <input type="radio" name="enable" value="1" <{$tag.enable_1}>><{$smarty.const._YES}>
+              <input type="radio" name="enable" value="1"  <{if $tag.enable=='1' or $tag.enable==''}>checked<{/if}>><{$smarty.const._YES}>
             </label>
             <label class="radio inline">
-              <input type="radio" name="enable" value="0" <{$tag.enable_0}>><{$smarty.const._NO}>
+              <input type="radio" name="enable" value="0" <{if $tag.enable=='0'}>checked<{/if}>><{$smarty.const._NO}>
             </label>
           </td>
           <td>

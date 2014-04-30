@@ -27,8 +27,7 @@ function list_tad_news_tags($def_tag_sn=""){
     $tagarr[$i]['enable_txt']=($enable=='1')?_YES:_NO;
     $tagarr[$i]['tool']="<a href='tag.php?tag_sn=$tag_sn' class='btn btn-info'>"._TADNEWS_EDIT."</a> $enable_btn $del";
     $tagarr[$i]['mode']=($def_tag_sn==$tag_sn)?"edit":"show";
-    $tagarr[$i]['enable_1']=($def_tag_sn==$tag_sn)?chk($enable,'1','1'):"";
-    $tagarr[$i]['enable_0']=($def_tag_sn==$tag_sn)?chk($enable,'0'):"";
+    $tagarr[$i]['enable']=($def_tag_sn==$tag_sn)?1:"";
     $tagarr[$i]['amount']=sprintf(_MA_TADNEWS_TAG_AMOUNT,$tag_amount);
     $i++;
 
@@ -40,15 +39,14 @@ function list_tad_news_tags($def_tag_sn=""){
   $xoopsTpl->assign( "tag" , $tag) ;
   $xoopsTpl->assign( "font_color" , $font_color) ;
   $xoopsTpl->assign( "color" , $color) ;
-  $xoopsTpl->assign( "enable1" , chk($enable,'1','1')) ;
-  $xoopsTpl->assign( "enable0" , chk($enable,'0')) ;
+  $xoopsTpl->assign( "enable" , $enable) ;
   return $main;
 }
 
 function insert_tad_news_tags(){
   global $xoopsDB;
 
-  $sql = "insert into ".$xoopsDB->prefix("tad_news_tags")."  (`tag` , `font_color`, `color`  , `enable`) values('{$_POST['tag']}', '{$_POST['font_color']}',, '{$_POST['color']}', '{$_POST['enable']}') ";
+  $sql = "insert into ".$xoopsDB->prefix("tad_news_tags")."  (`tag` , `font_color`, `color`  , `enable`) values('{$_POST['tag']}', '{$_POST['font_color']}', '{$_POST['color']}', '{$_POST['enable']}') ";
   $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
 }
 

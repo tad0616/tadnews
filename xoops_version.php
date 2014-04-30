@@ -418,14 +418,6 @@ $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = '1';
 
 $i++;
-$modversion['config'][$i]['name'] = 'use_social_tools';
-$modversion['config'][$i]['title'] = '_MI_SOCIALTOOLS_TITLE';
-$modversion['config'][$i]['description'] = '_MI_SOCIALTOOLS_TITLE_DESC';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = '1';
-
-$i++;
 $modversion['config'][$i]['name'] = 'use_star_rating';
 $modversion['config'][$i]['title'] = '_MI_STAR_RATING_TITLE';
 $modversion['config'][$i]['description'] = '_MI_STAR_RATING_DESC';
