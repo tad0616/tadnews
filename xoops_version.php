@@ -407,7 +407,7 @@ $modversion['config'][$i]['title'] = '_MI_USE_PDA_TITLE';
 $modversion['config'][$i]['description'] = '_MI_USE_PDA_TITLE_DESC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = '1';
+$modversion['config'][$i]['default'] = '0';
 
 $i++;
 $modversion['config'][$i]['name'] = 'use_social_tools';

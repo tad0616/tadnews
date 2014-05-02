@@ -1,7 +1,7 @@
 <?php
 include_once "../../mainfile.php";
 
-if($xoopsModuleConfig['use_pda']=='1'){
+if($xoopsModuleConfig['use_pda']=='1' and strpos($_SERVER['PHP_SELF'], "ajax.php")===false){
   $nsn=(isset($_REQUEST['nsn']))?intval($_REQUEST['nsn']) : 0;
   $ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : 0;
   if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/mobile_device_detect.php")){

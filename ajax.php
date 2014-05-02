@@ -3,6 +3,13 @@ include_once "header.php";
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php");
+if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php")){
+  include_once XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php";
+
+  $FooTable = new FooTable();
+  $FooTableJS=$FooTable->render();
+}
+
 $op=isset($_REQUEST['op'])?$_REQUEST['op']:"";
 
 $num=!empty($_POST['num'])?intval($_POST['num']):10;
@@ -43,21 +50,26 @@ foreach($_POST['cell'] as $col){
 if(empty($show_col))$show_col=array('start_day','news_title','uid','ncsn','counter');
 
 
-$block="";
+$block=$FooTableJS;
 
 
-$tt['start_day']="<th style='width:80px;'>".to_utf8(_MD_TADNEWS_START_DATE)."</th>";
-$tt['news_title']="<th>".to_utf8(_MD_TADNEWS_NEWS_TITLE)."</th>";
-$tt['uid']="<th style='width:80px;'>".to_utf8(_MD_TADNEWS_POSTER)."</th>";
-$tt['ncsn']="<th style='width:80px;'>".to_utf8(_MD_TADNEWS_NEWS_CATE)."</th>";
-$tt['counter']="<th>".to_utf8(_MD_TADNEWS_COUNTER)."</th>";
+$tt['start_day']="<th data-hide='phone' style='width:80px;'>".to_utf8(_MD_TADNEWS_START_DATE)."</th>";
+$tt['news_title']="<th data-class='expand'>".to_utf8(_MD_TADNEWS_NEWS_TITLE)."</th>";
+$tt['uid']="<th data-hide='phone' style='width:80px;'>".to_utf8(_MD_TADNEWS_POSTER)."</th>";
+$tt['ncsn']="<th data-hide='phone' style='width:80px;'>".to_utf8(_MD_TADNEWS_NEWS_CATE)."</th>";
+$tt['counter']="<th data-hide='phone'>".to_utf8(_MD_TADNEWS_COUNTER)."</th>";
 $blockTitle="";
 foreach($show_col as $colname){
   $blockTitle.=$tt[$colname];
 }
 
 
-$block.="<table class='table table-striped'><tr>{$blockTitle}</tr>";
+$block.="
+<table class='table table-striped footable'>
+<thead>
+  <tr>{$blockTitle}</tr>
+</thead>
+";
 
 
 $i=2;
