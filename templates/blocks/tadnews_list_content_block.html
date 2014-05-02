@@ -10,22 +10,45 @@
 
 <{if $block.page}>
   <div class="row-fluid">
-    <ul>
-      <{foreach item=page from=$block.page}>
-        <li>
-          <{$page.post_date}>
-          <{$page.pic}>
-          <{$page.prefix_tag}>
-          <{if $page.need_sign}>
-            <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
-          <{/if}>
-          <{$page.enable_txt}>
-          <{$page.today_pic}>
-          <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-          <{$page.content}>
-        </li>
-      <{/foreach}>
-    </ul>
+    <{if $block.display_mode=="table"}>
+    <table class="table table-striped">
+      <tbody>
+        <{foreach item=page from=$block.page}>
+          <tr>
+            <td>
+              <{$page.chkbox}>
+              <{$page.post_date}>
+
+              <{$page.prefix_tag}>
+              <{if $page.need_sign}>
+                <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
+              <{/if}>
+              <{$page.enable_txt}><{$page.today_pic}>
+              <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
+              <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
+            </td>
+          </tr>
+        <{/foreach}>
+      </tbody>
+    </table>
+    <{else}>
+      <ul>
+        <{foreach item=page from=$block.page}>
+          <li>
+            <{$page.post_date}>
+            <{$page.pic}>
+            <{$page.prefix_tag}>
+            <{if $page.need_sign}>
+              <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
+            <{/if}>
+            <{$page.enable_txt}>
+            <{$page.today_pic}>
+            <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
+            <{$page.content}>
+          </li>
+        <{/foreach}>
+      </ul>
+    <{/if}>
   </div>
 
 <{/if}>

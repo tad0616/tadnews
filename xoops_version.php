@@ -237,7 +237,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC10;
 $modversion['blocks'][$i]['show_func'] = "tadnews_list_content_block_show";
 $modversion['blocks'][$i]['template'] = "tadnews_list_content_block.html";
 $modversion['blocks'][$i]['edit_func'] = "tadnews_list_content_block_edit";
-$modversion['blocks'][$i]['options'] = "5|100|color:gray;font-size:11px;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0";
+$modversion['blocks'][$i]['options'] = "5|100|color:gray;font-size:11px;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|list";
 
 
 $i++;

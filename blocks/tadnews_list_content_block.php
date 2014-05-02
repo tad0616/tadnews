@@ -24,6 +24,7 @@ function tadnews_list_content_block_show($options){
   $block=$tadnews->get_news('return');
   if(empty($block['page']))return;
   $block['bootstrap']=get_bootstrap();
+  $block['display_mode']=empty($options[8])?"list":$options[8];
 
   return $block;
 }
@@ -33,6 +34,8 @@ function tadnews_list_content_block_edit($options){
 
   $options4_1=($options[4]=="1")?"checked":"";
   $options4_0=($options[4]=="0")?"checked":"";
+  $options8_1=($options[8]=="list")?"checked":"";
+  $options8_0=($options[8]=="table")?"checked":"";
 
   $option=block_news_cate($options[7]);
 
@@ -55,18 +58,18 @@ function tadnews_list_content_block_edit($options){
   <div>ex: <span style='color:#0066CC;font-size:11px;'>color:gray;font-size:11px;margin-top:3px;line-height:150%;</span></div>
   </td></tr>
   <tr><th>
-  "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM3."
+  "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM3.""._MB_TADNEWS_LIST_TEMPLATE_NOTE."
   </th><td>
   <INPUT type='text' name='options[3]' value='{$options[3]}' size=6>"._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM3_DESC."
   </td></tr>
   <tr><th>
-  "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM4."
+  "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM4.""._MB_TADNEWS_LIST_TEMPLATE_NOTE."
   </th><td>
   <INPUT type='radio' name='options[4]' value='1' $options4_1>"._YES."
   <INPUT type='radio' name='options[4]' value='0' $options4_0>"._NO."
   </td></tr>
   <tr><th>
-  "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM5."
+  "._MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM5.""._MB_TADNEWS_LIST_TEMPLATE_NOTE."
   </th><td>
   <textarea name='options[5]' style='width:400px;height:40px;font-family:Arial;font-size:13px;'>{$options[5]}</textarea>
   <div>ex: <span style='color:#0066CC;font-size:11px;'>width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;</span></div>
@@ -78,6 +81,13 @@ function tadnews_list_content_block_edit($options){
   </td></tr>
   <tr><th>"._MB_TADNEWS_CATE_NEWS_EDIT_BITEM0."</th><td>{$option['form']}
   <INPUT type='hidden' name='options[7]' id='bb' value='{$options[7]}'></td></tr>
+
+  <tr><th>
+  "._MB_TADNEWS_LIST_TEMPLATE."
+  </th><td>
+  <INPUT type='radio' name='options[8]' value='list' $options8_1>"._MB_TADNEWS_LIST_TEMPLATE_LIST."
+  <INPUT type='radio' name='options[8]' value='table' $options8_0>"._MB_TADNEWS_LIST_TEMPLATE_TABLE."
+  </td></tr>
   </table>
   ";
   return $form;

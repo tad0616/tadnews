@@ -75,6 +75,7 @@ define("_MB_TADNEWS_FOCUS_FULL","ゅ");
 define("_MB_TADNEWS_FOCUS_SUMMARY","篕璶");
 define("_MB_TADNEWS_LOADING","穝籇更い叫祔...");
 
+
 define('_MB_TADNEWS_MARQUEE_DIRECTION','よ');
 define('_MB_TADNEWS_MARQUEE_DIRECTION_LEFT','■');
 define('_MB_TADNEWS_MARQUEE_DIRECTION_RIGHT','△');
@@ -85,5 +86,11 @@ define('_MB_TADNEWS_MARQUEE_DURATION','硉计禫禫篊');
 define('_MB_TADNEWS_MARQUEE_CSS','CSS砞﹚ぃ砞');
 define('_MB_TADNEWS_MARQUEE_CSS_DEFAULT','ヘ玡CSS箇砞');
 define('_MB_TADNEWS_MARQUEE_ITEM_CSS','禲皑縊ず甧兜ヘCSS砞﹚');
+
+
+define('_MB_TADNEWS_LIST_TEMPLATE_NOTE','兵家Α礚ノ');
+define('_MB_TADNEWS_LIST_TEMPLATE','瞷家Α');
+define('_MB_TADNEWS_LIST_TEMPLATE_LIST','兵家Α');
+define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','兵家Α家舱兵家Α');
 
 ?>

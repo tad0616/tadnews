@@ -49,12 +49,7 @@ ML.Config = {
 <{$author_select}>
 <table class="table table-striped">
   <tr>
-      <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_TITLE}></th>
-      <{if $show_admin_tool_title}>
-      <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_PASSWD}></th>
-      <th nowrap><{$smarty.const._MD_TADNEWS_CAN_READ_NEWS_GROUP}></th>
-      <th nowrap><{$smarty.const._TAD_FUNCTION}></th>
-      <{/if}>
+    <th nowrap><{$smarty.const._MD_TADNEWS_NEWS_TITLE}></th>
   </tr>
   <tbody id="sort">
     <{foreach item=page from=$page}>

@@ -88,4 +88,9 @@ define('_MB_TADNEWS_MARQUEE_CSS_DEFAULT','目前CSS預設值：');
 define('_MB_TADNEWS_MARQUEE_ITEM_CSS','跑馬燈內容項目的CSS設定');
 
 
+define('_MB_TADNEWS_LIST_TEMPLATE_NOTE','（在表格條列模式無作用）');
+define('_MB_TADNEWS_LIST_TEMPLATE','呈現模式');
+define('_MB_TADNEWS_LIST_TEMPLATE_LIST','原條列模式');
+define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','表格條列模式（同模組首頁的條列模式）');
+
 ?>

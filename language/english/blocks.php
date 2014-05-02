@@ -83,4 +83,9 @@ define('_MB_TADNEWS_MARQUEE_CSS','Marquee CSS Style');
 define('_MB_TADNEWS_MARQUEE_CSS_DEFAULT','Default CSS:');
 define('_MB_TADNEWS_MARQUEE_ITEM_CSS','Marquee item CSS Style');
 
+define('_MB_TADNEWS_LIST_TEMPLATE_NOTE',' (disable in table mode))');
+define('_MB_TADNEWS_LIST_TEMPLATE','Display type');
+define('_MB_TADNEWS_LIST_TEMPLATE_LIST','List mode');
+define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','Table mode');
+
 ?>
