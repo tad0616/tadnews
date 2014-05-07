@@ -24,7 +24,7 @@ define("_MB_TADNEWS_SUBMIT","送出");
 define("_MB_TADNEWS_TITLE","電子報：");
 define("_MB_TADNEWS_NO_NEWSPAPER","尚未建立電子報，無法提供訂閱。");
 define("_MB_TADNEWS_EMAIL","Email ：");
-define("_MB_TADNEWS_ORDER","訂閱");
+define("_MB_TADNEWS_ORDER","訂閱 ");
 define("_MB_TADNEWS_CANCEL","取消");
 define("_MB_TADNEWS_ORDER_COUNT","目前訂閱人數： %s 人");
 
