@@ -635,23 +635,10 @@ class tadnews{
       //製作新聞標題內容，及密碼判斷
       $have_pass=(isset($_SESSION['have_pass']))?$_SESSION['have_pass']:array();
 
-      if(!empty($passwd) and !empty($this->summary_num)){
-        $tadnews_passw=(isset($_POST['tadnews_passwd']))?$_POST['tadnews_passwd']:"";
-        if($tadnews_passw != $passwd and !in_array($nsn,$have_pass)){
-          $news_content="<div class='hero-unit'>
-          <p>"._TADNEWS_NEWS_NEED_PASSWD."</p>
-          <form action='".XOOPS_URL."/modules/tadnews/index.php' method='post'>
-            <fieldset>
-            <input type='hidden' name='nsn' value='{$nsn}'>
-            <input type='password' name='tadnews_passwd'>
-            <button type='submit' class='btn btn-primary'>"._TADNEWS_SUBMIT."</button>
-            </fieldset>
-          </form>
-          </div>";
-        }else{
-          $_SESSION['have_pass'][]=$nsn;
-        }
-      }elseif(!empty($this->summary_num) and is_numeric($this->summary_num)){
+      $file_mode=$this->show_mode=='one'?"":"small";
+      $tadnews_files=$this->get_news_files($nsn,$file_mode);
+
+      if(!empty($this->summary_num) and is_numeric($this->summary_num)){
         $news_content=strip_tags($news_content);
         $news_content=str_replace("--summary--","",$news_content);
 
@@ -692,6 +679,42 @@ class tadnews{
 
         $more=(empty($content[1]))?"":"<p><a href='".XOOPS_URL."/modules/tadnews/index.php?nsn={$nsn}'>"._TADNEWS_MORE."...</a></p>";
         $news_content=$content[0].$more;
+      }
+
+
+      //if(!empty($passwd) and !empty($this->summary_num)){
+      if(!empty($passwd)){
+        $tadnews_passw=(isset($_POST['tadnews_passwd']))?$_POST['tadnews_passwd']:"";
+        if($tadnews_passw != $passwd and !in_array($nsn,$have_pass)){
+          if($this->show_mode=="one"){
+          $news_content="
+            <div class='hero-unit'>
+            <p>"._TADNEWS_NEWS_NEED_PASSWD."</p>
+            <form action='".XOOPS_URL."/modules/tadnews/index.php' method='post'>
+              <fieldset>
+              <input type='hidden' name='nsn' value='{$nsn}'>
+              <input type='password' name='tadnews_passwd'>
+              <button type='submit' class='btn btn-primary'>"._TADNEWS_SUBMIT."</button>
+              </fieldset>
+            </form>
+            </div>";
+          }else{
+            $news_content="
+            <div>
+            <div>"._TADNEWS_NEWS_NEED_PASSWD."</div>
+            <form action='".XOOPS_URL."/modules/tadnews/index.php' method='post' style='display:inline'>
+              <fieldset>
+              <input type='hidden' name='nsn' value='{$nsn}'>
+              <input type='password' name='tadnews_passwd'>
+              <button type='submit' class='btn btn-primary'>"._TADNEWS_SUBMIT."</button>
+              </fieldset>
+            </form>
+            </div>";
+          }
+          $tadnews_files="";
+        }else{
+          $_SESSION['have_pass'][]=$nsn;
+        }
       }
 
       $have_read_chk=$this->have_read_chk($have_read_group,$nsn);
@@ -735,8 +758,6 @@ class tadnews{
         $rating_js=$rating->render();
       }
 
-      $file_mode=$this->show_mode=='one'?"":"small";
-      $tadnews_files=$this->get_news_files($nsn,$file_mode);
 
       $prefix_tag=$this->mk_prefix_tag($prefix_tag);
 
