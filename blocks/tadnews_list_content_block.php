@@ -5,26 +5,21 @@ include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 //區塊主函式 (顯示新聞內容)
 function tadnews_list_content_block_show($options){
   global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig,$xoopsTpl;
-  $ncsn_arr=array();
-  if(isset($options[7])){
-    $ncsn_arr=explode(',',$options[7]);
-  }
-  include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 
-  $tadnews=new tadnews();
-
-  $tadnews->set_show_num($options[0]);
-  $tadnews->set_view_ncsn($ncsn_arr);
-  $tadnews->set_show_mode('list');
-  $tadnews->set_news_kind("news");
-  $tadnews->set_summary($options[1],$options[2]);
-  $tadnews->set_title_length($options[3]);
-  $tadnews->set_cover($options[4],$options[5]);
-  $tadnews->set_skip_news($options[6]);
-  $block=$tadnews->get_news('return');
-  if(empty($block['page']))return;
+  $block['jquery_path']=get_jquery();
   $block['bootstrap']=get_bootstrap();
+  $block['randStr']=randStr(8);
+  $block['num']=$options[0];
+  $block['summary_length']=$options[1];
+  $block['summary_css']=$options[2];
+  $block['title_length']=$options[3];
+  $block['show_cover']=$options[4];
+  $block['cover_css']=$options[5];
+  $block['start_from']=$options[6];
+  $block['show_ncsn']=isset($options[7])?$options[7]:"";
   $block['display_mode']=empty($options[8])?"list":$options[8];
+  $block['show_button']=$options[9];
+  $block['HTTP_HOST']=get_xoops_url();
 
   return $block;
 }
@@ -36,6 +31,8 @@ function tadnews_list_content_block_edit($options){
   $options4_0=($options[4]=="0")?"checked":"";
   $options8_1=($options[8]=="list")?"checked":"";
   $options8_0=($options[8]=="table")?"checked":"";
+  $chked1_0=($options[9]=="1")?"checked":"";
+  $chked1_1=($options[9]=="0")?"checked":"";
 
   $option=block_news_cate($options[7]);
 
@@ -87,6 +84,12 @@ function tadnews_list_content_block_edit($options){
   </th><td>
   <INPUT type='radio' name='options[8]' value='list' $options8_1>"._MB_TADNEWS_LIST_TEMPLATE_LIST."
   <INPUT type='radio' name='options[8]' value='table' $options8_0>"._MB_TADNEWS_LIST_TEMPLATE_TABLE."
+  </td></tr>
+  <tr><th>
+  "._MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM1."
+  </th><td>
+  <INPUT type='radio' $chked1_0 name='options[9]' value='1'>"._YES."
+  <INPUT type='radio' $chked1_1 name='options[9]' value='0'>"._NO."
   </td></tr>
   </table>
   ";

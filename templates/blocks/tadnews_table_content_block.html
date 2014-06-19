@@ -1,9 +1,10 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
 <{$block.bootstrap}>
 <style>
-#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
+  #centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
 </style>
 <{$block.jquery_path}>
+
 <script type="text/javascript">
   $(document).ready(function(){
     view_content<{$block.randStr}>(0);
@@ -25,6 +26,5 @@
 	}
 
 </script>
-<div>
-  <div id="msg_results<{$block.randStr}>"><{$smarty.const._MB_TADNEWS_LOADING}></div>
-</div>
+
+<div id="msg_results<{$block.randStr}>"><{$smarty.const._MB_TADNEWS_LOADING}></div>

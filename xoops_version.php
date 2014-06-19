@@ -4,7 +4,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADNEWS_NAME;
-$modversion['version'] = 3.3;
+$modversion['version'] = 3.4;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author'] = 'Tad (tad0616@gmail.com)';
 $modversion['credits'] = 'geek01';
@@ -16,7 +16,7 @@ $modversion['dirname'] = basename(dirname(__FILE__));
 
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2014/04/16';
+$modversion['release_date'] = '2014/05/20';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status'] = 'release';
@@ -237,7 +237,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC10;
 $modversion['blocks'][$i]['show_func'] = "tadnews_list_content_block_show";
 $modversion['blocks'][$i]['template'] = "tadnews_list_content_block.html";
 $modversion['blocks'][$i]['edit_func'] = "tadnews_list_content_block_edit";
-$modversion['blocks'][$i]['options'] = "5|100|color:gray;font-size:11px;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|list";
+$modversion['blocks'][$i]['options'] = "5|100|color:gray;font-size:11px;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|list|0";
 
 
 $i++;

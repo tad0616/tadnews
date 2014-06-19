@@ -10,8 +10,6 @@ if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php")){
   $FooTableJS=$FooTable->render();
 }
 
-$op=isset($_REQUEST['op'])?$_REQUEST['op']:"";
-
 $num=!empty($_POST['num'])?intval($_POST['num']):10;
 $show_button=!empty($_POST['show_button'])?$_POST['show_button']:"";
 $start_from=intval($_POST['start_from']);

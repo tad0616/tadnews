@@ -25,7 +25,7 @@ CREATE TABLE `tad_news` (
   `start_day` datetime NOT NULL default '0000-00-00 00:00:00',
   `end_day` datetime default NULL default '0000-00-00 00:00:00',
   `enable` enum('1','0') NOT NULL default '1',
-  `uid` smallint(5) unsigned NOT NULL default 0,
+  `uid` mediumint(8) unsigned NOT NULL default 0,
   `passwd` varchar(255) NOT NULL default '',
   `enable_group` varchar(255) NOT NULL default '',
   `counter` smallint(5) unsigned NOT NULL default 0,
@@ -88,7 +88,7 @@ CREATE TABLE `tad_news_paper_setup` (
 CREATE TABLE `tad_news_sign` (
   `sign_sn` mediumint(8) UNSIGNED NOT NULL auto_increment,
   `nsn` SMALLINT UNSIGNED NOT NULL  default 0,
-  `uid` SMALLINT UNSIGNED NOT NULL  default 0,
+  `uid` mediumint(8) UNSIGNED NOT NULL  default 0,
   `sign_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`sign_sn`)
 ) ENGINE=MyISAM;
@@ -125,7 +125,7 @@ CREATE TABLE `tadnews_rank` (
   `col_name` varchar(100) NOT NULL default '',
   `col_sn` smallint(5) unsigned NOT NULL default 0,
   `rank` tinyint(3) unsigned NOT NULL default 0,
-  `uid` smallint(5) unsigned NOT NULL default 0,
+  `uid` mediumint(8) unsigned NOT NULL default 0,
   `rank_date` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY (`col_name`,`col_sn`,`uid`)
 ) ENGINE=MyISAM;
