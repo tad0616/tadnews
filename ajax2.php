@@ -57,7 +57,7 @@ if($display_mode=='table'){
           {$need_sign}
           {$news['enable_txt']}{$news['today_pic']}
           <a href='".XOOPS_URL."/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
-          <span style='color:gray;font-size:12px;'> (<a href='index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='".XOOPS_URL."/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
+          <span style='color:gray;font-size:12px;'> (<a href='".XOOPS_URL."/modules/tadnews/index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='".XOOPS_URL."/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
         </td>
       </tr>";
       $total++;

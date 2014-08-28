@@ -1,7 +1,7 @@
 CREATE TABLE `tadnews_files_center` (
   `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `col_name` varchar(255) NOT NULL default '',
-  `col_sn` smallint(5) unsigned NOT NULL default 0,
+  `col_sn` mediumint(9) unsigned NOT NULL default 0,
   `sort` smallint(5) unsigned NOT NULL default 0,
   `kind` enum('img','file') NOT NULL default 'img',
   `file_name` varchar(255) NOT NULL default '',

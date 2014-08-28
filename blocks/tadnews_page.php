@@ -10,16 +10,31 @@ function tadnews_page($options){
   include_once XOOPS_ROOT_PATH."/modules/tadtools/dtree.php";
   if(empty($options[0]))return;
 
-  $sql="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$options[0]}'";
+  $sql="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$options[0]}' and not_news='1' ";
   $result=$xoopsDB->query($sql);
   list($ncsn,$of_ncsn,$nc_title)=$xoopsDB->fetchRow($result);
 
-  $home['sn']=$ncsn;
-  $home['title']=$nc_title;
-  $home['url']=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
+  if(empty($ncsn)){
+    $sql="select ncsn from ".$xoopsDB->prefix("tad_news_cate")." where not_news='1' and of_ncsn=0 order by ncsn limit 0,1";
+    //die($sql);
+    $result=$xoopsDB->query($sql);
+    list($ncsn)=$xoopsDB->fetchRow($result);
 
-  $page=block_get_page_cate($options[0]);
-//die(var_export($page));
+    $sql="select ncsn,of_ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where ncsn='{$ncsn}'";
+    $result=$xoopsDB->query($sql);
+    list($ncsn,$of_ncsn,$nc_title)=$xoopsDB->fetchRow($result);
+  }
+
+    $home['sn']=$ncsn;
+    $home['title']=$nc_title;
+    $home['url']=XOOPS_URL."/modules/tadnews/page.php?ncsn={$ncsn}";
+
+
+
+
+
+  $page=block_get_page_cate($ncsn);
+
   $dtree=new dtree("tadnews_mypage_tree{$ncsn}",$home,$page['title'],$page['of_ncsn'],$page['url']);
   $block=$dtree->render();
   return $block;

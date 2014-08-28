@@ -14,7 +14,9 @@ function xoops_module_update_tadnews(&$module, $old_version) {
     if(!chk_chk17()) go_update17();
     if(!chk_chk18()) go_update18();
     if(!chk_chk19()) go_update19();
-
+    //調整檔案上傳欄位col_sn為mediumint(9)格式
+    if(chk_files_center()) go_update_files_center();
+    if(chk_uid()) go_update_uid();
 
     $old_fckeditor=XOOPS_ROOT_PATH."/modules/tadnews/fckeditor";
     if(is_dir($old_fckeditor)){
@@ -315,6 +317,48 @@ function go_update19(){
   $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL."/modules/system/admin.php?fct=modulesadmin",30,  mysql_error());
 }
 
+
+//修正col_sn欄位
+function chk_files_center(){
+  global $xoopsDB;
+  $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE table_name = '".$xoopsDB->prefix("tadnews_files_center")."' AND COLUMN_NAME = 'col_sn'";
+  $result=$xoopsDB->query($sql);
+  list($type)=$xoopsDB->fetchRow($result);
+  if($type=='smallint')return true;
+  return false;
+}
+
+//執行更新
+function go_update_files_center(){
+  global $xoopsDB;
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tadnews_files_center")."` CHANGE `col_sn` `col_sn` mediumint(9) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  return true;
+}
+
+//修正uid欄位
+function chk_uid(){
+  global $xoopsDB;
+  $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE table_name = '".$xoopsDB->prefix("tad_news")."' AND COLUMN_NAME = 'uid'";
+  $result=$xoopsDB->query($sql);
+  list($type)=$xoopsDB->fetchRow($result);
+  if($type=='smallint')return true;
+  return false;
+}
+
+//執行更新
+function go_update_uid(){
+  global $xoopsDB;
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tad_news")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tad_news_sign")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tadnews_rank")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  return true;
+}
 
 //建立目錄
 function mk_dir($dir=""){

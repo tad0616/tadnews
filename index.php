@@ -5,12 +5,15 @@ include_once "header.php";
 /*-----------function區--------------*/
 
 //列出所有tad_news資料(summary模式)
-function list_tad_summary_news($the_ncsn=""){
+function list_tad_summary_news($the_ncsn="",$show_uid=""){
   global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
   $tadnews->set_summary("page_break");
+  if(!empty($show_uid)){
+    $tadnews->set_view_uid($show_uid);
+  }
   if($the_ncsn>0){
     $tadnews->set_view_ncsn($the_ncsn);
     $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
@@ -30,11 +33,14 @@ function list_tad_summary_news($the_ncsn=""){
 
 
 //列出所有tad_news資料
-function list_tad_all_news($the_ncsn=""){
+function list_tad_all_news($the_ncsn="",$show_uid=""){
   global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
   $tadnews->set_news_kind("news");
+  if(!empty($show_uid)){
+    $tadnews->set_view_uid($show_uid);
+  }
   if($the_ncsn>0){
     $tadnews->set_view_ncsn($the_ncsn);
     $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
@@ -62,12 +68,15 @@ function list_tad_tag_news($tag_sn=""){
 
 
 //列出所有tad_news資料
-function list_tad_cate_news($show_ncsn=0,$the_level=0){
+function list_tad_cate_news($show_ncsn=0,$the_level=0,$show_uid=""){
   global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
 
   $tadnews->set_news_kind("news");
   $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
   $tadnews->set_show_num($xoopsModuleConfig['show_num']);
+  if(!empty($show_uid)){
+    $tadnews->set_view_uid($show_uid);
+  }
   $tadnews->get_cate_news();
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
@@ -177,6 +186,7 @@ $uid=(isset($_REQUEST['uid']))?intval($_REQUEST['uid']) : "";
 $kind=(empty($_REQUEST['kind']))?"":$_REQUEST['kind'];
 $tag_sn=(isset($_REQUEST['tag_sn']))?intval($_REQUEST['tag_sn']) : "";
 
+$show_uid=(isset($_REQUEST['show_uid']))?intval($_REQUEST['show_uid']) : "";
 switch($op){
 
   //下載檔案
@@ -241,15 +251,15 @@ switch($op){
     if($xoopsModuleConfig['show_mode']=="summary"){
       $xoopsOption['template_main'] = "tadnews_index_summary_tpl.html";
       include XOOPS_ROOT_PATH."/header.php";
-      list_tad_summary_news();
+      list_tad_summary_news(NULL,$show_uid);
     }elseif($xoopsModuleConfig['show_mode']=="cate"){
       $xoopsOption['template_main'] = "tadnews_index_cate_tpl.html";
       include XOOPS_ROOT_PATH."/header.php";
-      list_tad_cate_news();
+      list_tad_cate_news(NULL,NULL,$show_uid);
     }else{
       $xoopsOption['template_main'] = "tadnews_list_tpl.html";
       include XOOPS_ROOT_PATH."/header.php";
-      list_tad_all_news();
+      list_tad_all_news(NULL,$show_uid);
     }
   }
 

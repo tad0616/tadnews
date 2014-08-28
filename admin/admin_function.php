@@ -196,14 +196,15 @@ function change_kind($ncsn="",$not_news=""){
   global $xoopsDB,$xoopsModuleConfig;
 
   $sql = "update ".$xoopsDB->prefix("tad_news_cate")." set not_news='{$not_news}' , of_ncsn='0' where ncsn ='{$ncsn}'";
-  $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_UPDATE_ERROR1."<br>$sql");
+  $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_UPDATE_ERROR1);
 
   //先找看看底下有無分類，若有將其也一起變
   $sub_cate=get_sub_cate($ncsn);
-  $where=empty($sub_cate)?"where ncsn ='{$ncsn}'":"where ncsn in ($sub_cate)";
+  if(!empty($sub_cate)){
+    $sql = "update ".$xoopsDB->prefix("tad_news_cate")." set not_news='{$not_news}' where ncsn in ($sub_cate)";
+    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_UPDATE_ERROR1);
+  }
 
-  $sql = "update ".$xoopsDB->prefix("tad_news_cate")." set not_news='{$not_news}' $where";
-  $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADNEWS_DB_UPDATE_ERROR1."<br>$sql");
   if($not_news==1){
     header("location: page_cate.php");
   }else{

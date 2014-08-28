@@ -2114,6 +2114,12 @@ class tadnews{
   private function creat_tad_news_cate($of_ncsn="",$new_cate="",$not_news='0'){
     global $xoopsDB;
     $enable_group=$enable_post_group=$setup="";
+    if(!empty($of_ncsn)){
+      $cate=$this->get_tad_news_cate($of_ncsn);
+      $enable_group=$cate['enable_group'];
+      $enable_post_group=$cate['enable_post_group'];
+      $setup=$cate['setup'];
+    }
     $sort=$this->get_max_sort($of_ncsn);
 
     $myts =MyTextSanitizer::getInstance();
