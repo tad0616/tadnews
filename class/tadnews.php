@@ -900,6 +900,7 @@ class tadnews{
           $xoopsTpl->assign('xoops_meta_description',  strip_tags($all_news[0]['content']));
         }
         $xoopsTpl->assign('xoops_module_header', "<meta property='og:image' content='{$all_news[0]['image_big']}'/>  <meta property='og:title' content='{$all_news[0]['news_title']}'/>");
+        $xoopsTpl->assign("xoops_pagetitle",$all_news[0]['news_title']);
       }
 
 
@@ -1507,9 +1508,11 @@ class tadnews{
     if($this->kind==="page"){
       $news=$this->get_tad_news($now_nsn);
       $now_ncsn=$news['ncsn'];
-      $order="page_sort";
+      $order="a.page_sort";
+      $not_news="and b.not_news='1'";
     }else{
-      $order="start_day desc";
+      $order="a.start_day desc";
+      $not_news="and b.not_news='0'";
     }
 
     //取得目前使用者的所屬群組
@@ -1518,10 +1521,10 @@ class tadnews{
     }else{
       $User_Groups=array();
     }
-    $where_cate=($now_ncsn)?"and ncsn='$now_ncsn'":"";
+    $where_cate=($now_ncsn)?"and a.ncsn='$now_ncsn'":"";
 
 
-    $sql = "select nsn,news_title,start_day,enable_group,ncsn from ".$xoopsDB->prefix("tad_news")."  where enable='1' $where_cate and start_day < '{$today}' and (end_day > '{$today}' or end_day='0000-00-00 00:00:00') order by {$order}";
+    $sql = "select a.nsn,a.news_title,a.start_day,a.enable_group,a.ncsn from ".$xoopsDB->prefix("tad_news")." as a left join ".$xoopsDB->prefix("tad_news_cate")." as b on a.ncsn=b.ncsn where a.enable='1' $not_news $where_cate and a.start_day < '{$today}' and (a.end_day > '{$today}' or a.end_day='0000-00-00 00:00:00') order by {$order}";
 
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, $sql);
