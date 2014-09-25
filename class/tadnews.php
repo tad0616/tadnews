@@ -1494,7 +1494,7 @@ class tadnews{
     list($font_color,$color,$tag)=$xoopsDB->fetchRow($result);
 
 
-    $prefix_tag="<span class=\"label\" style='background-color:$color;font-weight:normal;cursor:pointer;color:$font_color;text-shadow:none;' onClick=\"location.href='".XOOPS_URL."/modules/tadnews/index.php?tag_sn=$tag_sn'\" >$tag</span>";
+    $prefix_tag="<a class='label' style='background-color:$color;font-weight:normal;color:$font_color;text-shadow:none;' href='".XOOPS_URL."/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>";
     return $prefix_tag;
   }
 
