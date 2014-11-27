@@ -88,4 +88,6 @@ define('_MB_TADNEWS_LIST_TEMPLATE','Display type');
 define('_MB_TADNEWS_LIST_TEMPLATE_LIST','List mode');
 define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','Table mode');
 
+define('_MB_TADNEWS_PAGE_EDIT_BITEM2','Font size:');
+
 ?>

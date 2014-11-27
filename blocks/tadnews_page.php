@@ -36,7 +36,7 @@ function tadnews_page($options){
   $page=block_get_page_cate($ncsn);
 
   $dtree=new dtree("tadnews_mypage_tree{$ncsn}",$home,$page['title'],$page['of_ncsn'],$page['url']);
-  $block=$dtree->render();
+  $block=$dtree->render($options[2]);
   return $block;
 }
 
@@ -53,6 +53,9 @@ function tadnews_page_edit($options){
   <br />
   "._MB_TADNEWS_PAGE_EDIT_BITEM1."
   <INPUT type='text' name='options[1]' value='{$options[1]}' size=3> px
+  <br />
+  "._MB_TADNEWS_PAGE_EDIT_BITEM2."
+  <INPUT type='text' name='options[2]' value='{$options[2]}' size=3>
   ";
   return $form;
 }

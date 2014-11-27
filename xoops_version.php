@@ -210,7 +210,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC7;
 $modversion['blocks'][$i]['show_func'] = "tadnews_page";
 $modversion['blocks'][$i]['template'] = "tadnews_page.html";
 $modversion['blocks'][$i]['edit_func'] = "tadnews_page_edit";
-$modversion['blocks'][$i]['options'] = "|160";
+$modversion['blocks'][$i]['options'] = "|160|12px";
 
 $i++;
 $modversion['blocks'][$i]['file'] = "tadnews_focus_news.php";

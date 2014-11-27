@@ -93,4 +93,6 @@ define('_MB_TADNEWS_LIST_TEMPLATE','瞷家Α');
 define('_MB_TADNEWS_LIST_TEMPLATE_LIST','兵家Α');
 define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','兵家Α家舱兵家Α');
 
+define('_MB_TADNEWS_PAGE_EDIT_BITEM2','ゅ');
+
 ?>

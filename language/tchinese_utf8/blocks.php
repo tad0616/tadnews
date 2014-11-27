@@ -93,4 +93,6 @@ define('_MB_TADNEWS_LIST_TEMPLATE','呈現模式');
 define('_MB_TADNEWS_LIST_TEMPLATE_LIST','原條列模式');
 define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','表格條列模式（同模組首頁的條列模式）');
 
+define('_MB_TADNEWS_PAGE_EDIT_BITEM2','文字大小');
+
 ?>
