@@ -34,7 +34,7 @@ define("_MD_TADNEWS_END_DATE","End Date");
 define("_MD_TADNEWS_NEWS_PASSWD","Password");
 define("_MD_TADNEWS_ADV_SETUP","Advance Settings");
 define("_MD_TADNEWS_SAVE_NEWS","Save");
-define("_MD_TADNEWS_CAN_READ_NEWS_GROUP","Available Groups");<br>Non-select for publishing immediatelly.");<br>Non-select for forever visible.");
+define("_MD_TADNEWS_CAN_READ_NEWS_GROUP","Available Groups");
 define("_MD_TADNEWS_NEWS_CATE","Category");
 define("_MD_TADNEWS_NEWS_ENABLE","Save as");
 define("_MD_TADNEWS_NEWS_ENABLE_OK","Public");

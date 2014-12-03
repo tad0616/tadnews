@@ -10,7 +10,7 @@ define("_MA_TADNEWS_ADD","Post");
 define("_TAD_NEED_TADTOOLS","This module need tadtools module. You can download tadtools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
 define("_MA_TADNEWS_NEWS_TITLE","Title");
 define("_MA_TADNEWS_NEWS_PASSWD","Password");
-define("_MA_TADNEWS_CAN_READ_NEWS_GROUP","Available Groups");<br>Non-select for publishing immediatelly.");<br>Non-select for forever visible.");
+define("_MA_TADNEWS_CAN_READ_NEWS_GROUP","Available Groups");
 define("_MA_TADNEWS_NEWS_CATE","Category");
 
 
