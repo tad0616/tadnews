@@ -286,6 +286,16 @@ $modversion['blocks'][$i]['template'] = "tadnews_marquee.html";
 $modversion['blocks'][$i]['edit_func'] = "tadnews_marquee_edit";
 $modversion['blocks'][$i]['options'] = "5|0|down|5000||";
 
+
+$i++;
+$modversion['blocks'][$i]['file'] = "tadnews_covered.php";
+$modversion['blocks'][$i]['name'] = _MI_TADNEWS_COVERED;
+$modversion['blocks'][$i]['description'] = _MI_TADNEWS_COVERED_DESC;
+$modversion['blocks'][$i]['show_func'] = "tadnews_covered";
+$modversion['blocks'][$i]['template'] = "tadnews_covered.html";
+$modversion['blocks'][$i]['edit_func'] = "tadnews_covered_edit";
+$modversion['blocks'][$i]['options'] = "3|2|66|font-size:13px ;color: gray; line-height: 1.5; font-family:新細明體;|";
+
 //---偏好設定---//
 $i=1;
 $modversion['config'][$i]['name'] = 'show_num';

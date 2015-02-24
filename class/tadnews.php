@@ -1692,14 +1692,14 @@ class tadnews{
       }
       include_once XOOPS_ROOT_PATH."/modules/tadtools/elrte.php";
       $elrte=new elrte("tadnews","news_content",$news_content);
-      $elrte->setHeight(350);
+      $elrte->setHeight('350px');
       $editor=$elrte->render();
     }else{
-      if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/fck.php")){
+      if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/ck.php")){
         redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50",3, _TAD_NEED_TADTOOLS);
       }
-      include_once XOOPS_ROOT_PATH."/modules/tadtools/fck.php";
-      $fck=new FCKEditor264("tadnews","news_content",$news_content);
+      include_once XOOPS_ROOT_PATH."/modules/tadtools/ck.php";
+      $fck=new CKEditor("tadnews","news_content",$news_content);
       $fck->setHeight(350);
       $editor=$fck->render();
     }

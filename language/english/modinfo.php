@@ -107,4 +107,7 @@ define("_MI_TADNEWS_FANCYBOX_SPEED_DESC","Default speed is 5000 (5 secends), 0 =
 
 define("_MI_TADNEWS_MARQUEE","News marquee");
 define("_MI_TADNEWS_MARQUEE_DESC","News marquee");
+
+define("_MI_TADNEWS_COVERED","News with cover image");
+define("_MI_TADNEWS_COVERED_DESC","News with cover image");
 ?>

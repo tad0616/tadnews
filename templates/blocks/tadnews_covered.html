@@ -1,0 +1,25 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
+<{$block.bootstrap}>
+<style>
+  #centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
+</style>
+<{$block.jquery_path}>
+
+<{if $block.page}>
+  <div class="row">
+    <{foreach from=$block.page item=news}>
+      <div class="col-md-4" style="margin-bottom:6px;">
+        <div style="height:150px;overflow:hidden;">
+          <{if $news.image_big}>
+            <img src="<{$news.image_big}>" alt="<{$news.news_title}>" title="<{$news.news_title}>" class="img-responsive">
+          <{else}>
+            <img src="<{$xoops_url}>/modules/tadnews/images/demo1.jpg" alt="<{$news.news_title}>" title="<{$news.news_title}>" class="img-responsive">
+          <{/if}>
+        </div>
+        <div style="font-size:18px; overflow:hidden;height:15pt;line-height:15pt;margin:8px 3px; border-bottom:1px solid #cfcfcf;"><{$news.news_title}></div>
+        <div><{$news.content}></div>
+      </div>
+    <{/foreach}>
+
+  </div>
+<{/if}>

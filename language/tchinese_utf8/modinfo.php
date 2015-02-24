@@ -109,4 +109,6 @@ define("_MI_TADNEWS_FANCYBOX_SPEED_DESC","預設為 5000（5秒）自動播放�
 define("_MI_TADNEWS_MARQUEE","跑馬燈區塊");
 define("_MI_TADNEWS_MARQUEE_DESC","相當於條列新聞做成跑馬燈之意");
 
+define("_MI_TADNEWS_COVERED","圖文集區塊");
+define("_MI_TADNEWS_COVERED_DESC","以封面圖為主，搭配簡短文字的區塊");
 ?>

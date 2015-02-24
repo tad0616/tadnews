@@ -108,4 +108,7 @@ define("_MI_TADNEWS_FANCYBOX_SPEED_DESC","¹w³]¬° 5000¡]5¬í¡^¦Û°Ê¼½©ñ¡A³]¦¨ 0 §Y¤
 
 define("_MI_TADNEWS_MARQUEE","¶]°¨¿O°Ï¶ô");
 define("_MI_TADNEWS_MARQUEE_DESC","¬Û·í©ó±ø¦C·s»D°µ¦¨¶]°¨¿O¤§·N");
+
+define("_MI_TADNEWS_COVERED","¹Ï¤å¶°°Ï¶ô");
+define("_MI_TADNEWS_COVERED_DESC","¥H«Ê­±¹Ï¬°¥D¡A·f°tÂ²µu¤å¦rªº°Ï¶ô");
 ?>
