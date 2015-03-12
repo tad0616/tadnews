@@ -95,4 +95,7 @@ define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','表格條列模式（同模組首頁�
 
 define('_MB_TADNEWS_PAGE_EDIT_BITEM2','文字大小');
 
+define('_MB_TADNEWS_COVERED_OPT1','一個橫列放幾篇文章？');
+define('_MB_TADNEWS_COVERED_OPT2','共幾個橫列？');
+
 ?>

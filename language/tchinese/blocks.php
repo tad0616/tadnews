@@ -24,7 +24,7 @@ define("_MB_TADNEWS_SUBMIT","送出");
 define("_MB_TADNEWS_TITLE","電子報：");
 define("_MB_TADNEWS_NO_NEWSPAPER","尚未建立電子報，無法提供訂閱。");
 define("_MB_TADNEWS_EMAIL","Email ：");
-define("_MB_TADNEWS_ORDER","訂閱 ");
+define("_MB_TADNEWS_ORDER","訂閱");
 define("_MB_TADNEWS_CANCEL","取消");
 define("_MB_TADNEWS_ORDER_COUNT","目前訂閱人數： %s 人");
 
@@ -94,5 +94,8 @@ define('_MB_TADNEWS_LIST_TEMPLATE_LIST','原條列模式');
 define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','表格條列模式（同模組首頁的條列模式）');
 
 define('_MB_TADNEWS_PAGE_EDIT_BITEM2','文字大小');
+
+define('_MB_TADNEWS_COVERED_OPT1','一個橫列放幾篇文章？');
+define('_MB_TADNEWS_COVERED_OPT2','共幾個橫列？');
 
 ?>

@@ -1,7 +1,9 @@
 <?php
 include_once "../../mainfile.php";
 
-if($xoopsModuleConfig['use_pda']=='1' and strpos($_SERVER['PHP_SELF'], "ajax.php")===false){
+include_once "function.php";
+
+if($xoopsModuleConfig['use_pda']=='1' and strpos($_SERVER['PHP_SELF'], "ajax.php")===false and strpos($_SESSION['theme_kind'], 'bootstrap')===false){
   $nsn=(isset($_REQUEST['nsn']))?intval($_REQUEST['nsn']) : 0;
   $ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : 0;
   if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/mobile_device_detect.php")){
@@ -9,8 +11,6 @@ if($xoopsModuleConfig['use_pda']=='1' and strpos($_SERVER['PHP_SELF'], "ajax.php
     mobile_device_detect(true,false,true,true,true,true,true,"pda.php?nsn={$nsn}&ncsn={$ncsn}",false);
   }
 }
-
-include_once "function.php";
 
 if ($xoopsUser) {
   $module_id = $xoopsModule->getVar('mid');

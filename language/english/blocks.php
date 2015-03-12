@@ -90,4 +90,7 @@ define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','Table mode');
 
 define('_MB_TADNEWS_PAGE_EDIT_BITEM2','Font size:');
 
+define('_MB_TADNEWS_COVERED_OPT1','How many columns in a row?');
+define('_MB_TADNEWS_COVERED_OPT2','How many rows?');
+
 ?>
