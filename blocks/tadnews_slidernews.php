@@ -28,6 +28,7 @@ function tadnews_slidernews_show($options){
   if(empty($all_news['page']))return;
 
   $n=0;
+
   $lofslidernews=new lofslidernews($options[0],$options[1],$options[3]);
 
   foreach($all_news['page'] as $news){

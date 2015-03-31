@@ -4,7 +4,7 @@ include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 
 //區塊主函式 (顯示新聞內容)
 function tadnews_marquee($options){
-  global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig,$xoopsTpl;
+  global $xoTheme;
   $ncsn_arr=array();
   if(isset($options[1])){
     $ncsn_arr=explode(',',$options[1]);
@@ -19,13 +19,15 @@ function tadnews_marquee($options){
   $tadnews->set_news_kind("news");
   $block=$tadnews->get_news('return');
   if(empty($block['page']))return;
-  $block['bootstrap']=get_bootstrap();
+  get_bootstrap();
   $block['direction']=empty($options[2])?'down':$options[2];
   $block['duration']=empty($options[3])?'5000':$options[3];
   $block['css']=empty($options[4])?'':$options[4];
   $block['item_css']=empty($options[5])?'':$options[5];
   $block['randStr']=randStr();
   $block['jquery']=get_jquery();
+  $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+  $xoTheme->addScript('modules/tadnews/class/jQuery.Marquee/jquery.marquee.min.js');
   return $block;
 }
 

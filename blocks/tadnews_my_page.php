@@ -6,10 +6,10 @@
 // ------------------------------------------------------------------------- //
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
-	
+
 //¦Û¿ï­¶­±
 function tadnews_my_page($options){
-	global $xoopsDB;
+	global $xoTheme;
 
 	if(empty($options[0]))return "";
 
@@ -20,8 +20,9 @@ function tadnews_my_page($options){
 	$tadnews->set_show_mode('table');
 	$tadnews->set_view_nsn($nsn_arr);
 	$block=$tadnews->get_news('return');
-  $block['bootstrap']=get_bootstrap();
+  get_bootstrap();
 
+  $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 	return $block;
 }
 

@@ -4,10 +4,10 @@ include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 
 //區塊主函式 (顯示新聞內容)
 function tadnews_list_content_block_show($options){
-  global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig,$xoopsTpl;
+  global $xoTheme;
 
   $block['jquery_path']=get_jquery();
-  $block['bootstrap']=get_bootstrap();
+  get_bootstrap();
   $block['randStr']=randStr(8);
   $block['num']=$options[0];
   $block['summary_length']=$options[1];
@@ -21,6 +21,7 @@ function tadnews_list_content_block_show($options){
   $block['show_button']=$options[9];
   $block['HTTP_HOST']=get_xoops_url();
 
+  $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
   return $block;
 }
 
