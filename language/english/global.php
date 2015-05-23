@@ -1,4 +1,5 @@
 <?php
+define("_TADNEWS_NAME","ALL News");
 define("_TADNEWS_ALWAYS_TOP","Sticky");
 define("_TADNEWS_TODAY_NEWS","Today");
 define("_TADNEWS_MORE","Read More");
@@ -27,4 +28,9 @@ define("_TADNEWS_BLOCK_BACK","Previous %s ");
 define("_TADNEWS_EDIT_CATE","Edit category");
 define("_TADNEWS_EMPTY","No News");
 define("_TADNEWS_DIGN_LIST","Sign list");
+define("_TADNEWS_DB_ADD_ERROR1","Failed to add data to tad_news_cate");
+define("_TADNEWS_ALL_NO","None");
+define("_TADNEWS_CREAT_FIRST_CATE","Creat a sub-category");
+define("_TADNEWS_CREAT_NEWS_CATE","Creat a sub-category under left category");
+define("_TADNEWS_PREFIX_TAG","Prefix");
 ?>

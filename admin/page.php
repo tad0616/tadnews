@@ -1,14 +1,9 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: page.php,v 1.1 2008/06/25 06:35:47 tad Exp $
-// ------------------------------------------------------------------------- //
-
 /*-----------引入檔案區--------------*/
 include_once "admin_header.php";
 include_once "admin_function.php";
 $xoopsOption['template_main'] = "tadnews_adm_page_tpl.html";
+
 /*-----------function區--------------*/
 
 
@@ -26,26 +21,26 @@ switch($op){
 	$ncsn=insert_tad_news_cate();
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 	//更新資料
 	case "update_tad_news_cate";
 	update_tad_news_cate($ncsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 	//刪除資料
 	case "delete_tad_news_cate";
 	delete_tad_news_cate($ncsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 
 	//刪除資料
 	case "delete_tad_news";
-	tadnews::delete_tad_news($nsn);
+	$tadnews->delete_tad_news($nsn);
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 
 	//批次管理
 	case "batch":
@@ -56,7 +51,7 @@ switch($op){
   }
 	header("location: ".$_SERVER['PHP_SELF']);
 	break;
-	
+
 	default:
   list_tad_news($ncsn,"page",$show_uid) ;
 

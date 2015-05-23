@@ -1,68 +1,79 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadnews/iconize.css" />
-<{$block.bootstrap}>
-
 <{php}>
-$arr= $this->get_template_vars('block');
-$col_num= $arr['col_num'];
-$end=$col_num-1;
-$i=0;
+  $arr= $this->get_template_vars('block');
+  $col_num= $arr['col_num'];
+  $end=$col_num-1;
+  $i=0;
 <{/php}>
 
 <{$block.syntaxhighlighter_code}>
 <{$block.rating_js}>
 <{$block.del_js}>
+
 <{if $block.page}>
+
   <{foreach item=page from=$block.page}>
 
     <{php}>
-    if($i % $col_num==0){
-      echo "<!-----start------>\n<div class=\"row-fluid\" style=\"margin:10px 0px;\">";
+    if($col_num==0 or $i % $col_num==0){
+      echo '
+      <div class="row-fluid" style="margin:10px 0px;">
+      ';
     }
     <{/php}>
 
     <div class="<{$block.width}>">
-      <{if $block.col_num=="1"}>
-        <div class="news_head well" <{if $page.need_sign}>style="background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;"<{/if}>>
-          <div style="float:right;"><{$page.star}></div>
-          <div style="font-size: 16px;font-weight: bolder;border: none;	color:rgb(153,0,0);"><{$page.prefix_tag}>
+      <{if $block.col_num=="1" or $block.col_num==""}>
+        <div class="well" <{if $page.need_sign}>style="background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;"<{/if}>>
+
+          <{if $page.star}><div class="pull-right"><{$page.star}></div><{/if}>
+
+          <div style="font-size: 16px;font-weight: bolder;border: none; color:rgb(153,0,0);"><{$page.prefix_tag}>
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size:16px;color:#990000;font-weight:bold;"><{$page.news_title}></a>
           </div>
 
           <div style="font-size:12px;margin:8px 0px 0px;">
-            <div style="float:right"><{$page.files}></div>
-            <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+            <{if $page.files}><div style="float:right"><{$page.files}></div><{/if}>
+
+            <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+
           </div>
         </div>
 
-        <div style="margin:10px auto;	line-height: 2em;	font-weight:normal;<{$block.summary_css}>">
+        <div style="margin:10px auto; line-height: 2em; font-weight:normal;<{$block.summary_css}>">
           <{$page.pic}><{$page.content}> (<a href='<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>'><{$smarty.const._MB_TADNEWS_SHOW_ALL}></a>)
           <div style="float:right"><{$page.fun}></div>
         </div>
+
       <{else}>
-        <div class="span12 well" style="<{if $page.need_sign}>background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;<{/if}>">
+        <div class="well" style="<{if $page.need_sign}>background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;<{/if}>">
           <div style="border:none;height:20px;line-height:20px;overflow:hidden;"><{$page.prefix_tag}>
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size:16px;color:#990000;font-weight:bold;"><{$page.news_title}></a>
           </div>
 
           <div class="span12" style="font-size:11px;margin:8px 0px 0px;">
             <div style="float:right"><{$page.files}></div>
-            <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$page.counter}>
+            <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a class="multilink" id="content_<{$page.nsn}>" data-dls-links="<{$page.mutilink}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$page.counter}>
           </div>
 
-          <div class="span12" style="margin:10px auto;	line-height: 2em;	font-weight:normal;<{$block.summary_css}>">
+          <div class="span12" style="margin:10px auto;  line-height: 2em; font-weight:normal;<{$block.summary_css}>">
             <{$page.pic}><{$page.content}> (<a href='<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>'><{$smarty.const._MB_TADNEWS_SHOW_ALL}></a>)
           </div>
           <div class="span12 text-right"><{$page.fun}></div>
         </div>
       <{/if}>
+
     </div>
 
     <{php}>
-    if(($i % $col_num)==$end){
-      echo "</div>\n<!-----end------>";
+    if($col_num==0 or ($i % $col_num)==$end){
+      echo "
+      </div>
+      ";
     }
     $i++;
     <{/php}>
 
   <{/foreach}>
+
+
 <{/if}>

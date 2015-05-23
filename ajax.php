@@ -1,12 +1,14 @@
 <?php
 include_once "header.php";
-include_once "block_function.php";
-//include_once "function.php";
-// { num: "<{$block.num}>", p: p , show_button:"<{$block.show_button}>",  "cell[]": ["<{$block.cell1}>", "<{$block.cell2}>", "<{$block.cell3}>", "<{$block.cell4}>", "<{$block.cell5}>"],start_from:"<{$block.start_from}>",show_ncsn: "<{$block.show_ncsn}>"}
 
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
-include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig[language]}/blocks.php");
-$op=isset($_REQUEST['op'])?$_REQUEST['op']:"";
+include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php");
+if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php")){
+  include_once XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php";
+
+  $FooTable = new FooTable();
+  $FooTableJS=$FooTable->render();
+}
 
 $num=!empty($_POST['num'])?intval($_POST['num']):10;
 $show_button=!empty($_POST['show_button'])?$_POST['show_button']:"";
@@ -22,7 +24,6 @@ $start=$p*$num+$start_from;
 if($start <= 0 )$start=0;
 //echo "<p>strat:{$start},p:{$p},b:{$b},n:{$n},start_from:{$start_from},num:{$num}</p>";
 
-$tadnews=new tadnews();
 
 $tadnews->set_show_num($num);
 $tadnews->set_view_ncsn($ncsn_arr);
@@ -32,6 +33,8 @@ $tadnews->set_use_star_rating(false);
 $tadnews->set_cover(false);
 $tadnews->set_skip_news($start);
 $all_news=$tadnews->get_news('return');
+
+if(empty($all_news['page']))die(_TADNEWS_EMPTY);
 
 $show_col='';
 
@@ -45,29 +48,34 @@ foreach($_POST['cell'] as $col){
 if(empty($show_col))$show_col=array('start_day','news_title','uid','ncsn','counter');
 
 
-$block="";
+$block=$FooTableJS;
 
 
-$tt['start_day']="<th style='width:80px;'>".to_utf8(_MB_TADNEWS_START_DATE)."</th>";
-$tt['news_title']="<th>".to_utf8(_MB_TADNEWS_NEWS_TITLE)."</th>";
-$tt['uid']="<th style='width:80px;'>".to_utf8(_MB_TADNEWS_POSTER)."</th>";
-$tt['ncsn']="<th style='width:80px;'>".to_utf8(_MB_TADNEWS_NEWS_CATE)."</th>";
-$tt['counter']="<th>".to_utf8(_MB_TADNEWS_COUNTER)."</th>";
+$tt['start_day']="<th data-hide='phone' style='width:80px;'>".to_utf8(_MD_TADNEWS_START_DATE)."</th>";
+$tt['news_title']="<th data-class='expand'>".to_utf8(_MD_TADNEWS_NEWS_TITLE)."</th>";
+$tt['uid']="<th data-hide='phone' style='width:80px;'>".to_utf8(_MD_TADNEWS_POSTER)."</th>";
+$tt['ncsn']="<th data-hide='phone' style='width:80px;'>".to_utf8(_MD_TADNEWS_NEWS_CATE)."</th>";
+$tt['counter']="<th data-hide='phone'>".to_utf8(_MD_TADNEWS_COUNTER)."</th>";
 $blockTitle="";
 foreach($show_col as $colname){
   $blockTitle.=$tt[$colname];
 }
 
 
-$block.="<table class='table table-striped'><tr>{$blockTitle}</tr>";
+$block.="
+<table class='table table-striped footable'>
+<thead>
+  <tr>{$blockTitle}</tr>
+</thead>
+";
 
 
 $i=2;
 
-//$total=0;
+$total=0;
 foreach($all_news['page'] as $news){
 
-	$need_sign=(!empty($news['need_sign']))?"<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>":"";
+  $need_sign=(!empty($news['need_sign']))?"<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>":"";
 
   $start_day="<td nowrap>{$news['post_date']}</td>";
   $news_title="<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='".XOOPS_URL."/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>";
@@ -78,20 +86,20 @@ foreach($all_news['page'] as $news){
   $news_title=to_utf8($news_title);
   $uid=to_utf8($uid);
   $ncsn=to_utf8($ncsn);
-	$block.="<tr>";
+  $block.="<tr>";
   foreach($show_col as $colname){
     $block.=$$colname;
   }
 
   $block.="</tr>";
-	$i++;
+  $i++;
   $total++;
 }
 
 
-$b_button=($b < 0)?"":"<button onClick='view_content({$b})' class='btn'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</button>";
+$b_button=($b < 0)?"":"<button onClick='view_content{$_POST['randStr']}({$b})' class='btn'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</button>";
 
-$n_button=($total < $num)?"":"<button style='float:right;' onClick='view_content({$n})' class='btn'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</button>";
+$n_button=($total < $num)?"":"<button style='float:right;' onClick='view_content{$_POST['randStr']}({$n})' class='btn'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</button>";
 
 $button=($show_button)?"{$n_button}{$b_button}":"";
 //$button="{$n_button}{$b_button}";

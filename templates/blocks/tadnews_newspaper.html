@@ -1,34 +1,39 @@
-<style>
-#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
-</style>
 <{if $block.option==""}>
   <{$smarty.const._MB_TADNEWS_NO_NEWSPAPER}>
 <{else}>
-<div class="row-fluid">
-  <form action="<{$xoops_url}>/modules/tadnews/email.php" method="post">
-    <{$block.counter}>
-    
-    <div class="controls controls-row">
-      <div class="span4"><{$smarty.const._MB_TADNEWS_TITLE}></div>
-      <select name="nps_sn" class="span8" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
-        <{foreach item=opt from=$block.option}>
-        <option value="<{$opt.value}>"><{$opt.text}></option>
-        <{/foreach}>
-      </select>
-    </div>
+  <div class="row-fluid">
+    <form action="<{$xoops_url}>/modules/tadnews/email.php" method="post">
+      <{$block.counter}>
+
+      <div class="row-fluid">
+        <label class="span4"><{$smarty.const._MB_TADNEWS_TITLE}></label>
+        <div class="span8">
+          <select name="nps_sn" class="span12" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
+            <{foreach item=opt from=$block.option}>
+            <option value="<{$opt.value}>"><{$opt.text}></option>
+            <{/foreach}>
+          </select>
+        </div>
+      </div>
 
 
-    <div class="controls controls-row">
-      <div class="span4"><{$smarty.const._MB_TADNEWS_EMAIL}></div>
-      <input type="text" name="newspaper_email" id="newspaper_email" placeholder="<{$smarty.const._MB_TADNEWS_EMAIL}>" class="span8">
-    </div>
+      <div class="row-fluid">
+        <label class="span4"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
+        <div class="span8">
+          <input type="text" name="newspaper_email" id="newspaper_email" placeholder="<{$smarty.const._MB_TADNEWS_EMAIL}>" value="<{$block.email}>" class="span12">
+        </div>
+      </div>
 
 
-    <div class="controls controls-row">
-    <input type="radio" name="mode" value="add" checked><{$smarty.const._MB_TADNEWS_ORDER}>
-    <input type="radio" name="mode" value="del"><{$smarty.const._MB_TADNEWS_CANCEL}>
-    <button type="submit" class="btn"><{$smarty.const._MB_TADNEWS_SUBMIT}></button>
-    </div>
-  </form>
-</div>
+      <div class="row-fluid">
+        <div class="span8">
+          <label class="radio inline"><input type="radio" name="mode" value="add" checked><{$smarty.const._MB_TADNEWS_ORDER}></label>
+          <label class="radio inline"><input type="radio" name="mode" value="del"><{$smarty.const._MB_TADNEWS_CANCEL}></label>
+        </div>
+        <div class="span4">
+          <button type="submit" class="btn"><{$smarty.const._MB_TADNEWS_SUBMIT}></button>
+        </div>
+      </div>
+    </form>
+  </div>
 <{/if}>

@@ -1,25 +1,7 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: blocks.php,v 1.4 2008/06/25 06:40:09 tad Exp $
-// ------------------------------------------------------------------------- //
 //global
 include_once "global.php";
-
-
-
-define("_MB_TADNEWS_EXPAND_ALL","全部展開");
-define("_MB_TADNEWS_CONTACT_ALL","全部收合");
-
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM0","文章數");
 define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM1","一橫列放幾則新聞");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM6","標題字數");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM6_DESC","（設0，代表完整出現標題。）");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM3","摘要字數");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM3_DESC","（設0，代表不秀出摘要。）");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM4","摘要文字樣式");
-define("_MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM5","封面圖樣式");
 
 define("_MB_TADNEWS_RE_EDIT_BITEM0","列出回應數");
 define("_MB_TADNEWS_RE_EDIT_BITEM1","秀出回應內容長度");
@@ -31,17 +13,11 @@ define("_MB_TADNEWS_CATE_NEWS_EDIT_BITEM3","是否秀出分隔線？");
 
 define("_MB_TADNEWS_NP_EDIT_BITEM0","秀出電子報數");
 define("_MB_TADNEWS_FOCUS_EDIT_BITEM0","請選擇要秀出的新聞");
-define("_MB_TADNEWS_YES","是");
 define("_MB_TADNEWS_NO","否");
 
 define("_MB_TADNEWS_NEWS_TITLE","文章標題");
-define("_MB_TADNEWS_START_DATE","發佈時間");
-define("_MB_TADNEWS_POSTER","發佈者");
 define("_MB_TADNEWS_NEWS_CATE","所屬分類");
 define("_MB_TADNEWS_COUNTER","人氣");
-define("_MB_TADNEWS_LESS","摘要顯示");
-define("_MB_TADNEWS_SHOW_TABLE","表格佈告欄式");
-define("_MB_TADNEWS_SHOW_LIST","文章標題條列式");
 define("_MB_TADNEWS_SHOW_ALL","全文");
 
 define("_MB_TADNEWS_SUBMIT","送出");
@@ -60,7 +36,6 @@ define("_MB_TADNEWS_PAGE_EDIT_BITEM1","標題長度限制");
 //tadnews 1.3.1
 define("_MB_TADNEWS_MY_PAGE","請選擇文章");
 define("_MB_TADNEWS_NO_CATE","不分類");
-define("_MB_TADNEWS_NO_TITLE","無標題");
 
 //tadnews 2.0
 define("_MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM0","列出文章數");
@@ -98,4 +73,29 @@ define("_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4","使用的滑動圖文外掛")
 define("_MB_TADNEWS_FOCUS_EDIT_BITEM1","顯示全文或摘要？");
 define("_MB_TADNEWS_FOCUS_FULL","全文");
 define("_MB_TADNEWS_FOCUS_SUMMARY","摘要");
+define("_MB_TADNEWS_LOADING","新聞載入中，請稍後...");
+
+
+define('_MB_TADNEWS_MARQUEE_DIRECTION','方向');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_LEFT','←');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_RIGHT','→');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_UP','↑');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_DOWN','↓');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_DESC','「上下」的速度約 5000 左右；「左右」的速度約 15000 左右（高度也要調整為 height:1em;）');
+define('_MB_TADNEWS_MARQUEE_DURATION','速度（數字越大越慢）');
+define('_MB_TADNEWS_MARQUEE_CSS','CSS設定（可不設）');
+define('_MB_TADNEWS_MARQUEE_CSS_DEFAULT','目前CSS預設值：');
+define('_MB_TADNEWS_MARQUEE_ITEM_CSS','跑馬燈內容項目的CSS設定');
+
+
+define('_MB_TADNEWS_LIST_TEMPLATE_NOTE','（在表格條列模式無作用）');
+define('_MB_TADNEWS_LIST_TEMPLATE','呈現模式');
+define('_MB_TADNEWS_LIST_TEMPLATE_LIST','原條列模式');
+define('_MB_TADNEWS_LIST_TEMPLATE_TABLE','表格條列模式（同模組首頁的條列模式）');
+
+define('_MB_TADNEWS_PAGE_EDIT_BITEM2','文字大小');
+
+define('_MB_TADNEWS_COVERED_OPT1','一個橫列放幾篇文章？');
+define('_MB_TADNEWS_COVERED_OPT2','共幾個橫列？');
+
 ?>

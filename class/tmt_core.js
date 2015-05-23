@@ -1,4 +1,4 @@
-/** 
+/**
 * Copyright 2006-2008 massimocorner.com
 * License: http://www.massimocorner.com/license.htm
 * @author      Massimo Foti (massimo@massimocorner.com)
@@ -47,7 +47,7 @@ tmt.get = function(){
 }
 
 /**
-* Returns an array containing all child nodes. 
+* Returns an array containing all child nodes.
 * If no starting node is passed, assume the document is the starting point
 */
 tmt.getAll = function(startNode){
@@ -57,7 +57,7 @@ tmt.getAll = function(startNode){
 }
 
 /**
-* Returns an array containing all child nodes. 
+* Returns an array containing all child nodes.
 * Unlike tmt.getAll, it return only elements of type Node.NODE_ELEMENT, no comments or other kind of nodes
 * If no starting node is passed, assume the document is the starting point
 */
@@ -73,7 +73,7 @@ tmt.getAllNodes = function(startNode){
 }
 
 /**
-* Returns an array containing all child nodes that contain the given attribute 
+* Returns an array containing all child nodes that contain the given attribute
 * If no starting node is passed, assume the document is the starting point
 */
 tmt.getNodesByAttribute = function(attName, startNode){

@@ -1,53 +1,26 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期: 2007-11-04
-// $Id: modinfo.php,v 1.4 2008/06/25 06:40:09 tad Exp $
-// ------------------------------------------------------------------------- //
 include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 //Version XXX
 
 define('_MI_TADNEWS_ADMIN_HOME',"Home");
 define("_MI_TADNEWS_ADMIN_HOME_DESC","Back to Home");
 
-define("_MI_TADNEWS_ADMIN_ABOUT" , "About");
-define("_MI_TADNEWS_ADMIN_ABOUT_DESC" , "About this module");
-
 
 
 
 define("_MI_TADNEWS_NAME","Tadnews");
 define("_MI_TADNEWS_DESC","An easy News module");
-define("_MI_TADNEWS_WEB","Tad 教材網");
+define("_MI_TADNEWS_WEB","Tad E-learn Site");
 define("_MI_TADNEWS_ADMENU1", "Admin");
 define("_MI_TADNEWS_ADMENU2", "Post");
 define("_MI_TADNEWS_ADMENU3", "Categories");
 define("_MI_TADNEWS_ADMENU4", "Data Transfer");
 define("_MI_TADNEWS_ADMENU5", "Newspaper");
-define("_MI_TADNEWS_ADMENU6", "Upgrade");
 define("_MI_TADNEWS_ADMENU7", "Customized Page");
 define("_MI_TADNEWS_ADMENU8", "Tags");
 define("_MI_TADNEWS_ADMENU9", "Customized Page categories");
 define("_MI_TADNEWS_NEWSPAPER","Newspaper List");
 define("_MI_TADNEWS_ARCHIVE","Archive");
-
-define("_MI_TADNEWS_TEMPLATE_DESC1", "The index template ");
-define("_MI_TADNEWS_TEMPLATE_DESC2", "The news template ");
-define("_MI_TADNEWS_TEMPLATE_DESC3", "The RSS template ");
-define("_MI_TADNEWS_TEMPLATE_DESC4", "The post form template ");
-define("_MI_TADNEWS_TEMPLATE_DESC5", "The archive template ");
-define("_MI_TADNEWS_TEMPLATE_DESC6", "The customized page template ");
-define("_MI_TADNEWS_TEMPLATE_DESC7", "The index template (Summary news)");
-define("_MI_TADNEWS_TEMPLATE_DESC8", "The index template (Categories news )");
-define("_MI_TADNEWS_TEMPLATE_DESC9", "The newspaper template");
-define("_MI_TADNEWS_TEMPLATE_DESC10", "The admin index template");
-define("_MI_TADNEWS_TEMPLATE_DESC11", "The admin custom page template");
-define("_MI_TADNEWS_TEMPLATE_DESC12", "The admin categories management template");
-define("_MI_TADNEWS_TEMPLATE_DESC13", "The admin newsapaer management template");
-define("_MI_TADNEWS_TEMPLATE_DESC14", "The admin tag management template");
-define("_MI_TADNEWS_TEMPLATE_DESC15", "The customized page categories management template");
-define("_MI_TADNEWS_TEMPLATE_DESC16", "The customized page categories template");
-define("_MI_TADNEWS_TEMPLATE_DESC17", "List sign status template");
 
 define("_MI_TADNEWS_BNAME1","Categories");
 define("_MI_TADNEWS_BDESC1","Show All Categories");
@@ -68,10 +41,6 @@ define("_MI_TADNEWS_BDESC8","Content could be appointed");
 
 define("_MI_TADNEWS_TITLE1","<b>News numbers in each page?</b>");
 define("_MI_TADNEWS_DESC1","Set the news numbers in each page");
-define("_MI_TADNEWS_TITLE2","<b>Downloading method of attachment</b>");
-define("_MI_TADNEWS_DESC2","Method 1: Common; Method 2: (More memories required. Not appropriate for big files, but Chinese is working.(default)");
-define("_MI_TADNEWS_DL_METHOD1","Method 1: Use \"SN_original.XXX\" as filename");
-define("_MI_TADNEWS_DL_METHOD2","Method 2: System makes up attachments");
 
 define("_MI_TADNEWS_SHOW_MODE","<b>Performing method of Index</b>");
 define("_MI_TADNEWS_SHOW_MODE_DESC","Digest(Default) or news titles (faster, clear)");
@@ -81,10 +50,6 @@ define("_MI_TADNEWS_SHOW_MODE_OPT3","News titles of each category");
 
 define("_MI_TADNEWS_CATE_SHOW_MODE","<b>Performing method in single category</b>");
 define("_MI_TADNEWS_CATE_SHOW_MODE_DESC","Digest(Default) or news titles (faster, clear)");
-
-define("_MI_TADNEWS_PREFIX_TAG","<b>Prefix Tags</b>");
-define("_MI_TADNEWS_PREFIX_TAG_DESC","Add prefix tags to show the news type. (items divided by \";\")");
-define("_MI_TADNEWS_PREFIX_TAG_VAL","<font color='red'>[emergency]</font>;<font color='blue'>[announcement]</font>;<font color='#CC33CC'>[investigate]</font>;<font color='#00CC33'>[good news]</font>");
 
 define("_MI_TADNEWS_SHOW_BB","<b>\"BB Code\" available?</b>");
 define("_MI_TADNEWS_SHOW_BB_DESC","\"No\" in default. Old news modules use BB Code to set the font style.<br/>For example: color, size. Choose \"yes\" if you have news content from old modules.");
@@ -115,8 +80,6 @@ define("_MI_TADNEWS_DOWNLOAD_AFTER_READ","Download attachments after read.");
 define("_MI_TADNEWS_DOWNLOAD_AFTER_READ_DESC","Download attachments after read.");
 define("_MI_TADNEWS_CREAT_CATE_GROUP","The groups can add categories.");
 define("_MI_TADNEWS_CREAT_CATE_GROUP_DESC","Settong the group can add categories when in a news release");
-//define("_MI_TADNEWS_USE_KCFINDER","Use KCFinder?");
-//define("_MI_TADNEWS_USE_KCFINDER_DESC","KCFinder needs PHP5.");
 define("_MI_TADNEWS_BNAME10","List News");
 define("_MI_TADNEWS_BDESC10","List news");
 define("_MI_TADNEWS_BNAME11","Table News");
@@ -133,14 +96,18 @@ define("_MI_TADNEWS_BNAME14","Responsive Slider News");
 define("_MI_TADNEWS_BDESC14","Responsive Slider News");
 
 
-
-//define("_MI_TADNEWS_USE_EMBED","Does enable embed ?");
-//define("_MI_TADNEWS_USE_EMBED_DESC","");
-
 define("_MI_COVER_PIC_CSS","The default CSS of the cover image");
 define("_MI_COVER_PIC_CSS_DESC","The default CSS of the cover image in the article");
 
 define("_MI_TADNEWS_EDITOR","Select editor");
 define("_MI_TADNEWS_EDITOR_DESC","elRTE can be used in mobile device.");
-?>
 
+define("_MI_TADNEWS_FANCYBOX_SPEED","Fancybox2 play speed");
+define("_MI_TADNEWS_FANCYBOX_SPEED_DESC","Default speed is 5000 (5 secends), 0 = unable auto play.");
+
+define("_MI_TADNEWS_MARQUEE","News marquee");
+define("_MI_TADNEWS_MARQUEE_DESC","News marquee");
+
+define("_MI_TADNEWS_COVERED","News with cover image");
+define("_MI_TADNEWS_COVERED_DESC","News with cover image");
+?>

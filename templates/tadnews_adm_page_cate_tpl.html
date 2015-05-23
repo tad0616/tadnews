@@ -34,70 +34,87 @@ function move_cate(ncsn){
   <div class="row-fluid">
     <div class="well span12 <{$cate.offset}>" style="background-color:#FFFF99;">
       <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
-        <div class="span2">
-          <label><{$smarty.const._MA_TADNEWS_CATE_PIC}></label>
-          <input type="file" name="cate_pic" class="span12" size=10>
-        </div>
+        <div class="row-fluid">
 
-        <div class="span2">
-          <label><{$smarty.const._MA_TADNEWS_PARENT_CATE}></label>
-          <select name="of_ncsn" size=1 class="span12">
-            <{$cate_select}>
-          </select>
-          <label><{$smarty.const._MA_TADNEWS_CATE_TITLE}></label>
-          <input type="text" name="nc_title" id="nc_title" class="span12" value="<{$cate.nc_title}>">
-        </div>
+          <div class="span2">
+            <label><{$smarty.const._MA_TADNEWS_CATE_PIC}></label>
+            <input type="file" name="cate_pic" class="span12" size=10>
+          </div>
 
 
-        <div class="span3">
-          <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_TITLE}>
-            <select name="setup[title]">
-              <option value="1" selected="selected"><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-              <option value="0"><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
+          <div class="span3">
+            <label><{$smarty.const._MA_TADNEWS_PARENT_CATE}></label>
+            <select name="of_ncsn" size=1 class="span12">
+              <{$cate_select}>
             </select>
-          </label>
+            <label><{$smarty.const._MA_TADNEWS_CATE_TITLE}></label>
+            <input type="text" name="nc_title" id="nc_title" class="span12" value="<{$cate.nc_title}>">
+          </div>
 
-          <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_TOOL}>
-            <select name="setup[tool]">
-              <option value="1"><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-              <option value="0" selected="selected"><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-            </select>
-          </label>
+          <div class="span3">
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TITLE}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[title]" id="setup_title_1" value="1" checked><{$smarty.const._YES}>
+              </label>
 
-          <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_COMM}>
-            <select name="setup[comm]">
-              <option value="1"><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-              <option value="0" selected="selected"><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-            </select>
-          </label>
+              <label class="radio inline">
+              <input type="radio" name="setup[title]" id="setup_title_0" value="0"><{$smarty.const._NO}>
+              </label>
+            </div>
 
-          <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_NAV}>
-            <select name="setup[nav]">
-              <option value="1" selected="selected"><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-              <option value="0"><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-            </select>
-          </label>
-          
-          
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TOOL}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[tool]" id="setup_tool_1" value="1"><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[tool]" id="setup_tool_0" value="0" checked><{$smarty.const._NO}>
+              </label>
+            </div>
+
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_COMM}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[comm]" id="setup_comm_1" value="1"><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[comm]" id="setup_comm_0" value="0" checked><{$smarty.const._NO}>
+              </label>
+            </div>
+
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_NAV}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[nav]" id="setup_nav_1" value="1" checked><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[nav]" id="setup_nav_0" value="0"><{$smarty.const._NO}>
+              </label>
+            </div>
+          </div>
+
+          <div class="span2">
+            <label><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP}><br />
+            <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
+            <{$enable_group}>
+          </div>
+
+          <div class="span2">
+
+            <label><{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP}><br />
+            <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
+            <{$enable_post_group}>
+
+            <input type="hidden" name="not_news" value="1">
+            <input type="hidden" name="op" value="<{$op}>">
+            <button type="submit" class="btn btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+          </div>
         </div>
 
-
-        <div class="span2">
-          <label><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP}><br />
-          <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
-          <{$enable_group}>
-        </div>
-
-        <div class="span3">
-
-          <label><{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP}><br />
-          <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
-          <{$enable_post_group}>
-          <input type="hidden" name="not_news" value="1">
-        	<input type="hidden" name="ncsn" value="<{$ncsn}>">
-          <input type="hidden" name="op" value="<{$op}>">
-          <button type="submit" class="btn btn-mini btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
-        </div>
       </form>
     </div>
   </div>
@@ -113,7 +130,7 @@ function move_cate(ncsn){
       });
       </script>
       <div class="row-fluid">
-        <div class="well span10 <{$cate.offset}>" style="background-color:#FFFF99;">
+        <div class="well span12 <{$cate.offset}>" style="background-color:#FFFF99;">
           <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
             <div class="span2">
               <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$cate.ncsn}>"><img src="<{$cate.pic}>"  alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" class="img-polaroid" ></a>
@@ -121,7 +138,7 @@ function move_cate(ncsn){
               <input type="file" name="cate_pic" class="span12" size=10>
             </div>
 
-            <div class="span2">
+            <div class="span3">
               <label><{$smarty.const._MA_TADNEWS_PARENT_CATE}></label>
               <select name="of_ncsn" size=1 class="span12">
                 <{$cate_select}>
@@ -132,33 +149,49 @@ function move_cate(ncsn){
 
 
             <div class="span3">
-              <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_TITLE}>
-                <select name="setup[title]">
-                  <option value="1" <{$set_title_1}>><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-                  <option value="0" <{$set_title_0}>><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-                </select>
-              </label>
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TITLE}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[title]" id="setup_title_1" value="1" <{if $set.title=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
 
-              <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_TOOL}>
-                <select name="setup[tool]">
-                  <option value="1" <{$set_tool_1}>><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-                  <option value="0" <{$set_tool_0}>><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-                </select>
-              </label>
+                <label class="radio inline">
+                <input type="radio" name="setup[title]" id="setup_title_0" value="0" <{if $set.title=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
 
-              <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_COMM}>
-                <select name="setup[comm]">
-                  <option value="1" <{$set_comm_1}>><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-                  <option value="0" <{$set_comm_0}>><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-                </select>
-              </label>
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TOOL}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[tool]" id="setup_tool_1" value="1" <{if $set.tool=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
 
-              <label><{$smarty.const._MA_TADNEWS_CATE_SHOW_NAV}>
-                <select name="setup[nav]">
-                  <option value="1" <{$set_nav_1}>><{$smarty.const._MA_TADNEWS_CATE_YES}></option>
-                  <option value="0" <{$set_nav_0}>><{$smarty.const._MA_TADNEWS_CATE_NO}></option>
-                </select>
-              </label>
+                <label class="radio inline">
+                <input type="radio" name="setup[tool]" id="setup_tool_0" value="0" <{if $set.tool=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
+
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_COMM}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[comm]" id="setup_comm_1" value="1" <{if $set.comm=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
+
+                <label class="radio inline">
+                <input type="radio" name="setup[comm]" id="setup_comm_0" value="0" <{if $set.comm=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
+
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_NAV}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[nav]" id="setup_nav_1" value="1" <{if $set.nav=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
+
+                <label class="radio inline">
+                <input type="radio" name="setup[nav]" id="setup_nav_0" value="0" <{if $set.nav=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
             </div>
 
 
@@ -176,7 +209,7 @@ function move_cate(ncsn){
               <input type="hidden" name="not_news" value="1">
             	<input type="hidden" name="ncsn" value="<{$ncsn}>">
               <input type="hidden" name="op" value="<{$op}>">
-              <button type="submit" class="btn btn-mini btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+              <button type="submit" class="btn btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
             </div>
           </form>
         </div>

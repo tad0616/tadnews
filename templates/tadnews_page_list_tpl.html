@@ -2,7 +2,7 @@
 <{if $ncsn}>
 <link rel="alternate" type="application/rss+xml" title="tadnews rss" href="<{$xoops_url}>/modules/tadnews/rss.php?ncsn=<{$ncsn}>" />
 <{/if}>
-<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadnews/iconize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
 
 <{$bootstrap}>
 
@@ -12,24 +12,17 @@
 
 
 <!--TadNews Start-->
-<table class="table">
-  <{foreach item=all_news from=$all_news}>
+<{foreach item=all_news from=$all_news}>
+  <h3><a href="page.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h3>
+  <table class="table table-striped table-hover">
+  <{foreach  item=news from=$all_news.news}>
     <tr>
       <td>
-        <h4><a href="page.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
-        <table class="table table-striped">
-        <{foreach  item=news from=$all_news.news}>
-          <tr>
-            <td class="span1"></td>
-            <td><{$news.always_top_pic}><{$news.prefix_tag}>
-            <a href="<{$xoops_url}>/modules/tadnews/page.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
-            </td>
-            <td class="span1 text-right" style="color: gray;font-size:12px;">(<{$news.counter}>)</td>
-          </tr>
-        <{/foreach}>
-        </table>
+      <a href="<{$xoops_url}>/modules/tadnews/page.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
       </td>
+      <td class="span1 text-right" style="color: gray;font-size:12px;">(<{$news.counter}>)</td>
     </tr>
   <{/foreach}>
-</table>
+  </table>
+<{/foreach}>
 <!--TadNews End-->

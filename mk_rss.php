@@ -4,28 +4,28 @@ function mk_rss(){
   xoops_load('XoopsLocal');
   $myts =MyTextSanitizer::getInstance();
   $sql="select ncsn,nc_title from ".$xoopsDB->prefix("tad_news_cate")." where not_news!='1' and enable_group=''";
-	$result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
-	while(list($ncsn,$nc_title)=$xoopsDB->fetchRow($result)){
-		$ncsn_ok[]=$ncsn;
-		$cates[$ncsn]=$nc_title;
-	}
+  $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
+  while(list($ncsn,$nc_title)=$xoopsDB->fetchRow($result)){
+    $ncsn_ok[]=$ncsn;
+    $cates[$ncsn]=$nc_title;
+  }
 
-	$ok_cate=implode(",",$ncsn_ok);
-	$where_cate=(empty($ok_cate))?"and ncsn='0'":"and (ncsn in($ok_cate) or ncsn='0')";
+  $ok_cate=implode(",",$ncsn_ok);
+  $where_cate=(empty($ok_cate))?"and ncsn='0'":"and (ncsn in($ok_cate) or ncsn='0')";
   $today=date("Y-m-d H:i:s" , xoops_getUserTimestamp(time()));
-	$sql = "select * from ".$xoopsDB->prefix("tad_news")." where enable='1' and passwd='' and enable_group='' $where_cate and start_day < '{$today}' and (end_day > '{$today}' or end_day='0000-00-00 00:00:00') order by $top_order start_day desc limit 0 , 30";
+  $sql = "select * from ".$xoopsDB->prefix("tad_news")." where enable='1' and passwd='' and enable_group='' $where_cate and start_day < '{$today}' and (end_day > '{$today}' or end_day='0000-00-00 00:00:00') order by $top_order start_day desc limit 0 , 30";
 
-	$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL,3,show_error($sql));
-	$allItem="";
+  $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL,3,show_error($sql));
+  $allItem="";
   while($all_news=$xoopsDB->fetchArray($result)){
-	  foreach($all_news as $k=>$v){
-			$$k=$v;
-		}
+    foreach($all_news as $k=>$v){
+      $$k=$v;
+    }
     $news_title=$myts->htmlSpecialChars($news_title);
     $news_content=$myts->displayTarea($news_content,1,1,1,1,0);
-		
-		$allItem.="
-		<item>
+
+    $allItem.="
+    <item>
       <title>".XoopsLocal::convert_encoding(htmlspecialchars($news_title, ENT_QUOTES))."</title>
       <link>".XOOPS_URL."/modules/tadnews/index.php?nsn={$nsn}</link>
       <description>". XoopsLocal::convert_encoding(htmlspecialchars($news_content, ENT_QUOTES))."</description>
@@ -35,9 +35,9 @@ function mk_rss(){
     </item>
     ";
 
-	}
-	
-	
+  }
+
+
   $dimension = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');
   if (empty($dimension[0])) {
       $width = 88;
@@ -49,9 +49,9 @@ function mk_rss(){
   } else {
       $height = ($dimension[1] > 400) ? 400 : $dimension[1];
   }
-  
-    
-	$main="
+
+
+  $main="
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <rss version=\"2.0\">
   <channel>

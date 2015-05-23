@@ -1,15 +1,10 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2007-11-04
-// $Id: tadnews_cate_news.php,v 1.1 2008/06/25 06:36:34 tad Exp $
-// ------------------------------------------------------------------------- //
 include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
 
 //區塊主函式 (顯示類別新聞)
 function tadnews_cate_news($options){
   //$block=list_block_cate_news($options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);
-  global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption,$xoopsModuleConfig,$xoopsTpl;
+  global $xoTheme;
 
   $ncsn_arr=explode(',',$options[0]);
 
@@ -22,9 +17,13 @@ function tadnews_cate_news($options){
 	$tadnews->set_cover($options[2]);
 	$tadnews->set_view_ncsn($ncsn_arr);
 	$block=$tadnews->get_cate_news('return');
-  $block['bootstrap']=get_bootstrap();
-  $block['show_line']=($options[3]=='1')?"table":"";
+  if(empty($block['all_news']))return;
 
+  get_bootstrap();
+  $block['show_line']=($options[3]=='1')?"table":"";
+  $block['bootstrap_version']=$_SESSION['bootstrap'];
+
+  $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 	return $block;
 }
 

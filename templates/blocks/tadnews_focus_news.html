@@ -1,13 +1,8 @@
-<{$block.bootstrap}>
-<style>
-#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
-</style>
 <{$block.syntaxhighlighter_code}>
 <{$block.rating_js}>
 <{$block.del_js}>
-
 <{foreach item=page from=$block.page}>
-  <{if $page.enable=="1"}>
+  <{if $page.enable=="1" or $page.uid==$uid}>
   <div class="row-fluid">
     <div class="news_head well" <{if $page.need_sign}>style="background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;"<{/if}>>
       <div style="float:right"><{$page.star}></div>
@@ -17,7 +12,7 @@
 
       <div style="font-size:12px;">
         <div style="float:right"><{$page.fun}></div>
-        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
       </div>
     </div>
 
@@ -39,4 +34,3 @@
     </div>
   <{/if}>
 <{/foreach}>
-

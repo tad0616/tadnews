@@ -7,9 +7,21 @@
 <{$syntaxhighlighter_code}>
 <{$rating_js}>
 <{$del_js}>
-  
+
+<{$jquery}>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/MultiLink/js/MultiLink.js"></script>
+<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/MultiLink/css/MultiLink.css" type="text/css" media="screen" />
+
+<script type="text/javascript">
+ML.Config = {
+	"allLinks" : {
+    <{$MutiLinkConfig}>
+	}
+}
+</script>
+
 <{foreach item=page from=$page}>
-  <{if $page.enable=="1"}>
+  <{if $page.enable=="1" or $page.uid==$uid}>
   <div class="row-fluid">
     <div class="news_head well" <{if $page.need_sign}>style="background-image:url(<{$page.need_sign}>);background-position: right top;background-repeat: no-repeat;"<{/if}>>
       <div style="float:right"><{$page.star}></div>
@@ -19,7 +31,7 @@
 
       <div style="font-size:12px;">
         <div style="float:right"><{$page.fun}></div>
-        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
+        <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a class="multilink" id="news_<{$page.nsn}>" data-dls-links="<{$page.mutilink}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
       </div>
     </div>
 
@@ -78,4 +90,8 @@
 
   <{/if}>
 <{/foreach}>
-
+<script type='text/javascript'>
+  if($('#linkdiv').text() == '') {
+    document.write("<div id=\"linkdiv\" class=\"hideme\">I get replaced with the listing of links...<\/div>");
+  }
+</script>

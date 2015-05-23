@@ -1,8 +1,3 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<{$block.xoops_url}>/modules/tadnews/iconize.css" />
-<{$block.bootstrap}>
-<style>
-#centerCcolumn .blockContent, #bottomCcolumn .blockContent{border:none;}
-</style>
 <table class="table table-striped">
 <tr>
 	<th><{$smarty.const._MB_TADNEWS_NEWS_CATE}></th>
@@ -11,7 +6,7 @@
 </tr>
 <{foreach item=page from=$block.page}>
 	<tr>
-		<td><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a></td>
+		<td><a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a></td>
 		<td>
       <{$page.prefix_tag}>
       <{if $page.need_sign}>

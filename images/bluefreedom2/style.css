@@ -1,12 +1,12 @@
 * {
     padding: 0;
     margin: 0;
-} 
+}
 
 body {
     background: #fff;
 	font: .74em "Trebuchet MS" Verdana, Arial, sans-serif;
-	line-height: 1.5em; 
+	line-height: 1.5em;
 }
 a {
 	color: #3B6EBF;
@@ -17,7 +17,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-
 #wrap {
 margin: 20px auto;
 width: 724px;
@@ -25,7 +24,7 @@ background: #fff url('images/midbg.jpg');
 background-repeat: repeat-y;
 }
 
-#top { 
+#top {
 background: #fff url('images/topbg.jpg');
 height: 30px;
 }
@@ -66,12 +65,12 @@ background: #85ACF7 url('images/hidr.jpg');
 }
 
 
-.breadcrumbs { 
-    background: #F6F9FB; 
-	border-bottom: 1px solid #E1E1E1; 
+.breadcrumbs {
+    background: #F6F9FB;
+	border-bottom: 1px solid #E1E1E1;
 	padding: 5px;
 }
-	
+
 .middle {
 	float: left;
 	width: 96%;
