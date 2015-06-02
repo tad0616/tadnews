@@ -4,6 +4,11 @@ include_once "header.php";
 include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
 include_once(XOOPS_ROOT_PATH."/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php");
 
+$row=($_SESSION['bootstrap']=='3')?'row':'row-fluid';
+$span=($_SESSION['bootstrap']=='3')?'col-md-':'span';
+$controls_row=($_SESSION['bootstrap']=='3')?'form-group':'control-group';
+
+
 $num=!empty($_POST['num'])?intval($_POST['num']):10;
 $summary_length=intval($_POST['summary_length']);
 $summary_css=$_POST['summary_css'];
@@ -37,7 +42,7 @@ $all_news=$tadnews->get_news('return');
 
 if(empty($all_news['page']))die(_TADNEWS_EMPTY);
 
-$block="<div class='row-fluid'>";
+$block="<div class='$row'>";
 
 $total=0;
 
@@ -88,14 +93,15 @@ if($display_mode=='table'){
   </ul>";
 }
 
-$b_button=($b < 0)?"":"<button onClick='tadnew_list_content{$_POST['randStr']}({$b})' class='btn'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</button>";
+$b_button=($b < 0)?"":"<button onClick='tadnew_list_content{$_POST['randStr']}({$b})'  onfocus='tadnew_list_content{$_POST['randStr']}({$b})' class='btn btn-default'>".sprintf(_TADNEWS_BLOCK_BACK,$num)."</button>";
 
-$n_button=($total < $num)?"":"<button style='float:right;' onClick='tadnew_list_content{$_POST['randStr']}({$n})' class='btn'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</button>";
-$button=($show_button)?"{$n_button}{$b_button}":"";
+$n_button=($total < $num)?"":"<button onClick='tadnew_list_content{$_POST['randStr']}({$n})' onfocus='tadnew_list_content{$_POST['randStr']}({$n})' class='btn btn-default'>".sprintf(_TADNEWS_BLOCK_NEXT,$num)."</button>";
+
+$m_button=($total < $num)?"":"<a href='".XOOPS_URL."/modules/tadnews/' class='btn btn-default'>more</a>";
+$button=($show_button)?"<div class='$row'><div class='{$span}4 text-left'>{$b_button}</div><div class='{$span}4 text-center'>{$m_button}</div><div class='{$span}4 text-right'>{$n_button}</div></div>":"";
 
 $block.="</div>
-{$button}
-<div style='clear:both;'></div>";
+{$button}";
 
 echo $block;
 
