@@ -9,6 +9,7 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
         $tadnews->set_view_uid($show_uid);
     }
 
+    $tadnews->set_only_one_ncsn(true);
     $tadnews->set_news_kind($kind);
     $tadnews->set_summary(0);
     $tadnews->set_show_mode("list");
@@ -20,7 +21,6 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
     $tadnews->set_news_check_mode(1);
     $tadnews->chk_user_cate_power("pass");
     $options = $tadnews->get_tad_news_cate_option(0, 0, "", true, "", "1");
-    $xoopsTpl->assign('options', $options);
 
     if (!empty($the_ncsn)) {
         $tadnews->set_view_ncsn($the_ncsn);
@@ -30,6 +30,10 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
     }
 
     $tadnews->get_news();
+    $xoopsTpl->assign('options', $options);
+    $xoopsTpl->assign('ncsn', $the_ncsn);
+    $cate = $tadnews->get_tad_news_cate($the_ncsn);
+    $xoopsTpl->assign('cate', $cate);
 }
 
 //列出所有tad_news_cate資料
@@ -95,7 +99,7 @@ function mk_thumb($ncsn = "", $col_name = "", $width = 100)
     if (file_exists(_TADNEWS_CATE_DIR . "/{$ncsn}.png")) {
         unlink(_TADNEWS_CATE_DIR . "/{$ncsn}.png");
     }
-
+    //die(_TADNEWS_CATE_DIR);
     $handle = new upload($_FILES[$col_name]);
     if ($handle->uploaded) {
         $handle->file_new_name_body = $ncsn;
@@ -164,6 +168,7 @@ function update_tad_news_cate($ncsn = "")
     $setup = substr($setup, 0, -1);
 
     $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set  of_ncsn = '{$_POST['of_ncsn']}', nc_title = '{$_POST['nc_title']}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}', sort = '{$_POST['sort']}',not_news='{$_POST['not_news']}',setup='{$setup}' where ncsn='$ncsn'";
+    //die($sql);
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_UPDATE_ERROR1 . "<br>$sql");
 
     if (!empty($_FILES['cate_pic']['name'])) {
@@ -204,10 +209,10 @@ function change_kind($ncsn = "", $not_news = "")
     }
 
     if ($not_news == 1) {
-        header("location: page_cate.php");
+        header("location: page.php");
         exit;
     } else {
-        header("location: cate.php");
+        header("location: main.php");
         exit;
     }
 }

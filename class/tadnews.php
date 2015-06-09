@@ -147,6 +147,7 @@ class tadnews
     public $tadnewsConfig;
     public $tadnewsModule;
     public $module_id;
+    public $only_one_ncsn = false;
 
     //建構函數
     public function __construct()
@@ -170,6 +171,12 @@ class tadnews
         }
         $this->TadUpFiles = new TadUpFiles("tadnews");
 
+    }
+
+    //是否僅秀出單一分類下的文章
+    public function set_only_one_ncsn($set = false)
+    {
+        $this->only_one_ncsn = $set;
     }
 
     //設定種類
@@ -440,6 +447,7 @@ class tadnews
             //不限篇數
             $this->set_show_num(0);
             $all_nsn = implode(',', $this->view_nsn);
+
             //找出相關資訊
             $sql2    = "select ncsn from " . $xoopsDB->prefix("tad_news") . " where nsn in($all_nsn)";
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
@@ -448,11 +456,11 @@ class tadnews
             }
             $this->set_view_ncsn($all_ncsn);
             $all_ncsn = implode(',', $this->view_ncsn);
+
             //分析目前觀看得是新聞還是自訂頁面
             $kind_chk   = '';
             $where_cate = empty($all_ncsn) ? "" : " and ncsn in($all_ncsn)";
             $where_news = " and nsn in($all_nsn)";
-
             //秀出分類或不指定
         } else {
             //die(var_export($this->view_nsn));
@@ -473,10 +481,10 @@ class tadnews
             } elseif (is_array($this->view_ncsn)) {
                 $all_ncsn   = implode(',', $this->view_ncsn);
                 $where_cate = empty($all_ncsn) ? "" : "and ncsn in($all_ncsn)";
-
                 //指定觀看某一個分類
+            } elseif ($this->only_one_ncsn) {
+                $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
-                //找出底下的子分類
                 $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
                 $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
                 $ncsn_arr[] = $this->view_ncsn;
@@ -484,8 +492,9 @@ class tadnews
                     $ncsn_arr[] = $sub_ncsn;
                 }
 
-                $where_cate = "and ncsn in(" . implode(',', $ncsn_arr) . ")";
+                $where_cate = "and `ncsn` in(" . implode(',', $ncsn_arr) . ")";
             }
+
         }
 
         //設定是否需要評分工具
@@ -499,7 +508,8 @@ class tadnews
         }
 
         //找指定的分類
-        $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where 1 $kind_chk $where_cate order by sort";
+        $sql = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where 1 $kind_chk $where_cate order by sort";
+        //die($sql);
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
@@ -538,6 +548,9 @@ class tadnews
             } elseif (is_array($this->view_ncsn)) {
                 $where_cate = empty($ok_cate) ? "" : "and ncsn in($ok_cate)";
                 //指定觀看某一個分類
+
+            } elseif ($this->only_one_ncsn) {
+                $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
                 //找出底下的子分類
                 $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
@@ -602,6 +615,7 @@ class tadnews
                 $sql     = $PageBar['sql'];
             }
         }
+
         //die($sql);
 
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
@@ -704,28 +718,28 @@ class tadnews
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ($this->show_mode == "one") {
                         $news_content = "
-            <div class='hero-unit'>
-            <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
-            <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post'>
-              <fieldset>
-              <input type='hidden' name='nsn' value='{$nsn}'>
-              <input type='password' name='tadnews_passwd'>
-              <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . "</button>
-              </fieldset>
-            </form>
-            </div>";
+                        <div class='hero-unit'>
+                        <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
+                        <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post'>
+                          <fieldset>
+                          <input type='hidden' name='nsn' value='{$nsn}'>
+                          <input type='password' name='tadnews_passwd'>
+                          <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . "</button>
+                          </fieldset>
+                        </form>
+                        </div>";
                     } else {
                         $news_content = "
-            <div>
-            <div>" . _TADNEWS_NEWS_NEED_PASSWD . "</div>
-            <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post' style='display:inline'>
-              <fieldset>
-              <input type='hidden' name='nsn' value='{$nsn}'>
-              <input type='password' name='tadnews_passwd'>
-              <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . "</button>
-              </fieldset>
-            </form>
-            </div>";
+                        <div>
+                        <div>" . _TADNEWS_NEWS_NEED_PASSWD . "</div>
+                        <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post' style='display:inline'>
+                          <fieldset>
+                          <input type='hidden' name='nsn' value='{$nsn}'>
+                          <input type='password' name='tadnews_passwd'>
+                          <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . "</button>
+                          </fieldset>
+                        </form>
+                        </div>";
                     }
                     $tadnews_files = "";
                 } else {
@@ -908,6 +922,7 @@ class tadnews
             }
             if (is_numeric($this->view_ncsn)) {
                 $xoopsTpl->assign("show_cate_title", $show_cate_title);
+                $xoopsTpl->assign("nc_title", $show_cate_title);
             }
 
             if (isset($all_news[0]['news_title'])) {
@@ -1173,7 +1188,7 @@ class tadnews
 
         $edit_cate = "";
         if (!empty($ncsn)) {
-            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page_cate.php?ncsn=$ncsn' class='btn btn-mini' style='font-weight:normal;'><i class='icon-pencil'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/cate.php?ncsn=$ncsn' class='btn btn-mini' style='font-weight:normal;'><i class='icon-pencil'></i> " . _TADNEWS_EDIT_CATE . "</a>";
+            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?ncsn=$ncsn' class='btn btn-mini' style='font-weight:normal;'><i class='icon-pencil'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?ncsn=$ncsn' class='btn btn-mini' style='font-weight:normal;'><i class='icon-pencil'></i> " . _TADNEWS_EDIT_CATE . "</a>";
         }
 
         $signbtn = "";
@@ -2220,6 +2235,13 @@ class tadnews
         $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='$ncsn'";
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
         $data   = $xoopsDB->fetchArray($result);
+
+        $sql2           = "select count(*) from " . $xoopsDB->prefix("tad_news") . " where ncsn='{$ncsn}'";
+        $result2        = $xoopsDB->query($sql2);
+        list($counter)  = $xoopsDB->fetchRow($result2);
+        $data['count']  = $counter;
+        $data['g_txt']  = $this->txt_to_group_name($data['enable_group'], _TADNEWS_ALL_OK);
+        $data['gp_txt'] = $this->txt_to_group_name($data['enable_post_group'], _MA_TADNEWS_ONLY_ROOT, " , ");
         return $data;
     }
 

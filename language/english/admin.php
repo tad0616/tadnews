@@ -14,6 +14,7 @@ define('_MA_TADNEWS_CAN_READ_NEWS_GROUP', 'Available Groups');
 //<br > Non - select for publishing immediatelly . ');<br>Non-select for forever visible.') ;
 define('_MA_TADNEWS_NEWS_CATE', 'Category');
 define('_MA_TADNEWS_CHECK_ALL', 'Check all');
+define('_MA_TADNEWS_NO_NEWS', 'This category is no article.');
 
 //cate.php
 define('_MA_TADNEWS_ADD_CATE', 'Add Category');

@@ -13,6 +13,7 @@ define('_MA_TADNEWS_NEWS_PASSWD', '文章加密');
 define('_MA_TADNEWS_CAN_READ_NEWS_GROUP', '可讀取群組');
 define('_MA_TADNEWS_NEWS_CATE', '所屬分類');
 define('_MA_TADNEWS_CHECK_ALL', '全選');
+define('_MA_TADNEWS_NO_NEWS', '該分類沒有任何文章');
 
 //cate.php
 define('_MA_TADNEWS_ADD_CATE', '建立文章分類');
