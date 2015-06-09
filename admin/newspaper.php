@@ -96,7 +96,7 @@ function newspaper_themes($themes = "")
 
     if (is_dir(_TADNEWS_NSP_THEMES_PATH)) {
         if ($dh = opendir(_TADNEWS_NSP_THEMES_PATH)) {
-            $select = "<select name='themes'>";
+            $select = "<select name='themes' id='themes' class='form-control'>";
             while (($file = readdir($dh)) !== false) {
                 if ($file == "." or $file == "..") {
                     continue;
@@ -199,8 +199,7 @@ function add_newspaper($nps_sn = "")
 
     //自動抓數字
     $number = get_max_number($nps_sn);
-
-    $xoopsTpl->assign("newspaper_set_title", $newspaper_set['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, "<input type='text' name='number' id='number' value='{$number}' class='span1'>"));
+    $xoopsTpl->assign("newspaper_set_title", $newspaper_set['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, "<input type='text' name='number' id='number' value='{$number}' style='width: 50px;'>"));
     $xoopsTpl->assign("opt", $opt);
     $xoopsTpl->assign("opt2", $opt2);
     $xoopsTpl->assign("nps_sn", $nps_sn);
