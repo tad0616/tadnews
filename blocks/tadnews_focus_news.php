@@ -1,76 +1,68 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// ¥»¼Ò²Õ¥Ñ tad »s§@
-// »s§@¤é´Á¡G2007-11-04
-// $Id: tadnews_content_block.php,v 1.4 2008/06/25 06:36:39 tad Exp $
-// ------------------------------------------------------------------------- //
+include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
+//å€å¡Šä¸»å‡½å¼ (é¡¯ç¤ºæ–°èžå…§å®¹)
+function tadnews_focus_news($options)
+{
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
 
-//°Ï¶ô¥D¨ç¦¡ (Åã¥Ü·s»D¤º®e)
-function tadnews_focus_news($options){
-	global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption;
+    if (empty($options[0])) {
+        return "";
+    }
 
-	if(empty($options[0]))return "";
+    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 
+    $tadnews = new tadnews();
+    $tadnews->set_view_nsn($options[0]);
+    $summary = ($options[1] == 'summary') ? "page_preak" : "full";
+    $tadnews->set_summary($summary);
+    $tadnews->set_cover(true, "db");
+    $block              = $tadnews->get_news('return');
+    $block['bootstrap'] = get_bootstrap();
 
-  include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
-
-	$tadnews=new tadnews();
-	$tadnews->set_view_nsn($options[0]);
-	$summary=($options[1]=='summary')?"page_preak":"full";
-	$tadnews->set_summary($summary);
-	$tadnews->set_cover(true,"db");
-	$block=$tadnews->get_news('return');
-  $block['bootstrap']=get_bootstrap();
-
-	return $block;
+    return $block;
 }
 
-//°Ï¶ô½s¿è¨ç¦¡
-function tadnews_focus_news_edit($options){
-	global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsOption;
-	$today=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+//å€å¡Šç·¨è¼¯å‡½å¼
+function tadnews_focus_news_edit($options)
+{
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
+    $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
-	$sql = "select a.nsn,a.ncsn,a.news_title,a.passwd,a.start_day,b.not_news,b.nc_title from ".$xoopsDB->prefix("tad_news")." as a left join ".$xoopsDB->prefix("tad_news_cate")." as b on a.ncsn=b.ncsn where a.enable='1' and a.start_day < '{$today}' and (a.end_day > '{$today}' or a.end_day='0000-00-00 00:00:00')  order by a.start_day desc";
+    $sql = "select a.nsn,a.ncsn,a.news_title,a.passwd,a.start_day,b.not_news,b.nc_title from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where a.enable='1' and a.start_day < '{$today}' and (a.end_day > '{$today}' or a.end_day='0000-00-00 00:00:00')  order by a.start_day desc";
 
-	$result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL,3,show_error($sql));
-  $option="<select name='options[0]'>";
-  $myts =MyTextSanitizer::getInstance();
-	while(list($nsn,$ncsn,$news_title,$passwd,$start_day,$not_news,$nc_title)=$xoopsDB->fetchRow($result)){
-		$selected=($options[0]==$nsn)?"selected":"";
-    $start_day=substr($start_day,0,10);
-    $news_title=$myts->htmlSpecialChars($news_title);
-		$option.="<option value='$nsn' $selected>$start_day [{$nc_title}] $news_title</option>";
-	}
-	$option.="</select>";
-	
+    $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
+    $option = "<select name='options[0]'>";
+    $myts   = MyTextSanitizer::getInstance();
+    while (list($nsn, $ncsn, $news_title, $passwd, $start_day, $not_news, $nc_title) = $xoopsDB->fetchRow($result)) {
+        $selected   = ($options[0] == $nsn) ? "selected" : "";
+        $start_day  = substr($start_day, 0, 10);
+        $news_title = $myts->htmlSpecialChars($news_title);
+        $option .= "<option value='$nsn' $selected>$start_day [{$nc_title}] $news_title</option>";
+    }
+    $option .= "</select>";
 
-	$form="<table style='width:auto;'>
-	<tr><th>"._MB_TADNEWS_FOCUS_EDIT_BITEM0."</th><td>$option</td></tr>
-	<tr><th>"._MB_TADNEWS_FOCUS_EDIT_BITEM1."</th><td>
+    $form = "<table style='width:auto;'>
+	<tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</th><td>$option</td></tr>
+	<tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</th><td>
     <select name='options[1]'>
-    <option value='full' ".chk($options[1],'full','1','selected').">"._MB_TADNEWS_FOCUS_FULL."</option>
-    <option value='summary' ".chk($options[1],'summary','0','selected').">"._MB_TADNEWS_FOCUS_SUMMARY."</option>
+    <option value='full' " . chk($options[1], 'full', '1', 'selected') . ">" . _MB_TADNEWS_FOCUS_FULL . "</option>
+    <option value='summary' " . chk($options[1], 'summary', '0', 'selected') . ">" . _MB_TADNEWS_FOCUS_SUMMARY . "</option>
     </select>
   </td></tr>
   </table>";
-	return $form;
+    return $form;
 }
 
-
-
-
-//³æ¿ï¦^´_­ì©l¸ê®Æ¨ç¼Æ
-if(!function_exists("chk")){
-  function chk($DBV="",$NEED_V="",$defaul="",$return="checked"){
-  	if($DBV==$NEED_V){
-  		return $return;
-  	}elseif(empty($DBV) && $defaul=='1'){
-  		return $return;
-  	}
-  	return "";
-  }
+//å–®é¸å›žå¾©åŽŸå§‹è³‡æ–™å‡½æ•¸
+if (!function_exists("chk")) {
+    function chk($DBV = "", $NEED_V = "", $defaul = "", $return = "checked")
+    {
+        if ($DBV == $NEED_V) {
+            return $return;
+        } elseif (empty($DBV) && $defaul == '1') {
+            return $return;
+        }
+        return "";
+    }
 }
-
-?>

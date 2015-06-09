@@ -47,10 +47,7 @@ define('_MD_TADNEWS_ARCHIVE', 'Archive');
 define('_MD_TADNEWS_YEAR', 'Year');
 define('_MD_TADNEWS_MONTH', 'Month');
 
-
 define('_MD_TADNEWS_NEWSPAPER', 'Newspaper List');
-
-
 
 define('_MD_TADNEWS_TIME_TAB', 'Post time');
 define('_MD_TADNEWS_PRIVILEGE_TAB', 'Privilege');

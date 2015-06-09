@@ -1,79 +1,76 @@
 <?php
-/*-----------¤Ş¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 include_once "header.php";
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 
-//Åã¥Ü³æ¤@·s»D
-function show_news($nsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
+//é¡¯ç¤ºå–®ä¸€æ–°è
+function show_news($nsn = "")
+{
+    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $tadnews;
 
-  $tadnews->set_view_nsn($nsn);
-  $tadnews->set_cover(true,"db");
-  $tadnews->set_summary('full');
+    $tadnews->set_view_nsn($nsn);
+    $tadnews->set_cover(true, "db");
+    $tadnews->set_summary('full');
 
-  $tadnews->get_news();
-
-}
-
-
-//¦C¥X©Ò¦³tad_news¸ê®Æ
-function list_tad_all_news($the_ncsn=""){
-  global $xoopsModuleConfig,$xoopsTpl,$interface_menu,$tadnews;
-
-  $tadnews->set_news_kind("page");
-  $tadnews->set_show_num('none');
-  $tadnews->set_view_ncsn($the_ncsn);
-  $tadnews->get_cate_news();
+    $tadnews->get_news();
 
 }
 
+//åˆ—å‡ºæ‰€æœ‰tad_newsè³‡æ–™
+function list_tad_all_news($the_ncsn = "")
+{
+    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $tadnews;
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
-$_REQUEST['op']=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
+    $tadnews->set_news_kind("page");
+    $tadnews->set_show_num('none');
+    $tadnews->set_view_ncsn($the_ncsn);
+    $tadnews->get_cate_news();
 
-$nsn=(isset($_REQUEST['nsn']))?intval($_REQUEST['nsn']) : 0;
-$ncsn=(isset($_REQUEST['ncsn']))?intval($_REQUEST['ncsn']) : 0;
-$fsn=(isset($_REQUEST['fsn']))?intval($_REQUEST['fsn']) : 0;
-
-switch($_REQUEST['op']){
-
-  //¤U¸üÀÉ®×
-  case "tufdl":
-  $files_sn=isset($_GET['files_sn'])?intval($_GET['files_sn']):"";
-  $TadUpFiles->add_file_counter($files_sn,$hash=false);
-  exit;
-  break;
-
-
-  //§R°£¸ê®Æ
-  case "delete_tad_news";
-  $tadnews->delete_tad_news($nsn);
-  header("location: ".$_SERVER['PHP_SELF']);
-  break;
-
-
-
-  default:
-  if(!empty($nsn)){
-    $xoopsOption['template_main'] = "tadnews_page_tpl.html";
-    include XOOPS_ROOT_PATH."/header.php";
-    $main=show_news($nsn);
-  }elseif(!empty($ncsn)){
-    $xoopsOption['template_main'] = "tadnews_page_list_tpl.html";
-    include XOOPS_ROOT_PATH."/header.php";
-    $main=list_tad_all_news($ncsn);
-  }else{
-    header("location:index.php?nsn={$nsn}");
-  }
-
-  break;
 }
 
-$xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
-$xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
+$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
-include_once XOOPS_ROOT_PATH.'/include/comment_view.php';
-include_once XOOPS_ROOT_PATH.'/footer.php';
+$nsn  = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
+$ncsn = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : 0;
+$fsn  = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
 
-?>
+switch ($_REQUEST['op']) {
+
+    //ä¸‹è¼‰æª”æ¡ˆ
+    case "tufdl":
+        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $TadUpFiles->add_file_counter($files_sn, $hash = false);
+        exit;
+        break;
+
+    //åˆªé™¤è³‡æ–™
+    case "delete_tad_news";
+        $tadnews->delete_tad_news($nsn);
+        header("location: " . $_SERVER['PHP_SELF']);
+        exit;
+        break;
+
+    default:
+        if (!empty($nsn)) {
+            $xoopsOption['template_main'] = "tadnews_page.html";
+            include XOOPS_ROOT_PATH . "/header.php";
+            $main = show_news($nsn);
+        } elseif (!empty($ncsn)) {
+            $xoopsOption['template_main'] = "tadnews_page_list.html";
+            include XOOPS_ROOT_PATH . "/header.php";
+            $main = list_tad_all_news($ncsn);
+        } else {
+            header("location:index.php?nsn={$nsn}");
+            exit;
+        }
+
+        break;
+}
+
+$xoopsTpl->assign("bootstrap", get_bootstrap());
+$xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+
+/*-----------ç§€å‡ºçµæœå€--------------*/
+include_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+include_once XOOPS_ROOT_PATH . '/footer.php';

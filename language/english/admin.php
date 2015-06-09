@@ -13,6 +13,7 @@ define('_MA_TADNEWS_NEWS_PASSWD', 'Password');
 define('_MA_TADNEWS_CAN_READ_NEWS_GROUP', 'Available Groups');
 //<br > Non - select for publishing immediatelly . ');<br>Non-select for forever visible.') ;
 define('_MA_TADNEWS_NEWS_CATE', 'Category');
+define('_MA_TADNEWS_CHECK_ALL', 'Check all');
 
 //cate.php
 define('_MA_TADNEWS_ADD_CATE', 'Add Category');
@@ -85,7 +86,6 @@ define('_MA_TADNEWS_SEND_LOG', 'View log');
 define('_MA_TADNEWS_EMPTY_LOG', 'No log');
 define('_MA_TADNEWS_BACK_TO', 'Back to %s');
 define('_MA_TADNEWS_NP_SUB_TITLE', 'Newspaper title: ');
-
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', 'Show News Title');

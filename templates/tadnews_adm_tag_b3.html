@@ -1,0 +1,103 @@
+<!--TadNews Start-->
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
+
+
+<{$jquery}>
+
+
+<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
+
+<script type="text/JavaScript">
+  $(".color").mColorPicker({
+    imageFolder: "<{$xoops_url}>/modules/tadtools/mColorPicker/images/"
+  });
+
+  function delete_tag(tag_sn){
+  	var sure = window.confirm('<{$smarty.const._TADNEWS_SURE_DEL}>');
+  	if (!sure)	return;
+  	location.href="<{$xoops_url}>/modules/tadnews/admin/tag.php?op=del_tag&tag_sn=" + tag_sn;
+  }
+
+</script>
+
+
+<form action="tag.php" method="post" id="myForm">
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th><{$smarty.const._MA_TADNEWS_TAG_DEMO}></th>
+      <th><{$smarty.const._MA_TADNEWS_TAG_TITLE}></th>
+      <th><{$smarty.const._MA_TADNEWS_TAG_FONTCOLOR}></th>
+      <th><{$smarty.const._MA_TADNEWS_TAG_COLOR}></th>
+      <th><{$smarty.const._MA_TADNEWS_TAG_ENABLE}></th>
+      <th><{$smarty.const._MA_TADNEWS_TAG_FUNC}></th>
+    </tr>
+
+    <{if $tag_sn==""}>
+      <tr class="info">
+        <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
+        <td><input type="text" name="tag" value="<{$tag}>" class="span2"></td>
+        <td>
+          <input type="text" name="font_color" class="span2 color" value="<{$font_color}>" id="font_color" data-hex="true">
+        </td>
+        <td>
+          <input type="text" name="color" class="span2 color" value="<{$color}>" id="color" data-hex="true">
+        </td>
+        <td>
+          <label class="radio inline">
+            <input type="radio" name="enable" value="1" checked><{$smarty.const._YES}>
+          </label>
+          <label class="radio inline">
+            <input type="radio" name="enable" value="0" ><{$smarty.const._NO}>
+          </label>
+        </td>
+        <td>
+        <input type="hidden" name="op" value="insert_tad_news_tags">
+        <button class="btn" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+        </td>
+      </tr>
+    <{/if}>
+
+    <{foreach item=tag from=$tagarr}>
+      <{if $tag.mode=="edit"}>
+        <tr class="warning">
+          <td><{$tag.prefix_tag}></td>
+          <td><input type="text" name="tag" value="<{$tag.tag}>" class="span2"></td>
+
+          <td>
+            <input type="text" name="font_color" class="span2 color" value="<{$tag.font_color}>" id="font_color" data-hex="true">
+          </td>
+          <td>
+            <input type="text" name="color" class="span2 color" value="<{$tag.color}>" id="color" data-hex="true">
+          </td>
+
+          <td>
+            <label class="radio inline">
+              <input type="radio" name="enable" value="1"  <{if $tag.enable=='1' or $tag.enable==''}>checked<{/if}>><{$smarty.const._YES}>
+            </label>
+            <label class="radio inline">
+              <input type="radio" name="enable" value="0" <{if $tag.enable=='0'}>checked<{/if}>><{$smarty.const._NO}>
+            </label>
+          </td>
+          <td>
+        	<input type="hidden" name="tag_sn" value="<{$tag_sn}>">
+          <input type="hidden" name="op" value="update_tad_news_tags">
+          <button class="btn" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+          </td></tr>
+      <{else}>
+        <tr>
+          <td><{$tag.prefix_tag}></td>
+          <td><{$tag.tag}></td>
+          <td><{$tag.font_color}></td>
+          <td><{$tag.color}></td>
+          <td><{$tag.enable_txt}><{$tag.amount}></td>
+          <td><{$tag.tool}></td>
+        </tr>
+      <{/if}>
+    <{/foreach}>
+
+  </table>
+
+</form>

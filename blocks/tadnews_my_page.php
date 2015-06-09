@@ -1,60 +1,57 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// ¥»¼Ò²Õ¥Ñ tad »s§@
-// »s§@¤é´Á¡G2007-11-04
-// $Id: tadnews_re_block.php,v 1.2 2008/05/14 01:31:48 tad Exp $
-// ------------------------------------------------------------------------- //
+include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-include_once XOOPS_ROOT_PATH."/modules/tadnews/block_function.php";
+//è‡ªé¸é é¢
+function tadnews_my_page($options)
+{
+    global $xoTheme;
 
-//¦Û¿ï­¶­±
-function tadnews_my_page($options){
-	global $xoTheme;
+    if (empty($options[0])) {
+        return "";
+    }
 
-	if(empty($options[0]))return "";
+    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 
-  include_once XOOPS_ROOT_PATH."/modules/tadnews/class/tadnews.php";
+    $nsn_arr = explode(',', $options[0]);
+    $tadnews = new tadnews();
+    $tadnews->set_show_mode('table');
+    $tadnews->set_view_nsn($nsn_arr);
+    $block = $tadnews->get_news('return');
+    get_bootstrap();
 
-	$nsn_arr=explode(',',$options[0]);
-	$tadnews = new tadnews();
-	$tadnews->set_show_mode('table');
-	$tadnews->set_view_nsn($nsn_arr);
-	$block=$tadnews->get_news('return');
-  get_bootstrap();
-
-  $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-	return $block;
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    return $block;
 }
 
-//°Ï¶ô½s¿è¨ç¦¡
-function tadnews_my_page_edit($options){
-	global $xoopsDB;
+//å€å¡Šç·¨è¼¯å‡½å¼
+function tadnews_my_page_edit($options)
+{
+    global $xoopsDB;
 
-  $cates=get_all_news_cate();
+    $cates = get_all_news_cate();
 
-  $options_arr=explode(',',$options[0]);
+    $options_arr = explode(',', $options[0]);
 
-  $order=empty($options[0])?"":"field( `nsn` , {$options[0]}) ,";
+    $order = empty($options[0]) ? "" : "field( `nsn` , {$options[0]}) ,";
 
-  $sql = "select * from ".$xoopsDB->prefix("tad_news")." where enable='1' order by  $order start_day desc";
+    $sql = "select * from " . $xoopsDB->prefix("tad_news") . " where enable='1' order by  $order start_day desc";
 //die($sql);
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
-  $myts =MyTextSanitizer::getInstance();
-  $opt="";
-  while(list($nsn,$ncsn,$news_title,$news_content,$start_day,$end_day,$enable,$uid,$passwd,$enable_group)=$xoopsDB->fetchRow($result)){
-    $news_title=$myts->htmlSpecialChars($news_title);
-    if(in_array($nsn,$options_arr)){
-      $opt2.="<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
-    }else{
-      $opt.="<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
+    $myts = MyTextSanitizer::getInstance();
+    $opt  = "";
+    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
+        $news_title = $myts->htmlSpecialChars($news_title);
+        if (in_array($nsn, $options_arr)) {
+            $opt2 .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
+        } else {
+            $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
+        }
     }
-  }
 
-
-	$form="
-  <script type=\"text/javascript\" src=\"".XOOPS_URL."/modules/tadnews/class/tmt_core.js\"></script>
-	<script type=\"text/javascript\" src=\"".XOOPS_URL."/modules/tadnews/class/tmt_spry_linkedselect.js\"></script>
+    $form = "
+  <script type=\"text/javascript\" src=\"" . XOOPS_URL . "/modules/tadnews/class/tmt_core.js\"></script>
+	<script type=\"text/javascript\" src=\"" . XOOPS_URL . "/modules/tadnews/class/tmt_spry_linkedselect.js\"></script>
 	<script type=\"text/javascript\">
 	function getOptions()
 	{
@@ -67,7 +64,7 @@ function tadnews_my_page_edit($options){
 	  document.getElementById('all_my_news').value=values.join(',');
 	  }
 	</script>
-	<b>"._MB_TADNEWS_MY_PAGE."</b><br>
+	<b>" . _MB_TADNEWS_MY_PAGE . "</b><br>
 
   <table class='form_tbl' style='width:auto'>
 
@@ -78,11 +75,11 @@ function tadnews_my_page_edit($options){
 			</select>
 		</td>
 		<td style='vertical-align:middle'>
-		<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();\"><img src=\"".XOOPS_URL."/modules/tadnews/images/right.png\"></button><br>
-		<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();\"><img src=\"".XOOPS_URL."/modules/tadnews/images/left.png\"></button><br><br>
+		<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();\"><img src=\"" . XOOPS_URL . "/modules/tadnews/images/right.png\"></button><br>
+		<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();\"><img src=\"" . XOOPS_URL . "/modules/tadnews/images/left.png\"></button><br><br>
 
-<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptionUp('destination');getOptions();\"><img src=\"".XOOPS_URL."/modules/tadnews/images/up.png\"></button><br>
-		<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptionDown('destination');getOptions();\"><img src=\"".XOOPS_URL."/modules/tadnews/images/down.png\"></button>
+<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptionUp('destination');getOptions();\"><img src=\"" . XOOPS_URL . "/modules/tadnews/images/up.png\"></button><br>
+		<button type=\"button\" onclick=\"tmt.spry.linkedselect.util.moveOptionDown('destination');getOptions();\"><img src=\"" . XOOPS_URL . "/modules/tadnews/images/down.png\"></button>
 		</td>
 		<td style='vertical-align:top;'>
 			<select id=\"destination\" size=\"12\" multiple=\"multiple\" tmt:linkedselect=\"true\" style='width: 300px;'>
@@ -95,7 +92,5 @@ function tadnews_my_page_edit($options){
   </td></tr>
 	</table>
 	";
-	return $form;
+    return $form;
 }
-
-?>

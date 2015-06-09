@@ -1,66 +1,61 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 include "header.php";
-$xoopsOption['template_main'] = "tadnews_newspaper_tpl.html";
-include XOOPS_ROOT_PATH."/header.php";
-/*-----------function°Ï--------------*/
+$xoopsOption['template_main'] = "tadnews_newspaper.html";
+include XOOPS_ROOT_PATH . "/header.php";
+/*-----------functionå€--------------*/
 
+//åˆ—å‡ºnewspaperè³‡æ–™
+function list_newspaper()
+{
+    global $xoopsDB, $xoopsOption, $xoopsTpl;
 
-//¦C¥Xnewspaper¸ê®Æ
-function list_newspaper(){
-  global $xoopsDB,$xoopsOption,$xoopsTpl;
+    $myts = &MyTextSanitizer::getInstance();
 
-  $myts =& MyTextSanitizer::getInstance();
+    $sql = "select a.npsn,a.number,b.title,a.np_date from " . $xoopsDB->prefix("tad_news_paper") . " as a ," . $xoopsDB->prefix("tad_news_paper_setup") . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc";
 
-  $sql = "select a.npsn,a.number,b.title,a.np_date from ".$xoopsDB->prefix("tad_news_paper")." as a ,".$xoopsDB->prefix("tad_news_paper_setup")." as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc";
+    //getPageBar($åŽŸsqlèªžæ³•, æ¯é é¡¯ç¤ºå¹¾ç­†è³‡æ–™, æœ€å¤šé¡¯ç¤ºå¹¾å€‹é æ•¸é¸é …);
+    $PageBar = getPageBar($sql, 10, 10);
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
 
-  //getPageBar($­ìsql»yªk, ¨C­¶Åã¥Ü´Xµ§¸ê®Æ, ³Ì¦hÅã¥Ü´X­Ó­¶¼Æ¿ï¶µ);
-  $PageBar=getPageBar($sql,10,10);
-  $bar=$PageBar['bar'];
-  $sql=$PageBar['sql'];
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $i      = 0;
+    $main   = "";
+    while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
+        $title               = $myts->htmlSpecialChars($title);
+        $main[$i]['allnpsn'] = $allnpsn;
+        $main[$i]['title']   = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
+        $main[$i]['np_date'] = $np_date;
+        $i++;
+    }
 
-
-  $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
-  $i=0;
-  $main="";
-  while(list($allnpsn,$number,$title,$np_date)=$xoopsDB->fetchRow($result)){
-      $title=$myts->htmlSpecialChars($title);
-      $main[$i]['allnpsn']=$allnpsn;
-      $main[$i]['title']=$title.sprintf(_MD_TADNEWS_NP_TITLE,$number);
-      $main[$i]['np_date']=$np_date;
-      $i++;
-  }
-
-
-  $xoopsTpl->assign( "page" , $main) ;
-  $xoopsTpl->assign( "bar" , $bar) ;
+    $xoopsTpl->assign("page", $main);
+    $xoopsTpl->assign("bar", $bar);
 
 }
 
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
+$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
+$npsn           = (empty($_GET['npsn'])) ? "" : intval($_GET['npsn']);
+switch ($_REQUEST['op']) {
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
-$_REQUEST['op']=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
-$npsn=(empty($_GET['npsn']))?"":intval($_GET['npsn']);
-switch($_REQUEST['op']){
+    case "preview":
+        $main = preview_newspaper($npsn);
+        break;
 
-  case "preview":
-  $main=preview_newspaper($npsn);
-  break;
-
-  default:
-  $main=list_newspaper();
-  break;
+    default:
+        $main = list_newspaper();
+        break;
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
-if($_REQUEST['op']=="preview"){
-  echo $main;
-}else{
-  $xoopsTpl->assign('xoops_showrblock', 0);
+/*-----------ç§€å‡ºçµæžœå€--------------*/
+if ($_REQUEST['op'] == "preview") {
+    echo $main;
+} else {
+    $xoopsTpl->assign('xoops_showrblock', 0);
 
-  $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
-  $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
-  include_once XOOPS_ROOT_PATH.'/footer.php';
+    $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign("bootstrap", get_bootstrap());
+    include_once XOOPS_ROOT_PATH . '/footer.php';
 }
-
-?>

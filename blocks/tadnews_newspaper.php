@@ -1,28 +1,29 @@
 <?php
-//°Ï¶ô¥D¨ç¦¡ (¹q¤l³ø­q¾\)
-function tadnews_newspaper($options){
-  global $xoopsDB,$xoopsUser;
+//å€å¡Šä¸»å‡½å¼ (é›»å­å ±è¨‚é–±)
+function tadnews_newspaper($options)
+{
+    global $xoopsDB, $xoopsUser;
 
-  $sql = "select count(*) from ".$xoopsDB->prefix("tad_news_paper_email")."";
-  $result=$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3,show_error($sql));
-  list($counter)=$xoopsDB->fetchRow($result);
+    $sql           = "select count(*) from " . $xoopsDB->prefix("tad_news_paper_email") . "";
+    $result        = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    list($counter) = $xoopsDB->fetchRow($result);
 
-  //§ä¥X²{¦³³]©w²Õ
-  $sql = "select nps_sn,title from ".$xoopsDB->prefix("tad_news_paper_setup")." where status='1'";
-  $result=$xoopsDB->query($sql);
-  $i=0;
-  $option="";
-  while(list($nps_sn,$title)=$xoopsDB->fetchRow($result)){
-    $option[$i]['value']=$nps_sn;
-    $option[$i]['text']=$title;
-    $i++;
-  }
-  if(empty($option))return;
+    //æ‰¾å‡ºç¾æœ‰è¨­å®šçµ„
+    $sql    = "select nps_sn,title from " . $xoopsDB->prefix("tad_news_paper_setup") . " where status='1'";
+    $result = $xoopsDB->query($sql);
+    $i      = 0;
+    $option = "";
+    while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
+        $option[$i]['value'] = $nps_sn;
+        $option[$i]['text']  = $title;
+        $i++;
+    }
+    if (empty($option)) {
+        return;
+    }
 
-  $block['counter']=sprintf(_MB_TADNEWS_ORDER_COUNT,$counter);
-  $block['option']=$option;
-  $block['email']=$xoopsUser?$xoopsUser->email():"";
-  return $block;
+    $block['counter'] = sprintf(_MB_TADNEWS_ORDER_COUNT, $counter);
+    $block['option']  = $option;
+    $block['email']   = $xoopsUser ? $xoopsUser->email() : "";
+    return $block;
 }
-
-?>

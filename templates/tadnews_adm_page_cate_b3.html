@@ -1,0 +1,268 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/bootstrap/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/xoops_adm.css" />
+
+
+
+<{$jquery}>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
+      var order = $(this).sortable("serialize");
+      $.post("save_sort_cate.php", order, function(theResponse){
+          $("#save_msg").html(theResponse);
+      });
+  }
+  });
+});
+
+
+function delete_tad_news_cate_func(ncsn){
+	var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
+	if (!sure)	return;
+	location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
+}
+
+function move_cate(ncsn){
+  $('#move_form'+ncsn).show();
+}
+</script>
+
+<h3><{$smarty.const._MA_TADNEWS_ADD_PAGE_CATE}></h3>
+
+<{if $ncsn==""}>
+  <div class="row-fluid">
+    <div class="well span12 <{$cate.offset}>" style="background-color:#FFFF99;">
+      <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
+        <div class="row-fluid">
+
+          <div class="span2">
+            <label><{$smarty.const._MA_TADNEWS_CATE_PIC}></label>
+            <input type="file" name="cate_pic" class="span12" size=10>
+          </div>
+
+
+          <div class="span3">
+            <label><{$smarty.const._MA_TADNEWS_PARENT_CATE}></label>
+            <select name="of_ncsn" size=1 class="span12">
+              <{$cate_select}>
+            </select>
+            <label><{$smarty.const._MA_TADNEWS_CATE_TITLE}></label>
+            <input type="text" name="nc_title" id="nc_title" class="span12" value="<{$cate.nc_title}>">
+          </div>
+
+          <div class="span3">
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TITLE}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[title]" id="setup_title_1" value="1" checked><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[title]" id="setup_title_0" value="0"><{$smarty.const._NO}>
+              </label>
+            </div>
+
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TOOL}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[tool]" id="setup_tool_1" value="1"><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[tool]" id="setup_tool_0" value="0" checked><{$smarty.const._NO}>
+              </label>
+            </div>
+
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_COMM}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[comm]" id="setup_comm_1" value="1"><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[comm]" id="setup_comm_0" value="0" checked><{$smarty.const._NO}>
+              </label>
+            </div>
+
+            <div>
+              <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_NAV}><{$smarty.const._TAD_FOR}></label>
+              <label class="radio inline">
+              <input type="radio" name="setup[nav]" id="setup_nav_1" value="1" checked><{$smarty.const._YES}>
+              </label>
+
+              <label class="radio inline">
+              <input type="radio" name="setup[nav]" id="setup_nav_0" value="0"><{$smarty.const._NO}>
+              </label>
+            </div>
+          </div>
+
+          <div class="span2">
+            <label><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP}><br />
+            <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
+            <{$enable_group}>
+          </div>
+
+          <div class="span2">
+
+            <label><{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP}><br />
+            <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
+            <{$enable_post_group}>
+
+            <input type="hidden" name="not_news" value="1">
+            <input type="hidden" name="op" value="<{$op}>">
+            <button type="submit" class="btn btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+<{/if}>
+
+<{if $cate}>
+  <div class="row-fluid" id="sort">
+  <{foreach item=cate from=$cate}>
+    <{if $cate.ncsn==$ncsn}>
+      <script type="text/javascript">
+      $(document).ready(function() {
+        $("#nc_title").focus();
+      });
+      </script>
+      <div class="row-fluid">
+        <div class="well span12 <{$cate.offset}>" style="background-color:#FFFF99;">
+          <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
+            <div class="span2">
+              <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$cate.ncsn}>"><img src="<{$cate.pic}>"  alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" class="img-polaroid" ></a>
+              <label><{$smarty.const._MA_TADNEWS_CATE_PIC}></label>
+              <input type="file" name="cate_pic" class="span12" size=10>
+            </div>
+
+            <div class="span3">
+              <label><{$smarty.const._MA_TADNEWS_PARENT_CATE}></label>
+              <select name="of_ncsn" size=1 class="span12">
+                <{$cate_select}>
+              </select>
+              <label><{$smarty.const._MA_TADNEWS_CATE_TITLE}></label>
+              <input type="text" name="nc_title" id="nc_title" class="span12" value="<{$cate.nc_title}>">
+            </div>
+
+
+            <div class="span3">
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TITLE}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[title]" id="setup_title_1" value="1" <{if $set.title=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
+
+                <label class="radio inline">
+                <input type="radio" name="setup[title]" id="setup_title_0" value="0" <{if $set.title=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
+
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_TOOL}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[tool]" id="setup_tool_1" value="1" <{if $set.tool=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
+
+                <label class="radio inline">
+                <input type="radio" name="setup[tool]" id="setup_tool_0" value="0" <{if $set.tool=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
+
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_COMM}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[comm]" id="setup_comm_1" value="1" <{if $set.comm=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
+
+                <label class="radio inline">
+                <input type="radio" name="setup[comm]" id="setup_comm_0" value="0" <{if $set.comm=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
+
+              <div>
+                <label class="inline"><{$smarty.const._MA_TADNEWS_CATE_SHOW_NAV}><{$smarty.const._TAD_FOR}></label>
+                <label class="radio inline">
+                <input type="radio" name="setup[nav]" id="setup_nav_1" value="1" <{if $set.nav=="1"}>checked<{/if}>><{$smarty.const._YES}>
+                </label>
+
+                <label class="radio inline">
+                <input type="radio" name="setup[nav]" id="setup_nav_0" value="0" <{if $set.nav=="0"}>checked<{/if}>><{$smarty.const._NO}>
+                </label>
+              </div>
+            </div>
+
+
+            <div class="span2">
+              <label><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP}><br />
+              <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
+              <{$enable_group}>
+            </div>
+
+            <div class="span2">
+
+              <label><{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP}><br />
+              <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}></label>
+              <{$enable_post_group}>
+              <input type="hidden" name="not_news" value="1">
+            	<input type="hidden" name="ncsn" value="<{$ncsn}>">
+              <input type="hidden" name="op" value="<{$op}>">
+              <button type="submit" class="btn btn-info"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    <{else}>
+      <div class="row-fluid" id="tr_<{$cate.ncsn}>">
+        <div class="well span5 <{$cate.offset}>" style="background-color:white;">
+          <div class="span3">
+            <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$cate.ncsn}>"><img src="<{$cate.pic}>"  alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" class="img-polaroid" ></a>
+            <div style="margin:6px 0px;text-align:center;">
+            <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$cate.ncsn}>" style="color:#669900;"><{$smarty.const._MA_TADNEWS_CATE_COUNTER}><{$cate.counter}></a>
+
+            </div>
+          </div>
+
+          <div class="span9">
+            <div>
+              <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$cate.ncsn}>" style="font-size:11pt;"><{$cate.nc_title}></a>
+            </div>
+
+        		<div style="margin:6px 0px;">
+
+              <a href="<{$php_self}>?ncsn=<{$cate.ncsn}>" class="btn btn-mini btn-info"><{$smarty.const._TADNEWS_EDIT}></a>
+              <{if $cate.counter==0}>
+          		<a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
+          		<{/if}>
+          		<a href="<{$php_self}>?not_news=<{$cate.new_kind}>&op=change_kind&ncsn=<{$cate.ncsn}>" class="btn btn-mini btn-success"><{$cate.change_text}></a>
+            </div>
+        		<div style="margin:6px 0px;"><b><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP_S}></b>: <{$cate.g_txt}></div>
+            <div><b><{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_S}></b>: <{$cate.gp_txt}></div>
+        		<{if $cate.counter}>
+        		<div style="margin:6px 0px;">
+              <form action="<{$php_self}>" method="post" id="myForm" enctype="multipart/form-data">
+          		  <a class="btn btn-mini btn-warning" id="move_button<{$cate.ncsn}>" onClick="move_cate(<{$cate.ncsn}>)"><{$smarty.const._MA_TADNEWS_MOVE}></a>
+          		  <span id="move_form<{$cate.ncsn}>" style="display:none;">
+              		<select name="to_ncsn" size=1>
+                  <{$cate_select}>
+                  </select>
+                	<input type="hidden" name="ncsn" value="<{$cate.ncsn}>">
+                  <input type="hidden" name="op" value="move_to">
+                  <button type="submit" class="btn btn-mini btn-info"><{$smarty.const._TADNEWS_MOVE_TO}></button>
+                </span>
+              </form>
+        		</div>
+        		<{/if}>
+          </div>
+
+        </div>
+      </div>
+    <{/if}>
+  <{/foreach}>
+  </div>
+<{/if}>
+
+
+<div id="save_msg"></div>

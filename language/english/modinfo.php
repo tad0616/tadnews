@@ -102,8 +102,8 @@ define('_MI_TADNEWS_FANCYBOX_SPEED_DESC', 'Default speed is 5000 (5 secends), 0 
 define('_MI_TADNEWS_MARQUEE', 'News marquee');
 define('_MI_TADNEWS_MARQUEE_DESC', 'News marquee');
 
-define('_MI_TADNEWS_COVERED','News with cover image');
-define('_MI_TADNEWS_COVERED_DESC','News with cover image');
+define('_MI_TADNEWS_COVERED', 'News with cover image');
+define('_MI_TADNEWS_COVERED_DESC', 'News with cover image');
 
 define('_MI_TADNEWS_DIRNAME', basename(dirname(dirname(__DIR__))));
 define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.html');
@@ -111,4 +111,3 @@ define('_MI_TADNEWS_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
 define('_MI_TADNEWS_HELP_OVERVIEW', 'Overview');
-

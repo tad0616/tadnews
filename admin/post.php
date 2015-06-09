@@ -1,37 +1,37 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
-include_once "admin_header.php";
+$xoopsOption['template_main'] = 'tadnews_post.html';
+include_once "header.php";
+include_once "../function.php";
+include_once "admin_function.php";
 
-$xoopsOption['template_main'] = "tadnews_post_tpl.html";
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
-$op = (!isset($_REQUEST['op']))? "":$_REQUEST['op'];
-$nsn = (!isset($_REQUEST['nsn']))? 0:intval($_REQUEST['nsn']);
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op  = system_CleanVars($_REQUEST, 'op', '', 'string');
+$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 
-switch($op){
+switch ($op) {
 
-  //·s¼W¸ê®Æ
-  case "insert_tad_news":
-  $nsn=$tadnews->insert_tad_news();
-  break;
+    //æ–°å¢žè³‡æ–™
+    case "insert_tad_news":
+        $nsn = $tadnews->insert_tad_news();
+        break;
 
-  //¿é¤Jªí®æ
-  case "tad_news_form";
-  $tadnews->tad_news_form($nsn);
-  break;
+    //è¼¸å…¥è¡¨æ ¼
+    case "tad_news_form";
+        $tadnews->tad_news_form($nsn);
+        break;
 
-  //§ó·s¸ê®Æ
-  case "update_tad_news";
-  $tadnews->update_tad_news($nsn);
-  header("location: ../index.php?nsn={$nsn}");
-  break;
+    //æ›´æ–°è³‡æ–™
+    case "update_tad_news";
+        $tadnews->update_tad_news($nsn);
+        header("location: ../index.php?nsn={$nsn}");
+        exit;
+        break;
 
-
-  default:
-  $tadnews->tad_news_form($nsn);
-  break;
+    default:
+        $tadnews->tad_news_form($nsn);
+        break;
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæžœå€--------------*/
 include_once "footer.php";
-
-?>
