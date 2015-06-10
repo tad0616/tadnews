@@ -86,6 +86,7 @@ define('_MA_TADNEWS_SEND_LOG', '觀看寄送紀錄');
 define('_MA_TADNEWS_EMPTY_LOG', '查無寄送紀錄');
 define('_MA_TADNEWS_BACK_TO', '回「%s」');
 define('_MA_TADNEWS_NP_SUB_TITLE', '本期電子報標題：');
+define('_MA_TADNEWS_NO_EMAIL', '目前沒有任何電子郵件，可至<a href="newspaper.php?op=newspaper_email&nps_sn=%s">Email管理</a>手動匯入Email。');
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', '顯示文章標題');

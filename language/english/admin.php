@@ -87,6 +87,7 @@ define('_MA_TADNEWS_SEND_LOG', 'View log');
 define('_MA_TADNEWS_EMPTY_LOG', 'No log');
 define('_MA_TADNEWS_BACK_TO', 'Back to %s');
 define('_MA_TADNEWS_NP_SUB_TITLE', 'Newspaper title: ');
+define('_MA_TADNEWS_NO_EMAIL', 'There are no e-mail, go to <a href="newspaper.php?op=newspaper_email&nps_sn=%s"> Email Management </a> manually import Email.');
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', 'Show News Title');

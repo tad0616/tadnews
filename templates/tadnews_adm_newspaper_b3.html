@@ -145,35 +145,39 @@
 
     <h2><{$smarty.const._MA_TADNEWS_NP_STEP4}></h2>
 
-    <div class="form-group">
-      <div class="controls">
-        <{$total}>
-      </div>
+    <div class="alert alert-info">
+      <{$total}>
     </div>
 
-    <form action="newspaper.php" method="post" id="myForm">
-      <table class="table table-condensed">
-        <{assign var="i" value=0}>
+    <{if $log}>
+      <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
+        <table class="table table-condensed">
+          <{assign var="i" value=0}>
 
-        <{foreach item=log from=$log }>
-          <{if !$i}><tr><{/if}>
-            <td>
-              <label class="checkbox">
-              <{$log.checkbox}><{$log.email}>
-              </label>
-            </td>
-            <td><{$log.data}></td>
-          <{assign var="i" value=$i+1}>
-          <{if $i == 2}></tr><{assign var="i" value=0}><{/if}>
-        <{/foreach}>
-      </table>
+          <{foreach item=log from=$log }>
+            <{if !$i}><tr><{/if}>
+              <td>
+                <label class="checkbox-inline">
+                  <{$log.checkbox}><{$log.email}>
+                </label>
+              </td>
+              <td><{$log.data}></td>
+            <{assign var="i" value=$i+1}>
+            <{if $i == 2}></tr><{assign var="i" value=0}><{/if}>
+          <{/foreach}>
+        </table>
         <input type="hidden" name="op" value="send_now">
         <input type="hidden" name="npsn" value="<{$npsn}>">
-        <div class="text-center"><button type="submit"><{$smarty.const._MA_TADNEWS_SEND_NOW}></button></div>
-
-    </form>
-
-    <iframe src="newspaper.php?op=preview&npsn=<{$npsn}>" style="width:800px;height:480px;border:1px solid gray;clear:both"><{$np_content}></iframe>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADNEWS_SEND_NOW}></button>
+        </div>
+      </form>
+    <{else}>
+      <div class="alert alert-danger">
+        <{$no_email}>
+      </div>
+    <{/if}>
+    <iframe src="newspaper.php?op=preview&npsn=<{$npsn}>" style="width: 100%; height: 480px;b order:1px solid gray; clear: both"><{$np_content}></iframe>
   <{elseif $op=="newspaper_email"}>
     <script>
       function delete_tad_news_email_func(email){
@@ -185,70 +189,79 @@
 
     <h2><{$title}><{$smarty.const._MA_TADNEWS_NP_EMAIL}></h2>
 
-    <div class="-row"><a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a></div>
+    <div class="row">
+      <div class="col-md-12">
+        <a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a>
+      </div>
+    </div>
 
-    <table class="table table-striped">
-    <tr><td colspan=10>
-    <{$bar}>
-    </td></tr>
+    <{if $log}>
+      <div class="text-center">
+        <{$bar}>
+      </div>
+      <table class="table table-striped">
+        <{assign var="i" value=0}>
 
-    <{assign var="i" value=0}>
-
-    <{foreach item=log from=$log }>
-      <{if !$i}><tr><{/if}>
-        <{if $log.edit}>
-          <td colspan=5>
-            <form action="newspaper.php" method="post">
-            <input type="text" name="new_email" value="<{$log.email}>" style="width:100%;background-color:#FFFF99;color:black;"></td><td>
-            <input type="hidden" name="old_email" value="<{$log.email}>">
-            <input type="hidden" name="op" value="update_email">
-            <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
-            <input type="hidden" name="g2p" value="<{$g2p}>">
-            <input type="submit" value="<{$smarty.const._MA_TADNEWS_SAVE_CATE}>">
-            </form>
-          </td>
-        <{else}>
-          <td><{$log.email}></td>
-          <td>
-          <{if $log.ok=="ok"}>
-            <span class="badge badge-info"><{$log.ok}></span>
-          <{else}>
-            <span class="badge badge-important"><{$log.ok}></span>
-          <{/if}>
-          </td>
-          <td><{$log.order_date}></td>
-          <td>
-            <a href="newspaper.php?op=newspaper_email&nps_sn=<{$nps_sn}>&memail=<{$log.email}>&g2p=<{$g2p}>" class="btn btn-mini btn-warning"><{$smarty.const._TADNEWS_EDIT}></a>
-            <a href="javascript:delete_tad_news_email_func('<{$log.email}>');" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
-          </td>
-          <td>
-            <{$log.data}>
-          </td>
-        <{/if}>
-      <{assign var="i" value=$i+1}>
-      <{if $i == 2}></tr><{assign var="i" value=0}><{/if}>
-    <{/foreach}>
-
-    <tr><td colspan=10>
-    <{$bar}>
-    </td></tr>
-
-    <tr><td colspan=10>
+        <{foreach item=log from=$log }>
+          <{if !$i}><tr><{/if}>
+            <{if $log.edit}>
+              <td colspan=5>
+                <form action="newspaper.php" method="post">
+                <input type="text" name="new_email" value="<{$log.email}>" style="width:100%;background-color:#FFFF99;color:black;"></td><td>
+                <input type="hidden" name="old_email" value="<{$log.email}>">
+                <input type="hidden" name="op" value="update_email">
+                <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
+                <input type="hidden" name="g2p" value="<{$g2p}>">
+                <input type="submit" value="<{$smarty.const._MA_TADNEWS_SAVE_CATE}>">
+                </form>
+              </td>
+            <{else}>
+              <td><{$log.email}></td>
+              <td>
+              <{if $log.ok=="ok"}>
+                <span class="badge badge-info"><{$log.ok}></span>
+              <{else}>
+                <span class="badge badge-important"><{$log.ok}></span>
+              <{/if}>
+              </td>
+              <td><{$log.order_date}></td>
+              <td>
+                <a href="newspaper.php?op=newspaper_email&nps_sn=<{$nps_sn}>&memail=<{$log.email}>&g2p=<{$g2p}>" class="btn btn-xs btn-warning"><{$smarty.const._TADNEWS_EDIT}></a>
+                <a href="javascript:delete_tad_news_email_func('<{$log.email}>');" class="btn btn-xs btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
+              </td>
+              <td>
+                <{$log.data}>
+              </td>
+            <{/if}>
+          <{assign var="i" value=$i+1}>
+          <{if $i == 2}></tr><{assign var="i" value=0}><{/if}>
+        <{/foreach}>
+      </table>
+      <div class="text-center">
+        <{$bar}>
+      </div>
+    <{/if}>
     <form action="newspaper.php" method="post">
-      <textarea name="email_import" class="col-md-12"></textarea>
+      <textarea name="email_import" class="col-md-12" placeholder="<{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}>"></textarea>
       <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
-      <input type="hidden" name="op" value="email_import"><br>
-      <input type="submit" value="<{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}>">
+      <input type="hidden" name="op" value="email_import">
+      <div class="text-center" style="margin: 20px 0px;">
+        <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}></button>
+      </div>
     </form>
-    </td></tr>
-    </table>
   <{elseif $op=="sendmail_log"}>
     <h2><{$title}></h2>
 
-    <div class="-row"><a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a></div>
+    <div class="row">
+      <div class="col-md-12">
+        <a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a>
+      </div>
+    </div>
 
     <{if $empty}>
-      <div class="well"><{$smarty.const._MA_TADNEWS_EMPTY_LOG}></div>
+      <div class="alert alert-danger">
+        <{$smarty.const._MA_TADNEWS_EMPTY_LOG}>
+      </div>
     <{else}>
       <table class="table table-striped">
         <{assign var="i" value=0}>
@@ -266,15 +279,18 @@
     <h2><{$smarty.const._MA_TADNEWS_NP_LIST}></h2>
 
     <{$js}>
-    <div style="margin:10px;">
-      <select name="nps_sn" id="nps_sn" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
-        <option value=""><{$smarty.const._MA_TADNEWS_NP_OPTION}></option>
-        <{$option}>
-      </select>
-      <{$create_btn}>
-
-      <{$del_btn}>
-      <{$edit_btn}>
+    <div class="row" style="margin:10px;">
+      <div class="col-md-5">
+        <select name="nps_sn" id="nps_sn" class="form-control col-md-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
+          <option value=""><{$smarty.const._MA_TADNEWS_NP_OPTION}></option>
+          <{$option}>
+        </select>
+      </div>
+      <div class="col-md-7">
+        <{$create_btn}>
+        <{$del_btn}>
+        <{$edit_btn}>
+      </div>
     </div>
 
     <{if $nps_sn}>
@@ -292,10 +308,10 @@
             </td>
             <td><{$np.np_date}></td>
             <td>
-              <a href="newspaper.php?op=edit_newspaper&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-warning"><{$smarty.const._TADNEWS_EDIT}></a>
-              <a href="javascript:delete_tad_newspaper(<{$np.allnpsn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
-              <a href="newspaper.php?op=sendmail_log&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-info"><{$smarty.const._MA_TADNEWS_SEND_LOG}></a>
-              <a href="newspaper.php?op=sendmail&npsn=<{$np.allnpsn}>" class="btn btn-mini btn-primary"><{$smarty.const._MA_TADNEWS_SEND_NOW}></a>
+              <a href="newspaper.php?op=edit_newspaper&npsn=<{$np.allnpsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TADNEWS_EDIT}></a>
+              <a href="javascript:delete_tad_newspaper(<{$np.allnpsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TADNEWS_DEL}></a>
+              <a href="newspaper.php?op=sendmail_log&npsn=<{$np.allnpsn}>" class="btn btn-xs btn-info"><{$smarty.const._MA_TADNEWS_SEND_LOG}></a>
+              <a href="newspaper.php?op=sendmail&npsn=<{$np.allnpsn}>" class="btn btn-xs btn-primary"><{$smarty.const._MA_TADNEWS_SEND_NOW}></a>
             </td>
           </tr>
         <{/foreach}>
