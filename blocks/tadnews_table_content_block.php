@@ -7,7 +7,6 @@ function tadnews_table_content_block_show($options)
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme;
 
     $block['jquery_path'] = get_jquery();
-    get_bootstrap();
     $block['randStr']     = randStr(8);
     $block['num']         = $options[0];
     $block['show_button'] = $options[1];

@@ -13,11 +13,13 @@
             $("#msg_results<{$block.randStr}>").html(responseData);
         },
         error: function (responseData, textStatus, errorThrown) {
-            $("#msg_results<{$block.randStr}>").html("<{$block.HTTP_HOST}>");
+            $("#msg_results<{$block.randStr}>").html("<{$smarty.const._MB_TADNEWS_AJAX_ERROR}>");
         }
     });
 	}
 
 </script>
 
-<div id="msg_results<{$block.randStr}>"><{$smarty.const._MB_TADNEWS_LOADING}></div>
+<div id="msg_results<{$block.randStr}>">
+    <{$smarty.const._MB_TADNEWS_LOADING}>
+</div>

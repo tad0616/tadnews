@@ -25,5 +25,9 @@ function tadnews_newspaper($options)
     $block['counter'] = sprintf(_MB_TADNEWS_ORDER_COUNT, $counter);
     $block['option']  = $option;
     $block['email']   = $xoopsUser ? $xoopsUser->email() : "";
+    $block['bootstrap_version']=$_SESSION['bootstrap'];
+    $block['row']=($_SESSION['bootstrap']=='3')?'row':'row-fluid';
+    $block['span']=($_SESSION['bootstrap']=='3')?'col-md-':'span';
+    $block['inline']=($_SESSION['bootstrap']=='3')?'-inline':' inline';
     return $block;
 }

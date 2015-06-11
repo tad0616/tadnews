@@ -17,9 +17,11 @@ function tadnews_focus_news($options)
     $summary = ($options[1] == 'summary') ? "page_preak" : "full";
     $tadnews->set_summary($summary);
     $tadnews->set_cover(true, "db");
-    $block              = $tadnews->get_news('return');
-    $block['bootstrap'] = get_bootstrap();
+    $block = $tadnews->get_news('return');
 
+    $block['bootstrap_version'] = $_SESSION['bootstrap'];
+    $block['row']               = ($_SESSION['bootstrap'] == '3') ? 'row' : 'row-fluid';
+    $block['span']              = ($_SESSION['bootstrap'] == '3') ? 'col-md-' : 'span';
     return $block;
 }
 
@@ -43,14 +45,14 @@ function tadnews_focus_news_edit($options)
     $option .= "</select>";
 
     $form = "<table style='width:auto;'>
-	<tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</th><td>$option</td></tr>
-	<tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</th><td>
-    <select name='options[1]'>
-    <option value='full' " . chk($options[1], 'full', '1', 'selected') . ">" . _MB_TADNEWS_FOCUS_FULL . "</option>
-    <option value='summary' " . chk($options[1], 'summary', '0', 'selected') . ">" . _MB_TADNEWS_FOCUS_SUMMARY . "</option>
-    </select>
-  </td></tr>
-  </table>";
+    <tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</th><td>$option</td></tr>
+    <tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</th><td>
+      <select name='options[1]'>
+      <option value='full' " . chk($options[1], 'full', '1', 'selected') . ">" . _MB_TADNEWS_FOCUS_FULL . "</option>
+      <option value='summary' " . chk($options[1], 'summary', '0', 'selected') . ">" . _MB_TADNEWS_FOCUS_SUMMARY . "</option>
+      </select>
+    </td></tr>
+    </table>";
     return $form;
 }
 

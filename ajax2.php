@@ -52,45 +52,45 @@ $total = 0;
 
 if ($display_mode == 'table') {
     $block .= "
-  <table class='table table-striped'>
-    <tbody>";
+    <table class='table table-striped'>
+      <tbody>";
     foreach ($all_news['page'] as $news) {
         $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}' style='margin:3px;'>" : "";
 
         $block .= "
-      <tr>
-        <td>
-          {$news['chkbox']}
-          {$news['post_date']}
-          {$news['prefix_tag']}
-          {$need_sign}
-          {$news['enable_txt']}{$news['today_pic']}
-          <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
-          <span style='color:gray;font-size:12px;'> (<a href='" . XOOPS_URL . "/modules/tadnews/index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
-        </td>
-      </tr>";
+        <tr>
+          <td>
+            {$news['chkbox']}
+            {$news['post_date']}
+            {$news['prefix_tag']}
+            {$need_sign}
+            {$news['enable_txt']}{$news['today_pic']}
+            <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
+            <span style='color:gray;font-size:12px;'> (<a href='" . XOOPS_URL . "/modules/tadnews/index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
+          </td>
+        </tr>";
         $total++;
     }
 
     $block .= "
-    </tbody>
-  </table>";
+        </tbody>
+      </table>";
 } else {
     $block .= "<ul>";
 
     foreach ($all_news['page'] as $news) {
         $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}' style='margin:3px;'>" : "";
         $block .= "
-    <li>
-      {$news['post_date']}
-      {$news['pic']}
-      {$news['prefix_tag']}
-      {$need_sign}
-      {$news['enable_txt']}
-      {$news['today_pic']}
-      <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
-      {$news['content']}
-    </li>";
+        <li>
+          {$news['post_date']}
+          {$news['pic']}
+          {$news['prefix_tag']}
+          {$need_sign}
+          {$news['enable_txt']}
+          {$news['today_pic']}
+          <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
+          {$news['content']}
+        </li>";
         $total++;
     }
     $block .= "

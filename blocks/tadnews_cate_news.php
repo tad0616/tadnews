@@ -25,7 +25,8 @@ function tadnews_cate_news($options)
     get_bootstrap();
     $block['show_line']         = ($options[3] == '1') ? "table" : "";
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
-
+    $block['row']               = ($_SESSION['bootstrap'] == '3') ? 'row' : 'row-fluid';
+    $block['span']              = ($_SESSION['bootstrap'] == '3') ? 'col-md-' : 'span';
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     return $block;
 }
@@ -36,23 +37,23 @@ function tadnews_cate_news_edit($options)
     $option = block_news_cate($options[0]);
 
     $form = "{$option['js']}
-	<table style='width:auto;'>
-	<tr><th>1.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$option['form']}
-	<INPUT type='hidden' name='options[0]' id='bb' value='{$options[0]}'></td></tr>
-	<tr><th>2.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM1 . "</th><td><INPUT type='text' name='options[1]' value='{$options[1]}' size=3></td></tr>
-	<tr><th>3.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM2 . "</th><td>
-  <INPUT type='radio' name='options[2]' value='1' " . chk($options[2], 1, "1") . ">" . _YES . "
-  <INPUT type='radio' name='options[2]' value='0' " . chk($options[2], 0) . ">" . _NO . "</td></tr>
-  <tr><th>4.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM3 . "</th><td>
-  <INPUT type='radio' name='options[3]' value='1' " . chk($options[3], 1, "1") . ">" . _YES . "
-  <INPUT type='radio' name='options[3]' value='0' " . chk($options[3], 0) . ">" . _NO . "</td></tr>
-  <tr><th>5.</th><th>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM1 . "</th><td>
-	<INPUT type='text' name='options[4]' value='{$options[4]}'></td></tr>
-  <tr><th>6.</th><th>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</th><td>
-	<textarea name='options[5]' style='width:400px;height:50px;'>{$options[5]}</textarea>
-  </td></tr>
-	</table>
-	";
+    <table style='width:auto;'>
+    <tr><th>1.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$option['form']}
+    <INPUT type='hidden' name='options[0]' id='bb' value='{$options[0]}'></td></tr>
+    <tr><th>2.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM1 . "</th><td><INPUT type='text' name='options[1]' value='{$options[1]}' size=3></td></tr>
+    <tr><th>3.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM2 . "</th><td>
+    <INPUT type='radio' name='options[2]' value='1' " . chk($options[2], 1, "1") . ">" . _YES . "
+    <INPUT type='radio' name='options[2]' value='0' " . chk($options[2], 0) . ">" . _NO . "</td></tr>
+    <tr><th>4.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM3 . "</th><td>
+    <INPUT type='radio' name='options[3]' value='1' " . chk($options[3], 1, "1") . ">" . _YES . "
+    <INPUT type='radio' name='options[3]' value='0' " . chk($options[3], 0) . ">" . _NO . "</td></tr>
+    <tr><th>5.</th><th>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM1 . "</th><td>
+    <INPUT type='text' name='options[4]' value='{$options[4]}'></td></tr>
+    <tr><th>6.</th><th>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</th><td>
+    <textarea name='options[5]' style='width:400px;height:50px;'>{$options[5]}</textarea>
+    </td></tr>
+    </table>
+  ";
     return $form;
 }
 
