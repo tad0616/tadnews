@@ -34,10 +34,12 @@ function tadnews_covered($options)
     $tadnews->set_cover(true, $cover_css);
 
     $block                      = $tadnews->get_news('return');
-    $block['span']              = 12 / $options[0];
+    $block['num']              = 12 / $options[0];
     $block['cols']              = $options[0];
     $block['count']             = $num;
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
+    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
+    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     return $block;

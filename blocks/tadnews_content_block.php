@@ -26,17 +26,6 @@ function tadnews_content_block_show($options)
     }
 
 
-    $options[8]     = isset($options[8]) ? $options[8] : "";
-    $options[8]=str_replace('span', '', $options[8]);
-    $block['width'] = empty($options[8]) ? "12" : $options[8];
-
-    // $span = intval(substr($options[8], 4));
-    // if (empty($span)) {
-    //     $span = 12;
-    // }
-
-    $block['col_num']           = 12 / $options[8];
-    $block['end'] = $options[0];
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
     $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
     $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
@@ -47,11 +36,6 @@ function tadnews_content_block_show($options)
 //區塊編輯函式
 function tadnews_content_block_edit($options)
 {
-
-    $select1 = ($options[8] == "12") ? "selected" : "";
-    $select2 = ($options[8] == "6") ? "selected" : "";
-    $select3 = ($options[8] == "4") ? "selected" : "";
-    $select4 = ($options[8] == "3") ? "selected" : "";
 
     $options4_1 = ($options[4] == "1") ? "checked" : "";
     $options4_0 = ($options[4] == "0") ? "checked" : "";
@@ -101,16 +85,6 @@ function tadnews_content_block_edit($options)
     <tr><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$block_news_cate['form']}
     <INPUT type='hidden' name='options[7]' id='bb' value='{$options[7]}'></td></tr>
 
-    <tr><th>
-    " . _MB_TADNEWS_CONTENT_BLOCK_EDIT_BITEM1 . "
-    </th><td>
-    <select name='options[8]'>
-    <option value='12' $select1>1</option>
-    <option value='6' $select2>2</option>
-    <option value='4' $select3>3</option>
-    <option value='3' $select4>4</option>
-    </select>
-    </td></tr>
     </table>
     ";
     return $form;
