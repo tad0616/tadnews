@@ -11,7 +11,7 @@ function list_tad_summary_news($the_ncsn = "", $show_uid = "")
 
     $tadnews->set_show_num($xoopsModuleConfig['show_num']);
     $tadnews->set_news_kind("news");
-    $tadnews->set_summary("page_break");
+    $tadnews->set_summary("300");
     if (!empty($show_uid)) {
         $tadnews->set_view_uid($show_uid);
     }
@@ -127,15 +127,15 @@ function list_sign($nsn = "")
     global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $interface_menu, $tadnews;
     $news = $tadnews->get_tad_news($nsn);
 
-    $sql    = "select uid,sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where nsn='$nsn' order by sign_time";
-    $sign   = "";
-    $i      = 0;
+    $sql = "select uid,sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where nsn='$nsn' order by sign_time";
+    $sign = "";
+    $i = 0;
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
-        $uid_name              = XoopsUser::getUnameFromId($uid, 1);
-        $uid_name              = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
-        $sign[$i]['uid']       = $uid;
-        $sign[$i]['uid_name']  = $uid_name;
+        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+        $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $sign[$i]['uid'] = $uid;
+        $sign[$i]['uid_name'] = $uid_name;
         $sign[$i]['sign_time'] = $sign_time;
         $i++;
     }
@@ -156,18 +156,18 @@ function list_user_sign($uid = "")
     $uid_name = XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
-    $sql    = "select a.nsn,a.sign_time,b.news_title from " . $xoopsDB->prefix("tad_news_sign") . " as a left join " . $xoopsDB->prefix("tad_news") . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
-    $sign   = "";
-    $i      = 0;
+    $sql = "select a.nsn,a.sign_time,b.news_title from " . $xoopsDB->prefix("tad_news_sign") . " as a left join " . $xoopsDB->prefix("tad_news") . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
+    $sign = "";
+    $i = 0;
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
     $myts = MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
 
-        $news_title             = $myts->htmlSpecialChars($news_title);
-        $sign[$i]['nsn']        = $nsn;
+        $news_title = $myts->htmlSpecialChars($news_title);
+        $sign[$i]['nsn'] = $nsn;
         $sign[$i]['news_title'] = $news_title;
-        $sign[$i]['sign_time']  = $sign_time;
+        $sign[$i]['sign_time'] = $sign_time;
         $i++;
     }
 
@@ -180,11 +180,11 @@ function list_user_sign($uid = "")
 /*-----------執行動作判斷區----------*/
 $op = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
 
-$nsn    = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
-$ncsn   = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : null;
-$fsn    = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
-$uid    = (isset($_REQUEST['uid'])) ? intval($_REQUEST['uid']) : "";
-$kind   = (empty($_REQUEST['kind'])) ? "" : $_REQUEST['kind'];
+$nsn = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
+$ncsn = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : null;
+$fsn = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
+$uid = (isset($_REQUEST['uid'])) ? intval($_REQUEST['uid']) : "";
+$kind = (empty($_REQUEST['kind'])) ? "" : $_REQUEST['kind'];
 $tag_sn = (isset($_REQUEST['tag_sn'])) ? intval($_REQUEST['tag_sn']) : "";
 
 $show_uid = (isset($_REQUEST['show_uid'])) ? intval($_REQUEST['show_uid']) : "";
@@ -255,7 +255,7 @@ switch ($op) {
                 include XOOPS_ROOT_PATH . "/header.php";
                 list_tad_summary_news(null, $show_uid);
             } elseif ($xoopsModuleConfig['show_mode'] == "cate") {
-                $xoopsOption['template_main'] = "tadnews_index_cate.html";
+                $xoopsOption['template_main'] = set_bootstrap("tadnews_index_cate.html");
                 include XOOPS_ROOT_PATH . "/header.php";
                 list_tad_cate_news(null, null, $show_uid);
             } else {

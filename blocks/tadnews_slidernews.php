@@ -31,12 +31,13 @@ function tadnews_slidernews_show($options)
     }
 
     $n = 0;
-
     $lofslidernews = new lofslidernews($options[0], $options[1], $options[3]);
-
+    $pic_num = 1;
     foreach ($all_news['page'] as $news) {
-        $lofslidernews->add_content($news['nsn'], $news['news_title'], $news['content'], $news['image_big'], $news['post_date'], XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}");
+        $big_image = empty($news['image_big']) ? XOOPS_URL . "/modules/tadnews/images/demo{$pic_num}.jpg" : $news['image_big'];
+        $lofslidernews->add_content($news['nsn'], $news['news_title'], $news['content'], $big_image, $news['post_date'], XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}");
         $n++;
+        $pic_num++;
         if ($n >= $options[2]) {
             break;
         }
@@ -55,30 +56,30 @@ function tadnews_slidernews_edit($options)
     $block_news_cate = block_news_cate($options[4]);
 
     $form = "{$block_news_cate['js']}
-  <table style='width:auto;'>
-  <tr><th>
-  " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM0 . "
-  </th><td>
-  <INPUT type='text' name='options[0]' value='{$options[0]}' size=6>px
-  </td></tr>
-  <tr><th>
-  " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM1 . "
-  </th><td>
-  <INPUT type='text' name='options[1]' value='{$options[1]}' size=6>px
-  </td></tr>
-  <tr><th>
-  " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2 . "
-  </th><td>
-  <INPUT type='text' name='options[2]' value='{$options[2]}' size=6>
-  </td></tr>
-  <tr><th>
-  " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3 . "
-  </th><td>
-  <INPUT type='text' name='options[3]' value='{$options[3]}' size=6>
-  </td></tr>
-  <tr><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$block_news_cate['form']}
-  <INPUT type='hidden' name='options[4]' id='bb' value='{$options[4]}'></td></tr>
-  </table>
-  ";
+    <table style='width:auto;'>
+    <tr><th>
+    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM0 . "
+    </th><td>
+    <INPUT type='text' name='options[0]' value='{$options[0]}' size=6>px
+    </td></tr>
+    <tr><th>
+    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM1 . "
+    </th><td>
+    <INPUT type='text' name='options[1]' value='{$options[1]}' size=6>px
+    </td></tr>
+    <tr><th>
+    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2 . "
+    </th><td>
+    <INPUT type='text' name='options[2]' value='{$options[2]}' size=6>
+    </td></tr>
+    <tr><th>
+    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3 . "
+    </th><td>
+    <INPUT type='text' name='options[3]' value='{$options[3]}' size=6>
+    </td></tr>
+    <tr><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$block_news_cate['form']}
+    <INPUT type='hidden' name='options[4]' id='bb' value='{$options[4]}'></td></tr>
+    </table>
+    ";
     return $form;
 }

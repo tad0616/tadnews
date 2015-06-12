@@ -9,17 +9,6 @@
 
 <{if $page}>
 
-  <script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/MultiLink/js/MultiLink.js"></script>
-  <link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/MultiLink/css/MultiLink.css" type="text/css" media="screen" />
-
-  <script type="text/javascript">
-  ML.Config = {
-    "allLinks" : {
-      <{$MutiLinkConfig}>
-    }
-  }
-  </script>
-
   <div class="row-fluid">
   <div id="tadnews_save_msg"></div>
   <{$cate_select}>
@@ -43,7 +32,7 @@
             <{/if}>
             <{$page.enable_txt}><{$page.today_pic}>
             <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-            <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a class="multilink" id="my_news_<{$page.nsn}>" data-dls-links="<{$page.mutilink}>"><{$page.cate_name}></a>)</span> <{$page.content}>
+            <span style="color:gray;font-size:12px;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
           </td>
         </tr>
       <{/foreach}>
@@ -51,9 +40,4 @@
   </table>
   </div>
   <{$bar}>
-  <script type='text/javascript'>
-    if($('#linkdiv').text() == '') {
-      document.write("<div id=\"linkdiv\" class=\"hideme\">I get replaced with the listing of links...<\/div>");
-    }
-  </script>
 <{/if}>

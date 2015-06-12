@@ -9,16 +9,7 @@
 <{$rating_js}>
 <{$del_js}>
 <{$jquery}>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/MultiLink/js/MultiLink.js"></script>
-<link rel="stylesheet" href="<{$xoops_url}>/modules/tadnews/class/MultiLink/css/MultiLink.css" type="text/css" media="screen" />
 
-<script type="text/javascript">
-ML.Config = {
-	"allLinks" : {
-    <{$MutiLinkConfig}>
-	}
-}
-</script>
 
 <{foreach item=page from=$page}>
   <{if $page.enable=="1" or $page.uid==$uid}>
@@ -28,8 +19,8 @@ ML.Config = {
       <div class="news_head">
 
         <div style="font-size:12px;">
-          <div style="float:right"><{$page.fun}></div>          
-          <a class="multilink" id="page_<{$page.nsn}>" data-dls-links="<{$page.mutilink}>"><{$page.cate_name}></a>
+          <div style="float:right"><{$page.fun}></div>
+          <a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>
 
         </div>
 
@@ -96,9 +87,3 @@ ML.Config = {
 
   <{/if}>
 <{/foreach}>
-
-<script type='text/javascript'>
-  if($('#linkdiv').text() == '') {
-    document.write("<div id=\"linkdiv\" class=\"hideme\">I get replaced with the listing of links...<\/div>");
-  }
-</script>
