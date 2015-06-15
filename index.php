@@ -18,6 +18,8 @@ function list_tad_summary_news($the_ncsn = "", $show_uid = "")
     if ($the_ncsn > 0) {
         $tadnews->set_view_ncsn($the_ncsn);
         $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
+        $xoopsTpl->assign("cate", $tadnews->get_tad_news_cate($the_ncsn));
+
     } else {
         $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
@@ -26,8 +28,8 @@ function list_tad_summary_news($the_ncsn = "", $show_uid = "")
     //if($xoopsModuleConfig['use_star_rating']=='1'){
     //  $tadnews->set_use_star_rating(true);
     //}
+
     $tadnews->get_news();
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("ncsn", $the_ncsn);
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
@@ -45,11 +47,11 @@ function list_tad_all_news($the_ncsn = "", $show_uid = "")
     if ($the_ncsn > 0) {
         $tadnews->set_view_ncsn($the_ncsn);
         $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
+        $xoopsTpl->assign("cate", $tadnews->get_tad_news_cate($the_ncsn));
     } else {
         $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
     $tadnews->get_news();
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
 
@@ -63,7 +65,6 @@ function list_tad_tag_news($tag_sn = "")
     $tadnews->set_view_tag($tag_sn);
 
     $tadnews->get_news();
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
 
@@ -79,7 +80,6 @@ function list_tad_cate_news($show_ncsn = 0, $the_level = 0, $show_uid = "")
         $tadnews->set_view_uid($show_uid);
     }
     $tadnews->get_cate_news();
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
 
@@ -98,7 +98,6 @@ function show_news($nsn = "")
     //}
     $tadnews->get_news();
     $xoopsTpl->assign("uid", $uid);
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 
 }
@@ -127,15 +126,15 @@ function list_sign($nsn = "")
     global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $interface_menu, $tadnews;
     $news = $tadnews->get_tad_news($nsn);
 
-    $sql = "select uid,sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where nsn='$nsn' order by sign_time";
-    $sign = "";
-    $i = 0;
+    $sql    = "select uid,sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where nsn='$nsn' order by sign_time";
+    $sign   = "";
+    $i      = 0;
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
-        $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
-        $sign[$i]['uid'] = $uid;
-        $sign[$i]['uid_name'] = $uid_name;
+        $uid_name              = XoopsUser::getUnameFromId($uid, 1);
+        $uid_name              = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $sign[$i]['uid']       = $uid;
+        $sign[$i]['uid_name']  = $uid_name;
         $sign[$i]['sign_time'] = $sign_time;
         $i++;
     }
@@ -143,7 +142,6 @@ function list_sign($nsn = "")
     $xoopsTpl->assign("news_title", sprintf(_MD_TADNEWS_SIGN_LOG, $news["news_title"]));
     $xoopsTpl->assign("nsn", $nsn);
     $xoopsTpl->assign("sign", $sign);
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
 
@@ -156,35 +154,34 @@ function list_user_sign($uid = "")
     $uid_name = XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
-    $sql = "select a.nsn,a.sign_time,b.news_title from " . $xoopsDB->prefix("tad_news_sign") . " as a left join " . $xoopsDB->prefix("tad_news") . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
-    $sign = "";
-    $i = 0;
+    $sql    = "select a.nsn,a.sign_time,b.news_title from " . $xoopsDB->prefix("tad_news_sign") . " as a left join " . $xoopsDB->prefix("tad_news") . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
+    $sign   = "";
+    $i      = 0;
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
     $myts = MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
 
-        $news_title = $myts->htmlSpecialChars($news_title);
-        $sign[$i]['nsn'] = $nsn;
+        $news_title             = $myts->htmlSpecialChars($news_title);
+        $sign[$i]['nsn']        = $nsn;
         $sign[$i]['news_title'] = $news_title;
-        $sign[$i]['sign_time'] = $sign_time;
+        $sign[$i]['sign_time']  = $sign_time;
         $i++;
     }
 
     $xoopsTpl->assign("uid", $uid);
     $xoopsTpl->assign("sign", $sign);
     $xoopsTpl->assign("uid_name", sprintf(_MD_TADNEWS_SIGN_LOG, $uid_name));
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
 /*-----------執行動作判斷區----------*/
 $op = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
 
-$nsn = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
-$ncsn = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : null;
-$fsn = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
-$uid = (isset($_REQUEST['uid'])) ? intval($_REQUEST['uid']) : "";
-$kind = (empty($_REQUEST['kind'])) ? "" : $_REQUEST['kind'];
+$nsn    = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
+$ncsn   = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : null;
+$fsn    = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
+$uid    = (isset($_REQUEST['uid'])) ? intval($_REQUEST['uid']) : "";
+$kind   = (empty($_REQUEST['kind'])) ? "" : $_REQUEST['kind'];
 $tag_sn = (isset($_REQUEST['tag_sn'])) ? intval($_REQUEST['tag_sn']) : "";
 
 $show_uid = (isset($_REQUEST['show_uid'])) ? intval($_REQUEST['show_uid']) : "";
@@ -213,7 +210,7 @@ switch ($op) {
 
     //列出簽收狀況
     case "list_sign":
-        $xoopsOption['template_main'] = "tadnews_sign.html";
+        $xoopsOption['template_main'] = set_bootstrap("tadnews_sign.html");
         include XOOPS_ROOT_PATH . "/header.php";
         list_sign($nsn);
         $xoopsTpl->assign("op", $op);
@@ -221,7 +218,7 @@ switch ($op) {
 
     //列出某人狀況
     case "list_user_sign":
-        $xoopsOption['template_main'] = "tadnews_sign.html";
+        $xoopsOption['template_main'] = set_bootstrap("tadnews_sign.html");
         include XOOPS_ROOT_PATH . "/header.php";
         list_user_sign($uid);
         $xoopsTpl->assign("op", $op);

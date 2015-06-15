@@ -103,13 +103,13 @@ function get_news_doc_pic_m($col_name = "", $col_sn = "", $mode = "big", $style 
             if ($only_url) {
                 return XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}";
             } else {
-                return "<img style='{$style}' src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}'>";
+                return "<img style='{$style}' src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}'>";
             }
         } else {
             if ($only_url) {
                 return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
             } else {
-                return "<img style='{$style}' src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}'>";
+                return "<img style='{$style}' src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}'>";
             }
         }
     }

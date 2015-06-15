@@ -13,6 +13,10 @@
 <{$del_js}>
 
 
+<{if $cate}>
+  <h1><{$cate.nc_title}></h1>
+<{/if}>
+
 <{if $page}>
   <{foreach item=page from=$page}>
     <div class="row" style="margin-bottom: 20px;">

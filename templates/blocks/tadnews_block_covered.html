@@ -12,7 +12,9 @@
         </div>
       </a>
       <div style="font-size:18px; overflow:hidden;height:15pt;line-height:16pt;margin:8px 3px; "><a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a></div>
-      <div><a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.content}></a></div>
+      <div>
+        <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>" style="<{$block.summary_css}>"><{$news.content}></a>
+      </div>
     </div>
 
     <{assign var="i" value=$i+1}>

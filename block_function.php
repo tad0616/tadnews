@@ -31,9 +31,9 @@ if (!function_exists("block_news_cate")) {
         }
 
         $js = "<script>
-    function bbv(){
-      i=0;
-      var arr = new Array();";
+            function bbv(){
+              i=0;
+              var arr = new Array();";
 
         $sql    = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news!='1' order by sort";
         $result = $xoopsDB->query($sql);

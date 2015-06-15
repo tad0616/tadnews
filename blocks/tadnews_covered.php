@@ -11,8 +11,7 @@ function tadnews_covered($options)
     $tadnews = new tadnews();
 
     $block['jquery_path'] = get_jquery();
-    get_bootstrap();
-    $block['randStr'] = randStr(8);
+    $block['randStr']     = randStr(8);
 
     $num = $options[0] * $options[1];
     if (empty($num)) {
@@ -30,13 +29,14 @@ function tadnews_covered($options)
     $tadnews->set_view_ncsn($ncsn_arr);
     $tadnews->set_show_mode('list');
     $tadnews->set_news_kind("news");
-    $tadnews->set_summary($summary_length, $summary_css);
+    $tadnews->set_summary($summary_length);
     $tadnews->set_cover(true, $cover_css);
 
     $block                      = $tadnews->get_news('return');
-    $block['num']              = 12 / $options[0];
+    $block['num']               = 12 / $options[0];
     $block['cols']              = $options[0];
     $block['count']             = $num;
+    $block['summary_css']       = $summary_css;
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
     $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
     $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';

@@ -98,3 +98,6 @@ define('_MD_TADNEWS_NEWSPIC_DEMO', "<p>Each article could have a cover picture, 
 
 //define('_MD_TADNEWS_EMBED','embed');
 define('_MD_TADNEWS_COUNTER', 'Count');
+define('_MD_TADNEWS_KIND_NEWS', 'News');
+define('_MD_TADNEWS_KIND_PAGE', 'Page');
+define('_MD_TADNEWS_KIND', 'Article kind:');

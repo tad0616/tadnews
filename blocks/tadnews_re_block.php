@@ -37,7 +37,6 @@ function tadnews_b_show_3($options)
         return;
     }
 
-    $block['bootstrap'] = get_bootstrap();
     return $block;
 }
 

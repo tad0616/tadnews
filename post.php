@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = "tadnews_post.html";
+$xoopsOption['template_main'] = set_bootstrap("tadnews_post.html");
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 if (empty($xoopsUser)) {
@@ -25,7 +25,6 @@ switch ($op) {
     case "tad_news_form";
         $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn);
-    //$main.=list_tad_news(1);
         break;
 
     //更新資料
@@ -42,6 +41,5 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("bootstrap", get_bootstrap());
 
 include_once XOOPS_ROOT_PATH . '/footer.php';

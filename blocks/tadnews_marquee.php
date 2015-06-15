@@ -22,7 +22,6 @@ function tadnews_marquee($options)
         return;
     }
 
-    get_bootstrap();
     $block['direction'] = empty($options[2]) ? 'down' : $options[2];
     $block['duration']  = empty($options[3]) ? '5000' : $options[3];
     $block['css']       = empty($options[4]) ? '' : $options[4];

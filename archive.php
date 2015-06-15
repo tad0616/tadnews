@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = "tadnews_archive.html";
+$xoopsOption['template_main'] = set_bootstrap("tadnews_archive.html");
 include_once XOOPS_ROOT_PATH . "/header.php";
 
 /*-----------function區--------------*/
@@ -26,7 +26,6 @@ function month_list($now_date = "")
     $jquery = get_jquery();
     $xoopsTpl->assign("jquery", $jquery);
     $xoopsTpl->assign("opt", $opt);
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
 
 }
 
@@ -45,7 +44,6 @@ function archive($date = "")
     $tadnews->set_show_month($date);
     $tadnews->set_show_enable(1);
     $tadnews->get_news();
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
     $date_title = to_utf8(str_replace("-", "" . _MD_TADNEWS_YEAR . " ", $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign("date_title", $date_title);

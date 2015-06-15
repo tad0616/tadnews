@@ -6,8 +6,7 @@ function tadnews_list_content_block_show($options)
 {
     global $xoTheme;
 
-    $block['jquery_path'] = get_jquery();
-    get_bootstrap();
+    $block['jquery_path']    = get_jquery();
     $block['randStr']        = randStr(8);
     $block['num']            = $options[0];
     $block['summary_length'] = $options[1];

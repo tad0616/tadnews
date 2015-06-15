@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = "tadnews_my_news.html";
+$xoopsOption['template_main'] = set_bootstrap("tadnews_my_news.html");
 include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -24,7 +24,6 @@ function list_tad_my_news()
     }
     $tadnews->get_news();
 
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 
 }
@@ -60,22 +59,6 @@ switch ($op) {
         have_read($nsn, $uid);
         header("location: " . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
-        break;
-
-    //列出簽收狀況
-    case "list_sign":
-        $xoopsOption['template_main'] = "tadnews_sign.html";
-        include XOOPS_ROOT_PATH . "/header.php";
-        list_sign($nsn);
-        $xoopsTpl->assign("op", $op);
-        break;
-
-    //列出某人狀況
-    case "list_user_sign":
-        $xoopsOption['template_main'] = "tadnews_sign.html";
-        include XOOPS_ROOT_PATH . "/header.php";
-        list_user_sign($uid);
-        $xoopsTpl->assign("op", $op);
         break;
 
     default:

@@ -9,11 +9,11 @@ function tadnews_page($options)
     }
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/dtree.php";
-    if (empty($options[0])) {
-        return;
-    }
 
-    $sql                             = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$options[0]}' and not_news='1' ";
+    $and_ncsn=empty($options[0])?"":" and ncsn='{$options[0]}'";
+
+    $sql = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' {$and_ncsn}";
+    //die($sql);
     $result                          = $xoopsDB->query($sql);
     list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
 

@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = "tadnews_newspaper.html";
+$xoopsOption['template_main'] = set_bootstrap("tadnews_newspaper.html");
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -56,6 +56,5 @@ if ($_REQUEST['op'] == "preview") {
     $xoopsTpl->assign('xoops_showrblock', 0);
 
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-    $xoopsTpl->assign("bootstrap", get_bootstrap());
     include_once XOOPS_ROOT_PATH . '/footer.php';
 }

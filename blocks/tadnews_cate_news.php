@@ -22,7 +22,6 @@ function tadnews_cate_news($options)
         return;
     }
 
-    get_bootstrap();
     $block['show_line']         = ($options[3] == '1') ? "table" : "";
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
     $block['row']               = ($_SESSION['bootstrap'] == '3') ? 'row' : 'row-fluid';

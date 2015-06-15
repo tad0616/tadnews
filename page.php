@@ -53,11 +53,11 @@ switch ($_REQUEST['op']) {
 
     default:
         if (!empty($nsn)) {
-            $xoopsOption['template_main'] = "tadnews_page.html";
+            $xoopsOption['template_main'] = set_bootstrap("tadnews_page.html");
             include XOOPS_ROOT_PATH . "/header.php";
             $main = show_news($nsn);
         } elseif (!empty($ncsn)) {
-            $xoopsOption['template_main'] = "tadnews_page_list.html";
+            $xoopsOption['template_main'] = set_bootstrap("tadnews_page_list.html");
             include XOOPS_ROOT_PATH . "/header.php";
             $main = list_tad_all_news($ncsn);
         } else {
@@ -68,7 +68,6 @@ switch ($_REQUEST['op']) {
         break;
 }
 
-$xoopsTpl->assign("bootstrap", get_bootstrap());
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 
 /*-----------秀出結果區--------------*/
