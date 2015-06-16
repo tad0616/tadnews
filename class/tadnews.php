@@ -110,6 +110,9 @@ $this->get_tad_news_cate($ncsn="");
 //更新tad_news某一筆資料
 $this->update_tad_news($nsn="");
 
+//啟動某一篇文章
+$this->enable_tad_news($nsn="");
+
 //刪除tad_news某筆資料資料
 $tadnews=new tadnews();
 $tadnews->delete_tad_news($nsn);
@@ -540,6 +543,24 @@ class tadnews
             }
         }
 
+        if ($this->kind === "page") {
+            //die(var_dump($cate_setup[$ncsn]));
+            $set = $this->get_setup($cate_setup[$ncsn]);
+            //die(var_dump($set));
+            //title=0;tool=0;comm=0
+            if ($mode == 'return') {
+                $main['cate_set_title'] = $set['title'];
+                $main['cate_set_tool']  = $set['tool'];
+                $main['cate_set_comm']  = $set['comm'];
+                $main['cate_set_nav']   = $set['nav'];
+            } else {
+                $xoopsTpl->assign("cate_set_title", $set['title']);
+                $xoopsTpl->assign("cate_set_tool", $set['tool']);
+                $xoopsTpl->assign("cate_set_comm", $set['comm']);
+                $xoopsTpl->assign("cate_set_nav", $set['nav']);
+            }
+        }
+
         if (empty($ncsn_ok)) {
             $where_cate = "and ncsn=''";
         } else {
@@ -669,7 +690,7 @@ class tadnews
             //新聞資訊列
             $fun        = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group);
             $end_day    = ($end_day == "0000-00-00 00:00:00") ? "" : "~ " . $end_day;
-            $enable_txt = ($enable == 1) ? "" : "[" . _TADNEWS_NEWS_UNABLE . "]";
+            $enable_txt = ($enable == 1) ? "" : "<span class='badge'>" . _TADNEWS_NEWS_UNABLE . "</span>";
 
             //製作新聞標題內容，及密碼判斷
             $have_pass = (isset($_SESSION['have_pass'])) ? $_SESSION['have_pass'] : array();
@@ -864,24 +885,6 @@ class tadnews
             $all_news[$i]['image_big']         = $image_big;
             $all_news[$i]['image_thumb']       = $image_thumb;
             $all_news[$i]['not_news']          = $not_news_arr[$ncsn];
-
-            if ($this->kind === "page") {
-                //die(var_dump($cate_setup[$ncsn]));
-                $set = $this->get_setup($cate_setup[$ncsn]);
-                //die(var_dump($set));
-                //title=0;tool=0;comm=0
-                if ($mode == 'return') {
-                    $main['cate_set_title'] = $set['title'];
-                    $main['cate_set_tool']  = $set['tool'];
-                    $main['cate_set_comm']  = $set['comm'];
-                    $main['cate_set_nav']   = $set['nav'];
-                } else {
-                    $xoopsTpl->assign("cate_set_title", $set['title']);
-                    $xoopsTpl->assign("cate_set_tool", $set['tool']);
-                    $xoopsTpl->assign("cate_set_comm", $set['comm']);
-                    $xoopsTpl->assign("cate_set_nav", $set['nav']);
-                }
-            }
 
             if ($this->use_star_rating) {
                 $all_news[$i]['star'] = "<div id='rating_nsn_{$nsn}'></div>";
@@ -1237,12 +1240,12 @@ class tadnews
     private function del_js()
     {
         $js = "<script>
-    function delete_tad_news_func(nsn){
-      var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-      if (!sure)  return;
-      location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
-    }
-    </script>";
+        function delete_tad_news_func(nsn){
+          var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
+          if (!sure)  return;
+          location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
+        }
+        </script>";
         return $js;
     }
 
@@ -1669,7 +1672,6 @@ class tadnews
         if (empty($setup)) {
             return "";
         }
-
         $set = explode(";", $setup);
         foreach ($set as $s) {
             $ss        = explode("=", $s);
@@ -1811,8 +1813,8 @@ class tadnews
         $now         = time();
         $jquery_path = get_jquery(true);
 
-        $css = $this->get_pic_css($pic_css);
-        $pic_css=$this->mk_pic_css($css);
+        $css       = $this->get_pic_css($pic_css);
+        $pic_css   = $this->mk_pic_css($css);
         $cate_menu = empty($cate_num) ? "<div class='{$this->span}2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='span12 form-control'>$cate_select</select>";
 
         $form = "";
@@ -1981,7 +1983,7 @@ class tadnews
             $option .= "<option value='{$tag_sn}' $selected>{$tag}</option>";
         }
 
-        $select = "<select name='prefix_tag' class='span2 form-control'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
+        $select = "<select name='prefix_tag' class='span12 form-control'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
         return $select;
     }
 
@@ -2000,7 +2002,7 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser;
 
-        $sql = "select * from " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
+        $sql    = "select * from " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
         $result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
         while ($all = $xoopsDB->fetchArray($result)) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
@@ -2194,7 +2196,7 @@ class tadnews
     //把圖片的 CSS 設定整成成一般css
     private function mk_pic_css($set = '')
     {
-        if (empty($set)){
+        if (empty($set)) {
             $pic_css = '';
         } else {
             $pic_css = '';
@@ -2297,6 +2299,26 @@ class tadnews
         exit;
     }
 
+    //啟動tad_news某一筆資料
+    public function enable_tad_news($nsn = "")
+    {
+        global $xoopsDB, $xoopsUser;
+        $uid = $xoopsUser->getVar('uid');
+
+        //確認有管理員或本人才能管理
+        $news = $this->get_tad_news($nsn);
+        if (!$this->chk_who($news['uid'])) {
+            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
+        }
+
+        $sql = "update " . $xoopsDB->prefix("tad_news") . " set enable = '1' where nsn='$nsn'";
+        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+
+        $cate = $this->get_tad_news_cate($_POST['ncsn']);
+        $page = ($cate['not_news'] == '1') ? "page" : "index";
+        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?nsn={$nsn}");
+        exit;
+    }
     //身份查核
     private function chk_who($author_id = "")
     {

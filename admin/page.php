@@ -66,6 +66,12 @@ function tad_news_cate_form($ncsn = "")
     $not_news          = (!isset($DBV['not_news'])) ? "" : $DBV['not_news'];
     $cate_pic          = (!isset($DBV['cate_pic'])) ? "" : $DBV['cate_pic'];
     $pic               = (empty($cate_pic)) ? "../images/no_cover.png" : _TADNEWS_CATE_URL . "/{$cate_pic}";
+    $setup             = (!isset($DBV['setup'])) ? "" : $DBV['setup'];
+    $setup_arr         = explode(';', $setup);
+    foreach ($setup_arr as $set) {
+        list($set_name, $set_val) = explode('=', $set);
+        $xoopsTpl->assign($set_name, $set_val);
+    }
 
     $cate_op = (empty($ncsn)) ? "insert_tad_news_cate" : "update_tad_news_cate";
     //$op="replace_tad_news_cate";

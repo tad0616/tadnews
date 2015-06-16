@@ -9,9 +9,9 @@ function show_news($nsn = "")
     global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $tadnews;
 
     $tadnews->set_view_nsn($nsn);
+    $tadnews->set_news_kind("page");
     $tadnews->set_cover(true, "db");
     $tadnews->set_summary('full');
-
     $tadnews->get_news();
 
 }
@@ -29,13 +29,13 @@ function list_tad_all_news($the_ncsn = "")
 }
 
 /*-----------執行動作判斷區----------*/
-$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$nsn  = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$fsn  = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
 
-$nsn  = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
-$ncsn = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : 0;
-$fsn  = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
-
-switch ($_REQUEST['op']) {
+switch ($op) {
 
     //下載檔案
     case "tufdl":
@@ -55,11 +55,11 @@ switch ($_REQUEST['op']) {
         if (!empty($nsn)) {
             $xoopsOption['template_main'] = set_bootstrap("tadnews_page.html");
             include XOOPS_ROOT_PATH . "/header.php";
-            $main = show_news($nsn);
+            show_news($nsn);
         } elseif (!empty($ncsn)) {
             $xoopsOption['template_main'] = set_bootstrap("tadnews_page_list.html");
             include XOOPS_ROOT_PATH . "/header.php";
-            $main = list_tad_all_news($ncsn);
+            list_tad_all_news($ncsn);
         } else {
             header("location:index.php?nsn={$nsn}");
             exit;

@@ -32,6 +32,11 @@ switch ($op) {
         $tadnews->update_tad_news($nsn);
         break;
 
+    //啟用文章
+    case "enable_news";
+        $tadnews->enable_tad_news($nsn);
+        break;
+
     default:
         $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn, $ncsn);

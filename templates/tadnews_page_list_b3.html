@@ -1,13 +1,11 @@
 <!--TadNews Start-->
 <{if $ncsn}>
-<link rel="alternate" type="application/rss+xml" title="tadnews rss" href="<{$xoops_url}>/modules/tadnews/rss.php?ncsn=<{$ncsn}>" />
+  <link rel="alternate" type="application/rss+xml" title="tadnews rss" href="<{$xoops_url}>/modules/tadnews/rss.php?ncsn=<{$ncsn}>" />
 <{/if}>
 <link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
 
-<{$bootstrap}>
-
 <p>
-<{$toolbar}>
+  <{$toolbar}>
 </p>
 
 
@@ -20,7 +18,7 @@
       <td>
       <a href="<{$xoops_url}>/modules/tadnews/page.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
       </td>
-      <td class="span1 text-right" style="color: gray;font-size:12px;">(<{$news.counter}>)</td>
+      <td class="col-md-1 text-right" style="color: gray;font-size:12px;">(<{$news.counter}>)</td>
     </tr>
   <{/foreach}>
   </table>

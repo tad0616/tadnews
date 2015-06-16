@@ -86,7 +86,7 @@
         <div class="row-fluid">
           <div class="span6">
             <h3>
-              <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;" class="img-rounded">
+              <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
               <{$cate.nc_title}>
             </h3>
           </div>
@@ -160,12 +160,12 @@
               </label>
               <div class="span4 controls">
                 <label class="radio inline">
-                  <input type="radio" name="setup[title]" id="setup_title_1" value="1" checked>
+                  <input type="radio" name="setup[title]" id="setup_title_1" value="1" <{if $title!='0'}>checked<{/if}>>
                   <{$smarty.const._YES}>
                 </label>
 
                 <label class="radio inline">
-                  <input type="radio" name="setup[title]" id="setup_title_0" value="0">
+                  <input type="radio" name="setup[title]" id="setup_title_0" value="0" <{if $title=='0'}>checked<{/if}>>
                   <{$smarty.const._NO}>
                 </label>
               </div>
@@ -175,12 +175,12 @@
               </label>
               <div class="span4 controls">
                 <label class="radio inline">
-                  <input type="radio" name="setup[tool]" id="setup_tool_1" value="1">
+                  <input type="radio" name="setup[tool]" id="setup_tool_1" value="1" <{if $tool!='0'}>checked<{/if}>>
                   <{$smarty.const._YES}>
                 </label>
 
                 <label class="radio inline">
-                  <input type="radio" name="setup[tool]" id="setup_tool_0" value="0" checked>
+                  <input type="radio" name="setup[tool]" id="setup_tool_0" value="0" <{if $tool=='0'}>checked<{/if}>>
                   <{$smarty.const._NO}>
                 </label>
               </div>
@@ -193,12 +193,12 @@
               </label>
               <div class="span4 controls">
                 <label class="radio inline">
-                  <input type="radio" name="setup[comm]" id="setup_comm_1" value="1">
+                  <input type="radio" name="setup[comm]" id="setup_comm_1" value="1" <{if $comm=='1'}>checked<{/if}>>
                   <{$smarty.const._YES}>
                 </label>
 
                 <label class="radio inline">
-                  <input type="radio" name="setup[comm]" id="setup_comm_0" value="0" checked>
+                  <input type="radio" name="setup[comm]" id="setup_comm_0" value="0" <{if $comm!='1'}>checked<{/if}>>
                   <{$smarty.const._NO}>
                 </label>
               </div>
@@ -208,12 +208,12 @@
               </label>
               <div class="span4 controls">
                 <label class="radio inline">
-                  <input type="radio" name="setup[nav]" id="setup_nav_1" value="1" checked>
+                  <input type="radio" name="setup[nav]" id="setup_nav_1" value="1" <{if $nav=='0'}>checked<{/if}>>
                   <{$smarty.const._YES}>
                 </label>
 
                 <label class="radio inline">
-                  <input type="radio" name="setup[nav]" id="setup_nav_0" value="0">
+                  <input type="radio" name="setup[nav]" id="setup_nav_0" value="0" <{if $nav!='0'}>checked<{/if}>>
                   <{$smarty.const._NO}>
                 </label>
               </div>

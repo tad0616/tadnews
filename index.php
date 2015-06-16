@@ -175,16 +175,16 @@ function list_user_sign($uid = "")
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 }
 /*-----------執行動作判斷區----------*/
-$op = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op       = system_CleanVars($_REQUEST, 'op', '', 'string');
+$ncsn     = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$nsn      = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$fsn      = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
+$uid      = system_CleanVars($_REQUEST, 'uid', 0, 'int');
+$kind     = system_CleanVars($_REQUEST, 'kind', '', 'string');
+$tag_sn   = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
+$show_uid = system_CleanVars($_REQUEST, 'show_uid', 0, 'int');
 
-$nsn    = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
-$ncsn   = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : null;
-$fsn    = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
-$uid    = (isset($_REQUEST['uid'])) ? intval($_REQUEST['uid']) : "";
-$kind   = (empty($_REQUEST['kind'])) ? "" : $_REQUEST['kind'];
-$tag_sn = (isset($_REQUEST['tag_sn'])) ? intval($_REQUEST['tag_sn']) : "";
-
-$show_uid = (isset($_REQUEST['show_uid'])) ? intval($_REQUEST['show_uid']) : "";
 switch ($op) {
 
     //下載檔案
