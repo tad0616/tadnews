@@ -1,4 +1,18 @@
 ==================================================
+TadNews 3.6 official version amended project (2015-06-16 release)
+==================================================
+ 1.Added text size setting for the tree menu
+ 2.Fixed the cover image can not be deleted
+ 3.When using the bootstrap sets, auto-hide pda.php
+ 4.Adjust backend interface, removing category management page.
+ 5.Modify the code to meet specifications PSR2
+ 6.Remove QRCode block
+ 7.Added default cover image for some blocks.
+ 8.Simplified block Setting items
+ 9.Adjust user interface
+ 10.Bootstrap3 Support
+
+==================================================
 TadNews 3.51 official version amended project (2014-09-25 release)
 ==================================================
  1. plus xoops_pagetitle of meta information, strengthen SEO
