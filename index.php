@@ -236,7 +236,7 @@ switch ($op) {
             $xoopsOption['template_main'] = set_bootstrap("tadnews_list.html");
             include XOOPS_ROOT_PATH . "/header.php";
             list_tad_tag_news($tag_sn);
-        } elseif (!is_null($ncsn)) {
+        } elseif (!empty($ncsn)) {
             if ($xoopsModuleConfig['cate_show_mode'] == "summary") {
                 $xoopsOption['template_main'] = set_bootstrap("tadnews_index_summary.html");
                 include XOOPS_ROOT_PATH . "/header.php";
