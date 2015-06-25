@@ -1,4 +1,12 @@
 ==================================================
+TadNews 3.61 official version amended project (2015-06-25 release)
+==================================================
+ 1.Fixed index page dispaly mode can not be setup.
+ 2.Fixed some block.
+ 3.Adjust news title line height.
+
+
+==================================================
 TadNews 3.6 official version amended project (2015-06-16 release)
 ==================================================
  1.Added text size setting for the tree menu

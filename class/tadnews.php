@@ -707,7 +707,7 @@ class tadnews
                 $news_content = $this->xlang($news_content);
 
                 $style = (empty($this->summary_css)) ? "" : "style='{$this->summary_css}'";
-                $more  = strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}'><i class=\"fa fa-file-text-o\"></i>
+                $more  = strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>
 " . _TADNEWS_MORE . "</a></p>";
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . "</div>";
@@ -721,7 +721,7 @@ class tadnews
                 } else {
                     $content_arr = explode("<div style=\"page-break-after: always;\"><span style=\"display: none;\">&nbsp;</span></div>", $news_content);
                 }
-                $more         = (empty($content_arr[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}'>" . _TADNEWS_MORE . "...</a></p>";
+                $more         = (empty($content_arr[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
                 $news_content = $content_arr[0] . $more;
             } elseif ($this->summary_num === "full") {
                 $news_content = str_replace("<p>--summary--</p>", "", $news_content);
@@ -741,7 +741,7 @@ class tadnews
                     $content = explode(_SEPARTE, $news_content);
                 }
 
-                $more         = (empty($content[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}'>" . _TADNEWS_MORE . "...</a></p>";
+                $more         = (empty($content[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
                 $news_content = $content[0] . $more;
             }
 

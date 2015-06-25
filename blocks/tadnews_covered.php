@@ -32,10 +32,12 @@ function tadnews_covered($options)
     $tadnews->set_summary($summary_length);
     $tadnews->set_cover(true, $cover_css);
 
-    $block                      = $tadnews->get_news('return');
+    $news = $tadnews->get_news('return');
+
+    $block                      = $news;
     $block['num']               = 12 / $options[0];
     $block['cols']              = $options[0];
-    $block['count']             = $num;
+    $block['count']             = sizeof($news['page']);
     $block['summary_css']       = $summary_css;
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
     $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
