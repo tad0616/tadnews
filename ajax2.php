@@ -17,8 +17,6 @@ $cover_css      = $_POST['cover_css'];
 $start_from     = intval($_POST['start_from']);
 $show_ncsn      = !empty($_POST['show_ncsn']) ? $_POST['show_ncsn'] : "";
 $ncsn_arr       = explode(',', $show_ncsn);
-$show_button    = !empty($_POST['show_button']) ? $_POST['show_button'] : "0";
-$display_mode   = $_POST['display_mode'];
 
 $p     = !empty($_REQUEST['p']) ? intval($_REQUEST['p']) : 0;
 $b     = $p - 1;
@@ -40,20 +38,24 @@ $tadnews->set_title_length($title_length);
 $tadnews->set_cover($show_cover, $cover_css);
 $tadnews->set_skip_news($start);
 
-$all_news = $tadnews->get_news('return');
-
-if (empty($all_news['page'])) {
-    die(_TADNEWS_EMPTY);
-}
+//die(var_export($_POST));
 
 $block = "<div class='$row'>";
 
 $total = 0;
 
+$show_button  = !empty($_POST['show_button']) ? $_POST['show_button'] : "0";
+$display_mode = $_POST['display_mode'];
+
+//die('display_mode:' . $display_mode);
 if ($display_mode == 'table') {
     $block .= "
     <table class='table table-striped'>
       <tbody>";
+    $all_news = $tadnews->get_news('return');
+    if (empty($all_news['page'])) {
+        die(_TADNEWS_EMPTY);
+    }
     foreach ($all_news['page'] as $news) {
         $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}' style='margin:3px;'>" : "";
 
@@ -77,7 +79,10 @@ if ($display_mode == 'table') {
       </table>";
 } else {
     $block .= "<ul>";
-
+    $all_news = $tadnews->get_news('return');
+    if (empty($all_news['page'])) {
+        die(_TADNEWS_EMPTY);
+    }
     foreach ($all_news['page'] as $news) {
         $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}' style='margin:3px;'>" : "";
         $block .= "

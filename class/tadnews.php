@@ -401,7 +401,6 @@ class tadnews
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoTheme;
         //die(var_export($this->get_view_nsn()));
         $rating_js = "";
-
         //設定是否需要高亮度語法
         $syntaxhighlighter_code = $this->get_syntaxhighlighter();
 
@@ -789,7 +788,7 @@ class tadnews
             $cate_name  = (empty($cates[$ncsn])) ? _TADNEWS_NO_CATE : $cates[$ncsn];
 
             $post_date = substr($start_day, 0, 10);
-            $today_pic = $this->get_news_pic($always_top, $start_day);
+            $today_pic = $this->get_news_pic($always_top, $post_date);
             if ($this->show_mode == "summary" or $this->show_mode == "one") {
                 $need_sign = (!empty($have_read_group)) ? XOOPS_URL . "/modules/tadnews/images/sign_bg.png" : "";
             } else {
@@ -1120,7 +1119,7 @@ class tadnews
 
                 $subnews[$j]['content']        = $myts->displayTarea($content, 1, 1, 1, 1, 0);
                 $subnews[$j]['post_date']      = substr($start_day, 0, 10);
-                $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, $start_day);
+                $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, $post_date);
                 $subnews[$j]['prefix_tag']     = $this->mk_prefix_tag($prefix_tag);
                 $subnews[$j]['nsn']            = $nsn;
                 $subnews[$j]['news_title']     = $myts->htmlSpecialChars($news_title);
