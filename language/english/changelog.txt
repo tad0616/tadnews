@@ -1,4 +1,14 @@
 ==================================================
+TadNews 3.62 official version amended project (2015-07-03 release)
+==================================================
+ 1.Fixed list news block
+ 2.Fixed today icon can not be displayed
+ 3.Fixed cover setting is not working properly
+ 4.Bug Fixes custom page can not be pulled back to sort
+
+
+
+==================================================
 TadNews 3.61 official version amended project (2015-06-25 release)
 ==================================================
  1.Fixed index page dispaly mode can not be setup.

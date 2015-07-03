@@ -1,50 +1,58 @@
 <!--TadNews Start-->
 <link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
-  <script language="JavaScript">
-    $().ready(function(){
-      $("#clickAll").click(function() {
-        var x = document.getElementById("clickAll").checked;
-        if(x){
-          $(".news").each(function() {
-            $(this).attr("checked", true);
-          });
-        }else{
-         $(".news").each(function() {
-             $(this).attr("checked", false);
-         });
-        }
-        coint_checked();
-      });
-
-      $(".news").change(function(event) {
-        coint_checked();
-      });
-
+<script language="JavaScript">
+  $().ready(function(){
+    $("#clickAll").click(function() {
+      var x = document.getElementById("clickAll").checked;
+      if(x){
+        $(".news").each(function() {
+          $(this).attr("checked", true);
+        });
+      }else{
+       $(".news").each(function() {
+           $(this).attr("checked", false);
+       });
+      }
+      coint_checked();
     });
 
-    function delete_tad_news_cate_func(ncsn){
-      var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-      if (!sure)  return;
-      location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
-    }
+    $(".news").change(function(event) {
+      coint_checked();
+    });
 
-    function coint_checked(){
-      var $b = $('.news');
-      if($b.filter(':checked').length > 0 ){
-        $('#batch_tool').show();
-      }else{
-        $('#batch_tool').hide();
+    $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
+      var order = $(this).sortable('serialize');
+      $.post('save_sort.php', order, function(theResponse){
+          $('#save_msg').html(theResponse);
+      });
       }
-    }
+    });
 
-    function check_one(id_name,change){
-      if(document.getElementById(id_name).checked && change){
-        document.getElementById(id_name).checked = false;
-      }else{
-        document.getElementById(id_name).checked = true;
-      }
+  });
+
+  function delete_tad_news_cate_func(ncsn){
+    var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
+    if (!sure)  return;
+    location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
+  }
+
+  function coint_checked(){
+    var $b = $('.news');
+    if($b.filter(':checked').length > 0 ){
+      $('#batch_tool').show();
+    }else{
+      $('#batch_tool').hide();
     }
-  </script>
+  }
+
+  function check_one(id_name,change){
+    if(document.getElementById(id_name).checked && change){
+      document.getElementById(id_name).checked = false;
+    }else{
+      document.getElementById(id_name).checked = true;
+    }
+  }
+</script>
 
 <div class="container-fluid">
 
@@ -243,9 +251,9 @@
                 <th nowrap><{$smarty.const._MA_TADNEWS_FUNCTION}></th>
               <{/if}>
             </tr>
-            <tbody>
+            <tbody id="sort">
               <{foreach item=page from=$page}>
-                <tr>
+                <tr id="tr_<{$page.nsn}>">
                   <td>
                     <label class="checkbox inline">
                       <input name="nsn_arr[]" value="<{$page.nsn}>" type="checkbox" class="news">
