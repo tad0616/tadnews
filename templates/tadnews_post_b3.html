@@ -55,11 +55,16 @@
 
     var $tabs = $("#<{$jquery_tabs_id}>").tabs({ cookie: { expires: 30 } });
 
-    $("#pic_css_set").hide();
+    <{if $use_pic_css==""}>
+      $("#pic_css_set").hide();
+    <{else}>
+      $("#pic_css_set").show();
+    <{/if}>
 
     $("#pic_css").change(function(){
       if($("#pic_css").val()=="true"){
         $("#pic_css_set").show();
+        $("#demo_cover_pic").attr("style","background-image: url('<{$pic}>');width:200px; height:150px; border:1px solid #909090; background-position:center center; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;");
       }else{
         $("#pic_css_set").hide();
       }
@@ -261,7 +266,7 @@
 
           <{else}>
 
-            <{assign var=pic value="<div id='demo_cover_pic' style='width:200px; height:150px; border:1px solid #909090; background-position:left top; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;'></div>"}>
+            <{assign var=pic value="<div id='demo_cover_pic' style='width:200px; height:150px; border:1px solid #909090; background-position:center center; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;'></div>"}>
 
             <script type="text/javascript">
               d = new Date();
@@ -298,8 +303,8 @@
                   <{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC}>
                 </label>
                 <select class="form-control" name="pic_css[use_pic_css]" id="pic_css">
-                  <option value="" <{$use_pic_css}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_NO}></option>
-                  <option value="true" <{$use_pic_css_true}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
+                  <option value="" <{if $use_pic_css==""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_NO}></option>
+                  <option value="true" <{if $use_pic_css!=""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
                 </select>
               </div>
             </div>
@@ -323,15 +328,15 @@
                     </label>
                     <select class="form-control" name="pic_css[border_style]" onChange="$('#demo_cover_pic').css('border-style',this.value);">
 
-                      <option value="solid" <{$pic_css_border_style_solid}>><{$smarty.const._MD_TADNEWS_NEWSPIC_SOLID}> </option>
-                      <option value="dashed" <{$pic_css_border_style_dashed}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DASHED}></option>
-                      <option value="double" <{$pic_css_border_style_double}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOUBLE}></option>
-                      <option value="dotted" <{$pic_css_border_style_dotted}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOTTED}></option>
-                      <option value="groove" <{$pic_css_border_style_groove}>><{$smarty.const._MD_TADNEWS_NEWSPIC_GROOVE}></option>
-                      <option value="ridge" <{$pic_css_border_style_ridge}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIDGE}></option>
-                      <option value="inset" <{$pic_css_border_style_inset}>><{$smarty.const._MD_TADNEWS_NEWSPIC_INSET}></option>
-                      <option value="outset" <{$pic_css_border_style_outset}>><{$smarty.const._MD_TADNEWS_NEWSPIC_OUTSET}></option>
-                      <option value="none" <{$pic_css_border_style_none}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NONE}></option>
+                      <option value="solid" <{if $pic_css_border_style=="solid"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_SOLID}> </option>
+                      <option value="dashed" <{if $pic_css_border_style=="dashed"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DASHED}></option>
+                      <option value="double" <{if $pic_css_border_style=="double"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOUBLE}></option>
+                      <option value="dotted" <{if $pic_css_border_style=="dotted"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOTTED}></option>
+                      <option value="groove" <{if $pic_css_border_style=="groove"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_GROOVE}></option>
+                      <option value="ridge" <{if $pic_css_border_style=="ridge"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIDGE}></option>
+                      <option value="inset" <{if $pic_css_border_style=="inset"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_INSET}></option>
+                      <option value="outset" <{if $pic_css_border_style=="outset"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_OUTSET}></option>
+                      <option value="none" <{if $pic_css_border_style=="none"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NONE}></option>
                     </select>
                   </div>
 
@@ -347,9 +352,9 @@
                       <{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}>
                     </label>
                     <select class="form-control" name="pic_css[float]" onChange="$('#demo_cover_pic').css('float',this.value);">
-                      <option value="left" <{$pic_css_float_left}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_LEFT}></option>
-                      <option value="right" <{$pic_css_float_right}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_RIGHT}></option>
-                      <option value="none" <{$pic_css_float_none}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_NONE}></option>
+                      <option value="left" <{if $pic_css_float=="left"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_LEFT}></option>
+                      <option value="right" <{if $pic_css_float=="right"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_RIGHT}></option>
+                      <option value="none" <{if $pic_css_float=="none"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_NONE}></option>
                     </select>
                   </div>
 
@@ -367,10 +372,10 @@
                       <{$smarty.const._MD_TADNEWS_NEWSPIC}>
                     </label>
                     <select class="form-control" name="pic_css[background_repeat]" onChange="$('#demo_cover_pic').css('background-repeat',this.value);">
-                      <option value="no-repeat" <{$pic_css_background_repeat_no_repeat}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_REPEAT}></option>
-                      <option value="repeat" <{$pic_css_background_repeat_repeat}>><{$smarty.const._MD_TADNEWS_NEWSPIC_REPEAT}></option>
-                      <option value="repeat-x" <{$pic_css_background_repeat_x}>><{$smarty.const._MD_TADNEWS_NEWSPIC_X_REPEAT}></option>
-                      <option value="repeat-y" <{$pic_css_background_repeat_y}>><{$smarty.const._MD_TADNEWS_NEWSPIC_Y_REPEAT}></option>
+                      <option value="no-repeat" <{if $pic_css_background_repeat=="no-repeat"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_REPEAT}></option>
+                      <option value="repeat" <{if $pic_css_background_repeat=="repeat"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_REPEAT}></option>
+                      <option value="repeat-x" <{if $pic_css_background_repeat=="repeat-x"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_X_REPEAT}></option>
+                      <option value="repeat-y" <{if $pic_css_background_repeat=="repeat-y"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_Y_REPEAT}></option>
                     </select>
                   </div>
 
@@ -379,15 +384,15 @@
                       <{$smarty.const._MD_TADNEWS_NEWSPIC_SHOW}>
                     </label>
                     <select class="form-control" name="pic_css[background_position]" onChange="$('#demo_cover_pic').css('background-position',this.value);">
-                      <option value="left top" <{$pic_css_background_position_left_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_TOP}></option>
-                      <option value="left center" <{$pic_css_background_position_left_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_CENTER}></option>
-                      <option value="left bottom" <{$pic_css_background_position_left_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_BOTTOM}></option>
-                      <option value="right top" <{$pic_css_background_position_right_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_TOP}></option>
-                      <option value="right center" <{$pic_css_background_position_right_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_CENTER}></option>
-                      <option value="right bottom" <{$pic_css_background_position_right_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_BOTTOM}></option>
-                      <option value="center top" <{$pic_css_background_position_center_top}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_TOP}></option>
-                      <option value="center center" <{$pic_css_background_position_center_center}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_CENTER}></option>
-                      <option value="center bottom" <{$pic_css_background_position_center_bottom}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_BOTTOM}></option>
+                      <option value="left top" <{if $pic_css_background_position=="left top"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_TOP}></option>
+                      <option value="left center" <{if $pic_css_background_position=="left center"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_CENTER}></option>
+                      <option value="left bottom" <{if $pic_css_background_position=="left bottom"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_BOTTOM}></option>
+                      <option value="right top" <{if $pic_css_background_position=="right top"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_TOP}></option>
+                      <option value="right center" <{if $pic_css_background_position=="right center"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_CENTER}></option>
+                      <option value="right bottom" <{if $pic_css_background_position=="right bottom"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_RIGHT_BOTTOM}></option>
+                      <option value="center top" <{if $pic_css_background_position=="center top"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_TOP}></option>
+                      <option value="center center" <{if $pic_css_background_position=="center center"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_CENTER}></option>
+                      <option value="center bottom" <{if $pic_css_background_position=="center bottom"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CENTER_BOTTOM}></option>
                     </select>
                   </div>
 
@@ -396,9 +401,9 @@
                       <{$smarty.const._MD_TADNEWS_NEWSPIC_AND}>
                     </label>
                     <select class="form-control" name="pic_css[background_size]" onChange="$('#demo_cover_pic').css('background-size',this.value);">
-                      <option value="" <{$pic_css_background_size}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_RESIZE}></option>
-                      <option value="contain" <{$pic_css_background_size_contain}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CONTAIN}></option>
-                      <option value="cover" <{$pic_css_background_size_cover}>><{$smarty.const._MD_TADNEWS_NEWSPIC_COVER}></option>
+                      <option value="" <{if $pic_css_background_size==""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_RESIZE}></option>
+                      <option value="contain" <{if $pic_css_background_size=="contain"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CONTAIN}></option>
+                      <option value="cover" <{if $pic_css_background_size=="cover"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_COVER}></option>
                     </select>
                   </div>
 

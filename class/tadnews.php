@@ -1812,76 +1812,53 @@ class tadnews
         $now         = time();
         $jquery_path = get_jquery(true);
 
-        $css       = $this->get_pic_css($pic_css);
-        $pic_css   = $this->mk_pic_css($css);
+        $css     = $this->get_pic_css($pic_css);
+        $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
+        //die($pic_css);
         $cate_menu = empty($cate_num) ? "<div class='{$this->span}2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='span12 form-control'>$cate_select</select>";
 
         $form = "";
         if ($mode == "return") {
-            $form['jquery']                                    = $jquery_path;
-            $form['action']                                    = $_SERVER['PHP_SELF'];
-            $form['nsn']                                       = $nsn;
-            $form['uid']                                       = $uid;
-            $form['op']                                        = $op;
-            $form['cate']                                      = $cate;
-            $form['cate_menu']                                 = $cate_menu;
-            $form['cate_select']                               = $cate_select;
-            $form['news_cate_select']                          = $news_cate_select;
-            $form['page_cate_select']                          = $page_cate_select;
-            $form['creat_cate_tool']                           = $creat_cate_tool;
-            $form['prefix_tag_menu']                           = $prefix_tag_menu;
-            $form['news_title']                                = $news_title;
-            $form['news_content']                              = $news_content;
-            $form['editor']                                    = $editor;
-            $form['jquery_tabs_id']                            = "jquery-tabs{$now}";
-            $form['start_day']                                 = $start_day;
-            $form['end_day']                                   = $end_day;
-            $form['always_top']                                = $always_top;
-            $form['always_top_checked']                        = $always_top_checked;
-            $form['always_top_date']                           = $always_top_date;
-            $form['enable_group']                              = $enable_group;
-            $form['have_read_group']                           = $have_read_group;
-            $form['enable_checked1']                           = chk($enable, "1", "1");
-            $form['enable_checked0']                           = chk($enable, "0");
-            $form['passwd']                                    = $passwd;
-            $form['pic_css']                                   = $pic_css;
-            $form['use_pic_css']                               = chk($use_pic_css, "", 1, "selected");
-            $form['use_pic_css_true']                          = chk($use_pic_css, "true", 0, "selected");
-            $form['pic_css_width']                             = $css['width'];
-            $form['pic_css_height']                            = $css['height'];
-            $form['pic_css_border_width']                      = $css['border_width'];
-            $form['pic_css_border_style_solid']                = chk($css["border_style"], "solid", 1, "selected");
-            $form['pic_css_border_style_dashed']               = chk($css["border_style"], "dashed", 0, "selected");
-            $form['pic_css_border_style_double']               = chk($css["border_style"], "double", 0, "selected");
-            $form['pic_css_border_style_dotted']               = chk($css["border_style"], "dotted", 0, "selected");
-            $form['pic_css_border_style_groove']               = chk($css["border_style"], "groove", 0, "selected");
-            $form['pic_css_border_style_ridge']                = chk($css["border_style"], "ridge", 0, "selected");
-            $form['pic_css_border_style_inset']                = chk($css["border_style"], "inset", 0, "selected");
-            $form['pic_css_border_style_outset']               = chk($css["border_style"], "outset", 0, "selected");
-            $form['pic_css_border_style_none']                 = chk($css["border_style"], "none", 0, "selected");
-            $form['pic_css_border_color']                      = $css['border_color'];
-            $form['pic_css_float_left']                        = chk($css["float"], "left", 1, "selected");
-            $form['pic_css_float_right']                       = chk($css["float"], "right", 0, "selected");
-            $form['pic_css_float_none']                        = chk($css["float"], "none", 0, "selected");
-            $form['pic_css_margin']                            = $css['margin'];
-            $form['pic_css_background_repeat_no_repeat']       = chk($css["background_repeat"], "no-repeat", 1, "selected");
-            $form['pic_css_background_repeat_repeat']          = chk($css["background_repeat"], "repeat", 0, "selected");
-            $form['pic_css_background_repeat_x']               = chk($css["background_repeat"], "repeat-x", 0, "selected");
-            $form['pic_css_background_repeat_y']               = chk($css["background_repeat"], "repeat-y", 0, "selected");
-            $form['pic_css_background_position_left_top']      = chk($css["background_position"], "left top", 1, "selected");
-            $form['pic_css_background_position_left_center']   = chk($css["background_position"], "left center", 0, "selected");
-            $form['pic_css_background_position_left_bottom']   = chk($css["background_position"], "left bottom", 0, "selected");
-            $form['pic_css_background_position_right_top']     = chk($css["background_position"], "right top", 0, "selected");
-            $form['pic_css_background_position_right_center']  = chk($css["background_position"], "right center", 0, "selected");
-            $form['pic_css_background_position_right_bottom']  = chk($css["background_position"], "right bottom", 0, "selected");
-            $form['pic_css_background_position_center_top']    = chk($css["background_position"], "center top", 0, "selected");
-            $form['pic_css_background_position_center_center'] = chk($css["background_position"], "center center", 0, "selected");
-            $form['pic_css_background_position_center_bottom'] = chk($css["background_position"], "center bottom", 0, "selected");
-            $form['pic_css_background_size']                   = chk($css["background_size"], "", 1, "selected");
-            $form['pic_css_background_size_contain']           = chk($css["background_size"], "contain", 0, "selected");
-            $form['pic_css_background_size_cover']             = chk($css["background_size"], "cover", 0, "selected");
-            $form['pic']                                       = $pic;
-            $form['files_sn']                                  = $files_sn;
+            $form['jquery']                      = $jquery_path;
+            $form['action']                      = $_SERVER['PHP_SELF'];
+            $form['nsn']                         = $nsn;
+            $form['uid']                         = $uid;
+            $form['op']                          = $op;
+            $form['cate']                        = $cate;
+            $form['cate_menu']                   = $cate_menu;
+            $form['cate_select']                 = $cate_select;
+            $form['news_cate_select']            = $news_cate_select;
+            $form['page_cate_select']            = $page_cate_select;
+            $form['creat_cate_tool']             = $creat_cate_tool;
+            $form['prefix_tag_menu']             = $prefix_tag_menu;
+            $form['news_title']                  = $news_title;
+            $form['news_content']                = $news_content;
+            $form['editor']                      = $editor;
+            $form['jquery_tabs_id']              = "jquery-tabs{$now}";
+            $form['start_day']                   = $start_day;
+            $form['end_day']                     = $end_day;
+            $form['always_top']                  = $always_top;
+            $form['always_top_checked']          = $always_top_checked;
+            $form['always_top_date']             = $always_top_date;
+            $form['enable_group']                = $enable_group;
+            $form['have_read_group']             = $have_read_group;
+            $form['enable_checked1']             = chk($enable, "1", "1");
+            $form['enable_checked0']             = chk($enable, "0");
+            $form['passwd']                      = $passwd;
+            $form['pic_css']                     = $pic_css;
+            $form['use_pic_css']                 = $use_pic_css;
+            $form['pic_css_width']               = $css['width'];
+            $form['pic_css_height']              = $css['height'];
+            $form['pic_css_border_width']        = $css['border_width'];
+            $form['pic_css_border_style']        = $css["border_style"];
+            $form['pic_css_border_color']        = $css['border_color'];
+            $form['pic_css_float']               = $css["float"];
+            $form['pic_css_margin']              = $css['margin'];
+            $form['pic_css_background_repeat']   = $css["background_repeat"];
+            $form['pic_css_background_position'] = $css["background_position"];
+            $form['pic_css_background_size']     = $css["background_size"];
+            $form['pic']                         = $pic;
+            $form['files_sn']                    = $files_sn;
 
             $this->TadUpFiles->set_col("nsn", $nsn);
             $upform         = $this->TadUpFiles->upform(true, 'upfile', null, true);
@@ -1923,41 +1900,17 @@ class tadnews
             $xoopsTpl->assign("enable_checked0", chk($enable, "0"));
             $xoopsTpl->assign("passwd", $passwd);
             $xoopsTpl->assign("pic_css", $pic_css);
-            $xoopsTpl->assign("use_pic_css", chk($use_pic_css, "", 1, "selected"));
-            $xoopsTpl->assign("use_pic_css_true", chk($use_pic_css, "true", 0, "selected"));
+            $xoopsTpl->assign("use_pic_css", $use_pic_css);
             $xoopsTpl->assign("pic_css_width", $css['width']);
             $xoopsTpl->assign("pic_css_height", $css['height']);
             $xoopsTpl->assign("pic_css_border_width", $css['border_width']);
-            $xoopsTpl->assign("pic_css_border_style_solid", chk($css["border_style"], "solid", 1, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_dashed", chk($css["border_style"], "dashed", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_double", chk($css["border_style"], "double", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_dotted", chk($css["border_style"], "dotted", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_groove", chk($css["border_style"], "groove", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_ridge", chk($css["border_style"], "ridge", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_inset", chk($css["border_style"], "inset", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_outset", chk($css["border_style"], "outset", 0, "selected"));
-            $xoopsTpl->assign("pic_css_border_style_none", chk($css["border_style"], "none", 0, "selected"));
+            $xoopsTpl->assign("pic_css_border_style", $css["border_style"]);
             $xoopsTpl->assign("pic_css_border_color", $css['border_color']);
-            $xoopsTpl->assign("pic_css_float_left", chk($css["float"], "left", 1, "selected"));
-            $xoopsTpl->assign("pic_css_float_right", chk($css["float"], "right", 0, "selected"));
-            $xoopsTpl->assign("pic_css_float_none", chk($css["float"], "none", 0, "selected"));
+            $xoopsTpl->assign("pic_css_float", $css["float"]);
             $xoopsTpl->assign("pic_css_margin", $css['margin']);
-            $xoopsTpl->assign("pic_css_background_repeat_no_repeat", chk($css["background_repeat"], "no-repeat", 1, "selected"));
-            $xoopsTpl->assign("pic_css_background_repeat_repeat", chk($css["background_repeat"], "repeat", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_repeat_x", chk($css["background_repeat"], "repeat-x", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_repeat_y", chk($css["background_repeat"], "repeat-y", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_left_top", chk($css["background_position"], "left top", 1, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_left_center", chk($css["background_position"], "left center", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_left_bottom", chk($css["background_position"], "left bottom", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_right_top", chk($css["background_position"], "right top", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_right_center", chk($css["background_position"], "right center", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_right_bottom", chk($css["background_position"], "right bottom", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_center_top", chk($css["background_position"], "center top", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_center_center", chk($css["background_position"], "center center", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_position_center_bottom", chk($css["background_position"], "center bottom", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_size", chk($css["background_size"], "", 1, "selected"));
-            $xoopsTpl->assign("pic_css_background_size_contain", chk($css["background_size"], "contain", 0, "selected"));
-            $xoopsTpl->assign("pic_css_background_size_cover", chk($css["background_size"], "cover", 0, "selected"));
+            $xoopsTpl->assign("pic_css_background_repeat", $css["background_repeat"]);
+            $xoopsTpl->assign("pic_css_background_position", $css["background_position"]);
+            $xoopsTpl->assign("pic_css_background_size", $css["background_size"]);
             $xoopsTpl->assign("pic", $pic);
             $xoopsTpl->assign("files_sn", $files_sn);
 
@@ -2045,11 +1998,11 @@ class tadnews
             $css['border_width']        = '1';
             $css['border_style']        = 'solid';
             $css['border_color']        = '#909090';
-            $css['background_position'] = 'left top';
+            $css['background_position'] = 'center center';
             $css['background_repeat']   = 'no-repeat';
-            $css['float']               = 'left';
+            $css['float']               = 'right';
             $css['margin']              = '4';
-            $css['background_size']     = 'contain';
+            $css['background_size']     = 'cover';
         } else {
             $cssArr = explode(';', $pic_css);
             foreach ($cssArr as $css_set) {
@@ -2106,7 +2059,7 @@ class tadnews
         $news_title   = $myts->addSlashes($_POST['news_title']);
         $news_content = $myts->addSlashes($_POST['news_content']);
         $always_top   = (empty($_POST['always_top'])) ? "0" : "1";
-        $pic_css      = $this->mk_pic_css($_POST['pic_css']);
+        $pic_css      = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
         //die($pic_css);
         if (!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']) {
             $pic_css = $this->tadnewsConfig['cover_pic_css'];
@@ -2130,7 +2083,7 @@ class tadnews
 
         //修改暫存封面圖
         if ($_POST['files_sn']) {
-            $pic_css = $this->mk_pic_css($_POST['pic_css']);
+            $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
             $files_sn = intval($_POST['files_sn']);
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
@@ -2195,6 +2148,7 @@ class tadnews
     //把圖片的 CSS 設定整成成一般css
     private function mk_pic_css($set = '')
     {
+        //die(var_export($set));
         if (empty($set)) {
             $pic_css = '';
         } else {
@@ -2209,6 +2163,7 @@ class tadnews
             $pic_css .= is_null($set['margin']) ? '' : "margin:{$set['margin']}px; ";
 
         }
+        //die($pic_css);
         return $pic_css;
     }
 
@@ -2284,7 +2239,7 @@ class tadnews
 
         //修改暫存封面圖
         if ($_POST['files_sn']) {
-            $pic_css = $this->mk_pic_css($_POST['pic_css']);
+            $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
             $files_sn = intval($_POST['files_sn']);
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
