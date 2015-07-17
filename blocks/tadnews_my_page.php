@@ -16,6 +16,7 @@ function tadnews_my_page($options)
     $tadnews = new tadnews();
     $tadnews->set_show_mode('table');
     $tadnews->set_view_nsn($nsn_arr);
+    $tadnews->set_use_star_rating(false);
     $block = $tadnews->get_news('return');
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');

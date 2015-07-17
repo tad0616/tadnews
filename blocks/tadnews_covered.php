@@ -31,7 +31,7 @@ function tadnews_covered($options)
     $tadnews->set_news_kind("news");
     $tadnews->set_summary($summary_length);
     $tadnews->set_cover(true, $cover_css);
-
+    $tadnews->set_use_star_rating(false);
     $news = $tadnews->get_news('return');
 
     $block                      = $news;

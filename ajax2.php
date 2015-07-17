@@ -16,7 +16,8 @@ $show_cover     = $_POST['show_cover'];
 $cover_css      = $_POST['cover_css'];
 $start_from     = intval($_POST['start_from']);
 $show_ncsn      = !empty($_POST['show_ncsn']) ? $_POST['show_ncsn'] : "";
-$ncsn_arr       = explode(',', $show_ncsn);
+
+$ncsn_arr = explode(',', $show_ncsn);
 
 $p     = !empty($_REQUEST['p']) ? intval($_REQUEST['p']) : 0;
 $b     = $p - 1;

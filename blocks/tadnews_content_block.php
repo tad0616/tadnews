@@ -19,12 +19,11 @@ function tadnews_content_block_show($options)
     $tadnews->set_title_length($options[3]);
     $tadnews->set_cover($options[4], $options[5]);
     $tadnews->set_skip_news($options[6]);
-    //$tadnews->set_use_star_rating(true);
+    $tadnews->set_use_star_rating(false);
     $block = $tadnews->get_news('return');
     if (empty($block['page'])) {
         return;
     }
-
 
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
     $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';

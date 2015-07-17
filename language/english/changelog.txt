@@ -1,4 +1,15 @@
 ==================================================
+TadNews 3.63 official version amended project (2015-07-15 release)
+==================================================
+1. Close all the blocks rating tool.
+2. Fixed list news blocks are not displayed correctly category article questions.
+3. Fixed custom page ztree can not be displayed in admin page.
+4. Fixed custom page article Toolbar can not display.
+5. Fixed custom page can not be post.
+6. Fixed page can not appear the rating tool issue.
+
+
+==================================================
 TadNews 3.62 official version amended project (2015-07-03 release)
 ==================================================
  1.Fixed list news block

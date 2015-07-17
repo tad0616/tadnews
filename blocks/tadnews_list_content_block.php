@@ -16,7 +16,7 @@ function tadnews_list_content_block_show($options)
     $block['cover_css']      = $options[5];
     $block['start_from']     = $options[6];
 
-    if (!is_numeric($options[7]) and strpos(',', $options[7]) === false) {
+    if (!is_numeric($options[7]) and strpos($options[7], ',') === false) {
         $options[7] = '';
     }
 

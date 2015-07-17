@@ -35,7 +35,7 @@ function tadnews_slidernews2_show($options)
 
     $slider = new slider($options[1]);
 
-    $n = 0;
+    $n       = 0;
     $pic_num = 1;
     foreach ($all_news['page'] as $news) {
         $big_image = empty($news['image_big']) ? XOOPS_URL . "/modules/tadnews/images/demo{$pic_num}.jpg" : $news['image_big'];
@@ -57,7 +57,7 @@ function tadnews_slidernews2_edit($options)
 {
 
     $ResponsiveSlides = $options[2] == "ResponsiveSlides" ? "selected" : "";
-    $flexslider2 = $options[2] == "flexslider2" ? "selected" : "";
+    $flexslider2      = $options[2] == "flexslider2" ? "selected" : "";
 
     $block_news_cate = block_news_cate($options[3]);
 

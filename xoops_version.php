@@ -4,7 +4,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
-$modversion['version']     = 3.62;
+$modversion['version']     = 3.63;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author']      = 'Tad (tad0616@gmail.com)';
 $modversion['credits']     = 'geek01';
@@ -15,13 +15,13 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2015/07/03';
+$modversion['release_date']        = '2015/07/15';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status']       = 'release';
 $modversion['author_website_url']  = 'http://tad0616.net/';
 $modversion['author_website_name'] = 'Tad';
-$modversion['min_php']             = '5.2';
+$modversion['min_php']             = '5.3';
 $modversion['min_xoops']           = '2.5';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 

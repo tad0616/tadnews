@@ -17,6 +17,7 @@ function tadnews_marquee($options)
     $tadnews->set_view_ncsn($ncsn_arr);
     $tadnews->set_show_mode('list');
     $tadnews->set_news_kind("news");
+    $tadnews->set_use_star_rating(false);
     $block = $tadnews->get_news('return');
     if (empty($block['page'])) {
         return;

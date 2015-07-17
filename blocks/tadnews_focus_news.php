@@ -17,6 +17,7 @@ function tadnews_focus_news($options)
     $summary = ($options[1] == 'summary') ? "page_preak" : "full";
     $tadnews->set_summary($summary);
     $tadnews->set_cover(true, "db");
+    $tadnews->set_use_star_rating(false);
     $block = $tadnews->get_news('return');
 
     $block['bootstrap_version'] = $_SESSION['bootstrap'];

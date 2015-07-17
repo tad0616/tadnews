@@ -20,6 +20,8 @@ function list_tadnews_cate_tree($def_ncsn = "")
     $path     = get_tadnews_cate_path($def_ncsn);
     $path_arr = array_keys($path);
 
+    $data[] = "{ id:0, pId:0, name:'All', url:'page.php', target:'_self', open:true}";
+
     $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' order by sort";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
@@ -35,7 +37,7 @@ function list_tadnews_cate_tree($def_ncsn = "")
         redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/ztree.php";
-    $ztree      = new ztree("album_tree", $json, "save_drag.php", "save_cate_sort.php", "of_ncsn", "ncsn");
+    $ztree      = new ztree("page_tree", $json, "save_drag.php", "save_cate_sort.php", "of_ncsn", "ncsn");
     $ztree_code = $ztree->render();
     $xoopsTpl->assign('ztree_code', $ztree_code);
 
@@ -91,7 +93,6 @@ function tad_news_cate_form($ncsn = "")
     $xoopsTpl->assign("cate_op", $cate_op);
     $cate_pic_width = $xoopsModuleConfig['cate_pic_width'] + 10;
     $xoopsTpl->assign("cate_pic_width", $cate_pic_width);
-    $xoopsTpl->assign("jquery", get_jquery(true));
     $xoopsTpl->assign("cate_select", $cate_select);
     $xoopsTpl->assign("sort", $sort);
     $xoopsTpl->assign("ncsn", $ncsn);
@@ -182,4 +183,5 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
+$xoopsTpl->assign("jquery", get_jquery(true));
 include_once "footer.php";
