@@ -117,7 +117,6 @@ $this->enable_tad_news($nsn="");
 $tadnews=new tadnews();
 $tadnews->delete_tad_news($nsn);
 
-
  */
 class tadnews
 {
@@ -2079,7 +2078,7 @@ class tadnews
         //處理上傳的檔案
         //upload_file('upfile',"nsn",$nsn);
         $this->TadUpFiles->set_col('nsn', $nsn);
-        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width']);
+        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true);
 
         //修改暫存封面圖
         if ($_POST['files_sn']) {
