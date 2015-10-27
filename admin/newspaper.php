@@ -272,12 +272,13 @@ function edit_newspaper($npsn = "")
     }
 
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/fck.php")) {
-        redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+        redirect_header("index.php", 3, _MD_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/fck.php";
-    $fck = new FCKEditor264("tadnews", "np_content", $html);
-    $fck->setHeight(600);
-    $editor = $fck->render();
+
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
+    $ck = new CKEditor("tadnews", "np_content", $html);
+    $ck->setHeight(400);
+    $editor = $ck->render();
 
     $xoopsTpl->assign("editor", $editor);
     $xoopsTpl->assign("npsn", $npsn);
