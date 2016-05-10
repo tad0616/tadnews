@@ -41,7 +41,7 @@ $tadnews->set_skip_news($start);
 
 //die(var_export($_POST));
 
-$block = "<div class='$row'>";
+$block = "";
 
 $total = 0;
 
@@ -110,7 +110,7 @@ $n_button = ($total < $num) ? "" : "<button onClick='tadnew_list_content{$_POST[
 $m_button = ($total < $num) ? "" : "<a href='" . XOOPS_URL . "/modules/tadnews/' class='btn btn-default'>more</a>";
 $button   = ($show_button) ? "<div class='$row'><div class='{$span}4 text-left'>{$b_button}</div><div class='{$span}4 text-center'>{$m_button}</div><div class='{$span}4 text-right'>{$n_button}</div></div>" : "";
 
-$block .= "</div>
+$block .= "
 {$button}";
 
 echo $block;

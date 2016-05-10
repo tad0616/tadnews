@@ -40,7 +40,7 @@ function tadnews_covered($options)
     $block['count']             = sizeof($news['page']);
     $block['summary_css']       = $summary_css;
     $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
+    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-sm-' : 'span';
     $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');

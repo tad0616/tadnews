@@ -226,7 +226,7 @@ function save_newspaper()
 //【步驟三】編輯電子報
 function edit_newspaper($npsn = "")
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $tadnews;
     $cates         = get_all_news_cate();
     $newspaper     = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
@@ -247,7 +247,12 @@ function edit_newspaper($npsn = "")
 
             $news_title   = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-
+            $pic          = $tadnews->get_news_cover("news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
+            if ($pic) {
+                $img = "<img src='$pic' alt='{$news_title}' align='left' style='text-align:left; margin:0px 6px 6px 0px;max-width:300px;'>";
+            } else {
+                $img = '';
+            }
             if (preg_match("/" . _SEPARTE2 . "/", $news_content)) {
                 //支援xlanguage
                 if (function_exists('xlanguage_ml')) {
@@ -263,7 +268,7 @@ function edit_newspaper($npsn = "")
             $news_content = $content[0] . $more;
             $html .= "
             <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . "{$cates[$ncsn]}" . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
-            <div class='TadNewsPaper_content'>$news_content</div>
+            <div class='TadNewsPaper_content'>{$img}{$news_content}</div>
             <hr class='TadNewsPaper_hr'>";
         }
         //$html.="{$newspaper_set['foot']}";

@@ -329,7 +329,7 @@ class tadnews
     }
 
     //取得圖片
-    private function get_news_cover($col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
+    public function get_news_cover($col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
     {
         global $xoopsDB, $xoopsUser;
 
@@ -1770,7 +1770,7 @@ class tadnews
 
         if ($this->editor == "elrte") {
             if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php")) {
-                redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+                redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
             }
             include_once XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php";
             $elrte = new elrte("tadnews", "news_content", $news_content);
@@ -1778,7 +1778,7 @@ class tadnews
             $editor = $elrte->render();
         } else {
             if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
-                redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+                redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
             }
             include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
             $fck = new CKEditor("tadnews", "news_content", $news_content);
@@ -1949,7 +1949,7 @@ class tadnews
     }
 
     //取得新聞封面圖片檔案
-    private function get_news_doc_pic($col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
+    public function get_news_doc_pic($col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
     {
         global $xoopsDB, $xoopsUser;
 

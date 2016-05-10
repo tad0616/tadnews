@@ -1,8 +1,10 @@
 <?php
 //global
 include_once 'global.php';
-define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 
+if (!defined('_TAD_NEED_TADTOOLS')) {
+    define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
+}
 define('_MD_TADNEWS_TO_MOD', '回模組首頁');
 define('_MD_TADNEWS_TO_ADMIN', '管理介面');
 define('_MD_TADNEWS_MY', '我的文章');
