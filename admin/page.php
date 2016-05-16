@@ -23,7 +23,7 @@ function list_tadnews_cate_tree($def_ncsn = "")
     $data[] = "{ id:0, pId:0, name:'All', url:'page.php', target:'_self', open:true}";
 
     $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($ncsn, $path_arr) ? 'true' : 'false';

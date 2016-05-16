@@ -20,7 +20,7 @@ function chk_cate_path($ncsn, $to_ncsn)
     global $xoopsDB;
     //抓出子目錄的編號
     $sql    = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {
         if (chk_cate_path($sub_ncsn, $to_ncsn)) {
             return true;

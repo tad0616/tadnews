@@ -34,8 +34,8 @@ $adminmenu[$i]['desc']  = _MI_TADNEWS_ADMENU8;
 $adminmenu[$i]['icon']  = "{$icon_dir}groupmod.png";
 $i++;
 
-$modhandler      = &xoops_gethandler('module');
-$newsxoopsModule = &$modhandler->getByDirname("news");
+$modhandler      = xoops_gethandler('module');
+$newsxoopsModule = $modhandler->getByDirname("news");
 if ($newsxoopsModule) {
     $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU4;
     $adminmenu[$i]['link']  = "admin/import.php";

@@ -166,10 +166,10 @@ class tadnews
         $this->now   = date("Y-m-d", xoops_getUserTimestamp(time()));
         $this->today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
-        $modhandler          = &xoops_gethandler('module');
+        $modhandler          = xoops_gethandler('module');
         $this->tadnewsModule = &$modhandler->getByDirname("tadnews");
         $this->module_id     = $this->tadnewsModule->getVar('mid');
-        $config_handler      = &xoops_gethandler('config');
+        $config_handler      = xoops_gethandler('config');
         $this->tadnewsConfig = &$config_handler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
 
         if ($this->tadnewsConfig['use_star_rating'] == '1') {
@@ -965,7 +965,7 @@ class tadnews
         }
 
         $sql                                 = "select nc_title,of_ncsn,not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
-        $result                              = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result                              = $xoopsDB->query($sql) or web_error($sql);
         list($nc_title, $of_ncsn, $not_news) = $xoopsDB->fetchRow($result);
 
         $opt_sub = (!empty($of_ncsn)) ? $this->get_cate_path($of_ncsn, true) : "";
@@ -999,7 +999,7 @@ class tadnews
     {
         global $xoopsDB;
         $sql    = "select ncsn,nc_title,of_ncsn,not_news from " . $xoopsDB->prefix("tad_news_cate") . "";
-        $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result = $xoopsDB->query($sql) or web_error($sql);
 
         $arr[] = "
     \"" . _TAD_TO_MOD . "\": {
@@ -1682,10 +1682,11 @@ class tadnews
 
     private function show_error($sql = "")
     {
+        global $xoopsDB;
         if (_TAD_NEWS_ERROR_LEVEL == 1) {
-            return mysql_error() . "<p>$sql</p>";
+            return $xoopsDB->error() . "<p>$sql</p>";
         } elseif (_TAD_NEWS_ERROR_LEVEL == 2) {
-            return mysql_error();
+            return $xoopsDB->error();
         } elseif (_TAD_NEWS_ERROR_LEVEL == 3) {
             return "sql error";
         }
@@ -1799,14 +1800,16 @@ class tadnews
                 $result                   = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
                 list($files_sn, $pic_css) = $xoopsDB->fetchRow($result);
             }
+        } else {
+            $files_sn = '';
+            $pic_css  = '';
         }
         $use_pic_css = empty($pic_css) ? "" : "true";
 
         //creat_cate_group
         $new_cate_input  = empty($cate_num) ? _TADNEWS_NAME : "";
         $creat_new_cate  = empty($cate_num) ? _TADNEWS_CREAT_FIRST_CATE : _TADNEWS_CREAT_NEWS_CATE;
-        $creat_cate_tool = ($this->chk_news_power(implode(",", $this->tadnewsConfig['creat_cate_group']), $User_Groups)) ?
-        "<input type='text' name='new_cate' id='new_cate_input' class='span12 form-control' value='$new_cate_input' placeholder='$creat_new_cate'>" : "";
+        $creat_cate_tool = ($this->chk_news_power(implode(",", $this->tadnewsConfig['creat_cate_group']), $User_Groups)) ? 1 : 0;
 
         $now         = time();
         $jquery_path = get_jquery(true);
@@ -1814,7 +1817,7 @@ class tadnews
         $css     = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
         //die($pic_css);
-        $cate_menu = empty($cate_num) ? "<div class='{$this->span}2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='span12 form-control'>$cate_select</select>";
+        $cate_menu = empty($cate_num) ? "<div class='{$this->span}2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = "";
         if ($mode == "return") {
@@ -1858,6 +1861,8 @@ class tadnews
             $form['pic_css_background_size']     = $css["background_size"];
             $form['pic']                         = $pic;
             $form['files_sn']                    = $files_sn;
+            $form['new_cate_input']              = $new_cate_input;
+            $form['creat_new_cate']              = $creat_new_cate;
 
             $this->TadUpFiles->set_col("nsn", $nsn);
             $upform         = $this->TadUpFiles->upform(true, 'upfile', null, true);
@@ -1912,6 +1917,8 @@ class tadnews
             $xoopsTpl->assign("pic_css_background_size", $css["background_size"]);
             $xoopsTpl->assign("pic", $pic);
             $xoopsTpl->assign("files_sn", $files_sn);
+            $xoopsTpl->assign("new_cate_input", $new_cate_input);
+            $xoopsTpl->assign("creat_new_cate", $creat_new_cate);
 
             $this->TadUpFiles->set_col("nsn", $nsn);
             $upform = $this->TadUpFiles->upform(true, 'upfile', null, true);
@@ -1934,7 +1941,7 @@ class tadnews
             $option .= "<option value='{$tag_sn}' $selected>{$tag}</option>";
         }
 
-        $select = "<select name='prefix_tag' class='span12 form-control'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
+        $select = "<select name='prefix_tag' class='form-control'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
         return $select;
     }
 
@@ -2005,10 +2012,12 @@ class tadnews
         } else {
             $cssArr = explode(';', $pic_css);
             foreach ($cssArr as $css_set) {
-                list($k, $v) = explode(':', $css_set);
-                $k           = trim($k);
-                $v           = trim($v);
-                $set[$k]     = $v;
+                if (!empty($css_set) and strpos($css_set, ':') !== false) {
+                    list($k, $v) = explode(':', $css_set);
+                    $k           = trim($k);
+                    $v           = trim($v);
+                    $set[$k]     = $v;
+                }
             }
             $css['width']  = is_null($set['width']) ? null : str_replace('px', '', $set['width']);
             $css['height'] = is_null($set['height']) ? null : str_replace('px', '', $set['height']);
@@ -2050,6 +2059,8 @@ class tadnews
         //新分類
         if (!empty($_POST['new_cate'])) {
             $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_cate']);
+        } elseif (!empty($_POST['new_page_cate'])) {
+            $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_page_cate'], 1);
         } else {
             $ncsn = intval($_POST['ncsn']);
         }
@@ -2111,6 +2122,7 @@ class tadnews
     private function creat_tad_news_cate($of_ncsn = "", $new_cate = "", $not_news = '0')
     {
         global $xoopsDB;
+        // die("{($of_ncsn}-{$new_cate}-{$not_news}");
         $enable_group = $enable_post_group = $setup = "";
         if (!empty($of_ncsn)) {
             $cate              = $this->get_tad_news_cate($of_ncsn);
@@ -2127,7 +2139,7 @@ class tadnews
         }
 
         $sql = "insert into " . $xoopsDB->prefix("tad_news_cate") . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$new_cate}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
-        //die($sql);
+        // die($sql);
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_DB_ADD_ERROR1);
         //取得最後新增資料的流水編號
         $ncsn = $xoopsDB->getInsertId();
@@ -2184,7 +2196,7 @@ class tadnews
         list($counter)  = $xoopsDB->fetchRow($result2);
         $data['count']  = $counter;
         $data['g_txt']  = $this->txt_to_group_name($data['enable_group'], _TADNEWS_ALL_OK);
-        $data['gp_txt'] = $this->txt_to_group_name($data['enable_post_group'], _MA_TADNEWS_ONLY_ROOT, " , ");
+        $data['gp_txt'] = $this->txt_to_group_name($data['enable_post_group'], _MD_TADNEWS_ONLY_ROOT, " , ");
         return $data;
     }
 
@@ -2216,6 +2228,8 @@ class tadnews
 
         if (!empty($_POST['new_cate'])) {
             $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_cate']);
+        } elseif (!empty($_POST['new_page_cate'])) {
+            $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_page_cate'], 1);
         } else {
             $ncsn = intval($_POST['ncsn']);
         }

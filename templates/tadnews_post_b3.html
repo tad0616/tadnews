@@ -19,26 +19,27 @@
       $("#add_page").show();
       $("#add_news").hide();
       $("#show_input_form").hide();
-      $("#page_ncsn").attr("enabled",true);
+      // $("#page_ncsn").attr("enabled",true);
       $("#page_ncsn").attr("disabled",false);
-      $("#page_title_input").attr("enabled",true);
+      // $("#page_title_input").attr("enabled",true);
       $("#page_title_input").attr("disabled",false);
       $("#news_ncsn").attr("disabled",true);
-      $("#news_ncsn").attr("enabled",false);
+      // $("#news_ncsn").attr("enabled",false);
       $("#news_title_input").attr("disabled",true);
-      $("#news_title_input").attr("enabled",false);
+      $("#new_page_cate_input").attr("disabled",false);
     <{else}>
       $("#add_page").hide();
       $("#add_news").show();
       $("#show_input_form").show();
-        $("#page_ncsn").attr("disabled",true);
-        $("#page_ncsn").attr("enabled",false);
-        $("#page_title_input").attr("disabled",true);
-        $("#page_title_input").attr("enabled",false);
-        $("#news_ncsn").attr("enabled",true);
-        $("#news_ncsn").attr("disabled",false);
-        $("#news_title_input").attr("enabled",true);
-        $("#news_title_input").attr("disabled",false);
+      $("#page_ncsn").attr("disabled",true);
+      // $("#page_ncsn").attr("enabled",false);
+      $("#page_title_input").attr("disabled",true);
+      // $("#page_title_input").attr("enabled",false);
+      // $("#news_ncsn").attr("enabled",true);
+      $("#news_ncsn").attr("disabled",false);
+      // $("#news_title_input").attr("enabled",true);
+      $("#news_title_input").attr("disabled",false);
+      $("#new_page_cate_input").attr("disabled",true);
     <{/if}>
 
     $("#kind").change(function() {
@@ -46,26 +47,28 @@
         $("#add_page").show();
         $("#add_news").hide();
         $("#show_input_form").hide();
-        $("#page_ncsn").attr("enabled",true);
+        // $("#page_ncsn").attr("enabled",true);
         $("#page_ncsn").attr("disabled",false);
-        $("#page_title_input").attr("enabled",true);
+        // $("#page_title_input").attr("enabled",true);
         $("#page_title_input").attr("disabled",false);
         $("#news_ncsn").attr("disabled",true);
-        $("#news_ncsn").attr("enabled",false);
+        // $("#news_ncsn").attr("enabled",false);
         $("#news_title_input").attr("disabled",true);
-        $("#news_title_input").attr("enabled",false);
+        // $("#news_title_input").attr("enabled",false);
+        $("#new_page_cate_input").attr("disabled",false);
       }else{
         $("#add_page").hide();
         $("#add_news").show();
         $("#show_input_form").show();
         $("#page_ncsn").attr("disabled",true);
-        $("#page_ncsn").attr("enabled",false);
+        // $("#page_ncsn").attr("enabled",false);
         $("#page_title_input").attr("disabled",true);
-        $("#page_title_input").attr("enabled",false);
-        $("#news_ncsn").attr("enabled",true);
+        // $("#page_title_input").attr("enabled",false);
+        // $("#news_ncsn").attr("enabled",true);
         $("#news_ncsn").attr("disabled",false);
-        $("#news_title_input").attr("enabled",true);
+        // $("#news_title_input").attr("enabled",true);
         $("#news_title_input").attr("disabled",false);
+        $("#new_page_cate_input").attr("disabled",true);
       }
     });
 
@@ -153,7 +156,7 @@
 
       <{if $creat_cate_tool}>
         <div class="col-md-3">
-          <{$creat_cate_tool}>
+          <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
         </div>
       <{/if}>
 
@@ -173,7 +176,7 @@
       </div>
       <{if $creat_cate_tool}>
         <div class="col-md-3">
-          <{$creat_cate_tool}>
+          <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
         </div>
       <{/if}>
       <div class="col-md-<{if $creat_cate_tool}>7<{else}>10<{/if}>">

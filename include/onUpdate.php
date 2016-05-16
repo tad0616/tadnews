@@ -48,6 +48,10 @@ function xoops_module_update_tadnews(&$module, $old_version)
         go_update19();
     }
 
+    if (chk_chk20()) {
+        go_update20();
+    }
+
     //調整檔案上傳欄位col_sn為mediumint(9)格式
     if (chk_files_center()) {
         go_update_files_center();
@@ -117,7 +121,7 @@ function go_update9()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_news") . " ADD `always_top_date` DATETIME NOT NULL";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, show_error($sql));
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, show_error($sql));
 }
 
 //建立搬移檔案新表格
@@ -155,13 +159,13 @@ function go_update10()
 
     //修改表格
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tadnews_files_center") . "`
-  CHANGE `fsn` `files_sn` SMALLINT( 5 ) UNSIGNED NOT NULL AUTO_INCREMENT,
-  CHANGE `nsn` `col_sn` SMALLINT( 5 ) UNSIGNED NOT NULL,
-  ADD `col_name` VARCHAR( 255 ) NOT NULL AFTER `files_sn` ,
-  ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
-  ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
-  ADD `description` TEXT NOT NULL AFTER `file_type`";
-    $xoopsDB->queryF($sql) or die($sql . "<br>" . mysql_error());
+      CHANGE `fsn` `files_sn` SMALLINT( 5 ) UNSIGNED NOT NULL AUTO_INCREMENT,
+      CHANGE `nsn` `col_sn` SMALLINT( 5 ) UNSIGNED NOT NULL,
+      ADD `col_name` VARCHAR( 255 ) NOT NULL AFTER `files_sn` ,
+      ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
+      ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
+      ADD `description` TEXT NOT NULL AFTER `file_type`";
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     //套入描述以及欄位名稱
     $sql = "update " . $xoopsDB->prefix("tadnews_files_center") . " set `col_name`='nsn', `description`=`file_name`";
@@ -169,7 +173,7 @@ function go_update10()
     $xoopsDB->queryF($sql);
 
     $sql    = "select files_sn,file_name,file_type,description,col_name,col_sn from " . $xoopsDB->prefix("tadnews_files_center") . "";
-    $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, show_error($sql));
+    $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, show_error($sql));
     while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
         $kind          = (substr($file_type, 0, 5) == "image") ? "img" : "file";
         $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . substr($description, -4);
@@ -393,11 +397,11 @@ function go_update18()
   ADD `original_filename` varchar(255) NOT NULL default '',
   ADD `hash_filename` varchar(255) NOT NULL default '',
   ADD `sub_dir` varchar(255) NOT NULL default ''";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
 
     $sql = "update " . $xoopsDB->prefix("tadnews_files_center") . " set
   `original_filename`=`description`";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
 }
 
 //新增 font_color 欄位
@@ -418,11 +422,32 @@ function go_update19()
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_news_tags") . "
   ADD `font_color` varchar(255) NOT NULL default '' after `tag`";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
 
     $sql = "update " . $xoopsDB->prefix("tad_news_tags") . " set
   `font_color`='#ffffff'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
+}
+
+//調大內容欄位為 longtext
+function chk_chk20()
+{
+    global $xoopsDB;
+    $sql    = "SHOW Fields FROM " . $xoopsDB->prefix("tad_news") . " where `Field`='news_content' and `Type`='text'";
+    $result = $xoopsDB->query($sql) or web_error($sql);
+    $all    = $xoopsDB->fetchRow($result);
+    if ($all === false) {
+        return false;
+    }
+    return true;
+}
+
+function go_update20()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_news") . " CHANGE `news_content` `news_content` longtext NOT NULL";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
+    return true;
 }
 
 //修正col_sn欄位
@@ -445,7 +470,7 @@ function go_update_files_center()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tadnews_files_center") . "` CHANGE `col_sn` `col_sn` mediumint(9) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     return true;
 }
 
@@ -469,11 +494,11 @@ function go_update_uid()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_news") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_news_sign") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tadnews_rank") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     return true;
 }
 

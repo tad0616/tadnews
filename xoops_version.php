@@ -1,17 +1,17 @@
 <?php
 //---基本設定---//
 $modversion = array();
-
+$language   = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
-$modversion['version']     = 3.63;
+$modversion['version']     = 3.7;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author']      = 'Tad (tad0616@gmail.com)';
 $modversion['credits']     = 'geek01';
 $modversion['help']        = 'page=help';
 $modversion['license']     = 'GNU GPL 2.0';
 $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
+$modversion['image']       = "images/logo_{$language}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
@@ -33,7 +33,7 @@ $modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
 //---資料表架構---//
-$modversion['sqlfile']['mysql'] = "sql/mysql.{$xoopsConfig['language']}.sql";
+$modversion['sqlfile']['mysql'] = "sql/mysql.{$language}.sql";
 $modversion['tables'][1]        = "tad_news";
 $modversion['tables'][2]        = "tad_news_cate";
 $modversion['tables'][3]        = "tadnews_files_center";
@@ -80,14 +80,8 @@ $modversion['onUninstall'] = "include/onUninstall.php";
 
 //---樣板設定---//
 $i                                          = 0;
-$modversion['templates'][$i]['file']        = 'tadnews_list.html';
-$modversion['templates'][$i]['description'] = 'tadnews_list.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_list_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_list_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_news.html';
-$modversion['templates'][$i]['description'] = 'tadnews_news.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_news_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_news_b3.html';
@@ -95,81 +89,41 @@ $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_rss.html';
 $modversion['templates'][$i]['description'] = 'tadnews_rss.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_post.html';
-$modversion['templates'][$i]['description'] = 'tadnews_post.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_post_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_post_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_archive.html';
-$modversion['templates'][$i]['description'] = 'tadnews_archive.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_archive_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_archive_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_page.html';
-$modversion['templates'][$i]['description'] = 'tadnews_page.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_page_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_page_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_index_summary.html';
-$modversion['templates'][$i]['description'] = 'tadnews_index_summary.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_index_summary_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_index_summary_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_index_cate.html';
-$modversion['templates'][$i]['description'] = 'tadnews_index_cate.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_index_cate_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_index_cate_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_newspaper.html';
-$modversion['templates'][$i]['description'] = 'tadnews_newspaper.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_newspaper_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_newspaper_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_page_list.html';
-$modversion['templates'][$i]['description'] = 'tadnews_page_list.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_page_list_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_page_list_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_sign.html';
-$modversion['templates'][$i]['description'] = 'tadnews_sign.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_sign_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_sign_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_my_news.html';
-$modversion['templates'][$i]['description'] = 'tadnews_my_news.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_my_news_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_my_news_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_adm_main.html';
-$modversion['templates'][$i]['description'] = 'tadnews_adm_main.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_adm_main_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_adm_main_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_adm_page.html';
-$modversion['templates'][$i]['description'] = 'tadnews_adm_page.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_adm_page_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_adm_page_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tadnews_adm_newspaper.html';
-$modversion['templates'][$i]['description'] = 'tadnews_adm_newspaper.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tadnews_adm_newspaper_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_adm_newspaper_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_adm_tag.html';
-$modversion['templates'][$i]['description'] = 'tadnews_adm_tag.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_adm_tag_b3.html';
 $modversion['templates'][$i]['description'] = 'tadnews_adm_tag_b3.html';

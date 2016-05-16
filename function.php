@@ -23,7 +23,7 @@ function get_tadnews_cate_path($the_ncsn = "", $include_self = true)
             LEFT JOIN `{$tbl}` t7 ON t7.of_ncsn = t6.ncsn
             WHERE t1.of_ncsn = '0'";
 
-        $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result = $xoopsDB->query($sql) or web_error($sql);
         while ($all = $xoopsDB->fetchArray($result)) {
             if (in_array($the_ncsn, $all)) {
                 foreach ($all as $ncsn) {
@@ -50,7 +50,7 @@ function get_tadnews_sub_cate($ncsn = "0")
 {
     global $xoopsDB;
     $sql      = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
-    $result   = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error() . "<br>$sql");
+    $result   = $xoopsDB->query($sql) or web_error($sql);
     $ncsn_arr = "";
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;

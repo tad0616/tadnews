@@ -103,3 +103,4 @@ define('_MD_TADNEWS_COUNTER', 'Count');
 define('_MD_TADNEWS_KIND_NEWS', 'News');
 define('_MD_TADNEWS_KIND_PAGE', 'Page');
 define('_MD_TADNEWS_KIND', 'Article kind:');
+define('_MD_TADNEWS_ONLY_ROOT', 'Administrator');

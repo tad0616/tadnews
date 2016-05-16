@@ -11,7 +11,7 @@ function list_tad_news_tags($def_tag_sn = "")
     global $xoopsDB, $xoopsTpl, $tadnews;
 
     $sql              = "select * from " . $xoopsDB->prefix("tad_news_tags") . "";
-    $result           = $xoopsDB->query($sql) or redirect_header("index.php", 3, mysql_error());
+    $result           = $xoopsDB->query($sql) or web_error($sql);
     $i                = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
@@ -81,7 +81,7 @@ function tags_used_amount()
     global $xoopsDB, $xoopsTpl;
 
     $sql    = "select prefix_tag,count(prefix_tag) from " . $xoopsDB->prefix("tad_news") . " group by prefix_tag ";
-    $result = $xoopsDB->query($sql) or redirect_header("index.php", 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $main   = "";
     while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;

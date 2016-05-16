@@ -21,7 +21,7 @@ CREATE TABLE `tad_news` (
   `nsn` smallint(5) unsigned NOT NULL auto_increment,
   `ncsn` smallint(5) unsigned NOT NULL default 0,
   `news_title` varchar(255) NOT NULL default '',
-  `news_content` text NOT NULL,
+  `news_content` longtext NOT NULL,
   `start_day` datetime NOT NULL default '0000-00-00 00:00:00',
   `end_day` datetime default NULL default '0000-00-00 00:00:00',
   `enable` enum('1','0') NOT NULL default '1',

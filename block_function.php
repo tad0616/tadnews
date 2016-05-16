@@ -77,10 +77,11 @@ if (!function_exists("get_all_news_cate")) {
 if (!function_exists("show_error")) {
     function show_error($sql = "")
     {
+        global $xoopsDB;
         if (_TAD_NEWS_ERROR_LEVEL == 1) {
-            return mysql_error() . "<p>$sql</p>";
+            return $xoopsDB->error() . "<p>$sql</p>";
         } elseif (_TAD_NEWS_ERROR_LEVEL == 2) {
-            return mysql_error();
+            return $xoopsDB->error();
         } elseif (_TAD_NEWS_ERROR_LEVEL == 3) {
             return "sql error";
         }

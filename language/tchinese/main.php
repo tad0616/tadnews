@@ -98,3 +98,4 @@ define('_MD_TADNEWS_COUNTER', '人氣');
 define('_MD_TADNEWS_KIND_NEWS', '新聞文章');
 define('_MD_TADNEWS_KIND_PAGE', '自訂頁面');
 define('_MD_TADNEWS_KIND', '發布文章種類：');
+define('_MD_TADNEWS_ONLY_ROOT', '僅管理員');

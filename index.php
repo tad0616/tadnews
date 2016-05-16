@@ -129,7 +129,7 @@ function list_sign($nsn = "")
     $sql    = "select uid,sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where nsn='$nsn' order by sign_time";
     $sign   = "";
     $i      = 0;
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
         $uid_name              = XoopsUser::getUnameFromId($uid, 1);
         $uid_name              = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -157,7 +157,7 @@ function list_user_sign($uid = "")
     $sql    = "select a.nsn,a.sign_time,b.news_title from " . $xoopsDB->prefix("tad_news_sign") . " as a left join " . $xoopsDB->prefix("tad_news") . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
     $sign   = "";
     $i      = 0;
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $myts = MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
