@@ -1,4 +1,16 @@
 ==================================================
+TadNews 3.7official version amended project (2016-05-16 release)
+==================================================
+1. Fixed management interface editor does not work properly
+2. The cover art was added to the newsletter
+3. Modify the news block
+4. Support PHP7
+5. The content was adjusted to longtext format
+6. Repair classification can not be established
+7. Remove the BootStrap2 template
+
+
+==================================================
 TadNews 3.63 official version amended project (2015-07-15 release)
 ==================================================
 1. Close all the blocks rating tool.
