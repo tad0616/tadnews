@@ -4,10 +4,6 @@ include_once "header.php";
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
 
-$row          = ($_SESSION['bootstrap'] == '3') ? 'row' : 'row-fluid';
-$span         = ($_SESSION['bootstrap'] == '3') ? 'col-md-' : 'span';
-$controls_row = ($_SESSION['bootstrap'] == '3') ? 'form-group' : 'control-group';
-
 $num            = !empty($_POST['num']) ? intval($_POST['num']) : 10;
 $summary_length = intval($_POST['summary_length']);
 $summary_css    = $_POST['summary_css'];
@@ -108,7 +104,7 @@ $b_button = ($b < 0) ? "" : "<button onClick='tadnew_list_content{$_POST['randSt
 $n_button = ($total < $num) ? "" : "<button onClick='tadnew_list_content{$_POST['randStr']}({$n})' onfocus='tadnew_list_content{$_POST['randStr']}({$n})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
 
 $m_button = ($total < $num) ? "" : "<a href='" . XOOPS_URL . "/modules/tadnews/' class='btn btn-default'>more</a>";
-$button   = ($show_button) ? "<div class='$row'><div class='{$span}4 text-left'>{$b_button}</div><div class='{$span}4 text-center'>{$m_button}</div><div class='{$span}4 text-right'>{$n_button}</div></div>" : "";
+$button   = ($show_button) ? "<div class='row'><div class='col-md-4 text-left'>{$b_button}</div><div class='col-md-4 text-center'>{$m_button}</div><div class='col-md-4 text-right'>{$n_button}</div></div>" : "";
 
 $block .= "
 {$button}";

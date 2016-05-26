@@ -1,5 +1,9 @@
+TadNews 3.7.1 (2016-05-26 release)
 ==================================================
-TadNews 3.7official version amended project (2016-05-16 release)
+1.Remove BootStrap2 code
+
+
+TadNews 3.7 (2016-05-16 release)
 ==================================================
 1. Fixed management interface editor does not work properly
 2. The cover art was added to the newsletter
@@ -10,8 +14,7 @@ TadNews 3.7official version amended project (2016-05-16 release)
 7. Remove the BootStrap2 template
 
 
-==================================================
-TadNews 3.63 official version amended project (2015-07-15 release)
+TadNews 3.63  (2015-07-15 release)
 ==================================================
 1. Close all the blocks rating tool.
 2. Fixed list news blocks are not displayed correctly category article questions.
@@ -21,8 +24,7 @@ TadNews 3.63 official version amended project (2015-07-15 release)
 6. Fixed page can not appear the rating tool issue.
 
 
-==================================================
-TadNews 3.62 official version amended project (2015-07-03 release)
+TadNews 3.62  (2015-07-03 release)
 ==================================================
  1.Fixed list news block
  2.Fixed today icon can not be displayed
@@ -31,16 +33,14 @@ TadNews 3.62 official version amended project (2015-07-03 release)
 
 
 
-==================================================
-TadNews 3.61 official version amended project (2015-06-25 release)
+TadNews 3.61  (2015-06-25 release)
 ==================================================
  1.Fixed index page dispaly mode can not be setup.
  2.Fixed some block.
  3.Adjust news title line height.
 
 
-==================================================
-TadNews 3.6 official version amended project (2015-06-16 release)
+TadNews 3.6  (2015-06-16 release)
 ==================================================
  1.Added text size setting for the tree menu
  2.Fixed the cover image can not be deleted
@@ -53,16 +53,15 @@ TadNews 3.6 official version amended project (2015-06-16 release)
  9.Adjust user interface
  10.Bootstrap3 Support
 
-==================================================
-TadNews 3.51 official version amended project (2014-09-25 release)
+
+TadNews 3.51  (2014-09-25 release)
 ==================================================
  1. plus xoops_pagetitle of meta information, strengthen SEO
  2. Fix the top and bottom will be a custom page news article questions
  3. Amendments to conform to WCAG
 
 
-==================================================
-TadNews 3.5 official version of the amended project (2014-08-16 release)
+TadNews 3.5 (2014-08-16 release)
 ==================================================
  1. Fixed custom page blocks if no data blocks do not show off air
  2. Fixed custom page blocks if you do not specify a directory, automatically find a custom page catalog to render
@@ -73,8 +72,7 @@ TadNews 3.5 official version of the amended project (2014-08-16 release)
  7. Click announcement will not list the amendments announced by the news of the bug
 
 
-==================================================
-TadNews 3.4 official version of the amended project (2014-05-20 release)
+TadNews 3.4 (2014-05-20 release)
 ==================================================
  1. adjusted when the article encrypted when rendering mode will be different according to display different password input box.
  2. Enter the article code correction, block encryption articles are inconsistent formatting issues and other articles.
@@ -82,8 +80,7 @@ TadNews 3.4 official version of the amended project (2014-05-20 release)
  The column-type news block was added a few pages, the next few pages feature
 
 
-==================================================
-TadNews 3.3 official version amended project (2014-05-02 release)
+TadNews 3.3  (2014-05-02 release)
 ==================================================
  1. Compact randStr () function, direct access tadtools in randStr ()
  2. Fix "automatic scaling sliding news" block can not be displayed correctly bug check classification contents
@@ -100,16 +97,14 @@ TadNews 3.3 official version amended project (2014-05-02 release)
 13. New Marquee block
 
 
-==================================================
-TadNews 3.2 official version amended project (2014-02-12 release)
+TadNews 3.2  (2014-02-12 release)
 ==================================================
  1. Fixed custom page on the bottom of the page incorrectly bug button link
  2. Amendments of column-style news block model
  3. Fix tabular blocks in IE8 or IE9 can not render the problem
 
 
-==================================================
-TadNews 3.1 official version of the amended project (2014-01-20 release)
+TadNews 3.1 (2014-01-20 release)
 ==================================================
  1. A lot of streamlining language, remove the unused languages.
  2. The amendment will lead to a variety of PHP bug notification message appears
@@ -119,8 +114,7 @@ TadNews 3.1 official version of the amended project (2014-01-20 release)
  6. streamlining common functions (need tadtools 2.06 above)
 
 
-==================================================
-TadNews 3.0 official version amended project (2013-10-16 release)
+TadNews 3.0  (2013-10-16 release)
 ==================================================
  1. The cover picture improved mechanism
  2. Custom correction page
@@ -129,17 +123,18 @@ TadNews 3.0 official version amended project (2013-10-16 release)
  5. The name of the attached file upload and download documents in support
  6. Modify a lot of details
 
-==================================================
-TadNews 3.0 RC5 version amended project (2013-05-27 release)
+
+TadNews 3.0 RC5 (2013-05-27 release)
 ==================================================
  1. Fix elrte not use elFinder of BUG in Linux
  BUG 2. Fixed tabular information block can not be used
  3. Fix pda page does not display a lack of news content and illustrated bug
  4. Remove the label function increase
- Still show the label bug fixes label 5. Close
+ Still show the label label 5. Close
  6. Apply Text Filter, strengthen its security
 
-TadNews version 3.0 RC4 amend item (2013-05-24 release)
+
+TadNews  3.0 RC4 (2013-05-24 release)
 ==================================================
  1. Amend classification can not be pulled back sort of bug
  2. Fix the front desk custom page list incorrect classification link bug
@@ -151,7 +146,8 @@ TadNews version 3.0 RC4 amend item (2013-05-24 release)
  The full text or a summary setting Item 8. Focus news block new display
  9. Newsletter new title features the current newsletter
 
-TadNews version 3.0 RC3 amend item (2013-05-10 release)
+
+TadNews  3.0 RC3 (2013-05-10 release)
 ==================================================
  1. Add a label displaying the news function.
  2. Fix the optional news block will not find the object tadnews bug.
@@ -159,7 +155,8 @@ TadNews version 3.0 RC3 amend item (2013-05-10 release)
  4. The amendment will lead to no article or classification Block unusual bug
  5. fixed sliding block can not remember checking the classification of bug
 
-TadNews 3.0 RC2 version amended project (2013-05-09 release)
+
+TadNews 3.0 RC2 (2013-05-09 release)
 ==================================================
  1. Fixed unable to add a second theme of the newsletter bug
  2. Amendments to Articles of bug password function failure
@@ -170,7 +167,8 @@ TadNews 3.0 RC2 version amended project (2013-05-09 release)
  7. Modify classification interchanged, if it is the top-level classification will disappear bug.
  8. Modify the classification was changed from news custom, the block check if this classification, the same will appear and become "no classification" problem.
 
-TadNews 3.0 RC1 version amended project (2013-05-08 release)
+
+TadNews 3.0 RC1 (2013-05-08 release)
 ==================================================
  1. The entire template meticulous Press area (currently only done abstract rendering mode) to facilitate modify the screen layout typesetting
  2. Fixed problem when news block copy table will be a block unusable.
@@ -189,7 +187,8 @@ TadNews 3.0 RC1 version amended project (2013-05-08 release)
 15. Optional page block instead visualization tool selected articles
 16. The removal of a large number of unused files and function
 
-TadNews 2.3 official version of the amended project (2012-12-17 release)
+
+TadNews 2.3 (2012-12-17 release)
 ==================================================
  1. Fixed background electronic management page faults bug
  2. Add Rating Tool
@@ -198,7 +197,8 @@ TadNews 2.3 official version of the amended project (2012-12-17 release)
  5. high brightness grammatical correction in the block as well as news modules home without acting bug
  6. Fixed block no permission to read the article, but you can download the attached file bug
 
-TadNews 2.2 official version of the amended project (2012-12-05 release)
+
+TadNews 2.2 (2012-12-05 release)
 ==================================================
  1. Amend Draft article foreground can not find a problem.
  2. Amendments to the news when the module Home News will not render correctly classified the bug
@@ -208,7 +208,8 @@ TadNews 2.2 official version of the amended project (2012-12-05 release)
  6. New Responsive (responsive slider) News sliding block
  7. "prefix" setting to "tag", and add the fish back label management tool
 
-TadNews 2.1 official version amended project (release 2012-11-01)
+
+TadNews 2.1  (release 2012-11-01)
 ==================================================
  1. Amend the introduction of a sliding block graphic jquery problem.
  2. issued in certain categories, article categories will automatically select the category.
@@ -219,15 +220,18 @@ TadNews 2.1 official version amended project (release 2012-11-01)
  7. Add facebook message box switch
  8. Modify publish articles when editing interface, increasing its friendliness.
 
-TadNews 2.0.2 official version of the amended project (2012-07-06 release)
+
+TadNews 2.0.2 (2012-07-06 release)
 ==================================================
  1. Add the slide graphic blocks.
 
-TadNews 2.0.1 official version of the amended project (release 2011-12-31)
+
+TadNews 2.0.1 (release 2011-12-31)
 ==================================================
  1. updated version of the book ... a lot, but .... I forgot ....
 
-TadNews 2.0 official version amended project (2011-12-07 release)
+
+TadNews 2.0  (2011-12-07 release)
 ==================================================
  1. Modify the newsletter e-mail newsletter record after the presentation screen.
  2. The new record function to send newsletters to watch.
@@ -239,7 +243,8 @@ TadNews 2.0 official version amended project (2011-12-07 release)
  8. Article representative diagram can not be replaced solve problems
  9. part of the forum trimming
 
-TadNews 2.0 RC11) Correction Program (2011-11-23 release)
+TadNe
+ws 2.0 RC11) (2011-11-23 release)
 ==================================================
  1. Modify the latest news block, so that it can laterally arranged and joined the initial text, images CSS control settings.
  2. Add "Articles cover map" function.
@@ -259,13 +264,15 @@ TadNews 2.0 RC11) Correction Program (2011-11-23 release)
 16. Join QR Code blocks will only appear in a single page news. Filming handheld device will automatically connect to the handheld device used to watch the page.
 17. High brightness join syntax support.
 
-TadNews version 2.0 RC9 amended project (release 2011-03-27)
+
+TadNews  2.0 RC9 (release 2011-03-27)
 ==================================================
  1. Add FaceBook Message interface
  2. Add e-newsletter subscription mail Email inspection
  3. Change the way to send newsletters
 
-TadNews version 2.0 RC8 amended project (release 2010-11-25)
+
+TadNews  2.0 RC8 (release 2010-11-25)
 ==================================================
  Problem 1. correction table jquery conflict of news blocks and other blocks
  2. Fixed the background menu introducing French
@@ -273,7 +280,8 @@ TadNews version 2.0 RC8 amended project (release 2010-11-25)
  4. Add Category news summary function, including the front and blocks
  5. fixed 'latest response "block
 
-TadNews 2.0 RC5 version amended project (release 2010-11-01)
+
+TadNews 2.0 RC5 (release 2010-11-01)
 ==================================================
  1. Fixed tree blocks repeat the installation standard bright unusual bug
  2. Modify the newsletter watching the screen, changed to open another full-page view
@@ -286,12 +294,14 @@ TadNews 2.0 RC5 version amended project (release 2010-11-01)
  9. New tabular block target
 10. The amendment "after the need to sign before they can download the attached file" if the election is a non-news sign attached gear can not download bug
 
-TadNews 2.0 RC4 amended project (release 2010-10-14)
+
+TadNews 2.0 RC4 (release 2010-10-14)
 ==================================================
  1. Amend classification number back link inaccuracies bug
  2. Amendments to the initial use of the newsletter was unable to add the bug
 
-TadNews 2.0 RC3 amended project (release 2010-10-11)
+
+TadNews 2.0 RC3 (release 2010-10-11)
 ==================================================
  1. Add "KCFinder File Manager" (need to open the preferences, XOOPS 2.4 and above only support PHP5), ultra-convenient FCK editor, file management tools.
  2. New "Upon receipt attached file available for download beginning" Preferences
@@ -304,7 +314,8 @@ TadNews 2.0 RC3 amended project (release 2010-10-11)
  9. Clear the .svn directory
 10. Fixed part of the language gaps
 
-TadNews 2.0 RC2 amend item (2010-10-05 release)
+
+TadNews 2.0 RC2 (2010-10-05 release)
 ==================================================
  1. Fixed Tweets button link wrong question.
  2. Add the newsletter Email management functions, a large number of imported Email, edit or delete Email
@@ -322,7 +333,8 @@ TadNews 2.0 RC2 amend item (2010-10-05 release)
 14. Use the new calendar suite.
 15. Fixed a lot of small places.
 
-TadNews 1.4 Correction Program (2010/09/10 release)
+
+TadNews 1.4 (2010/09/10 release)
 ==================================================
  1. Fixed FCK editor 2.6.4
  2. Amendments to the draft go away
@@ -337,7 +349,7 @@ TadNews 1.4 Correction Program (2010/09/10 release)
 11. Categories News block cancel a picture or baseline
 12. The added functionality Tweets
 
-TadNews 1.3 Bug Fixes
+TadNews 1.3
 ==================================================
  1. Fixed news release time (time zone) issues.
  2. Amendments to classification of news does not show off the question.
@@ -352,7 +364,8 @@ TadNews 1.3 Bug Fixes
 11. The English language is added
 12. Fixed monthly news irregularities
 
-TadNews 1.2.10 Bug Fixes (2008-10-06 release)
+
+TadNews 1.2.10 (2008-10-06 release)
 ==================================================
  1. Fixed pagination problem occurs customized news page.
  2. Fixed issue only a root classification
@@ -361,7 +374,8 @@ TadNews 1.2.10 Bug Fixes (2008-10-06 release)
  5. New Focus news blocks.
  6. Support XOOPS exm sets 2.3
 
-TadNews 1.2.9 Bug Fixes (2008-07-16 release)
+
+TadNews 1.2.9 (2008-07-16 release)
 ==================================================
  1. Fixed search problem (careless and confused tadgallery search).
  2. The "Classified" and "Custom page classified" presented separately, so as not to confuse.
@@ -370,7 +384,8 @@ TadNews 1.2.9 Bug Fixes (2008-07-16 release)
  5. Fixed subscribe RSS, an error message will appear.
  6. Add the browser title will show headlines functions.
 
-TadNews 1.2.8 Bug Fixes (2008-06-25)
+
+TadNews 1.2.8 (2008-06-25)
 ==================================================
  1. Fixed general users can not modify the file in question.
  2. Fix the classification set bug, avoid classification disappears.
@@ -380,7 +395,8 @@ TadNews 1.2.8 Bug Fixes (2008-06-25)
  6. New "Custom page classification" function, that is not included in the classification of the article in the news, but self-contained independent blocks, such as the right of the site's "About Us" blocks.
  7. "Custom page" to support multi-block catalog. And can set its own presentation look.
 
-TadNews 1.2.7 Bug Fixes (2008-05-26 release)
+
+TadNews 1.2.7 (2008-05-26 release)
 ==================================================
  1. Fixed Chinese attached file in IE can not download the issue.
  2. Fix the "Subject prefix 'cause you can not publish news of problems.
@@ -389,7 +405,8 @@ TadNews 1.2.7 Bug Fixes (2008-05-26 release)
  5. fixed date news newsletter publication date can not catch the real problem.
  6. Fixed 1.2.6 update, because the field does not lead to escalation of the problem page can not be displayed properly.
 
-TadNews 1.2.6 Correction Program (2008/05/15 release)
+
+TadNews 1.2.6 (2008/05/15 release)
 ==================================================
  1. The new top features.
  2. Add the Subject prefix function.
@@ -409,7 +426,8 @@ TadNews 1.2.6 Correction Program (2008/05/15 release)
 16. solve the main frame on Windows, but can not use FCK Editor to upload pictures of problems.
 17. Fixed "site updates" page on the switch will run one more question.
 
-TadNews 1.2.5 (2008/03/24) Bug Fixes
+
+TadNews 1.2.5 (2008/03/24)
 ==================================================
  1. Added setting function newsletters
  2. Fixed issue only a month when the monthly news will not be executed properly.
@@ -426,7 +444,8 @@ Download the document in question 11. amended name, FireFox and IE can not downl
 13. Fixed "http: // URL / ~ Account" website can not upload attached file problem.
 14. Fixed modify news content, the authors question becomes modified by name.
 
-TadNews 1.2.4 (2008/03/14) Bug Fixes
+
+TadNews 1.2.4 (2008/03/14)
 ==================================================
  1. Fixed subscriptions blocks unsubscribe is not working properly.
  2. Subscription will check Emial is legitimate.
@@ -440,17 +459,20 @@ TadNews 1.2.4 (2008/03/14) Bug Fixes
 10. Fixed management interface group name is displayed as a digital problem.
 11. Strengthening delete and update permissions control, in addition to the administrator with their published articles, can not move into someone else's article.
 
-TadNews 1.2.3 (2008/03/03) Bug Fixes
+
+TadNews 1.2.3 (2008/03/03)
 ==================================================
  Database is not removed question 1. Amend Anti clean installation.
  2. Fix the mail, change and XOOPS consistent, in other words, as long as XOOPS can send a letter, you can send news newsletter!
  3. rearrange CSS, management interface landscaping.
 
-TadNews 1.2.2 (2008/02/22) Bug Fixes
+
+TadNews 1.2.2 (2008/02/22)
 ==================================================
  1. Fixed interface problem newsletter
 
-TadNews 1.2.1 (2008/02/21) Bug Fixes
+
+TadNews 1.2.1 (2008/02/21)
 ==================================================
  1. Topic RSS feed added Block link
  2. Fixed the problem is not normal calendar
@@ -458,20 +480,23 @@ TadNews 1.2.1 (2008/02/21) Bug Fixes
  4. Fixed Location Toolbar
  5. Fixed file download problem can not find the field of counter
 
-TadNews 1.2 (2008/02/20) Bug Fixes
+
+TadNews 1.2 (2008/02/20)
 ==================================================
  1. Provide RSS feeds
  2. Add e-newsletter subscription and transmission functions
  3. Modify the latest news block to select the display type form will be a mess of bug
 
-TadNews 1.1 (2008/02/12) Bug Fixes
+
+TadNews 1.1 (2008/02/12)
 ==================================================
  1. Add the attached file upload feature
  2. Add the data transfer function (with comments will transfer)
  3. Amendments to the direct support of Big5 and UTF-8 bilingual system (that is, you do not have to modify tchinese own directory, the module will judge for themselves.)
  The dozens of small local correction
 
- TadNews 1.0 (2007/12/11) Bug Fixes
+
+ TadNews 1.0 (2007/12/11)
 ==================================================
  1. Fixed block language problem
  2. Fixed calendar lack graph problems

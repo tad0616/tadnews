@@ -22,10 +22,7 @@ function tadnews_cate_news($options)
         return;
     }
 
-    $block['show_line']         = ($options[3] == '1') ? "table" : "";
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = ($_SESSION['bootstrap'] == '3') ? 'row' : 'row-fluid';
-    $block['span']              = ($_SESSION['bootstrap'] == '3') ? 'col-md-' : 'span';
+    $block['show_line'] = ($options[3] == '1') ? "table" : "";
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     return $block;
 }

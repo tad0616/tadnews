@@ -1,14 +1,14 @@
 <{if $block.option==""}>
   <{$smarty.const._MB_TADNEWS_NO_NEWSPAPER}>
 <{else}>
-  <div class="<{$block.row}>">
+  <div class="row">
     <form action="<{$xoops_url}>/modules/tadnews/email.php" method="post">
       <{$block.counter}>
 
-      <div class="<{$block.row}>">
-        <label class="<{$block.span}>4"><{$smarty.const._MB_TADNEWS_TITLE}></label>
-        <div class="<{$block.span}>8">
-          <select name="nps_sn" class="<{$block.span}>12" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
+      <div class="row">
+        <label class="col-md-4"><{$smarty.const._MB_TADNEWS_TITLE}></label>
+        <div class="col-md-8">
+          <select name="nps_sn" class="form-control" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
             <{foreach item=opt from=$block.option}>
             <option value="<{$opt.value}>"><{$opt.text}></option>
             <{/foreach}>
@@ -17,20 +17,20 @@
       </div>
 
 
-      <div class="<{$block.row}>">
-        <label class="<{$block.span}>4"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
-        <div class="<{$block.span}>8">
-          <input type="text" name="newspaper_email" id="newspaper_email" placeholder="<{$smarty.const._MB_TADNEWS_EMAIL}>" value="<{$block.email}>" class="<{$block.span}>12">
+      <div class="row">
+        <label class="col-md-4"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
+        <div class="col-md-8">
+          <input type="text" name="newspaper_email" id="newspaper_email" placeholder="<{$smarty.const._MB_TADNEWS_EMAIL}>" value="<{$block.email}>" class="form-control">
         </div>
       </div>
 
 
-      <div class="<{$block.row}>">
-        <div class="<{$block.span}>8">
-          <label class="radio<{$block.inline}>"><input type="radio" name="mode" value="add" checked><{$smarty.const._MB_TADNEWS_ORDER}></label>
-          <label class="radio<{$block.inline}>"><input type="radio" name="mode" value="del"><{$smarty.const._MB_TADNEWS_CANCEL}></label>
+      <div class="row">
+        <div class="col-md-8">
+          <label class="radio-inline"><input type="radio" name="mode" value="add" checked><{$smarty.const._MB_TADNEWS_ORDER}></label>
+          <label class="radio-inline"><input type="radio" name="mode" value="del"><{$smarty.const._MB_TADNEWS_CANCEL}></label>
         </div>
-        <div class="<{$block.span}>4">
+        <div class="col-md-4">
           <button type="submit" class="btn btn-info"><{$smarty.const._MB_TADNEWS_SUBMIT}></button>
         </div>
       </div>

@@ -20,9 +20,6 @@ function tadnews_focus_news($options)
     $tadnews->set_use_star_rating(false);
     $block = $tadnews->get_news('return');
 
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = ($_SESSION['bootstrap'] == '3') ? 'row' : 'row-fluid';
-    $block['span']              = ($_SESSION['bootstrap'] == '3') ? 'col-md-' : 'span';
     return $block;
 }
 

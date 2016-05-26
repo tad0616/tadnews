@@ -34,14 +34,11 @@ function tadnews_covered($options)
     $tadnews->set_use_star_rating(false);
     $news = $tadnews->get_news('return');
 
-    $block                      = $news;
-    $block['num']               = 12 / $options[0];
-    $block['cols']              = $options[0];
-    $block['count']             = sizeof($news['page']);
-    $block['summary_css']       = $summary_css;
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-sm-' : 'span';
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
+    $block                = $news;
+    $block['num']         = 12 / $options[0];
+    $block['cols']        = $options[0];
+    $block['count']       = sizeof($news['page']);
+    $block['summary_css'] = $summary_css;
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     return $block;

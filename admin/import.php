@@ -6,13 +6,13 @@ include_once "admin_function.php";
 
 /*-----------function區--------------*/
 
-$module_handler = &xoops_gethandler('module');
+$module_handler = xoops_gethandler('module');
 $news           = &$module_handler->getByDirname('news');
 if (!empty($news)) {
     $mid     = $news->getVar("mid");
     $version = $news->getVar("version");
 
-    $module_handler2 = &xoops_gethandler('module');
+    $module_handler2 = xoops_gethandler('module');
     $tadnews         = &$module_handler->getByDirname('tadnews');
     $tadnews_mid     = $tadnews->getVar("mid");
 }

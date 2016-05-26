@@ -1,73 +1,32 @@
-<{if $block.bootstrap_version=='3'}>
-  <!-- for bootstrap3-->
-  <!--TadNews Start-->
-  <{foreach item=all_news from=$block.all_news}>
-    <{if $all_news.news}>
-      <div class="row">
-        <{if $all_news.show_pic}>
-          <div class="col-md-2">
-            <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
-              <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" class="thumbnail">
-            </a>
-          </div>
-          <div class="col-md-10">
-        <{else}>
-          <div class="col-md-12">
-        <{/if}>
-        <h4><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
-        <ul>
-        <{foreach from=$all_news.news item=news}>
-          <li>
-            <{$news.post_date}>
-            <{$news.always_top_pic}>
-            <{$news.prefix_tag}>
-            <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}>
-            </a>
-            <{if $news.content}>
-              <{$news.content}>
-            <{/if}>
-          </li>
-        <{/foreach}>
-        </ul>
+<{foreach item=all_news from=$block.all_news}>
+  <{if $all_news.news}>
+    <div class="row">
+      <{if $all_news.show_pic}>
+        <div class="col-md-2">
+          <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
+            <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" class="thumbnail">
+          </a>
         </div>
+        <div class="col-md-10">
+      <{else}>
+        <div class="col-md-12">
+      <{/if}>
+      <h4><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
+      <ul>
+      <{foreach from=$all_news.news item=news}>
+        <li>
+          <{$news.post_date}>
+          <{$news.always_top_pic}>
+          <{$news.prefix_tag}>
+          <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}>
+          </a>
+          <{if $news.content}>
+            <{$news.content}>
+          <{/if}>
+        </li>
+      <{/foreach}>
+      </ul>
       </div>
-    <{/if}>
-  <{/foreach}>
-  <!--TadNews End-->
-<{else}>
-  <!-- for bootstrap2-->
-  <!--TadNews Start-->
-  <{foreach item=all_news from=$block.all_news}>
-    <{if $all_news.news}>
-      <div class="row-fluid">
-        <{if $all_news.show_pic}>
-          <div class="span2">
-            <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
-              <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" class="thumbnail">
-            </a>
-          </div>
-          <div class="span10">
-        <{else}>
-          <div class="span12">
-        <{/if}>
-        <h4><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
-        <ul>
-        <{foreach from=$all_news.news item=news}>
-          <li>
-            <{$news.post_date}>
-            <{$news.always_top_pic}>
-            <{$news.prefix_tag}>
-            <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}>
-            </a>
-            <{if $news.content}>
-              <{$news.content}>
-            <{/if}>
-          </li>
-        <{/foreach}>
-        </ul>
-        </div>
-      </div>
-    <{/if}>
-  <{/foreach}>
-  <!--TadNews End-->
-<{/if}>
+    </div>
+  <{/if}>
+<{/foreach}>

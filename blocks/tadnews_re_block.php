@@ -4,7 +4,7 @@ function tadnews_b_show_3($options)
 {
     global $xoopsDB;
     include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
-    $modhandler  = &xoops_gethandler('module');
+    $modhandler  = xoops_gethandler('module');
     $xoopsModule = &$modhandler->getByDirname("tadnews");
     $com_modid   = $xoopsModule->getVar('mid');
     $sql         = "select com_id,com_text,com_itemid,com_uid from " . $xoopsDB->prefix("xoopscomments") . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";

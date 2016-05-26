@@ -25,9 +25,6 @@ function tadnews_content_block_show($options)
         return;
     }
 
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     return $block;
 }

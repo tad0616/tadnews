@@ -338,13 +338,11 @@ function sendmail_form($npsn = "")
 
     $i = 1;
 
-    $mini = $_SESSION['bootstrap'] == '3' ? 'xs' : 'mini';
-
     foreach ($emailArr as $email) {
 
         $checked = empty($mailData[$email]) ? "checked" : "";
 
-        $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn btn-{$mini} btn-danger'>" . _TADNEWS_DEL . "</a>" : $mailData[$email];
+        $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn btn-xs btn-danger'>" . _TADNEWS_DEL . "</a>" : $mailData[$email];
 
         $logdata[$i]['checkbox'] = "<input type='checkbox' name='mail_array[]' value='$email' $checked>";
         $logdata[$i]['email']    = $email;

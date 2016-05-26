@@ -177,10 +177,6 @@ class tadnews
         }
         $this->TadUpFiles = new TadUpFiles("tadnews");
 
-        $this->row    = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-        $this->span   = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
-        $this->mini   = $_SESSION['bootstrap'] == '3' ? 'xs' : 'mini';
-        $this->inline = $_SESSION['bootstrap'] == '3' ? '-inline' : ' inline';
     }
 
     //是否僅秀出單一分類下的文章
@@ -1208,22 +1204,22 @@ class tadnews
 
         $edit_cate = "";
         if (!empty($ncsn)) {
-            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
+            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
         }
 
         $signbtn = "";
         if (!empty($have_read_group)) {
-            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&nsn=$nsn' class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . "</a>";
+            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&nsn=$nsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . "</a>";
         }
 
         $admin_fun = ($uid == $uuid or $isAdmin) ? "
         $signbtn
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
-        <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
+        <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
+        <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
         $edit_cate
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&nsn=$nsn' class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>" : "";
+        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&nsn=$nsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>" : "";
 
-        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode'] == '1') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-default btn-{$this->mini}' style='font-weight:normal;'>BBCode</a>" : "";
+        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode'] == '1') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-default btn-xs' style='font-weight:normal;'>BBCode</a>" : "";
 
         $fun = "
         <div class='btn-group'>
@@ -1418,12 +1414,12 @@ class tadnews
         $del = "<label class='radio'><input type='radio' name='act' value='del_news'>" . _TADNEWS_DEL . "</label>";
 
         $tool = "
-        <div class=\"{$this->row}\">
+        <div class=\"row\">
           <h3>" . _TADNEWS_BATCH_TOOLS . "</h3>
           <div class='well'>
-            <div class='{$this->span}3'>{$move}</div>
-            <div class='{$this->span}3'>{$del}</div>
-            <div class='{$this->span}3'>
+            <div class='col-md-3'>{$move}</div>
+            <div class='col-md-3'>{$del}</div>
+            <div class='col-md-3'>
             <input type='hidden' name='kind' value='{$this->kind}'>
             <input type='hidden' name='op' value='batch'>
             <input type='submit' value='" . _TADNEWS_NP_SUBMIT . "'>
@@ -1456,7 +1452,7 @@ class tadnews
                 if (in_array($gid, $have_read_group_arr)) {
                     $time = $this->chk_sign_status($uid, $nsn);
                     if (!empty($time)) {
-                        $main = "<div class='{$this->span}10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . "</div>";
+                        $main = "<div class='col-md-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . "</div>";
                     } else {
                         $main = "
                          <form action='index.php' method='post' class='form-horizontal'>
@@ -1748,12 +1744,12 @@ class tadnews
 
         $SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false, $enable_group, 4, true);
         $SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-        $SelectGroup_name->setExtra("class='{$this->span}12 form-control'");
+        $SelectGroup_name->setExtra("class='col-md-12 form-control'");
         $enable_group = $SelectGroup_name->render();
 
         $SelectGroup_name2 = new XoopsFormSelectGroup("", "have_read_group", false, $have_read_group, 4, true);
         $SelectGroup_name2->addOption("", _TADNEWS_ALL_NO, false);
-        $SelectGroup_name2->setExtra("class='{$this->span}12 form-control'");
+        $SelectGroup_name2->setExtra("class='col-md-12 form-control'");
         $have_read_group = $SelectGroup_name2->render();
 
         //標籤選單
@@ -1817,7 +1813,7 @@ class tadnews
         $css     = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
         //die($pic_css);
-        $cate_menu = empty($cate_num) ? "<div class='{$this->span}2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
+        $cate_menu = empty($cate_num) ? "<div class='col-md-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = "";
         if ($mode == "return") {

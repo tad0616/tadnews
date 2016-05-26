@@ -579,8 +579,7 @@ echo "
 <meta name='apple-mobile-web-app-capable' content='yes'/>
 <title>$cate</title>
 <link href='http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css' rel='stylesheet' type='text/css'/>
-<link href='" . XOOPS_URL . "/modules/tadtools/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css'/>
-<link href='" . XOOPS_URL . "/modules/tadtools/bootstrap/css/bootstrap-responsive.css' rel='stylesheet' type='text/css'/>
+<link href='" . XOOPS_URL . "/modules/tadtools/bootstrap3/css/bootstrap.css' rel='stylesheet' type='text/css'/>
 <script src='" . XOOPS_URL . "/modules/tadtools/jquery/jquery.js' type='text/javascript'></script>
 <script>
 $(document).bind('mobileinit', function()
