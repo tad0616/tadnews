@@ -95,3 +95,5 @@ define('_MB_TADNEWS_PAGE_EDIT_BITEM2', '文字大小');
 define('_MB_TADNEWS_COVERED_OPT1', '一個橫列放幾篇文章？');
 define('_MB_TADNEWS_COVERED_OPT2', '共幾個橫列？');
 define('_MB_TADNEWS_AJAX_ERROR', '無法載入資料。');
+define('_MB_TADNEWS_PAGE_USE_PANEL', '是否使用面板？');
+define('_MB_TADNEWS_PAGE_SUB_CATE', '是否列出底下分類？');

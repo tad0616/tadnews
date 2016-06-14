@@ -90,7 +90,7 @@ define('_MA_TADNEWS_NO_EMAIL', '目前沒有任何電子郵件，可至<a href="
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', '顯示文章標題');
-define('_MA_TADNEWS_CATE_SHOW_TOOL', '顯示頁面工具');
+define('_MA_TADNEWS_CATE_SHOW_TOOL', '顯示模組工具');
 define('_MA_TADNEWS_CATE_SHOW_COMM', '使用評論功能');
 define('_MA_TADNEWS_CATE_SHOW_NAV', '使用上下頁鈕');
 
@@ -105,3 +105,6 @@ define('_MA_TADNEWS_TAG_NEW', '新標籤');
 define('_MA_TADNEWS_TAG_ABLE', '啟用');
 define('_MA_TADNEWS_TAG_UNABLE', '關閉');
 define('_MA_TADNEWS_TAG_AMOUNT', '，有 %s 篇文章使用此標籤');
+define('_MA_TADNEWS_NO_PERMISSION', '當沒有讀取權限時');
+define('_MA_TADNEWS_HIDE_ARTICLE', '完全隱藏文章');
+define('_MA_TADNEWS_DISPLAY_TITLE', '僅顯示標題');

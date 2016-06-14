@@ -22,12 +22,6 @@
 
     });
 
-    function delete_tad_news_cate_func(ncsn){
-      var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-      if (!sure)  return;
-      location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
-    }
-
     function coint_checked(){
       var $b = $('.news');
       if($b.filter(':checked').length > 0 ){
@@ -62,7 +56,7 @@
 
       <{if $ncsn}>
         <div>
-          <h3><{$cate.nc_title}></h3>
+          <h3><a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a></h3>
           <ul>
             <li style="line-height:2;"><{$smarty.const._MA_TADNEWS_CATE_COUNTER}><{$smarty.const._TAD_FOR}><{$cate.count}></li>
             <li style="line-height:2;"><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP_S}><{$smarty.const._TAD_FOR}><{$cate.g_txt}></li>
@@ -87,7 +81,7 @@
           <div class="col-md-6">
             <h3>
               <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
-              <{$cate.nc_title}>
+              <a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
             </h3>
           </div>
           <div class="col-md-6 text-right">
@@ -151,6 +145,23 @@
               </label>
               <div class="col-md-4">
                 <{$enable_post_group}>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                <{$smarty.const._MA_TADNEWS_NO_PERMISSION}><{$smarty.const._TAD_FOR}>
+              </label>
+              <div class="col-md-4">
+                <label class="radio-inline">
+                  <input type="radio" name="setup[only_title]" id="only_title_1" value="1" <{if $only_title=='1'}>checked<{/if}>>
+                  <{$smarty.const._MA_TADNEWS_DISPLAY_TITLE}>
+                </label>
+
+                <label class="radio-inline">
+                  <input type="radio" name="setup[only_title]" id="only_title_0" value="0" <{if $only_title!='1'}>checked<{/if}>>
+                  <{$smarty.const._MA_TADNEWS_HIDE_ARTICLE}>
+                </label>
               </div>
             </div>
           </div>

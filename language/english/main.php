@@ -104,3 +104,6 @@ define('_MD_TADNEWS_KIND_NEWS', 'News');
 define('_MD_TADNEWS_KIND_PAGE', 'Page');
 define('_MD_TADNEWS_KIND', 'Article kind:');
 define('_MD_TADNEWS_ONLY_ROOT', 'Administrator');
+define('_MD_TADNEWS_EDIT_CATE', 'Edit Category');
+define('_MD_TADNEWS_ADD_TO_MENU', 'Add Category to Navigation');
+define('_MD_TADNEWS_ADD_TO_MENU_ALERT', 'This category has been added to the navigation bar menu. If you want to remove or change the position of the menu, from the management to the "<a href="' . XOOPS_URL . '/modules/tad_themes/admin/dropdown.php">Menu Settings</a>" directly.');

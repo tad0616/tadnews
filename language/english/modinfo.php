@@ -105,6 +105,12 @@ define('_MI_TADNEWS_MARQUEE_DESC', 'News marquee');
 define('_MI_TADNEWS_COVERED', 'News with cover image');
 define('_MI_TADNEWS_COVERED_DESC', 'News with cover image');
 
+define('_MI_TADNEWS_PAGE_LIST', 'List custom pages');
+define('_MI_TADNEWS_PAGE_LIST_DESC', 'List custom pages');
+
+define('_MI_TADNEWS_USE_TOP_GROUP', 'Which groups can use "sticky" feature');
+define('_MI_TADNEWS_USE_TOP_GROUP_DESC', 'Which groups can use "sticky" feature');
+
 define('_MI_TADNEWS_DIRNAME', basename(dirname(dirname(__DIR__))));
 define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.html');
 define('_MI_TADNEWS_BACK_2_ADMIN', 'Back to Administration of ');

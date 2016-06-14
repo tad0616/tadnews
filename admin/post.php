@@ -1,5 +1,5 @@
 <?php
-$xoopsOption['template_main'] = 'tadnews_post.html';
+$xoopsOption['template_main'] = 'tadnews_post.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";

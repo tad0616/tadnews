@@ -1,4 +1,5 @@
 <?php
+//條列式新聞區塊
 include_once "header.php";
 
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
@@ -53,6 +54,7 @@ if ($display_mode == 'table') {
     if (empty($all_news['page'])) {
         die(_TADNEWS_EMPTY);
     }
+    // die(var_export($all_news['page']));
     foreach ($all_news['page'] as $news) {
         $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}' style='margin:3px;'>" : "";
 
@@ -65,6 +67,7 @@ if ($display_mode == 'table') {
             {$need_sign}
             {$news['enable_txt']}{$news['today_pic']}
             <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
+
             <span style='color:gray;font-size:12px;'> (<a href='" . XOOPS_URL . "/modules/tadnews/index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
           </td>
         </tr>";

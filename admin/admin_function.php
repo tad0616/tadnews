@@ -14,7 +14,9 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
     $tadnews->set_summary(0);
     $tadnews->set_show_mode("list");
     $tadnews->set_admin_tool(true);
-    $tadnews->set_show_num($xoopsModuleConfig['show_num']);
+    if (empty($the_ncsn) or $kind == "news") {
+        $tadnews->set_show_num($xoopsModuleConfig['show_num']);
+    }
     $tadnews->set_show_enable(0);
     //$tadnews->set_news_cate_select(1);
     //$tadnews->set_news_author_select(1);
@@ -26,6 +28,9 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
         $tadnews->set_view_ncsn($the_ncsn);
         if ($kind == "page") {
             $tadnews->set_sort_tool(1);
+            $page = 'page.php';
+        } else {
+            $page = 'main.php';
         }
     }
 
@@ -34,6 +39,13 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
     $xoopsTpl->assign('ncsn', $the_ncsn);
     $cate = $tadnews->get_tad_news_cate($the_ncsn);
     $xoopsTpl->assign('cate', $cate);
+
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
+        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    }
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
+    $sweet_alert      = new sweet_alert();
+    $sweet_alert_code = $sweet_alert->render("delete_tad_news_cate_func", "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
 }
 
 //列出所有tad_news_cate資料
@@ -173,6 +185,18 @@ function update_tad_news_cate($ncsn = "")
 
     if (!empty($_FILES['cate_pic']['name'])) {
         mk_thumb($ncsn, "cate_pic", $xoopsModuleConfig['cate_pic_width']);
+    }
+
+    $modhandler      = xoops_gethandler('module');
+    $TadThemesModule = $modhandler->getByDirname("tad_themes");
+    if ($TadThemesModule) {
+        $sql     = "select menuid from " . $xoopsDB->prefix("tad_themes_menu") . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
+        $result  = $xoopsDB->queryF($sql) or web_error($sql);
+        $RowsNum = $xoopsDB->getRowsNum($result);
+        if ($RowsNum > 0) {
+            $sql = "update " . $xoopsDB->prefix("tad_themes_menu") . " set `itemname`='{$_POST['nc_title']}' where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
+            $xoopsDB->queryF($sql) or web_error($sql);
+        }
     }
 
     return $ncsn;

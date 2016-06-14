@@ -1,5 +1,5 @@
 <?php
-$xoopsOption['template_main'] = 'tadnews_adm_tag.html';
+$xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
@@ -129,4 +129,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/bootstrap3/css/bootstrap.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/xoops_adm3.css');
 include_once "footer.php";

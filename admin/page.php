@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tadnews_adm_page.html';
+$xoopsOption['template_main'] = 'tadnews_adm_page.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
@@ -184,4 +184,6 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
 $xoopsTpl->assign("jquery", get_jquery(true));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/bootstrap3/css/bootstrap.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/xoops_adm3.css');
 include_once "footer.php";

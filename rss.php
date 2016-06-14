@@ -17,7 +17,7 @@ header("Content-Type:text/xml; charset=utf-8");
 $tpl = new XoopsTpl();
 $tpl->xoops_setCaching(2);
 $tpl->xoops_setCacheTime(10);
-if (!$tpl->is_cached('db:tadnews_rss.html')) {
+if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
 
     $tadnews->set_show_num(20);
     $tadnews->set_view_ncsn($ncsn);
@@ -64,4 +64,4 @@ if (!$tpl->is_cached('db:tadnews_rss.html')) {
         }
     }
 }
-$tpl->display('db:tadnews_rss.html');
+$tpl->display('db:tadnews_rss.tpl');

@@ -91,3 +91,5 @@ define('_MB_TADNEWS_PAGE_EDIT_BITEM2', 'Font size:');
 define('_MB_TADNEWS_COVERED_OPT1', 'How many columns in a row?');
 define('_MB_TADNEWS_COVERED_OPT2', 'How many rows?');
 define('_MB_TADNEWS_AJAX_ERROR', 'Unable to load data.');
+define('_MB_TADNEWS_PAGE_USE_PANEL', 'Do you want to use the panel?');
+define('_MB_TADNEWS_PAGE_SUB_CATE', 'Do you want to list the sub-categories?');

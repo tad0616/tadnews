@@ -33,3 +33,4 @@ define('_TADNEWS_ALL_NO', '不需簽收');
 define('_TADNEWS_CREAT_FIRST_CATE', '建立新分類');
 define('_TADNEWS_CREAT_NEWS_CATE', '在左邊分類下建立新分類');
 define('_TADNEWS_PREFIX_TAG', '標籤');
+define('_TADNEWS_NEED_LOGIN', '需登入，並限「%s」等群組觀看');

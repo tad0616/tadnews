@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tadnews_newspaper.html");
+$xoopsOption['template_main'] = "tadnews_newspaper.tpl";
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 

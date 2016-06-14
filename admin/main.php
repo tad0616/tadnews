@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tadnews_adm_main.html';
+$xoopsOption['template_main'] = 'tadnews_adm_main.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
@@ -68,6 +68,12 @@ function tad_news_cate_form($ncsn = "")
     $not_news          = (!isset($DBV['not_news'])) ? "" : $DBV['not_news'];
     $cate_pic          = (!isset($DBV['cate_pic'])) ? "" : $DBV['cate_pic'];
     $pic               = (empty($cate_pic)) ? "../images/no_cover.png" : _TADNEWS_CATE_URL . "/{$cate_pic}";
+    $setup             = (!isset($DBV['setup'])) ? "" : $DBV['setup'];
+    $setup_arr         = explode(';', $setup);
+    foreach ($setup_arr as $set) {
+        list($set_name, $set_val) = explode('=', $set);
+        $xoopsTpl->assign($set_name, $set_val);
+    }
 
     $cate_op = (empty($ncsn)) ? "insert_tad_news_cate" : "update_tad_news_cate";
     //$op="replace_tad_news_cate";
@@ -178,4 +184,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/bootstrap3/css/bootstrap.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/xoops_adm3.css');
 include_once "footer.php";

@@ -91,7 +91,7 @@ define('_MA_TADNEWS_NO_EMAIL', 'There are no e-mail, go to <a href="newspaper.ph
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', 'Show News Title');
-define('_MA_TADNEWS_CATE_SHOW_TOOL', 'Show Toolbar');
+define('_MA_TADNEWS_CATE_SHOW_TOOL', 'Show Module Toolbar');
 define('_MA_TADNEWS_CATE_SHOW_COMM', 'Comments Available');
 define('_MA_TADNEWS_CATE_SHOW_NAV', 'Show Navigation Button');
 
@@ -106,3 +106,6 @@ define('_MA_TADNEWS_TAG_NEW', 'New Tag');
 define('_MA_TADNEWS_TAG_ABLE', 'Enable');
 define('_MA_TADNEWS_TAG_UNABLE', 'Unable');
 define('_MA_TADNEWS_TAG_AMOUNT', ', %s news use it.');
+define('_MA_TADNEWS_NO_PERMISSION', 'When no read permission');
+define('_MA_TADNEWS_HIDE_ARTICLE', 'Hide article');
+define('_MA_TADNEWS_DISPLAY_TITLE', 'Display title only');

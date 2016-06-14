@@ -32,7 +32,7 @@ define('_MI_TADNEWS_BNAME5', '電子報一覽');
 define('_MI_TADNEWS_BDESC5', '秀出最新的電子報');
 define('_MI_TADNEWS_BNAME6', '分類新聞區塊');
 define('_MI_TADNEWS_BDESC6', '秀出指定分類最新的新聞');
-define('_MI_TADNEWS_BNAME7', '自訂頁面');
+define('_MI_TADNEWS_BNAME7', '自訂頁面樹狀目錄');
 define('_MI_TADNEWS_BDESC7', '秀出指定的自訂頁面分類所有文章標題');
 define('_MI_TADNEWS_BNAME8', '焦點新聞');
 define('_MI_TADNEWS_BDESC8', '可以自訂要播放哪些新聞');
@@ -105,3 +105,16 @@ define('_MI_TADNEWS_MARQUEE_DESC', '相當於條列新聞做成跑馬燈之意')
 
 define('_MI_TADNEWS_COVERED', '圖文集區塊');
 define('_MI_TADNEWS_COVERED_DESC', '以封面圖為主，搭配簡短文字的區塊');
+
+define('_MI_TADNEWS_PAGE_LIST', '自訂頁面選單');
+define('_MI_TADNEWS_PAGE_LIST_DESC', '自訂頁面選單');
+
+define('_MI_TADNEWS_USE_TOP_GROUP', '可使用置頂功能的群組');
+define('_MI_TADNEWS_USE_TOP_GROUP_DESC', '可使用置頂功能的群組');
+
+define('_MI_TADNEWS_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADNEWS_BACK_2_ADMIN', '管理');
+
+//help
+define('_MI_TADNEWS_HELP_OVERVIEW', '概要');

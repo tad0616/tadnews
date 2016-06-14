@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tadnews_post.html");
+$xoopsOption['template_main'] = "tadnews_post.tpl";
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 if (empty($xoopsUser)) {
@@ -18,7 +18,7 @@ switch ($op) {
     //新增資料
     case "insert_tad_news":
         //die(var_export($_REQUEST));
-        $nsn = $tadnews->insert_tad_news();
+        $tadnews->insert_tad_news();
         break;
 
     //輸入表格

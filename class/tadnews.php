@@ -513,8 +513,7 @@ class tadnews
         }
 
         //找指定的分類
-        $sql = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where 1 $kind_chk $where_cate order by sort";
-        //die($sql);
+        $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where 1 $kind_chk $where_cate order by sort";
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
@@ -524,22 +523,30 @@ class tadnews
                 $$k = $v;
             }
 
+            //是否僅秀出標題
+            $only_title = strpos($setup, 'only_title=1') !== false ? true : false;
+
             $not_news_arr[$ncsn] = $not_news;
 
-            //只有可讀的分類才納入
-            $cate_read_poewr = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, "read");
-            if ($cate_read_poewr) {
+            //只有可讀的分類才納入(或者允許看標題的也可以納入
+            $cate_read_power = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, "read");
+
+            if ($cate_read_power or $only_title) {
                 //該使用者可觀看的分類編號陣列
                 $ncsn_ok[] = $ncsn;
                 //可觀看分類名稱
                 $cates[$ncsn]      = $nc_title;
                 $cate_setup[$ncsn] = $setup;
+                if (!$cate_read_power) {
+                    $only_title_cate[$ncsn]       = $only_title;
+                    $only_title_cate_group[$ncsn] = $this->txt_to_group_name($enable_group, '', ' , ');
+                }
             }
         }
 
+        $set = $this->get_setup($cate_setup[$ncsn]);
         if ($this->kind === "page") {
             //die(var_dump($cate_setup[$ncsn]));
-            $set = $this->get_setup($cate_setup[$ncsn]);
             //die(var_dump($set));
             //title=0;tool=0;comm=0
             if ($mode == 'return') {
@@ -552,6 +559,12 @@ class tadnews
                 $xoopsTpl->assign("cate_set_tool", $set['tool']);
                 $xoopsTpl->assign("cate_set_comm", $set['comm']);
                 $xoopsTpl->assign("cate_set_nav", $set['nav']);
+            }
+        } else {
+            if ($mode == 'return') {
+                $main['cate_only_title'] = $set['only_title'];
+            } else {
+                $xoopsTpl->assign("cate_only_title", $set['only_title']);
             }
         }
 
@@ -672,8 +685,8 @@ class tadnews
             }
 
             //判斷本文及所屬分類是否允許該用戶之所屬群組觀看
-            $news_read_poewr = $this->chk_news_power($enable_group, $User_Groups);
-            if (!$news_read_poewr) {
+            $news_read_power = $this->chk_news_power($enable_group, $User_Groups);
+            if (!$news_read_power) {
                 continue;
             }
 
@@ -691,6 +704,10 @@ class tadnews
 
             $file_mode     = $this->show_mode == 'one' ? "" : "small";
             $tadnews_files = $this->get_news_files($nsn, $file_mode);
+
+            if ($only_title_cate[$ncsn]) {
+                $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
+            }
 
             if (!empty($this->summary_num) and is_numeric($this->summary_num)) {
                 $news_content = strip_tags($news_content);
@@ -745,7 +762,7 @@ class tadnews
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ($this->show_mode == "one") {
                         $news_content = "
-                        <div class='hero-unit'>
+                        <div class='jumbotron'>
                         <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
                         <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post'>
                           <fieldset>
@@ -844,7 +861,6 @@ class tadnews
 
             $facebook_comments = facebook_comments($this->tadnewsConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
             $push              = push_url($this->tadnewsConfig['use_social_tools']);
-            $mutilink          = $this->get_mutilink_path($ncsn);
 
             $all_news[$i]['nsn']               = $nsn;
             $all_news[$i]['facebook_comments'] = $facebook_comments;
@@ -852,7 +868,6 @@ class tadnews
             $all_news[$i]['pic']               = $pic;
             $all_news[$i]['chkbox']            = $chkbox;
             $all_news[$i]['ncsn']              = $ncsn;
-            $all_news[$i]['mutilink']          = $mutilink;
             $all_news[$i]['cate_name']         = $cate_name;
             $all_news[$i]['post_date']         = $post_date;
             $all_news[$i]['prefix_tag']        = $prefix_tag;
@@ -904,7 +919,6 @@ class tadnews
             $main['author_select']          = $author_select;
             $main['bar']                    = $bar;
             $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
-            $main['MutiLinkConfig']         = $this->get_mutilink_path_config();
             if ($this->use_star_rating) {
                 $main['rating_js'] = $rating_js;
             }
@@ -925,7 +939,6 @@ class tadnews
             $xoopsTpl->assign("author_select", $author_select);
             $xoopsTpl->assign("bar", $bar);
             $xoopsTpl->assign("syntaxhighlighter_code", $syntaxhighlighter_code);
-            $xoopsTpl->assign("MutiLinkConfig", $this->get_mutilink_path_config());
             if ($this->use_star_rating) {
                 $xoopsTpl->assign("rating_js", $rating_js);
             }
@@ -982,44 +995,8 @@ class tadnews
         return $path;
     }
 
-    //將路徑轉換為多網址路徑
-    public function get_mutilink_path($ncsn = "")
-    {
-        $path     = $this->get_cate_path($ncsn);
-        $mutilink = implode(",", array_keys($path));
-        return $mutilink;
-    }
-
-    //將路徑轉換為多網址路徑設定檔
-    public function get_mutilink_path_config()
-    {
-        global $xoopsDB;
-        $sql    = "select ncsn,nc_title,of_ncsn,not_news from " . $xoopsDB->prefix("tad_news_cate") . "";
-        $result = $xoopsDB->query($sql) or web_error($sql);
-
-        $arr[] = "
-    \"" . _TAD_TO_MOD . "\": {
-      \"label\"	: \"" . _TAD_TO_MOD . "\",
-      \"url\"	: \"" . XOOPS_URL . "/modules/tadnews/index.php\",
-      \"tags\"	: [\"" . _TAD_TO_MOD . "\"]
-    }";
-        while (list($ncsn, $nc_title, $of_ncsn, $not_news) = $xoopsDB->fetchRow($result)) {
-            $page  = ($not_news == '1') ? "page.php" : "index.php";
-            $arr[] = "
-      \"{$nc_title}\": {
-        \"label\"	: \"{$nc_title}\",
-        \"url\"	: \"" . XOOPS_URL . "/modules/tadnews/{$page}?ncsn={$ncsn}\",
-        \"tags\"	: [\"{$nc_title}\"]
-      }";
-        }
-
-        $mutilink = implode(",", $arr);
-        //die($mutilink);
-        return $mutilink;
-    }
-
     //取得分類新聞
-    public function get_cate_news($mode = 'assign')
+    public function get_cate_news($mode = 'assign', $include_sub_cate = false)
     {
         global $xoopsDB, $xoopsTpl, $xoopsUser;
 
@@ -1056,18 +1033,23 @@ class tadnews
             $and_cate = "and ncsn={$this->view_ncsn}";
         }
 
-        $sql = "select ncsn,nc_title,enable_group,enable_post_group,cate_pic from " . $xoopsDB->prefix("tad_news_cate") . " where 1  $and_cate $kind_chk order by sort";
-
+        $sql    = "select ncsn,nc_title,enable_group,enable_post_group,cate_pic,setup from " . $xoopsDB->prefix("tad_news_cate") . " where 1  $and_cate $kind_chk order by sort";
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
-        $i = 0;
+        $i          = 0;
+        $only_title = false;
+        while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
 
-        while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic) = $xoopsDB->fetchRow($result)) {
             //只有可讀的分類才納入
-            $cate_read_poewr = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, "read");
+            $cate_read_power = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, "read");
 
-            if (!$cate_read_poewr) {
-                continue;
+            if (!$cate_read_power) {
+                //是否僅秀出標題
+                $only_title = strpos($setup, 'only_title=1') !== false ? true : false;
+                if (!$only_title) {
+                    // die($nc_title);
+                    continue;
+                }
             }
 
             $pic = (empty($cate_pic)) ? XOOPS_URL . "/modules/tadnews/images/no_cover.png" : _TADNEWS_CATE_URL . "/{$cate_pic}";
@@ -1088,12 +1070,48 @@ class tadnews
                     $$k = $v;
                 }
 
-                $news_read_poewr = $this->chk_news_power($enable_group, $User_Groups);
-                if (!$news_read_poewr) {
-                    continue;
+                if (!empty($passwd)) {
+                    $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : "";
+                    if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
+                        if ($this->show_mode == "one") {
+                            $news_content = "
+                        <div class='jumbotron'>
+                        <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
+                        <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post'>
+                          <fieldset>
+                          <input type='hidden' name='nsn' value='{$nsn}'>
+                          <input type='password' name='tadnews_passwd'>
+                          <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . "</button>
+                          </fieldset>
+                        </form>
+                        </div>";
+                        } else {
+                            $news_content = "
+                        <div>
+                        <div>" . _TADNEWS_NEWS_NEED_PASSWD . "</div>
+                        <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post' style='display:inline'>
+                          <fieldset>
+                          <input type='hidden' name='nsn' value='{$nsn}'>
+                          <input type='password' name='tadnews_passwd'>
+                          <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . "</button>
+                          </fieldset>
+                        </form>
+                        </div>";
+                        }
+                        $tadnews_files = "";
+                    } else {
+                        $_SESSION['have_pass'][] = $nsn;
+                    }
+                } elseif ($only_title) {
+                    $news_content = sprintf(_TADNEWS_NEED_LOGIN, $this->txt_to_group_name($enable_group, '', ' , '));
                 }
 
-                if (is_numeric($this->summary_num) and !empty($this->summary_num)) {
+                // $news_read_power = $this->chk_news_power($enable_group, $User_Groups);
+                // if (!$news_read_power) {
+                //     continue;
+                // }
+
+                if (is_numeric($this->summary_num) and !empty($this->summary_num) and empty($passwd)) {
                     $news_content = strip_tags($news_content);
                     $style        = (empty($this->summary_css)) ? "" : "style='{$this->summary_css}'";
                     //支援xlanguage
@@ -1132,18 +1150,20 @@ class tadnews
             $all_news[$i]['news']     = $subnews;
             $all_news[$i]['rowspan']  = $j + 1;
 
+            // if ($include_sub_cate) {
+            //     $this->get_cate_news('return', $include_sub_cate);
+            // }
+
             $i++;
         }
 
         if ($mode == 'return') {
             $main['all_news']               = $all_news;
             $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
-            $main['MutiLinkConfig']         = $this->get_mutilink_path_config();
             return $main;
         } else {
             $xoopsTpl->assign("all_news", $all_news);
             $xoopsTpl->assign("syntaxhighlighter_code", $syntaxhighlighter_code);
-            $xoopsTpl->assign("MutiLinkConfig", $this->get_mutilink_path_config());
         }
 
     }
@@ -1495,11 +1515,8 @@ class tadnews
             $reader_uid = "";
         }
 
-        $speed = is_null($this->tadnewsConfig['fancybox_playspeed']) ? null : $this->tadnewsConfig['fancybox_playspeed'];
-        //show_files($upname="",$thumb=true,$show_mode="",$show_description=false,$show_dl=false,$limit=null,$path=null)
-
         $this->TadUpFiles->set_col('nsn', $nsn);
-        $files = $this->TadUpFiles->show_files('upfile', true, $mode, true, false, null, XOOPS_URL . "/modules/tadnews/index.php", null, $speed);
+        $files = $this->TadUpFiles->show_files('upfile', true, $mode, true, false, null, XOOPS_URL . "/modules/tadnews/index.php", null, 0);
         //上傳表單name, 是否縮圖, 顯示模式 (filename、small), 顯示描述, 顯示下載次數, 數量限制, 自訂路徑, 加密, 自動播放時間(0 or 3000)
 
         $news = $this->get_tad_news($nsn);
@@ -1807,6 +1824,12 @@ class tadnews
         $creat_new_cate  = empty($cate_num) ? _TADNEWS_CREAT_FIRST_CATE : _TADNEWS_CREAT_NEWS_CATE;
         $creat_cate_tool = ($this->chk_news_power(implode(",", $this->tadnewsConfig['creat_cate_group']), $User_Groups)) ? 1 : 0;
 
+        if (!empty($this->tadnewsConfig['use_top_group'])) {
+            $use_top_tool = ($this->chk_news_power(implode(",", $this->tadnewsConfig['use_top_group']), $User_Groups)) ? 1 : 0;
+        } else {
+            $use_top_tool = 1;
+        }
+
         $now         = time();
         $jquery_path = get_jquery(true);
 
@@ -1859,15 +1882,13 @@ class tadnews
             $form['files_sn']                    = $files_sn;
             $form['new_cate_input']              = $new_cate_input;
             $form['creat_new_cate']              = $creat_new_cate;
+            $form['use_top_tool']                = $use_top_tool;
 
             $this->TadUpFiles->set_col("nsn", $nsn);
-            $upform         = $this->TadUpFiles->upform(true, 'upfile', null, true);
-            $form['upform'] = $upform;
-
-            //$this->TadUpFiles->set_col("news_pic",$nsn);
-            //$upform2=$this->TadUpFiles->js_upform('upfile2');
-            //$upform2=$this->TadUpFiles->upform(true,'upfile2',1,true,"gif|jpg|png");
-            //$form['upform2']=$upform2;
+            $upform              = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
+            $form['upform']      = $upform;
+            $page_upform         = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
+            $form['page_upform'] = $page_upform;
 
             $form['formValidator_code'] = $formValidator_code;
 
@@ -1915,10 +1936,13 @@ class tadnews
             $xoopsTpl->assign("files_sn", $files_sn);
             $xoopsTpl->assign("new_cate_input", $new_cate_input);
             $xoopsTpl->assign("creat_new_cate", $creat_new_cate);
+            $xoopsTpl->assign("use_top_tool", $use_top_tool);
 
             $this->TadUpFiles->set_col("nsn", $nsn);
-            $upform = $this->TadUpFiles->upform(true, 'upfile', null, true);
+            $upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
             $xoopsTpl->assign("upform", $upform);
+            $page_upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
+            $xoopsTpl->assign("page_upform", $page_upform);
 
             $xoopsTpl->assign("formValidator_code", $formValidator_code);
         }
@@ -2107,7 +2131,7 @@ class tadnews
 
         $xoopsUser->incrementPost();
 
-        $cate = $this->get_tad_news_cate($_POST['ncsn']);
+        $cate = $this->get_tad_news_cate($ncsn);
         $page = ($cate['not_news'] == '1') ? "page" : "index";
         header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?nsn={$nsn}");
         exit;
@@ -2119,14 +2143,14 @@ class tadnews
     {
         global $xoopsDB;
         // die("{($of_ncsn}-{$new_cate}-{$not_news}");
-        $enable_group = $enable_post_group = $setup = "";
+        $enable_group = $enable_post_group = $setup = $cate = "";
         if (!empty($of_ncsn)) {
             $cate              = $this->get_tad_news_cate($of_ncsn);
             $enable_group      = $cate['enable_group'];
             $enable_post_group = $cate['enable_post_group'];
-            $setup             = $cate['setup'];
         }
-        $sort = $this->get_max_sort($of_ncsn);
+        $setup = ($not_news == '1' and !empty($cate['setup'])) ? $cate['setup'] : "title=1;tool=0;comm=0;nav=1";
+        $sort  = $this->get_max_sort($of_ncsn);
 
         $myts     = MyTextSanitizer::getInstance();
         $new_cate = $myts->addSlashes($new_cate);
