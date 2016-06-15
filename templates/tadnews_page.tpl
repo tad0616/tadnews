@@ -74,7 +74,7 @@
     </div>
   </div>
 <{else}>
-  <div class="jumbotron">
+  <div class="alert alert-danger">
     <p><{$smarty.const._MD_TADNEWS_HIDDEN}></p>
   </div>
 <{/if}>

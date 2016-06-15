@@ -686,7 +686,7 @@ class tadnews
 
             //判斷本文及所屬分類是否允許該用戶之所屬群組觀看
             $news_read_power = $this->chk_news_power($enable_group, $User_Groups);
-            if (!$news_read_power) {
+            if (!$news_read_power and $uid != $now_uid and !$isAdmin) {
                 continue;
             }
 
