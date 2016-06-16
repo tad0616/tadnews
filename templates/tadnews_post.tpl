@@ -74,6 +74,22 @@
         }
       });
     <{/if}>
+
+
+    $("#new_folder_icon").click(function() {
+      $("#new_folder_icon").hide();
+      $("#new_folder_col").show();
+      $("<option value='0'>/</option>").prependTo("#news_ncsn");
+      $("#news_title_input_col").removeClass("col-md-7").addClass("col-md-5");
+    });
+
+    $("#new_page_folder_icon").click(function() {
+      $("#new_page_folder_icon").hide();
+      $("#new_page_folder_col").show();
+      $("<option value='0'>/</option>").prependTo("#page_ncsn");
+      $("#page_title_input_col").removeClass("col-md-9").addClass("col-md-7");
+    });
+
     var $tabs = $("#<{$jquery_tabs_id}>").tabs({ cookie: { expires: 30 } });
 
     <{if $use_pic_css==""}>
@@ -150,38 +166,59 @@
 
   <div class="form-group">
     <div id="add_news">
-      <div class="col-md-2">
-        <select name="ncsn" id="news_ncsn" class="form-control">
-          <{$news_cate_select}>
-        </select>
-      </div>
-
-      <{if $creat_cate_tool}>
-        <div class="col-md-3">
-          <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
+      <{if $news_cate_select}>
+        <div class="col-md-2">
+          <select name="ncsn" id="news_ncsn" class="form-control">
+            <{$news_cate_select}>
+          </select>
         </div>
+        <{if $creat_cate_tool}>
+          <div class="col-md-1" id="new_folder_icon">
+            <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
+          </div>
+          <div class="col-md-3" id="new_folder_col" style="display: none;">
+            <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
+          </div>
+        <{/if}>
+      <{else}>
+        <{if $creat_cate_tool}>
+          <div class="col-md-3">
+            <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
+          </div>
+        <{/if}>
       <{/if}>
 
       <div class="col-md-2">
         <{$prefix_tag_menu}>
       </div>
 
-      <div class="col-md-<{if $creat_cate_tool}>5<{else}>8<{/if}>">
+      <div class="col-md-<{if $creat_cate_tool}>7<{else}>8<{/if}>" id="news_title_input_col">
         <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
       </div>
     </div>
     <div id="add_page">
-      <div class="col-md-2">
-        <select name="ncsn" id="page_ncsn" class="form-control">
-          <{$page_cate_select}>
-        </select>
-      </div>
-      <{if $creat_cate_tool}>
-        <div class="col-md-3">
-          <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
+      <{if $page_cate_select}>
+        <div class="col-md-2">
+          <select name="ncsn" id="page_ncsn" class="form-control">
+            <{$page_cate_select}>
+          </select>
         </div>
+        <{if $creat_cate_tool}>
+          <div class="col-md-1" id="new_page_folder_icon">
+            <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
+          </div>
+          <div class="col-md-3" id="new_page_folder_col" style="display: none;">
+            <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
+          </div>
+        <{/if}>
+      <{else}>
+        <{if $creat_cate_tool}>
+          <div class="col-md-3" id="new_page_folder_col">
+            <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
+          </div>
+        <{/if}>
       <{/if}>
-      <div class="col-md-<{if $creat_cate_tool}>7<{else}>10<{/if}>">
+      <div class="col-md-<{if $creat_cate_tool}>9<{else}>10<{/if}>" id="page_title_input_col">
         <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
       </div>
     </div>

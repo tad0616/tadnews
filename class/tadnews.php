@@ -706,7 +706,8 @@ class tadnews
             $tadnews_files = $this->get_news_files($nsn, $file_mode);
 
             if ($only_title_cate[$ncsn]) {
-                $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
+                $news_content  = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
+                $tadnews_files = "";
             }
 
             if (!empty($this->summary_num) and is_numeric($this->summary_num)) {
@@ -1339,7 +1340,7 @@ class tadnews
 
             $and_not_news = ($not_news != null) ? "and not_news='{$not_news}'" : "";
 
-            $option = ($of_ncsn or !$isAdmin) ? "" : "<option value='0'></option>";
+            $option = ($of_ncsn or !$isAdmin or $blank == false) ? "" : "<option value='0'></option>";
 
             $option == "";
             $sql    = "select ncsn,nc_title,not_news from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
@@ -1775,9 +1776,9 @@ class tadnews
         //類別選單
         $cate_select = $this->get_tad_news_cate_option(0, 0, $ncsn);
         //新聞選單
-        $news_cate_select = $this->get_tad_news_cate_option(0, 0, $ncsn, true, null, 0, '0');
+        $news_cate_select = $this->get_tad_news_cate_option(0, 0, $ncsn, false, null, 0, '0');
         //自訂頁面選單
-        $page_cate_select = $this->get_tad_news_cate_option(0, 0, $ncsn, true, null, 0, '1');
+        $page_cate_select = $this->get_tad_news_cate_option(0, 0, $ncsn, false, null, 0, '1');
 
         //取得分類數
         $cate_num = $this->get_cate_num();

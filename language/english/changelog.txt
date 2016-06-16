@@ -1,3 +1,12 @@
+TadNews 3.8.2 (2016-06-16 released)
+==================================================
+1. Fixed author under certain conditions can not see their own article
+2. Modify the new category model
+3. Fixed issue no permission to read article still visible attachments
+4. fixed "my article" in a custom page category link url
+5. Fixed page navigation bar custom sorting incorrect issue (to be with the TadTools 2.9.5)
+
+
 TadNews 3.8.1 (2016-06-07 released)
 ==================================================
 1. Fix the attached file thumbnails missing issue
