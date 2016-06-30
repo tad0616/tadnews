@@ -487,17 +487,19 @@ class tadnews
                 $all_ncsn   = implode(',', $this->view_ncsn);
                 $where_cate = empty($all_ncsn) ? "" : "and ncsn in($all_ncsn)";
                 //指定觀看某一個分類
-            } elseif ($this->only_one_ncsn) {
+            } elseif ($this->only_one_ncsn or $this->view_ncsn) {
                 $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
-                $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
-                $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-                $ncsn_arr[] = $this->view_ncsn;
-                while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
-                    $ncsn_arr[] = $sub_ncsn;
-                }
+                // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
+                // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+                // $ncsn_arr[] = $this->view_ncsn;
+                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
+                //     $ncsn_arr[] = $sub_ncsn;
+                // }
 
-                $where_cate = "and `ncsn` in(" . implode(',', $ncsn_arr) . ")";
+                // $where_cate = "and `ncsn` in(" . implode(',', $ncsn_arr) . ")";
+                $where_cate = "";
+                //2016-06-28 避免RSS抓不到部份目錄
             }
 
         }
@@ -585,18 +587,20 @@ class tadnews
                 $where_cate = empty($ok_cate) ? "" : "and ncsn in($ok_cate)";
                 //指定觀看某一個分類
 
-            } elseif ($this->only_one_ncsn) {
+            } elseif ($this->only_one_ncsn or $this->view_ncsn) {
                 $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
                 //找出底下的子分類
-                $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
-                $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-                $ncsn_arr[] = $this->view_ncsn;
-                while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
-                    $ncsn_arr[] = $sub_ncsn;
-                }
-                $all_ncsn   = implode(',', $ncsn_arr);
-                $where_cate = empty($all_ncsn) ? "" : "and ncsn in($all_ncsn)";
+                // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
+                // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+                // $ncsn_arr[] = $this->view_ncsn;
+                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
+                //     $ncsn_arr[] = $sub_ncsn;
+                // }
+                // $all_ncsn   = implode(',', $ncsn_arr);
+                // $where_cate = empty($all_ncsn) ? "" : "and ncsn in($all_ncsn)";
+                $where_cate = "";
+                //2016-06-28 避免RSS抓不到部份目錄я хочу сим карту купить
             }
         }
 
@@ -652,7 +656,7 @@ class tadnews
             }
         }
 
-        //die($sql);
+        // die($sql);
 
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 

@@ -10,13 +10,17 @@ if (file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/FooTable.php")) {
     $FooTableJS = $FooTable->render();
 }
 
-$num         = !empty($_POST['num']) ? intval($_POST['num']) : 10;
-$show_button = !empty($_POST['show_button']) ? $_POST['show_button'] : "";
-$start_from  = intval($_POST['start_from']);
-$show_ncsn   = !empty($_POST['show_ncsn']) ? $_POST['show_ncsn'] : "";
-$ncsn_arr    = explode(',', $show_ncsn);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$num         = system_CleanVars($_REQUEST, 'num', 10, 'int');
+$show_ncsn   = system_CleanVars($_REQUEST, 'show_ncsn', '', 'string');
+$show_button = system_CleanVars($_REQUEST, 'show_button', 0, 'int');
+$start_from  = system_CleanVars($_REQUEST, 'start_from', 0, 'int');
+$p           = system_CleanVars($_REQUEST, 'p', 0, 'int');
+$randStr     = system_CleanVars($_REQUEST, 'randStr', '', 'string');
+$cell        = system_CleanVars($_REQUEST, 'cell', '', 'array');
 
-$p     = !empty($_REQUEST['p']) ? intval($_REQUEST['p']) : 0;
+$ncsn_arr = explode(',', $show_ncsn);
+
 $b     = $p - 1;
 $n     = $p + 1;
 $start = $p * $num + $start_from;
@@ -42,7 +46,7 @@ if (empty($all_news['page'])) {
 
 $show_col = '';
 
-foreach ($_POST['cell'] as $col) {
+foreach ($cell as $col) {
     if ($col == '' or $col == 'hide') {
         continue;
     }
@@ -99,9 +103,9 @@ foreach ($all_news['page'] as $news) {
     $total++;
 }
 
-$b_button = ($b < 0) ? "" : "<button onClick='view_content{$_POST['randStr']}({$b})' class='btn'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";
+$b_button = ($b < 0) ? "" : "<button onClick='view_content{$randStr}({$b})' class='btn'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";
 
-$n_button = ($total < $num) ? "" : "<button style='float:right;' onClick='view_content{$_POST['randStr']}({$n})' class='btn'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
+$n_button = ($total < $num) ? "" : "<button style='float:right;' onClick='view_content{$randStr}({$n})' class='btn'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
 
 $button = ($show_button) ? "{$n_button}{$b_button}" : "";
 //$button="{$n_button}{$b_button}";

@@ -97,3 +97,8 @@ define('_MB_TADNEWS_COVERED_OPT2', '共幾個橫列？');
 define('_MB_TADNEWS_AJAX_ERROR', '無法載入資料。');
 define('_MB_TADNEWS_PAGE_USE_PANEL', '是否使用面板？');
 define('_MB_TADNEWS_PAGE_SUB_CATE', '是否列出底下分類？');
+
+define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', '呈現類型');
+define('_MB_TADNEWS_TAB_NEWS_DEFAULT', '橫向頁籤');
+define('_MB_TADNEWS_TAB_NEWS_VERTICAL', '垂直頁籤');
+define('_MB_TADNEWS_TAB_NEWS_ACCORDION', '伸縮選單');

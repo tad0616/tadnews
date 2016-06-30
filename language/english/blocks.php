@@ -93,3 +93,8 @@ define('_MB_TADNEWS_COVERED_OPT2', 'How many rows?');
 define('_MB_TADNEWS_AJAX_ERROR', 'Unable to load data.');
 define('_MB_TADNEWS_PAGE_USE_PANEL', 'Do you want to use the panel?');
 define('_MB_TADNEWS_PAGE_SUB_CATE', 'Do you want to list the sub-categories?');
+
+define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', 'Display Type');
+define('_MB_TADNEWS_TAB_NEWS_DEFAULT', 'Tabs');
+define('_MB_TADNEWS_TAB_NEWS_VERTICAL', 'Vertical Tabs');
+define('_MB_TADNEWS_TAB_NEWS_ACCORDION', 'Accordion');

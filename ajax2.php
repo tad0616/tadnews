@@ -5,18 +5,21 @@ include_once "header.php";
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
 
-$num            = !empty($_POST['num']) ? intval($_POST['num']) : 10;
-$summary_length = intval($_POST['summary_length']);
-$summary_css    = $_POST['summary_css'];
-$title_length   = intval($_POST['title_length']);
-$show_cover     = $_POST['show_cover'];
-$cover_css      = $_POST['cover_css'];
-$start_from     = intval($_POST['start_from']);
-$show_ncsn      = !empty($_POST['show_ncsn']) ? $_POST['show_ncsn'] : "";
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$num            = system_CleanVars($_REQUEST, 'num', 10, 'int');
+$show_ncsn      = system_CleanVars($_REQUEST, 'show_ncsn', '', 'string');
+$summary_length = system_CleanVars($_REQUEST, 'summary_length', 0, 'int');
+$summary_css    = system_CleanVars($_REQUEST, 'summary_css', '', 'string');
+$start_from     = system_CleanVars($_REQUEST, 'start_from', 0, 'int');
+$title_length   = system_CleanVars($_REQUEST, 'title_length', 0, 'int');
+$show_cover     = system_CleanVars($_REQUEST, 'show_cover', '', 'string');
+$cover_css      = system_CleanVars($_REQUEST, 'cover_css', '', 'string');
+$display_mode   = system_CleanVars($_REQUEST, 'display_mode', '', 'string');
+$show_button    = system_CleanVars($_REQUEST, 'show_button', 0, 'int');
+$p              = system_CleanVars($_REQUEST, 'p', 0, 'int');
+$randStr        = system_CleanVars($_REQUEST, 'randStr', '', 'string');
+$ncsn_arr       = explode(',', $show_ncsn);
 
-$ncsn_arr = explode(',', $show_ncsn);
-
-$p     = !empty($_REQUEST['p']) ? intval($_REQUEST['p']) : 0;
 $b     = $p - 1;
 $n     = $p + 1;
 $start = $p * $num + $start_from;
@@ -36,14 +39,9 @@ $tadnews->set_title_length($title_length);
 $tadnews->set_cover($show_cover, $cover_css);
 $tadnews->set_skip_news($start);
 
-//die(var_export($_POST));
-
 $block = "";
 
 $total = 0;
-
-$show_button  = !empty($_POST['show_button']) ? $_POST['show_button'] : "0";
-$display_mode = $_POST['display_mode'];
 
 //die('display_mode:' . $display_mode);
 if ($display_mode == 'table') {
@@ -102,9 +100,9 @@ if ($display_mode == 'table') {
   </ul>";
 }
 
-$b_button = ($b < 0) ? "" : "<button onClick='tadnew_list_content{$_POST['randStr']}({$b})'  onfocus='tadnew_list_content{$_POST['randStr']}({$b})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";
+$b_button = ($b < 0) ? "" : "<button onClick='tadnew_list_content{$randStr}({$b})'  onfocus='tadnew_list_content{$randStr}({$b})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";
 
-$n_button = ($total < $num) ? "" : "<button onClick='tadnew_list_content{$_POST['randStr']}({$n})' onfocus='tadnew_list_content{$_POST['randStr']}({$n})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
+$n_button = ($total < $num) ? "" : "<button onClick='tadnew_list_content{$randStr}({$n})' onfocus='tadnew_list_content{$randStr}({$n})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
 
 $m_button = ($total < $num) ? "" : "<a href='" . XOOPS_URL . "/modules/tadnews/' class='btn btn-default'>more</a>";
 $button   = ($show_button) ? "<div class='row'><div class='col-md-4 text-left'>{$b_button}</div><div class='col-md-4 text-center'>{$m_button}</div><div class='col-md-4 text-right'>{$n_button}</div></div>" : "";

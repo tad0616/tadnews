@@ -1,3 +1,13 @@
+TadNews 3.8.4 (2016-06-30 released)
+==================================================
+1.ajax.php and ajax2.php variable filter
+
+
+TadNews 3.8.3 (2016-06-18 released)
+==================================================
+1.Added news tab Block
+
+
 TadNews 3.8.2 (2016-06-16 released)
 ==================================================
 1. Fixed author under certain conditions can not see their own article

@@ -117,3 +117,6 @@ define('_MI_TADNEWS_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
 define('_MI_TADNEWS_HELP_OVERVIEW', 'Overview');
+
+define('_MI_TADNEWS_TAB_NEWS', 'Tabs News');
+define('_MI_TADNEWS_TAB_NEWS_DESC', 'Tabs News');

@@ -118,3 +118,6 @@ define('_MI_TADNEWS_BACK_2_ADMIN', '管理');
 
 //help
 define('_MI_TADNEWS_HELP_OVERVIEW', '概要');
+
+define('_MI_TADNEWS_TAB_NEWS', '頁籤新聞區塊');
+define('_MI_TADNEWS_TAB_NEWS_DESC', '頁籤新聞區塊');
