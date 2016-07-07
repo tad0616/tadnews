@@ -429,7 +429,8 @@ class tadnews
             $sql2                             = "select not_news,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='" . $this->view_ncsn . "'";
             $result2                          = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($not_news, $show_cate_title) = $xoopsDB->fetchRow($result2);
-            $kind                             = ($not_news) ? "page" : "news";
+
+            $kind = ($not_news) ? "page" : "news";
             $this->set_news_kind($kind);
 
             //分析目前觀看得是新聞還是自訂頁面
@@ -1050,7 +1051,9 @@ class tadnews
 
             if (!$cate_read_power) {
                 //是否僅秀出標題
-                $only_title = strpos($setup, 'only_title=1') !== false ? true : false;
+                $only_title                   = strpos($setup, 'only_title=1') !== false ? true : false;
+                $only_title_cate[$ncsn]       = $only_title;
+                $only_title_cate_group[$ncsn] = $this->txt_to_group_name($enable_group, '', ' , ');
                 if (!$only_title) {
                     // die($nc_title);
                     continue;
@@ -1107,8 +1110,9 @@ class tadnews
                     } else {
                         $_SESSION['have_pass'][] = $nsn;
                     }
-                } elseif ($only_title) {
-                    $news_content = sprintf(_TADNEWS_NEED_LOGIN, $this->txt_to_group_name($enable_group, '', ' , '));
+                } elseif ($only_title_cate[$ncsn]) {
+                    // die('enable_group:' . $enable_group);
+                    $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
                 }
 
                 // $news_read_power = $this->chk_news_power($enable_group, $User_Groups);
@@ -1716,7 +1720,7 @@ class tadnews
     //tad_news編輯表單
     public function tad_news_form($nsn = "", $ncsn = "", $mode = '')
     {
-        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl;
+        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig;
 
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/formValidator.php";
         $formValidator      = new formValidator("#myForm", false);
@@ -1760,7 +1764,7 @@ class tadnews
 
         $prefix_tag      = (!isset($DBV['prefix_tag'])) ? "" : $DBV['prefix_tag'];
         $always_top      = (!isset($DBV['always_top'])) ? "0" : $DBV['always_top'];
-        $always_top_date = (!isset($DBV['always_top_date']) or $DBV['always_top_date'] == "0000-00-00 00:00:00") ? date("Y-m-d H:i:s", time() + 15 * 86400) : $DBV['always_top_date'];
+        $always_top_date = (!isset($DBV['always_top_date']) or $DBV['always_top_date'] == "0000-00-00 00:00:00") ? date("Y-m-d H:i:s", time() + 7 * 86400) : $DBV['always_top_date'];
 
         $always_top_checked = ($always_top == '1') ? "checked" : "";
 
@@ -1888,6 +1892,7 @@ class tadnews
             $form['new_cate_input']              = $new_cate_input;
             $form['creat_new_cate']              = $creat_new_cate;
             $form['use_top_tool']                = $use_top_tool;
+            $form['top_max_day']                 = $xoopsModuleConfig['top_max_day'];
 
             $this->TadUpFiles->set_col("nsn", $nsn);
             $upform              = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
@@ -1942,6 +1947,7 @@ class tadnews
             $xoopsTpl->assign("new_cate_input", $new_cate_input);
             $xoopsTpl->assign("creat_new_cate", $creat_new_cate);
             $xoopsTpl->assign("use_top_tool", $use_top_tool);
+            $xoopsTpl->assign("top_max_day", $xoopsModuleConfig['top_max_day']);
 
             $this->TadUpFiles->set_col("nsn", $nsn);
             $upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
@@ -2351,6 +2357,7 @@ class tadnews
 
         $this->TadUpFiles->set_col("nsn", $nsn);
         $this->TadUpFiles->del_files();
+        $this->delete_cover($nsn);
     }
 
     //支援xlanguage
@@ -2360,6 +2367,14 @@ class tadnews
             $news_content = xlanguage_ml($news_content);
         }
         return $news_content;
+    }
+
+    public function delete_cover($nsn = "")
+    {
+
+        $this->TadUpFiles->set_col("news_pic", $nsn);
+        $this->TadUpFiles->del_files();
+        return;
     }
 
 }

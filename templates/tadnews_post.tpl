@@ -260,7 +260,7 @@
                 <{$smarty.const._MD_TADNEWS_ALWAYS_TOP}>
               </label>
               <span id="top_date_input">
-                <input type="text" name="always_top_date"  class="form-control" id="always_top_date"  value="<{$always_top_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',startDate:'%y-%M-{%d+14} %H:%m'})" align="absmiddle">
+                <input type="text" name="always_top_date"  class="form-control" id="always_top_date"  value="<{$always_top_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',startDate:'%y-%M-{%d+7} %H:%m',maxDate:'%y-%M-{%d+<{$top_max_day}>} %H:%m'})" align="absmiddle">
               </span>
             <{/if}>
           </div>
@@ -365,6 +365,11 @@
                 <option value="" <{if $use_pic_css==""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_NO}></option>
                 <option value="true" <{if $use_pic_css!=""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
               </select>
+            </div>
+            <div class="col-md-6">
+            <{if $pic}>
+              <a href="post.php?op=delete_cover&nsn=<{$nsn}>"><{$smarty.const._TAD_DEL}><{$smarty.const._MD_TADNEWS_NEWSPIC_TAB}></a>
+            <{/if}>
             </div>
           </div>
 

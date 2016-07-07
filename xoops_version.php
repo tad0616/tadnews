@@ -4,7 +4,7 @@ $modversion = array();
 $language   = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
-$modversion['version']     = 3.84;
+$modversion['version']     = 3.86;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author']      = 'Tad (tad0616@gmail.com)';
 $modversion['credits']     = 'geek01';
@@ -15,7 +15,7 @@ $modversion['image']       = "images/logo_{$language}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/06/30';
+$modversion['release_date']        = '2016/07/06';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status']       = 'release';
@@ -286,7 +286,16 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_TAB_NEWS_DESC;
 $modversion['blocks'][$i]['show_func']   = "tadnews_tab_news";
 $modversion['blocks'][$i]['template']    = "tadnews_block_tab_news.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_tab_news_edit";
-$modversion['blocks'][$i]['options']     = "|10|default|#B5AC5F|#E0D78C|#9C905C|#9C905C";
+$modversion['blocks'][$i]['options']     = "|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0";
+
+$i++;
+$modversion['blocks'][$i]['file']        = "tadnews_tag_news.php";
+$modversion['blocks'][$i]['name']        = _MI_TADNEWS_TAG_NEWS;
+$modversion['blocks'][$i]['description'] = _MI_TADNEWS_TAG_NEWS_DESC;
+$modversion['blocks'][$i]['show_func']   = "tadnews_tag_news";
+$modversion['blocks'][$i]['template']    = "tadnews_block_tag_news.tpl";
+$modversion['blocks'][$i]['edit_func']   = "tadnews_tag_news_edit";
+$modversion['blocks'][$i]['options']     = "|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0";
 
 //---偏好設定---//
 $i                                       = 1;
@@ -394,6 +403,14 @@ $modversion['config'][$i]['description'] = '_MI_TADNEWS_USE_TOP_GROUP_DESC';
 $modversion['config'][$i]['formtype']    = 'group_multi';
 $modversion['config'][$i]['valuetype']   = 'array';
 $modversion['config'][$i]['default']     = array();
+
+$i++;
+$modversion['config'][$i]['name']        = 'top_max_day';
+$modversion['config'][$i]['title']       = '_MI_TADNEWS_TOP_MAX_DAY';
+$modversion['config'][$i]['description'] = '_MI_TADNEWS_TOP_MAX_DAY_DESC';
+$modversion['config'][$i]['formtype']    = 'text';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 14;
 
 $i++;
 $modversion['config'][$i]['name']        = 'summary_lengths';

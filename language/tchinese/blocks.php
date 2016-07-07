@@ -102,3 +102,10 @@ define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', '呈現類型');
 define('_MB_TADNEWS_TAB_NEWS_DEFAULT', '橫向頁籤');
 define('_MB_TADNEWS_TAB_NEWS_VERTICAL', '垂直頁籤');
 define('_MB_TADNEWS_TAB_NEWS_ACCORDION', '伸縮選單');
+
+define('_MB_TADNEWS_ACTIVE_BG', '作用中的頁籤底色');
+define('_MB_TADNEWS_INACTIV_BG', '未作用的頁籤底色');
+define('_MB_TADNEWS_ACTIVE_BORDER_COLOR', '作用中的頁籤上邊框顏色');
+define('_MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR', '作用中的頁籤內容邊框顏色');
+define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', '加入所有最新消息頁籤（不分類）到最前面');
+define('_MB_TADNEWS_LATEST_NEWS_TAB', '所有消息');

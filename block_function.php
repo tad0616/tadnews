@@ -88,3 +88,43 @@ if (!function_exists("show_error")) {
         return;
     }
 }
+
+//取得所有標籤
+if (!function_exists("block_news_tags")) {
+    function block_news_tags($selected = "")
+    {
+        global $xoopsDB;
+
+        if (!empty($selected)) {
+            $sc = explode(",", $selected);
+        }
+
+        $js = "<script>
+            function bbv(){
+              i=0;
+              var arr = new Array();";
+
+        $sql    = "select tag_sn,tag from " . $xoopsDB->prefix("tad_news_tags") . " where enable='1' ";
+        $result = $xoopsDB->query($sql);
+        $option = "";
+        while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
+
+            $js .= "if(document.getElementById('c{$tag_sn}').checked){
+       arr[i] = document.getElementById('c{$tag_sn}').value;
+       i++;
+      }";
+            $ckecked = (in_array($tag_sn, $sc)) ? "checked" : "";
+            $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$tag_sn}' value='{$tag_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$tag_sn}'>$tag</label></span> ";
+            $tags[$tag_sn] = $tag;
+        }
+
+        $js .= "document.getElementById('bb').value=arr.join(',');
+    }
+    </script>";
+
+        $main['js']   = $js;
+        $main['form'] = $option;
+        $main['tags'] = $tags;
+        return $main;
+    }
+}

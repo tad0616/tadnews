@@ -2,20 +2,32 @@
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
 //區塊主函式 (顯示頁籤新聞)
-function tadnews_tab_news($options)
+function tadnews_tag_news($options)
 {
     //$block=list_block_cate_news($options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);
     global $xoTheme;
 
-    $ncsn_arr = explode(',', $options[0]);
+    $tags = block_news_tags();
+    // die(var_export($tags));
+    if (empty($options[0])) {
+        $tag_sn_arr = array_keys($tags['tags']);
+        // die(var_export($tag_sn_arr));
+    } else {
+        $tag_sn_arr = explode(',', $options[0]);
+    }
 
     include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
     $tadnews = new tadnews();
     $tadnews->set_news_kind("news");
-    $tadnews->set_show_mode('cate');
-    $tadnews->set_show_num($options[1]);
-    $tadnews->set_view_ncsn($ncsn_arr);
-    $block = $tadnews->get_cate_news('return');
+    foreach ($tag_sn_arr as $tag_sn) {
+        $tadnews->set_view_tag($tag_sn);
+        $tadnews->set_show_num($options[1]);
+        $block['all_news'][$tag_sn] = $tadnews->get_news('return');
+        $block['tags'][$tag_sn]     = $tags['tags'][$tag_sn];
+    }
+
+    // die(var_export($block['all_news'][1]));
+
     if (empty($block['all_news'])) {
         return;
     }
@@ -24,9 +36,9 @@ function tadnews_tab_news($options)
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/easy_responsive_tabs.php";
     $randStr         = randStr();
-    $responsive_tabs = new easy_responsive_tabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
+    $responsive_tabs = new easy_responsive_tabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
     $responsive_tabs->rander();
-    $block['tab_news_name'] = 'tab_news_' . $randStr;
+    $block['tag_news_name'] = 'tag_news_' . $randStr;
     $block['min_height']    = sizeof($ncsn_arr) * 55;
 
     if ($options[7] == '1') {
@@ -38,13 +50,14 @@ function tadnews_tab_news($options)
         $news                 = $tadnews->get_news('return');
         $block['latest_news'] = $news['page'];
     }
+
     return $block;
 }
 
 //區塊編輯函式
-function tadnews_tab_news_edit($options)
+function tadnews_tag_news_edit($options)
 {
-    $option = block_news_cate($options[0]);
+    $option = block_news_tags($options[0]);
 
     $form = "
     {$option['js']}
@@ -115,8 +128,6 @@ function tadnews_tab_news_edit($options)
             <input type='radio' name='options[7]'  value='0' " . chk($options[7], '0', 1) . ">" . _NO . "
         </td>
     </tr>
-
-
 
     </table>
   ";

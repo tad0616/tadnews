@@ -1,3 +1,18 @@
+TadNews 3.8.6 (2016-07-06 released)
+==================================================
+1.Fixed news category sort
+2.Resized the image in category news block
+3.Add top news max day
+4.Add RSS link
+5.Add Tab Color setup and show latest news tab to Tab block and Tag block
+6.Add cover pic delete function
+
+
+TadNews 3.8.5 (2016-07-04 released)
+==================================================
+1.Added tag news Block
+
+
 TadNews 3.8.4 (2016-06-30 released)
 ==================================================
 1.ajax.php and ajax2.php variable filter

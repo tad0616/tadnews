@@ -121,3 +121,7 @@ define('_MI_TADNEWS_HELP_OVERVIEW', '概要');
 
 define('_MI_TADNEWS_TAB_NEWS', '頁籤新聞區塊');
 define('_MI_TADNEWS_TAB_NEWS_DESC', '頁籤新聞區塊');
+define('_MI_TADNEWS_TAG_NEWS', '標籤新聞區塊');
+define('_MI_TADNEWS_TAG_NEWS_DESC', '標籤新聞區塊');
+define('_MI_TADNEWS_TOP_MAX_DAY', '置頂日數上限');
+define('_MI_TADNEWS_TOP_MAX_DAY_DESC', '新聞最多可以置頂幾天？');

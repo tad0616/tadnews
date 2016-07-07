@@ -37,6 +37,13 @@ switch ($op) {
         $tadnews->enable_tad_news($nsn);
         break;
 
+    //刪除封面圖
+    case "delete_cover";
+        $tadnews->delete_cover($nsn);
+        header("location:post.php?op=tad_news_form&nsn=$nsn");
+        exit;
+        break;
+
     default:
         $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn, $ncsn);

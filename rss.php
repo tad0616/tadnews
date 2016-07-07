@@ -6,13 +6,15 @@ include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 /*-----------function區--------------*/
 
 $ncsn = 0;
+$cate = array();
 if (isset($_GET['ncsn'])) {
     $ncsn = intval($_GET['ncsn']);
+    $cate = $tadnews->get_tad_news_cate($ncsn);
 }
 if (function_exists('mb_http_output')) {
     mb_http_output('pass');
 }
-header("Content-Type:text/xml; charset=utf-8");
+// header("Content-Type:text/xml; charset=utf-8");
 
 $tpl = new XoopsTpl();
 $tpl->xoops_setCaching(2);
@@ -28,7 +30,7 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
     $tadnews->set_cover(false);
     $all_news = $tadnews->get_news('return');
 
-    $all_news['nc_title'] = empty($all_news['show_cate_title']) ? _MD_TADNEWS_ALL_CATE : $all_news['show_cate_title'];
+    $all_news['nc_title'] = empty($ncsn) ? _MD_TADNEWS_ALL_CATE : $cate['nc_title'];
 
     if (is_array($all_news['page'])) {
         $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES);

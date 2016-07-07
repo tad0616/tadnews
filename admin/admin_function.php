@@ -179,7 +179,7 @@ function update_tad_news_cate($ncsn = "")
     }
     $setup = substr($setup, 0, -1);
 
-    $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set  of_ncsn = '{$_POST['of_ncsn']}', nc_title = '{$_POST['nc_title']}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}', sort = '{$_POST['sort']}',not_news='{$_POST['not_news']}',setup='{$setup}' where ncsn='$ncsn'";
+    $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set  of_ncsn = '{$_POST['of_ncsn']}', nc_title = '{$_POST['nc_title']}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$_POST['not_news']}',setup='{$setup}' where ncsn='$ncsn'";
     //die($sql);
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_UPDATE_ERROR1 . "<br>$sql");
 

@@ -120,3 +120,7 @@ define('_MI_TADNEWS_HELP_OVERVIEW', 'Overview');
 
 define('_MI_TADNEWS_TAB_NEWS', 'Tabs News');
 define('_MI_TADNEWS_TAB_NEWS_DESC', 'Tabs News');
+define('_MI_TADNEWS_TAG_NEWS', 'Tag News');
+define('_MI_TADNEWS_TAG_NEWS_DESC', 'Tag News');
+define('_MI_TADNEWS_TOP_MAX_DAY', 'Maximum number of days top news');
+define('_MI_TADNEWS_TOP_MAX_DAY_DESC', 'Top News limit the number of days?');
