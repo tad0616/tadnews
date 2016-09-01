@@ -127,6 +127,9 @@ $modversion['templates'][$i]['description'] = 'tadnews_adm_newspaper.tpl';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_adm_tag.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_adm_tag.tpl';
+$i++;
+$modversion['templates'][$i]['file']        = 'tadnews_adm_import.tpl';
+$modversion['templates'][$i]['description'] = 'tadnews_adm_import.tpl';
 
 //---評論設定---//
 $modversion['hasComments']          = 1;

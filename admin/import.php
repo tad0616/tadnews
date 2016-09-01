@@ -1,5 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = 'tadnews_adm_import.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
@@ -20,7 +21,7 @@ if (!empty($news)) {
 //檢查有無安裝新聞區模組
 function chk_news_mod($version)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsTpl;
 
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
@@ -39,7 +40,7 @@ function chk_news_mod($version)
         </form>";
     }
 
-    return $main;
+    $xoopsTpl->assign('main', $main);
 }
 
 //檢查分類
@@ -155,7 +156,7 @@ switch ($op) {
         break;
 
     default:
-        $main = chk_news_mod($version);
+        chk_news_mod($version);
         break;
 }
 

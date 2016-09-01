@@ -32,6 +32,7 @@ function tadnews_tab_news($options)
     if ($options[7] == '1') {
         $tadnews = new tadnews();
         $tadnews->set_show_mode('list');
+        $tadnews->set_show_num($options[1]);
         $tadnews->set_news_kind("news");
         $tadnews->set_use_star_rating(false);
         $tadnews->set_cover(false);

@@ -53,7 +53,7 @@ function add_to_menu($ncsn = "")
     $modhandler      = xoops_gethandler('module');
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
-        $sql = "insert into " . $xoopsDB->prefix("tad_themes_menu") . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1',0,'_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}')";
+        $sql = "insert into " . $xoopsDB->prefix("tad_themes_menu") . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1','0','_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}')";
         $xoopsDB->queryF($sql) or web_error($sql);
         //取得最後新增資料的流水編號
         $menuid = $xoopsDB->getInsertId();
