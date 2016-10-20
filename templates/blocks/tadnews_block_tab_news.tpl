@@ -23,6 +23,9 @@
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
           </div>
         <{/foreach}>
+        <div class="text-right">
+          [ <a href="<{$xoops_url}>/modules/tadnews/index.php">more...</a> ]
+        </div>
       </div>
     <{/if}>
     <{foreach item=all_news from=$block.all_news}>
