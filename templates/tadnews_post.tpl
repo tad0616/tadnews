@@ -157,8 +157,12 @@
       </label>
       <div class="col-md-4">
         <select name="kind" id="kind" class="form-control">
-          <option value="news"<{if $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
-          <option value="page"<{if $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
+          <{if $news_cate_kind_arr=='' or '0'|in_array:$news_cate_kind_arr}>
+            <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
+          <{/if}>
+          <{if $news_cate_kind_arr=='' or '1'|in_array:$news_cate_kind_arr}>
+          <option value="page"<{if $ncsn and  $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
+          <{/if}>
         </select>
       </div>
     </div>

@@ -63,7 +63,7 @@ function get_newspaper_set($nps_sn = "")
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$nps_sn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -73,7 +73,7 @@ function get_newspaper($npsn = "")
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_paper") . " where npsn='{$npsn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -88,7 +88,7 @@ function preview_newspaper($npsn = "")
 
     $np                                 = get_newspaper($npsn);
     $sql                                = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
-    $result                             = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result                             = $xoopsDB->query($sql) or web_error($sql);
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $myts             = &MyTextSanitizer::getInstance();

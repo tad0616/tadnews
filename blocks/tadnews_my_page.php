@@ -36,7 +36,7 @@ function tadnews_my_page_edit($options)
 
     $sql = "select * from " . $xoopsDB->prefix("tad_news") . " where enable='1' order by  $order start_day desc";
 //die($sql);
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $myts = MyTextSanitizer::getInstance();
     $opt  = "";

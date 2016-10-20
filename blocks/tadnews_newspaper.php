@@ -5,7 +5,7 @@ function tadnews_newspaper($options)
     global $xoopsDB, $xoopsUser;
 
     $sql           = "select count(*) from " . $xoopsDB->prefix("tad_news_paper_email") . "";
-    $result        = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result        = $xoopsDB->query($sql) or web_error($sql);
     list($counter) = $xoopsDB->fetchRow($result);
 
     //找出現有設定組

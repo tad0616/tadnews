@@ -1,5 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = 'tadnews_adm_import.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
@@ -20,7 +21,7 @@ if (!empty($news)) {
 //檢查有無安裝新聞區模組
 function chk_news_mod($version)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsTpl;
 
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
@@ -39,7 +40,7 @@ function chk_news_mod($version)
         </form>";
     }
 
-    return $main;
+    $xoopsTpl->assign('main', $main);
 }
 
 //檢查分類
@@ -52,7 +53,7 @@ function chk_cate($topic_pid = "", $left = 0)
     }
 
     $sql    = "select topic_id,topic_pid,topic_title from " . $xoopsDB->prefix("topics") . " where topic_pid='{$topic_pid}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $main = "";
 
@@ -73,7 +74,7 @@ function chk_stories($topicid = "", $left = 0)
     $left += 14;
 
     $sql    = "select storyid,title  from " . $xoopsDB->prefix("stories") . " where topicid ='{$topicid}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $main   = "";
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";
@@ -155,7 +156,7 @@ switch ($op) {
         break;
 
     default:
-        $main = chk_news_mod($version);
+        chk_news_mod($version);
         break;
 }
 

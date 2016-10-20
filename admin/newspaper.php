@@ -12,7 +12,7 @@ function newspaper_set_table($sel_nps_sn = "")
     $option = "";
     //找出現有設定組
     $sql    = "select nps_sn,title from " . $xoopsDB->prefix("tad_news_paper_setup") . "";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
         if ($sel_nps_sn == $nps_sn) {
             $selected = "selected";
@@ -29,7 +29,7 @@ function newspaper_set_table($sel_nps_sn = "")
 
     $sql = "select a.npsn,a.number,b.title,a.np_date from " . $xoopsDB->prefix("tad_news_paper") . " as a ," . $xoopsDB->prefix("tad_news_paper_setup") . " as b where a.nps_sn=b.nps_sn and b.nps_sn='{$sel_nps_sn}' order by a.np_date desc";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
 
     $js = "
@@ -159,7 +159,7 @@ function save_newspaper_set($nps_sn = "")
         $sql = "update " . $xoopsDB->prefix("tad_news_paper_setup") . " set title='{$title}',head='{$head}',foot='{$foot}',themes='{$themes}' where nps_sn='{$nps_sn}'";
     }
 
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     //取得最後新增資料的流水編號
     $nps_sn = (empty($nps_sn)) ? $xoopsDB->getInsertId() : $nps_sn;
@@ -172,7 +172,7 @@ function get_max_number($nps_sn = "")
 {
     global $xoopsDB;
     $sql          = "select max(`number`) from " . $xoopsDB->prefix("tad_news_paper") . " where nps_sn='{$nps_sn}'";
-    $result       = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result       = $xoopsDB->query($sql) or web_error($sql);
     list($number) = $xoopsDB->fetchRow($result);
     $max_number   = (empty($number)) ? 1 : $number + 1;
     return $max_number;
@@ -186,7 +186,7 @@ function add_newspaper($nps_sn = "")
     $cates  = get_all_news_cate();
     $myts   = &MyTextSanitizer::getInstance();
     $sql    = "select * from " . $xoopsDB->prefix("tad_news") . " where enable='1' order by start_day desc";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $opt = $opt2 = "";
     while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
@@ -215,7 +215,7 @@ function save_newspaper()
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "insert into " . $xoopsDB->prefix("tad_news_paper") . " (`nps_sn`, `number`, `nsn_array`, `np_date`) values('{$_POST['nps_sn']}','{$_POST['number']}','{$all_news}','$now')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->query($sql) or web_error($sql);
 
     //取得最後新增資料的流水編號
     $npsn = $xoopsDB->getInsertId();
@@ -242,7 +242,7 @@ function edit_newspaper($npsn = "")
         }
         $sql = "select * from " . $xoopsDB->prefix("tad_news") . " $news";
 
-        $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+        $result = $xoopsDB->query($sql) or web_error($sql);
         while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
 
             $news_title   = $myts->htmlSpecialChars($news_title);
@@ -300,7 +300,7 @@ function save_all($npsn = "")
     $np_title   = $myts->addSlashes($_POST['np_title']);
 
     $sql = "update " . $xoopsDB->prefix("tad_news_paper") . " set np_content='{$np_content}',np_title='{$np_title}' where npsn='{$npsn}'";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->query($sql) or web_error($sql);
 
     return $npsn;
 }
@@ -313,7 +313,7 @@ function sendmail_form($npsn = "")
 
     //取得郵寄名單
     $sql    = "select email from " . $xoopsDB->prefix("tad_news_paper_email") . " where nps_sn='{$newspaper['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
 
     while (list($email) = $xoopsDB->fetchRow($result)) {
@@ -326,7 +326,7 @@ function sendmail_form($npsn = "")
 
     //取得已寄名單
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_paper_send_log") . " where `npsn`='$npsn' order by send_time";
-    $result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->queryF($sql) or web_error($sql);
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
@@ -408,7 +408,7 @@ function del_newspaper($npsn = "")
     global $xoopsDB;
 
     $sql = "delete from " . $xoopsDB->prefix("tad_news_paper") . " where npsn='{$npsn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 
 }
 
@@ -418,7 +418,7 @@ function del_newspaper_set($nps_sn = "")
     global $xoopsDB;
 
     $sql = "delete from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$nps_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 
 }
 
@@ -437,7 +437,7 @@ function newspaper_email($nps_sn = "")
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $memail = isset($_GET['memail']) ? htmlspecialchars($_GET['memail']) : "";
 
@@ -497,7 +497,7 @@ function delete_tad_news_email($email = "", $nps_sn = "")
 
     $sql = "delete from " . $xoopsDB->prefix("tad_news_paper_email") . " where email like '{$email_part}%' and nps_sn='{$nps_sn}'";
 
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 
 }
 
@@ -507,7 +507,7 @@ function update_email($old_email, $new_email, $nps_sn)
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
 
     $sql = "update " . $xoopsDB->prefix("tad_news_paper_email") . " set email='$new_email' where email='$old_email' and nps_sn='{$nps_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 
 }
 
@@ -532,7 +532,7 @@ function email_import($email_import = "", $nps_sn = "")
 
         if (!empty($email)) {
             $sql = "replace into " . $xoopsDB->prefix("tad_news_paper_email") . " (`nps_sn`,`email`,`order_date`) values('$nps_sn','$email','{$now}')";
-            $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+            $xoopsDB->queryF($sql) or web_error($sql);
         }
     }
 }
@@ -547,7 +547,7 @@ function sendmail_log($npsn = "")
 
     $sql = "select * from " . $xoopsDB->prefix("tad_news_paper_send_log") . " where `npsn`='$npsn' order by send_time";
 
-    $result = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->queryF($sql) or web_error($sql);
     $total  = $xoopsDB->getRowsNum($result);
     $empty  = false;
     if (empty($total)) {

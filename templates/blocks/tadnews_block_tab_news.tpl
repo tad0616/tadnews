@@ -33,6 +33,9 @@
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
           </div>
         <{/foreach}>
+        <div class="text-right">
+          [ <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">more...</a> ]
+        </div>
       </div>
     <{/foreach}>
   </div>

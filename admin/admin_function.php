@@ -57,7 +57,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
     $level++;
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='{$not_news}' and of_ncsn='{$of_ncsn}' order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     //$catearr="";
 
@@ -152,7 +152,7 @@ function insert_tad_news_cate()
     $nc_title = $myts->addSlashes($_POST['nc_title']);
 
     $sql = "insert into " . $xoopsDB->prefix("tad_news_cate") . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$_POST['of_ncsn']}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$_POST['sort']}','{$_POST['not_news']}','{$setup}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_DB_ADD_ERROR1);
+    $xoopsDB->queryF($sql) or web_error($sql);
     //取得最後新增資料的流水編號
     $ncsn = $xoopsDB->getInsertId();
 
@@ -181,7 +181,7 @@ function update_tad_news_cate($ncsn = "")
 
     $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set  of_ncsn = '{$_POST['of_ncsn']}', nc_title = '{$_POST['nc_title']}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$_POST['not_news']}',setup='{$setup}' where ncsn='$ncsn'";
     //die($sql);
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_UPDATE_ERROR1 . "<br>$sql");
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     if (!empty($_FILES['cate_pic']['name'])) {
         mk_thumb($ncsn, "cate_pic", $xoopsModuleConfig['cate_pic_width']);
@@ -211,10 +211,10 @@ function delete_tad_news_cate($ncsn = "")
 
     //先找看看底下有無分類，若有將其父分類變成原分類之父分類
     $sql = "update " . $xoopsDB->prefix("tad_news_cate") . "  set  of_ncsn = '{$cate_org['of_ncsn']}' where of_ncsn='$ncsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_DEL_ERROR1 . "<br>$sql");
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $sql = "delete from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='$ncsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_DEL_ERROR1);
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 //轉換分類類型
@@ -223,13 +223,13 @@ function change_kind($ncsn = "", $not_news = "")
     global $xoopsDB, $xoopsModuleConfig;
 
     $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set not_news='{$not_news}' , of_ncsn='0' where ncsn ='{$ncsn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_UPDATE_ERROR1);
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     //先找看看底下有無分類，若有將其也一起變
     $sub_cate = get_sub_cate($ncsn);
     if (!empty($sub_cate)) {
         $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set not_news='{$not_news}' where ncsn in ($sub_cate)";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADNEWS_DB_UPDATE_ERROR1);
+        $xoopsDB->queryF($sql) or web_error($sql);
     }
 
     if ($not_news == 1) {
@@ -246,7 +246,7 @@ function get_sub_cate($of_ncsn = "")
 {
     global $xoopsDB;
     $sql    = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='$of_ncsn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql);
     //echo "<p>$sql</p>";
     while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {
         $ccc = get_sub_cate($sub_ncsn);
@@ -268,7 +268,7 @@ function move_to_cate($ncsn = "", $to_ncsn = "")
     global $xoopsDB;
 
     $sql = "update " . $xoopsDB->prefix("tad_news") . " set ncsn='{$to_ncsn}' where ncsn='{$ncsn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
     return;
 }
 
@@ -282,7 +282,7 @@ function move_news($nsn_arr = array(), $ncsn = "")
 
     foreach ($nsn_arr as $nsn) {
         $sql = "update " . $xoopsDB->prefix("tad_news") . " set ncsn='{$ncsn}' where nsn='{$nsn}'";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+        $xoopsDB->queryF($sql) or web_error($sql);
     }
     return;
 }
@@ -297,7 +297,7 @@ function del_news($nsn_arr = array())
 
     foreach ($nsn_arr as $nsn) {
         $sql = "delete from " . $xoopsDB->prefix("tad_news") . " where nsn='{$nsn}'";
-        $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+        $xoopsDB->queryF($sql) or web_error($sql);
     }
     return;
 }
