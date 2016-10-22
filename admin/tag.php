@@ -48,7 +48,7 @@ function insert_tad_news_tags()
     global $xoopsDB;
 
     $sql = "insert into " . $xoopsDB->prefix("tad_news_tags") . "  (`tag` , `font_color`, `color`  , `enable`) values('{$_POST['tag']}', '{$_POST['font_color']}', '{$_POST['color']}', '{$_POST['enable']}') ";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 function update_tad_news_tags($tag_sn)
@@ -56,7 +56,7 @@ function update_tad_news_tags($tag_sn)
     global $xoopsDB;
     $sql = "update " . $xoopsDB->prefix("tad_news_tags") . "  set  tag = '{$_POST['tag']}',font_color = '{$_POST['font_color']}',color = '{$_POST['color']}',enable = '{$_POST['enable']}' where tag_sn='{$tag_sn}'";
 
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 function tad_news_tags_stat($enable, $tag_sn)
@@ -64,7 +64,7 @@ function tad_news_tags_stat($enable, $tag_sn)
     global $xoopsDB;
 
     $sql = "update " . $xoopsDB->prefix("tad_news_tags") . "  set enable = '{$enable}' where tag_sn='{$tag_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 function del_tag($tag_sn = "")
@@ -72,7 +72,7 @@ function del_tag($tag_sn = "")
     global $xoopsDB;
 
     $sql = "delete from " . $xoopsDB->prefix("tad_news_tags") . " where tag_sn='{$tag_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $xoopsDB->queryF($sql) or web_error($sql);
 
 }
 

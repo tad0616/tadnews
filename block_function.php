@@ -64,7 +64,7 @@ if (!function_exists("get_all_news_cate")) {
     {
         global $xoopsDB;
         $sql    = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " order by sort";
-        $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+        $result = $xoopsDB->query($sql) or web_error($sql);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $data[$ncsn] = $nc_title;

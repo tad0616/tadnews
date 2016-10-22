@@ -1,3 +1,18 @@
+TadNews 3.8.8 (2016-10-14 released)
+==================================================
+1. redesigned pda.php phone screen
+2. Revised the article published article default type
+
+
+TadNews 3.8.7 (2016-10-11 released)
+==================================================
+1. Fix the problem that the contents of "news" module can not be imported
+2. Adjust the error message format
+3. Add more links to the tab and the label blocks
+4. Correct the classification menu sometimes incorrect problem
+5. Fixed a bug that the "List of articles" setting in the "Tabs News" block has no effect
+
+
 TadNews 3.8.6 (2016-07-06 released)
 ==================================================
 1.Fixed news category sort
