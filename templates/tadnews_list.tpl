@@ -15,7 +15,7 @@
 
 <{if $page}>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <table class="table table-striped table-bordered">
         <tbody>
           <{foreach item=page from=$page}>

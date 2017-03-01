@@ -520,7 +520,7 @@ class tadnews
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
-        $ncsn_ok = $cates = $cate_setup = "";
+        $ncsn_ok = $cates = $cate_setup = $only_title_cate = '';
         while ($all_cate = $xoopsDB->fetchArray($result)) {
             foreach ($all_cate as $k => $v) {
                 $$k = $v;
@@ -533,7 +533,6 @@ class tadnews
 
             //只有可讀的分類才納入(或者允許看標題的也可以納入
             $cate_read_power = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, "read");
-
             if ($cate_read_power or $only_title) {
                 //該使用者可觀看的分類編號陣列
                 $ncsn_ok[] = $ncsn;
@@ -1042,8 +1041,9 @@ class tadnews
         $sql    = "select ncsn,nc_title,enable_group,enable_post_group,cate_pic,setup from " . $xoopsDB->prefix("tad_news_cate") . " where 1  $and_cate $kind_chk order by sort";
         $result = $xoopsDB->query($sql) or web_error($sql);
 
-        $i          = 0;
-        $only_title = false;
+        $i               = 0;
+        $only_title      = false;
+        $only_title_cate = '';
         while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
 
             //只有可讀的分類才納入
@@ -1068,8 +1068,9 @@ class tadnews
 
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
 
-            $j       = 0;
-            $subnews = "";
+            $j               = 0;
+            $subnews         = "";
+            $only_title_cate = '';
 
             $myts = MyTextSanitizer::getInstance();
             while ($news = $xoopsDB->fetchArray($result2)) {
@@ -1110,7 +1111,7 @@ class tadnews
                     } else {
                         $_SESSION['have_pass'][] = $nsn;
                     }
-                } elseif ($only_title_cate[$ncsn]) {
+                } elseif (isset($only_title_cate[$ncsn]) and !empty($only_title_cate[$ncsn])) {
                     // die('enable_group:' . $enable_group);
                     $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
                 }
@@ -1141,7 +1142,7 @@ class tadnews
 
                 $subnews[$j]['content']        = $myts->displayTarea($content, 1, 1, 1, 1, 0);
                 $subnews[$j]['post_date']      = substr($start_day, 0, 10);
-                $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, $post_date);
+                $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, substr($start_day, 0, 10));
                 $subnews[$j]['prefix_tag']     = $this->mk_prefix_tag($prefix_tag);
                 $subnews[$j]['nsn']            = $nsn;
                 $subnews[$j]['news_title']     = $myts->htmlSpecialChars($news_title);
@@ -1446,9 +1447,9 @@ class tadnews
         <div class=\"row\">
           <h3>" . _TADNEWS_BATCH_TOOLS . "</h3>
           <div class='well'>
-            <div class='col-md-3'>{$move}</div>
-            <div class='col-md-3'>{$del}</div>
-            <div class='col-md-3'>
+            <div class='col-sm-3'>{$move}</div>
+            <div class='col-sm-3'>{$del}</div>
+            <div class='col-sm-3'>
             <input type='hidden' name='kind' value='{$this->kind}'>
             <input type='hidden' name='op' value='batch'>
             <input type='submit' value='" . _TADNEWS_NP_SUBMIT . "'>
@@ -1481,7 +1482,7 @@ class tadnews
                 if (in_array($gid, $have_read_group_arr)) {
                     $time = $this->chk_sign_status($uid, $nsn);
                     if (!empty($time)) {
-                        $main = "<div class='col-md-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . "</div>";
+                        $main = "<div class='col-sm-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . "</div>";
                     } else {
                         $main = "
                          <form action='index.php' method='post' class='form-horizontal'>
@@ -1781,12 +1782,12 @@ class tadnews
 
         $SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false, $enable_group, 4, true);
         $SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-        $SelectGroup_name->setExtra("class='col-md-12 form-control'");
+        $SelectGroup_name->setExtra("class='col-sm-12 form-control'");
         $enable_group = $SelectGroup_name->render();
 
         $SelectGroup_name2 = new XoopsFormSelectGroup("", "have_read_group", false, $have_read_group, 4, true);
         $SelectGroup_name2->addOption("", _TADNEWS_ALL_NO, false);
-        $SelectGroup_name2->setExtra("class='col-md-12 form-control'");
+        $SelectGroup_name2->setExtra("class='col-sm-12 form-control'");
         $have_read_group = $SelectGroup_name2->render();
 
         //標籤選單
@@ -1856,7 +1857,7 @@ class tadnews
         $css     = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
         //die($pic_css);
-        $cate_menu = empty($cate_num) ? "<div class='col-md-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
+        $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = "";
         if ($mode == "return") {

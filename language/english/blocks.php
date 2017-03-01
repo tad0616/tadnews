@@ -105,3 +105,5 @@ define('_MB_TADNEWS_ACTIVE_BORDER_COLOR', 'Active tab border color');
 define('_MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR', 'Active tab content border color');
 define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', 'Add all the latest news tab to the left');
 define('_MB_TADNEWS_LATEST_NEWS_TAB', 'latest news');
+
+define('_MB_TADNEWS_PAGE_SHOW_TITLE', 'Show category headings?');

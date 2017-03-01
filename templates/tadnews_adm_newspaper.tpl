@@ -65,7 +65,7 @@
     <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
 
       <div class="form-group">
-        <div class="col-md-11">
+        <div class="col-sm-11">
           <div class="alert alert-info">
              <{$newspaper_set_title}>
           </div>
@@ -75,12 +75,12 @@
 
 
       <div class="form-group">
-        <div class="col-md-5">
+        <div class="col-sm-5">
           <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
             <{$opt}>
           </select>
         </div>
-        <div class="col-md-1 text-center">
+        <div class="col-sm-1 text-center">
           <img src="../images/right.png" onclick="tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();"><br>
           <img src="../images/left.png" onclick="tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();"><br><br>
 
@@ -88,7 +88,7 @@
           <img src="../images/down.png" onclick="tmt.spry.linkedselect.util.moveOptionDown('destination');getOptions();">
         </div>
 
-        <div class="col-md-5">
+        <div class="col-sm-5">
           <select id="destination" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
            <{$opt2}>
           </select>
@@ -96,7 +96,7 @@
       </div>
 
       <div class="form-group">
-        <div class="col-md-11 text-center">
+        <div class="col-sm-11 text-center">
           <input type="hidden" name="op" value="save_newspaper">
           <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
           <input type="hidden" name="all_news" id="all_news">
@@ -109,22 +109,22 @@
     <h2><{$smarty.const._MA_TADNEWS_NP_STEP3}></h2>
     <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
       <div class="form-group">
-        <label class="col-md-2 control-label">
+        <label class="col-sm-2 control-label">
           <{$smarty.const._MA_TADNEWS_NP_SUB_TITLE}>
         </label>
-        <div class="col-md-10">
+        <div class="col-sm-10">
           <input type="text" name="np_title" class="form-control" value="<{$np_title}>">
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <{$editor}>
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-md-12 text-center">
+        <div class="col-sm-12 text-center">
           <input type="hidden" name="npsn" value="<{$npsn}>">
           <input type="hidden" name="op" value="save_all">
           <button type="submit" class="btn btn-primary"><{$smarty.const._TADNEWS_SUBMIT}></button>
@@ -190,7 +190,7 @@
     <h2><{$title}><{$smarty.const._MA_TADNEWS_NP_EMAIL}></h2>
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-sm-12">
         <a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a>
       </div>
     </div>
@@ -242,7 +242,7 @@
       </div>
     <{/if}>
     <form action="newspaper.php" method="post">
-      <textarea name="email_import" class="col-md-12" placeholder="<{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}>"></textarea>
+      <textarea name="email_import" class="col-sm-12" placeholder="<{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}>"></textarea>
       <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
       <input type="hidden" name="op" value="email_import">
       <div class="text-center" style="margin: 20px 0px;">
@@ -253,7 +253,7 @@
     <h2><{$title}></h2>
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-sm-12">
         <a href="newspaper.php?nps_sn=<{$nps_sn}>" class="btn btn-info"><{$back}></a>
       </div>
     </div>
@@ -280,13 +280,13 @@
 
     <{$js}>
     <div class="row" style="margin:10px;">
-      <div class="col-md-5">
-        <select name="nps_sn" id="nps_sn" class="form-control col-md-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
+      <div class="col-sm-5">
+        <select name="nps_sn" id="nps_sn" class="form-control col-sm-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
           <option value=""><{$smarty.const._MA_TADNEWS_NP_OPTION}></option>
           <{$option}>
         </select>
       </div>
-      <div class="col-md-7">
+      <div class="col-sm-7">
         <{$create_btn}>
         <{$del_btn}>
         <{$edit_btn}>

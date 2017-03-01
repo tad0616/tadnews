@@ -4,7 +4,7 @@ $modversion = array();
 $language   = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
-$modversion['version']     = 3.88;
+$modversion['version']     = 3.91;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author']      = 'Tad (tad0616@gmail.com)';
 $modversion['credits']     = 'geek01';
@@ -15,7 +15,7 @@ $modversion['image']       = "images/logo_{$language}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/10/14';
+$modversion['release_date']        = '2017/01/17';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status']       = 'release';
@@ -280,7 +280,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_LIST_DESC;
 $modversion['blocks'][$i]['show_func']   = "tadnews_page_list";
 $modversion['blocks'][$i]['template']    = "tadnews_block_page_list.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_page_list_edit";
-$modversion['blocks'][$i]['options']     = "|info|1";
+$modversion['blocks'][$i]['options']     = "|info|1|1";
 
 $i++;
 $modversion['blocks'][$i]['file']        = "tadnews_tab_news.php";

@@ -10,7 +10,7 @@
 
   <div class="row">
     <{foreach item=sign from=$sign}>
-      <div class="col-md-2 well">
+      <div class="col-sm-2 well">
         <div><a href="index.php?uid=<{$sign.uid}>&op=list_user_sign"><{$sign.uid_name}></a></div>
         <div><{$sign.sign_time}></div>
       </div>
@@ -24,7 +24,7 @@
 
   <div class="row">
     <{foreach item=sign from=$sign}>
-      <div class="col-md-3 well">
+      <div class="col-sm-3 well">
         <div>[<{$sign.nsn}>] <a href='<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$sign.nsn}>'><{$sign.news_title}></a></div>
         <div><{$sign.sign_time}></div>
       </div>

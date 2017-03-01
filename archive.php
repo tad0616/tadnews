@@ -51,14 +51,17 @@ function archive($date = "")
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$date = (!isset($_REQUEST['date'])) ? date("Y-m") : substr($_REQUEST['date'], 0, 7);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op       = system_CleanVars($_REQUEST, 'op', '', 'string');
+$files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
+$date     = system_CleanVars($_REQUEST, 'date', date("Y-m"), 'string');
+$date     = substr($date, 0, 7);
+
 switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
-        $TadUpFiles->add_file_counter($files_sn, $hash = false);
+        $TadUpFiles->add_file_counter($files_sn, false);
         exit;
         break;
 

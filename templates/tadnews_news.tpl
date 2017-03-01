@@ -12,7 +12,7 @@
     <{if $page.enable=="1" or $page.uid==$uid}>
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <div <{if $page.need_sign}>style="background-image: url('<{$page.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
             <div style="padding:10px 0px;">
               <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size: 24px;  font-weight: normal; line-height: 150%;">
@@ -25,7 +25,7 @@
 
 
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-sm-9">
           <{$page.prefix_tag}>
           <span style="font-size: 11px;">
             <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
@@ -33,13 +33,13 @@
           </span>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-sm-3">
           <div class="pull-right"><{$page.star}></div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <div style="border:1px solid #efefef; background-color: #fefefe; padding: 30px; margin:10px auto; line-height: 2em; font-weight: normal; <{$block.summary_css}>">
             <{$page.pic}>
             <{$page.content}>
@@ -70,12 +70,12 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <{if $page.back_news_link}>
             <a href="<{$page.back_news_link}>" class="btn btn-default btn-block"><img src="images/left.png" hspace=2 align="absmiddle" alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
           <{/if}>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <{if $page.next_news_link}>
             <a href="<{$page.next_news_link}>" class="btn btn-default btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 align="absmiddle" alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
           <{/if}>
@@ -90,13 +90,13 @@
       <{/if}>
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <{$page.facebook_comments}>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <div style="text-align: center; padding: 3px; margin: 3px;">
             <{$commentsnav}>
             <{$lang_notice}>
@@ -121,8 +121,8 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6 text-left"><{$page.back_news}></div>
-        <div class="col-md-6 text-right"><{$page.next_news}></div>
+        <div class="col-sm-6 text-left"><{$page.back_news}></div>
+        <div class="col-sm-6 text-right"><{$page.next_news}></div>
       </div>
 
     <{/if}>

@@ -8,7 +8,7 @@
 
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
     <div class="input-group">
       <span class="input-group-addon"><{$smarty.const._MD_TADNEWS_ARCHIVE}></span>
       <select onChange="location.href='archive.php?date='+this.value" class="form-control">
@@ -21,7 +21,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
     <table class="table table-striped table-bordered">
       <tr><th><{$date_title}></th></tr>
       <{foreach item=page from=$page}>

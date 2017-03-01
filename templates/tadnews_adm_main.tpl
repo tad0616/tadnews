@@ -45,7 +45,7 @@
   <{$del_js}>
 
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-sm-3">
 
       <div id="save_msg"></div>
 
@@ -74,17 +74,17 @@
 
     </div>
 
-    <div class="col-md-9">
+    <div class="col-sm-9">
 
       <{if $ncsn!=""}>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <h3>
               <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
               <a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
             </h3>
           </div>
-          <div class="col-md-6 text-right">
+          <div class="col-sm-6 text-right">
             <div style="margin-top: 10px;">
               <{if $now_op!="tad_news_cate_form" and $ncsn}>
 
@@ -105,54 +105,54 @@
           <div class="well" style="background-color:#EEFFCC;">
 
             <div class="form-group">
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_CATE_TITLE}>
               </label>
-              <div class="col-md-10">
+              <div class="col-sm-10">
                 <input type="text" name="nc_title" id="nc_title" class="form-control" value="<{$nc_title}>">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_PARENT_CATE}>
               </label>
-              <div class="col-md-4">
+              <div class="col-sm-4">
                 <select name="of_ncsn" size=1 id="of_ncsn" class="form-control">
                   <{$cate_select}>
                 </select>
               </div>
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_CATE_PIC}>
               </label>
-              <div class="col-md-4">
+              <div class="col-sm-4">
                 <input type="file" id="cate_pic" name="cate_pic">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP}><br>
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}>
               </label>
-              <div class="col-md-4">
+              <div class="col-sm-4">
                 <{$enable_group}>
               </div>
 
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP}><br>
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}>
               </label>
-              <div class="col-md-4">
+              <div class="col-sm-4">
                 <{$enable_post_group}>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_NO_PERMISSION}><{$smarty.const._TAD_FOR}>
               </label>
-              <div class="col-md-4">
+              <div class="col-sm-4">
                 <label class="radio-inline">
                   <input type="radio" name="setup[only_title]" id="only_title_1" value="1" <{if $only_title=='1'}>checked<{/if}>>
                   <{$smarty.const._MA_TADNEWS_DISPLAY_TITLE}>
@@ -225,20 +225,20 @@
           <div class="well" id="batch_tool" style="display: none;">
 
             <div class="form-group">
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <input type='radio' name='act' value='del_news'>
                 <{$smarty.const._TADNEWS_DEL}>
               </label>
 
-              <label class="col-md-2 control-label">
+              <label class="col-sm-2 control-label">
                 <input type='radio' name='act' value='move_news' id="move">
                 <{$smarty.const._TADNEWS_MOVE_TO}>
               </label>
-              <div class="col-md-4">
+              <div class="col-sm-4">
                 <select name='ncsn' class="form-control" onChange="check_one('move',false)"><{$options}></select>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-sm-3">
                 <input type='hidden' name='kind' value='news'>
                 <input type='hidden' name='op' value='batch'>
                 <button type='submit' class='btn btn-primary'><{$smarty.const._TAD_SUBMIT}></button>

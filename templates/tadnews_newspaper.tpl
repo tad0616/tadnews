@@ -9,7 +9,7 @@
       <tbody>
         <{foreach item=page from=$page}>
           <tr>
-            <td class="col-md-3"><{$page.np_date}></td>
+            <td class="col-sm-3"><{$page.np_date}></td>
             <td><a href="<{$xoops_url}>/modules/tadnews/newspaper.php?op=preview&npsn=<{$page.allnpsn}>" target="_blank">
             <{$page.title}></a>
             </td>

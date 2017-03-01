@@ -1,3 +1,17 @@
+TadNews 3.91 (2017-01-17 released)
+====================================================
+1.The "Custom page menu" section includes the option "Show category title"
+
+
+TadNews 3.9 (2017-01-11 released)
+====================================================
+1.Fixed a problem that the "restricted read group" has no effect.
+
+
+TadNews 3.8.9 (2017-01-07 released)
+====================================================
+1.Change the col-md of boootstrap to col-sm
+
 TadNews 3.8.8 (2016-10-14 released)
 ==================================================
 1. redesigned pda.php phone screen

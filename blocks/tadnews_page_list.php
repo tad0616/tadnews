@@ -70,8 +70,9 @@ function tadnews_page_list($options)
             }
         }
     }
-    $block['pages'] = $page;
-    $block['panel'] = $options[1];
+    $block['pages']      = $page;
+    $block['panel']      = $options[1];
+    $block['show_title'] = $options[3];
 
     return $block;
 }
@@ -88,8 +89,10 @@ function tadnews_page_list_edit($options)
     $panel_warning = $options[1] == 'warning' ? 'selected' : '';
     $panel_danger  = $options[1] == 'danger' ? 'selected' : '';
 
-    $sub_cate    = $options[2] == 1 ? 'checked' : '';
-    $no_sub_cate = $options[2] == 0 ? 'checked' : '';
+    $sub_cate        = $options[2] == 1 ? 'checked' : '';
+    $no_sub_cate     = $options[2] == 0 ? 'checked' : '';
+    $show_title      = $options[3] != 0 ? 'checked' : '';
+    $dont_show_title = $options[3] == 0 ? 'checked' : '';
 
     $form = "
     " . _MB_TADNEWS_PAGE_EDIT_BITEM0 . "
@@ -116,6 +119,14 @@ function tadnews_page_list_edit($options)
     </label>
     <label for='not_use_panel'>
     <INPUT type='radio' name='options[2]' value='0' id='no_sub_cate' $no_sub_cate>" . _NO . "
+    </label>
+    <br />
+    " . _MB_TADNEWS_PAGE_SHOW_TITLE . "
+    <label for='use_panel'>
+    <INPUT type='radio' name='options[3]' value='1' id='show_title' $show_title>" . _YES . "
+    </label>
+    <label for='not_use_panel'>
+    <INPUT type='radio' name='options[3]' value='0' id='dont_show_title' $dont_show_title>" . _NO . "
     </label>
       ";
     return $form;

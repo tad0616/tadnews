@@ -12,18 +12,18 @@
 <{foreach item=all_news from=$all_news}>
 
   <div class="row" style="margin: 40px 0px 0px;">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <a href="index.php?ncsn=<{$all_news.ncsn}>" style="font-size: 30px;"><{$all_news.nc_title}></a>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-sm-2">
       <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
         <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" style="width: 100%;">
       </a>
     </div>
-    <div class="col-md-10">
+    <div class="col-sm-10">
       <{if $all_news.news}>
         <table class="table table-striped table-bordered">
           <{foreach  item=news from=$all_news.news}>
@@ -44,7 +44,7 @@
 
       <{else}>
         <div class="row">
-          <div class="col-md-12" style="margin: 2px 0px; padding:2px;">
+          <div class="col-sm-12" style="margin: 2px 0px; padding:2px;">
             <div style="font-size: 30px; color: #cfcfcf; padding-top: 30px;">
               <{$smarty.const._TADNEWS_EMPTY}>
             </div>

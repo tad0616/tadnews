@@ -80,14 +80,14 @@
       $("#new_folder_icon").hide();
       $("#new_folder_col").show();
       $("<option value='0'>/</option>").prependTo("#news_ncsn");
-      $("#news_title_input_col").removeClass("col-md-7").addClass("col-md-5");
+      $("#news_title_input_col").removeClass("col-sm-7").addClass("col-sm-5");
     });
 
     $("#new_page_folder_icon").click(function() {
       $("#new_page_folder_icon").hide();
       $("#new_page_folder_col").show();
       $("<option value='0'>/</option>").prependTo("#page_ncsn");
-      $("#page_title_input_col").removeClass("col-md-9").addClass("col-md-7");
+      $("#page_title_input_col").removeClass("col-sm-9").addClass("col-sm-7");
     });
 
     var $tabs = $("#<{$jquery_tabs_id}>").tabs({ cookie: { expires: 30 } });
@@ -138,11 +138,11 @@
   <{else}>
   <div class="row">
     <{if $pic}>
-      <div class="col-md-2">
+      <div class="col-sm-2">
         <div style="background-image: url('<{$pic}>'); background-size: cover; width: 120px; height: 90px;"></div>
       </div>
     <{/if}>
-    <div class="col-md-10">
+    <div class="col-sm-10">
     <{$smarty.const._TAD_EDIT}><{if $cate.not_news=='1'}><{$smarty.const._MD_TADNEWS_KIND_PAGE}><{else}><{$smarty.const._MD_TADNEWS_KIND_NEWS}><{/if}>
     </div>
   </div>
@@ -152,10 +152,10 @@
 <form action="<{$action}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
   <{if $nsn==""}>
     <div class="form-group">
-      <label class="col-md-2 control-label">
+      <label class="col-sm-2 control-label">
         <{$smarty.const._MD_TADNEWS_KIND}>
       </label>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <select name="kind" id="kind" class="form-control">
           <{if $news_cate_kind_arr=='' or '0'|in_array:$news_cate_kind_arr}>
             <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
@@ -171,65 +171,65 @@
   <div class="form-group">
     <div id="add_news">
       <{if $news_cate_select}>
-        <div class="col-md-2">
+        <div class="col-sm-2">
           <select name="ncsn" id="news_ncsn" class="form-control">
             <{$news_cate_select}>
           </select>
         </div>
         <{if $creat_cate_tool}>
-          <div class="col-md-1" id="new_folder_icon">
+          <div class="col-sm-1" id="new_folder_icon">
             <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
           </div>
-          <div class="col-md-3" id="new_folder_col" style="display: none;">
+          <div class="col-sm-3" id="new_folder_col" style="display: none;">
             <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
           </div>
         <{/if}>
       <{else}>
         <{if $creat_cate_tool}>
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
           </div>
         <{/if}>
       <{/if}>
 
-      <div class="col-md-2">
+      <div class="col-sm-2">
         <{$prefix_tag_menu}>
       </div>
 
-      <div class="col-md-<{if $creat_cate_tool}>7<{else}>8<{/if}>" id="news_title_input_col">
+      <div class="col-sm-<{if $creat_cate_tool}>7<{else}>8<{/if}>" id="news_title_input_col">
         <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
       </div>
     </div>
     <div id="add_page">
       <{if $page_cate_select}>
-        <div class="col-md-2">
+        <div class="col-sm-2">
           <select name="ncsn" id="page_ncsn" class="form-control">
             <{$page_cate_select}>
           </select>
         </div>
         <{if $creat_cate_tool}>
-          <div class="col-md-1" id="new_page_folder_icon">
+          <div class="col-sm-1" id="new_page_folder_icon">
             <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
           </div>
-          <div class="col-md-3" id="new_page_folder_col" style="display: none;">
+          <div class="col-sm-3" id="new_page_folder_col" style="display: none;">
             <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
           </div>
         <{/if}>
       <{else}>
         <{if $creat_cate_tool}>
-          <div class="col-md-3" id="new_page_folder_col">
+          <div class="col-sm-3" id="new_page_folder_col">
             <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
           </div>
         <{/if}>
       <{/if}>
-      <div class="col-md-<{if $creat_cate_tool}>9<{else}>10<{/if}>" id="page_title_input_col">
+      <div class="col-sm-<{if $creat_cate_tool}>9<{else}>10<{/if}>" id="page_title_input_col">
         <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
       </div>
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <{$editor}>
     </div>
   </div>
@@ -247,17 +247,17 @@
       <div id="fragment-1">
         <div class="row">
 
-          <div class="col-md-4">
+          <div class="col-sm-4">
         	 <label><{$smarty.const._MD_TADNEWS_START_DATE}><{$smarty.const._MD_TADNEWS_FOR}></label>
            <input type="text" value="<{$start_day}>" name="start_day" id="start_day" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
           </div>
 
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <label><{$smarty.const._MD_TADNEWS_END_DATE}><{$smarty.const._MD_TADNEWS_FOR}></label>
             <input type="text" value="<{$end_day}>" name="end_day" id="end_day"  class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-{%d+14} %H:%m:%s'})">
           </div>
 
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <{if $use_top_tool=='1'}>
           	  <label class="checkbox">
                 <input type="checkbox" name="always_top" id="always_top" value="1" <{$always_top_checked}>>
@@ -276,17 +276,17 @@
 
         <div class="row">
 
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <label><{$smarty.const._MD_TADNEWS_CAN_READ_NEWS_GROUP}><{$smarty.const._MD_TADNEWS_FOR}></label>
             <{$enable_group}>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <label><{$smarty.const._MD_TADNEWS_NEWS_HAVE_READ}><{$smarty.const._MD_TADNEWS_FOR}></label>
             <{$have_read_group}>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <label>
               <{$smarty.const._MD_TADNEWS_NEWS_ENABLE}><{$smarty.const._MD_TADNEWS_FOR}>
             </label>
@@ -298,7 +298,7 @@
             </label>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <div class="row">
               <label>
                 <{$smarty.const._MD_TADNEWS_NEWS_PASSWD}><{$smarty.const._MD_TADNEWS_FOR}>
@@ -353,7 +353,7 @@
         <input type="hidden" name="files_sn" id="files_sn" value="<{$files_sn}>">
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
             <input id="upfile2" type="file" name="upfile2" multiple>
           </div>
@@ -361,7 +361,7 @@
 
         <div id="show_pic_css_setup">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
               <label>
                 <{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC}>
               </label>
@@ -370,7 +370,7 @@
                 <option value="true" <{if $use_pic_css!=""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
               </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-6">
             <{if $pic}>
               <a href="post.php?op=delete_cover&nsn=<{$nsn}>"><{$smarty.const._TAD_DEL}><{$smarty.const._MD_TADNEWS_NEWSPIC_TAB}></a>
             <{/if}>
@@ -380,7 +380,7 @@
           <div id="pic_css_set">
             <div class="alert alert-info">
               <div class="row" style="margin: 20px 0px;">
-                <div class="col-md-3">
+                <div class="col-sm-3">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_WIDTH}>
                   </label>
@@ -390,7 +390,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-sm-2">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_STYTLE}>
                   </label>
@@ -408,14 +408,14 @@
                   </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-sm-3">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER}><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_WIDTH}>
                   </label>
                   <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width}>" class="form-control" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');" style="width: 80%; display: inline;"> px
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-sm-3">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}>
                   </label>
@@ -426,7 +426,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-sm-1">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}>
                   </label>
@@ -435,7 +435,7 @@
               </div>
 
               <div class="row" style="margin: 10px 0px;">
-                <div class="col-md-3">
+                <div class="col-sm-3">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC}>
                   </label>
@@ -447,7 +447,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-sm-2">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_SHOW}>
                   </label>
@@ -464,7 +464,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-sm-5">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_AND}>
                   </label>
@@ -476,7 +476,7 @@
                 </div>
 
 
-                <div class="col-md-2">
+                <div class="col-sm-2">
                   <label>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_MARGIN}>
                   </label>
@@ -486,7 +486,7 @@
             </div>
 
             <div class="row" style="margin: 10px 0px;">
-              <div class="col-md-12">
+              <div class="col-sm-12">
                 <div class="well">
                   <div id="demo_cover_pic" style="background-image: url('<{$pic}>');<{$pic_css}>" title="<{$pic_css}>"></div>
                   <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
@@ -499,7 +499,7 @@
 
       <div id="fragment-4">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-12">
             <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>
             <{$upform}>
           </div>
@@ -511,10 +511,10 @@
 
   <div id="page_setup_form" style="display: none;">
     <div class="form-group">
-      <div class="col-md-2">
+      <div class="col-sm-2">
         <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>
       </div>
-      <div class="col-md-10">
+      <div class="col-sm-10">
         <{$page_upform}>
       </div>
     </div>
@@ -522,7 +522,7 @@
 
 
   <div class="row" style="margin: 30px 0px;">
-    <div class="col-md-12 text-center">
+    <div class="col-sm-12 text-center">
       <input type="hidden" name="nsn" value="<{$nsn}>">
       <input type="hidden" name="uid" value="<{$uid}>">
       <input type="hidden" name="op" value="<{$op}>">
