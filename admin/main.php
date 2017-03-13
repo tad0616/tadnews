@@ -120,7 +120,6 @@ switch ($op) {
         $tadnews->delete_tad_news($nsn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //批次管理
     case "batch":
@@ -131,7 +130,6 @@ switch ($op) {
         }
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     case "add_news_cate":
         list_tadnews_cate_tree();
@@ -148,28 +146,24 @@ switch ($op) {
         $ncsn = insert_tad_news_cate();
         header("location: " . $_SERVER['PHP_SELF'] . "?ncsn=$ncsn");
         exit;
-        break;
 
     //更新資料
     case "update_tad_news_cate";
         update_tad_news_cate($ncsn);
         header("location: " . $_SERVER['PHP_SELF'] . "?ncsn=$ncsn");
         exit;
-        break;
 
     //刪除資料
     case "delete_tad_news_cate";
         delete_tad_news_cate($ncsn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //搬移資料
     case "move_to":
         move_to_cate($ncsn, $to_ncsn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //分類類型互轉
     case "change_kind":

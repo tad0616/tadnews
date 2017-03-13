@@ -9,9 +9,10 @@ if (empty($xoopsUser)) {
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$nsn  = (!isset($_REQUEST['nsn'])) ? "" : intval($_REQUEST['nsn']);
-$ncsn = (!isset($_REQUEST['ncsn'])) ? "" : intval($_REQUEST['ncsn']);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$nsn  = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 
 switch ($op) {
 

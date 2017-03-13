@@ -19,7 +19,10 @@ function tadnews_table_content_block_show($options)
     $block['show_ncsn']   = isset($options[8]) ? $options[8] : "";
     $block['HTTP_HOST']   = get_xoops_url();
 
+    $block['ncsn'] = get_all_news_cate($options[8]);
+    $block['tag']  = get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
     return $block;
 }
 
@@ -47,13 +50,13 @@ function tadnews_table_content_block_edit($options)
             $allOption .= "<option value='$col_name' $selected>$col_title</option>\n";
         }
         $show_col .= "
-    <tr><th style='width:100px;'>
-    {$SetColTitle[$i]}
-    </th><td>
-    <select name='options[{$i}]'>
-    $allOption
-    </select>
-    </td></tr>";
+        <tr><th style='width:100px;'>
+        {$SetColTitle[$i]}
+        </th><td>
+        <select name='options[{$i}]'>
+        $allOption
+        </select>
+        </td></tr>";
     }
 
     $option = block_news_cate($options[8]);

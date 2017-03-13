@@ -18,6 +18,11 @@ $start_from  = system_CleanVars($_REQUEST, 'start_from', 0, 'int');
 $p           = system_CleanVars($_REQUEST, 'p', 0, 'int');
 $randStr     = system_CleanVars($_REQUEST, 'randStr', '', 'string');
 $cell        = system_CleanVars($_REQUEST, 'cell', '', 'array');
+$ncsn        = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$tag_sn      = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
+$keyword     = system_CleanVars($_REQUEST, 'keyword', '', 'string');
+$start_day   = system_CleanVars($_REQUEST, 'start_day', '', 'string');
+$end_day     = system_CleanVars($_REQUEST, 'end_day', '', 'string');
 
 $ncsn_arr = explode(',', $show_ncsn);
 
@@ -32,17 +37,33 @@ if ($start <= 0) {
 //echo "<p>strat:{$start},p:{$p},b:{$b},n:{$n},start_from:{$start_from},num:{$num}</p>";
 
 $tadnews->set_show_num($num);
-$tadnews->set_view_ncsn($ncsn_arr);
+if ($ncsn) {
+    $tadnews->set_view_ncsn($ncsn);
+} else {
+    $tadnews->set_view_ncsn($ncsn_arr);
+}
+
+if ($tag_sn) {
+    $tadnews->set_view_tag($tag_sn);
+}
+
+if ($keyword) {
+    $tadnews->set_keyword($keyword);
+}
+
+if ($start_day) {
+    $tadnews->set_start_day($start_day);
+}
+
+if ($end_day) {
+    $tadnews->set_end_day($end_day);
+}
 $tadnews->set_show_mode('list');
 $tadnews->set_news_kind("news");
 $tadnews->set_use_star_rating(false);
 $tadnews->set_cover(false);
 $tadnews->set_skip_news($start);
 $all_news = $tadnews->get_news('return');
-
-if (empty($all_news['page'])) {
-    die(_TADNEWS_EMPTY);
-}
 
 $show_col = '';
 
@@ -76,31 +97,35 @@ $block .= "
   <tr>{$blockTitle}</tr>
 </thead>
 ";
+if (empty($all_news['page'])) {
+    $block .= '<tr><td colspan=5>' . _TADNEWS_EMPTY . '</td></tr>';
+} else {
 
-$i = 2;
+    $i = 2;
 
-$total = 0;
-foreach ($all_news['page'] as $news) {
+    $total = 0;
+    foreach ($all_news['page'] as $news) {
 
-    $need_sign = (!empty($news['need_sign'])) ? "<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>" : "";
+        $need_sign = (!empty($news['need_sign'])) ? "<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>" : "";
 
-    $start_day  = "<td nowrap>{$news['post_date']}</td>";
-    $news_title = "<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>";
+        $start_day  = "<td nowrap>{$news['post_date']}</td>";
+        $news_title = "<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>";
 
-    $uid        = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>";
-    $ncsn       = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>";
-    $counter    = "<td nowrap>{$news['counter']}</td>";
-    $news_title = to_utf8($news_title);
-    $uid        = to_utf8($uid);
-    $ncsn       = to_utf8($ncsn);
-    $block .= "<tr>";
-    foreach ($show_col as $colname) {
-        $block .= $$colname;
+        $uid        = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>";
+        $ncsn       = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>";
+        $counter    = "<td nowrap>{$news['counter']}</td>";
+        $news_title = to_utf8($news_title);
+        $uid        = to_utf8($uid);
+        $ncsn       = to_utf8($ncsn);
+        $block .= "<tr>";
+        foreach ($show_col as $colname) {
+            $block .= $$colname;
+        }
+
+        $block .= "</tr>";
+        $i++;
+        $total++;
     }
-
-    $block .= "</tr>";
-    $i++;
-    $total++;
 }
 
 $b_button = ($b < 0) ? "" : "<button onClick='view_content{$randStr}({$b})' class='btn'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";

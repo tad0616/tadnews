@@ -118,3 +118,10 @@ define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', '加入所有最新消息頁籤（不分�
 define('_MB_TADNEWS_LATEST_NEWS_TAB', '所有消息');
 
 define('_MB_TADNEWS_PAGE_SHOW_TITLE', '是否顯示分類標題？');
+
+define('_MB_TADNEWS_BAR_CATE', '分類');
+define('_MB_TADNEWS_BAR_TAG', '標籤');
+define('_MB_TADNEWS_BAR_KEYWORD', '關鍵字');
+define('_MB_TADNEWS_BAR_DATE', '日期範圍');
+define('_MB_TADNEWS_BAR_START_DAY', '>=此日的公告');
+define('_MB_TADNEWS_BAR_END_DAY', '<=此日的公告');

@@ -107,3 +107,5 @@ define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', 'Add all the latest news tab to the left'
 define('_MB_TADNEWS_LATEST_NEWS_TAB', 'latest news');
 
 define('_MB_TADNEWS_PAGE_SHOW_TITLE', 'Show category headings?');
+define('_MB_TADNEWS_BAR_START_DAY', 'News >= this date');
+define('_MB_TADNEWS_BAR_END_DAY', 'News <= this date');

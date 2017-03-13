@@ -39,8 +39,8 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
         $tpl->assign('channel_link', XOOPS_URL . '/');
         $tpl->assign('channel_desc', to_utf8($slogan));
         $tpl->assign('channel_lastbuild', formatTimestamp(time(), 'rss'));
-        $tpl->assign('channel_webmaster', checkEmail($xoopsConfig['adminmail'], true)); // Fed up with spam
-        $tpl->assign('channel_editor', checkEmail($xoopsConfig['adminmail'], true)); // Fed up with spam
+        // $tpl->assign('channel_webmaster', checkEmail($xoopsConfig['adminmail'], true)); // Fed up with spam
+        // $tpl->assign('channel_editor', checkEmail($xoopsConfig['adminmail'], true)); // Fed up with spam
         $tpl->assign('channel_category', to_utf8($all_news['nc_title'], ENT_QUOTES));
         $tpl->assign('channel_generator', 'XOOPS');
         $tpl->assign('channel_language', _LANGCODE);

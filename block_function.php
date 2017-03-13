@@ -60,19 +60,40 @@ if (!function_exists("block_news_cate")) {
 
 //取得所有類別標題
 if (!function_exists("get_all_news_cate")) {
-    function get_all_news_cate()
+    function get_all_news_cate($ncsn_arr_str = '')
     {
         global $xoopsDB;
+        $ncsn_arr = array();
+        if ($ncsn_arr_str) {
+            $ncsn_arr = explode(',', $ncsn_arr_str);
+        }
+
         $sql    = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " order by sort";
         $result = $xoopsDB->query($sql) or web_error($sql);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-            $data[$ncsn] = $nc_title;
+            if (empty($ncsn_arr_str) or in_array($ncsn, $ncsn_arr)) {
+                $data[$ncsn] = $nc_title;
+            }
         }
         return $data;
     }
 }
 
+//取得所有標籤
+if (!function_exists("get_all_news_tag")) {
+    function get_all_news_tag()
+    {
+        global $xoopsDB;
+        $sql    = "select tag_sn,tag from " . $xoopsDB->prefix("tad_news_tags") . "";
+        $result = $xoopsDB->queryF($sql);
+        $data   = '';
+        while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
+            $data[$tag_sn] = $tag;
+        }
+        return $data;
+    }
+}
 //錯誤顯示方式
 if (!function_exists("show_error")) {
     function show_error($sql = "")

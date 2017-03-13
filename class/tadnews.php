@@ -154,6 +154,9 @@ class tadnews
     public $span          = 'span';
     public $mini          = 'mini';
     public $inline        = ' inline';
+    public $keyword       = '';
+    public $start_day     = '';
+    public $end_day       = '';
 
     //建構函數
     public function __construct()
@@ -242,6 +245,24 @@ class tadnews
     public function set_view_nsn($nsn = "")
     {
         $this->view_nsn = $nsn;
+    }
+
+    //設定關鍵字
+    public function set_keyword($keyword = "")
+    {
+        $this->keyword = $keyword;
+    }
+
+    //設定起始日期
+    public function set_start_day($start_day = "")
+    {
+        $this->start_day = $start_day;
+    }
+
+    //設定結束日期
+    public function set_end_day($end_day = "")
+    {
+        $this->end_day = $end_day;
     }
 
     //取得欲觀看文章
@@ -634,20 +655,33 @@ class tadnews
             $date_chk = "and start_day like '{$this->view_month}%'";
         } elseif ($this->admin_tool) {
             $date_chk = "";
+        } elseif ($this->start_day and $this->end_day) {
+            $date_chk = "and start_day >= '" . $this->start_day . "' and start_day <= '" . $this->end_day . " 23:59:59'";
+        } elseif ($this->start_day) {
+            $date_chk = "and start_day >= '" . $this->start_day . "'";
+        } elseif ($this->end_day) {
+            $date_chk = "and start_day <= '" . $this->end_day . " 23:59:59' ";
         } else {
             $date_chk = "and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') ";
         }
 
         $and_enable = ($this->show_enable == 1) ? "and enable='1'" : "";
 
+        //判斷是否有關鍵字
+        if (!empty($this->keyword)) {
+            $and_keyword = "and (`news_title` like '%{$this->keyword}%' or `news_content` like '%{$this->keyword}%')";
+        } else {
+            $and_keyword = "";
+        }
+
         //die($this->view_month);
         $bar = "";
         if (!empty($this->skip_news)) {
             $limit = (empty($this->show_num) or $this->show_num === 'none') ? "" : "limit {$this->skip_news} , {$this->show_num}";
-            $sql   = "select * from " . $xoopsDB->prefix("tad_news") . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate  $date_chk  $desc $limit";
+            $sql   = "select * from " . $xoopsDB->prefix("tad_news") . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc $limit";
         } else {
             $limit = empty($this->show_num) ? "10" : $this->show_num;
-            $sql   = "select * from " . $xoopsDB->prefix("tad_news") . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate  $date_chk  $desc";
+            $sql   = "select * from " . $xoopsDB->prefix("tad_news") . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc";
             if (empty($this->view_month) and $this->show_num != 'none') {
                 //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
                 $PageBar = getPageBar($sql, $limit);
@@ -2134,9 +2168,8 @@ class tadnews
         $nsn = $xoopsDB->getInsertId();
 
         //處理上傳的檔案
-        //upload_file('upfile',"nsn",$nsn);
         $this->TadUpFiles->set_col('nsn', $nsn);
-        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width']);
+        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true);
 
         //修改暫存封面圖
         if ($_POST['files_sn']) {

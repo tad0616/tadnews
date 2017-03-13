@@ -290,7 +290,7 @@ function move_news($nsn_arr = array(), $ncsn = "")
 //批次刪除
 function del_news($nsn_arr = array())
 {
-    global $xoopsDB;
+    global $xoopsDB, $tadnews;
     if (empty($nsn_arr) or !is_array($nsn_arr)) {
         return;
     }
@@ -298,6 +298,7 @@ function del_news($nsn_arr = array())
     foreach ($nsn_arr as $nsn) {
         $sql = "delete from " . $xoopsDB->prefix("tad_news") . " where nsn='{$nsn}'";
         $xoopsDB->queryF($sql) or web_error($sql);
+        $tadnews->delete_tad_news($nsn);
     }
     return;
 }

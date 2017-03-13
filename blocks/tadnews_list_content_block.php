@@ -25,7 +25,10 @@ function tadnews_list_content_block_show($options)
     $block['show_button']  = $options[9];
     $block['HTTP_HOST']    = get_xoops_url();
 
+    $block['ncsn'] = get_all_news_cate($options[7]);
+    $block['tag']  = get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
     return $block;
 }
 

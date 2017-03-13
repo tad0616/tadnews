@@ -51,6 +51,9 @@ function xoops_module_update_tadnews(&$module, $old_version)
     if (chk_chk20()) {
         go_update20();
     }
+    if (chk_chk21()) {
+        go_update21();
+    }
 
     //調整檔案上傳欄位col_sn為mediumint(9)格式
     if (chk_files_center()) {
@@ -446,6 +449,27 @@ function go_update20()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_news") . " CHANGE `news_content` `news_content` longtext NOT NULL";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
+    return true;
+}
+
+//移除封面圖的hash_filename
+function chk_chk21()
+{
+    global $xoopsDB;
+    $sql    = "select hash_filename FROM " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='news_pic'";
+    $result = $xoopsDB->query($sql) or web_error($sql);
+    $all    = $xoopsDB->fetchRow($result);
+    if ($all === false) {
+        return false;
+    }
+    return true;
+}
+
+function go_update21()
+{
+    global $xoopsDB;
+    $sql = "update " . $xoopsDB->prefix("tadnews_files_center") . " set hash_filename='' where `col_name`='news_pic'";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
     return true;
 }
