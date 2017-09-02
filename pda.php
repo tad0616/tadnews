@@ -12,8 +12,8 @@ function list_tadnews($ncsn = '')
 {
     global $xoopsModuleConfig, $tadnews;
 
-    $num   = (!empty($_POST['n'])) ? intval($_POST['n']) : 10;
-    $p     = (!empty($_POST['p'])) ? intval($_POST['p']) : 0;
+    $num   = (!empty($_POST['n'])) ? (int)$_POST['n'] : 10;
+    $p     = (!empty($_POST['p'])) ? (int)$_POST['p'] : 0;
     $start = $p * $num;
 
     $tadnews->set_show_num($num);
@@ -480,8 +480,8 @@ function list_tad_my_news_m()
         exit;
     }
 
-    $num   = (!empty($_POST['n'])) ? intval($_POST['n']) : 10;
-    $p     = (!empty($_POST['p'])) ? intval($_POST['p']) : 0;
+    $num   = (!empty($_POST['n'])) ? (int)$_POST['n'] : 10;
+    $p     = (!empty($_POST['p'])) ? (int)$_POST['p'] : 0;
     $start = $p * $num;
 
     $uid = $xoopsUser->uid();
@@ -549,7 +549,7 @@ switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

@@ -5,12 +5,12 @@ $op = isset($_POST['op']) ? $_POST['op'] : '';
 
 if ($op == "get_pic") {
 
-    $files_sn = isset($_POST['files_sn']) ? intval($_POST['files_sn']) : 0;
+    $files_sn = isset($_POST['files_sn']) ? (int)$_POST['files_sn'] : 0;
     echo $TadUpFiles->get_pic_file('images', 'url', $files_sn);
 
 } else {
 
-    $nsn = intval($_REQUEST['nsn']);
+    $nsn = (int)$_REQUEST['nsn'];
 
     if (empty($nsn)) {
         $rand = rand(0, 9999);

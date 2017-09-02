@@ -316,7 +316,7 @@ class tadnews
     //裁切標題
     public function set_title_length($length = 0)
     {
-        $this->title_length = intval($length);
+        $this->title_length = (int)$length;
     }
 
     //封面圖片設定
@@ -336,7 +336,7 @@ class tadnews
     //略過文章設定
     public function set_skip_news($num = 0)
     {
-        $this->skip_news = intval($num);
+        $this->skip_news = (int)$num;
     }
 
     //設定是否使用評分機制
@@ -2143,7 +2143,7 @@ class tadnews
         } elseif (!empty($_POST['new_page_cate'])) {
             $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_page_cate'], 1);
         } else {
-            $ncsn = intval($_POST['ncsn']);
+            $ncsn = (int)$_POST['ncsn'];
         }
 
         $myts         = MyTextSanitizer::getInstance();
@@ -2175,7 +2175,7 @@ class tadnews
         if ($_POST['files_sn']) {
             $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
-            $files_sn = intval($_POST['files_sn']);
+            $files_sn = (int)$_POST['files_sn'];
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
             $xoopsDB->queryF($sql) or web_error($sql);
 
@@ -2266,7 +2266,7 @@ class tadnews
             return;
         }
 
-        $ncsn   = intval($ncsn);
+        $ncsn   = (int)$ncsn;
         $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='$ncsn'";
         $result = $xoopsDB->queryF($sql) or web_error($sql);
         $data   = $xoopsDB->fetchArray($result);
@@ -2311,7 +2311,7 @@ class tadnews
         } elseif (!empty($_POST['new_page_cate'])) {
             $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_page_cate'], 1);
         } else {
-            $ncsn = intval($_POST['ncsn']);
+            $ncsn = (int)$_POST['ncsn'];
         }
 
         $myts         = MyTextSanitizer::getInstance();
@@ -2334,7 +2334,7 @@ class tadnews
         if ($_POST['files_sn']) {
             $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
-            $files_sn = intval($_POST['files_sn']);
+            $files_sn = (int)$_POST['files_sn'];
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
             $xoopsDB->queryF($sql) or web_error($sql);
 

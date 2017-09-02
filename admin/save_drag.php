@@ -2,8 +2,8 @@
 /*-----------引入檔案區--------------*/
 include "../../../include/cp_header.php";
 
-$of_ncsn = intval($_POST['of_ncsn']);
-$ncsn    = intval($_POST['ncsn']);
+$of_ncsn = (int)$_POST['of_ncsn'];
+$ncsn    = (int)$_POST['ncsn'];
 
 if (chk_cate_path($ncsn, $of_ncsn)) {
     die('不可移至自己的子目錄下');

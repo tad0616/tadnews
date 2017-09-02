@@ -36,7 +36,7 @@ function list_newspaper()
 
 /*-----------執行動作判斷區----------*/
 $_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$npsn           = (empty($_GET['npsn'])) ? "" : intval($_GET['npsn']);
+$npsn           = (empty($_GET['npsn'])) ? "" : (int)$_GET['npsn'];
 switch ($_REQUEST['op']) {
 
     case "preview":
