@@ -427,8 +427,8 @@ function member_m()
 function openid_login()
 {
     global $xoopsConfig;
-    $modhandler     = xoops_gethandler('module');
-    $config_handler = xoops_gethandler('config');
+    $modhandler     = xoops_getHandler('module');
+    $config_handler = xoops_getHandler('config');
 
     $TadLoginXoopsModule = $modhandler->getByDirname("tad_login");
     if ($TadLoginXoopsModule) {
@@ -437,7 +437,7 @@ function openid_login()
         $tad_login['facebook'] = facebook_login('return');
         $tad_login['google']   = google_login('return');
 
-        $config_handler = xoops_gethandler('config');
+        $config_handler = xoops_getHandler('config');
         $modConfig      = $config_handler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
 
         $auth_method = $modConfig['auth_method'];
@@ -531,7 +531,7 @@ function logout_m()
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler = xoops_gethandler('online');
+        $online_handler = xoops_getHandler('online');
         $online_handler->destroy($xoopsUser->getVar('uid'));
     }
 }

@@ -169,11 +169,11 @@ class tadnews
         $this->now   = date("Y-m-d", xoops_getUserTimestamp(time()));
         $this->today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
-        $modhandler          = xoops_gethandler('module');
-        $this->tadnewsModule = &$modhandler->getByDirname("tadnews");
+        $modhandler          = xoops_getHandler('module');
+        $this->tadnewsModule = $modhandler->getByDirname("tadnews");
         $this->module_id     = $this->tadnewsModule->getVar('mid');
-        $config_handler      = xoops_gethandler('config');
-        $this->tadnewsConfig = &$config_handler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
+        $config_handler      = xoops_getHandler('config');
+        $this->tadnewsConfig = $config_handler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
 
         if ($this->tadnewsConfig['use_star_rating'] == '1') {
             $this->set_use_star_rating(true);
