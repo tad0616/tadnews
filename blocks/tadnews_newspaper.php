@@ -4,12 +4,12 @@ function tadnews_newspaper($options)
 {
     global $xoopsDB, $xoopsUser;
 
-    $sql           = "select count(*) from " . $xoopsDB->prefix("tad_news_paper_email") . "";
-    $result        = $xoopsDB->query($sql) or web_error($sql);
+    $sql = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_paper_email") . "";
+    $result = $xoopsDB->query($sql) or web_error($sql);
     list($counter) = $xoopsDB->fetchRow($result);
 
     //找出現有設定組
-    $sql    = "select nps_sn,title from " . $xoopsDB->prefix("tad_news_paper_setup") . " where status='1'";
+    $sql    = "SELECT nps_sn,title FROM " . $xoopsDB->prefix("tad_news_paper_setup") . " WHERE status='1'";
     $result = $xoopsDB->query($sql);
     $i      = 0;
     $option = "";

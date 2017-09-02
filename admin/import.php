@@ -149,7 +149,7 @@ $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 switch ($op) {
 
     //刪除資料
-    case "import";
+    case "import":
         import();
         header("location: index.php");
         exit;

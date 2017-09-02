@@ -3,8 +3,8 @@ function mk_rss()
 {
     global $xoopsDB, $xoopsConfig;
     xoops_load('XoopsLocal');
-    $myts   = MyTextSanitizer::getInstance();
-    $sql    = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news!='1' and enable_group=''";
+    $myts = MyTextSanitizer::getInstance();
+    $sql  = "SELECT ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news!='1' AND enable_group=''";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_ok[]    = $ncsn;
@@ -16,7 +16,7 @@ function mk_rss()
     $today      = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql        = "select * from " . $xoopsDB->prefix("tad_news") . " where enable='1' and passwd='' and enable_group='' $where_cate and start_day < '{$today}' and (end_day > '{$today}' or end_day='0000-00-00 00:00:00') order by $top_order start_day desc limit 0 , 30";
 
-    $result  = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
     $allItem = "";
     while ($all_news = $xoopsDB->fetchArray($result)) {
         foreach ($all_news as $k => $v) {
@@ -35,7 +35,6 @@ function mk_rss()
       <guid>" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}</guid>
     </item>
     ";
-
     }
 
     $dimension = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');
