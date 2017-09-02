@@ -20,10 +20,10 @@ function tadnews_covered($options)
 
     $summary_length = intval($options[2]);
     $summary_css    = $options[3];
-    $show_cover     = $block['show_cover'];
-    $cover_css      = '';
-    $show_ncsn      = isset($options[4]) ? $options[4] : "";
-    $ncsn_arr       = explode(',', $show_ncsn);
+    // $show_cover     = $block['show_cover'];
+    $cover_css = '';
+    $show_ncsn = isset($options[4]) ? $options[4] : "";
+    $ncsn_arr  = explode(',', $show_ncsn);
 
     $tadnews->set_show_num($num);
     $tadnews->set_view_ncsn($ncsn_arr);

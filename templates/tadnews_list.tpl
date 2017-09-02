@@ -11,6 +11,8 @@
 
 <{if $cate}>
   <h1><{$cate.nc_title}></h1>
+<{else}>
+  <h1 class="sr-only" style="display: none;">All News</h1>
 <{/if}>
 
 <{if $page}>
@@ -42,4 +44,7 @@
     </div>
   </div>
 
+
+
+  <{includeq file="$xoops_rootpath/modules/tadnews/templates/rss.tpl"}>
 <{/if}>

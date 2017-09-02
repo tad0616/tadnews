@@ -7,11 +7,11 @@
     <div class="col-sm-12">
       <div <{if $page.need_sign}>style="background-image: url('<{$page.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
 
-        <div style="padding:10px 0px;">
+        <h2 style="padding:10px 0px;">
           <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size: 24px;  font-weight: normal;">
           <{$page.news_title}>
           </a>
-        </div>
+        </h2>
 
       </div>
 

@@ -152,9 +152,10 @@ function go_update10()
 
     //建立電子報佈景
     mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes");
-    if (!is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2")) {
-        full_copy(XOOPS_ROOT_PATH . "/modules/tadnews/images/bluefreedom2", XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
+    if (is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2")) {
+        delete_directory(XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
     }
+    full_copy(XOOPS_ROOT_PATH . "/modules/tadnews/images/bluefreedom2", XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
 
     //表格改名
     $sql = "RENAME TABLE " . $xoopsDB->prefix("tad_news_files") . "  TO " . $xoopsDB->prefix("tadnews_files_center");

@@ -113,3 +113,5 @@ define('_MB_TADNEWS_LATEST_NEWS_TAB', '所有消息');
 define('_MB_TADNEWS_PAGE_SHOW_TITLE', '是否顯示分類標題？');
 define('_MB_TADNEWS_BAR_START_DAY', '>=此日的公告');
 define('_MB_TADNEWS_BAR_END_DAY', '<=此日的公告');
+
+define('_MB_TADNEWS_SEARCHBAR', '是否加入新聞篩選工具？');

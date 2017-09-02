@@ -35,7 +35,7 @@ if (sizeof($p) > 0 and $xoopsUser) {
     $interface_menu[_MD_TADNEWS_MY]   = "my_news.php";
 }
 
-$interface_menu['RSS'] = empty($_REQUEST['ncsn']) ? "rss.php" : "rss.php?ncsn={$_REQUEST['ncsn']}";
+// $interface_menu['RSS'] = empty($_REQUEST['ncsn']) ? "rss.php" : "rss.php?ncsn={$_REQUEST['ncsn']}";
 
 if ($isAdmin) {
     $interface_menu[_MD_TADNEWS_TO_ADMIN] = "admin/main.php";

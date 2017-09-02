@@ -4,7 +4,7 @@ $modversion = array();
 $language   = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
-$modversion['version']     = 3.92;
+$modversion['version']     = 3.93;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author']      = 'Tad (tad0616@gmail.com)';
 $modversion['credits']     = 'geek01';
@@ -15,13 +15,13 @@ $modversion['image']       = "images/logo_{$language}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2017/03/02';
+$modversion['release_date']        = '2017/06/16';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status']       = 'release';
 $modversion['author_website_url']  = 'http://tad0616.net/';
 $modversion['author_website_name'] = 'Tad';
-$modversion['min_php']             = '5.3';
+$modversion['min_php']             = '5.4';
 $modversion['min_xoops']           = '2.5';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
@@ -226,7 +226,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC10;
 $modversion['blocks'][$i]['show_func']   = "tadnews_list_content_block_show";
 $modversion['blocks'][$i]['template']    = "tadnews_block_list_content_block.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_list_content_block_edit";
-$modversion['blocks'][$i]['options']     = "5|100|color:gray;font-size:11px;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0";
+$modversion['blocks'][$i]['options']     = "5|100|color:gray;font-size:11px;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0|0";
 
 $i++;
 $modversion['blocks'][$i]['file']        = "tadnews_table_content_block.php";
@@ -235,7 +235,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC11;
 $modversion['blocks'][$i]['show_func']   = "tadnews_table_content_block_show";
 $modversion['blocks'][$i]['template']    = "tadnews_block_table_content_block.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_table_content_block_edit";
-$modversion['blocks'][$i]['options']     = "6|1|start_day|news_title|uid|ncsn|counter|0";
+$modversion['blocks'][$i]['options']     = "6|1|start_day|news_title|uid|ncsn|counter|0||0";
 
 $i++;
 $modversion['blocks'][$i]['file']        = "tadnews_slidernews.php";

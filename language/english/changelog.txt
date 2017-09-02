@@ -1,3 +1,11 @@
+TadNews 3.93 (2017-06-16 released)
+====================================================
+1. Adjust the cover map to the FB meta tag
+2. Move framework7 to tadtools
+3. Press the news section, the table news block of the news screening tool set to optional
+4. Complete accessibility barrier detection
+
+
 TadNews 3.92 (2017-03-02 released)
 ====================================================
 1. Fixed RSS format

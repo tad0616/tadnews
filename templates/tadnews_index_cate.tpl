@@ -9,6 +9,8 @@
   <{$toolbar}>
 </p>
 
+<h1 class="sr-only" style="display: none;">All News</h1>
+
 <{foreach item=all_news from=$all_news}>
 
   <div class="row" style="margin: 40px 0px 0px;">
@@ -54,3 +56,6 @@
     </div>
   </div>
 <{/foreach}>
+
+
+<{includeq file="$xoops_rootpath/modules/tadnews/templates/rss.tpl"}>

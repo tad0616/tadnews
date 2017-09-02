@@ -6,7 +6,7 @@
       <{$block.counter}>
 
       <div class="row">
-        <label class="col-sm-4"><{$smarty.const._MB_TADNEWS_TITLE}></label>
+        <label class="col-sm-4" for="newspaper"><{$smarty.const._MB_TADNEWS_TITLE}></label>
         <div class="col-sm-8">
           <select name="nps_sn" class="form-control" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
             <{foreach item=opt from=$block.option}>
@@ -18,7 +18,7 @@
 
 
       <div class="row">
-        <label class="col-sm-4"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
+        <label class="col-sm-4" for="newspaper_email"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
         <div class="col-sm-8">
           <input type="text" name="newspaper_email" id="newspaper_email" placeholder="<{$smarty.const._MB_TADNEWS_EMAIL}>" value="<{$block.email}>" class="form-control">
         </div>
