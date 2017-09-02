@@ -11,10 +11,10 @@ function month_list($now_date = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = "select left(start_day,7) , count(*) from " . $xoopsDB->prefix("tad_news") . " where enable='1' group by left(start_day,7) order by start_day desc";
+    $sql = "SELECT left(start_day,7) , count(*) FROM " . $xoopsDB->prefix("tad_news") . " WHERE enable='1' GROUP BY left(start_day,7) ORDER BY start_day DESC";
 
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $i      = 1;
+    $i = 1;
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt[$i]['value']    = $ym;
         $opt[$i]['count']    = $count;
@@ -26,7 +26,6 @@ function month_list($now_date = "")
     $jquery = get_jquery();
     $xoopsTpl->assign("jquery", $jquery);
     $xoopsTpl->assign("opt", $opt);
-
 }
 
 //分月新聞
@@ -47,7 +46,6 @@ function archive($date = "")
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
     $date_title = to_utf8(str_replace("-", "" . _MD_TADNEWS_YEAR . " ", $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign("date_title", $date_title);
-
 }
 
 /*-----------執行動作判斷區----------*/

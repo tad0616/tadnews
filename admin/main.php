@@ -12,7 +12,7 @@ function list_tadnews_cate_tree($def_ncsn = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql    = "select ncsn , count(*) from " . $xoopsDB->prefix("tad_news") . " group by ncsn";
+    $sql    = "SELECT ncsn , count(*) FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY ncsn";
     $result = $xoopsDB->query($sql);
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;
@@ -22,7 +22,7 @@ function list_tadnews_cate_tree($def_ncsn = "")
 
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
-    $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news!='1' order by sort";
+    $sql = "SELECT ncsn,of_ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news!='1' ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
@@ -148,13 +148,13 @@ switch ($op) {
         exit;
 
     //更新資料
-    case "update_tad_news_cate";
+    case "update_tad_news_cate":
         update_tad_news_cate($ncsn);
         header("location: " . $_SERVER['PHP_SELF'] . "?ncsn=$ncsn");
         exit;
 
     //刪除資料
-    case "delete_tad_news_cate";
+    case "delete_tad_news_cate":
         delete_tad_news_cate($ncsn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;

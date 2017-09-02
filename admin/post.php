@@ -17,12 +17,12 @@ switch ($op) {
         break;
 
     //輸入表格
-    case "tad_news_form";
+    case "tad_news_form":
         $tadnews->tad_news_form($nsn);
         break;
 
     //更新資料
-    case "update_tad_news";
+    case "update_tad_news":
         $tadnews->update_tad_news($nsn);
         header("location: ../index.php?nsn={$nsn}");
         exit;

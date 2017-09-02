@@ -37,7 +37,7 @@ function list_tadnews($ncsn = '')
     foreach ($tnews['page'] as $news) {
         $content    = strip_tags($news['content']);
         $item_image = (empty($news['image_thumb'])) ? "" : "<div class='item-media'><img data-src='{$news['image_thumb']}' class='lazy lazy-fadein'></div>";
-        $all_news .= "
+        $all_news   .= "
           <li>
               <a href='pda.php?op=news&nsn={$news['nsn']}{$ncsn_param}' class='item-link item-content'>
                   {$item_image}
@@ -140,6 +140,7 @@ function get_tad_news_cate_list_m()
                 <ul>
         ";
 
+
     $sql    = "select `ncsn`, `nc_title`, `not_news` from " . $xoopsDB->prefix("tad_news_cate") . " where `not_news` != '1' order by `sort`";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
@@ -164,7 +165,7 @@ function month_list_m()
 {
     global $xoopsDB;
 
-    $sql = "select left(a.start_day,7), count(*) from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where a.enable='1' and b.not_news='0' group by left(a.start_day,7) order by a.start_day desc";
+    $sql = "SELECT left(a.start_day,7), count(*) FROM " . $xoopsDB->prefix("tad_news") . " AS a LEFT JOIN " . $xoopsDB->prefix("tad_news_cate") . " AS b ON a.ncsn=b.ncsn WHERE a.enable='1' AND b.not_news='0' GROUP BY left(a.start_day,7) ORDER BY a.start_day DESC";
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
@@ -246,7 +247,7 @@ function list_newspaper_m()
 {
     global $xoopsDB;
 
-    $sql = "select a.npsn,a.number,b.title,a.np_date from " . $xoopsDB->prefix("tad_news_paper") . " as a ," . $xoopsDB->prefix("tad_news_paper_setup") . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc";
+    $sql = "SELECT a.npsn,a.number,b.title,a.np_date FROM " . $xoopsDB->prefix("tad_news_paper") . " AS a ," . $xoopsDB->prefix("tad_news_paper_setup") . " AS b WHERE a.nps_sn=b.nps_sn AND b.status='1' ORDER BY a.np_date DESC";
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
@@ -262,10 +263,11 @@ function list_newspaper_m()
     $main = "{$nodata}";
 
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
-
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
         $np_date  = substr($np_date, 0, 10);
+
         $main .= "
+
             <li>
                 <a href='pda.php?op=preview&npsn={$allnpsn}' class='item-link item-content'>
                     <div class='item-inner'>
@@ -274,7 +276,6 @@ function list_newspaper_m()
                 </a>
             </li>
         ";
-
     }
 
     return $main;
@@ -291,6 +292,7 @@ function preview_newspaper_m($npsn = "")
     $np                                 = get_newspaper($npsn);
     $sql                                = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
     $result                             = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $head = str_replace('{N}', $np['number'], $head);

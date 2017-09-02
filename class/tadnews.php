@@ -445,12 +445,12 @@ class tadnews
             $this->add_counter($this->view_nsn);
 
             //找出相關資訊
-            $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news") . " where nsn='" . $this->view_nsn . "'";
+            $sql2 = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news") . " WHERE nsn='" . $this->view_nsn . "'";
             $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($ncsn) = $xoopsDB->fetchRow($result2);
             $this->set_view_ncsn($ncsn);
 
-            $sql2                             = "select not_news,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='" . $this->view_ncsn . "'";
+            $sql2 = "SELECT not_news,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE ncsn='" . $this->view_ncsn . "'";
             $result2                          = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($not_news, $show_cate_title) = $xoopsDB->fetchRow($result2);
 
@@ -1334,7 +1334,7 @@ class tadnews
     public function get_all_groups()
     {
         global $xoopsDB;
-        $sql    = "select groupid,name from " . $xoopsDB->prefix("groups") . "";
+        $sql    = "SELECT groupid,name FROM " . $xoopsDB->prefix("groups") . "";
         $result = $xoopsDB->query($sql);
         while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
             $data[$groupid] = $name;
@@ -1346,7 +1346,7 @@ class tadnews
     private function news_author_select()
     {
         global $xoopsDB;
-        $sql    = "select uid from " . $xoopsDB->prefix("tad_news") . " group by uid";
+        $sql = "SELECT uid FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY uid";
         $result = $xoopsDB->query($sql) or web_error($sql);
         $opt    = _TADNEWS_SHOW_AUTHOR_NEWS . "
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
@@ -2022,7 +2022,7 @@ class tadnews
     {
         global $xoopsDB;
 
-        $sql    = "select tag_sn,color,tag from " . $xoopsDB->prefix("tad_news_tags") . " where `enable`='1'";
+        $sql    = "SELECT tag_sn,color,tag FROM " . $xoopsDB->prefix("tad_news_tags") . " WHERE `enable`='1'";
         $result = $xoopsDB->query($sql);
         $option = "";
         while (list($tag_sn, $color, $tag) = $xoopsDB->fetchRow($result)) {
@@ -2038,7 +2038,7 @@ class tadnews
     private function get_cate_num()
     {
         global $xoopsDB;
-        $sql         = "select count(*) from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='0'";
+        $sql = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='0'";
         $result      = $xoopsDB->query($sql) or web_error($sql);
         list($count) = $xoopsDB->fetchRow($result);
         return $count;

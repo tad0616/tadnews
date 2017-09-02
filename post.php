@@ -23,23 +23,23 @@ switch ($op) {
         break;
 
     //輸入表格
-    case "tad_news_form";
+    case "tad_news_form":
         $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn);
         break;
 
     //更新資料
-    case "update_tad_news";
+    case "update_tad_news":
         $tadnews->update_tad_news($nsn);
         break;
 
     //啟用文章
-    case "enable_news";
+    case "enable_news":
         $tadnews->enable_tad_news($nsn);
         break;
 
     //刪除封面圖
-    case "delete_cover";
+    case "delete_cover":
         $tadnews->delete_cover($nsn);
         header("location:post.php?op=tad_news_form&nsn=$nsn");
         exit;

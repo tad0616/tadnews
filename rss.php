@@ -20,7 +20,6 @@ $tpl = new XoopsTpl();
 $tpl->xoops_setCaching(2);
 $tpl->xoops_setCacheTime(10);
 if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
-
     $tadnews->set_show_num(20);
     $tadnews->set_view_ncsn($ncsn);
     $tadnews->set_show_mode('summary');
@@ -62,7 +61,13 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
         foreach ($all_news['page'] as $news) {
             $storytitle  = htmlspecialchars($news['news_title'], ENT_QUOTES);
             $description = htmlspecialchars($news['content'], ENT_QUOTES);
-            $tpl->append('items', array('title' => to_utf8($storytitle), 'link' => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}", 'guid' => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}", 'pubdate' => formatTimestamp(strtotime($news['post_date']), 'rss'), 'description' => to_utf8($description)));
+            $tpl->append('items', array(
+                'title'       => to_utf8($storytitle),
+                'link'        => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}",
+                'guid'        => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}",
+                'pubdate'     => formatTimestamp(strtotime($news['post_date']), 'rss'),
+                'description' => to_utf8($description)
+            ));
         }
     }
 }

@@ -11,15 +11,15 @@ function tadnews_page($options)
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/dtree.php";
 
     if (empty($options[0])) {
-        $sql        = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and of_ncsn=0 order by ncsn limit 0,1";
-        $result     = $xoopsDB->query($sql);
+        $sql    = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
+        $result = $xoopsDB->query($sql);
         list($ncsn) = $xoopsDB->fetchRow($result);
     } else {
         $ncsn = intval($options[0]);
     }
 
-    $sql                             = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
-    $result                          = $xoopsDB->query($sql);
+    $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
+    $result = $xoopsDB->query($sql);
     list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
 
     $home['sn']    = $ncsn;
@@ -59,7 +59,7 @@ if (!function_exists("block_get_all_not_news_cate")) {
     {
         global $xoopsDB, $xoopsUser, $xoopsModule;
 
-        $left = $level * 10;
+        $left  = $level * 10;
         $level += 1;
 
         $option = ($of_ncsn) ? "" : "<option value='0'></option>";
@@ -68,8 +68,8 @@ if (!function_exists("block_get_all_not_news_cate")) {
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $selected = ($default_ncsn == $ncsn) ? "selected" : "";
-            $option .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
-            $option .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
+            $option   .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
+            $option   .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
         }
         return $option;
     }
@@ -114,7 +114,6 @@ if (!function_exists("block_get_page_cate")) {
                         $page['url'][$j]     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
                         $j++;
                     }
-
                 }
             }
 
@@ -127,9 +126,7 @@ if (!function_exists("block_get_page_cate")) {
                 $page['of_ncsn'][$i] = $ncsn;
                 $page['url'][$i]     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
                 $i++;
-
             }
-
         }
 
         return $page;

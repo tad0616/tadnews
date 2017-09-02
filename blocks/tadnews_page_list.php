@@ -6,8 +6,8 @@ function tadnews_page_list($options)
     global $xoopsDB;
 
     if (empty($options[0])) {
-        $sql        = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and of_ncsn=0 order by ncsn limit 0,1";
-        $result     = $xoopsDB->query($sql);
+        $sql    = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
+        $result = $xoopsDB->query($sql);
         list($ncsn) = $xoopsDB->fetchRow($result);
     } else {
         $ncsn = intval($options[0]);
@@ -66,7 +66,6 @@ function tadnews_page_list($options)
                     $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
                     $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
                 }
-
             }
         }
     }
@@ -138,7 +137,7 @@ if (!function_exists("block_get_all_not_news_cate")) {
     {
         global $xoopsDB, $xoopsUser, $xoopsModule;
 
-        $left = $level * 10;
+        $left  = $level * 10;
         $level += 1;
 
         $option = ($of_ncsn) ? "" : "<option value='0'></option>";
@@ -147,8 +146,8 @@ if (!function_exists("block_get_all_not_news_cate")) {
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $selected = ($default_ncsn == $ncsn) ? "selected" : "";
-            $option .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
-            $option .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
+            $option   .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
+            $option   .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
         }
         return $option;
     }
