@@ -49,8 +49,8 @@ function get_tadnews_cate_path($the_ncsn = "", $include_self = true)
 function get_tadnews_sub_cate($ncsn = "0")
 {
     global $xoopsDB;
-    $sql      = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
-    $result   = $xoopsDB->query($sql) or web_error($sql);
+    $sql = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $ncsn_arr = "";
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
@@ -62,9 +62,9 @@ function get_tadnews_sub_cate($ncsn = "0")
 function get_newspaper_set($nps_sn = "")
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
-    $sql    = "select * from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$nps_sn}'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$nps_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -72,9 +72,9 @@ function get_newspaper_set($nps_sn = "")
 function get_newspaper($npsn = "")
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
-    $sql    = "select * from " . $xoopsDB->prefix("tad_news_paper") . " where npsn='{$npsn}'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_news_paper") . " where npsn='{$npsn}'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -86,12 +86,12 @@ function preview_newspaper($npsn = "")
         return;
     }
 
-    $np                                 = get_newspaper($npsn);
-    $sql                                = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
-    $result                             = $xoopsDB->query($sql) or web_error($sql);
+    $np  = get_newspaper($npsn);
+    $sql = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
+    $result = $xoopsDB->query($sql) or web_error($sql);
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
-    $myts             = &MyTextSanitizer::getInstance();
+    $myts             = MyTextSanitizer::getInstance();
     $title            = $myts->htmlSpecialChars($title);
     $np['np_title']   = $myts->htmlSpecialChars($np['np_title']);
     $np['np_content'] = $myts->displayTarea($np['np_content'], 1, 1, 1, 1, 0);

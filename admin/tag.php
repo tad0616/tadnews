@@ -10,8 +10,8 @@ function list_tad_news_tags($def_tag_sn = "")
 {
     global $xoopsDB, $xoopsTpl, $tadnews;
 
-    $sql              = "select * from " . $xoopsDB->prefix("tad_news_tags") . "";
-    $result           = $xoopsDB->query($sql) or web_error($sql);
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_news_tags") . "";
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i                = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
@@ -30,7 +30,6 @@ function list_tad_news_tags($def_tag_sn = "")
         $tagarr[$i]['enable']     = ($def_tag_sn == $tag_sn) ? 1 : "";
         $tagarr[$i]['amount']     = sprintf(_MA_TADNEWS_TAG_AMOUNT, $tag_amount);
         $i++;
-
     }
 
     $xoopsTpl->assign("tag_sn", $def_tag_sn);
@@ -73,21 +72,21 @@ function del_tag($tag_sn = "")
 
     $sql = "delete from " . $xoopsDB->prefix("tad_news_tags") . " where tag_sn='{$tag_sn}'";
     $xoopsDB->queryF($sql) or web_error($sql);
-
 }
 
 function tags_used_amount()
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql    = "select prefix_tag,count(prefix_tag) from " . $xoopsDB->prefix("tad_news") . " group by prefix_tag ";
+    $sql = "SELECT prefix_tag,count(prefix_tag) FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY prefix_tag ";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $main   = "";
+    $main = "";
     while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;
     }
     return $main;
 }
+
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op     = system_CleanVars($_REQUEST, 'op', '', 'string');
@@ -103,21 +102,21 @@ switch ($op) {
         break;
 
     //更新資料
-    case "update_tad_news_tags";
+    case "update_tad_news_tags":
         update_tad_news_tags($tag_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
         break;
 
     //關閉資料
-    case "stat";
+    case "stat":
         tad_news_tags_stat($_GET['enable'], $tag_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
         break;
 
     //刪除資料
-    case "del_tag";
+    case "del_tag":
         del_tag($tag_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;

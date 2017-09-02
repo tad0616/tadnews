@@ -77,14 +77,14 @@ switch ($op) {
         break;
 
     //刪除資料
-    case "delete_tad_news";
+    case "delete_tad_news":
         $tadnews->delete_tad_news($nsn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
         break;
 
     //新增至選單
-    case "add_to_menu";
+    case "add_to_menu":
         add_to_menu($ncsn);
         header("location: {$_SERVER['PHP_SELF']}?ncsn=$ncsn");
         exit;
