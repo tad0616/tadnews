@@ -36,7 +36,7 @@
             </div>
           <{/foreach}>
           <div class="text-right">
-            [ <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$news.ncsn}>">more...</a> ]
+            [ <a href="<{$xoops_url}>/modules/tadnews/index.php?tag_sn=<{$tag_sn}>">more...</a> ]
           </div>
         <{/if}>
       </div>

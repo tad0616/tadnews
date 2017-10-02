@@ -445,12 +445,12 @@ class tadnews
             $this->add_counter($this->view_nsn);
 
             //找出相關資訊
-            $sql2 = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news") . " WHERE nsn='" . $this->view_nsn . "'";
+            $sql2       = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news") . " WHERE nsn='" . $this->view_nsn . "'";
             $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($ncsn) = $xoopsDB->fetchRow($result2);
             $this->set_view_ncsn($ncsn);
 
-            $sql2 = "SELECT not_news,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE ncsn='" . $this->view_ncsn . "'";
+            $sql2                             = "SELECT not_news,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE ncsn='" . $this->view_ncsn . "'";
             $result2                          = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($not_news, $show_cate_title) = $xoopsDB->fetchRow($result2);
 
@@ -1025,7 +1025,7 @@ class tadnews
 
         $opt_sub = (!empty($of_ncsn)) ? $this->get_cate_path($of_ncsn, true) : "";
 
-        $opt = $path = "";
+        $opt = $path = array();
 
         if (!empty($nc_title)) {
             $page           = ($not_news == '1') ? "page.php" : "index.php";
@@ -1110,7 +1110,7 @@ class tadnews
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
 
             $j               = 0;
-            $subnews         = "";
+            $subnews         = array();
             $only_title_cate = array();
 
             $myts = MyTextSanitizer::getInstance();
@@ -1346,7 +1346,7 @@ class tadnews
     private function news_author_select()
     {
         global $xoopsDB;
-        $sql = "SELECT uid FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY uid";
+        $sql    = "SELECT uid FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY uid";
         $result = $xoopsDB->query($sql) or web_error($sql);
         $opt    = _TADNEWS_SHOW_AUTHOR_NEWS . "
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
@@ -1763,7 +1763,14 @@ class tadnews
     //tad_news編輯表單
     public function tad_news_form($nsn = "", $def_ncsn = "", $mode = '')
     {
-        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig;
+        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
+
+        $ver = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
+        if ($ver >= 259) {
+            $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
+        } else {
+            $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
+        }
 
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/formValidator.php";
         $formValidator      = new formValidator("#myForm", false);
@@ -1845,23 +1852,23 @@ class tadnews
         //取得分類數
         $cate_num = $this->get_cate_num();
 
-        if ($this->editor == "elrte") {
-            if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php")) {
-                redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
-            }
-            include_once XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php";
-            $elrte = new elrte("tadnews", "news_content", $news_content);
-            $elrte->setHeight('350px');
-            $editor = $elrte->render();
-        } else {
-            if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
-                redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
-            }
-            include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
-            $fck = new CKEditor("tadnews", "news_content", $news_content);
-            $fck->setHeight(350);
-            $editor = $fck->render();
+        // if ($this->editor == "elrte") {
+        //     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php")) {
+        //         redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
+        //     }
+        //     include_once XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php";
+        //     $elrte = new elrte("tadnews", "news_content", $news_content);
+        //     $elrte->setHeight('350px');
+        //     $editor = $elrte->render();
+        // } else {
+        if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
+            redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
         }
+        include_once XOOPS_ROOT_PATH . "/modules/tadtools/ck.php";
+        $fck = new CKEditor("tadnews", "news_content", $news_content);
+        $fck->setHeight(350);
+        $editor = $fck->render();
+        // }
 
         //$editor="<textarea>$news_content</textarea>";
 
@@ -1901,7 +1908,7 @@ class tadnews
         //die($pic_css);
         $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
-        $form = "";
+        $form = array();
         if ($mode == "return") {
             $form['jquery']                      = $jquery_path;
             $form['action']                      = $_SERVER['PHP_SELF'];
@@ -2038,7 +2045,7 @@ class tadnews
     private function get_cate_num()
     {
         global $xoopsDB;
-        $sql = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='0'";
+        $sql         = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='0'";
         $result      = $xoopsDB->query($sql) or web_error($sql);
         list($count) = $xoopsDB->fetchRow($result);
         return $count;
@@ -2211,7 +2218,8 @@ class tadnews
     {
         global $xoopsDB;
         // die("{($of_ncsn}-{$new_cate}-{$not_news}");
-        $enable_group = $enable_post_group = $setup = $cate = "";
+        $enable_group = $enable_post_group = $setup = "";
+        $cate         = array();
         if (!empty($of_ncsn)) {
             $cate              = $this->get_tad_news_cate($of_ncsn);
             $enable_group      = $cate['enable_group'];

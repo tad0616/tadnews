@@ -1,3 +1,10 @@
+TadNews 3.94 (2017-10-02 released)
+====================================================
+1. solve the problem can not upload the cover image
+2. Increase PHP 7.1 compatibility
+3. Cancel the elRTE editor
+
+
 TadNews 3.93 (2017-06-16 released)
 ====================================================
 1. Adjust the cover map to the FB meta tag
