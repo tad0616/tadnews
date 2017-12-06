@@ -1765,12 +1765,12 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
 
-        $ver = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
+        /*$ver = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
         } else {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
-        }
+        }*/
 
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/formValidator.php";
         $formValidator      = new formValidator("#myForm", false);
