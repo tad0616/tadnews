@@ -187,7 +187,7 @@ function update_tad_news_cate($ncsn = "")
         mk_thumb($ncsn, "cate_pic", $xoopsModuleConfig['cate_pic_width']);
     }
 
-    $modhandler      = xoops_gethandler('module');
+    $modhandler      = xoops_getHandler('module');
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
         $sql     = "select menuid from " . $xoopsDB->prefix("tad_themes_menu") . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";

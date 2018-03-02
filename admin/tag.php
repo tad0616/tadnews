@@ -15,7 +15,7 @@ function list_tad_news_tags($def_tag_sn = "")
     $i                = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
-        $tag_amount = intval($tags_used_amount[$tag_sn]);
+        $tag_amount = (int)$tags_used_amount[$tag_sn];
         $enable_btn = ($enable == '1') ? "<a href='tag.php?op=stat&enable=0&tag_sn=$tag_sn' class='btn btn-warning'>" . _MA_TADNEWS_TAG_UNABLE . "</a>" : "<a href='tag.php?op=stat&enable=1&tag_sn=$tag_sn' class='btn btn-success'>" . _MA_TADNEWS_TAG_ABLE . "</a>";
 
         $del = ($enable != '1' and empty($tag_amount)) ? "<a href='javascript:delete_tag($tag_sn);' class='btn btn-danger'>" . _TADNEWS_DEL . "</a>" : "";

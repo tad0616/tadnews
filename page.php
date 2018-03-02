@@ -27,7 +27,7 @@ function list_tad_all_news($the_ncsn = "")
     $tadnews->get_cate_news();
 
     $RowsNum         = 0;
-    $modhandler      = xoops_gethandler('module');
+    $modhandler      = xoops_getHandler('module');
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
         $sql     = "select menuid from " . $xoopsDB->prefix("tad_themes_menu") . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$the_ncsn}'";
@@ -50,7 +50,7 @@ function add_to_menu($ncsn = "")
     $result = $xoopsDB->queryF($sql) or web_error($sql);
     $cate   = $xoopsDB->fetchArray($result);
 
-    $modhandler      = xoops_gethandler('module');
+    $modhandler      = xoops_getHandler('module');
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
         $sql = "insert into " . $xoopsDB->prefix("tad_themes_menu") . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1','0','_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}')";
@@ -71,7 +71,7 @@ switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

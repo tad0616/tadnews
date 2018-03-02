@@ -12,8 +12,8 @@ function list_tadnews($ncsn = '')
 {
     global $xoopsModuleConfig, $tadnews;
 
-    $num   = (!empty($_POST['n'])) ? intval($_POST['n']) : 10;
-    $p     = (!empty($_POST['p'])) ? intval($_POST['p']) : 0;
+    $num   = (!empty($_POST['n'])) ? (int)$_POST['n'] : 10;
+    $p     = (!empty($_POST['p'])) ? (int)$_POST['p'] : 0;
     $start = $p * $num;
 
     $tadnews->set_show_num($num);
@@ -431,8 +431,8 @@ function member_m()
 function openid_login()
 {
     global $xoopsConfig;
-    $modhandler     = xoops_gethandler('module');
-    $config_handler = xoops_gethandler('config');
+    $modhandler     = xoops_getHandler('module');
+    $config_handler = xoops_getHandler('config');
 
     $TadLoginXoopsModule = $modhandler->getByDirname("tad_login");
     if ($TadLoginXoopsModule) {
@@ -441,7 +441,7 @@ function openid_login()
         $tad_login['facebook'] = facebook_login('return');
         $tad_login['google']   = google_login('return');
 
-        $config_handler = xoops_gethandler('config');
+        $config_handler = xoops_getHandler('config');
         $modConfig      = $config_handler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
 
         $auth_method = $modConfig['auth_method'];
@@ -484,8 +484,8 @@ function list_tad_my_news_m()
         exit;
     }
 
-    $num   = (!empty($_POST['n'])) ? intval($_POST['n']) : 10;
-    $p     = (!empty($_POST['p'])) ? intval($_POST['p']) : 0;
+    $num   = (!empty($_POST['n'])) ? (int)$_POST['n'] : 10;
+    $p     = (!empty($_POST['p'])) ? (int)$_POST['p'] : 0;
     $start = $p * $num;
 
     $uid = $xoopsUser->uid();
@@ -535,7 +535,7 @@ function logout_m()
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler = xoops_gethandler('online');
+        $online_handler = xoops_getHandler('online');
         $online_handler->destroy($xoopsUser->getVar('uid'));
     }
 }
@@ -553,7 +553,7 @@ switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

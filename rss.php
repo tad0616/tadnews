@@ -8,7 +8,7 @@ include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 $ncsn = 0;
 $cate = array();
 if (isset($_GET['ncsn'])) {
-    $ncsn = intval($_GET['ncsn']);
+    $ncsn = (int)$_GET['ncsn'];
     $cate = $tadnews->get_tad_news_cate($ncsn);
 }
 if (function_exists('mb_http_output')) {

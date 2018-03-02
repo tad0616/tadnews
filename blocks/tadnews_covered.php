@@ -18,7 +18,7 @@ function tadnews_covered($options)
         $num = 12;
     }
 
-    $summary_length = intval($options[2]);
+    $summary_length = (int)$options[2];
     $summary_css    = $options[3];
     // $show_cover     = $block['show_cover'];
     $cover_css = '';

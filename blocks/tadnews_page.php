@@ -15,7 +15,7 @@ function tadnews_page($options)
         $result = $xoopsDB->query($sql);
         list($ncsn) = $xoopsDB->fetchRow($result);
     } else {
-        $ncsn = intval($options[0]);
+        $ncsn = (int)$options[0];
     }
 
     $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
