@@ -359,8 +359,10 @@ function send_now($npsn = "")
 
     $mail_array = $_POST['mail_array'];
 
+
     $xoopsMailer                           = &getMailer();
     $xoopsMailer->multimailer->ContentType = "text/html";
+    $xoopsMailer->addHeaders("MIME-Version: 1.0");
 
     $newspaper     = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
@@ -370,10 +372,9 @@ function send_now($npsn = "")
     $content = str_replace("src=\"/", "src=\"" . XOOPS_URL . "/", $content);
 
     $headers = "";
-    $xoopsMailer->addHeaders("MIME-Version: 1.0");
 
-    $xoopsMailer->setFromEmail($xoopsUser->getVar("email", "E"));
-    $xoopsMailer->setFromName($xoopsUser->getVar("uname", "E"));
+    // $xoopsMailer->setFromEmail($xoopsUser->getVar("email", "E"));
+    // $xoopsMailer->setFromName($xoopsUser->getVar("uname", "E"));
 
     //$xoopsMailer->setSubject($subject);
     //$xoopsMailer->setBody($content);
@@ -385,7 +386,7 @@ function send_now($npsn = "")
             continue;
         }
 
-        if ($xoopsMailer->sendMail($email, $subject, $content)) {
+        if ($xoopsMailer->sendMail($email, $subject, $content, $headers)) {
             $sql = "replace into " . $xoopsDB->prefix("tad_news_paper_send_log") . " (npsn,email,send_time,log) values('{$npsn}','{$email}','{$now}', 'success')";
             $xoopsDB->queryF($sql);
         } else {
@@ -576,14 +577,12 @@ switch ($op) {
         $nps_sn = save_newspaper_set($nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$nps_sn}");
         exit;
-        break;
 
     //刪除電子報設定組
     case "del_newspaper_set":
         del_newspaper_set($nps_sn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
 
     //編輯資料
     case "add_newspaper":
@@ -594,7 +593,6 @@ switch ($op) {
         $npsn = save_newspaper();
         header("location: {$_SERVER['PHP_SELF']}?op=edit_newspaper&npsn={$npsn}");
         exit;
-        break;
 
     //編輯電子報資料
     case "edit_newspaper":
@@ -605,14 +603,12 @@ switch ($op) {
         save_all($npsn);
         header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn={$npsn}");
         exit;
-        break;
 
     //刪除電子報
     case "del_newspaper":
         del_newspaper($npsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
 
     case "sendmail":
         sendmail_form($npsn);
@@ -622,7 +618,6 @@ switch ($op) {
         send_now($npsn);
         header("location: {$_SERVER['PHP_SELF']}?op=sendmail_log&npsn={$npsn}");
         exit;
-        break;
 
     case "sendmail_log":
         sendmail_log($npsn);
@@ -649,28 +644,24 @@ switch ($op) {
         delete_tad_news_email($_GET['email'], $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
         exit;
-        break;
 
     //刪除電子郵件
     case "delete_tad_news_email_npsn":
         delete_tad_news_email($_GET['email'], $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn=$npsn");
         exit;
-        break;
 
     //更新電子郵件
     case "update_email":
         update_email($_POST['old_email'], $_POST['new_email'], $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
         exit;
-        break;
 
     //匯入電子郵件
     case "email_import":
         email_import($_POST['email_import'], $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn");
         exit;
-        break;
 
     default:
         newspaper_set_table($nps_sn);
