@@ -34,7 +34,7 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
         }
     }
 
-    $tadnews->get_news();
+    $tadnews->get_news('assign', true);
     $xoopsTpl->assign('options', $options);
     $xoopsTpl->assign('ncsn', $the_ncsn);
     $cate = $tadnews->get_tad_news_cate($the_ncsn);

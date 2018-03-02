@@ -14,6 +14,8 @@
 
 <{if $cate}>
   <h1><{$cate.nc_title}></h1>
+<{else}>
+  <h1 class="sr-only" style="display: none;">All News</h1>
 <{/if}>
 
 <{if $page}>
@@ -21,11 +23,11 @@
     <div class="row" style="margin-bottom: 20px;">
       <div class="col-sm-12">
         <div <{if $page.need_sign}>style="background-image: url('<{$page.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
-          <div style="padding:10px 0px;">
+          <h2 style="padding:10px 0px;">
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size: 24px;  font-weight: normal;">
             <{$page.news_title}>
             </a>
-          </div>
+          </h2>
         </div>
 
         <{$page.prefix_tag}>
@@ -47,8 +49,10 @@
     </div>
   <{/foreach}>
 
-<{/if}>
+  <div class="text-center;">
+    <{$bar}>
+  </div>
 
-<div class="text-center;">
-  <{$bar}>
-</div>
+
+  <{includeq file="$xoops_rootpath/modules/tadnews/templates/rss.tpl"}>
+<{/if}>

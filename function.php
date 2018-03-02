@@ -101,6 +101,7 @@ function preview_newspaper($npsn = "")
     $head = str_replace('{T}', $np['np_title'], $head);
 
     $filename = _TADNEWS_NSP_THEMES_PATH . "/{$themes}/index.html";
+    // die('filename: ' . $filename);
     $handle   = fopen($filename, "rb");
     $contents = '';
     while (!feof($handle)) {

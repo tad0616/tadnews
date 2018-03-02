@@ -35,9 +35,12 @@ function list_newspaper()
 }
 
 /*-----------執行動作判斷區----------*/
-$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$npsn           = (empty($_GET['npsn'])) ? "" : (int)$_GET['npsn'];
-switch ($_REQUEST['op']) {
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
+
+switch ($op) {
 
     case "preview":
         $main = preview_newspaper($npsn);
@@ -49,7 +52,7 @@ switch ($_REQUEST['op']) {
 }
 
 /*-----------秀出結果區--------------*/
-if ($_REQUEST['op'] == "preview") {
+if ($op == "preview") {
     echo $main;
 } else {
     $xoopsTpl->assign('xoops_showrblock', 0);

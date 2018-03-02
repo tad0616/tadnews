@@ -271,7 +271,7 @@ function edit_newspaper($npsn = "")
         $html = $newspaper['np_content'];
     }
 
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/fck.php")) {
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
         redirect_header("index.php", 3, _MD_NEED_TADTOOLS);
     }
 

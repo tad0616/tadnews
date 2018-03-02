@@ -140,7 +140,8 @@ function get_tad_news_cate_list_m()
                 <ul>
         ";
 
-    $sql = "SELECT `ncsn`, `nc_title`, `not_news` FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE `not_news` != '1' ORDER BY `sort`";
+
+    $sql    = "select `ncsn`, `nc_title`, `not_news` from " . $xoopsDB->prefix("tad_news_cate") . " where `not_news` != '1' order by `sort`";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
     while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
@@ -264,7 +265,9 @@ function list_newspaper_m()
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
         $np_date  = substr($np_date, 0, 10);
-        $main     .= "
+
+        $main .= "
+
             <li>
                 <a href='pda.php?op=preview&npsn={$allnpsn}' class='item-link item-content'>
                     <div class='item-inner'>
@@ -286,9 +289,10 @@ function preview_newspaper_m($npsn = "")
         return;
     }
 
-    $np  = get_newspaper($npsn);
-    $sql = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $np                                 = get_newspaper($npsn);
+    $sql                                = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
+    $result                             = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $head = str_replace('{N}', $np['number'], $head);
@@ -861,10 +865,10 @@ echo "
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
     <title>{$module_name}</title>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/framework7.ios.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/framework7.ios.colors.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/ionicons.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/my-app.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/framework7.ios.min.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/framework7.ios.colors.min.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/ionicons.min.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/my-app.css'>
 </head>
 
 <body>
@@ -965,10 +969,10 @@ echo "
     </div>
     <!-- Framework7 Library JS-->
     <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/jquery/jquery-1.11.1.min.js'></script>
-    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadnews/class/framework7/js/framework7.min.js'></script>
+    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/framework7.min.js'></script>
     <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/fancyBox/source/jquery.fancybox.js?v=2.1.4'></script>
     <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/fancyBox/source/jquery.fancybox.css?v=2.1.4'>
-    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadnews/class/framework7/js/my-app.js'></script>
+    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/my-app.js'></script>
 </body>
 
 </html>

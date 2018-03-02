@@ -24,7 +24,7 @@ switch ($op) {
 
     //輸入表格
     case "tad_news_form":
-        $tadnews->set_news_editor($xoopsModuleConfig['editor']);
+        // $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn);
         break;
 
@@ -46,7 +46,7 @@ switch ($op) {
         break;
 
     default:
-        $tadnews->set_news_editor($xoopsModuleConfig['editor']);
+        // $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn, $ncsn);
         break;
 }

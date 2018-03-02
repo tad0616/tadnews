@@ -53,6 +53,7 @@ function list_tad_all_news($the_ncsn = "", $show_uid = "")
     }
     $tadnews->get_news();
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign("ncsn", $the_ncsn);
 }
 
 //列出所有tad_news資料
@@ -81,6 +82,7 @@ function list_tad_cate_news($show_ncsn = 0, $the_level = 0, $show_uid = "")
     }
     $tadnews->get_cate_news();
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign("ncsn", $show_ncsn);
 }
 
 //顯示單一新聞

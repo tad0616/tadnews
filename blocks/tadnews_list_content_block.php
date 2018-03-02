@@ -15,7 +15,7 @@ function tadnews_list_content_block_show($options)
     $block['show_cover']     = $options[4];
     $block['cover_css']      = $options[5];
     $block['start_from']     = $options[6];
-
+    $block['searchbar']      = $options[10];
     if (!is_numeric($options[7]) and strpos($options[7], ',') === false) {
         $options[7] = '';
     }
@@ -36,12 +36,14 @@ function tadnews_list_content_block_show($options)
 function tadnews_list_content_block_edit($options)
 {
 
-    $options4_1 = ($options[4] == "1") ? "checked" : "";
-    $options4_0 = ($options[4] == "0") ? "checked" : "";
-    $options8_1 = ($options[8] == "list") ? "checked" : "";
-    $options8_0 = ($options[8] == "table") ? "checked" : "";
-    $chked1_0   = ($options[9] == "1") ? "checked" : "";
-    $chked1_1   = ($options[9] == "0") ? "checked" : "";
+    $options4_1  = ($options[4] == "1") ? "checked" : "";
+    $options4_0  = ($options[4] == "0") ? "checked" : "";
+    $options8_1  = ($options[8] == "list") ? "checked" : "";
+    $options8_0  = ($options[8] == "table") ? "checked" : "";
+    $chked1_0    = ($options[9] == "1") ? "checked" : "";
+    $chked1_1    = ($options[9] == "0") ? "checked" : "";
+    $searchbar_0 = ($options[10] == "0") ? "checked" : "";
+    $searchbar_1 = ($options[10] == "1") ? "checked" : "";
 
     $option = block_news_cate($options[7]);
 
@@ -50,12 +52,12 @@ function tadnews_list_content_block_edit($options)
     <tr><th>
     " . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM0 . "
     </th><td>
-    <INPUT type='text' name='options[0]' value='{$options[0]}' size=6>
+    <input type='text' name='options[0]' value='{$options[0]}' size=6>
     </td></tr>
     <tr><th>
     " . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM1 . "
     </th><td>
-    <INPUT type='text' name='options[1]' value='{$options[1]}' size=6>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM1_DESC . "
+    <input type='text' name='options[1]' value='{$options[1]}' size=6>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM1_DESC . "
     </td></tr>
     <tr><th>
     " . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "
@@ -66,13 +68,13 @@ function tadnews_list_content_block_edit($options)
     <tr><th>
     " . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM3 . "" . _MB_TADNEWS_LIST_TEMPLATE_NOTE . "
     </th><td>
-    <INPUT type='text' name='options[3]' value='{$options[3]}' size=6>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM3_DESC . "
+    <input type='text' name='options[3]' value='{$options[3]}' size=6>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM3_DESC . "
     </td></tr>
     <tr><th>
     " . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM4 . "" . _MB_TADNEWS_LIST_TEMPLATE_NOTE . "
     </th><td>
-    <INPUT type='radio' name='options[4]' value='1' $options4_1>" . _YES . "
-    <INPUT type='radio' name='options[4]' value='0' $options4_0>" . _NO . "
+    <input type='radio' name='options[4]' value='1' $options4_1>" . _YES . "
+    <input type='radio' name='options[4]' value='0' $options4_0>" . _NO . "
     </td></tr>
     <tr><th>
     " . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM5 . "" . _MB_TADNEWS_LIST_TEMPLATE_NOTE . "
@@ -83,22 +85,28 @@ function tadnews_list_content_block_edit($options)
     <tr><th>
     " . _MB_TADNEWS_START_FROM . "
     </th><td>
-    <INPUT type='text' name='options[6]' value='{$options[6]}' size=6>
+    <input type='text' name='options[6]' value='{$options[6]}' size=6>
     </td></tr>
     <tr><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$option['form']}
-    <INPUT type='hidden' name='options[7]' id='bb' value='{$options[7]}'></td></tr>
+    <input type='hidden' name='options[7]' id='bb' value='{$options[7]}'></td></tr>
 
     <tr><th>
     " . _MB_TADNEWS_LIST_TEMPLATE . "
     </th><td>
-    <INPUT type='radio' name='options[8]' value='list' $options8_1>" . _MB_TADNEWS_LIST_TEMPLATE_LIST . "
-    <INPUT type='radio' name='options[8]' value='table' $options8_0>" . _MB_TADNEWS_LIST_TEMPLATE_TABLE . "
+    <input type='radio' name='options[8]' value='list' $options8_1>" . _MB_TADNEWS_LIST_TEMPLATE_LIST . "
+    <input type='radio' name='options[8]' value='table' $options8_0>" . _MB_TADNEWS_LIST_TEMPLATE_TABLE . "
     </td></tr>
     <tr><th>
     " . _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM1 . "
     </th><td>
-    <INPUT type='radio' $chked1_0 name='options[9]' value='1'>" . _YES . "
-    <INPUT type='radio' $chked1_1 name='options[9]' value='0'>" . _NO . "
+    <input type='radio' $chked1_0 name='options[9]' value='1'>" . _YES . "
+    <input type='radio' $chked1_1 name='options[9]' value='0'>" . _NO . "
+    </td></tr>
+    <tr><th>
+    " . _MB_TADNEWS_SEARCHBAR . "
+    </th><td>
+    <input type='radio' $searchbar_1 name='options[10]' value='1'>" . _YES . "
+    <input type='radio' $searchbar_0 name='options[10]' value='0'>" . _NO . "
     </td></tr>
     </table>
     ";

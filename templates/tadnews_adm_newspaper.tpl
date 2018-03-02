@@ -177,7 +177,7 @@
         <{$no_email}>
       </div>
     <{/if}>
-    <iframe src="newspaper.php?op=preview&npsn=<{$npsn}>" style="width: 100%; height: 480px;b order:1px solid gray; clear: both"><{$np_content}></iframe>
+    <iframe title="newspaper preview" src="newspaper.php?op=preview&npsn=<{$npsn}>" style="width: 100%; height: 480px;b order:1px solid gray; clear: both"><{$np_content}></iframe>
   <{elseif $op=="newspaper_email"}>
     <script>
       function delete_tad_news_email_func(email){
