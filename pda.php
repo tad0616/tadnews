@@ -972,7 +972,7 @@ echo "
     <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/framework7.min.js'></script>
     <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/fancyBox/source/jquery.fancybox.js?v=2.1.4'></script>
     <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/fancyBox/source/jquery.fancybox.css?v=2.1.4'>
-    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/my-app.js'></script>
+    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/tadnews-app.js'></script>
 </body>
 
 </html>
