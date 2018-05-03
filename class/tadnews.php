@@ -1788,7 +1788,7 @@ class tadnews
         if (empty($ncsn_arr)) {
             redirect_header("index.php", 3, _TADNEWS_NO_ADMIN_POWER . "<br>" . implode(";", $ncsn_arr));
         } else {
-            $news_cate_kind_arr = '';
+            $news_cate_kind_arr = array();
             foreach ($ncsn_arr as $ncsn) {
                 $sql    = "select not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
                 $result = $xoopsDB->query($sql) or web_error($sql);
