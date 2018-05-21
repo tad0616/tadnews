@@ -53,7 +53,7 @@ function add_to_menu($ncsn = "")
     $modhandler      = xoops_getHandler('module');
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
-        $sql = "insert into " . $xoopsDB->prefix("tad_themes_menu") . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1','0','_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}')";
+        $sql = "insert into " . $xoopsDB->prefix("tad_themes_menu") . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`, `read_group`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1','0','_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}', '1,2,3')";
         $xoopsDB->queryF($sql) or web_error($sql);
         //取得最後新增資料的流水編號
         $menuid = $xoopsDB->getInsertId();
@@ -71,7 +71,7 @@ switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : "";
+        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

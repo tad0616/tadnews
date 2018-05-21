@@ -36,6 +36,7 @@ function tadnews_tab_news($options)
         $tadnews->set_news_kind("news");
         $tadnews->set_use_star_rating(false);
         $tadnews->set_cover(false);
+        $tadnews->set_view_ncsn($ncsn_arr);
         $news                 = $tadnews->get_news('return');
         $block['latest_news'] = $news['page'];
     }

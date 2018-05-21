@@ -12,8 +12,8 @@ function list_tadnews($ncsn = '')
 {
     global $xoopsModuleConfig, $tadnews;
 
-    $num   = (!empty($_POST['n'])) ? (int)$_POST['n'] : 10;
-    $p     = (!empty($_POST['p'])) ? (int)$_POST['p'] : 0;
+    $num   = (!empty($_POST['n'])) ? (int) $_POST['n'] : 10;
+    $p     = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
     $start = $p * $num;
 
     $tadnews->set_show_num($num);
@@ -37,7 +37,7 @@ function list_tadnews($ncsn = '')
     foreach ($tnews['page'] as $news) {
         $content    = strip_tags($news['content']);
         $item_image = (empty($news['image_thumb'])) ? "" : "<div class='item-media'><img data-src='{$news['image_thumb']}' class='lazy lazy-fadein'></div>";
-        $all_news   .= "
+        $all_news .= "
           <li>
               <a href='pda.php?op=news&nsn={$news['nsn']}{$ncsn_param}' class='item-link item-content'>
                   {$item_image}
@@ -139,7 +139,6 @@ function get_tad_news_cate_list_m()
             <div class='list-block'>
                 <ul>
         ";
-
 
     $sql    = "select `ncsn`, `nc_title`, `not_news` from " . $xoopsDB->prefix("tad_news_cate") . " where `not_news` != '1' order by `sort`";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
@@ -289,9 +288,9 @@ function preview_newspaper_m($npsn = "")
         return;
     }
 
-    $np                                 = get_newspaper($npsn);
-    $sql                                = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
-    $result                             = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $np     = get_newspaper($npsn);
+    $sql    = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
@@ -484,8 +483,8 @@ function list_tad_my_news_m()
         exit;
     }
 
-    $num   = (!empty($_POST['n'])) ? (int)$_POST['n'] : 10;
-    $p     = (!empty($_POST['p'])) ? (int)$_POST['p'] : 0;
+    $num   = (!empty($_POST['n'])) ? (int) $_POST['n'] : 10;
+    $p     = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
     $start = $p * $num;
 
     $uid = $xoopsUser->uid();
@@ -553,7 +552,7 @@ switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : "";
+        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;
@@ -868,7 +867,7 @@ echo "
     <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/framework7.ios.min.css'>
     <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/framework7.ios.colors.min.css'>
     <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/ionicons.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/my-app.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/tadnews-app.css'>
 </head>
 
 <body>

@@ -110,7 +110,7 @@ function have_read($nsn = "", $uid = "")
     global $xoopsDB, $xoopsUser;
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql = "insert into " . $xoopsDB->prefix("tad_news_sign") . " (`nsn`,`uid`,`sign_time`) values('$nsn','$uid','{$now}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
+    $xoopsDB->query($sql) or web_error($sql);
 }
 
 //檢查置頂時間

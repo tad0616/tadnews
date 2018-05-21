@@ -1,3 +1,16 @@
+TadNews 3.96 (released on 2018-05-16)
+================================================== ==
+1. Support database strict mode
+
+
+TadNews 3.95 (released on 2018-05-16)
+================================================== ==
+1. Solve the problem that XOOPS 2.5.9 cannot send e-newsletters
+2. Solve the tab news block, display the problem of "add all the latest news" content is incorrect
+3. Delete the tchinese Big5 language
+4. Accelerate display speed
+
+
 TadNews 3.94 (2017-10-02 released)
 ====================================================
 1. solve the problem can not upload the cover image

@@ -22,8 +22,8 @@ CREATE TABLE `tad_news` (
   `ncsn` smallint(5) unsigned NOT NULL default 0,
   `news_title` varchar(255) NOT NULL default '',
   `news_content` longtext NOT NULL,
-  `start_day` datetime NOT NULL default '0000-00-00 00:00:00',
-  `end_day` datetime default NULL default '0000-00-00 00:00:00',
+  `start_day` datetime NOT NULL,
+  `end_day` datetime default NULL,
   `enable` enum('1','0') NOT NULL default '1',
   `uid` mediumint(8) unsigned NOT NULL default 0,
   `passwd` varchar(255) NOT NULL default '',
@@ -31,7 +31,7 @@ CREATE TABLE `tad_news` (
   `counter` smallint(5) unsigned NOT NULL default 0,
   `prefix_tag` varchar(255) NOT NULL default '',
   `always_top` enum('0','1') NOT NULL default '0',
-  `always_top_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `always_top_date` datetime NOT NULL,
   `have_read_group` varchar(255) NOT NULL default '',
   `page_sort` SMALLINT(5) UNSIGNED NOT NULL default 0,
   PRIMARY KEY  (`nsn`)
@@ -61,15 +61,15 @@ CREATE TABLE `tad_news_paper` (
   `np_title` varchar(255)  NOT NULL default '',
   `nsn_array` text NOT NULL,
   `np_content` text NOT NULL,
-  `np_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `np_date` datetime NOT NULL,
   PRIMARY KEY  (`npsn`)
-) ;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE `tad_news_paper_email` (
   `nps_sn` smallint(6) NOT NULL default 0,
   `email` varchar(100) NOT NULL default '',
-  `order_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `order_date` datetime NOT NULL,
   PRIMARY KEY  (`nps_sn`,`email`)
 ) ENGINE=MyISAM;
 
@@ -89,14 +89,14 @@ CREATE TABLE `tad_news_sign` (
   `sign_sn` mediumint(8) UNSIGNED NOT NULL auto_increment,
   `nsn` SMALLINT UNSIGNED NOT NULL  default 0,
   `uid` mediumint(8) UNSIGNED NOT NULL  default 0,
-  `sign_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `sign_time` DATETIME NOT NULL,
   PRIMARY KEY  (`sign_sn`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE `tad_news_paper_send_log` (
   `npsn` smallint(5) unsigned NOT NULL default 0,
   `email` varchar(100) NOT NULL default '',
-  `send_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `send_time` datetime NOT NULL,
   `log` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`npsn`,`email`)
 ) ENGINE=MyISAM;
@@ -125,6 +125,6 @@ CREATE TABLE `tadnews_rank` (
   `col_sn` smallint(5) unsigned NOT NULL default 0,
   `rank` tinyint(3) unsigned NOT NULL default 0,
   `uid` mediumint(8) unsigned NOT NULL default 0,
-  `rank_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `rank_date` datetime NOT NULL,
   PRIMARY KEY (`col_name`,`col_sn`,`uid`)
 ) ENGINE=MyISAM;
