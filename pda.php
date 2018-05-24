@@ -541,18 +541,17 @@ function logout_m()
 
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$nsn  = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
-$npsn = system_CleanVars($_REQUEST, 'npsn', '', 'int');
-$date = system_CleanVars($_REQUEST, 'date', '', 'date');
-$date = (!isset($date)) ? date("Y-m") : date("Y-m", $date);
+$op       = system_CleanVars($_REQUEST, 'op', '', 'string');
+$ncsn     = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$nsn      = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$npsn     = system_CleanVars($_REQUEST, 'npsn', '', 'int');
+$date     = system_CleanVars($_REQUEST, 'date', date("Y-m"), 'string');
+$files_sn = system_CleanVars($_REQUEST, 'files_sn', '', 'int');
 
 switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;
