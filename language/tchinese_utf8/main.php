@@ -103,3 +103,13 @@ define('_MD_TADNEWS_ONLY_ROOT', '僅管理員');
 define('_MD_TADNEWS_EDIT_CATE', '編輯此分類');
 define('_MD_TADNEWS_ADD_TO_MENU', '加入佈景選單');
 define('_MD_TADNEWS_ADD_TO_MENU_ALERT', '此分類已經加入導覽列選單，若欲將選單移除或變動位置，請直接從「<a href="' . XOOPS_URL . '/modules/tad_themes/admin/dropdown.php">選單設定</a>」管理之即可。');
+
+define('_MD_TADNEWS_USE_TAB_MODE', '使用頁籤模式');
+
+define('_MD_TADNEWS_TAB_TITLE', '請輸入頁籤 %s 標題');
+// <{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>
+define('_MD_TADNEWS_ADD_TAB', '新增頁籤');
+define('_MD_TADNEWS_DEL_TAB', '移除頁籤');
+
+define('_MD_TADNEWS_TAB_TITLE1', '請輸入頁籤');
+define('_MD_TADNEWS_TAB_TITLE2', '標題');

@@ -163,7 +163,7 @@ class tadnews
     {
         global $xoopsConfig;
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/TadUpFiles.php";
-        //include_once XOOPS_ROOT_PATH."/modules/tadnews/up_file.php";
+        include_once XOOPS_ROOT_PATH."/modules/tadtools/TadDataCenter.php" ;
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
         include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
         $this->now   = date("Y-m-d", xoops_getUserTimestamp(time()));
@@ -179,6 +179,7 @@ class tadnews
             $this->set_use_star_rating(true);
         }
         $this->TadUpFiles = new TadUpFiles("tadnews");
+        $this->TadDataCenter = new TadDataCenter("tadnews");
 
     }
 
@@ -639,6 +640,11 @@ class tadnews
         //假如有指定標籤
         if (!empty($this->view_tag)) {
             $where_tag = "and prefix_tag='{$this->view_tag}'";
+
+        } elseif (is_array($this->view_tag)) {
+            $all_tag   = implode(',', $this->view_tag);
+            $where_tag = empty($all_tag) ? "" : "and prefix_tag in($all_tag)";
+            //指定觀看某一個分類
         } else {
             $where_tag = "";
         }
@@ -876,7 +882,7 @@ class tadnews
             }
 
             $prefix_tag = $this->mk_prefix_tag($prefix_tag);
-            
+
             $back_news = $back_news_link = $back_news_title = $next_news_link = $next_news_title = $next_news = $push = $facebook_comments = "";
 
             if (!empty($this->view_nsn) and is_numeric($this->view_nsn)){
@@ -908,7 +914,7 @@ class tadnews
                 $push              = push_url($this->tadnewsConfig['use_social_tools']);
 
             }
-            
+
 
             $all_news[$i]['nsn']               = $nsn;
             $all_news[$i]['facebook_comments'] = $facebook_comments;
@@ -1650,7 +1656,7 @@ class tadnews
         global $xoopsDB, $xoopsUser;
 
         $news = $this->get_tad_news($now_nsn);
-        
+
         $myts    = MyTextSanitizer::getInstance();
         $nsnsort = array();
 
@@ -1659,15 +1665,15 @@ class tadnews
 
 
         if ($this->kind === "page") {
-            
+
             $sql_back = "select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where  a.page_sort < '{$news['page_sort']}'  $and_enable and b.not_news='1' and a.ncsn='{$news['ncsn']}' order by a.page_sort desc limit 0,1";
-            
+
             $sql_next = "select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where a.page_sort > '{$news['page_sort']}'  $and_enable and b.not_news='1' and a.ncsn='{$news['ncsn']}' order by a.page_sort limit 0,1";
-        } else {            
+        } else {
             $and_cate = ($now_ncsn) ? "and a.ncsn='$now_ncsn'" : "";
-            
+
             $sql_back = "select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where (a.start_day < '{$news['start_day']}' or a.nsn < '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate order by a.start_day desc, a.nsn desc limit 0,1";
-            
+
             $sql_next = "select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where (a.start_day > '{$news['start_day']}'  or a.nsn > '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate order by a.start_day , a.nsn limit 0,1";
         }
 
@@ -1682,7 +1688,7 @@ class tadnews
                 $nsnsort['nsn']   = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
                 $nsnsort['date']  = substr($start_day, 0, 10);
-            } elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {            
+            } elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {
                 $nsnsort['back'] = $this->news_sort($nsn, $ncsn, "back");
             } else{
                 $nsnsort['back']['nsn']   = $nsn;
@@ -1701,8 +1707,8 @@ class tadnews
                 $nsnsort['nsn']   = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
                 $nsnsort['date']  = substr($start_day, 0, 10);
-            }elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {          
-                $nsnsort['next'] = $this->news_sort($nsn, $ncsn, "next");                 
+            }elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {
+                $nsnsort['next'] = $this->news_sort($nsn, $ncsn, "next");
             } else {
                 $nsnsort['next']['nsn']   = $nsn;
                 $nsnsort['next']['title'] = $myts->htmlSpecialChars($news_title);
@@ -1783,7 +1789,7 @@ class tadnews
     public function tad_news_form($nsn = "", $def_ncsn = "", $mode = '')
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
-
+        $myts = MyTextSanitizer::getInstance();
         $ver = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
@@ -1821,9 +1827,13 @@ class tadnews
 
         //抓取預設值
         if (!empty($nsn)) {
+            //先檢查是否為頁籤
+            $this->TadDataCenter->set_col('nsn',$nsn);
+            $tab_arr=$this->TadDataCenter->getData();
+
             $DBV = $this->get_tad_news($nsn, true, false);
         } else {
-            $DBV = array();
+            $DBV = $tab_arr=array();
         }
 
         //預設值設定
@@ -1871,15 +1881,6 @@ class tadnews
         //取得分類數
         $cate_num = $this->get_cate_num();
 
-        // if ($this->editor == "elrte") {
-        //     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php")) {
-        //         redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
-        //     }
-        //     include_once XOOPS_ROOT_PATH . "/modules/tadtools/elrte.php";
-        //     $elrte = new elrte("tadnews", "news_content", $news_content);
-        //     $elrte->setHeight('350px');
-        //     $editor = $elrte->render();
-        // } else {
         if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
             redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
         }
@@ -1887,9 +1888,20 @@ class tadnews
         $fck = new CKEditor("tadnews", "news_content", $news_content);
         $fck->setHeight(350);
         $editor = $fck->render();
-        // }
 
-        //$editor="<textarea>$news_content</textarea>";
+        if($tab_arr){
+            foreach($tab_arr['tab_content'] as $k => $content){
+                $ck = new CKEditor("tadnews", "tab_content[$k]", $content);
+                $ck->setHeight(200);
+                $tab_arr['tab_editor'][$k] = $ck->render();
+                $tab_arr['tab_title'][$k] = $myts->htmlSpecialChars($tab_arr['tab_title'][$k]);
+            }
+        }else{
+            $ck = new CKEditor("tadnews", "tab_content[1]", $tab_arr['tab_content'][1]);
+            $ck->setHeight(200);
+            $tab_editor = $ck->render();
+        }
+
 
         $op = (empty($nsn)) ? "insert_tad_news" : "update_tad_news";
 
@@ -1945,6 +1957,7 @@ class tadnews
             $form['news_title']                  = $news_title;
             $form['news_content']                = $news_content;
             $form['editor']                      = $editor;
+            $form['tab_editor']                      = $tab_editor;
             $form['jquery_tabs_id']              = "jquery-tabs{$now}";
             $form['start_day']                   = $start_day;
             $form['end_day']                     = $end_day;
@@ -1983,6 +1996,7 @@ class tadnews
             $form['page_upform'] = $page_upform;
 
             $form['formValidator_code'] = $formValidator_code;
+            $form['tab_arr'] = $tab_arr;
 
             return $form;
         } else {
@@ -2002,6 +2016,7 @@ class tadnews
             $xoopsTpl->assign("news_title", $news_title);
             $xoopsTpl->assign("news_content", $news_content);
             $xoopsTpl->assign("editor", $editor);
+            $xoopsTpl->assign("tab_editor", $tab_editor);
             $xoopsTpl->assign("jquery_tabs_id", "jquery-tabs{$now}");
             $xoopsTpl->assign("start_day", $start_day);
             $xoopsTpl->assign("end_day", $end_day);
@@ -2040,6 +2055,7 @@ class tadnews
             $xoopsTpl->assign("page_upform", $page_upform);
 
             $xoopsTpl->assign("formValidator_code", $formValidator_code);
+            $xoopsTpl->assign("tab_arr", $tab_arr);
         }
     }
 
@@ -2182,7 +2198,51 @@ class tadnews
 
         $myts         = MyTextSanitizer::getInstance();
         $news_title   = $myts->addSlashes($_POST['news_title']);
-        $news_content = $myts->addSlashes($_POST['news_content']);
+        //若是頁籤模式
+        if($_POST['tab_mode']==1){
+            $tabs_content="
+            <link rel='stylesheet' href='".XOOPS_URL."/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css' />
+            <script src='".XOOPS_URL."/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
+            <div id='PageTab'>";
+
+            $tab_title_data_arr=$tab_content_data_arr=array();
+            $tab_title_div=$tab_content_div="";
+            foreach($_POST['tab_title'] as $tab_key=>$tab_val){
+                $tab_data_arr['tab_title'][$tab_key]=$tab_val;
+                $tab_title_div.="<li>$tab_val</li>";
+
+                $tab_data_arr['tab_content'][$tab_key]=$_POST['tab_content'][$tab_key];
+
+                $tab_content_div.="
+                <div>
+                    {$_POST['tab_content'][$tab_key]}
+                </div>";
+            }
+
+            $tabs_content.="
+                <ul class='resp-tabs-list vert'>
+                    {$tab_title_div}
+                </ul>
+                <div class='resp-tabs-container vert'>
+                    {$tab_content_div}
+                </div>
+            </div>
+            <script type='text/javascript'>
+                $(document).ready(function(){
+                  $('#PageTab').easyResponsiveTabs({
+                        tabidentify: 'vert',
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto',
+                        fit: true,
+                        closed: false
+                    });
+                });
+            </script>
+            ";
+            $news_content=$myts->addSlashes($tabs_content);
+        }else{
+            $news_content = $myts->addSlashes($_POST['news_content']);
+        }
         $always_top   = (empty($_POST['always_top'])) ? "0" : "1";
         $pic_css      = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
         //die($pic_css);
@@ -2200,6 +2260,10 @@ class tadnews
 
         //取得最後新增資料的流水編號
         $nsn = $xoopsDB->getInsertId();
+        if($_POST['tab_mode']==1){
+            $this->TadDataCenter->set_col('nsn',$nsn);
+            $this->TadDataCenter->saveCustomData($tab_data_arr);
+        }
 
         //處理上傳的檔案
         $this->TadUpFiles->set_col('nsn', $nsn);
@@ -2350,7 +2414,52 @@ class tadnews
 
         $myts         = MyTextSanitizer::getInstance();
         $news_title   = $myts->addSlashes($_POST['news_title']);
-        $news_content = $myts->addSlashes($_POST['news_content']);
+        //若是頁籤模式
+        if($_POST['tab_mode']==1){
+            $tabs_content="
+            <link rel='stylesheet' href='".XOOPS_URL."/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css' />
+            <script src='".XOOPS_URL."/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
+            <div id='PageTab'>";
+
+            $tab_title_data_arr=$tab_content_data_arr=array();
+            $tab_title_div=$tab_content_div="";
+            foreach($_POST['tab_title'] as $tab_key=>$tab_val){
+                $tab_data_arr['tab_title'][$tab_key]=$tab_val;
+                $tab_title_div.="<li>$tab_val</li>";
+
+                $tab_data_arr['tab_content'][$tab_key]=$_POST['tab_content'][$tab_key];
+
+                $tab_content_div.="
+                <div>
+                    {$_POST['tab_content'][$tab_key]}
+                </div>";
+            }
+
+            $tabs_content.="
+                <ul class='resp-tabs-list vert'>
+                    {$tab_title_div}
+                </ul>
+                <div class='resp-tabs-container vert'>
+                    {$tab_content_div}
+                </div>
+            </div>
+            <script type='text/javascript'>
+                $(document).ready(function(){
+                    $('#PageTab').easyResponsiveTabs({
+                        tabidentify: 'vert',
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto',
+                        fit: true,
+                        closed: false
+                    });
+                });
+            </script>
+            ";
+            $news_content=$myts->addSlashes($tabs_content);
+        }else{
+            $news_content = $myts->addSlashes($_POST['news_content']);
+        }
+
         $always_top   = (empty($_POST['always_top'])) ? "0" : "1";
 
         if (empty($_POST['end_day'])) {
@@ -2359,6 +2468,12 @@ class tadnews
 
         $sql = "update " . $xoopsDB->prefix("tad_news") . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$_POST['end_day']}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}',prefix_tag='{$_POST['prefix_tag']}',always_top='{$always_top}',always_top_date='{$_POST['always_top_date']}',have_read_group='{$have_read_group}' where nsn='$nsn'";
         $xoopsDB->queryF($sql) or web_error($sql);
+
+
+        if($_POST['tab_mode']==1){
+            $this->TadDataCenter->set_col('nsn',$nsn);
+            $this->TadDataCenter->saveCustomData($tab_data_arr);
+        }
 
         //處理上傳的檔案
         $this->TadUpFiles->set_col('nsn', $nsn);

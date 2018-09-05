@@ -8,6 +8,20 @@
   <{$toolbar}>
 </p>
 
+<{if $isAdmin}>
+<script language="JavaScript">
+  $().ready(function(){
+    $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
+      var order = $(this).sortable('serialize');
+      $.post('admin/save_sort.php', order, function(theResponse){
+          $('#save_msg').html(theResponse);
+      });
+      }
+    });  
+  });
+</script>
+<{/if}>
+
 <!--TadNews Start-->
 <{foreach item=all_news from=$all_news}>
 
@@ -23,14 +37,15 @@
   <{/if}>
   <a href="page.php?ncsn=<{$all_news.ncsn}>" style="text-shadow:1px 1px 1px #aaaaaa;"><{$all_news.nc_title}></a>
   </h3>
+  <div id="save_msg"></div>
 
-  <div class="list-group">
-  <{foreach  item=news from=$all_news.news}>
-    <a href="<{$xoops_url}>/modules/tadnews/page.php?nsn=<{$news.nsn}>" class="list-group-item">
-      <span class="badge"><{$news.counter}></span>
-      <{$news.news_title}>
-    </a>
-  <{/foreach}>
+  <div class="list-group" id="sort">
+    <{foreach from=$all_news.news item=news}>
+      <a href="<{$xoops_url}>/modules/tadnews/page.php?nsn=<{$news.nsn}>" class="list-group-item"  <{if $isAdmin}>id="tr_<{$news.nsn}>"<{/if}>>
+        <span class="badge"><{$news.counter}></span>
+        <{$news.news_title}>
+      </a>
+    <{/foreach}>
   </div>
 
 

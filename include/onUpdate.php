@@ -55,6 +55,11 @@ function xoops_module_update_tadnews(&$module, $old_version)
         go_update21();
     }
 
+    
+    if (chk_chk22()) {
+        go_update22();
+    }
+
     //調整檔案上傳欄位col_sn為mediumint(9)格式
     if (chk_files_center()) {
         go_update_files_center();
@@ -470,6 +475,37 @@ function go_update21()
     $sql = "update " . $xoopsDB->prefix("tadnews_files_center") . " set hash_filename='' where `col_name`='news_pic'";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
     return true;
+}
+
+
+//新增簽收表格
+function chk_chk22()
+{
+    global $xoopsDB;
+    $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tadnews_data_center");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
+}
+
+function go_update22()
+{
+    global $xoopsDB;
+    $sql = "CREATE TABLE " . $xoopsDB->prefix("tadnews_data_center") . " (
+        `mid` mediumint(9) unsigned NOT NULL AUTO_INCREMENT ,
+        `col_name` varchar(100) NOT NULL DEFAULT '',
+        `col_sn` mediumint(9) unsigned NOT NULL DEFAULT '0',
+        `data_name` varchar(100) NOT NULL DEFAULT '',
+        `data_value` text NOT NULL ,
+        `data_sort` mediumint(9) unsigned NOT NULL DEFAULT '0',
+        `col_id` varchar(100) NOT NULL,
+        `update_time` datetime NOT NULL,
+      PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+    $xoopsDB->queryF($sql);
 }
 
 //修正col_sn欄位

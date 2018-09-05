@@ -2,7 +2,6 @@
   <p><{$toolbar}></p>
 <{/if}>
 
-
 <{$rating_js}>
 <{$del_js}>
 <{$jquery}>

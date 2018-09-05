@@ -1,3 +1,7 @@
+TadNews 3.97 (released on 2018-08-24)
+=========================================================== ==
+1. Custom page added tab mode
+
 TadNews 3.96 (released on 2018-05-16)
 ================================================== ==
 1. Support database strict mode

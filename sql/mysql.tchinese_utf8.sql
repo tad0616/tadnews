@@ -128,3 +128,15 @@ CREATE TABLE `tadnews_rank` (
   `rank_date` datetime NOT NULL,
   PRIMARY KEY (`col_name`,`col_sn`,`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tadnews_data_center` (
+  `mid` mediumint(9) unsigned NOT NULL AUTO_INCREMENT COMMENT '模組編號',
+  `col_name` varchar(100) NOT NULL DEFAULT '' COMMENT '欄位名稱',
+  `col_sn` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '欄位編號',
+  `data_name` varchar(100) NOT NULL DEFAULT '' COMMENT '資料名稱',
+  `data_value` text NOT NULL COMMENT '儲存值',
+  `data_sort` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `col_id` varchar(100) NOT NULL COMMENT '辨識字串',
+  `update_time` datetime NOT NULL COMMENT '更新時間',
+PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

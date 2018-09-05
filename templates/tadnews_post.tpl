@@ -19,28 +19,30 @@
       $("#add_page").show();
       $("#add_news").hide();
       $("#show_input_form").hide();
-      $("#page_ncsn").attr("disabled",false);
-      $("#page_title_input").attr("disabled",false);
-      $("#news_ncsn").attr("disabled",true);
-      $("#news_title_input").attr("disabled",true);
-      $("#new_page_cate_input").attr("disabled",false);
+      $("#page_ncsn").prop("disabled",false);
+      $("#page_title_input").prop("disabled",false);
+      $("#news_ncsn").prop("disabled",true);
+      $("#news_title_input").prop("disabled",true);
+      $("#new_page_cate_input").prop("disabled",false);
       $("#setup_form").hide();
       $("#page_setup_form").show();
-      $("#upform").attr("disabled",true);
-      $("#page_upform").attr("disabled",false);
+      $("#upform").prop("disabled",true);
+      $("#page_upform").prop("disabled",false);
+      $("#tab_mode_checkbox").show();
     <{else}>
       $("#add_page").hide();
       $("#add_news").show();
       $("#show_input_form").show();
-      $("#page_ncsn").attr("disabled",true);
-      $("#page_title_input").attr("disabled",true);
-      $("#news_ncsn").attr("disabled",false);
-      $("#news_title_input").attr("disabled",false);
-      $("#new_page_cate_input").attr("disabled",true);
+      $("#page_ncsn").prop("disabled",true);
+      $("#page_title_input").prop("disabled",true);
+      $("#news_ncsn").prop("disabled",false);
+      $("#news_title_input").prop("disabled",false);
+      $("#new_page_cate_input").prop("disabled",true);
       $("#setup_form").show();
       $("#page_setup_form").hide();
-      $("#upform").attr("disabled",false);
-      $("#page_upform").attr("disabled",true);
+      $("#upform").prop("disabled",false);
+      $("#page_upform").prop("disabled",true);
+      $("#tab_mode_checkbox").hide();
     <{/if}>
 
     <{if $nsn==""}>
@@ -49,30 +51,43 @@
           $("#add_page").show();
           $("#add_news").hide();
           $("#show_input_form").hide();
-          $("#page_ncsn").attr("disabled",false);
-          $("#page_title_input").attr("disabled",false);
-          $("#news_ncsn").attr("disabled",true);
-          $("#news_title_input").attr("disabled",true);
-          $("#new_page_cate_input").attr("disabled",false);
+          $("#page_ncsn").prop("disabled",false);
+          $("#page_title_input").prop("disabled",false);
+          $("#news_ncsn").prop("disabled",true);
+          $("#news_title_input").prop("disabled",true);
+          $("#new_page_cate_input").prop("disabled",false);
           $("#setup_form").hide();
           $("#page_setup_form").show();
-          $("#upform").attr("disabled",true);
-          $("#page_upform").attr("disabled",false);
+          $("#upform").prop("disabled",true);
+          $("#page_upform").prop("disabled",false);
+          $("#tab_mode_checkbox").show();
         }else{
           $("#add_page").hide();
           $("#add_news").show();
           $("#show_input_form").show();
-          $("#page_ncsn").attr("disabled",true);
-          $("#page_title_input").attr("disabled",true);
-          $("#news_ncsn").attr("disabled",false);
-          $("#news_title_input").attr("disabled",false);
-          $("#new_page_cate_input").attr("disabled",true);
+          $("#page_ncsn").prop("disabled",true);
+          $("#page_title_input").prop("disabled",true);
+          $("#news_ncsn").prop("disabled",false);
+          $("#news_title_input").prop("disabled",false);
+          $("#new_page_cate_input").prop("disabled",true);
           $("#setup_form").show();
           $("#page_setup_form").hide();
-          $("#upform").attr("disabled",false);
-          $("#page_upform").attr("disabled",true);
+          $("#upform").prop("disabled",false);
+          $("#page_upform").prop("disabled",true);
+          $("#tab_mode_checkbox").hide();
         }
       });
+      // $("#tab_editor").hide();
+      $("#tab_mode").change(function(){
+        if ($("#tab_mode").prop("checked")) {
+          $("#tab_editor").show();
+          $("#editor").hide();
+        }else{
+          $("#tab_editor").hide();
+          $("#editor").show();
+        }
+      });
+
     <{/if}>
 
 
@@ -101,7 +116,7 @@
     $("#pic_css").change(function(){
       if($("#pic_css").val()=="true"){
         $("#pic_css_set").show();
-        $("#demo_cover_pic").attr("style","background-image: url('<{$pic}>');width:200px; height:150px; border:1px solid #909090; background-position:center center; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;");
+        $("#demo_cover_pic").prop("style","background-image: url('<{$pic}>');width:200px; height:150px; border:1px solid #909090; background-position:center center; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;");
       }else{
         $("#pic_css_set").hide();
       }
@@ -165,10 +180,23 @@
           <{/if}>
         </select>
       </div>
+      <div class="col-sm-4" id="tab_mode_checkbox">
+        <label for="tab_mode" class="checkbox">
+          <input type="checkbox" name="tab_mode" id="tab_mode" value="1"><{$smarty.const._MD_TADNEWS_USE_TAB_MODE}>
+        </label>
+      </div>
     </div>
+  <{else}>  
+    <{if $tab_arr}>
+      <input type="hidden" name="tab_mode" value="1">
+    <{/if}>
   <{/if}>
 
+
+
+
   <div class="form-group">
+
     <div id="add_news">
       <{if $news_cate_select}>
         <div class="col-sm-2">
@@ -200,6 +228,7 @@
         <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
       </div>
     </div>
+
     <div id="add_page">
       <{if $page_cate_select}>
         <div class="col-sm-2">
@@ -226,13 +255,92 @@
         <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
       </div>
     </div>
+
   </div>
 
-  <div class="form-group">
-    <div class="col-sm-12">
-      <{$editor}>
-    </div>
+  <div id="editor" <{if $tab_arr}>style="display: none;"<{/if}>>
+    <{$editor}>
   </div>
+  <div id="tab_editor" <{if !$tab_arr}>style="display: none;"<{/if}>>
+
+    <div class="input_fields_wrap">
+        <{if $tab_arr}>
+          <{foreach from=$tab_arr.tab_title key=k item=title}>  
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-12">
+                    <{$tab_arr.tab_editor.$k}>
+                </div>
+              </div>
+          <{/foreach}>
+        <{else}>         
+          <div class="form-group">
+            <div class="col-sm-12">
+              <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12">
+                <{$tab_editor}>
+            </div>
+          </div> 
+        <{/if}>
+    </div>
+    
+    <button id="add_field_button" class="btn btn-primary"><{$smarty.const._MD_TADNEWS_ADD_TAB}></button>
+  </div>
+  <script>
+    $(document).ready(function() {
+        var max_fields      = 20; //maximum input boxes allowed
+        var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+        var add_button      = $("#add_field_button"); //Add button ID
+        <{if $k}>
+          var x = <{$k}>; //initlal text box count
+        <{else}>
+          var x = 1; //initlal text box count
+        <{/if}>
+        $(add_button).click(function(e){ //on add input button click
+            e.preventDefault();
+            if(x < max_fields){ //max input box allowed
+                x++; //text box increment
+                var editorId = 'editor_' +x;
+                $(wrapper).append('<div class="form-group"><div class="col-sm-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group"><div class="col-sm-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div>'); //add input box
+                
+                CKEDITOR.replace(editorId, { height: 200 ,
+                toolbar : 'my' ,
+                contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap3/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
+                extraPlugins: 'syntaxhighlight,dialog,oembed,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet',
+                filebrowserBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=file&mod_dir=tadnews',
+                filebrowserImageBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=image&mod_dir=tadnews',
+                filebrowserFlashBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=flash&mod_dir=tadnews',
+                filebrowserUploadUrl : '<{$xoops_url}>/modules/tadtools/upload.php?type=file&mod_dir=tadnews',
+                filebrowserImageUploadUrl : '<{$xoops_url}>/modules/tadtools/upload.php?type=image&mod_dir=tadnews',
+                filebrowserFlashUploadUrl : '<{$xoops_url}>/modules/tadtools/upload.php?type=flash&mod_dir=tadnews',
+                qtRows: 10, // Count of rows
+                qtColumns: 10, // Count of columns
+                qtBorder: '1', // Border of inserted table
+                qtWidth: '100%', // Width of inserted table
+                qtStyle: { 'border-collapse' : 'collapse' },
+                qtClass: 'table table-bordered table-hover table-condensed', // Class of table
+                qtCellPadding: '0', // Cell padding table
+                qtCellSpacing: '0', // Cell spacing table
+                qtPreviewBorder: '1px double black', // preview table border
+                qtPreviewSize: '15px', // Preview table cell size
+                qtPreviewBackground: '#c8def4' // preview table background (hover)
+              });
+            }
+        });
+        
+        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+            e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+    });
+  </script>
+
 
 
   <div id="setup_form" style="display: none;">
@@ -509,7 +617,7 @@
     </div>
   </div>
 
-  <div id="page_setup_form" style="display: none;">
+  <div id="page_setup_form" style="margin-top:20px;display: none;">
     <div class="form-group">
       <div class="col-sm-2">
         <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>

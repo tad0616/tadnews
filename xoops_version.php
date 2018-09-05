@@ -4,7 +4,7 @@ $modversion = array();
 $language   = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
-$modversion['version']     = 3.96;
+$modversion['version']     = 3.97;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author']      = 'Tad (tad0616@gmail.com)';
 $modversion['credits']     = 'geek01';
@@ -15,7 +15,7 @@ $modversion['image']       = "images/logo_{$language}.png";
 $modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2018/05/21';
+$modversion['release_date']        = '2018/08/24';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status']       = 'release';
@@ -34,16 +34,17 @@ $modversion['paypal']['currency_code'] = 'USD';
 
 //---資料表架構---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.{$language}.sql";
-$modversion['tables'][1]        = "tad_news";
-$modversion['tables'][2]        = "tad_news_cate";
-$modversion['tables'][3]        = "tadnews_files_center";
-$modversion['tables'][4]        = "tad_news_paper";
-$modversion['tables'][5]        = "tad_news_paper_setup";
-$modversion['tables'][6]        = "tad_news_paper_email";
-$modversion['tables'][7]        = "tad_news_sign";
-$modversion['tables'][8]        = "tad_news_paper_send_log";
-$modversion['tables'][9]        = "tad_news_tags";
-$modversion['tables'][10]       = "tadnews_rank";
+$modversion['tables'][]         = "tad_news";
+$modversion['tables'][]         = "tad_news_cate";
+$modversion['tables'][]         = "tadnews_files_center";
+$modversion['tables'][]         = "tad_news_paper";
+$modversion['tables'][]         = "tad_news_paper_setup";
+$modversion['tables'][]         = "tad_news_paper_email";
+$modversion['tables'][]         = "tad_news_sign";
+$modversion['tables'][]         = "tad_news_paper_send_log";
+$modversion['tables'][]         = "tad_news_tags";
+$modversion['tables'][]         = "tadnews_rank";
+$modversion['tables'][]         = "tadnews_data_center";
 
 //---啟動後台管理界面選單---//
 $modversion['system_menu'] = 1;

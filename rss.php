@@ -8,7 +8,7 @@ include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
 $ncsn = 0;
 $cate = array();
 if (isset($_GET['ncsn'])) {
-    $ncsn = (int)$_GET['ncsn'];
+    $ncsn = (int) $_GET['ncsn'];
     $cate = $tadnews->get_tad_news_cate($ncsn);
 }
 if (function_exists('mb_http_output')) {
@@ -38,8 +38,6 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
         $tpl->assign('channel_link', XOOPS_URL . '/');
         $tpl->assign('channel_desc', to_utf8($slogan));
         $tpl->assign('channel_lastbuild', formatTimestamp(time(), 'rss'));
-        // $tpl->assign('channel_webmaster', checkEmail($xoopsConfig['adminmail'], true)); // Fed up with spam
-        // $tpl->assign('channel_editor', checkEmail($xoopsConfig['adminmail'], true)); // Fed up with spam
         $tpl->assign('channel_category', to_utf8($all_news['nc_title'], ENT_QUOTES));
         $tpl->assign('channel_generator', 'XOOPS');
         $tpl->assign('channel_language', _LANGCODE);
@@ -66,7 +64,7 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
                 'link'        => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}",
                 'guid'        => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}",
                 'pubdate'     => formatTimestamp(strtotime($news['post_date']), 'rss'),
-                'description' => to_utf8($description)
+                'description' => to_utf8($description),
             ));
         }
     }

@@ -39,7 +39,7 @@ function list_tad_all_news($the_ncsn = "")
     } else {
         $xoopsTpl->assign('show_add_to_menu', 1);
     }
-
+    get_jquery(true);
 }
 
 function add_to_menu($ncsn = "")
