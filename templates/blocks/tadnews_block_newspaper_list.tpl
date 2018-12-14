@@ -1,9 +1,2 @@
-<{if $block.page}>
-  <{foreach item=page from=$block.page}>
-    <div>
-      <a href="<{$xoops_url}>/modules/tadnews/newspaper.php?op=preview&npsn=<{$page.npsn}>" target="_blank"><{$page.title}></a>
-    </div>
-  <{/foreach}>
-<{else}>
-  <{$smarty.const._MB_TADNEWS_NO_NEWSPAPER}>
-<{/if}>
+<{assign var=this_file value=tadnews_block_newspaper_list}>
+<{includeq file="$xoops_rootpath/modules/tadnews/templates/blocks/b4.tpl"}>

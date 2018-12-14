@@ -1,3 +1,8 @@
+TadNews 3.98 (released on 2018-09-05)
+=========================================================== ==
+1. Custom page to foreground can be sorted directly
+2. Fix the problem that the number of labels in the news block is incorrect.
+
 TadNews 3.97 (released on 2018-08-24)
 =========================================================== ==
 1. Custom page added tab mode

@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once "header.php";
 $xoopsOption['template_main'] = "tadnews_post.tpl";
+include_once "header.php";
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 if (empty($xoopsUser)) {

@@ -125,11 +125,11 @@ if ($display_mode == 'table') {
   </ul>";
 }
 
-$b_button = ($b < 0) ? "" : "<button onClick='tadnew_list_content{$randStr}({$b})'  onfocus='tadnew_list_content{$randStr}({$b})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";
+$b_button = ($b < 0) ? "" : "<button onClick='tadnew_list_content{$randStr}({$b})'  onfocus='tadnew_list_content{$randStr}({$b})' class='btn btn-info'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . "</button>";
 
-$n_button = ($total < $num) ? "" : "<button onClick='tadnew_list_content{$randStr}({$n})' onfocus='tadnew_list_content{$randStr}({$n})' class='btn btn-default'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
+$n_button = ($total < $num) ? "" : "<button onClick='tadnew_list_content{$randStr}({$n})' onfocus='tadnew_list_content{$randStr}({$n})' class='btn btn-info'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . "</button>";
 
-$m_button = ($total < $num) ? "" : "<a href='" . XOOPS_URL . "/modules/tadnews/' class='btn btn-default'>more</a>";
+$m_button = ($total < $num) ? "" : "<a href='" . XOOPS_URL . "/modules/tadnews/' class='btn btn-info'>more</a>";
 $button   = ($show_button) ? "<div class='row'><div class='col-sm-4 text-left'>{$b_button}</div><div class='col-sm-4 text-center'>{$m_button}</div><div class='col-sm-4 text-right'>{$n_button}</div></div>" : "";
 
 $block .= "

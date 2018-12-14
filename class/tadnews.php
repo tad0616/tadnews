@@ -1286,22 +1286,22 @@ class tadnews
 
         $edit_cate = "";
         if (!empty($ncsn)) {
-            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
+            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
         }
 
         $signbtn = "";
         if (!empty($have_read_group)) {
-            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&nsn=$nsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . "</a>";
+            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&nsn=$nsn' class='btn btn-info btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . "</a>";
         }
 
         $admin_fun = ($uid == $uuid or $isAdmin) ? "
         $signbtn
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
-        <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
+        <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
+        <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
         $edit_cate
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&nsn=$nsn' class='btn btn-default btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>" : "";
+        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&nsn=$nsn' class='btn btn-warning btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>" : "";
 
-        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode'] == '1') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-default btn-xs' style='font-weight:normal;'>BBCode</a>" : "";
+        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode'] == '1') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-success btn-xs' style='font-weight:normal;'>BBCode</a>" : "";
 
         $fun = "
         <div class='btn-group'>
@@ -1646,7 +1646,7 @@ class tadnews
         $result                         = $xoopsDB->query($sql);
         list($font_color, $color, $tag) = $xoopsDB->fetchRow($result);
 
-        $prefix_tag = "<a class='label' style='background-color:$color;font-weight:normal;color:$font_color;text-shadow:none;' href='" . XOOPS_URL . "/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>";
+        $prefix_tag = "<a class='badge' style='background-color:$color;font-weight:normal;color:$font_color;text-shadow:none;' href='" . XOOPS_URL . "/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>";
         return $prefix_tag;
     }
 

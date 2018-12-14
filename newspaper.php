@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
-include "header.php";
 $xoopsOption['template_main'] = "tadnews_newspaper.tpl";
+include "header.php";
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -20,8 +20,8 @@ function list_newspaper()
     $sql     = $PageBar['sql'];
 
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $i    = 0;
-    $main = "";
+    $i      = 0;
+    $main   = "";
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $title               = $myts->htmlSpecialChars($title);
         $main[$i]['allnpsn'] = $allnpsn;
