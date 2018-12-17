@@ -27,7 +27,7 @@
     </div>
     <div class="col-sm-10">
       <{if $all_news.news}>
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-responsive">
           <{foreach  item=news from=$all_news.news}>
             <tr>
               <td>

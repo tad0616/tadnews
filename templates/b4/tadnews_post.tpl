@@ -319,7 +319,7 @@
                     qtBorder: '1', // Border of inserted table
                     qtWidth: '100%', // Width of inserted table
                     qtStyle: { 'border-collapse' : 'collapse' },
-                    qtClass: 'table table-bordered table-hover table-condensed', // Class of table
+                    qtClass: 'table table-bordered table-hover table-sm', // Class of table
                     qtCellPadding: '0', // Cell padding table
                     qtCellSpacing: '0', // Cell spacing table
                     qtPreviewBorder: '1px double black', // preview table border

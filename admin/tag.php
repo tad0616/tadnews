@@ -10,12 +10,12 @@ function list_tad_news_tags($def_tag_sn = "")
 {
     global $xoopsDB, $xoopsTpl, $tadnews;
 
-    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_news_tags") . "";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql              = "SELECT * FROM " . $xoopsDB->prefix("tad_news_tags") . "";
+    $result           = $xoopsDB->query($sql) or web_error($sql);
     $i                = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
-        $tag_amount = (int)$tags_used_amount[$tag_sn];
+        $tag_amount = (int) $tags_used_amount[$tag_sn];
         $enable_btn = ($enable == '1') ? "<a href='tag.php?op=stat&enable=0&tag_sn=$tag_sn' class='btn btn-warning'>" . _MA_TADNEWS_TAG_UNABLE . "</a>" : "<a href='tag.php?op=stat&enable=1&tag_sn=$tag_sn' class='btn btn-success'>" . _MA_TADNEWS_TAG_ABLE . "</a>";
 
         $del = ($enable != '1' and empty($tag_amount)) ? "<a href='javascript:delete_tag($tag_sn);' class='btn btn-danger'>" . _TADNEWS_DEL . "</a>" : "";
@@ -78,9 +78,9 @@ function tags_used_amount()
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = "SELECT prefix_tag,count(prefix_tag) FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY prefix_tag ";
+    $sql    = "SELECT prefix_tag,count(prefix_tag) FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY prefix_tag ";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $main = "";
+    $main   = "";
     while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;
     }
@@ -99,28 +99,24 @@ switch ($op) {
         $tag_sn = insert_tad_news_tags();
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //更新資料
     case "update_tad_news_tags":
         update_tad_news_tags($tag_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //關閉資料
     case "stat":
         tad_news_tags_stat($_GET['enable'], $tag_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //刪除資料
     case "del_tag":
         del_tag($tag_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     default:
         list_tad_news_tags($tag_sn);
@@ -128,6 +124,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/bootstrap3/css/bootstrap.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/xoops_adm3.css');
 include_once "footer.php";

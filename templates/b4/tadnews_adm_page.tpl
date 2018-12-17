@@ -229,7 +229,7 @@
         </form>
       <{elseif $page}>
         <form action="page.php" method="post" role="form">
-          <table class="table table-striped table-bordered">
+          <table class="table table-sm table-striped table-bordered table-responsive">
             <tr>
               <th nowrap>
                 <label class="checkbox-inline">

@@ -18,7 +18,7 @@
 <{if $page}>
   <div class="row">
     <div class="col-sm-12">
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered table-responsive">
         <tbody>
           <{foreach item=page from=$page}>
             <tr>

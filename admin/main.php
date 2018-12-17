@@ -22,7 +22,7 @@ function list_tadnews_cate_tree($def_ncsn = "")
 
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
-    $sql = "SELECT ncsn,of_ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news!='1' ORDER BY sort";
+    $sql    = "SELECT ncsn,of_ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news!='1' ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
@@ -178,6 +178,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/bootstrap3/css/bootstrap.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/xoops_adm3.css');
 include_once "footer.php";

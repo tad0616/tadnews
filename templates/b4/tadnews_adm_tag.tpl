@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
   <form action="tag.php" method="post" id="myForm" role="form">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered table-responsive">
       <tr>
         <th><{$smarty.const._MA_TADNEWS_TAG_DEMO}></th>
         <th><{$smarty.const._MA_TADNEWS_TAG_TITLE}></th>

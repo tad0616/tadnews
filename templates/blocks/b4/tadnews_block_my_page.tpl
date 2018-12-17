@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped table-responsive">
 <tr>
 	<th><{$smarty.const._MB_TADNEWS_NEWS_CATE}></th>
 	<th><{$smarty.const._MB_TADNEWS_NEWS_TITLE}></th>
@@ -8,11 +8,11 @@
 	<tr>
 		<td><a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a></td>
 		<td>
-      <{$page.prefix_tag}>
-      <{if $page.need_sign}>
-        <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
-      <{/if}>
-      <a href="<{$xoops_url}>/modules/tadnews/<{$page.index}>?nsn=<{$page.nsn}>"><{$page.news_title}></a></td>
+		<{$page.prefix_tag}>
+		<{if $page.need_sign}>
+			<img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
+		<{/if}>
+		<a href="<{$xoops_url}>/modules/tadnews/<{$page.index}>?nsn=<{$page.nsn}>"><{$page.news_title}></a></td>
 		<td><{$page.counter}></td>
 	</tr>
 <{/foreach}>

@@ -1,3 +1,7 @@
+TadNews 3.99 (released on 2019-01-01)
+================================
+1.Support BootStrap4
+
 TadNews 3.98 (released on 2018-09-05)
 =========================================================== ==
 1. Custom page to foreground can be sorted directly

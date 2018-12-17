@@ -21,7 +21,7 @@
 </div>
 
 <{if $page}>
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered table-responsive">
     <tr><th><{$date_title}></th></tr>
     <{foreach item=page from=$page}>
       <tr><td>

@@ -26,7 +26,6 @@ switch ($op) {
         $tadnews->update_tad_news($nsn);
         header("location: ../index.php?nsn={$nsn}");
         exit;
-        break;
 
     default:
         $tadnews->tad_news_form($nsn);

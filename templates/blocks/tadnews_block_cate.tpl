@@ -1,2 +1,2 @@
-<{assign var=this_file value=tadnews_block_cate}>
+<{assign var=this_file value=$smarty.template|basename|replace:'db:':''}>
 <{includeq file="$xoops_rootpath/modules/tadnews/templates/blocks/b4.tpl"}>

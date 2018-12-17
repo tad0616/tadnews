@@ -151,7 +151,7 @@
 
     <{if $log}>
       <form action="newspaper.php" method="post" id="myForm" role="form">
-        <table class="table table-condensed">
+        <table class="table table-sm table-responsive">
           <{assign var="i" value=0}>
 
           <{foreach item=log from=$log }>
@@ -199,7 +199,7 @@
       <div class="text-center">
         <{$bar}>
       </div>
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive">
         <{assign var="i" value=0}>
 
         <{foreach item=log from=$log }>
@@ -263,7 +263,7 @@
         <{$smarty.const._MA_TADNEWS_EMPTY_LOG}>
       </div>
     <{else}>
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive">
         <{assign var="i" value=0}>
         <{foreach item=log from=$log }>
           <td><{$log.email}></td>
@@ -294,7 +294,7 @@
     </div>
 
     <{if $nps_sn}>
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover table-responsive">
         <tr>
           <th><{$smarty.const._MA_TADNEWS_NP_TITLE}></th>
           <th><{$smarty.const._MA_TADNEWS_NP_DATE}></th>

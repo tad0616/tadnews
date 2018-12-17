@@ -5,7 +5,7 @@
 <h1 class="sr-only" style="display: none;"><{$smarty.const._MD_TADNEWS_NEWSPAPER}></h1>
 
 <{if $page}>
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered table-responsive">
     <tbody>
       <{foreach item=page from=$page}>
         <tr>

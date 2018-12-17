@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped table-responsive">
 <{foreach item=topic from=$block.re}>
   <tr>
   	<td class="text-right"><a href='<{$xoops_url}>/userinfo.php?uid=<{$topic.uid}>'><{$topic.uid_name}></a> : </td>
