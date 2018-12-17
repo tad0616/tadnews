@@ -186,7 +186,7 @@
         </label>
       </div>
     </div>
-  <{else}>  
+  <{else}>
     <{if $tab_arr}>
       <input type="hidden" name="tab_mode" value="1">
     <{/if}>
@@ -265,7 +265,7 @@
 
     <div class="input_fields_wrap">
         <{if $tab_arr}>
-          <{foreach from=$tab_arr.tab_title key=k item=title}>  
+          <{foreach from=$tab_arr.tab_title key=k item=title}>
               <div class="form-group">
                 <div class="col-sm-12">
                   <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
@@ -277,7 +277,7 @@
                 </div>
               </div>
           <{/foreach}>
-        <{else}>         
+        <{else}>
           <div class="form-group">
             <div class="col-sm-12">
               <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
@@ -287,10 +287,10 @@
             <div class="col-sm-12">
                 <{$tab_editor}>
             </div>
-          </div> 
+          </div>
         <{/if}>
     </div>
-    
+
     <button id="add_field_button" class="btn btn-primary"><{$smarty.const._MD_TADNEWS_ADD_TAB}></button>
   </div>
   <script>
@@ -309,7 +309,7 @@
                 x++; //text box increment
                 var editorId = 'editor_' +x;
                 $(wrapper).append('<div class="form-group"><div class="col-sm-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group"><div class="col-sm-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div>'); //add input box
-                
+
                 CKEDITOR.replace(editorId, { height: 200 ,
                 toolbar : 'my' ,
                 contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap3/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
@@ -334,7 +334,7 @@
               });
             }
         });
-        
+
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
         })
@@ -638,6 +638,7 @@
       <{if $cate.not_news!='1'}>
         <button class="btn btn-success" type="button" id="show_input_form"><{$smarty.const._MD_TADNEWS_ADV_SETUP}></button>
       <{/if}>
+      <{$XOOPS_TOKEN}>
       <button class="btn btn-primary" type="submit"><{$smarty.const._MD_TADNEWS_SAVE_NEWS}></button>
     </div>
   </div>

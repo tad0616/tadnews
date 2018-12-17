@@ -26,7 +26,9 @@ function chk_news_mod($version)
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
-        $main = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
+        include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+        $XOOPS_TOKEN = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+        $main        = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
         $main .= "<form action='{$_SERVER['PHP_SELF']}' method='post'>
         <center>
         <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
@@ -35,6 +37,7 @@ function chk_news_mod($version)
         $main .= chk_cate();
         $main .= "</table>
         <input type='hidden' name='op' value='import'>
+        $XOOPS_TOKEN
         <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
         </center>
         </form>";
@@ -86,6 +89,11 @@ function chk_stories($topicid = "", $left = 0)
 function import($topic_pid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
 
@@ -104,6 +112,11 @@ function import($topic_pid = 0, $new_topic_pid = 0)
 function import_stories($topicid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
 
     $myts = MyTextSanitizer::getInstance();
 

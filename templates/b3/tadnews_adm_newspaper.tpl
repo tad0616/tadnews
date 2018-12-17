@@ -41,6 +41,7 @@
       <div class="form-group text-center">
           <{$hidden}>
           <input type="hidden" name="op" value="save_newspaper_set">
+          <{$XOOPS_TOKEN}>
           <button type="submit" class="btn btn-primary"><{$smarty.const._TADNEWS_NP_SUBMIT}></button>
       </div>
     </form>
@@ -100,6 +101,7 @@
           <input type="hidden" name="op" value="save_newspaper">
           <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
           <input type="hidden" name="all_news" id="all_news">
+          <{$XOOPS_TOKEN}>
           <button type="submit" class="btn btn-primary"><{$smarty.const._TADNEWS_NP_SUBMIT}></button>
         </div>
       </div>
@@ -127,6 +129,7 @@
         <div class="col-sm-12 text-center">
           <input type="hidden" name="npsn" value="<{$npsn}>">
           <input type="hidden" name="op" value="save_all">
+          <{$XOOPS_TOKEN}>
           <button type="submit" class="btn btn-primary"><{$smarty.const._TADNEWS_SUBMIT}></button>
         </div>
       </div>
@@ -169,6 +172,7 @@
         <input type="hidden" name="op" value="send_now">
         <input type="hidden" name="npsn" value="<{$npsn}>">
         <div class="text-center">
+            <{$XOOPS_TOKEN}>
           <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADNEWS_SEND_NOW}></button>
         </div>
       </form>
@@ -212,6 +216,7 @@
                 <input type="hidden" name="op" value="update_email">
                 <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
                 <input type="hidden" name="g2p" value="<{$g2p}>">
+                <{$XOOPS_TOKEN}>
                 <input type="submit" value="<{$smarty.const._MA_TADNEWS_SAVE_CATE}>">
                 </form>
               </td>
@@ -246,6 +251,7 @@
       <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
       <input type="hidden" name="op" value="email_import">
       <div class="text-center" style="margin: 20px 0px;">
+          <{$XOOPS_TOKEN}>
         <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}></button>
       </div>
     </form>

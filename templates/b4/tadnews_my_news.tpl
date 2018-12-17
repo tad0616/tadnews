@@ -6,7 +6,7 @@
 </p>
 
 <{if $page}>
-  <table class="table table-striped table-bordered table-responsive">
+  <table class="table table-striped table-bordered">
     <tbody>
       <{foreach item=page from=$page}>
         <tr>

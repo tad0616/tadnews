@@ -145,6 +145,11 @@ function open_newspaper($nps_sn = "")
 function save_newspaper_set($nps_sn = "")
 {
     global $xoopsDB, $xoopsUser;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
     $myts   = MyTextSanitizer::getInstance();
     $title  = $myts->addSlashes($_POST['title']);
     $head   = $myts->addSlashes($_POST['head']);
@@ -207,6 +212,11 @@ function add_newspaper($nps_sn = "")
 function save_newspaper()
 {
     global $xoopsDB, $xoopsUser;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
     $all_news = substr($_POST['all_news'], 1);
 
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
@@ -333,10 +343,11 @@ function sendmail_form($npsn = "")
 
     $i = 1;
 
+    $btn_xs = $_SESSION['bootstrap'] == 4 ? 'btn-sm' : 'btn-xs';
     foreach ($emailArr as $email) {
         $checked = empty($mailData[$email]) ? "checked" : "";
 
-        $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn btn-xs btn-danger'>" . _TADNEWS_DEL . "</a>" : $mailData[$email];
+        $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn $btn_xs btn-danger'>" . _TADNEWS_DEL . "</a>" : $mailData[$email];
 
         $logdata[$i]['checkbox'] = "<input type='checkbox' name='mail_array[]' value='$email' $checked>";
         $logdata[$i]['email']    = $email;
@@ -350,6 +361,9 @@ function sendmail_form($npsn = "")
     $xoopsTpl->assign("total", sprintf(_MA_TADNEWS_MAIL_LIST, $total));
     $xoopsTpl->assign("np_content", $newspaper['np_content']);
     $xoopsTpl->assign("nps_sn", $newspaper['nps_sn']);
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $xoopsTpl->assign("XOOPS_TOKEN", $token->render());
 }
 
 //立即寄出

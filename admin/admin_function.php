@@ -44,8 +44,8 @@ function list_tad_news($the_ncsn = "0", $kind = "news", $show_uid = "")
         redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert      = new sweet_alert();
-    $sweet_alert_code = $sweet_alert->render("delete_tad_news_cate_func", "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
+    $sweet_alert = new sweet_alert();
+    $sweet_alert->render("delete_tad_news_cate_func", "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
 }
 
 //列出所有tad_news_cate資料
@@ -136,22 +136,32 @@ function mk_thumb($ncsn = "", $col_name = "", $width = 100)
 function insert_tad_news_cate()
 {
     global $xoopsDB, $xoopsModuleConfig;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
     if (empty($_POST['enable_group']) or in_array("", $_POST['enable_group'])) {
         $enable_group = "";
     } else {
         $enable_group = implode(",", $_POST['enable_group']);
     }
     $enable_post_group = implode(",", $_POST['enable_post_group']);
-
     foreach ($_POST['setup'] as $key => $val) {
         $setup .= "{$key}=$val;";
     }
     $setup = substr($setup, 0, -1);
 
-    $myts     = MyTextSanitizer::getInstance();
-    $nc_title = $myts->addSlashes($_POST['nc_title']);
+    $myts              = MyTextSanitizer::getInstance();
+    $of_ncsn           = (int) $_POST['of_ncsn'];
+    $sort              = (int) $_POST['sort'];
+    $not_news          = (int) $_POST['not_news'];
+    $nc_title          = $myts->addSlashes($_POST['nc_title']);
+    $enable_post_group = $myts->addSlashes($enable_post_group);
+    $enable_group      = $myts->addSlashes($enable_group);
+    $setup             = $myts->addSlashes($setup);
 
-    $sql = "insert into " . $xoopsDB->prefix("tad_news_cate") . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$_POST['of_ncsn']}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$_POST['sort']}','{$_POST['not_news']}','{$setup}')";
+    $sql = "insert into " . $xoopsDB->prefix("tad_news_cate") . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
     $xoopsDB->queryF($sql) or web_error($sql);
     //取得最後新增資料的流水編號
     $ncsn = $xoopsDB->getInsertId();
@@ -179,7 +189,16 @@ function update_tad_news_cate($ncsn = "")
     }
     $setup = substr($setup, 0, -1);
 
-    $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set  of_ncsn = '{$_POST['of_ncsn']}', nc_title = '{$_POST['nc_title']}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$_POST['not_news']}',setup='{$setup}' where ncsn='$ncsn'";
+    $myts              = MyTextSanitizer::getInstance();
+    $of_ncsn           = (int) $_POST['of_ncsn'];
+    $sort              = (int) $_POST['sort'];
+    $not_news          = (int) $_POST['not_news'];
+    $nc_title          = $myts->addSlashes($_POST['nc_title']);
+    $enable_post_group = $myts->addSlashes($enable_post_group);
+    $enable_group      = $myts->addSlashes($enable_group);
+    $setup             = $myts->addSlashes($setup);
+
+    $sql = "update " . $xoopsDB->prefix("tad_news_cate") . " set  of_ncsn = '{$of_ncsn}', nc_title = '{$nc_title}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$not_news}',setup='{$setup}' where ncsn='$ncsn'";
     //die($sql);
     $xoopsDB->queryF($sql) or web_error($sql);
 
@@ -194,7 +213,7 @@ function update_tad_news_cate($ncsn = "")
         $result  = $xoopsDB->queryF($sql) or web_error($sql);
         $RowsNum = $xoopsDB->getRowsNum($result);
         if ($RowsNum > 0) {
-            $sql = "update " . $xoopsDB->prefix("tad_themes_menu") . " set `itemname`='{$_POST['nc_title']}' where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
+            $sql = "update " . $xoopsDB->prefix("tad_themes_menu") . " set `itemname`='{$nc_title}' where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
             $xoopsDB->queryF($sql) or web_error($sql);
         }
     }

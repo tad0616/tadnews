@@ -82,12 +82,12 @@ function tad_news_cate_form($ncsn = "")
 
     $SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false, $enable_group, 3, true);
     $SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-    $SelectGroup_name->setExtra("class='span12 form-control'");
+    $SelectGroup_name->setExtra("class='form-control'");
     $enable_group = $SelectGroup_name->render();
 
     $SelectGroup_name = new XoopsFormSelectGroup("", "enable_post_group", false, $enable_post_group, 3, true);
     //$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-    $SelectGroup_name->setExtra("class='span12 form-control'");
+    $SelectGroup_name->setExtra("class='form-control'");
     $enable_post_group = $SelectGroup_name->render();
 
     $xoopsTpl->assign("cate_op", $cate_op);
@@ -102,6 +102,9 @@ function tad_news_cate_form($ncsn = "")
     $xoopsTpl->assign("enable_post_group", $enable_post_group);
     $xoopsTpl->assign("pic", $pic);
     $xoopsTpl->assign("now_op", "tad_news_cate_form");
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $token = new XoopsFormHiddenToken();
+    $xoopsTpl->assign("XOOPS_TOKEN", $token->render());
 }
 
 /*-----------執行動作判斷區----------*/

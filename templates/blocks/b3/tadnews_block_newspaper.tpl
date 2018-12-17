@@ -31,6 +31,7 @@
           <label class="radio-inline"><input type="radio" name="mode" value="del"><{$smarty.const._MB_TADNEWS_CANCEL}></label>
         </div>
         <div class="col-sm-4">
+            <{$XOOPS_TOKEN}>
           <button type="submit" class="btn btn-info"><{$smarty.const._MB_TADNEWS_SUBMIT}></button>
         </div>
       </div>

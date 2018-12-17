@@ -39,12 +39,20 @@ function list_tad_news_tags($def_tag_sn = "")
     $xoopsTpl->assign("font_color", $font_color);
     $xoopsTpl->assign("color", $color);
     $xoopsTpl->assign("enable", $enable);
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $xoopsTpl->assign("XOOPS_TOKEN", $token->render());
     return $main;
 }
 
 function insert_tad_news_tags()
 {
     global $xoopsDB;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
 
     $sql = "insert into " . $xoopsDB->prefix("tad_news_tags") . "  (`tag` , `font_color`, `color`  , `enable`) values('{$_POST['tag']}', '{$_POST['font_color']}', '{$_POST['color']}', '{$_POST['enable']}') ";
     $xoopsDB->queryF($sql) or web_error($sql);

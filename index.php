@@ -108,6 +108,11 @@ function show_news($nsn = "")
 function have_read($nsn = "", $uid = "")
 {
     global $xoopsDB, $xoopsUser;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql = "insert into " . $xoopsDB->prefix("tad_news_sign") . " (`nsn`,`uid`,`sign_time`) values('$nsn','$uid','{$now}')";
     $xoopsDB->query($sql) or web_error($sql);

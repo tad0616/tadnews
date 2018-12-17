@@ -1,4 +1,4 @@
-<table class="table table-striped table-responsive">
+<table class="table table-striped">
 <tr>
 	<th><{$smarty.const._MB_TADNEWS_NEWS_CATE}></th>
 	<th><{$smarty.const._MB_TADNEWS_NEWS_TITLE}></th>

@@ -386,6 +386,7 @@
             <{if $cate.not_news!='1'}>
                 <button class="btn btn-success" type="button" id="show_input_form"><{$smarty.const._MD_TADNEWS_ADV_SETUP}></button>
             <{/if}>
+            <{$XOOPS_TOKEN}>
             <button class="btn btn-primary" type="submit"><{$smarty.const._MD_TADNEWS_SAVE_NEWS}></button>
         </div>
     </div>

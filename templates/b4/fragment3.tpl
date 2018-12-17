@@ -173,7 +173,7 @@
 
         <div class="row" style="margin: 10px 0px;">
             <div class="col-sm-12">
-                <div class="well">
+                <div class="card card-body bg-light m-1">
                     <div id="demo_cover_pic" style="background-image: url('<{$pic}>');<{$pic_css}>" title="<{$pic_css}>"></div>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
                 </div>

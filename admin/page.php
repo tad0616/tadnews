@@ -22,7 +22,7 @@ function list_tadnews_cate_tree($def_ncsn = "")
 
     $data[] = "{ id:0, pId:0, name:'All', url:'page.php', target:'_self', open:true}";
 
-    $sql = "SELECT ncsn,of_ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' ORDER BY sort";
+    $sql    = "SELECT ncsn,of_ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
@@ -82,12 +82,12 @@ function tad_news_cate_form($ncsn = "")
 
     $SelectGroup_name = new XoopsFormSelectGroup("", "enable_group", false, $enable_group, 3, true);
     $SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-    $SelectGroup_name->setExtra("class='span12 form-control'");
+    $SelectGroup_name->setExtra("class='form-control'");
     $enable_group = $SelectGroup_name->render();
 
     $SelectGroup_name = new XoopsFormSelectGroup("", "enable_post_group", false, $enable_post_group, 3, true);
     //$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
-    $SelectGroup_name->setExtra("class='span12 form-control'");
+    $SelectGroup_name->setExtra("class='form-control'");
     $enable_post_group = $SelectGroup_name->render();
 
     $xoopsTpl->assign("cate_op", $cate_op);
@@ -101,6 +101,9 @@ function tad_news_cate_form($ncsn = "")
     $xoopsTpl->assign("enable_post_group", $enable_post_group);
     $xoopsTpl->assign("pic", $pic);
     $xoopsTpl->assign("now_op", "tad_news_cate_form");
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $xoopsTpl->assign("XOOPS_TOKEN", $token->render());
 }
 
 /*-----------執行動作判斷區----------*/

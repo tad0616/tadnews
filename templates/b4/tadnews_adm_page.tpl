@@ -111,7 +111,7 @@
       <{if $now_op=="tad_news_cate_form"}>
         <form action="page.php" method="post" id="myForm" enctype="multipart/form-data" role="form">
 
-          <div class="well" style="background-color:#EEFFCC;">
+          <div class="card card-body m-1" style="background-color:#EEFFCC;">
 
             <div class="form-group row">
               <label class="col-sm-2 col-form-label text-sm-right">
@@ -220,16 +220,17 @@
             </div>
           </div>
 
-          <div class="form-group row text-center">
+          <div class="text-center">
             <input type="hidden" name="not_news" value="1">
             <input type="hidden" name="ncsn" value="<{$ncsn}>">
             <input type="hidden" name="op" value="<{$cate_op}>">
+            <{$XOOPS_TOKEN}>
             <button type="submit" class="btn btn-info"><{if $ncsn==""}><{$smarty.const._MA_TADNEWS_ADD_CATE}><{else}><{$smarty.const._TAD_SAVE}><{/if}></button>
           </div>
         </form>
       <{elseif $page}>
         <form action="page.php" method="post" role="form">
-          <table class="table table-sm table-striped table-bordered table-responsive">
+          <table class="table table-sm table-striped table-bordered">
             <tr>
               <th nowrap>
                 <label class="checkbox-inline">
@@ -276,7 +277,7 @@
           </table>
           <{$bar}>
 
-          <div class="well" id="batch_tool" style="display: none;">
+          <div class="card card-body bg-light m-1" id="batch_tool" style="display: none;">
 
             <div class="form-group row">
               <label class="col-sm-2 col-form-label text-sm-right">
@@ -295,6 +296,7 @@
               <div class="col-sm-3">
                 <input type='hidden' name='kind' value='news'>
                 <input type='hidden' name='op' value='batch'>
+                <{$XOOPS_TOKEN}>
                 <button type='submit' class='btn btn-primary'><{$smarty.const._TAD_SUBMIT}></button>
               </div>
             </div>

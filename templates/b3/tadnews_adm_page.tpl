@@ -227,6 +227,7 @@
             <input type="hidden" name="not_news" value="1">
             <input type="hidden" name="ncsn" value="<{$ncsn}>">
             <input type="hidden" name="op" value="<{$cate_op}>">
+            <{$XOOPS_TOKEN}>
             <button type="submit" class="btn btn-info"><{if $ncsn==""}><{$smarty.const._MA_TADNEWS_ADD_CATE}><{else}><{$smarty.const._TAD_SAVE}><{/if}></button>
           </div>
         </form>
@@ -298,6 +299,7 @@
               <div class="col-sm-3">
                 <input type='hidden' name='kind' value='news'>
                 <input type='hidden' name='op' value='batch'>
+                <{$XOOPS_TOKEN}>
                 <button type='submit' class='btn btn-primary'><{$smarty.const._TAD_SUBMIT}></button>
               </div>
             </div>

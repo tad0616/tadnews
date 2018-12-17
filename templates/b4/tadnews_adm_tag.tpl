@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
   <form action="tag.php" method="post" id="myForm" role="form">
-    <table class="table table-striped table-bordered table-responsive">
+    <table class="table table-striped table-bordered">
       <tr>
         <th><{$smarty.const._MA_TADNEWS_TAG_DEMO}></th>
         <th><{$smarty.const._MA_TADNEWS_TAG_TITLE}></th>
@@ -47,6 +47,7 @@
           </td>
           <td>
             <input type="hidden" name="op" value="insert_tad_news_tags">
+            <{$XOOPS_TOKEN}>
             <button class="btn btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
           </td>
         </tr>
@@ -78,6 +79,7 @@
             <td>
           	<input type="hidden" name="tag_sn" value="<{$tag_sn}>">
             <input type="hidden" name="op" value="update_tad_news_tags">
+            <{$XOOPS_TOKEN}>
             <button class="btn btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
             </td></tr>
         <{else}>
