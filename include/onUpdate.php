@@ -55,7 +55,6 @@ function xoops_module_update_tadnews(&$module, $old_version)
         go_update21();
     }
 
-    
     if (chk_chk22()) {
         go_update22();
     }
@@ -75,7 +74,37 @@ function xoops_module_update_tadnews(&$module, $old_version)
         delete_directory(XOOPS_ROOT_PATH . "/modules/tadnews/dhtmlgoodies_calendar");
     }
     chk_tadnews_block();
+
+    //新增檔案欄位
+    if (chk_fc_tag()) {
+        go_fc_tag();
+    }
+
     return true;
+}
+
+//新增檔案欄位
+function chk_fc_tag()
+{
+    global $xoopsDB;
+    $sql    = "SELECT count(`tag`) FROM " . $xoopsDB->prefix("tadnews_files_center");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
+}
+
+function go_fc_tag()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tadnews_files_center") . "
+    ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
+    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+    ";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
 }
 
 //刪除錯誤的重複欄位及樣板檔
@@ -180,7 +209,7 @@ function go_update10()
 
     $xoopsDB->queryF($sql);
 
-    $sql = "SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM " . $xoopsDB->prefix("tadnews_files_center") . "";
+    $sql    = "SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM " . $xoopsDB->prefix("tadnews_files_center") . "";
     $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, show_error($sql));
     while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
         $kind          = (substr($file_type, 0, 5) == "image") ? "img" : "file";
@@ -439,9 +468,9 @@ function go_update19()
 function chk_chk20()
 {
     global $xoopsDB;
-    $sql = "SHOW Fields FROM " . $xoopsDB->prefix("tad_news") . " where `Field`='news_content' and `Type`='text'";
+    $sql    = "SHOW Fields FROM " . $xoopsDB->prefix("tad_news") . " where `Field`='news_content' and `Type`='text'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $all = $xoopsDB->fetchRow($result);
+    $all    = $xoopsDB->fetchRow($result);
     if ($all === false) {
         return false;
     }
@@ -460,9 +489,9 @@ function go_update20()
 function chk_chk21()
 {
     global $xoopsDB;
-    $sql = "SELECT hash_filename FROM " . $xoopsDB->prefix("tadnews_files_center") . " WHERE `col_name`='news_pic'";
+    $sql    = "SELECT hash_filename FROM " . $xoopsDB->prefix("tadnews_files_center") . " WHERE `col_name`='news_pic'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $all = $xoopsDB->fetchRow($result);
+    $all    = $xoopsDB->fetchRow($result);
     if ($all === false) {
         return false;
     }
@@ -476,7 +505,6 @@ function go_update21()
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
     return true;
 }
-
 
 //新增簽收表格
 function chk_chk22()
@@ -512,9 +540,9 @@ function go_update22()
 function chk_files_center()
 {
     global $xoopsDB;
-    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tadnews_files_center") . "' AND COLUMN_NAME = 'col_sn'";
-    $result = $xoopsDB->query($sql);
+    $result     = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;
@@ -536,9 +564,9 @@ function go_update_files_center()
 function chk_uid()
 {
     global $xoopsDB;
-    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tad_news") . "' AND COLUMN_NAME = 'uid'";
-    $result = $xoopsDB->query($sql);
+    $result     = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;

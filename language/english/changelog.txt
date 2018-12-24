@@ -1,6 +1,7 @@
 TadNews 3.99 (released on 2019-01-01)
 ================================
 1.Support BootStrap4
+2.Attached support panoramic picture
 
 TadNews 3.98 (released on 2018-09-05)
 =========================================================== ==
