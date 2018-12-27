@@ -1,6 +1,6 @@
 <{$jquery}>
 <!--TadNews Start-->
-<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css">
 <script language="JavaScript">
   $().ready(function(){
     $("#clickAll").click(function() {
@@ -10,9 +10,9 @@
           $(this).attr("checked", true);
         });
       }else{
-       $(".news").each(function() {
-           $(this).attr("checked", false);
-       });
+        $(".news").each(function() {
+            $(this).attr("checked", false);
+        });
       }
       coint_checked();
     });
