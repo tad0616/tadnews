@@ -37,12 +37,12 @@
           <div class="row" style="margin:10px;">
             <div class="col-sm-6">
               <{if $page.back_news_link}>
-                <a href="<{$page.back_news_link}>" class="btn btn-secondary btn-block"><img src="images/left.png" hspace=2 align="absmiddle" alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
+                <a href="<{$page.back_news_link}>" class="btn btn-outline-info btn-block"><img src="images/left.png" hspace=2 align="absmiddle" alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
               <{/if}>
             </div>
             <div class="col-sm-6">
               <{if $page.next_news_link}>
-                <a href="<{$page.next_news_link}>" class="btn btn-secondary btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 align="absmiddle" alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
+                <a href="<{$page.next_news_link}>" class="btn btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 align="absmiddle" alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
               <{/if}>
             </div>
           </div>
