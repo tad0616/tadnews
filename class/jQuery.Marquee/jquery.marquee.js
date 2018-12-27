@@ -106,7 +106,7 @@
             attr;
             $.each(o, function(key, value) {
                 //Check if element has this data attribute
-                attr = $this.attr('data-' + key);
+                attr = $this.prop('data-' + key);
                 if (typeof attr !== 'undefined') {
                     //Now check if value is boolean or not
                     switch (attr) {

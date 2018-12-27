@@ -7,12 +7,12 @@
       var x = document.getElementById("clickAll").checked;
       if(x){
         $(".news").each(function() {
-          $(this).attr("checked", true);
+          $(this).prop("checked", true);
         });
       }else{
-       $(".news").each(function() {
-           $(this).attr("checked", false);
-       });
+        $(".news").each(function() {
+            $(this).prop("checked", false);
+        });
       }
       coint_checked();
     });
