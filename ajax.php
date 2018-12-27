@@ -65,7 +65,7 @@ $tadnews->set_cover(false);
 $tadnews->set_skip_news($start);
 $all_news = $tadnews->get_news('return');
 
-$show_col = '';
+$show_col = array();
 
 foreach ($cell as $col) {
     if ($col == '' or $col == 'hide') {
@@ -97,13 +97,13 @@ $block .= "
   <tr>{$blockTitle}</tr>
 </thead>
 ";
+$total = 0;
 if (empty($all_news['page'])) {
     $block .= '<tr><td colspan=5>' . _TADNEWS_EMPTY . '</td></tr>';
 } else {
 
     $i = 2;
 
-    $total = 0;
     foreach ($all_news['page'] as $news) {
 
         $need_sign = (!empty($news['need_sign'])) ? "<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>" : "";

@@ -540,6 +540,7 @@ class tadnews
             }
         }
 
+        $ncsn=isset($ncsn)?$ncsn:'';
         //找指定的分類
         $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where 1 $kind_chk $where_cate order by sort";
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
@@ -571,7 +572,8 @@ class tadnews
             }
         }
 
-        $set = $this->get_setup($cate_setup[$ncsn]);
+        $ncsn_cate_setup=isset($cate_setup[$ncsn])?$cate_setup[$ncsn]:'';
+        $set = $this->get_setup($ncsn_cate_setup);
         if ($this->kind === "page") {
             //die(var_dump($cate_setup[$ncsn]));
             //die(var_dump($set));
