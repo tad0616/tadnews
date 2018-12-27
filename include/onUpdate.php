@@ -202,7 +202,7 @@ function go_update10()
       ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
       ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
       ADD `description` TEXT NOT NULL AFTER `file_type`";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or die($sql);
 
     //套入描述以及欄位名稱
     $sql = "update " . $xoopsDB->prefix("tadnews_files_center") . " set `col_name`='nsn', `description`=`file_name`";
@@ -469,7 +469,7 @@ function chk_chk20()
 {
     global $xoopsDB;
     $sql    = "SHOW Fields FROM " . $xoopsDB->prefix("tad_news") . " where `Field`='news_content' and `Type`='text'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->queryF($sql) or die($sql);
     $all    = $xoopsDB->fetchRow($result);
     if ($all === false) {
         return false;
@@ -490,7 +490,7 @@ function chk_chk21()
 {
     global $xoopsDB;
     $sql    = "SELECT hash_filename FROM " . $xoopsDB->prefix("tadnews_files_center") . " WHERE `col_name`='news_pic'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or die($sql);
     $all    = $xoopsDB->fetchRow($result);
     if ($all === false) {
         return false;
