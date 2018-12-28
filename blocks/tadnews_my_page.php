@@ -1,7 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//自選頁面
+//區塊主函式 (自選文章)
 function tadnews_my_page($options)
 {
     global $xoTheme;

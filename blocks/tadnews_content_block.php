@@ -1,7 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//區塊主函式 (顯示新聞內容)
+//區塊主函式 (本站最新消息)
 function tadnews_content_block_show($options)
 {
     global $xoTheme;

@@ -1,5 +1,5 @@
 <?php
-//區塊主函式 (列出最新的新聞評論)
+//區塊主函式 (最新回應)
 function tadnews_b_show_3($options)
 {
     global $xoopsDB;

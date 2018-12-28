@@ -1,6 +1,6 @@
 <?php
 
-//區塊主函式 (顯示指定的自訂類別文章)
+//區塊主函式 (自訂頁面選單)
 function tadnews_page_list($options)
 {
     global $xoopsDB;

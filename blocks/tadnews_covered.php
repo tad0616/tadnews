@@ -2,7 +2,7 @@
 
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//區塊主函式 (顯示新聞內容)
+//區塊主函式 (圖文集區塊)
 function tadnews_covered($options)
 {
     global $xoopsDB, $xoTheme;

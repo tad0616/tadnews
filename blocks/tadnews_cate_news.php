@@ -1,7 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//區塊主函式 (顯示類別新聞)
+//區塊主函式 (分類新聞區塊)
 function tadnews_cate_news($options)
 {
     //$block=list_block_cate_news($options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);

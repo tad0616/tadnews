@@ -1,6 +1,6 @@
 <?php
 
-//區塊主函式 (顯示指定的自訂類別文章)
+//區塊主函式 (自訂頁面樹狀目錄)
 function tadnews_page($options)
 {
     global $xoopsDB;

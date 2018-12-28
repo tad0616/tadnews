@@ -1,11 +1,11 @@
 <?php
-//區塊主函式 (電子報訂閱)
+//區塊主函式 (訂閱 / 取消電子報)
 function tadnews_newspaper($options)
 {
     global $xoopsDB, $xoopsUser;
 
-    $sql = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_paper_email") . "";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql           = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_paper_email") . "";
+    $result        = $xoopsDB->query($sql) or web_error($sql);
     list($counter) = $xoopsDB->fetchRow($result);
 
     //找出現有設定組

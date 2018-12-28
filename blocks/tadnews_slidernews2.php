@@ -1,6 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
+//區塊主函式 (自動縮放的滑動新聞)
 function tadnews_slidernews2_show($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;

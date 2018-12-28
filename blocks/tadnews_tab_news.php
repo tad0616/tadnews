@@ -1,7 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//區塊主函式 (顯示頁籤新聞)
+//區塊主函式 (頁籤新聞區塊)
 function tadnews_tab_news($options)
 {
     //$block=list_block_cate_news($options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);
@@ -47,6 +47,12 @@ function tadnews_tab_news($options)
 function tadnews_tab_news_edit($options)
 {
     $option = block_news_cate($options[0]);
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/mColorPicker.php")) {
+        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    }
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/mColorPicker.php";
+    $mColorPicker = new mColorPicker('.color');
+    $mColorPicker->render();
 
     $form = "
     {$option['js']}
@@ -75,25 +81,25 @@ function tadnews_tab_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BG . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input' name='options[3]' value='{$options[3]}' size=6>
+                <input type='text' class='my-input color' data-hex='true' name='options[3]' value='{$options[3]}' size=6>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_INACTIV_BG . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input' name='options[4]' value='{$options[4]}' size=6>
+                <input type='text' class='my-input color' data-hex='true' name='options[4]' value='{$options[4]}' size=6>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BORDER_COLOR . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input' name='options[5]' value='{$options[5]}' size=6>
+                <input type='text' class='my-input color' data-hex='true' name='options[5]' value='{$options[5]}' size=6>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input' name='options[6]' value='{$options[6]}' size=6>
+                <input type='text' class='my-input color' data-hex='true' name='options[6]' value='{$options[6]}' size=6>
             </div>
         </li>
         <li class='my-row'>

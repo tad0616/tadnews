@@ -1,7 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//區塊主函式 (顯示新聞內容)
+//區塊主函式 (焦點新聞)
 function tadnews_focus_news($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
@@ -41,23 +41,27 @@ function tadnews_focus_news_edit($options)
         $option .= "<option value='$nsn' $selected>$start_day [{$nc_title}] $news_title</option>";
     }
     $option .= "</select>";
+
     $form = "
-    <div class='my-row'>
-        <lable class='my-label'>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</lable>
-        <div class='my-content'>
-            $option
-        </div>
-    </div>
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                $option
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+                <select name='options[1]' class='my-input'>
+                    <option value='full' " . chk($options[1], 'full', '1', 'selected') . ">" . _MB_TADNEWS_FOCUS_FULL . "</option>
+                    <option value='summary' " . chk($options[1], 'summary', '0', 'selected') . ">" . _MB_TADNEWS_FOCUS_SUMMARY . "</option>
+                </select>
+            </div>
+        </li>
+    </ol>
     ";
-    $form = "<table style='width:auto;'>
-    <tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</th><td>$option</td></tr>
-    <tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</th><td>
-      <select name='options[1]'>
-      <option value='full' " . chk($options[1], 'full', '1', 'selected') . ">" . _MB_TADNEWS_FOCUS_FULL . "</option>
-      <option value='summary' " . chk($options[1], 'summary', '0', 'selected') . ">" . _MB_TADNEWS_FOCUS_SUMMARY . "</option>
-      </select>
-    </td></tr>
-    </table>";
+
     return $form;
 }
 
