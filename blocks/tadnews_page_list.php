@@ -6,11 +6,11 @@ function tadnews_page_list($options)
     global $xoopsDB;
 
     if (empty($options[0])) {
-        $sql    = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
-        $result = $xoopsDB->query($sql);
+        $sql        = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
+        $result     = $xoopsDB->query($sql);
         list($ncsn) = $xoopsDB->fetchRow($result);
     } else {
-        $ncsn = (int)$options[0];
+        $ncsn = (int) $options[0];
     }
 
     $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
@@ -94,40 +94,44 @@ function tadnews_page_list_edit($options)
     $dont_show_title = $options[3] == 0 ? 'checked' : '';
 
     $form = "
-    " . _MB_TADNEWS_PAGE_EDIT_BITEM0 . "
-    <select name='options[0]' class='form-control'>
-    $cate
-    </select>
-    <br />
-    " . _MB_TADNEWS_PAGE_PANEL_COLOR . "
-
-    <select name='options[1]'>
-        <option value='' $panel_no>" . _MB_TADNEWS_PAGE_PANEL_NO . "</option>
-        <option value='default' $panel_default>" . _MB_TADNEWS_PAGE_PANEL_DEFAULT . "</option>
-        <option value='primary' $panel_primary>" . _MB_TADNEWS_PAGE_PANEL_PRIMARY . "</option>
-        <option value='success' $panel_success>" . _MB_TADNEWS_PAGE_PANEL_SUCCESS . "</option>
-        <option value='info' $panel_info>" . _MB_TADNEWS_PAGE_PANEL_INFO . "</option>
-        <option value='warning' $panel_warning>" . _MB_TADNEWS_PAGE_PANEL_WARNING . "</option>
-        <option value='danger' $panel_danger>" . _MB_TADNEWS_PAGE_PANEL_DANGER . "</option>
-    </select>
-
-    <br />
-    " . _MB_TADNEWS_PAGE_SUB_CATE . "
-    <label for='use_panel'>
-    <INPUT type='radio' name='options[2]' value='1' id='sub_cate' $sub_cate>" . _YES . "
-    </label>
-    <label for='not_use_panel'>
-    <INPUT type='radio' name='options[2]' value='0' id='no_sub_cate' $no_sub_cate>" . _NO . "
-    </label>
-    <br />
-    " . _MB_TADNEWS_PAGE_SHOW_TITLE . "
-    <label for='use_panel'>
-    <INPUT type='radio' name='options[3]' value='1' id='show_title' $show_title>" . _YES . "
-    </label>
-    <label for='not_use_panel'>
-    <INPUT type='radio' name='options[3]' value='0' id='dont_show_title' $dont_show_title>" . _NO . "
-    </label>
-      ";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                <select name='options[0]' class='my-input'>
+                $cate
+                </select>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_PANEL_COLOR . "</lable>
+            <div class='my-content'>
+                <select name='options[1]' class='my-input'>
+                    <option value='' $panel_no>" . _MB_TADNEWS_PAGE_PANEL_NO . "</option>
+                    <option value='default' $panel_default>" . _MB_TADNEWS_PAGE_PANEL_DEFAULT . "</option>
+                    <option value='primary' $panel_primary>" . _MB_TADNEWS_PAGE_PANEL_PRIMARY . "</option>
+                    <option value='success' $panel_success>" . _MB_TADNEWS_PAGE_PANEL_SUCCESS . "</option>
+                    <option value='info' $panel_info>" . _MB_TADNEWS_PAGE_PANEL_INFO . "</option>
+                    <option value='warning' $panel_warning>" . _MB_TADNEWS_PAGE_PANEL_WARNING . "</option>
+                    <option value='danger' $panel_danger>" . _MB_TADNEWS_PAGE_PANEL_DANGER . "</option>
+                </select>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_SUB_CATE . "</lable>
+            <div class='my-content'>
+                <input type='radio' name='options[2]' value='1' id='sub_cate' $sub_cate>" . _YES . "
+                <input type='radio' name='options[2]' value='0' id='no_sub_cate' $no_sub_cate>" . _NO . "
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_SHOW_TITLE . "</lable>
+            <div class='my-content'>
+            <INPUT type='radio' name='options[3]' value='1' id='show_title' $show_title>" . _YES . "
+            <INPUT type='radio' name='options[3]' value='0' id='dont_show_title' $dont_show_title>" . _NO . "
+            </div>
+        </li>
+    </ol>";
     return $form;
 }
 
@@ -137,7 +141,7 @@ if (!function_exists("block_get_all_not_news_cate")) {
     {
         global $xoopsDB, $xoopsUser, $xoopsModule;
 
-        $left  = $level * 10;
+        $left = $level * 10;
         $level += 1;
 
         $option = ($of_ncsn) ? "" : "<option value='0'></option>";
@@ -146,8 +150,8 @@ if (!function_exists("block_get_all_not_news_cate")) {
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $selected = ($default_ncsn == $ncsn) ? "selected" : "";
-            $option   .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
-            $option   .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
+            $option .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
+            $option .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
         }
         return $option;
     }

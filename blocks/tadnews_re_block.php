@@ -44,10 +44,20 @@ function tadnews_b_show_3($options)
 function tadnews_re_edit($options)
 {
 
-    $form = "<table style='width:auto;'>
-	<tr><th>1.</th><th>" . _MB_TADNEWS_RE_EDIT_BITEM0 . "</th><td><INPUT type='text' name='options[0]' value='{$options[0]}' size=3></td></tr>
-	<tr><th>2.</th><th>" . _MB_TADNEWS_RE_EDIT_BITEM1 . "</th><td><INPUT type='text' name='options[1]' value='{$options[1]}' size=3></td></tr>
-	</table>
-	";
+    $form = "
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_RE_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_RE_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }

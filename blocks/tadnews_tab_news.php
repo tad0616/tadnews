@@ -50,78 +50,60 @@ function tadnews_tab_news_edit($options)
 
     $form = "
     {$option['js']}
-    <table style='width:auto;'>
-    <tr>
-        <th>1.</th><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th>
-        <td>
-            {$option['form']}
-            <input type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
-        </td>
-    </tr>
-
-    <tr>
-        <th>2.</th>
-        <th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM1 . "</th>
-        <td>
-            <input type='text' name='options[1]' value='{$options[1]}' size=3>
-        </td>
-    </tr>
-
-    <tr>
-        <th>3.</th>
-        <th>" . _MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE . "</th>
-        <td>
-            <input type='radio' name='options[2]' value='default' " . chk($options[2], 'default', 1) . ">" . _MB_TADNEWS_TAB_NEWS_DEFAULT . "
-            <input type='radio' name='options[2]' value='vertical' " . chk($options[2], 'vertical', 0) . ">" . _MB_TADNEWS_TAB_NEWS_VERTICAL . "
-            <input type='radio' name='options[2]' value='accordion' " . chk($options[2], 'accordion', 0) . ">" . _MB_TADNEWS_TAB_NEWS_ACCORDION . "
-        </td>
-    </tr>
-
-    <tr>
-        <th>4.</th>
-        <th>" . _MB_TADNEWS_ACTIVE_BG . "</th>
-        <td>
-            <input type='text' name='options[3]'  value='{$options[3]}'>
-        </td>
-    </tr>
-
-    <tr>
-        <th>5.</th>
-        <th>" . _MB_TADNEWS_INACTIV_BG . "</th>
-        <td>
-            <input type='text' name='options[4]'  value='{$options[4]}'>
-        </td>
-    </tr>
-
-    <tr>
-        <th>6.</th>
-        <th>" . _MB_TADNEWS_ACTIVE_BORDER_COLOR . "</th>
-        <td>
-            <input type='text' name='options[5]'  value='{$options[5]}'>
-        </td>
-    </tr>
-
-    <tr>
-        <th>7.</th>
-        <th>" . _MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR . "</th>
-        <td>
-            <input type='text' name='options[6]'  value='{$options[6]}'>
-        </td>
-    </tr>
-
-    <tr>
-        <th>8.</th>
-        <th>" . _MB_TADNEWS_ADD_ALL_NEWS_TAB . "</th>
-        <td>
-            <input type='radio' name='options[7]'  value='1' " . chk($options[7], '1') . ">" . _YES . "
-            <input type='radio' name='options[7]'  value='0' " . chk($options[7], '0', 1) . ">" . _NO . "
-        </td>
-    </tr>
-
-
-
-    </table>
-  ";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                {$option['form']}
+                <input type='hidden' name='options[0]' id='bb' value='{$options[0]}'>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE . "</lable>
+            <div class='my-content'>
+                <input type='radio' name='options[2]' value='default' " . chk($options[2], 'default', 1) . ">" . _MB_TADNEWS_TAB_NEWS_DEFAULT . "
+                <input type='radio' name='options[2]' value='vertical' " . chk($options[2], 'vertical', 0) . ">" . _MB_TADNEWS_TAB_NEWS_VERTICAL . "
+                <input type='radio' name='options[2]' value='accordion' " . chk($options[2], 'accordion', 0) . ">" . _MB_TADNEWS_TAB_NEWS_ACCORDION . "
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BG . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[3]' value='{$options[3]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_INACTIV_BG . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[4]' value='{$options[4]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BORDER_COLOR . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[5]' value='{$options[5]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[6]' value='{$options[6]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_ADD_ALL_NEWS_TAB . "</lable>
+            <div class='my-content'>
+                <input type='radio' name='options[7]'  value='1' " . chk($options[7], '1') . ">" . _YES . "
+                <input type='radio' name='options[7]'  value='0' " . chk($options[7], '0', 1) . ">" . _NO . "
+            </div>
+        </li>
+    </ol>";
 
     return $form;
 }

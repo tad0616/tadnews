@@ -62,28 +62,36 @@ function tadnews_slidernews2_edit($options)
     $block_news_cate = block_news_cate($options[3]);
 
     $form = "{$block_news_cate['js']}
-    <table style='width:auto;'>
-    <tr><th>
-    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2 . "
-    </th><td>
-    <INPUT type='text' name='options[0]' value='{$options[0]}' size=6>
-    </td></tr>
-    <tr><th>
-    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3 . "
-    </th><td>
-    <INPUT type='text' name='options[1]' value='{$options[1]}' size=6>
-    </td></tr>
-    <tr><th>
-    " . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4 . "
-    </th><td>
-    <select name='options[2]' >
-    <option value='ResponsiveSlides' $ResponsiveSlides>ResponsiveSlides</option>
-    <option value='flexslider2' $flexslider2>flexslider2</option>
-    </select>
-    </td></tr>
-    <tr><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$block_news_cate['form']}
-    <INPUT type='hidden' name='options[3]' id='bb' value='{$options[3]}'></td></tr>
-    </table>
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4 . "</lable>
+            <div class='my-content'>
+                <select name='options[2]' class='my-input'>
+                    <option value='ResponsiveSlides' $ResponsiveSlides>ResponsiveSlides</option>
+                    <option value='flexslider2' $flexslider2>flexslider2</option>
+                </select>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                {$block_news_cate['form']}
+                <input type='hidden' name='options[3]' id='bb' value='{$options[3]}'>
+            </div>
+        </li>
+    </ol>
     ";
     return $form;
 }

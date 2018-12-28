@@ -28,8 +28,13 @@ function tadnews_newspaper_list_edit($options)
 {
 
     $form = "
-  " . _MB_TADNEWS_NP_EDIT_BITEM0 . "
-  <INPUT type='text' name='options[0]' value='{$options[0]}'>
-  ";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_NP_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }

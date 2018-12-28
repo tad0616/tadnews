@@ -39,12 +39,12 @@ if (!function_exists("block_news_cate")) {
         $result = $xoopsDB->query($sql);
         $option = "";
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-            $js      .= "if(document.getElementById('c{$ncsn}').checked){
-       arr[i] = document.getElementById('c{$ncsn}').value;
-       i++;
-      }";
+            $js .= "if(document.getElementById('c{$ncsn}').checked){
+            arr[i] = document.getElementById('c{$ncsn}').value;
+            i++;
+            }";
             $ckecked = (in_array($ncsn, $sc)) ? "checked" : "";
-            $option  .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$ncsn}' value='{$ncsn}' class='bbv' onChange=bbv() $ckecked><label for='c{$ncsn}'>$nc_title</label></span> ";
+            $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$ncsn}' value='{$ncsn}' class='bbv' onChange=bbv() $ckecked><label for='c{$ncsn}'>$nc_title</label></span> ";
         }
 
         $js .= "document.getElementById('bb').value=arr.join(',');
@@ -67,7 +67,7 @@ if (!function_exists("get_all_news_cate")) {
             $ncsn_arr = explode(',', $ncsn_arr_str);
         }
 
-        $sql = "SELECT ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " ORDER BY sort";
+        $sql    = "SELECT ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " ORDER BY sort";
         $result = $xoopsDB->query($sql) or web_error($sql);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
@@ -128,12 +128,12 @@ if (!function_exists("block_news_tags")) {
         $result = $xoopsDB->query($sql);
         $option = "";
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
-            $js            .= "if(document.getElementById('c{$tag_sn}').checked){
+            $js .= "if(document.getElementById('c{$tag_sn}').checked){
        arr[i] = document.getElementById('c{$tag_sn}').value;
        i++;
       }";
-            $ckecked       = (in_array($tag_sn, $sc)) ? "checked" : "";
-            $option        .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$tag_sn}' value='{$tag_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$tag_sn}'>$tag</label></span> ";
+            $ckecked = (in_array($tag_sn, $sc)) ? "checked" : "";
+            $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$tag_sn}' value='{$tag_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$tag_sn}'>$tag</label></span> ";
             $tags[$tag_sn] = $tag;
         }
 

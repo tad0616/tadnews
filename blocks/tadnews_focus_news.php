@@ -41,7 +41,14 @@ function tadnews_focus_news_edit($options)
         $option .= "<option value='$nsn' $selected>$start_day [{$nc_title}] $news_title</option>";
     }
     $option .= "</select>";
-
+    $form = "
+    <div class='my-row'>
+        <lable class='my-label'>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</lable>
+        <div class='my-content'>
+            $option
+        </div>
+    </div>
+    ";
     $form = "<table style='width:auto;'>
     <tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM0 . "</th><td>$option</td></tr>
     <tr><th>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</th><td>
