@@ -281,7 +281,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_LIST_DESC;
 $modversion['blocks'][$i]['show_func']   = "tadnews_page_list";
 $modversion['blocks'][$i]['template']    = "tadnews_block_page_list.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_page_list_edit";
-$modversion['blocks'][$i]['options']     = "|info|1|1";
+$modversion['blocks'][$i]['options']     = "|#9ea200|1|1|#ffffff";
 
 $i++;
 $modversion['blocks'][$i]['file']        = "tadnews_tab_news.php";
