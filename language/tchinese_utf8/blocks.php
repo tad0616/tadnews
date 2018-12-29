@@ -95,14 +95,8 @@ define('_MB_TADNEWS_PAGE_EDIT_BITEM2', '文字大小');
 define('_MB_TADNEWS_COVERED_OPT1', '一個橫列放幾篇文章？');
 define('_MB_TADNEWS_COVERED_OPT2', '共幾個橫列？');
 define('_MB_TADNEWS_AJAX_ERROR', '無法載入資料。');
-define('_MB_TADNEWS_PAGE_PANEL_COLOR', '選擇面板顏色');
-define('_MB_TADNEWS_PAGE_PANEL_NO', '不使用');
-define('_MB_TADNEWS_PAGE_PANEL_DEFAULT', '淺灰');
-define('_MB_TADNEWS_PAGE_PANEL_PRIMARY', '深藍');
-define('_MB_TADNEWS_PAGE_PANEL_SUCCESS', '淺綠');
-define('_MB_TADNEWS_PAGE_PANEL_INFO', '淺藍');
-define('_MB_TADNEWS_PAGE_PANEL_WARNING', '淺黃');
-define('_MB_TADNEWS_PAGE_PANEL_DANGER', '粉紅');
+define('_MB_TADNEWS_PAGE_BG_COLOR', '選擇標題底色');
+define('_MB_TADNEWS_PAGE_FONT_COLOR', '選擇標題顏色');
 define('_MB_TADNEWS_PAGE_SUB_CATE', '是否列出底下分類？');
 
 define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', '呈現類型');

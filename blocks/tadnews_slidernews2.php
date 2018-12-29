@@ -33,8 +33,11 @@ function tadnews_slidernews2_show($options)
     if (empty($all_news['page'])) {
         return;
     }
-
-    $slider = new slider($options[1]);
+    if ($options[2] == 'flexslider2') {
+        $slider = new flexslider($options[1]);
+    } else {
+        $slider = new slider($options[1]);
+    }
 
     $n       = 0;
     $pic_num = 1;

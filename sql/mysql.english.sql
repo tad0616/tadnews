@@ -139,7 +139,7 @@ CREATE TABLE `tadnews_data_center` (
   `data_name` varchar(100) NOT NULL DEFAULT '',
   `data_value` text NOT NULL ,
   `data_sort` mediumint(9) unsigned NOT NULL DEFAULT '0',
-  `col_id` varchar(100) NOT NULL,
+  `col_id` varchar(100) NOT NULL default '',
   `update_time` datetime NOT NULL,
 PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

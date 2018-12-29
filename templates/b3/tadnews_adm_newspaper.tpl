@@ -247,7 +247,7 @@
       </div>
     <{/if}>
     <form action="newspaper.php" method="post">
-      <textarea name="email_import" class="col-sm-12" placeholder="<{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}>"></textarea>
+      <textarea name="email_import" class="form-control" placeholder="<{$smarty.const._MA_TADNEWS_NP_EMAIL_IMPORT}>"></textarea>
       <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
       <input type="hidden" name="op" value="email_import">
       <div class="text-center" style="margin: 20px 0px;">

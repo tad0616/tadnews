@@ -3,7 +3,8 @@
 //區塊主函式 (自訂頁面選單)
 function tadnews_page_list($options)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vertical_menu.css');
 
     if (empty($options[0])) {
         $sql        = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
@@ -24,7 +25,7 @@ function tadnews_page_list($options)
     $result = $xoopsDB->query($sql);
     while (list($nsn, $news_title) = $xoopsDB->fetchRow($result)) {
         $page['page' . $nsn]['type']    = 'page';
-        $page['page' . $nsn]['padding'] = 1;
+        $page['page' . $nsn]['padding'] = 0;
         $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
         $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
     }
@@ -34,7 +35,7 @@ function tadnews_page_list($options)
         $result = $xoopsDB->query($sql);
         while (list($ncsn1, $nc_title) = $xoopsDB->fetchRow($result)) {
             $page['cate' . $ncsn1]['type']    = 'cate';
-            $page['cate' . $ncsn1]['padding'] = 1;
+            $page['cate' . $ncsn1]['padding'] = 0;
             $page['cate' . $ncsn1]['title']   = $myts->htmlSpecialChars($nc_title);
             $page['cate' . $ncsn1]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn1}";
 
@@ -43,7 +44,7 @@ function tadnews_page_list($options)
             $result2 = $xoopsDB->query($sql2);
             while (list($nsn, $news_title) = $xoopsDB->fetchRow($result2)) {
                 $page['page' . $nsn]['type']    = 'page';
-                $page['page' . $nsn]['padding'] = 2;
+                $page['page' . $nsn]['padding'] = 1;
                 $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
                 $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
             }
@@ -53,7 +54,7 @@ function tadnews_page_list($options)
             $result2 = $xoopsDB->query($sql2);
             while (list($ncsn2, $nc_title) = $xoopsDB->fetchRow($result2)) {
                 $page['cate' . $ncsn2]['type']    = 'cate';
-                $page['cate' . $ncsn2]['padding'] = 2;
+                $page['cate' . $ncsn2]['padding'] = 1;
                 $page['cate' . $ncsn2]['title']   = $myts->htmlSpecialChars($nc_title);
                 $page['cate' . $ncsn2]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn2}";
 
@@ -62,7 +63,7 @@ function tadnews_page_list($options)
                 $result3 = $xoopsDB->query($sql3);
                 while (list($nsn, $news_title) = $xoopsDB->fetchRow($result3)) {
                     $page['page' . $nsn]['type']    = 'page';
-                    $page['page' . $nsn]['padding'] = 3;
+                    $page['page' . $nsn]['padding'] = 2;
                     $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
                     $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
                 }
@@ -70,7 +71,8 @@ function tadnews_page_list($options)
         }
     }
     $block['pages']      = $page;
-    $block['panel']      = $options[1];
+    $block['bgcolor']    = $options[1];
+    $block['color']      = $options[4];
     $block['show_title'] = $options[3];
 
     return $block;
@@ -79,19 +81,19 @@ function tadnews_page_list($options)
 //區塊編輯函式
 function tadnews_page_list_edit($options)
 {
-    $cate          = block_get_all_not_news_cate(0, $options[0]);
-    $panel_no      = $options[1] == '' ? 'selected' : '';
-    $panel_default = $options[1] == 'default' ? 'selected' : '';
-    $panel_primary = $options[1] == 'primary' ? 'selected' : '';
-    $panel_success = $options[1] == 'success' ? 'selected' : '';
-    $panel_info    = $options[1] == 'info' ? 'selected' : '';
-    $panel_warning = $options[1] == 'warning' ? 'selected' : '';
-    $panel_danger  = $options[1] == 'danger' ? 'selected' : '';
+    $cate = block_get_all_not_news_cate(0, $options[0]);
 
     $sub_cate        = $options[2] == 1 ? 'checked' : '';
     $no_sub_cate     = $options[2] == 0 ? 'checked' : '';
     $show_title      = $options[3] != 0 ? 'checked' : '';
     $dont_show_title = $options[3] == 0 ? 'checked' : '';
+
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/mColorPicker.php")) {
+        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    }
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/mColorPicker.php";
+    $mColorPicker = new mColorPicker('.color');
+    $mColorPicker->render();
 
     $form = "
     <ol class='my-form'>
@@ -104,17 +106,9 @@ function tadnews_page_list_edit($options)
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_PAGE_PANEL_COLOR . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_BG_COLOR . "</lable>
             <div class='my-content'>
-                <select name='options[1]' class='my-input'>
-                    <option value='' $panel_no>" . _MB_TADNEWS_PAGE_PANEL_NO . "</option>
-                    <option value='default' $panel_default>" . _MB_TADNEWS_PAGE_PANEL_DEFAULT . "</option>
-                    <option value='primary' $panel_primary>" . _MB_TADNEWS_PAGE_PANEL_PRIMARY . "</option>
-                    <option value='success' $panel_success>" . _MB_TADNEWS_PAGE_PANEL_SUCCESS . "</option>
-                    <option value='info' $panel_info>" . _MB_TADNEWS_PAGE_PANEL_INFO . "</option>
-                    <option value='warning' $panel_warning>" . _MB_TADNEWS_PAGE_PANEL_WARNING . "</option>
-                    <option value='danger' $panel_danger>" . _MB_TADNEWS_PAGE_PANEL_DANGER . "</option>
-                </select>
+                <input type='text' class='my-input color' data-hex='true' name='options[1]' value='{$options[1]}' size=6>
             </div>
         </li>
         <li class='my-row'>
@@ -129,6 +123,12 @@ function tadnews_page_list_edit($options)
             <div class='my-content'>
             <INPUT type='radio' name='options[3]' value='1' id='show_title' $show_title>" . _YES . "
             <INPUT type='radio' name='options[3]' value='0' id='dont_show_title' $dont_show_title>" . _NO . "
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_FONT_COLOR . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input color' data-hex='true' name='options[4]' value='{$options[4]}' size=6>
             </div>
         </li>
     </ol>";

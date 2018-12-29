@@ -115,7 +115,7 @@ function have_read($nsn = "", $uid = "")
     }
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql = "insert into " . $xoopsDB->prefix("tad_news_sign") . " (`nsn`,`uid`,`sign_time`) values('$nsn','$uid','{$now}')";
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
 }
 
 //檢查置頂時間
@@ -136,7 +136,7 @@ function list_sign($nsn = "")
     $sql    = "select uid,sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where nsn='$nsn' order by sign_time";
     $sign   = "";
     $i      = 0;
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
         $uid_name              = XoopsUser::getUnameFromId($uid, 1);
         $uid_name              = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -164,7 +164,7 @@ function list_user_sign($uid = "")
     $sql    = "select a.nsn,a.sign_time,b.news_title from " . $xoopsDB->prefix("tad_news_sign") . " as a left join " . $xoopsDB->prefix("tad_news") . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
     $sign   = "";
     $i      = 0;
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
 
     $myts = MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {

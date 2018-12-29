@@ -13,7 +13,7 @@ function month_list($now_date = "")
 
     $sql = "SELECT left(start_day,7) , count(*) FROM " . $xoopsDB->prefix("tad_news") . " WHERE enable='1' GROUP BY left(start_day,7) ORDER BY start_day DESC";
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
     $i = 1;
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt[$i]['value']    = $ym;

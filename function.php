@@ -23,7 +23,7 @@ function get_tadnews_cate_path($the_ncsn = "", $include_self = true)
             LEFT JOIN `{$tbl}` t7 ON t7.of_ncsn = t6.ncsn
             WHERE t1.of_ncsn = '0'";
 
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             if (in_array($the_ncsn, $all)) {
                 foreach ($all as $ncsn) {
@@ -50,7 +50,7 @@ function get_tadnews_sub_cate($ncsn = "0")
 {
     global $xoopsDB;
     $sql      = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
-    $result   = $xoopsDB->query($sql) or web_error($sql);
+    $result   = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
     $ncsn_arr = "";
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
@@ -63,7 +63,7 @@ function get_newspaper_set($nps_sn = "")
 {
     global $xoopsDB;
     $sql    = "select * from `" . $xoopsDB->prefix("tad_news_paper_setup") . "` where `nps_sn`='{$nps_sn}'";
-    $result = $xoopsDB->queryF($sql) or web_error($sql);
+    $result = $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -73,7 +73,7 @@ function get_newspaper($npsn = "")
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_paper") . " where npsn='{$npsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -88,7 +88,7 @@ function preview_newspaper($npsn = "")
 
     $np                                 = get_newspaper($npsn);
     $sql                                = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
-    $result                             = $xoopsDB->query($sql) or web_error($sql);
+    $result                             = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $myts             = MyTextSanitizer::getInstance();

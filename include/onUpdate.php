@@ -80,6 +80,11 @@ function xoops_module_update_tadnews(&$module, $old_version)
         go_fc_tag();
     }
 
+    //調整檔案上傳欄位col_id的預設值
+    if (chk_data_center_col_id()) {
+        go_update_data_center_col_id();
+    }
+
     return true;
 }
 
@@ -310,12 +315,12 @@ function go_update14()
 {
     global $xoopsDB;
     $sql = "CREATE TABLE " . $xoopsDB->prefix("tad_news_paper_send_log") . " (
-  `npsn` SMALLINT UNSIGNED NOT NULL ,
-  `email` VARCHAR(255) NOT NULL DEFAULT '' ,
-  `send_time` DATETIME NOT NULL,
-  `log`  VARCHAR(255) NOT NULL DEFAULT '' ,
-  PRIMARY KEY  (`npsn`,`email`)
-  )";
+    `npsn` SMALLINT UNSIGNED NOT NULL ,
+    `email` VARCHAR(255) NOT NULL DEFAULT '' ,
+    `send_time` DATETIME NOT NULL,
+    `log`  VARCHAR(255) NOT NULL DEFAULT '' ,
+    PRIMARY KEY  (`npsn`,`email`)
+    )";
     $xoopsDB->queryF($sql);
 }
 
@@ -456,11 +461,11 @@ function go_update19()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_news_tags") . "
-  ADD `font_color` VARCHAR(255) NOT NULL DEFAULT '' AFTER `tag`";
+    ADD `font_color` VARCHAR(255) NOT NULL DEFAULT '' AFTER `tag`";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
 
     $sql = "update " . $xoopsDB->prefix("tad_news_tags") . " set
-  `font_color`='#ffffff'";
+    `font_color`='#ffffff'";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 3, $xoopsDB->error());
 }
 
@@ -541,7 +546,7 @@ function chk_files_center()
 {
     global $xoopsDB;
     $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE table_name = '" . $xoopsDB->prefix("tadnews_files_center") . "' AND COLUMN_NAME = 'col_sn'";
+    WHERE table_name = '" . $xoopsDB->prefix("tadnews_files_center") . "' AND COLUMN_NAME = 'col_sn'";
     $result     = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
@@ -550,6 +555,7 @@ function chk_files_center()
 
     return false;
 }
+
 
 //執行更新
 function go_update_files_center()
@@ -560,12 +566,36 @@ function go_update_files_center()
     return true;
 }
 
+
+//修正col_id欄位
+function chk_data_center_col_id()
+{
+    global $xoopsDB;
+    $sql = "SELECT Fields FROM `" . $xoopsDB->prefix("tadnews_data_center") . "` where `Field`='col_id' and `Default` IS NULL";
+    $result     = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
+}
+
+//執行更新
+function go_update_data_center_col_id()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tadnews_data_center") . "` CHANGE `col_id` `col_id` varchar(100) NOT NULL DEFAULT ''";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
+    return true;
+}
+
+
 //修正uid欄位
 function chk_uid()
 {
     global $xoopsDB;
     $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE table_name = '" . $xoopsDB->prefix("tad_news") . "' AND COLUMN_NAME = 'uid'";
+    WHERE table_name = '" . $xoopsDB->prefix("tad_news") . "' AND COLUMN_NAME = 'uid'";
     $result     = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {

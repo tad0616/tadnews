@@ -31,7 +31,7 @@ function list_tad_all_news($the_ncsn = "")
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
         $sql     = "select menuid from " . $xoopsDB->prefix("tad_themes_menu") . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$the_ncsn}'";
-        $result  = $xoopsDB->queryF($sql) or web_error($sql);
+        $result  = $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
         $RowsNum = $xoopsDB->getRowsNum($result);
     }
     if ($RowsNum > 0) {
@@ -52,14 +52,14 @@ function add_to_menu($ncsn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='$ncsn'";
-    $result = $xoopsDB->queryF($sql) or web_error($sql);
+    $result = $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
     $cate   = $xoopsDB->fetchArray($result);
 
     $modhandler      = xoops_getHandler('module');
     $TadThemesModule = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
         $sql = "insert into " . $xoopsDB->prefix("tad_themes_menu") . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`, `read_group`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1','0','_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}', '1,2,3')";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
         //取得最後新增資料的流水編號
         $menuid = $xoopsDB->getInsertId();
     }

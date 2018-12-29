@@ -27,8 +27,10 @@ function chk_news_mod($version)
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
         include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-        $XOOPS_TOKEN = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
-        $main        = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
+        $token       = new XoopsFormHiddenToken();
+        $XOOPS_TOKEN = $token->render();
+
+        $main = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
         $main .= "<form action='{$_SERVER['PHP_SELF']}' method='post'>
         <center>
         <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
@@ -56,7 +58,7 @@ function chk_cate($topic_pid = "", $left = 0)
     }
 
     $sql    = "select topic_id,topic_pid,topic_title from " . $xoopsDB->prefix("topics") . " where topic_pid='{$topic_pid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $main = "";
 
@@ -77,7 +79,7 @@ function chk_stories($topicid = "", $left = 0)
     $left += 14;
 
     $sql    = "select storyid,title  from " . $xoopsDB->prefix("stories") . " where topicid ='{$topicid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $main   = "";
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";

@@ -228,7 +228,7 @@ class tadnews
         $this->view_ncsn = $ncsn;
         if (!is_array($ncsn) and !empty($ncsn)) {
             $sql            = "select not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
-            $result         = $xoopsDB->query($sql) or web_error($sql);
+            $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             list($not_news) = $xoopsDB->fetchRow($result);
             if ($not_news == 1) {
                 $this->set_news_kind("page");
@@ -353,7 +353,7 @@ class tadnews
 
         $sql = "select * from " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
 
-        $result = $xoopsDB->queryF($sql) or web_error($sql);
+        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
             foreach ($all as $k => $v) {
@@ -540,7 +540,7 @@ class tadnews
             }
         }
 
-        $ncsn=isset($ncsn)?$ncsn:'';
+        $ncsn = isset($ncsn) ? $ncsn : '';
         //找指定的分類
         $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where 1 $kind_chk $where_cate order by sort";
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
@@ -572,8 +572,8 @@ class tadnews
             }
         }
 
-        $ncsn_cate_setup=isset($cate_setup[$ncsn])?$cate_setup[$ncsn]:'';
-        $set = $this->get_setup($ncsn_cate_setup);
+        $ncsn_cate_setup = isset($cate_setup[$ncsn]) ? $cate_setup[$ncsn] : '';
+        $set             = $this->get_setup($ncsn_cate_setup);
         if ($this->kind === "page") {
             //die(var_dump($cate_setup[$ncsn]));
             //die(var_dump($set));
@@ -704,7 +704,7 @@ class tadnews
 
         // die($sql);
 
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         //分類篩選工具
         if ($this->show_cate_select) {
@@ -812,7 +812,8 @@ class tadnews
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : "";
                 include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                $XOOPS_TOKEN = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                $token       = new XoopsFormHiddenToken();
+                $XOOPS_TOKEN = $token->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ($this->show_mode == "one") {
                         $news_content = "
@@ -1036,7 +1037,7 @@ class tadnews
         }
 
         $sql                                 = "select nc_title,of_ncsn,not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
-        $result                              = $xoopsDB->query($sql) or web_error($sql);
+        $result                              = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         list($nc_title, $of_ncsn, $not_news) = $xoopsDB->fetchRow($result);
 
         $opt_sub = (!empty($of_ncsn)) ? $this->get_cate_path($of_ncsn, true) : "";
@@ -1096,7 +1097,7 @@ class tadnews
         }
 
         $sql    = "select ncsn,nc_title,enable_group,enable_post_group,cate_pic,setup from " . $xoopsDB->prefix("tad_news_cate") . " where 1  $and_cate $kind_chk order by sort";
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         $i               = 0;
         $only_title      = false;
@@ -1139,7 +1140,9 @@ class tadnews
                 if (!empty($passwd)) {
 
                     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                    $XOOPS_TOKEN   = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                    $token       = new XoopsFormHiddenToken();
+                    $XOOPS_TOKEN = $token->render();
+                    
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : "";
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                         if ($this->show_mode == "one") {
@@ -1370,7 +1373,7 @@ class tadnews
     {
         global $xoopsDB;
         $sql    = "SELECT uid FROM " . $xoopsDB->prefix("tad_news") . " GROUP BY uid";
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $opt    = _TADNEWS_SHOW_AUTHOR_NEWS . "
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
     <option value=''></option>";
@@ -1417,7 +1420,7 @@ class tadnews
 
             $option == "";
             $sql    = "select ncsn,nc_title,not_news from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
-            $result = $xoopsDB->query($sql) or web_error($sql);
+            $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 if (!in_array($ncsn, $ok_cat)) {
@@ -1437,7 +1440,7 @@ class tadnews
         } else {
             $all_ncsn = implode(",", $ok_cat);
             $sql      = "select ncsn,nc_title,not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn in($all_ncsn) $and_not_news order by sort";
-            $result   = $xoopsDB->query($sql) or web_error($sql);
+            $result   = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 if (!in_array($ncsn, $ok_cat)) {
                     continue;
@@ -1476,7 +1479,7 @@ class tadnews
         $where = ($isAdmin) ? "" : "where $col!=''";
 
         $sql    = "select ncsn,{$col} from " . $xoopsDB->prefix("tad_news_cate") . " $where";
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
             if ($isAdmin or $kind == "pass") {
@@ -1540,7 +1543,9 @@ class tadnews
         if (!empty($have_read_group)) {
 
             include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XOOPS_TOKEN         = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $token       = new XoopsFormHiddenToken();
+            $XOOPS_TOKEN = $token->render();
+            
             $have_read_group_arr = explode(",", $have_read_group);
 
             foreach ($User_Groups as $gid) {
@@ -1575,7 +1580,7 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser;
         $sql             = "select sign_time from " . $xoopsDB->prefix("tad_news_sign") . " where uid='$uid' and nsn='$nsn'";
-        $result          = $xoopsDB->query($sql) or web_error($sql);
+        $result          = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         list($sign_time) = $xoopsDB->fetchRow($result);
         return $sign_time;
     }
@@ -1762,7 +1767,7 @@ class tadnews
         global $xoopsDB;
 
         $sql = "update " . $xoopsDB->prefix("tad_news") . " set  counter = counter + 1 where nsn='$nsn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         return $nsn;
     }
 
@@ -1828,7 +1833,7 @@ class tadnews
             $news_cate_kind_arr = array();
             foreach ($ncsn_arr as $ncsn) {
                 $sql    = "select not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
-                $result = $xoopsDB->query($sql) or web_error($sql);
+                $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
                 while (list($not_news) = $xoopsDB->fetchRow($result)) {
                     $news_cate_kind_arr[$not_news] = $not_news;
                 }
@@ -1922,7 +1927,7 @@ class tadnews
             //die('pic:'.$pic);
             if (!empty($pic)) {
                 $sql                      = "select files_sn,description from " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
-                $result                   = $xoopsDB->queryF($sql) or web_error($sql);
+                $result                   = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
                 list($files_sn, $pic_css) = $xoopsDB->fetchRow($result);
             }
         } else {
@@ -2010,7 +2015,8 @@ class tadnews
             $form['tab_arr']            = $tab_arr;
 
             include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $form['XOOPS_TOKEN'] = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $token       = new XoopsFormHiddenToken();
+            $form['XOOPS_TOKEN'] = $token->render();
             return $form;
         } else {
             $xoopsTpl->assign("jquery", $jquery_path);
@@ -2097,7 +2103,7 @@ class tadnews
     {
         global $xoopsDB;
         $sql         = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='0'";
-        $result      = $xoopsDB->query($sql) or web_error($sql);
+        $result      = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         list($count) = $xoopsDB->fetchRow($result);
         return $count;
     }
@@ -2108,7 +2114,7 @@ class tadnews
         global $xoopsDB, $xoopsUser;
 
         $sql    = "select * from " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
-        $result = $xoopsDB->queryF($sql) or web_error($sql);
+        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
             foreach ($all as $k => $v) {
@@ -2297,7 +2303,7 @@ class tadnews
 
         $sql = "insert into " . $xoopsDB->prefix("tad_news") . " (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$start_day}','{$end_day}','{$enable}','{$uid}','{$passwd}','{$enable_group}','{$prefix_tag}','{$always_top}','{$always_top_date}','{$have_read_group}')";
         //die($sql);
-        $xoopsDB->query($sql) or web_error($sql);
+        $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         //取得最後新增資料的流水編號
         $nsn = $xoopsDB->getInsertId();
@@ -2316,7 +2322,7 @@ class tadnews
 
             $files_sn = (int) $_POST['files_sn'];
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
-            $xoopsDB->queryF($sql) or web_error($sql);
+            $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
             $pic = $this->get_news_doc_pic("news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
 
@@ -2342,10 +2348,10 @@ class tadnews
     {
         global $xoopsDB;
         //安全判斷
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
-            redirect_header("index.php", 3, $error);
-        }
+        // if (!$GLOBALS['xoopsSecurity']->check()) {
+        //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        //     redirect_header("index.php", 3, $error);
+        // }
         $enable_group = $enable_post_group = $setup = $cate = "";
         if (!empty($of_ncsn)) {
             $cate              = $this->get_tad_news_cate($of_ncsn);
@@ -2374,7 +2380,7 @@ class tadnews
     {
         global $xoopsDB;
         $sql        = "select max(sort) from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='$of_ncsn' and not_news='$not_news'";
-        $result     = $xoopsDB->query($sql) or web_error($sql);
+        $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         list($sort) = $xoopsDB->fetchRow($result);
         return ++$sort;
     }
@@ -2411,7 +2417,7 @@ class tadnews
 
         $ncsn   = (int) $ncsn;
         $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='$ncsn'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql);
+        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         $data   = $xoopsDB->fetchArray($result);
 
         $sql2           = "select count(*) from " . $xoopsDB->prefix("tad_news") . " where ncsn='{$ncsn}'";
@@ -2512,7 +2518,7 @@ class tadnews
         }
 
         $sql = "update " . $xoopsDB->prefix("tad_news") . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$_POST['end_day']}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}',prefix_tag='{$_POST['prefix_tag']}',always_top='{$always_top}',always_top_date='{$_POST['always_top_date']}',have_read_group='{$have_read_group}' where nsn='$nsn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
         if ($_POST['tab_mode'] == 1) {
             $this->TadDataCenter->set_col('nsn', $nsn);
@@ -2529,7 +2535,7 @@ class tadnews
 
             $files_sn = (int) $_POST['files_sn'];
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
-            $xoopsDB->queryF($sql) or web_error($sql);
+            $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
         }
 
@@ -2552,7 +2558,7 @@ class tadnews
         }
 
         $sql = "update " . $xoopsDB->prefix("tad_news") . " set enable = '1' where nsn='$nsn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
         $cate = $this->get_tad_news_cate($_POST['ncsn']);
         $page = ($cate['not_news'] == '1') ? "page" : "index";
@@ -2592,7 +2598,7 @@ class tadnews
         }
 
         $sql = "delete from " . $xoopsDB->prefix("tad_news") . " where nsn='$nsn'";
-        $xoopsDB->queryF($sql) or web_error($sql);
+        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
         //刪除檔案
         //del_files("","nsn",$nsn);
