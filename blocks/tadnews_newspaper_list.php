@@ -3,7 +3,8 @@
 //區塊主函式 (最新回應)
 function tadnews_newspaper_list($options)
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB, $xoopsUser, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     //找出現有設定組
     $sql    = "select a.npsn,a.number,b.title from " . $xoopsDB->prefix("tad_news_paper") . " as a ," . $xoopsDB->prefix("tad_news_paper_setup") . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc limit 0,{$options[0]}";
@@ -20,6 +21,7 @@ function tadnews_newspaper_list($options)
     }
 
     $block['page'] = $page;
+
     return $block;
 }
 
