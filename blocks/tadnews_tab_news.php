@@ -93,13 +93,13 @@ function tadnews_tab_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BORDER_COLOR . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input color' data-hex='true' name='options[5]' value='{$options[5]}' size=6>
+                <input type='text' class='my-input color' data-hex='true' name='options[5]' value='{$options[5]}' size=8>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input color' data-hex='true' name='options[6]' value='{$options[6]}' size=6>
+                <input type='text' class='my-input color' data-hex='true' name='options[6]' value='{$options[6]}' size=8>
             </div>
         </li>
         <li class='my-row'>
