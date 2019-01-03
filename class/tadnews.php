@@ -1142,7 +1142,7 @@ class tadnews
                     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
                     $token       = new XoopsFormHiddenToken();
                     $XOOPS_TOKEN = $token->render();
-                    
+
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : "";
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                         if ($this->show_mode == "one") {
@@ -1545,7 +1545,7 @@ class tadnews
             include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
             $token       = new XoopsFormHiddenToken();
             $XOOPS_TOKEN = $token->render();
-            
+
             $have_read_group_arr = explode(",", $have_read_group);
 
             foreach ($User_Groups as $gid) {
@@ -2281,7 +2281,7 @@ class tadnews
             ";
             $news_content = $myts->addSlashes($tabs_content);
         } else {
-            $news_content = $myts->addSlashes($news_content);
+            $news_content = $myts->addSlashes($_POST['news_content']);
         }
         $always_top = (empty($_POST['always_top'])) ? "0" : "1";
         $pic_css    = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
