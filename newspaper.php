@@ -19,9 +19,9 @@ function list_newspaper()
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
-    $main   = "";
+    $main   = array();
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $title               = $myts->htmlSpecialChars($title);
         $main[$i]['allnpsn'] = $allnpsn;
