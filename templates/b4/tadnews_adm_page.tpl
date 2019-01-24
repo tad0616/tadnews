@@ -169,7 +169,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="setup[title]" id="setup_title_0" value="0" <{if $title=='0'}>checked<{/if}>>
-                  <label class="form-check-label" for="setup_title_0"><{$smarty.const._YES}></label>
+                  <label class="form-check-label" for="setup_title_0"><{$smarty.const._NO}></label>
                 </div>
               </div>
 

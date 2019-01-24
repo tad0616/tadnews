@@ -45,11 +45,6 @@ function list_tad_all_news($the_ncsn = "")
 function add_to_menu($ncsn = "")
 {
     global $xoopsDB;
-    //安全判斷
-    if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
-        redirect_header("index.php", 3, $error);
-    }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='$ncsn'";
     $result = $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
@@ -93,7 +88,6 @@ switch ($op) {
         add_to_menu($ncsn);
         header("location: {$_SERVER['PHP_SELF']}?ncsn=$ncsn");
         exit;
-        break;
 
     default:
         if (!empty($nsn)) {
