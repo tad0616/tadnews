@@ -92,10 +92,10 @@ function import($topic_pid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
     //安全判斷
-    if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
-        redirect_header("index.php", 3, $error);
-    }
+    // if (!$GLOBALS['xoopsSecurity']->check()) {
+    //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+    //     redirect_header("index.php", 3, $error);
+    // }
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
 
@@ -115,10 +115,10 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
     //安全判斷
-    if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
-        redirect_header("index.php", 3, $error);
-    }
+    // if (!$GLOBALS['xoopsSecurity']->check()) {
+    //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+    //     redirect_header("index.php", 3, $error);
+    // }
 
     $myts = MyTextSanitizer::getInstance();
 

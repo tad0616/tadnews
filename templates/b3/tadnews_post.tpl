@@ -172,12 +172,8 @@
       </label>
       <div class="col-sm-4">
         <select name="kind" id="kind" class="form-control">
-          <{if $news_cate_kind_arr=='' or '0'|in_array:$news_cate_kind_arr}>
             <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
-          <{/if}>
-          <{if $news_cate_kind_arr=='' or '1'|in_array:$news_cate_kind_arr}>
           <option value="page"<{if $ncsn and  $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
-          <{/if}>
         </select>
       </div>
       <div class="col-sm-4" id="tab_mode_checkbox">
