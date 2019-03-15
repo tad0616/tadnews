@@ -18,7 +18,7 @@ function tadnews_table_content_block_show($options)
     $block['start_from']  = $options[7];
     $block['show_ncsn']   = isset($options[8]) ? $options[8] : "";
     $block['searchbar']   = $options[9];
-    $block['HTTP_HOST']   = get_xoops_url();
+    $block['HTTP_HOST']   = XOOPS_URL;
 
     $block['ncsn'] = get_all_news_cate($options[8]);
     $block['tag']  = get_all_news_tag();
