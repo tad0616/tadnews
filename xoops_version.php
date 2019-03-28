@@ -299,6 +299,15 @@ $modversion['blocks'][$i]['template']    = "tadnews_block_tag_news.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_tag_news_edit";
 $modversion['blocks'][$i]['options']     = "|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0";
 
+$i++;
+$modversion['blocks'][$i]['file']        = "tadnews_page_auto_menu.php";
+$modversion['blocks'][$i]['name']        = _MI_TADNEWS_PAGE_AUTO_MENU;
+$modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_AUTO_MENUS_DESC;
+$modversion['blocks'][$i]['show_func']   = "tadnews_page_auto_menu";
+$modversion['blocks'][$i]['template']    = "tadnews_block_page_auto_menu.tpl";
+$modversion['blocks'][$i]['edit_func']   = "tadnews_page_auto_menu_edit";
+$modversion['blocks'][$i]['options']     = "";
+
 //---偏好設定---//
 $i                                       = 1;
 $modversion['config'][$i]['name']        = 'show_num';

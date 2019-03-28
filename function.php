@@ -33,6 +33,7 @@ function get_tadnews_cate_path($the_ncsn = "", $include_self = true)
                         }
                         $arr[$ncsn]        = $tadnews->get_tad_news_cate($ncsn);
                         $arr[$ncsn]['sub'] = get_tadnews_sub_cate($ncsn);
+                        // die(var_dump(get_tadnews_sub_cate($ncsn)));
                         if ($ncsn == $the_ncsn) {
                             break;
                         }
@@ -49,12 +50,14 @@ function get_tadnews_cate_path($the_ncsn = "", $include_self = true)
 function get_tadnews_sub_cate($ncsn = "0")
 {
     global $xoopsDB;
-    $sql      = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
+    $sql = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
+    // die($sql);
     $result   = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $ncsn_arr = "";
+    $ncsn_arr = array();
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
     }
+    // die(var_dump($ncsn_arr));
     return $ncsn_arr;
 }
 
@@ -244,4 +247,40 @@ function update_tad_news_cate($ncsn = "")
     }
 
     return $ncsn;
+}
+
+//路徑導覽
+function breadcrumb($ncsn = '0', $array = array())
+{
+    $item = "";
+    if (is_array($array)) {
+        foreach ($array as $cate) {
+            $url    = ($ncsn == $cate['ncsn']) ? "<a href='index.php?ncsn={$cate['ncsn']}' style='color: gray;'>{$cate['nc_title']}</a>" : "<a href='index.php?ncsn={$cate['ncsn']}'>{$cate['nc_title']}</a>";
+            $active = ($ncsn == $cate['ncsn']) ? "active" : "";
+
+            // if (!empty($cate['sub']) and is_array($cate['sub']) and ($ncsn != $cate['ncsn'] or $ncsn == 0)) {
+            //     $item .= "
+            //     <li class='dropdown'>
+            //         <a class='dropdown-toggle' data-toggle='dropdown' href='index.php?ncsn={$cate['ncsn']}'>
+            //             {$cate['nc_title']} <span class='caret'></span>
+            //         </a>
+            //         <ul class='dropdown-menu' role='menu'>";
+            //     foreach ($cate['sub'] as $sub_ncsn => $sub_title) {
+            //         $item .= "<li><a href='index.php?ncsn={$sub_ncsn}'>{$sub_title}</a></li>\n";
+            //     }
+            //     $item .= "
+            //         </ul>
+            //     </li>";
+            // } else {
+            $item .= "<li class='breadcrumb-item {$active}'>{$url}</li>";
+            // }
+        }
+    }
+
+    $main = "
+        <ul class='breadcrumb'>
+            $item
+        </ul>
+    ";
+    return $main;
 }

@@ -2,6 +2,8 @@
   <p><{$toolbar}></p>
 <{/if}>
 
+<{$breadcrumb}>
+
 <{$rating_js}>
 <{$del_js}>
 <{$jquery}>

@@ -255,18 +255,21 @@
 
         <div class="input_fields_wrap">
             <{if $tab_arr}>
-            <{foreach from=$tab_arr.tab_title key=k item=title}>
-                <div class="form-group row">
-                    <div class="col-sm-12">
-                    <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                <{foreach from=$tab_arr.tab_title key=k item=title}>
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger"><{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></button>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-12">
-                        <{$tab_arr.tab_editor.$k}>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <{$tab_arr.tab_editor.$k}>
+                        </div>
                     </div>
-                </div>
-            <{/foreach}>
+                <{/foreach}>
             <{else}>
             <div class="form-group row">
                 <div class="col-sm-12">

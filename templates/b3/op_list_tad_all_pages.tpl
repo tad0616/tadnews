@@ -40,7 +40,7 @@
     <ul  class="list-group" id="sort">
         <{foreach from=$all_news.news item=news}>
             <li class="list-group-item d-flex justify-content-between align-items-center" <{if $isAdmin or $isOwner}>id="tr_<{$news.nsn}>"<{/if}>>
-                <a href="<{$xoops_url}>/modules/tadnews/page.php?nsn=<{$news.nsn}>">
+                <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$all_news.ncsn}>&nsn=<{$news.nsn}>">
                     <{$news.news_title}>
                 </a>
                 <span class="badge  badge-pill badge-secondary"><{$news.counter}></span>

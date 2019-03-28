@@ -119,6 +119,9 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+// $arr = get_tadnews_cate_path($ncsn);
+// die(var_dump($arr));
+$xoopsTpl->assign("breadcrumb", breadcrumb($ncsn, get_tadnews_cate_path($ncsn)));
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 $xoopsTpl->assign("now_op", $op);
