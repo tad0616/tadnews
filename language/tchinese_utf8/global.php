@@ -20,7 +20,7 @@ define('_TADNEWS_NP_SUBMIT', '下一步');
 define('_TADNEWS_SIGN_OK', '已於 %s 簽收完畢');
 define('_TADNEWS_I_HAVE_READ', '我已閱讀完畢！');
 define('_TADNEWS_DOWNLOAD_AFTER_READ', '您必須簽收後才能下載本文附檔。');
-define('_TADNEWS_NO_ADMIN_POWER', '您沒有權限管理這篇文章');
+define('_TADNEWS_NO_ADMIN_POWER', '您沒有進行此動作的權限');
 define('_TADNEWS_NO_CATE', '不分類');
 define('_TADNEWS_ALL_OK', '全部開放');
 define('_TADNEWS_BLOCK_NEXT', '下 %s 則');

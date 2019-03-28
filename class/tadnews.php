@@ -1301,7 +1301,7 @@ class tadnews
 
         $edit_cate = "";
         if (!empty($ncsn)) {
-            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
+            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
         }
 
         $signbtn = "";
@@ -2565,6 +2565,7 @@ class tadnews
         header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?nsn={$nsn}");
         exit;
     }
+
     //身份查核
     private function chk_who($author_id = "")
     {

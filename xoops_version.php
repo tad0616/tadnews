@@ -107,9 +107,7 @@ $modversion['templates'][$i]['description'] = 'tadnews_index_cate.tpl';
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_newspaper.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_newspaper.tpl';
-$i++;
-$modversion['templates'][$i]['file']        = 'tadnews_page_list.tpl';
-$modversion['templates'][$i]['description'] = 'tadnews_page_list.tpl';
+
 $i++;
 $modversion['templates'][$i]['file']        = 'tadnews_sign.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_sign.tpl';
