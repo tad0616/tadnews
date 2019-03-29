@@ -8,7 +8,7 @@ function get_tadnews_cate_path($the_ncsn = "", $include_self = true)
 {
     global $xoopsDB, $tadnews;
 
-    $arr[0]['ncsn']     = "0";
+    $arr[0]['ncsn']     = "";
     $arr[0]['nc_title'] = "<i class='fa fa-home'></i>";
     $arr[0]['sub']      = get_tadnews_sub_cate(0);
     if (!empty($the_ncsn)) {

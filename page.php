@@ -18,33 +18,28 @@ function show_page($nsn = "")
 }
 
 //列出所有tad_news資料
-function list_tad_all_pages($the_ncsn = "")
+function list_tad_all_pages($the_ncsn = 0)
 {
     global $xoopsTpl, $xoopsDB, $tadnews;
 
+    get_jquery(true);
     $tadnews->set_news_kind("page");
     $tadnews->set_show_num('none');
     $tadnews->set_view_ncsn($the_ncsn);
     $tadnews->get_cate_news();
 
-    $RowsNum         = 0;
-    $modhandler      = xoops_getHandler('module');
-    $TadThemesModule = $modhandler->getByDirname("tad_themes");
+    $link_cate_sn_arr = array();
+    $modhandler       = xoops_getHandler('module');
+    $TadThemesModule  = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
-        $sql     = "select menuid from " . $xoopsDB->prefix("tad_themes_menu") . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$the_ncsn}'";
-        $result  = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        $RowsNum = $xoopsDB->getRowsNum($result);
+        $sql    = "select link_cate_sn from " . $xoopsDB->prefix("tad_themes_menu") . " where `link_cate_name`='tadnews_page_cate'";
+        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        while (list($link_cate_sn) = $xoopsDB->fetchRow($result)) {
+            $link_cate_sn_arr[] = $link_cate_sn;
+        }
     }
-    if ($RowsNum > 0) {
-        $xoopsTpl->assign('show_add_to_menu', 0);
-    } else {
-        $xoopsTpl->assign('show_add_to_menu', 1);
-    }
-    get_jquery(true);
-
-    $ok_cat  = $tadnews->chk_user_cate_power('post');
-    $isOwner = in_array($the_ncsn, $ok_cat) ? true : false;
-    $xoopsTpl->assign('isOwner', $isOwner);
+    $xoopsTpl->assign('link_cate_sn_arr', $link_cate_sn_arr);
+    $xoopsTpl->assign('ok_cat', $tadnews->chk_user_cate_power('post'));
 }
 
 function add_to_menu($ncsn = "")
@@ -106,12 +101,9 @@ switch ($op) {
         if (!empty($nsn)) {
             show_page($nsn);
             $op = "show_page";
-        } elseif (!empty($ncsn)) {
+        } else {
             list_tad_all_pages($ncsn);
             $op = "list_tad_all_pages";
-        } else {
-            header("location:index.php?nsn={$nsn}");
-            exit;
         }
 
         break;
