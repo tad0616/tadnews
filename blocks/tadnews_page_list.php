@@ -27,7 +27,7 @@ function tadnews_page_list($options)
         $page['page' . $nsn]['type']    = 'page';
         $page['page' . $nsn]['padding'] = 0;
         $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
-        $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+        $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
     }
     if ($options[2] == 1) {
         //第一層底下的目錄
@@ -46,7 +46,7 @@ function tadnews_page_list($options)
                 $page['page' . $nsn]['type']    = 'page';
                 $page['page' . $nsn]['padding'] = 1;
                 $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
-                $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+                $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn1}&nsn={$nsn}";
             }
 
             //第三層底下的目錄
@@ -65,7 +65,7 @@ function tadnews_page_list($options)
                     $page['page' . $nsn]['type']    = 'page';
                     $page['page' . $nsn]['padding'] = 2;
                     $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
-                    $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+                    $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn2}&nsn={$nsn}";
                 }
             }
         }

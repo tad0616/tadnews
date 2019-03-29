@@ -261,7 +261,7 @@
                             <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
                         </div>
                         <div class="col-sm-4">
-                            <button class="btn btn-danger"><{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></button>
+                            <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-danger"><{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
                         </div>
                     </div>
                     <div class="form-group row">

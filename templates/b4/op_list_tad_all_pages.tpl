@@ -4,7 +4,9 @@
 <{/if}>
 <link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css" />
 
-<{$toolbar}>
+<{if $cate_set_tool}>
+  <p><{$toolbar}></p>
+<{/if}>
 
 
 <{if $isAdmin or $isOwner}>
@@ -21,6 +23,7 @@
 </script>
 <{/if}>
 
+<{$breadcrumb}>
 <!--TadNews Start-->
 <{foreach item=all_news from=$all_news}>
     <h3>

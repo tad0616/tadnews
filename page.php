@@ -15,7 +15,6 @@ function show_page($nsn = "")
     $tadnews->set_cover(true, "db");
     $tadnews->set_summary('full');
     $tadnews->get_news();
-
 }
 
 //列出所有tad_news資料
@@ -121,7 +120,7 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 // $arr = get_tadnews_cate_path($ncsn);
 // die(var_dump($arr));
-$xoopsTpl->assign("breadcrumb", breadcrumb($ncsn, get_tadnews_cate_path($ncsn)));
+$xoopsTpl->assign("breadcrumb", breadcrumb($ncsn, get_tadnews_cate_path($ncsn), $nsn));
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 $xoopsTpl->assign("now_op", $op);

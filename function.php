@@ -250,37 +250,25 @@ function update_tad_news_cate($ncsn = "")
 }
 
 //路徑導覽
-function breadcrumb($ncsn = '0', $array = array())
+function breadcrumb($ncsn = '0', $array = array(), $nsn = '')
 {
-    $item = "";
+    global $xoopsDB;
+    $main = "<ul class='breadcrumb'>";
     if (is_array($array)) {
         foreach ($array as $cate) {
-            $url    = ($ncsn == $cate['ncsn']) ? "<a href='index.php?ncsn={$cate['ncsn']}' style='color: gray;'>{$cate['nc_title']}</a>" : "<a href='index.php?ncsn={$cate['ncsn']}'>{$cate['nc_title']}</a>";
+            $url    = ($ncsn == $cate['ncsn']) ? "<a href='page.php?ncsn={$cate['ncsn']}' style='color: gray;'>{$cate['nc_title']}</a>" : "<a href='page.php?ncsn={$cate['ncsn']}'>{$cate['nc_title']}</a>";
             $active = ($ncsn == $cate['ncsn']) ? "active" : "";
-
-            // if (!empty($cate['sub']) and is_array($cate['sub']) and ($ncsn != $cate['ncsn'] or $ncsn == 0)) {
-            //     $item .= "
-            //     <li class='dropdown'>
-            //         <a class='dropdown-toggle' data-toggle='dropdown' href='index.php?ncsn={$cate['ncsn']}'>
-            //             {$cate['nc_title']} <span class='caret'></span>
-            //         </a>
-            //         <ul class='dropdown-menu' role='menu'>";
-            //     foreach ($cate['sub'] as $sub_ncsn => $sub_title) {
-            //         $item .= "<li><a href='index.php?ncsn={$sub_ncsn}'>{$sub_title}</a></li>\n";
-            //     }
-            //     $item .= "
-            //         </ul>
-            //     </li>";
-            // } else {
-            $item .= "<li class='breadcrumb-item {$active}'>{$url}</li>";
-            // }
+            $main .= "<li class='breadcrumb-item {$active}'>{$url}</li>";
         }
     }
 
-    $main = "
-        <ul class='breadcrumb'>
-            $item
-        </ul>
-    ";
+    if ($nsn) {
+        $sql    = "select * from " . $xoopsDB->prefix("tad_news") . " where nsn='$nsn'";
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $news   = $xoopsDB->fetchArray($result);
+        $main .= "<li class='breadcrumb-item'>{$news['news_title']}</li>";
+    }
+
+    $main .= "</ul>";
     return $main;
 }

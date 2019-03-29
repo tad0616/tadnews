@@ -13,6 +13,7 @@ include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op   = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nsn  = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$sort = system_CleanVars($_REQUEST, 'sort', 0, 'int');
 
 switch ($op) {
 
@@ -38,12 +39,17 @@ switch ($op) {
         $tadnews->enable_tad_news($nsn);
         break;
 
+    //刪除頁籤
+    case "del_page_tab":
+        $tadnews->del_page_tab($nsn, $sort);
+        header("location:post.php?op=tad_news_form&nsn=$nsn");
+        exit;
+
     //刪除封面圖
     case "delete_cover":
         $tadnews->delete_cover($nsn);
         header("location:post.php?op=tad_news_form&nsn=$nsn");
         exit;
-        break;
 
     default:
         // $tadnews->set_news_editor($xoopsModuleConfig['editor']);

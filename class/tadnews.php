@@ -1818,6 +1818,13 @@ class tadnews
         $formValidator      = new formValidator("#myForm", false);
         $formValidator_code = $formValidator->render('topLeft');
 
+        if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
+            redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+        }
+        include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
+        $sweet_alert = new sweet_alert();
+        $sweet_alert->render("del_page_tab", "post.php?op=del_page_tab&nsn=$nsn&sort=", 'sort');
+
         include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
@@ -2015,7 +2022,7 @@ class tadnews
             $form['tab_arr']            = $tab_arr;
 
             include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $token       = new XoopsFormHiddenToken();
+            $token               = new XoopsFormHiddenToken();
             $form['XOOPS_TOKEN'] = $token->render();
             return $form;
         } else {
@@ -2626,4 +2633,11 @@ class tadnews
         return;
     }
 
+    public function del_page_tab($nsn, $sort)
+    {
+        $this->TadDataCenter->set_col('nsn', $nsn);
+        $this->TadDataCenter->delData('tab_title', $sort, __FILE__, __LINE__);
+        $this->TadDataCenter->delData('tab_content', $sort, __FILE__, __LINE__);
+        return;
+    }
 }

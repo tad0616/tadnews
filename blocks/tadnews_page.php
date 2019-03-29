@@ -122,7 +122,7 @@ if (!function_exists("block_get_page_cate")) {
                         $myts->htmlSpecialChars($news_title);
                         $page['title'][$j]   = $news_title;
                         $page['of_ncsn'][$j] = $ncsn;
-                        $page['url'][$j]     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+                        $page['url'][$j]     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
                         $j++;
                     }
                 }
@@ -135,7 +135,7 @@ if (!function_exists("block_get_page_cate")) {
                 $myts->htmlSpecialChars($news_title);
                 $page['title'][$i]   = $news_title;
                 $page['of_ncsn'][$i] = $ncsn;
-                $page['url'][$i]     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+                $page['url'][$i]     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
                 $i++;
             }
         }
