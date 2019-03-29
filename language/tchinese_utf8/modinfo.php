@@ -106,8 +106,11 @@ define('_MI_TADNEWS_MARQUEE_DESC', '相當於條列新聞做成跑馬燈之意')
 define('_MI_TADNEWS_COVERED', '圖文集區塊');
 define('_MI_TADNEWS_COVERED_DESC', '以封面圖為主，搭配簡短文字的區塊');
 
-define('_MI_TADNEWS_PAGE_LIST', '自訂頁面選單');
-define('_MI_TADNEWS_PAGE_LIST_DESC', '自訂頁面選單');
+define('_MI_TADNEWS_PAGE_LIST', '自訂頁面列表');
+define('_MI_TADNEWS_PAGE_LIST_DESC', '自訂頁面列表');
+
+define('_MI_TADNEWS_PAGE_MENU', '自訂頁面選單');
+define('_MI_TADNEWS_PAGE_MENU_DESC', '自訂頁面選單');
 
 define('_MI_TADNEWS_USE_TOP_GROUP', '可使用置頂功能的群組');
 define('_MI_TADNEWS_USE_TOP_GROUP_DESC', '可使用置頂功能的群組');

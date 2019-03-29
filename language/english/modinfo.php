@@ -108,6 +108,9 @@ define('_MI_TADNEWS_COVERED_DESC', 'News with cover image');
 define('_MI_TADNEWS_PAGE_LIST', 'List custom pages');
 define('_MI_TADNEWS_PAGE_LIST_DESC', 'List custom pages');
 
+define('_MI_TADNEWS_PAGE_MENU', 'Custom pages menu');
+define('_MI_TADNEWS_PAGE_MENU_DESC', 'Custom pages menu');
+
 define('_MI_TADNEWS_USE_TOP_GROUP', 'Which groups can use "sticky" feature');
 define('_MI_TADNEWS_USE_TOP_GROUP_DESC', 'Which groups can use "sticky" feature');
 
