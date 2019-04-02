@@ -347,7 +347,7 @@ class tadnews
     }
 
     //取得圖片
-    public function get_news_cover($col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
+    public function get_news_cover($ncsn = '', $col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
     {
         global $xoopsDB, $xoopsUser;
 
@@ -371,14 +371,14 @@ class tadnews
                 if ($only_url) {
                     return XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}";
                 } else {
-                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
                     return $img;
                 }
             } else {
                 if ($only_url) {
                     return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
                 } else {
-                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
                     return $img;
                 }
             }
@@ -446,9 +446,14 @@ class tadnews
             $this->add_counter($this->view_nsn);
 
             //找出相關資訊
-            $sql2       = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news") . " WHERE nsn='" . $this->view_nsn . "'";
+            $sql2       = "SELECT ncsn,news_content FROM " . $xoopsDB->prefix("tad_news") . " WHERE nsn='" . $this->view_nsn . "'";
             $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-            list($ncsn) = $xoopsDB->fetchRow($result2);
+            list($ncsn,$news_content) = $xoopsDB->fetchRow($result2);
+            if($redirect=$this->only_url($news_content,$this->view_nsn)){
+                header("location: {$redirect}");
+                exit;
+            }
+
             $this->set_view_ncsn($ncsn);
 
             $sql2                             = "SELECT not_news,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE ncsn='" . $this->view_ncsn . "'";
@@ -628,7 +633,7 @@ class tadnews
                 // $all_ncsn   = implode(',', $ncsn_arr);
                 // $where_cate = empty($all_ncsn) ? "" : "and ncsn in($all_ncsn)";
                 $where_cate = "";
-                //2016-06-28 避免RSS抓不到部份目錄я хочу сим карту купить
+                //2016-06-28 避免RSS抓不到部份目錄
             }
         }
 
@@ -770,7 +775,7 @@ class tadnews
                 $news_content = $this->xlang($news_content);
 
                 $style = (empty($this->summary_css)) ? "" : "style='{$this->summary_css}'";
-                $more  = strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>
+                $more  = strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>
 " . _TADNEWS_MORE . "</a>";
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . "</div>";
@@ -784,7 +789,7 @@ class tadnews
                 } else {
                     $content_arr = explode("<div style=\"page-break-after: always;\"><span style=\"display: none;\">&nbsp;</span></div>", $news_content);
                 }
-                $more         = (empty($content_arr[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
+                $more         = (empty($content_arr[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
                 $news_content = $content_arr[0] . $more;
             } elseif ($this->summary_num === "full") {
                 $news_content = str_replace("<p>--summary--</p>", "", $news_content);
@@ -804,7 +809,7 @@ class tadnews
                     $content = explode(_SEPARTE, $news_content);
                 }
 
-                $more         = (empty($content[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
+                $more         = (empty($content[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
                 $news_content = $content[0] . $more;
             }
 
@@ -877,12 +882,12 @@ class tadnews
             }
 
             if ($this->cover_use) {
-                $pic = $this->get_news_cover("news_pic", $nsn, "big", $this->cover_css, null, 'demo_cover_pic');
+                $pic = $this->get_news_cover($ncsn, "news_pic", $nsn, "big", $this->cover_css, null, 'demo_cover_pic');
             } else {
                 $pic = "";
             }
-            $image_big   = $this->get_news_cover("news_pic", $nsn, "big", null, true);
-            $image_thumb = $this->get_news_cover("news_pic", $nsn, "thumb", null, true);
+            $image_big   = $this->get_news_cover($ncsn, "news_pic", $nsn, "big", null, true);
+            $image_thumb = $this->get_news_cover($ncsn, "news_pic", $nsn, "thumb", null, true);
 
             if ($this->use_star_rating) {
                 $rating_js = $rating->render();
@@ -901,7 +906,7 @@ class tadnews
                     //$title=xoops_substr($nsnsort['back']['title'], 0, 30);
                     $title           = mb_substr($nsnsort['back']['title'], 0, 20, _CHARSET) . "...";
                     $date            = substr($nsnsort['back']['date'], 5);
-                    $back_news_link  = XOOPS_URL . "/modules/tadnews/{$link_page}?nsn={$nsnsort['back']['nsn']}";
+                    $back_news_link  = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn=nsn={$nsnsort['back']['ncsn']}&nsn={$nsnsort['back']['nsn']}";
                     $back_news_title = ($this->kind === "page") ? $title : "{$date} {$title}";
                 }
 
@@ -913,7 +918,7 @@ class tadnews
                     $title = mb_substr($nsnsort['next']['title'], 0, 20, _CHARSET) . "...";
                     $date  = substr($nsnsort['next']['date'], 5);
 
-                    $next_news_link  = XOOPS_URL . "/modules/tadnews/{$link_page}?nsn={$nsnsort['next']['nsn']}";
+                    $next_news_link  = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn=nsn={$nsnsort['next']['ncsn']}&nsn={$nsnsort['next']['nsn']}";
                     $next_news_title = ($this->kind === "page") ? $title : "{$date} {$title}";
                 }
 
@@ -1306,7 +1311,7 @@ class tadnews
 
         $signbtn = "";
         if (!empty($have_read_group)) {
-            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . "</a>";
+            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . "</a>";
         }
 
         $admin_fun = ($uid == $uuid or $isAdmin) ? "
@@ -1314,9 +1319,9 @@ class tadnews
         <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary $btn_xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
         <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger $btn_xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
         $edit_cate
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&nsn=$nsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>" : "";
+        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>" : "";
 
-        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode'] == '1') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}&bb=1' class='btn btn-success $btn_xs' style='font-weight:normal;'>BBCode</a>" : "";
+        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and $this->tadnewsConfig['show_bbcode'] == '1') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success $btn_xs' style='font-weight:normal;'>BBCode</a>" : "";
 
         $fun = "
         <div class='btn-group'>
@@ -1702,12 +1707,14 @@ class tadnews
             list($nsn, $news_title, $start_day, $enable_group, $ncsn, $cate_enable_group) = $xoopsDB->fetchRow($result);
 
             if ($mode == "back") {
+                $nsnsort['ncsn']   = $ncsn;
                 $nsnsort['nsn']   = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
                 $nsnsort['date']  = substr($start_day, 0, 10);
             } elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {
                 $nsnsort['back'] = $this->news_sort($nsn, $ncsn, "back");
             } else {
+                $nsnsort['back']['ncsn']   = $ncsn;
                 $nsnsort['back']['nsn']   = $nsn;
                 $nsnsort['back']['title'] = $myts->htmlSpecialChars($news_title);
                 $nsnsort['back']['date']  = substr($start_day, 0, 10);
@@ -1721,12 +1728,14 @@ class tadnews
             list($nsn, $news_title, $start_day, $enable_group, $ncsn, $cate_enable_group) = $xoopsDB->fetchRow($result);
 
             if ($mode == "next") {
+                $nsnsort['ncsn']   = $ncsn;
                 $nsnsort['nsn']   = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
                 $nsnsort['date']  = substr($start_day, 0, 10);
             } elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {
                 $nsnsort['next'] = $this->news_sort($nsn, $ncsn, "next");
             } else {
+                $nsnsort['next']['ncsn']   = $ncsn;
                 $nsnsort['next']['nsn']   = $nsn;
                 $nsnsort['next']['title'] = $myts->htmlSpecialChars($news_title);
                 $nsnsort['next']['date']  = substr($start_day, 0, 10);
@@ -1930,7 +1939,7 @@ class tadnews
 
         $pic = $pic_css = "";
         if (!empty($nsn)) {
-            $pic = $this->get_news_doc_pic("news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
+            $pic = $this->get_news_doc_pic($ncsn, "news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
             //die('pic:'.$pic);
             if (!empty($pic)) {
                 $sql                      = "select files_sn,description from " . $xoopsDB->prefix("tadnews_files_center") . " where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
@@ -2116,7 +2125,7 @@ class tadnews
     }
 
     //取得新聞封面圖片檔案
-    public function get_news_doc_pic($col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
+    public function get_news_doc_pic($ncsn = '', $col_name = "", $col_sn = "", $mode = "big", $style = "db", $only_url = false, $id = 'cover_pic')
     {
         global $xoopsDB, $xoopsUser;
 
@@ -2138,7 +2147,7 @@ class tadnews
                 if ($only_url) {
                     return XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}";
                 } else {
-                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
                     return $img;
                 }
             } else {
@@ -2146,7 +2155,7 @@ class tadnews
                     //die(XOOPS_URL . "/uploads/tadnews/image/{$file_name}");
                     return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
                 } else {
-                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                    $img = ($style == 'db') ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
                     //die($img);
                     return $img;
                 }
@@ -2331,7 +2340,7 @@ class tadnews
             $sql      = "update " . $xoopsDB->prefix("tadnews_files_center") . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
             $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-            $pic = $this->get_news_doc_pic("news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
+            $pic = $this->get_news_doc_pic($ncsn, "news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
 
             $ff = explode('.', $_FILES['upfile2']['name']);
             foreach ($ff as $ext_name) {
@@ -2345,7 +2354,7 @@ class tadnews
 
         $cate = $this->get_tad_news_cate($ncsn);
         $page = ($cate['not_news'] == '1') ? "page" : "index";
-        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?nsn={$nsn}");
+        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?ncsn={$ncsn}&nsn={$nsn}");
         exit;
         return $nsn;
     }
@@ -2462,15 +2471,17 @@ class tadnews
             $have_read_group = implode(",", $_POST['have_read_group']);
         }
 
+        $myts = MyTextSanitizer::getInstance();
+
+        $ncsn          = (int) $_POST['ncsn'];
+        $new_cate      = $myts->addSlashes($_POST['new_cate']);
+        $new_page_cate = $myts->addSlashes($_POST['new_page_cate']);
         if (!empty($_POST['new_cate'])) {
-            $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_cate']);
+            $ncsn = $this->creat_tad_news_cate($ncsn, $new_cate);
         } elseif (!empty($_POST['new_page_cate'])) {
-            $ncsn = $this->creat_tad_news_cate($_POST['ncsn'], $_POST['new_page_cate'], 1);
-        } else {
-            $ncsn = (int) $_POST['ncsn'];
+            $ncsn = $this->creat_tad_news_cate($ncsn, $new_page_cate, 1);
         }
 
-        $myts       = MyTextSanitizer::getInstance();
         $news_title = $myts->addSlashes($_POST['news_title']);
         //若是頁籤模式
         if ($_POST['tab_mode'] == 1) {
@@ -2546,9 +2557,9 @@ class tadnews
 
         }
 
-        $cate = $this->get_tad_news_cate($_POST['ncsn']);
+        $cate = $this->get_tad_news_cate($ncsn);
         $page = ($cate['not_news'] == '1') ? "page" : "index";
-        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?nsn={$nsn}");
+        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?ncsn={$ncsn}&nsn={$nsn}");
         exit;
     }
 
@@ -2566,10 +2577,10 @@ class tadnews
 
         $sql = "update " . $xoopsDB->prefix("tad_news") . " set enable = '1' where nsn='$nsn'";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-
-        $cate = $this->get_tad_news_cate($_POST['ncsn']);
+        $ncsn=(int)$_POST['ncsn'];
+        $cate = $this->get_tad_news_cate($ncsn);
         $page = ($cate['not_news'] == '1') ? "page" : "index";
-        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?nsn={$nsn}");
+        header("location: " . XOOPS_URL . "/modules/tadnews/{$page}.php?ncsn={$ncsn}&nsn={$nsn}");
         exit;
     }
 
@@ -2633,11 +2644,25 @@ class tadnews
         return;
     }
 
+    // 刪除頁籤
     public function del_page_tab($nsn, $sort)
     {
         $this->TadDataCenter->set_col('nsn', $nsn);
         $this->TadDataCenter->delData('tab_title', $sort, __FILE__, __LINE__);
         $this->TadDataCenter->delData('tab_content', $sort, __FILE__, __LINE__);
         return;
+    }
+
+    // 檢查內容是不是只有一行網址
+    public function only_url($news_content, $nsn)
+    {
+        $url = strip_tags($news_content);
+        $url = trim($url);
+        if (filter_var($url, FILTER_VALIDATE_URL) !== false) {
+            return $url;
+        } else {
+            return;
+        }
+
     }
 }

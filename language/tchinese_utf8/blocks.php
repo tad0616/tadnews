@@ -98,6 +98,8 @@ define('_MB_TADNEWS_AJAX_ERROR', '無法載入資料。');
 define('_MB_TADNEWS_PAGE_BG_COLOR', '選擇標題底色');
 define('_MB_TADNEWS_PAGE_FONT_COLOR', '選擇標題顏色');
 define('_MB_TADNEWS_PAGE_SUB_CATE', '是否列出底下分類？');
+define('_MB_TADNEWS_PAGE_BG_CSS', '標題文字樣式');
+define('_MB_TADNEWS_PAGE_FONT_CSS', '標題背景樣式');
 
 define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', '呈現類型');
 define('_MB_TADNEWS_TAB_NEWS_DEFAULT', '橫向頁籤');

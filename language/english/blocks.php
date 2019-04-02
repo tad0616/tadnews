@@ -94,6 +94,8 @@ define('_MB_TADNEWS_AJAX_ERROR', 'Unable to load data.');
 define('_MB_TADNEWS_PAGE_BG_COLOR', 'Select title background color');
 define('_MB_TADNEWS_PAGE_FONT_COLOR', 'Select title color');
 define('_MB_TADNEWS_PAGE_SUB_CATE', 'Do you want to list the sub-categories?');
+define('_MB_TADNEWS_PAGE_FONT_CSS', 'Title style');
+define('_MB_TADNEWS_PAGE_BG_CSS', 'Title background style');
 
 define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', 'Display Type');
 define('_MB_TADNEWS_TAB_NEWS_DEFAULT', 'Tabs');

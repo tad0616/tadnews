@@ -12,10 +12,13 @@ function tadnews_page_menu($options)
 
     $ncsn = (int) $_GET['ncsn'];
 
-    $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
-    $result = $xoopsDB->query($sql);
+    $sql                             = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
+    $result                          = $xoopsDB->query($sql);
+    list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
 
-    list($block['ncsn'], $block['of_ncsn'], $block['nc_title']) = $xoopsDB->fetchRow($result);
+    $block['ncsn']     = $ncsn;
+    $block['of_ncsn']  = $of_ncsn;
+    $block['nc_title'] = $nc_title;
 
     $myts = MyTextSanitizer::getInstance();
     //第一層底下的文章
@@ -26,6 +29,8 @@ function tadnews_page_menu($options)
         $page['page' . $nsn]['padding'] = 0;
         $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
         $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
+        $page['page' . $nsn]['nsn']     = $nsn;
+
     }
     if ($options[0] == 1) {
         //第一層底下的目錄
@@ -45,6 +50,8 @@ function tadnews_page_menu($options)
                 $page['page' . $nsn]['padding'] = 1;
                 $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
                 $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn1}&nsn={$nsn}";
+                $page['page' . $nsn]['nsn']     = $nsn;
+
             }
 
             //第三層底下的目錄
@@ -64,14 +71,19 @@ function tadnews_page_menu($options)
                     $page['page' . $nsn]['padding'] = 2;
                     $page['page' . $nsn]['title']   = $myts->htmlSpecialChars($news_title);
                     $page['page' . $nsn]['url']     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn2}&nsn={$nsn}";
+                    $page['page' . $nsn]['nsn']     = $nsn;
+
                 }
             }
         }
     }
     $block['pages']      = $page;
-    $block['bgcolor']    = $options[3];
-    $block['color']      = $options[2];
     $block['show_title'] = $options[1];
+    $block['color']      = $options[2];
+    $block['bgcolor']    = $options[3];
+    $block['text_css']   = $options[4];
+    $block['bg_css']     = $options[5];
+    $block['now_nsn']    = (int) $_GET['nsn'];
 
     return $block;
 }
@@ -118,6 +130,24 @@ function tadnews_page_menu_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_PAGE_BG_COLOR . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input color' data-hex='true' name='options[3]' value='{$options[3]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_FONT_CSS . "</lable>
+            <div class='my-content'>
+                <textarea class='my-input' name='options[4]'>{$options[4]}</textarea>
+                <span class='my-example'><br>
+                font-size: 1.5em;
+                </span>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_BG_CSS . "</lable>
+            <div class='my-content'>
+                <textarea class='my-input' name='options[5]'>{$options[5]}</textarea>
+                <span class='my-example'><br>
+                padding: 4px;
+                </span>
             </div>
         </li>
     </ol>";

@@ -261,7 +261,7 @@ function edit_newspaper($npsn = "")
         while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
             $news_title   = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-            $pic          = $tadnews->get_news_cover("news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
+            $pic          = $tadnews->get_news_cover($ncsn,"news_pic", $nsn, "big", 'db', true, 'demo_cover_pic');
             if ($pic) {
                 $img = "<img src='$pic' alt='{$news_title}' align='left' style='text-align:left; margin:0px 6px 6px 0px;max-width:300px;'>";
             } else {

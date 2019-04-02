@@ -306,8 +306,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_MENUS_DESC;
 $modversion['blocks'][$i]['show_func']   = "tadnews_page_menu";
 $modversion['blocks'][$i]['template']    = "tadnews_block_page_menu.tpl";
 $modversion['blocks'][$i]['edit_func']   = "tadnews_page_menu_edit";
-$modversion['blocks'][$i]['options']     = "1|1|#dbff40|#5e6b00
-";
+$modversion['blocks'][$i]['options']     = "1|1|#dbff40|#5e6b00|font-size: 1.5em;|padding: 4px;";
 
 //---偏好設定---//
 $i                                       = 1;
