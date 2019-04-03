@@ -60,6 +60,30 @@ function add_to_menu($ncsn = "")
     }
 }
 
+//頁籤排序
+function tabs_sort($ncsn, $nsn)
+{
+    global $xoopsDB, $xoopsTpl, $tadnews;
+
+    $sql    = "select `data_value`,`data_sort` from " . $xoopsDB->prefix("tadnews_data_center") . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and `data_name`='tab_title'  order by `data_sort`";
+    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+
+    $myts    = MyTextSanitizer::getInstance();
+    $tab_div = array();
+    while (list($data_value, $data_sort) = $xoopsDB->fetchRow($result)) {
+        $tab_div[$data_sort] = $data_value;
+    }
+    $xoopsTpl->assign('ncsn', $ncsn);
+    $xoopsTpl->assign('nsn', $nsn);
+    $xoopsTpl->assign('tab_div', $tab_div);
+    get_jquery(true);
+    $tadnews->set_view_nsn($nsn);
+    $tadnews->set_news_kind("page");
+    $tadnews->set_cover(true, "db");
+    $tadnews->set_summary('full');
+    $tadnews->get_news();
+}
+
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op       = system_CleanVars($_REQUEST, 'op', '', 'string');
@@ -96,6 +120,10 @@ switch ($op) {
         update_tad_news_cate($ncsn);
         header("location: {$_SERVER['PHP_SELF']}?ncsn=$ncsn");
         exit;
+
+    case "tabs_sort":
+        tabs_sort($ncsn, $nsn);
+        break;
 
     default:
         if (!empty($nsn)) {

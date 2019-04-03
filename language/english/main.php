@@ -106,18 +106,18 @@ define('_MD_TADNEWS_KIND', 'Article kind:');
 define('_MD_TADNEWS_ONLY_ROOT', 'Administrator');
 define('_MD_TADNEWS_EDIT_CATE', 'Edit Category');
 define('_MD_TADNEWS_ADD_TO_MENU', 'Add Category to Navigation');
-define('_MD_TADNEWS_ADD_TO_MENU_ALERT', 'This category has been added to the navigation bar menu. If you want to remove or change the position of the menu, from the management to the "<a href="' . XOOPS_URL . '/modules/tad_themes/admin/dropdown.php">Menu Settings</a>" directly.');
+define('_MD_TADNEWS_ADD_TO_MENU_ALERT', '"%s" has been added to the navigation bar menu. If you want to remove or change the position of the menu, from the management to the "<a href="' . XOOPS_URL . '/modules/tad_themes/admin/dropdown.php">Menu Settings</a>" directly.');
 
-define('_MD_TADNEWS_USE_TAB_MODE', '使用頁籤模式');
+define('_MD_TADNEWS_USE_TAB_MODE', 'Use tab mode');
 
-define('_MD_TADNEWS_TAB_TITLE', '請輸入頁籤 %s 標題');
+define('_MD_TADNEWS_TAB_TITLE', 'Please enter the tab %s title');
 // <{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>
-define('_MD_TADNEWS_ADD_TAB', '新增頁籤');
-define('_MD_TADNEWS_DEL_TAB', '移除頁籤');
-define('_MD_TADNEWS_DELETE_TAB', '刪除「%s」除頁籤');
+define('_MD_TADNEWS_ADD_TAB', 'Add tab');
+define('_MD_TADNEWS_DEL_TAB', 'Remove tab');
+define('_MD_TADNEWS_DELETE_TAB', 'Remove "%s" tab');
 
-define('_MD_TADNEWS_TAB_TITLE1', '請輸入頁籤');
-define('_MD_TADNEWS_TAB_TITLE2', '標題');
+define('_MD_TADNEWS_TAB_TITLE1', 'Please enter the tab');
+define('_MD_TADNEWS_TAB_TITLE2', 'title');
 
 //cate.php
 define('_MD_TADNEWS_ADD_CATE', 'Add Category');

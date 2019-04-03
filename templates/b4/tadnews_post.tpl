@@ -252,35 +252,38 @@
     </div>
 
     <div id="tab_editor" <{if !$tab_arr}>style="display: none;"<{/if}>>
-
         <div class="input_fields_wrap">
             <{if $tab_arr}>
                 <{foreach from=$tab_arr.tab_title key=k item=title}>
-                    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                    <div class="alert alert-info">
+                        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-sm btn-danger"><{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-danger"><{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <{$tab_arr.tab_editor.$k}>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <{$tab_arr.tab_editor.$k}>
+                            </div>
                         </div>
                     </div>
                 <{/foreach}>
             <{else}>
-            <div class="form-group row">
-                <div class="col-sm-12">
-                <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
+                <div class="alert alert-warning">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                        <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <{$tab_editor}>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-12">
-                    <{$tab_editor}>
-                </div>
-            </div>
             <{/if}>
         </div>
 
@@ -301,9 +304,9 @@
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
                     var editorId = 'editor_' +x;
-                    $(wrapper).append('<div class="form-group row"><div class="col-sm-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row"><div class="col-sm-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div>'); //add input box
+                    $(wrapper).append('<div class="alert alert-success"><div class="form-group row"><div class="col-sm-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row"><div class="col-sm-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div></div>'); //add input box
 
-                    CKEDITOR.replace(editorId, { height: 200 ,
+                    CKEDITOR.replace(editorId, { height: 300 ,
                     toolbar : 'my' ,
                     contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap3/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
                     extraPlugins: 'syntaxhighlight,dialog,oembed,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet',
@@ -330,7 +333,14 @@
 
             $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
                 e.preventDefault(); $(this).parent('div').remove(); x--;
-            })
+            });
+            $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
+                var order = $(this).sortable('serialize');
+                $.post('save_sort.php?op=sort_tabs&nsn=<{$nsn}>', order, function(theResponse){
+                    $('#save_msg').html(theResponse);
+                });
+            }
+            });
         });
     </script>
 

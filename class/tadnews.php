@@ -750,6 +750,8 @@ class tadnews
                 $rating->add_rating("nsn", $nsn);
             }
 
+            $tab_mode=(strpos($news_content,"Easy-Responsive-Tabs")!==false)?true:false;
+
             //新聞資訊列
             $fun        = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group);
             $end_day    = ($end_day == "0000-00-00 00:00:00") ? "" : "~ " . $end_day;
@@ -1306,7 +1308,8 @@ class tadnews
 
         $edit_cate = "";
         if (!empty($ncsn)) {
-            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
+            $edit_cate = ($this->kind === "page") ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>
+            <a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-sort'></i> " . _TADNEWS_TABS_SORT . "</a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>";
         }
 
         $signbtn = "";
@@ -1925,13 +1928,13 @@ class tadnews
         if ($tab_arr) {
             foreach ($tab_arr['tab_content'] as $k => $content) {
                 $ck = new CKEditor("tadnews", "tab_content[$k]", $content);
-                $ck->setHeight(200);
+                $ck->setHeight(300);
                 $tab_arr['tab_editor'][$k] = $ck->render();
                 $tab_arr['tab_title'][$k]  = $myts->htmlSpecialChars($tab_arr['tab_title'][$k]);
             }
         } else {
             $ck = new CKEditor("tadnews", "tab_content[1]", $tab_arr['tab_content'][1]);
-            $ck->setHeight(200);
+            $ck->setHeight(300);
             $tab_editor = $ck->render();
         }
 

@@ -28,7 +28,7 @@
     <dic class="h3">
         <{if $isAdmin or $all_news.ncsn|in_array:$ok_cat}>
             <div class="pull-right">
-                <{if $all_news.ncsn|in_array:$link_cate_sn_arr}>
+                <{if !$all_news.ncsn|in_array:$link_cate_sn_arr}>
                     <a href="page.php?op=add_to_menu&ncsn=<{$all_news.ncsn}>" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></a>
                 <{/if}>
                 <a href="page.php?op=modify_page_cate&ncsn=<{$all_news.ncsn}>" class="btn btn-warning"><{$smarty.const._MD_TADNEWS_EDIT_CATE}></a>
@@ -53,7 +53,7 @@
 
 
     <{if !$all_news.ncsn|in_array:$link_cate_sn_arr and ($isAdmin or $all_news.ncsn|in_array:$ok_cat)}>
-        <div class="alert alert-warning"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT}></div>
+        <div class="alert alert-warning"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT|sprintf:$all_news.nc_title}></div>
     <{/if}>
 
 <{/foreach}>

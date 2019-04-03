@@ -1,3 +1,15 @@
+TadNews 4.1 (released from 2019-04-03)
+=================================
+1. Custom page classification owners can sort and manage classifications in the foreground
+2. Add the tab delete function
+3. Customize the page to join the path tour
+4. Those who have permission to publish can see all the customized pages.
+5. The original "Customized Page Menu" block was renamed to "Customized Page List" block.
+6. Add the "Customized Page Menu" block
+7. If the content has only one row of URLs, it will be automatically directed to the URL.
+8. Add custom page tabs to sort
+
+
 TadNews 4.0 (released from 2019-01-23)
 =================================
 1. Fix the problem that RSS can't display
