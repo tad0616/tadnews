@@ -128,6 +128,11 @@ switch ($op) {
     default:
         if (!empty($nsn)) {
             show_page($nsn);
+
+            $sql              = "select news_title from " . $xoopsDB->prefix("tad_news") . " where nsn='$nsn'";
+            $result           = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+            list($news_title) = $xoopsDB->fetchRow($result);
+
             $op = "show_page";
         } else {
             list_tad_all_pages($ncsn);
@@ -140,7 +145,11 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 // $arr = get_tadnews_cate_path($ncsn);
 // die(var_dump($arr));
-$xoopsTpl->assign("breadcrumb", breadcrumb($ncsn, get_tadnews_cate_path($ncsn), $nsn));
+
+$arr  = get_tadnews_cate_path($ncsn);
+$path = tad_breadcrumb($ncsn, $arr, "page.php", "ncsn", "nc_title", $news_title);
+
+$xoopsTpl->assign("breadcrumb", $path);
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 $xoopsTpl->assign("now_op", $op);

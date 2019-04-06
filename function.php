@@ -248,27 +248,3 @@ function update_tad_news_cate($ncsn = "")
 
     return $ncsn;
 }
-
-//路徑導覽
-function breadcrumb($ncsn = '0', $array = array(), $nsn = '')
-{
-    global $xoopsDB;
-    $main = "<ul class='breadcrumb'>";
-    if (is_array($array)) {
-        foreach ($array as $cate) {
-            $url    = ($ncsn == $cate['ncsn']) ? "<a href='page.php?ncsn={$cate['ncsn']}' style='color: gray;'>{$cate['nc_title']}</a>" : "<a href='page.php?ncsn={$cate['ncsn']}'>{$cate['nc_title']}</a>";
-            $active = ($ncsn == $cate['ncsn']) ? "active" : "";
-            $main .= "<li class='breadcrumb-item {$active}'>{$url}</li>";
-        }
-    }
-
-    if ($nsn) {
-        $sql    = "select * from " . $xoopsDB->prefix("tad_news") . " where nsn='$nsn'";
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        $news   = $xoopsDB->fetchArray($result);
-        $main .= "<li class='breadcrumb-item'>{$news['news_title']}</li>";
-    }
-
-    $main .= "</ul>";
-    return $main;
-}
