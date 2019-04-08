@@ -105,9 +105,25 @@ define('_MI_TADNEWS_MARQUEE_DESC', 'News marquee');
 define('_MI_TADNEWS_COVERED', 'News with cover image');
 define('_MI_TADNEWS_COVERED_DESC', 'News with cover image');
 
+define('_MI_TADNEWS_PAGE_LIST', 'List custom pages');
+define('_MI_TADNEWS_PAGE_LIST_DESC', 'List custom pages');
+
+define('_MI_TADNEWS_PAGE_MENU', 'Custom pages menu');
+define('_MI_TADNEWS_PAGE_MENU_DESC', 'Custom pages menu');
+
+define('_MI_TADNEWS_USE_TOP_GROUP', 'Which groups can use "sticky" feature');
+define('_MI_TADNEWS_USE_TOP_GROUP_DESC', 'Which groups can use "sticky" feature');
+
 define('_MI_TADNEWS_DIRNAME', basename(dirname(dirname(__DIR__))));
 define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADNEWS_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
 define('_MI_TADNEWS_HELP_OVERVIEW', 'Overview');
+
+define('_MI_TADNEWS_TAB_NEWS', 'Tabs News');
+define('_MI_TADNEWS_TAB_NEWS_DESC', 'Tabs News');
+define('_MI_TADNEWS_TAG_NEWS', 'Tag News');
+define('_MI_TADNEWS_TAG_NEWS_DESC', 'Tag News');
+define('_MI_TADNEWS_TOP_MAX_DAY', 'Maximum number of days top news');
+define('_MI_TADNEWS_TOP_MAX_DAY_DESC', 'Top News limit the number of days?');

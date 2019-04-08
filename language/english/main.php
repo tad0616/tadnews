@@ -76,7 +76,7 @@ define('_MD_TADNEWS_NEWSPIC_FLOAT', 'Float');
 define('_MD_TADNEWS_NEWSPIC_FLOAT_LEFT', 'Left');
 define('_MD_TADNEWS_NEWSPIC_FLOAT_RIGHT', 'Right');
 define('_MD_TADNEWS_NEWSPIC_FLOAT_NONE', 'None');
-define('_MD_TADNEWS_NEWSPIC_MARGIN', 'Wargin:');
+define('_MD_TADNEWS_NEWSPIC_MDRGIN', 'Wargin:');
 define('_MD_TADNEWS_NEWSPIC', 'Image repeat:');
 define('_MD_TADNEWS_NEWSPIC_NO_REPEAT', 'No-Repeat');
 define('_MD_TADNEWS_NEWSPIC_REPEAT', 'Repeat');
@@ -104,3 +104,41 @@ define('_MD_TADNEWS_KIND_NEWS', 'News');
 define('_MD_TADNEWS_KIND_PAGE', 'Page');
 define('_MD_TADNEWS_KIND', 'Article kind:');
 define('_MD_TADNEWS_ONLY_ROOT', 'Administrator');
+define('_MD_TADNEWS_EDIT_CATE', 'Edit Category');
+define('_MD_TADNEWS_ADD_TO_MENU', 'Add Category to Navigation');
+define('_MD_TADNEWS_ADD_TO_MENU_ALERT', '"%s" has been added to the navigation bar menu. If you want to remove or change the position of the menu, from the management to the "<a href="' . XOOPS_URL . '/modules/tad_themes/admin/dropdown.php">Menu Settings</a>" directly.');
+
+define('_MD_TADNEWS_USE_TAB_MODE', 'Use tab mode');
+
+define('_MD_TADNEWS_TAB_TITLE', 'Please enter the tab %s title');
+// <{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>
+define('_MD_TADNEWS_ADD_TAB', 'Add tab');
+define('_MD_TADNEWS_DEL_TAB', 'Remove tab');
+define('_MD_TADNEWS_DELETE_TAB', 'Remove "%s" tab');
+
+define('_MD_TADNEWS_TAB_TITLE1', 'Please enter the tab');
+define('_MD_TADNEWS_TAB_TITLE2', 'title');
+
+//cate.php
+define('_MD_TADNEWS_ADD_CATE', 'Add Category');
+define('_MD_TADNEWS_ADD_PAGE_CATE', 'Add Customized Page Category');
+define('_MD_TADNEWS_PARENT_CATE', 'Parent Category:');
+define('_MD_TADNEWS_CATE_TITLE', 'Title');
+define('_MD_TADNEWS_CAN_READ_CATE_GROUP', 'Available groups to <span style="color:blue">read</span> this category');
+define('_MD_TADNEWS_CAN_POST_CATE_GROUP', 'Available groups to <span style="color:red">post</span> news in this category.');
+define('_MD_TADNEWS_CAN_READ_CATE_GROUP_TXT', 'None selected = All Free');
+define('_MD_TADNEWS_CAN_POST_CATE_GROUP_TXT', 'None selected = Administrator Only');
+define('_MD_TADNEWS_DB_UPDATE_ERROR1', 'Failed to update data of tad_news_cate');
+define('_MD_TADNEWS_DB_DEL_ERROR1', 'Can\'t delete tad_news_cate\'s news');
+define('_MD_TADNEWS_CATE_COUNTER', 'Total: ');
+define('_MD_TADNEWS_ONLY_ROOT', 'Administrator');
+define('_MD_TADNEWS_CAN_READ_CATE_GROUP_S', 'Read');
+define('_MD_TADNEWS_CAN_POST_CATE_GROUP_S', 'Post');
+define('_MD_TADNEWS_NO', 'No (for customized pages with blocks.)');
+define('_MD_TADNEWS_CATE_PIC', 'Icon');
+define('_MD_TADNEWS_CHANGE_TO_NEWS', 'Set as News category');
+define('_MD_TADNEWS_CHANGE_TO_PAGE', 'Set as customized pages category');
+define('_MD_TADNEWS_CATE_SHOW_TITLE', 'Show News Title');
+define('_MD_TADNEWS_CATE_SHOW_TOOL', 'Show Module Toolbar');
+define('_MD_TADNEWS_CATE_SHOW_COMM', 'Comments Available');
+define('_MD_TADNEWS_CATE_SHOW_NAV', 'Show Navigation Button');

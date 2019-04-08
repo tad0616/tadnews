@@ -91,3 +91,26 @@ define('_MB_TADNEWS_PAGE_EDIT_BITEM2', 'Font size:');
 define('_MB_TADNEWS_COVERED_OPT1', 'How many columns in a row?');
 define('_MB_TADNEWS_COVERED_OPT2', 'How many rows?');
 define('_MB_TADNEWS_AJAX_ERROR', 'Unable to load data.');
+define('_MB_TADNEWS_PAGE_BG_COLOR', 'Select title background color');
+define('_MB_TADNEWS_PAGE_FONT_COLOR', 'Select title color');
+define('_MB_TADNEWS_PAGE_SUB_CATE', 'Do you want to list the sub-categories?');
+define('_MB_TADNEWS_PAGE_FONT_CSS', 'Title style');
+define('_MB_TADNEWS_PAGE_BG_CSS', 'Title background style');
+
+define('_MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE', 'Display Type');
+define('_MB_TADNEWS_TAB_NEWS_DEFAULT', 'Tabs');
+define('_MB_TADNEWS_TAB_NEWS_VERTICAL', 'Vertical Tabs');
+define('_MB_TADNEWS_TAB_NEWS_ACCORDION', 'Accordion');
+
+define('_MB_TADNEWS_ACTIVE_BG', 'Active tab background color');
+define('_MB_TADNEWS_INACTIV_BG', 'Inactive tab background color');
+define('_MB_TADNEWS_ACTIVE_BORDER_COLOR', 'Active tab border color');
+define('_MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR', 'Active tab content border color');
+define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', 'Add all the latest news tab to the left');
+define('_MB_TADNEWS_LATEST_NEWS_TAB', 'latest news');
+
+define('_MB_TADNEWS_PAGE_SHOW_TITLE', 'Show category headings?');
+define('_MB_TADNEWS_BAR_START_DAY', 'News >= this date');
+define('_MB_TADNEWS_BAR_END_DAY', 'News <= this date');
+
+define('_MB_TADNEWS_SEARCHBAR', 'Do you join a news search tool?');

@@ -74,7 +74,7 @@ define('_MD_TADNEWS_NEWSPIC_FLOAT', '圖片框位置');
 define('_MD_TADNEWS_NEWSPIC_FLOAT_LEFT', '靠左文繞圖');
 define('_MD_TADNEWS_NEWSPIC_FLOAT_RIGHT', '靠右文繞圖');
 define('_MD_TADNEWS_NEWSPIC_FLOAT_NONE', '不文繞圖');
-define('_MD_TADNEWS_NEWSPIC_MARGIN', '外邊界');
+define('_MD_TADNEWS_NEWSPIC_MDRGIN', '外邊界');
 define('_MD_TADNEWS_NEWSPIC', '封面圖的重複方式');
 define('_MD_TADNEWS_NEWSPIC_NO_REPEAT', '不重複');
 define('_MD_TADNEWS_NEWSPIC_REPEAT', '重複');
@@ -100,3 +100,41 @@ define('_MD_TADNEWS_KIND_NEWS', '新聞文章');
 define('_MD_TADNEWS_KIND_PAGE', '自訂頁面');
 define('_MD_TADNEWS_KIND', '發布文章種類：');
 define('_MD_TADNEWS_ONLY_ROOT', '僅管理員');
+define('_MD_TADNEWS_EDIT_CATE', '編輯此分類');
+define('_MD_TADNEWS_ADD_TO_MENU', '加入佈景選單');
+define('_MD_TADNEWS_ADD_TO_MENU_ALERT', '「%s」已經加入導覽列選單，若欲將選單移除或變動位置，請直接從「<a href="' . XOOPS_URL . '/modules/tad_themes/admin/dropdown.php">選單設定</a>」管理之即可。');
+// <{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT|sprintf:$k}>
+
+define('_MD_TADNEWS_USE_TAB_MODE', '使用頁籤模式');
+
+define('_MD_TADNEWS_TAB_TITLE', '請輸入頁籤 %s 標題');
+define('_MD_TADNEWS_ADD_TAB', '新增頁籤');
+define('_MD_TADNEWS_DEL_TAB', '移除頁籤');
+define('_MD_TADNEWS_DELETE_TAB', '刪除「%s」除頁籤');
+
+define('_MD_TADNEWS_TAB_TITLE1', '請輸入頁籤');
+define('_MD_TADNEWS_TAB_TITLE2', '標題');
+
+//cate.php
+define('_MD_TADNEWS_ADD_CATE', '建立文章分類');
+define('_MD_TADNEWS_ADD_PAGE_CATE', '建立自定頁面分類');
+define('_MD_TADNEWS_PARENT_CATE', '放在此分類底下：');
+define('_MD_TADNEWS_CATE_TITLE', '分類名稱');
+define('_MD_TADNEWS_CAN_READ_CATE_GROUP', '可<span style="color: blue;">讀文章</span>群組');
+define('_MD_TADNEWS_CAN_POST_CATE_GROUP', '可<span style="color: red;">發文章</span>群組');
+define('_MD_TADNEWS_CAN_READ_CATE_GROUP_TXT', '不選=全部可讀');
+define('_MD_TADNEWS_CAN_POST_CATE_GROUP_TXT', '不選=僅站長可發');
+define('_MD_TADNEWS_DB_UPDATE_ERROR1', '無法更新tad_news_cate資料');
+define('_MD_TADNEWS_DB_DEL_ERROR1', '無法刪除tad_news_cate資料');
+define('_MD_TADNEWS_CATE_COUNTER', '文章數');
+define('_MD_TADNEWS_ONLY_ROOT', '僅管理員');
+define('_MD_TADNEWS_CAN_READ_CATE_GROUP_S', '可讀取群組');
+define('_MD_TADNEWS_CAN_POST_CATE_GROUP_S', '可管理群組');
+define('_MD_TADNEWS_NO', '否（自訂頁面的用法，搭配區塊使用）');
+define('_MD_TADNEWS_CATE_PIC', '分類圖片');
+define('_MD_TADNEWS_CHANGE_TO_NEWS', '轉為新聞分類');
+define('_MD_TADNEWS_CHANGE_TO_PAGE', '轉為自訂頁面分類');
+define('_MD_TADNEWS_CATE_SHOW_TITLE', '顯示文章標題');
+define('_MD_TADNEWS_CATE_SHOW_TOOL', '顯示模組工具');
+define('_MD_TADNEWS_CATE_SHOW_COMM', '使用評論功能');
+define('_MD_TADNEWS_CATE_SHOW_NAV', '使用上下頁鈕');

@@ -68,9 +68,9 @@ define('_MA_TADNEWS_NP_CONTENT_FOOT_DESC', '若欲回覆系統預設的頁首、
 define('_MA_TADNEWS_NP_TITLE_L', '《');
 define('_MA_TADNEWS_NP_TITLE_R', '》');
 
-define('_MA_TADNEWS_NP_HEAD_CONTENT', '<h5 style="color:white;float:right;">%s電子報第 {N} 期</h5><h1>{T}</h1><h2>◎ 訂閱網址：%s ◎ 發報時間：{D}</h2>');
+define('_MA_TADNEWS_NP_HEAD_CONTENT', '<h5 style="color:white;float:right;">%s電子報第 {N} 期</h5><h2>{T}</h1><h2>◎ 訂閱網址：%s ◎ 發報時間：{D}</h2>');
 
-define('_MA_TADNEWS_NP_FOOT_CONTENT', '<div class="foot"><h1>【關於本報】</h1>
+define('_MA_TADNEWS_NP_FOOT_CONTENT', '<div class="foot"><h2>【關於本報】</h1>
 <p>◎ 主編：%s</p>
 <p>本電子報智慧財產權屬於「<a href="%s" target="_blank">%s</a>」，採用<a href="http://creativecommons.org/licenses/by-sa/2.5/tw/deed.zh_TW" target="_blank">創用 CC「姓名標示－禁止改作－非商業性」授權條款臺灣 2.5 版授權</a>散布。<a href="http://creativecommons.org/licenses/by-sa/2.5/tw/legalcode" target="_blank">《授權條款全文》</a></p>
 <p>若欲為上述授權範圍以外之利用，請與「%s」（<a href="mailto:%s">%s</a>） 聯絡。</p>
@@ -90,7 +90,7 @@ define('_MA_TADNEWS_NO_EMAIL', '目前沒有任何電子郵件，可至<a href="
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', '顯示文章標題');
-define('_MA_TADNEWS_CATE_SHOW_TOOL', '顯示頁面工具');
+define('_MA_TADNEWS_CATE_SHOW_TOOL', '顯示模組工具');
 define('_MA_TADNEWS_CATE_SHOW_COMM', '使用評論功能');
 define('_MA_TADNEWS_CATE_SHOW_NAV', '使用上下頁鈕');
 
@@ -105,3 +105,6 @@ define('_MA_TADNEWS_TAG_NEW', '新標籤');
 define('_MA_TADNEWS_TAG_ABLE', '啟用');
 define('_MA_TADNEWS_TAG_UNABLE', '關閉');
 define('_MA_TADNEWS_TAG_AMOUNT', '，有 %s 篇文章使用此標籤');
+define('_MA_TADNEWS_NO_PERMISSION', '當沒有讀取權限時');
+define('_MA_TADNEWS_HIDE_ARTICLE', '完全隱藏文章');
+define('_MA_TADNEWS_DISPLAY_TITLE', '僅顯示標題');

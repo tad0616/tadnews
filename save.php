@@ -7,9 +7,14 @@ add_tad_news_cate($_POST['value']);
 function add_tad_news_cate($title = "", $no_news = '0')
 {
     global $xoopsDB, $xoopsModuleConfig;
+    //安全判斷
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+        redirect_header("index.php", 3, $error);
+    }
     $enable_group = $enable_post_group = $setup = "";
-    $sql          = "select max(sort) from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn=''";
-    $result       = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $sql          = "SELECT max(sort) FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE of_ncsn=''";
+    $result       = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
     list($sort)   = $xoopsDB->fetchRow($result);
     $sort++;
 

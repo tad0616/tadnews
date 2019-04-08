@@ -1,30 +1,35 @@
 <?php
 /*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = 'tadnews_adm_import.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
 
 /*-----------function區--------------*/
 
-$module_handler = xoops_gethandler('module');
-$news           = &$module_handler->getByDirname('news');
+$module_handler = xoops_getHandler('module');
+$news           = $module_handler->getByDirname('news');
 if (!empty($news)) {
     $mid     = $news->getVar("mid");
     $version = $news->getVar("version");
 
-    $module_handler2 = xoops_gethandler('module');
-    $tadnews         = &$module_handler->getByDirname('tadnews');
+    $module_handler2 = xoops_getHandler('module');
+    $tadnews         = $module_handler->getByDirname('tadnews');
     $tadnews_mid     = $tadnews->getVar("mid");
 }
 
 //檢查有無安裝新聞區模組
 function chk_news_mod($version)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsTpl;
 
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
+        include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+        $token       = new XoopsFormHiddenToken();
+        $XOOPS_TOKEN = $token->render();
+
         $main = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
         $main .= "<form action='{$_SERVER['PHP_SELF']}' method='post'>
         <center>
@@ -34,12 +39,13 @@ function chk_news_mod($version)
         $main .= chk_cate();
         $main .= "</table>
         <input type='hidden' name='op' value='import'>
+        $XOOPS_TOKEN
         <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
         </center>
         </form>";
     }
 
-    return $main;
+    $xoopsTpl->assign('main', $main);
 }
 
 //檢查分類
@@ -52,7 +58,7 @@ function chk_cate($topic_pid = "", $left = 0)
     }
 
     $sql    = "select topic_id,topic_pid,topic_title from " . $xoopsDB->prefix("topics") . " where topic_pid='{$topic_pid}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $main = "";
 
@@ -73,7 +79,7 @@ function chk_stories($topicid = "", $left = 0)
     $left += 14;
 
     $sql    = "select storyid,title  from " . $xoopsDB->prefix("stories") . " where topicid ='{$topicid}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $main   = "";
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";
@@ -85,6 +91,11 @@ function chk_stories($topicid = "", $left = 0)
 function import($topic_pid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
+    //安全判斷
+    // if (!$GLOBALS['xoopsSecurity']->check()) {
+    //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+    //     redirect_header("index.php", 3, $error);
+    // }
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
 
@@ -103,6 +114,11 @@ function import($topic_pid = 0, $new_topic_pid = 0)
 function import_stories($topicid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
+    //安全判斷
+    // if (!$GLOBALS['xoopsSecurity']->check()) {
+    //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
+    //     redirect_header("index.php", 3, $error);
+    // }
 
     $myts = MyTextSanitizer::getInstance();
 
@@ -148,14 +164,14 @@ $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 switch ($op) {
 
     //刪除資料
-    case "import";
+    case "import":
         import();
         header("location: index.php");
         exit;
         break;
 
     default:
-        $main = chk_news_mod($version);
+        chk_news_mod($version);
         break;
 }
 

@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = "tadnews_newspaper.tpl";
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tadnews_newspaper.html");
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -10,18 +10,18 @@ function list_newspaper()
 {
     global $xoopsDB, $xoopsOption, $xoopsTpl;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
-    $sql = "select a.npsn,a.number,b.title,a.np_date from " . $xoopsDB->prefix("tad_news_paper") . " as a ," . $xoopsDB->prefix("tad_news_paper_setup") . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc";
+    $sql = "SELECT a.npsn,a.number,b.title,a.np_date FROM " . $xoopsDB->prefix("tad_news_paper") . " AS a ," . $xoopsDB->prefix("tad_news_paper_setup") . " AS b WHERE a.nps_sn=b.nps_sn AND b.status='1' ORDER BY a.np_date DESC";
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = getPageBar($sql, 10, 10);
     $bar     = $PageBar['bar'];
     $sql     = $PageBar['sql'];
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 0;
-    $main   = "";
+    $main   = array();
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $title               = $myts->htmlSpecialChars($title);
         $main[$i]['allnpsn'] = $allnpsn;
@@ -32,13 +32,15 @@ function list_newspaper()
 
     $xoopsTpl->assign("page", $main);
     $xoopsTpl->assign("bar", $bar);
-
 }
 
 /*-----------執行動作判斷區----------*/
-$_REQUEST['op'] = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$npsn           = (empty($_GET['npsn'])) ? "" : intval($_GET['npsn']);
-switch ($_REQUEST['op']) {
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
+
+switch ($op) {
 
     case "preview":
         $main = preview_newspaper($npsn);
@@ -50,7 +52,7 @@ switch ($_REQUEST['op']) {
 }
 
 /*-----------秀出結果區--------------*/
-if ($_REQUEST['op'] == "preview") {
+if ($op == "preview") {
     echo $main;
 } else {
     $xoopsTpl->assign('xoops_showrblock', 0);

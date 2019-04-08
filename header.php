@@ -4,8 +4,8 @@ include_once "../../mainfile.php";
 include_once "function.php";
 
 if ($xoopsModuleConfig['use_pda'] == '1' and strpos($_SERVER['PHP_SELF'], "ajax.php") === false and strpos($_SESSION['theme_kind'], 'bootstrap') === false) {
-    $nsn  = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
-    $ncsn = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : 0;
+    $nsn  = (isset($_REQUEST['nsn'])) ? (int) $_REQUEST['nsn'] : 0;
+    $ncsn = (isset($_REQUEST['ncsn'])) ? (int) $_REQUEST['ncsn'] : 0;
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/mobile_device_detect.php")) {
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/mobile_device_detect.php";
         mobile_device_detect(true, false, true, true, true, true, true, "pda.php?nsn={$nsn}&ncsn={$ncsn}", false);
@@ -30,10 +30,13 @@ if ($xoopsModuleConfig['use_newspaper'] == '1') {
 
 $p = $tadnews->chk_user_cate_power();
 if (sizeof($p) > 0 and $xoopsUser) {
-    $and_ncsn                         = empty($_REQUEST['ncsn']) ? "" : "?ncsn={$_REQUEST['ncsn']}";
-    $interface_menu[_MD_TADNEWS_POST] = "post.php{$and_ncsn}";
-    $interface_menu[_MD_TADNEWS_MY]   = "my_news.php";
+    $and_ncsn                              = empty($_REQUEST['ncsn']) ? "" : "?ncsn={$_REQUEST['ncsn']}";
+    $interface_menu[_MD_TADNEWS_POST]      = "post.php{$and_ncsn}";
+    $interface_menu[_MD_TADNEWS_KIND_PAGE] = "page.php";
+    $interface_menu[_MD_TADNEWS_MY]        = "my_news.php";
 }
+
+// $interface_menu['RSS'] = empty($_REQUEST['ncsn']) ? "rss.php" : "rss.php?ncsn={$_REQUEST['ncsn']}";
 
 if ($isAdmin) {
     $interface_menu[_MD_TADNEWS_TO_ADMIN] = "admin/main.php";

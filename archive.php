@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tadnews_archive.html");
+$xoopsOption['template_main'] = "tadnews_archive.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 
 /*-----------function區--------------*/
@@ -11,10 +11,10 @@ function month_list($now_date = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = "select left(start_day,7) , count(*) from " . $xoopsDB->prefix("tad_news") . " where enable='1' group by left(start_day,7) order by start_day desc";
+    $sql = "SELECT left(start_day,7) , count(*) FROM " . $xoopsDB->prefix("tad_news") . " WHERE enable='1' GROUP BY left(start_day,7) ORDER BY start_day DESC";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
-    $i      = 1;
+    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
+    $i = 1;
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt[$i]['value']    = $ym;
         $opt[$i]['count']    = $count;
@@ -26,7 +26,6 @@ function month_list($now_date = "")
     $jquery = get_jquery();
     $xoopsTpl->assign("jquery", $jquery);
     $xoopsTpl->assign("opt", $opt);
-
 }
 
 //分月新聞
@@ -47,18 +46,20 @@ function archive($date = "")
     $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
     $date_title = to_utf8(str_replace("-", "" . _MD_TADNEWS_YEAR . " ", $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign("date_title", $date_title);
-
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$date = (!isset($_REQUEST['date'])) ? date("Y-m") : substr($_REQUEST['date'], 0, 7);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op       = system_CleanVars($_REQUEST, 'op', '', 'string');
+$files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
+$date     = system_CleanVars($_REQUEST, 'date', date("Y-m"), 'string');
+$date     = substr($date, 0, 7);
+
 switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
-        $TadUpFiles->add_file_counter($files_sn, $hash = false);
+        $TadUpFiles->add_file_counter($files_sn, false);
         exit;
         break;
 

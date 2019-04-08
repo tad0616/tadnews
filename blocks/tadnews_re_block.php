@@ -1,15 +1,15 @@
 <?php
-//區塊主函式 (列出最新的新聞評論)
+//區塊主函式 (最新回應)
 function tadnews_b_show_3($options)
 {
     global $xoopsDB;
     include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
-    $modhandler  = xoops_gethandler('module');
-    $xoopsModule = &$modhandler->getByDirname("tadnews");
+    $modhandler  = xoops_getHandler('module');
+    $xoopsModule = $modhandler->getByDirname("tadnews");
     $com_modid   = $xoopsModule->getVar('mid');
     $sql         = "select com_id,com_text,com_itemid,com_uid from " . $xoopsDB->prefix("xoopscomments") . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";
     //die($sql);
-    $result         = $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result         = $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
     $block          = "";
     $block['width'] = $options[1];
     $myts           = MyTextSanitizer::getInstance();
@@ -44,10 +44,20 @@ function tadnews_b_show_3($options)
 function tadnews_re_edit($options)
 {
 
-    $form = "<table style='width:auto;'>
-	<tr><th>1.</th><th>" . _MB_TADNEWS_RE_EDIT_BITEM0 . "</th><td><INPUT type='text' name='options[0]' value='{$options[0]}' size=3></td></tr>
-	<tr><th>2.</th><th>" . _MB_TADNEWS_RE_EDIT_BITEM1 . "</th><td><INPUT type='text' name='options[1]' value='{$options[1]}' size=3></td></tr>
-	</table>
-	";
+    $form = "
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_RE_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_RE_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }

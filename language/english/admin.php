@@ -69,9 +69,9 @@ define('_MA_TADNEWS_NP_CONTENT_FOOT_DESC', 'Keep empty and click "Next" for defa
 define('_MA_TADNEWS_NP_TITLE_L', '(');
 define('_MA_TADNEWS_NP_TITLE_R', ')');
 
-define('_MA_TADNEWS_NP_HEAD_CONTENT', "<h5 style=\"color:white;float:right;\">%s NO. {N} </h5><h1>{T}</h1><h2>* Subscribe: %s * Publish Date: {D}</h2>");
+define('_MA_TADNEWS_NP_HEAD_CONTENT', "<h5 style=\"color:white;float:right;\">%s NO. {N} </h5><h2>{T}</h1><h2>* Subscribe: %s * Publish Date: {D}</h2>");
 
-define('_MA_TADNEWS_NP_FOOT_CONTENT', "<div class=\"foot\"><h1>[About] </h1>
+define('_MA_TADNEWS_NP_FOOT_CONTENT', "<div class=\"foot\"><h2>[About] </h1>
 <p>* Editor: %s</p>
 <p>All rights reserved by \"<a href='%s' target='_blank'>%s</a>\', and published in <a href='http://creativecommons.org/licenses/by-sa/2.5/tw/deed.zh_TW' target='_blank'>Creative Common CC\"Attribution licensing-Attribution-NoDerivs-Noncommercial\"article of authority Taiwan 2.5 version </a>. <a href='http://creativecommons.org/licenses/by-sa/2.5/tw/legalcode' target='_blank'>(Full Article of Authority)</a></p>
 <p>To use any content of newspaper out of authorized range, please contact \"%s\"(<a href='mailto:%s'>%s</a>) </p>
@@ -91,7 +91,7 @@ define('_MA_TADNEWS_NO_EMAIL', 'There are no e-mail, go to <a href="newspaper.ph
 
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', 'Show News Title');
-define('_MA_TADNEWS_CATE_SHOW_TOOL', 'Show Toolbar');
+define('_MA_TADNEWS_CATE_SHOW_TOOL', 'Show Module Toolbar');
 define('_MA_TADNEWS_CATE_SHOW_COMM', 'Comments Available');
 define('_MA_TADNEWS_CATE_SHOW_NAV', 'Show Navigation Button');
 
@@ -106,3 +106,6 @@ define('_MA_TADNEWS_TAG_NEW', 'New Tag');
 define('_MA_TADNEWS_TAG_ABLE', 'Enable');
 define('_MA_TADNEWS_TAG_UNABLE', 'Unable');
 define('_MA_TADNEWS_TAG_AMOUNT', ', %s news use it.');
+define('_MA_TADNEWS_NO_PERMISSION', 'When no read permission');
+define('_MA_TADNEWS_HIDE_ARTICLE', 'Hide article');
+define('_MA_TADNEWS_DISPLAY_TITLE', 'Display title only');

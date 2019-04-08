@@ -1,6 +1,6 @@
 <?php
 
-//區塊主函式 (顯示指定的自訂類別文章)
+//區塊主函式 (自訂頁面樹狀目錄)
 function tadnews_page($options)
 {
     global $xoopsDB;
@@ -10,23 +10,17 @@ function tadnews_page($options)
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/dtree.php";
 
-    $and_ncsn=empty($options[0])?"":" and ncsn='{$options[0]}'";
-
-    $sql = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' {$and_ncsn}";
-    //die($sql);
-    $result                          = $xoopsDB->query($sql);
-    list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
-
-    if (empty($ncsn)) {
-        $sql = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and of_ncsn=0 order by ncsn limit 0,1";
-        //die($sql);
+    if (empty($options[0])) {
+        $sql        = "SELECT ncsn FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
         $result     = $xoopsDB->query($sql);
         list($ncsn) = $xoopsDB->fetchRow($result);
-
-        $sql                             = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
-        $result                          = $xoopsDB->query($sql);
-        list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
+    } else {
+        $ncsn = (int) $options[0];
     }
+
+    $sql                             = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news='1' and `ncsn`='{$ncsn}'";
+    $result                          = $xoopsDB->query($sql);
+    list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
 
     $home['sn']    = $ncsn;
     $home['title'] = $nc_title;
@@ -45,17 +39,28 @@ function tadnews_page_edit($options)
     $cate = block_get_all_not_news_cate(0, $options[0]);
 
     $form = "
-  " . _MB_TADNEWS_PAGE_EDIT_BITEM0 . "
-  <select name='options[0]'>
-  $cate
-  </select>
-  <br />
-  " . _MB_TADNEWS_PAGE_EDIT_BITEM1 . "
-  <INPUT type='text' name='options[1]' value='{$options[1]}' size=3> px
-  <br />
-  " . _MB_TADNEWS_PAGE_EDIT_BITEM2 . "
-  <INPUT type='text' name='options[2]' value='{$options[2]}' size=3>
-  ";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                <select name='options[0]' class='my-input'>
+                $cate
+                </select>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>px
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_EDIT_BITEM2 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[2]' value='{$options[2]}' size=6>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }
 
@@ -117,10 +122,9 @@ if (!function_exists("block_get_page_cate")) {
                         $myts->htmlSpecialChars($news_title);
                         $page['title'][$j]   = $news_title;
                         $page['of_ncsn'][$j] = $ncsn;
-                        $page['url'][$j]     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+                        $page['url'][$j]     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
                         $j++;
                     }
-
                 }
             }
 
@@ -131,11 +135,9 @@ if (!function_exists("block_get_page_cate")) {
                 $myts->htmlSpecialChars($news_title);
                 $page['title'][$i]   = $news_title;
                 $page['of_ncsn'][$i] = $ncsn;
-                $page['url'][$i]     = XOOPS_URL . "/modules/tadnews/page.php?nsn={$nsn}";
+                $page['url'][$i]     = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
                 $i++;
-
             }
-
         }
 
         return $page;

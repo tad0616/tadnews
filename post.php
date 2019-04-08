@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = "tadnews_post.tpl";
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tadnews_post.html");
 include XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 if (empty($xoopsUser)) {
@@ -9,36 +9,50 @@ if (empty($xoopsUser)) {
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = (!isset($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$nsn  = (!isset($_REQUEST['nsn'])) ? "" : intval($_REQUEST['nsn']);
-$ncsn = (!isset($_REQUEST['ncsn'])) ? "" : intval($_REQUEST['ncsn']);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$nsn  = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
+$sort = system_CleanVars($_REQUEST, 'sort', 0, 'int');
 
 switch ($op) {
 
     //新增資料
     case "insert_tad_news":
         //die(var_export($_REQUEST));
-        $nsn = $tadnews->insert_tad_news();
+        $tadnews->insert_tad_news();
         break;
 
     //輸入表格
-    case "tad_news_form";
-        $tadnews->set_news_editor($xoopsModuleConfig['editor']);
+    case "tad_news_form":
+        // $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn);
         break;
 
     //更新資料
-    case "update_tad_news";
+    case "update_tad_news":
         $tadnews->update_tad_news($nsn);
         break;
 
     //啟用文章
-    case "enable_news";
+    case "enable_news":
         $tadnews->enable_tad_news($nsn);
         break;
 
+    //刪除頁籤
+    case "del_page_tab":
+        $tadnews->del_page_tab($nsn, $sort);
+        header("location:post.php?op=tad_news_form&nsn=$nsn");
+        exit;
+
+    //刪除封面圖
+    case "delete_cover":
+        $tadnews->delete_cover($nsn);
+        header("location:post.php?op=tad_news_form&nsn=$nsn");
+        exit;
+
     default:
-        $tadnews->set_news_editor($xoopsModuleConfig['editor']);
+        // $tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $tadnews->tad_news_form($nsn, $ncsn);
         break;
 }

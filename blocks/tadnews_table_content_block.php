@@ -1,7 +1,7 @@
 <?php
 include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 
-//區塊主函式 (顯示新聞內容)
+//區塊主函式 (表格式新聞)
 function tadnews_table_content_block_show($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme;
@@ -17,17 +17,23 @@ function tadnews_table_content_block_show($options)
     $block['cell5']       = $options[6];
     $block['start_from']  = $options[7];
     $block['show_ncsn']   = isset($options[8]) ? $options[8] : "";
-    $block['HTTP_HOST']   = get_xoops_url();
+    $block['searchbar']   = $options[9];
+    $block['HTTP_HOST']   = XOOPS_URL;
 
+    $block['ncsn'] = get_all_news_cate($options[8]);
+    $block['tag']  = get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
     return $block;
 }
 
 //區塊編輯函式
 function tadnews_table_content_block_edit($options)
 {
-    $chked1_0 = ($options[1] == "1") ? "checked" : "";
-    $chked1_1 = ($options[1] == "0") ? "checked" : "";
+    $chked1_0    = ($options[1] == "1") ? "checked" : "";
+    $chked1_1    = ($options[1] == "0") ? "checked" : "";
+    $searchbar_0 = ($options[9] == "0") ? "checked" : "";
+    $searchbar_1 = ($options[9] == "1") ? "checked" : "";
 
     $defOptions  = array(2 => 'start_day', 'news_title', 'uid', 'ncsn', 'counter');
     $ShowColArr  = array("start_day" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_1, "news_title" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_2, "uid" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_3, "ncsn" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_4, "counter" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_5);
@@ -47,39 +53,54 @@ function tadnews_table_content_block_edit($options)
             $allOption .= "<option value='$col_name' $selected>$col_title</option>\n";
         }
         $show_col .= "
-    <tr><th style='width:100px;'>
-    {$SetColTitle[$i]}
-    </th><td>
-    <select name='options[{$i}]'>
-    $allOption
-    </select>
-    </td></tr>";
+        <li class='my-row'>
+            <lable class='my-label'>{$SetColTitle[$i]}</lable>
+            <div class='my-content'>
+                <select name='options[{$i}]' class='my-input'>
+                $allOption
+                </select>
+            </div>
+        </li>";
     }
 
     $option = block_news_cate($options[8]);
 
     $form = "{$option['js']}
-  <table>
-  <tr><th>
-  " . _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM0 . "
-  </th><td>
-  <INPUT type='text' name='options[0]' value='{$options[0]}'>
-  </td></tr>
-  <tr><th>
-  " . _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM1 . "
-  </th><td>
-  <INPUT type='radio' $chked1_0 name='options[1]' value='1'>" . _YES . "
-  <INPUT type='radio' $chked1_1 name='options[1]' value='0'>" . _NO . "
-  </td></tr>
-  $show_col
-  <tr><th>
-  " . _MB_TADNEWS_START_FROM . "
-  </th><td>
-  <INPUT type='text' name='options[7]' value='{$options[7]}' size=6>
-  </td></tr>
-  <tr><th>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</th><td>{$option['form']}
-  <INPUT type='hidden' name='options[8]' id='bb' value='{$options[8]}'></td></tr>
-  </table>
-  ";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM1 . "</lable>
+            <div class='my-content'>
+                <input type='radio' $chked1_0 name='options[1]' value='1'>" . _YES . "
+                <input type='radio' $chked1_1 name='options[1]' value='0'>" . _NO . "
+            </div>
+        </li>
+        $show_col
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_START_FROM . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[7]' value='{$options[7]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</lable>
+            <div class='my-content'>
+                {$option['form']}
+                <input type='hidden' name='options[8]' id='bb' value='{$options[8]}'>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_SEARCHBAR . "</lable>
+            <div class='my-content'>
+                <input type='radio' $searchbar_1 name='options[9]' value='1'>" . _YES . "
+                <input type='radio' $searchbar_0 name='options[9]' value='0'>" . _NO . "
+            </div>
+        </li>
+    </ol>";
     return $form;
 }

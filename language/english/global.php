@@ -33,3 +33,5 @@ define('_TADNEWS_ALL_NO', 'None');
 define('_TADNEWS_CREAT_FIRST_CATE', 'Creat a sub-category');
 define('_TADNEWS_CREAT_NEWS_CATE', 'Creat a sub-category under left category');
 define('_TADNEWS_PREFIX_TAG', 'Prefix');
+define('_TADNEWS_NEED_LOGIN', 'Need login, and only "%s" groups can read.');
+define('_TADNEWS_TABS_SORT', 'Change tab ordering');

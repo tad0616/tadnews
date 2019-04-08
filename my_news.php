@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = "tadnews_my_news.tpl";
 include_once "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tadnews_my_news.html");
 include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -31,18 +31,18 @@ function list_tad_my_news()
 /*-----------執行動作判斷區----------*/
 $op = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
 
-$nsn    = (isset($_REQUEST['nsn'])) ? intval($_REQUEST['nsn']) : 0;
-$ncsn   = (isset($_REQUEST['ncsn'])) ? intval($_REQUEST['ncsn']) : 0;
-$fsn    = (isset($_REQUEST['fsn'])) ? intval($_REQUEST['fsn']) : 0;
-$uid    = (isset($_REQUEST['uid'])) ? intval($_REQUEST['uid']) : "";
+$nsn    = (isset($_REQUEST['nsn'])) ? (int) $_REQUEST['nsn'] : 0;
+$ncsn   = (isset($_REQUEST['ncsn'])) ? (int) $_REQUEST['ncsn'] : 0;
+$fsn    = (isset($_REQUEST['fsn'])) ? (int) $_REQUEST['fsn'] : 0;
+$uid    = (isset($_REQUEST['uid'])) ? (int) $_REQUEST['uid'] : "";
 $kind   = (empty($_REQUEST['kind'])) ? "" : $_REQUEST['kind'];
-$tag_sn = (isset($_REQUEST['tag_sn'])) ? intval($_REQUEST['tag_sn']) : "";
+$tag_sn = (isset($_REQUEST['tag_sn'])) ? (int) $_REQUEST['tag_sn'] : "";
 
 switch ($op) {
 
     //下載檔案
     case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : "";
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

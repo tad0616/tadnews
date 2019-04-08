@@ -1,5 +1,5 @@
 <?php
-$xoopsOption['template_main'] = 'tadnews_post.html';
+$xoopsOption['template_main'] = 'tadnews_post.tpl';
 include_once "header.php";
 include_once "../function.php";
 include_once "admin_function.php";
@@ -17,16 +17,15 @@ switch ($op) {
         break;
 
     //輸入表格
-    case "tad_news_form";
+    case "tad_news_form":
         $tadnews->tad_news_form($nsn);
         break;
 
     //更新資料
-    case "update_tad_news";
+    case "update_tad_news":
         $tadnews->update_tad_news($nsn);
         header("location: ../index.php?nsn={$nsn}");
         exit;
-        break;
 
     default:
         $tadnews->tad_news_form($nsn);

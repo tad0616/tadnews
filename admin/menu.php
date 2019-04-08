@@ -1,7 +1,6 @@
 <?php
 $adminmenu = array();
 $i         = 1;
-$icon_dir  = substr(XOOPS_VERSION, 6, 3) == '2.6' ? "" : "images/";
 
 $adminmenu[$i]['title'] = _MI_TADNEWS_ADMIN_HOME;
 $adminmenu[$i]['link']  = 'admin/index.php';
@@ -18,28 +17,28 @@ $i++;
 $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU5;
 $adminmenu[$i]['link']  = "admin/newspaper.php";
 $adminmenu[$i]['desc']  = _MI_TADNEWS_ADMENU5;
-$adminmenu[$i]['icon']  = "{$icon_dir}newsletter.png";
+$adminmenu[$i]['icon']  = "images/admin/newsletter.png";
 $i++;
 
 $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU7;
 $adminmenu[$i]['link']  = "admin/page.php";
 $adminmenu[$i]['desc']  = _MI_TADNEWS_ADMENU7;
-$adminmenu[$i]['icon']  = "{$icon_dir}content.png";
+$adminmenu[$i]['icon']  = "images/admin/content.png";
 
 $i++;
 
 $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU8;
 $adminmenu[$i]['link']  = "admin/tag.php";
 $adminmenu[$i]['desc']  = _MI_TADNEWS_ADMENU8;
-$adminmenu[$i]['icon']  = "{$icon_dir}groupmod.png";
+$adminmenu[$i]['icon']  = "images/admin/groupmod.png";
 $i++;
 
-$modhandler      = xoops_gethandler('module');
+$modhandler      = xoops_getHandler('module');
 $newsxoopsModule = $modhandler->getByDirname("news");
 if ($newsxoopsModule) {
     $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU4;
     $adminmenu[$i]['link']  = "admin/import.php";
     $adminmenu[$i]['desc']  = _MI_TADNEWS_ADMENU4;
-    $adminmenu[$i]['icon']  = "{$icon_dir}synchronized.png";
+    $adminmenu[$i]['icon']  = "images/admin/synchronized.png";
     $i++;
 }

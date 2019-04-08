@@ -28,10 +28,9 @@ if (!function_exists("block_get_news_cate")) {
     {
         global $xoopsDB;
 
-        $sql    = "select ncsn,of_ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where not_news!='1' order by sort";
+        $sql    = "SELECT ncsn,of_ncsn,nc_title FROM " . $xoopsDB->prefix("tad_news_cate") . " WHERE not_news!='1' ORDER BY sort";
         $result = $xoopsDB->query($sql);
         while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-
             $cate['title'][$ncsn]   = $nc_title;
             $cate['of_ncsn'][$ncsn] = $of_ncsn;
             $cate['url'][$ncsn]     = XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}";
