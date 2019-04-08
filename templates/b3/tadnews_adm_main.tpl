@@ -149,10 +149,17 @@
             </div>
 
             <div class="form-group">
+<<<<<<< HEAD:templates/tadnews_adm_main.tpl
+              <label class="col-md-2 control-label">
+                <{$smarty.const._MA_TADNEWS_NO_PERMISSION}><{$smarty.const._TAD_FOR}>
+              </label>
+              <div class="col-md-4">
+=======
               <label class="col-sm-2 control-label">
                 <{$smarty.const._MA_TADNEWS_NO_PERMISSION}><{$smarty.const._TAD_FOR}>
               </label>
               <div class="col-sm-4">
+>>>>>>> 8d63994034172071eb7b25a96dc5263c0cdffe79:templates/b3/tadnews_adm_main.tpl
                 <label class="radio-inline">
                   <input type="radio" name="setup[only_title]" id="only_title_1" value="1" <{if $only_title=='1'}>checked<{/if}>>
                   <{$smarty.const._MA_TADNEWS_DISPLAY_TITLE}>
