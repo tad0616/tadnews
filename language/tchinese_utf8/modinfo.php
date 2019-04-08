@@ -116,7 +116,7 @@ define('_MI_TADNEWS_USE_TOP_GROUP', '可使用置頂功能的群組');
 define('_MI_TADNEWS_USE_TOP_GROUP_DESC', '可使用置頂功能的群組');
 
 define('_MI_TADNEWS_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADNEWS_BACK_2_ADMIN', '管理');
 
 //help
