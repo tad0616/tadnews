@@ -4,7 +4,7 @@
       <{if $all_news.show_pic}>
         <div class="col-md-2">
           <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
-            <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" class="thumbnail">
+            <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" class="img-responsive thumbnail">
           </a>
         </div>
         <div class="col-md-10">

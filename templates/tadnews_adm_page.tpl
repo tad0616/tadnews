@@ -31,12 +31,6 @@
 
   });
 
-  function delete_tad_news_cate_func(ncsn){
-    var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-    if (!sure)  return;
-    location.href="<{$php_self}>?op=delete_tad_news_cate&ncsn=" + ncsn;
-  }
-
   function coint_checked(){
     var $b = $('.news');
     if($b.filter(':checked').length > 0 ){
@@ -71,7 +65,7 @@
 
       <{if $ncsn}>
         <div>
-          <h3><{$cate.nc_title}></h3>
+          <h3><a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a></h3>
           <ul>
             <li style="line-height:2;"><{$smarty.const._MA_TADNEWS_CATE_COUNTER}><{$smarty.const._TAD_FOR}><{$cate.count}></li>
             <li style="line-height:2;"><{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP_S}><{$smarty.const._TAD_FOR}><{$cate.g_txt}></li>
@@ -96,7 +90,7 @@
           <div class="col-md-6">
             <h3>
               <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
-              <{$cate.nc_title}>
+              <a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
             </h3>
           </div>
           <div class="col-md-6 text-right">

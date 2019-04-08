@@ -106,7 +106,7 @@ define('_MI_TADNEWS_COVERED', 'News with cover image');
 define('_MI_TADNEWS_COVERED_DESC', 'News with cover image');
 
 define('_MI_TADNEWS_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADNEWS_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADNEWS_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
