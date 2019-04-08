@@ -17,8 +17,8 @@
  * @version      $Id $
  **/
 
-include '../../../include/cp_header.php';
-include '../../../class/xoopsformloader.php';
+require_once '../../../include/cp_header.php';
+require_once '../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 

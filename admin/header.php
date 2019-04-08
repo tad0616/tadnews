@@ -17,7 +17,7 @@
  * @version      $Id $
  **/
 
-include '../../../include/cp_header.php';
+require_once '../../../include/cp_header.php';
 
 defined('FRAMEWORKS_ART_FUNCTIONS_INI') || include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
