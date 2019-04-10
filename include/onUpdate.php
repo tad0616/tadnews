@@ -193,7 +193,7 @@ function go_update10()
     if (is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2")) {
         delete_directory(XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
     }
-    full_copy(XOOPS_ROOT_PATH . "/modules/tadnews/images/bluefreedom2", XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
+    tadnews_full_copy(XOOPS_ROOT_PATH . "/modules/tadnews/images/bluefreedom2", XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
 
     //表格改名
     $sql = "RENAME TABLE " . $xoopsDB->prefix("tad_news_files") . "  TO " . $xoopsDB->prefix("tadnews_files_center");
@@ -638,7 +638,7 @@ if (!function_exists('mk_dir')) {
 
 //拷貝目錄
 if (!function_exists('full_copy')) {
-    function full_copy($source = "", $target = "")
+    function tadnews_full_copy($source = "", $target = "")
     {
         if (is_dir($source)) {
             @mkdir($target);
@@ -650,7 +650,7 @@ if (!function_exists('full_copy')) {
 
                 $Entry = $source . '/' . $entry;
                 if (is_dir($Entry)) {
-                    full_copy($Entry, $target . '/' . $entry);
+                    tadnews_full_copy($Entry, $target . '/' . $entry);
                     continue;
                 }
                 copy($Entry, $target . '/' . $entry);

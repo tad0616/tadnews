@@ -2,22 +2,22 @@
 function xoops_module_install_tadnews(&$module)
 {
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/cate");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/file");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/image");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/image/.thumbs");
+    tadnews_mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews");
+    tadnews_mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/cate");
+    tadnews_mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/file");
+    tadnews_mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/image");
+    tadnews_mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/image/.thumbs");
 
     //建立電子報佈景
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes");
+    tadnews_mk_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes");
     if (!is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2")) {
-        full_copy(XOOPS_ROOT_PATH . "/modules/tadnews/images/bluefreedom2", XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
+        tadnews_full_copy(XOOPS_ROOT_PATH . "/modules/tadnews/images/bluefreedom2", XOOPS_ROOT_PATH . "/uploads/tadnews/themes/bluefreedom2");
     }
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function tadnews_mk_dir($dir = "")
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
@@ -33,7 +33,7 @@ function mk_dir($dir = "")
 }
 
 //拷貝目錄
-function full_copy($source = "", $target = "")
+function tadnews_full_copy($source = "", $target = "")
 {
     if (is_dir($source)) {
         @mkdir($target);
@@ -45,7 +45,7 @@ function full_copy($source = "", $target = "")
 
             $Entry = $source . '/' . $entry;
             if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
+                tadnews_full_copy($Entry, $target . '/' . $entry);
                 continue;
             }
             copy($Entry, $target . '/' . $entry);
