@@ -1358,7 +1358,7 @@ class tadnews
             $gs    = explode(",", $enable_group);
             $g_txt = "";
             foreach ($gs as $gid) {
-                $g_txt .= $groups_array[$gid] . "{$syb}";
+                $g_txt .= $groups_array[$gid] . (string)($syb);
             }
         }
         return $g_txt;
@@ -1819,7 +1819,7 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $myts = MyTextSanitizer::getInstance();
-        $ver  = intval(str_replace('.', '', substr(XOOPS_VERSION, 6, 5)));
+        $ver  = (int)str_replace('.', '', substr(XOOPS_VERSION, 6, 5));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
         } else {

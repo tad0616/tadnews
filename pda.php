@@ -64,7 +64,7 @@ function show_news($nsn = '', $ncsn = '')
 
     $module_name  = $xoopsModule->getVar('name');
     $cate         = $tadnews->get_tad_news_cate($ncsn);
-    $navbar_title = (empty($ncsn)) ? "{$module_name}" : "{$cate['nc_title']}";
+    $navbar_title = (empty($ncsn)) ? (string)($module_name) : (string)($cate['nc_title']);
 
     $tadnews->set_view_nsn($nsn);
     $tadnews->set_cover(true, 'db');
@@ -177,7 +177,7 @@ function month_list_m()
             </div>
         </li>" : "";
 
-    $opt = "{$nodata}";
+    $opt = (string)($nodata);
 
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt .= "
@@ -220,7 +220,7 @@ function archive_m($date = "")
 
     $date_title = to_utf8(str_replace("-", "" . _MD_TADNEWS_YEAR . " ", $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
 
-    $list = "{$nodata}";
+    $list = (string)($nodata);
 
     foreach ($tnews['page'] as $news) {
         $list .= "
@@ -259,7 +259,7 @@ function list_newspaper_m()
             </div>
         </li>" : "";
 
-    $main = "{$nodata}";
+    $main = (string)($nodata);
 
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);

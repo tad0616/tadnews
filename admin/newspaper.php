@@ -130,7 +130,7 @@ function open_newspaper($nps_sn = "")
     //取得使用之佈景
     $nps_theme = newspaper_themes($set['themes']);
 
-    $np_title = (empty($nps_sn)) ? "$xoopsConfig[sitename]" . _MA_TADNEWS_NP : $set['title'];
+    $np_title = (empty($nps_sn)) ? (string)$xoopsConfig[sitename] . _MA_TADNEWS_NP : $set['title'];
 
     $author = $xoopsUser->getVar('uname');
 
@@ -281,7 +281,7 @@ function edit_newspaper($npsn = "")
             $more         = (empty($content[1])) ? "" : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . "...</a></p>";
             $news_content = $content[0] . $more;
             $html         .= "
-            <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . "{$cates[$ncsn]}" . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
+            <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string)($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
             <div class='TadNewsPaper_content'>{$img}{$news_content}</div>
             <hr class='TadNewsPaper_hr'>";
         }
