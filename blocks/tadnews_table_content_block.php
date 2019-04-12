@@ -35,9 +35,9 @@ function tadnews_table_content_block_edit($options)
     $searchbar_0 = ($options[9] == "0") ? "checked" : "";
     $searchbar_1 = ($options[9] == "1") ? "checked" : "";
 
-    $defOptions  = array(2 => 'start_day', 'news_title', 'uid', 'ncsn', 'counter');
-    $ShowColArr  = array("start_day" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_1, "news_title" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_2, "uid" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_3, "ncsn" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_4, "counter" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_5);
-    $SetColTitle = array(2 => _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM2, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM3, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM4, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM5, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM6);
+    $defOptions  = [2 => 'start_day', 'news_title', 'uid', 'ncsn', 'counter'];
+    $ShowColArr  = ["start_day" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_1, "news_title" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_2, "uid" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_3, "ncsn" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_4, "counter" => _MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_5];
+    $SetColTitle = [2 => _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM2, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM3, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM4, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM5, _MB_TADNEWS_TABLE_CONTENT_BLOCK_EDIT_BITEM6];
 
     $show_col = "";
 

@@ -62,7 +62,7 @@ if (!function_exists("get_all_news_cate")) {
     function get_all_news_cate($ncsn_arr_str = '')
     {
         global $xoopsDB;
-        $ncsn_arr = array();
+        $ncsn_arr = [];
         if ($ncsn_arr_str) {
             $ncsn_arr = explode(',', $ncsn_arr_str);
         }

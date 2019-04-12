@@ -1,6 +1,6 @@
 <?php
 //---基本設定---//
-$modversion = array();
+$modversion = [];
 $language   = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADNEWS_NAME;
@@ -23,10 +23,10 @@ $modversion['author_website_url']  = 'https://tad0616.net/';
 $modversion['author_website_name'] = 'Tad';
 $modversion['min_php']             = '5.4';
 $modversion['min_xoops']           = '2.5';
-$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
+$modversion['min_db']              = ['mysql' => '5.0.7', 'mysqli' => '5.0.7'];
 
 //---paypal資訊---//
-$modversion['paypal']                  = array();
+$modversion['paypal']                  = [];
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TADNEWS_DESC;
 $modversion['paypal']['amount']        = 0;
@@ -324,7 +324,7 @@ $modversion['config'][$i]['description'] = '_MI_TADNEWS_SHOW_MODE_DESC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default']     = "summary";
-$modversion['config'][$i]['options']     = array('_MI_TADNEWS_SHOW_MODE_OPT1' => 'summary', '_MI_TADNEWS_SHOW_MODE_OPT2' => 'list', '_MI_TADNEWS_SHOW_MODE_OPT3' => 'cate');
+$modversion['config'][$i]['options']     = ['_MI_TADNEWS_SHOW_MODE_OPT1' => 'summary', '_MI_TADNEWS_SHOW_MODE_OPT2' => 'list', '_MI_TADNEWS_SHOW_MODE_OPT3' => 'cate'];
 
 $i++;
 $modversion['config'][$i]['name']        = 'cate_show_mode';
@@ -333,7 +333,7 @@ $modversion['config'][$i]['description'] = '_MI_TADNEWS_CATE_SHOW_MODE_DESC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default']     = "summary";
-$modversion['config'][$i]['options']     = array('_MI_TADNEWS_SHOW_MODE_OPT1' => 'summary', '_MI_TADNEWS_SHOW_MODE_OPT2' => 'list');
+$modversion['config'][$i]['options']     = ['_MI_TADNEWS_SHOW_MODE_OPT1' => 'summary', '_MI_TADNEWS_SHOW_MODE_OPT2' => 'list'];
 
 $i++;
 $modversion['config'][$i]['name']        = 'show_bbcode';
@@ -405,7 +405,7 @@ $modversion['config'][$i]['title']       = '_MI_TADNEWS_CREAT_CATE_GROUP';
 $modversion['config'][$i]['description'] = '_MI_TADNEWS_CREAT_CATE_GROUP_DESC';
 $modversion['config'][$i]['formtype']    = 'group_multi';
 $modversion['config'][$i]['valuetype']   = 'array';
-$modversion['config'][$i]['default']     = array(1);
+$modversion['config'][$i]['default']     = [1];
 
 $i++;
 $modversion['config'][$i]['name']        = 'use_top_group';
@@ -413,7 +413,7 @@ $modversion['config'][$i]['title']       = '_MI_TADNEWS_USE_TOP_GROUP';
 $modversion['config'][$i]['description'] = '_MI_TADNEWS_USE_TOP_GROUP_DESC';
 $modversion['config'][$i]['formtype']    = 'group_multi';
 $modversion['config'][$i]['valuetype']   = 'array';
-$modversion['config'][$i]['default']     = array();
+$modversion['config'][$i]['default']     = [];
 
 $i++;
 $modversion['config'][$i]['name']        = 'top_max_day';

@@ -10,7 +10,7 @@ function tadnews_search($queryarray, $andor, $limit, $offset, $userid)
             }
             $queryarray = $arr;
         } else {
-            $queryarray = array();
+            $queryarray = [];
         }
     }
     $sql = "SELECT nsn,news_title,start_day, uid FROM " . $xoopsDB->prefix("tad_news") . " WHERE enable='1'";
@@ -27,7 +27,7 @@ function tadnews_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql .= "ORDER BY start_day DESC";
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret    = array();
+    $ret    = [];
     $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $ret[$i]['image'] = "images/dot.gif";

@@ -429,7 +429,7 @@ class tadnews
             $User_Groups = $xoopsUser->getGroups();
             $now_uid     = $xoopsUser->uid();
         } else {
-            $User_Groups = array();
+            $User_Groups = [];
             $now_uid     = 0;
         }
 
@@ -551,7 +551,7 @@ class tadnews
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
-        $ncsn_ok = $cates = $cate_setup = $only_title_cate = array();
+        $ncsn_ok = $cates = $cate_setup = $only_title_cate = [];
         while ($all_cate = $xoopsDB->fetchArray($result)) {
             foreach ($all_cate as $k => $v) {
                 $$k = $v;
@@ -725,7 +725,7 @@ class tadnews
         } else {
             $author_select = "";
         }
-        $all_news = array();
+        $all_news = [];
         $i        = 0;
 
         $myts = MyTextSanitizer::getInstance();
@@ -758,7 +758,7 @@ class tadnews
             $enable_txt = ($enable == 1) ? "" : "<span class='badge'>" . _TADNEWS_NEWS_UNABLE . "</span>";
 
             //製作新聞標題內容，及密碼判斷
-            $have_pass = (isset($_SESSION['have_pass'])) ? $_SESSION['have_pass'] : array();
+            $have_pass = (isset($_SESSION['have_pass'])) ? $_SESSION['have_pass'] : [];
 
             $file_mode     = $this->show_mode == 'one' ? "" : "small";
             $tadnews_files = $this->get_news_files($nsn, $file_mode);
@@ -1040,7 +1040,7 @@ class tadnews
         if (!$sub) {
             $home[_TAD_TO_MOD] = XOOPS_URL . "/modules/tadnews/index.php";
         } else {
-            $home = array();
+            $home = [];
         }
 
         $sql                                 = "select nc_title,of_ncsn,not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
@@ -1049,7 +1049,7 @@ class tadnews
 
         $opt_sub = (!empty($of_ncsn)) ? $this->get_cate_path($of_ncsn, true) : "";
 
-        $opt = $path = array();
+        $opt = $path = [];
 
         if (!empty($nc_title)) {
             $page           = ($not_news == '1') ? "page.php" : "index.php";
@@ -1079,7 +1079,7 @@ class tadnews
             $User_Groups = $xoopsUser->getGroups();
             $now_uid     = $xoopsUser->uid();
         } else {
-            $User_Groups = array();
+            $User_Groups = [];
             $now_uid     = 0;
         }
 
@@ -1108,7 +1108,7 @@ class tadnews
 
         $i               = 0;
         $only_title      = false;
-        $only_title_cate = array();
+        $only_title_cate = [];
         while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
 
             //只有可讀的分類才納入
@@ -1134,8 +1134,8 @@ class tadnews
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
 
             $j               = 0;
-            $subnews         = array();
-            $only_title_cate = array();
+            $subnews         = [];
+            $only_title_cate = [];
 
             $myts = MyTextSanitizer::getInstance();
             while ($news = $xoopsDB->fetchArray($result2)) {
@@ -1686,7 +1686,7 @@ class tadnews
         $news = $this->get_tad_news($now_nsn);
 
         $myts    = MyTextSanitizer::getInstance();
-        $nsnsort = array();
+        $nsnsort = [];
 
         $and_enable = ($this->show_enable == 1) ? "and a.enable='1'" : "";
 
@@ -1757,7 +1757,7 @@ class tadnews
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
         } else {
-            $User_Groups = array();
+            $User_Groups = [];
         }
 
         //判斷本文之所屬分類是否允許該用戶之所屬群組觀看
@@ -1842,14 +1842,14 @@ class tadnews
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
         } else {
-            $User_Groups = array();
+            $User_Groups = [];
         }
 
         $ncsn_arr = $this->chk_user_cate_power("post");
         if (empty($ncsn_arr)) {
             redirect_header("index.php", 3, _TADNEWS_NO_ADMIN_POWER . "<br>" . implode(";", $ncsn_arr));
         } else {
-            $news_cate_kind_arr = array();
+            $news_cate_kind_arr = [];
             foreach ($ncsn_arr as $ncsn) {
                 $sql    = "select not_news from " . $xoopsDB->prefix("tad_news_cate") . " where ncsn='{$ncsn}'";
                 $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
@@ -1869,7 +1869,7 @@ class tadnews
 
             $DBV = $this->get_tad_news($nsn, true, false);
         } else {
-            $DBV = $tab_arr = array();
+            $DBV = $tab_arr = [];
         }
 
         //預設值設定
@@ -1974,7 +1974,7 @@ class tadnews
         //die($pic_css);
         $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . "</div>" : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
-        $form = array();
+        $form = [];
         if ($mode == "return") {
             $form['jquery']                      = $jquery_path;
             $form['action']                      = $_SERVER['PHP_SELF'];
@@ -2259,7 +2259,7 @@ class tadnews
             <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
             <div id='PageTab'>";
 
-            $tab_title_data_arr = $tab_content_data_arr = array();
+            $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div      = $tab_content_div      = "";
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
 
@@ -2493,7 +2493,7 @@ class tadnews
             <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
             <div id='PageTab'>";
 
-            $tab_title_data_arr = $tab_content_data_arr = array();
+            $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div      = $tab_content_div      = "";
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;

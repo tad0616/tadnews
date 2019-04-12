@@ -244,7 +244,7 @@ function move_to_cate($ncsn = "", $to_ncsn = "")
 }
 
 //批次移動
-function move_news($nsn_arr = array(), $ncsn = "")
+function move_news($nsn_arr = [], $ncsn = "")
 {
     global $xoopsDB;
     if (empty($nsn_arr) or !is_array($nsn_arr)) {
@@ -259,7 +259,7 @@ function move_news($nsn_arr = array(), $ncsn = "")
 }
 
 //批次刪除
-function del_news($nsn_arr = array())
+function del_news($nsn_arr = [])
 {
     global $xoopsDB, $tadnews;
     if (empty($nsn_arr) or !is_array($nsn_arr)) {

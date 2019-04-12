@@ -1,5 +1,5 @@
 <?php
-$adminmenu = array();
+$adminmenu = [];
 $i         = 1;
 
 $adminmenu[$i]['title'] = _MI_TADNEWS_ADMIN_HOME;

@@ -28,7 +28,7 @@ function list_tad_all_pages($the_ncsn = 0)
     $tadnews->set_view_ncsn($the_ncsn);
     $tadnews->get_cate_news();
 
-    $link_cate_sn_arr = array();
+    $link_cate_sn_arr = [];
     $modhandler       = xoops_getHandler('module');
     $TadThemesModule  = $modhandler->getByDirname("tad_themes");
     if ($TadThemesModule) {
@@ -69,7 +69,7 @@ function tabs_sort($ncsn, $nsn)
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     $myts    = MyTextSanitizer::getInstance();
-    $tab_div = array();
+    $tab_div = [];
     while (list($data_value, $data_sort) = $xoopsDB->fetchRow($result)) {
         $tab_div[$data_sort] = $data_value;
     }

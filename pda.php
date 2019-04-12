@@ -529,7 +529,7 @@ function logout_m()
     global $xoopsConfig, $xoopsUser;
     // Regenerate a new session id and destroy old session
     $GLOBALS["sess_handler"]->regenerate_id(true);
-    $_SESSION = array();
+    $_SESSION = [];
     setcookie($xoopsConfig['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table

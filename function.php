@@ -53,7 +53,7 @@ function get_tadnews_sub_cate($ncsn = "0")
     $sql = "select ncsn,nc_title from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='{$ncsn}'";
     // die($sql);
     $result   = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $ncsn_arr = array();
+    $ncsn_arr = [];
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
     }
@@ -140,7 +140,7 @@ function tad_news_cate_form($ncsn = "")
         $DBV = $tadnews->get_tad_news_cate($ncsn);
         $xoopsTpl->assign('cate', $DBV);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定

@@ -68,7 +68,7 @@ function newspaper_set_table($sel_nps_sn = "")
     }
 
     $i         = 0;
-    $newspaper = array();
+    $newspaper = [];
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $newspaper[$i]['allnpsn'] = $allnpsn;
         $newspaper[$i]['title']   = $title;
@@ -125,7 +125,7 @@ function open_newspaper($nps_sn = "")
         $hidden .= $token->render();
 
     //取得主題資料
-    $set = (empty($nps_sn)) ? array('themes' => null, 'title' => null, 'head' => null, 'foot' => null) : get_newspaper_set($nps_sn);
+    $set = (empty($nps_sn)) ? ['themes' => null, 'title' => null, 'head' => null, 'foot' => null] : get_newspaper_set($nps_sn);
 
     //取得使用之佈景
     $nps_theme = newspaper_themes($set['themes']);

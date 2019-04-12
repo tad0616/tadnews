@@ -5,7 +5,7 @@ include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
 function tadnews_marquee($options)
 {
     global $xoTheme;
-    $ncsn_arr = array();
+    $ncsn_arr = [];
     if (isset($options[1])) {
         $ncsn_arr = explode(',', $options[1]);
     }

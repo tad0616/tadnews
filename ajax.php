@@ -65,7 +65,7 @@ $tadnews->set_cover(false);
 $tadnews->set_skip_news($start);
 $all_news = $tadnews->get_news('return');
 
-$show_col = array();
+$show_col = [];
 
 foreach ($cell as $col) {
     if ($col == '' or $col == 'hide') {
@@ -76,7 +76,7 @@ foreach ($cell as $col) {
 }
 
 if (empty($show_col)) {
-    $show_col = array('start_day', 'news_title', 'uid', 'ncsn', 'counter');
+    $show_col = ['start_day', 'news_title', 'uid', 'ncsn', 'counter'];
 }
 
 $block = $FooTableJS;
