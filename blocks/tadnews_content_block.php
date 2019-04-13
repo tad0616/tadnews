@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
+include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (本站最新消息)
 function tadnews_content_block_show($options)
@@ -8,13 +8,13 @@ function tadnews_content_block_show($options)
 
     $ncsn_arr = explode(',', $options[7]);
 
-    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
+    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
     $tadnews->set_show_num($options[0]);
     $tadnews->set_view_ncsn($ncsn_arr);
     $tadnews->set_show_mode('summary');
-    $tadnews->set_news_kind("news");
+    $tadnews->set_news_kind('news');
     $tadnews->set_summary($options[1], $options[2]);
     $tadnews->set_title_length($options[3]);
     $tadnews->set_cover($options[4], $options[5]);
@@ -26,15 +26,15 @@ function tadnews_content_block_show($options)
     }
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+
     return $block;
 }
 
 //區塊編輯函式
 function tadnews_content_block_edit($options)
 {
-
-    $options4_1 = ($options[4] == "1") ? "checked" : "";
-    $options4_0 = ($options[4] == "0") ? "checked" : "";
+    $options4_1 = ('1' == $options[4]) ? 'checked' : '';
+    $options4_0 = ('0' == $options[4]) ? 'checked' : '';
 
     $block_news_cate = block_news_cate($options[7]);
 
@@ -96,5 +96,6 @@ function tadnews_content_block_edit($options)
         </li>
     </ol>
     ";
+
     return $form;
 }

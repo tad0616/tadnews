@@ -3,17 +3,17 @@
 function tadnews_b_show_3($options)
 {
     global $xoopsDB;
-    include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
-    $modhandler  = xoops_getHandler('module');
-    $xoopsModule = $modhandler->getByDirname("tadnews");
-    $com_modid   = $xoopsModule->getVar('mid');
-    $sql         = "select com_id,com_text,com_itemid,com_uid from " . $xoopsDB->prefix("xoopscomments") . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";
+    include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+    $modhandler = xoops_getHandler('module');
+    $xoopsModule = $modhandler->getByDirname('tadnews');
+    $com_modid = $xoopsModule->getVar('mid');
+    $sql = 'select com_id,com_text,com_itemid,com_uid from ' . $xoopsDB->prefix('xoopscomments') . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";
     //die($sql);
-    $result         = $xoopsDB->queryF($sql) or web_error($sql,__FILE__,__LINE__);
-    $block          = "";
+    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $block = '';
     $block['width'] = $options[1];
-    $myts           = MyTextSanitizer::getInstance();
-    $i              = 0;
+    $myts = MyTextSanitizer::getInstance();
+    $i = 0;
     while (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result)) {
         $txt = strip_tags($txt);
         //支援xlanguage
@@ -22,14 +22,14 @@ function tadnews_b_show_3($options)
         }
         //$txt=xoops_substr($txt , 0 , $options[1] , "...");
         $txt = mb_substr($txt, 0, $options[1], _CHARSET);
-        $txt .= "...";
-        $uid_name             = XoopsUser::getUnameFromId($uid, 1);
-        $uid_name             = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
-        $re['uid']            = $uid;
-        $re['uid_name']       = $uid_name;
-        $re['nsn']            = $nsn;
-        $re['com_id']         = $com_id;
-        $re['txt']            = $txt;
+        $txt .= '...';
+        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+        $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $re['uid'] = $uid;
+        $re['uid_name'] = $uid_name;
+        $re['nsn'] = $nsn;
+        $re['com_id'] = $com_id;
+        $re['txt'] = $txt;
         $block['re'][$com_id] = $re;
         $i++;
     }
@@ -43,7 +43,6 @@ function tadnews_b_show_3($options)
 //區塊編輯函式
 function tadnews_re_edit($options)
 {
-
     $form = "
     <ol class='my-form'>
         <li class='my-row'>
@@ -59,5 +58,6 @@ function tadnews_re_edit($options)
             </div>
         </li>
     </ol>";
+
     return $form;
 }

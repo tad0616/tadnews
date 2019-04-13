@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
+include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (自動縮放的滑動新聞)
 function tadnews_slidernews2_show($options)
@@ -7,24 +7,24 @@ function tadnews_slidernews2_show($options)
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
 
     if (empty($options[2])) {
-        $options[2] = "ResponsiveSlides";
+        $options[2] = 'ResponsiveSlides';
     }
 
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/{$options[2]}.php")) {
-        redirect_header("index.php", 3, _MB_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/{$options[2]}.php";
 
     $ncsn_arr = explode(',', $options[3]);
 
-    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
+    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
 
     $tadnews->set_show_num($options[0]);
     $tadnews->set_view_ncsn($ncsn_arr);
     $tadnews->set_show_mode('summary');
-    $tadnews->set_news_kind("news");
+    $tadnews->set_news_kind('news');
     $tadnews->set_summary($options[1]);
     $tadnews->set_use_star_rating(false);
     $tadnews->set_cover(false);
@@ -33,13 +33,13 @@ function tadnews_slidernews2_show($options)
     if (empty($all_news['page'])) {
         return;
     }
-    if ($options[2] == 'flexslider2') {
+    if ('flexslider2' == $options[2]) {
         $slider = new flexslider($options[1]);
     } else {
         $slider = new slider($options[1]);
     }
 
-    $n       = 0;
+    $n = 0;
     $pic_num = 1;
     foreach ($all_news['page'] as $news) {
         $big_image = empty($news['image_big']) ? XOOPS_URL . "/modules/tadnews/images/demo{$pic_num}.jpg" : $news['image_big'];
@@ -49,7 +49,6 @@ function tadnews_slidernews2_show($options)
         if ($n >= $options[0]) {
             break;
         }
-
     }
 
     $block = $slider->render();
@@ -59,9 +58,8 @@ function tadnews_slidernews2_show($options)
 
 function tadnews_slidernews2_edit($options)
 {
-
-    $ResponsiveSlides = $options[2] == "ResponsiveSlides" ? "selected" : "";
-    $flexslider2      = $options[2] == "flexslider2" ? "selected" : "";
+    $ResponsiveSlides = 'ResponsiveSlides' == $options[2] ? 'selected' : '';
+    $flexslider2 = 'flexslider2' == $options[2] ? 'selected' : '';
 
     $block_news_cate = block_news_cate($options[3]);
 
@@ -97,5 +95,6 @@ function tadnews_slidernews2_edit($options)
         </li>
     </ol>
     ";
+
     return $form;
 }

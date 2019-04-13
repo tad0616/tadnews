@@ -96,7 +96,7 @@ define('_MD_TADNEWS_NEWSPIC_AND', ', Image-size');
 define('_MD_TADNEWS_NEWSPIC_NO_RESIZE', 'No Resize');
 define('_MD_TADNEWS_NEWSPIC_CONTAIN', 'Contain');
 define('_MD_TADNEWS_NEWSPIC_COVER', 'Cover');
-define('_MD_TADNEWS_NEWSPIC_DEMO', "<p>Each article could have a cover picture, this picture can be used for some block. Each block can set its size and appearance. If you want to use cover picture in the artical, then you can use this interface to make setting.</p><p>You can upload any size image for cover picture , we recommend that  cover picture size is large than  slide news block width.  The  slide news block size  is 670x250. Therefore, we recommend that cover picture is large than  670x250.</p>");
+define('_MD_TADNEWS_NEWSPIC_DEMO', '<p>Each article could have a cover picture, this picture can be used for some block. Each block can set its size and appearance. If you want to use cover picture in the artical, then you can use this interface to make setting.</p><p>You can upload any size image for cover picture , we recommend that  cover picture size is large than  slide news block width.  The  slide news block size  is 670x250. Therefore, we recommend that cover picture is large than  670x250.</p>');
 
 //define('_MD_TADNEWS_EMBED','embed');
 define('_MD_TADNEWS_COUNTER', 'Count');
