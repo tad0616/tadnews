@@ -5,7 +5,7 @@ include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nsn = system_CleanVars($_REQUEST, 'nsn', '', 'int');
 
-if ('sort_tabs' == $op) {
+if ('sort_tabs' === $op) {
     $updateRecordsArray = $_POST['sort'];
     $sort = 1;
     foreach ($updateRecordsArray as $data_sort) {
@@ -24,7 +24,7 @@ if ('sort_tabs' == $op) {
     $myts = MyTextSanitizer::getInstance();
     $tab_title_div = $tab_content_div = '';
     while (list($data_name, $data_value) = $xoopsDB->fetchRow($result)) {
-        if ('tab_title' == $data_name) {
+        if ('tab_title' === $data_name) {
             $tab_title_div .= "<li>$data_value</li>";
         } else {
             $tab_content_div .= "

@@ -14,7 +14,7 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     $tadnews->set_summary(0);
     $tadnews->set_show_mode('list');
     $tadnews->set_admin_tool(true);
-    if (empty($the_ncsn) or 'news' == $kind) {
+    if (empty($the_ncsn) or 'news' === $kind) {
         $tadnews->set_show_num($xoopsModuleConfig['show_num']);
     }
     $tadnews->set_show_enable(0);
@@ -26,7 +26,7 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
 
     if (!empty($the_ncsn)) {
         $tadnews->set_view_ncsn($the_ncsn);
-        if ('page' == $kind) {
+        if ('page' === $kind) {
             $tadnews->set_sort_tool(1);
             $page = 'page.php';
         } else {

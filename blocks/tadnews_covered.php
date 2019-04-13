@@ -57,8 +57,8 @@ function tadnews_covered_edit($options)
 
     $options4_1 = ('1' == $options[4]) ? 'checked' : '';
     $options4_0 = ('0' == $options[4]) ? 'checked' : '';
-    $options8_1 = ('list' == $options[8]) ? 'checked' : '';
-    $options8_0 = ('table' == $options[8]) ? 'checked' : '';
+    $options8_1 = ('list' === $options[8]) ? 'checked' : '';
+    $options8_0 = ('table' === $options[8]) ? 'checked' : '';
     $chked1_0 = ('1' == $options[9]) ? 'checked' : '';
     $chked1_1 = ('0' == $options[9]) ? 'checked' : '';
 

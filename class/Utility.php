@@ -56,7 +56,7 @@ class Utility
         }
 
         while ($file = readdir($dir_handle)) {
-            if ('.' != $file && '..' != $file) {
+            if ('.' !== $file && '..' !== $file) {
                 if (!is_dir($dirname . '/' . $file)) {
                     unlink($dirname . '/' . $file);
                 } else {
@@ -79,7 +79,7 @@ class Utility
             }
             $d = dir($source);
             while (false !== ($entry = $d->read())) {
-                if ('.' == $entry || '..' == $entry) {
+                if ('.' === $entry || '..' === $entry) {
                     continue;
                 }
 
@@ -240,9 +240,9 @@ class Utility
         $sql = 'SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM ' . $xoopsDB->prefix('tadnews_files_center') . '';
         $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, show_error($sql));
         while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
-            $kind = ('image' == mb_substr($file_type, 0, 5)) ? 'img' : 'file';
+            $kind = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
             $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . mb_substr($description, -4);
-            if ('file' == $kind) {
+            if ('file' === $kind) {
                 rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/file/$new_file_name");
             } else {
                 rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/image/$new_file_name");
@@ -576,7 +576,7 @@ class Utility
     WHERE table_name = '" . $xoopsDB->prefix('tadnews_files_center') . "' AND COLUMN_NAME = 'col_sn'";
         $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
-        if ('smallint' == $type) {
+        if ('smallint' === $type) {
             return true;
         }
 
@@ -624,7 +624,7 @@ class Utility
     WHERE table_name = '" . $xoopsDB->prefix('tad_news') . "' AND COLUMN_NAME = 'uid'";
         $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
-        if ('smallint' == $type) {
+        if ('smallint' === $type) {
             return true;
         }
 

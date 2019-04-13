@@ -69,7 +69,7 @@ $block = '';
 $total = 0;
 
 //die('display_mode:' . $display_mode);
-if ('table' == $display_mode) {
+if ('table' === $display_mode) {
     $block .= "
     <table class='table table-striped'>
       <tbody>";

@@ -33,7 +33,7 @@ function tadnews_slidernews2_show($options)
     if (empty($all_news['page'])) {
         return;
     }
-    if ('flexslider2' == $options[2]) {
+    if ('flexslider2' === $options[2]) {
         $slider = new flexslider($options[1]);
     } else {
         $slider = new slider($options[1]);
@@ -58,8 +58,8 @@ function tadnews_slidernews2_show($options)
 
 function tadnews_slidernews2_edit($options)
 {
-    $ResponsiveSlides = 'ResponsiveSlides' == $options[2] ? 'selected' : '';
-    $flexslider2 = 'flexslider2' == $options[2] ? 'selected' : '';
+    $ResponsiveSlides = 'ResponsiveSlides' === $options[2] ? 'selected' : '';
+    $flexslider2 = 'flexslider2' === $options[2] ? 'selected' : '';
 
     $block_news_cate = block_news_cate($options[3]);
 

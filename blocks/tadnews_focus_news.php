@@ -14,7 +14,7 @@ function tadnews_focus_news($options)
 
     $tadnews = new tadnews();
     $tadnews->set_view_nsn($options[0]);
-    $summary = ('summary' == $options[1]) ? 'page_preak' : 'full';
+    $summary = ('summary' === $options[1]) ? 'page_preak' : 'full';
     $tadnews->set_summary($summary);
     $tadnews->set_cover(true, 'db');
     $tadnews->set_use_star_rating(false);

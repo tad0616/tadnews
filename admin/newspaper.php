@@ -96,7 +96,7 @@ function newspaper_themes($themes = '')
         if ($dh = opendir(_TADNEWS_NSP_THEMES_PATH)) {
             $select = "<select name='themes' id='themes' class='form-control'>";
             while (false !== ($file = readdir($dh))) {
-                if ('.' == $file or '..' == $file) {
+                if ('.' === $file or '..' === $file) {
                     continue;
                 }
 
@@ -683,7 +683,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-if ('preview' == $op) {
+if ('preview' === $op) {
     echo $main;
 } else {
     include_once 'footer.php';

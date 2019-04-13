@@ -68,7 +68,7 @@ $all_news = $tadnews->get_news('return');
 $show_col = [];
 
 foreach ($cell as $col) {
-    if ('' == $col or 'hide' == $col) {
+    if ('' == $col or 'hide' === $col) {
         continue;
     }
 

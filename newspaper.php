@@ -50,7 +50,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-if ('preview' == $op) {
+if ('preview' === $op) {
     echo $main;
 } else {
     $xoopsTpl->assign('xoops_showrblock', 0);

@@ -359,25 +359,25 @@ class tadnews
                 $$k = $v;
             }
 
-            $style_set = ('db' == $style) ? $description : $style;
+            $style_set = ('db' === $style) ? $description : $style;
             //die($style_set);
 
             if (empty($style) and !$only_url) {
                 return;
             }
 
-            if ('big' != $mode) {
+            if ('big' !== $mode) {
                 if ($only_url) {
                     return XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}";
                 }
-                $img = ('db' == $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
 
                 return $img;
             }
             if ($only_url) {
                 return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
             }
-            $img = ('db' == $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+            $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
 
             return $img;
         }
@@ -537,7 +537,7 @@ class tadnews
         //設定是否需要評分工具
         if ($this->use_star_rating) {
             include_once XOOPS_ROOT_PATH . '/modules/tadtools/star_rating.php';
-            if ('one' == $this->show_mode) {
+            if ('one' === $this->show_mode) {
                 $rating = new rating('tadnews', '10', '', 'simple');
             } else {
                 $rating = new rating('tadnews', '10', 'show', 'simple');
@@ -582,7 +582,7 @@ class tadnews
             //die(var_dump($cate_setup[$ncsn]));
             //die(var_dump($set));
             //title=0;tool=0;comm=0
-            if ('return' == $mode) {
+            if ('return' === $mode) {
                 $main['cate_set_title'] = $set['title'];
                 $main['cate_set_tool'] = $set['tool'];
                 $main['cate_set_comm'] = $set['comm'];
@@ -595,7 +595,7 @@ class tadnews
             }
         } else {
             $only_title = isset($set['only_title']) ? $set['only_title'] : 0;
-            if ('return' == $mode) {
+            if ('return' === $mode) {
                 $main['cate_only_title'] = $only_title;
             } else {
                 $xoopsTpl->assign('cate_only_title', $only_title);
@@ -609,7 +609,7 @@ class tadnews
 
             //假如沒有指定觀看分類
             if (null === $this->view_ncsn) {
-                if ('page' == $this->kind) {
+                if ('page' === $this->kind) {
                     $where_cate = (empty($ok_cate)) ? 'and 0' : "and ncsn in($ok_cate)";
                 } else {
                     $where_cate = (empty($ok_cate)) ? "and ncsn='0'" : "and (ncsn in($ok_cate) or ncsn='0')";
@@ -653,12 +653,12 @@ class tadnews
             $where_tag = '';
         }
 
-        if ('page' == $this->kind) {
+        if ('page' === $this->kind) {
             $desc = 'order by ncsn , page_sort';
         } elseif (!empty($this->view_nsn) and is_array($this->view_nsn)) {
             $nsn_order = implode(',', $this->view_nsn);
             $desc = "order by field(`nsn` , $nsn_order)";
-        } elseif ('news' == $this->kind) {
+        } elseif ('news' === $this->kind) {
             $desc = 'order by always_top desc , start_day desc';
         } else {
             $desc = 'order by always_top desc , start_day desc';
@@ -696,7 +696,7 @@ class tadnews
         } else {
             $limit = empty($this->show_num) ? '10' : $this->show_num;
             $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc";
-            if (empty($this->view_month) and 'none' != $this->show_num) {
+            if (empty($this->view_month) and 'none' !== $this->show_num) {
                 //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
                 $PageBar = getPageBar($sql, $limit);
                 $bar = $PageBar['bar'];
@@ -710,7 +710,7 @@ class tadnews
 
         //分類篩選工具
         if ($this->show_cate_select) {
-            $not_news = ('news' == $this->kind) ? 0 : 1;
+            $not_news = ('news' === $this->kind) ? 0 : 1;
             $cate_select = $this->news_cate_select($not_news);
         } else {
             $cate_select = '';
@@ -750,13 +750,13 @@ class tadnews
 
             //新聞資訊列
             $fun = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group);
-            $end_day = ('0000-00-00 00:00:00' == $end_day) ? '' : '~ ' . $end_day;
+            $end_day = ('0000-00-00 00:00:00' === $end_day) ? '' : '~ ' . $end_day;
             $enable_txt = (1 == $enable) ? '' : "<span class='badge'>" . _TADNEWS_NEWS_UNABLE . '</span>';
 
             //製作新聞標題內容，及密碼判斷
             $have_pass = (isset($_SESSION['have_pass'])) ? $_SESSION['have_pass'] : [];
 
-            $file_mode = 'one' == $this->show_mode ? '' : 'small';
+            $file_mode = 'one' === $this->show_mode ? '' : 'small';
             $tadnews_files = $this->get_news_files($nsn, $file_mode);
 
             if (isset($only_title_cate[$ncsn]) and !empty($only_title_cate[$ncsn])) {
@@ -817,7 +817,7 @@ class tadnews
                 $token = new XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $token->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
-                    if ('one' == $this->show_mode) {
+                    if ('one' === $this->show_mode) {
                         $news_content = "
                         <div class='jumbotron'>
                         <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
@@ -860,7 +860,7 @@ class tadnews
 
             $post_date = mb_substr($start_day, 0, 10);
             $today_pic = $this->get_news_pic($always_top, $post_date);
-            if ('summary' == $this->show_mode or 'one' == $this->show_mode) {
+            if ('summary' === $this->show_mode or 'one' === $this->show_mode) {
                 $need_sign = (!empty($have_read_group)) ? XOOPS_URL . '/modules/tadnews/images/sign_bg.png' : '';
             } else {
                 $need_sign = (!empty($have_read_group)) ? XOOPS_URL . '/modules/tadnews/images/sign_s.png' : '';
@@ -968,7 +968,7 @@ class tadnews
         $ui = 1 == $this->sort_tool ? true : false;
         $jquery = get_jquery($ui);
 
-        if ('return' == $mode) {
+        if ('return' === $mode) {
             $main['jquery'] = $jquery;
             $main['page'] = $all_news;
             $main['show_admin_tool_title'] = $this->admin_tool;
@@ -1142,7 +1142,7 @@ class tadnews
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
-                        if ('one' == $this->show_mode) {
+                        if ('one' === $this->show_mode) {
                             $news_content = "
                         <div class='jumbotron'>
                         <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
@@ -1193,7 +1193,7 @@ class tadnews
                 } else {
                     $content = '';
                 }
-                if ('summary' == $this->show_mode or 'one' == $this->show_mode) {
+                if ('summary' === $this->show_mode or 'one' === $this->show_mode) {
                     $need_sign = (!empty($have_read_group)) ? XOOPS_URL . '/modules/tadnews/images/sign_bg.png' : '';
                 } else {
                     $need_sign = (!empty($have_read_group)) ? XOOPS_URL . '/modules/tadnews/images/sign_s.png' : '';
@@ -1227,7 +1227,7 @@ class tadnews
             $i++;
         }
 
-        if ('return' == $mode) {
+        if ('return' === $mode) {
             $main['all_news'] = $all_news;
             $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
 
@@ -1473,7 +1473,7 @@ class tadnews
         }
         $user_array = $xoopsUser->getGroups();
 
-        $col = ('post' == $kind) ? 'enable_post_group' : 'enable_group';
+        $col = ('post' === $kind) ? 'enable_post_group' : 'enable_group';
 
         //非管理員才要檢查
         $where = ($isAdmin) ? '' : "where $col!=''";
@@ -1482,7 +1482,7 @@ class tadnews
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
-            if ($isAdmin or 'pass' == $kind) {
+            if ($isAdmin or 'pass' === $kind) {
                 $ok_cat[] = $ncsn;
             } else {
                 $power_array = explode(',', $power);
@@ -1606,7 +1606,7 @@ class tadnews
         if ('1' == $this->tadnewsConfig['download_after_read'] and !empty($news['have_read_group'])) {
             $time = $this->chk_sign_status($reader_uid, $nsn);
             if (empty($time) and !empty($files)) {
-                $files = ('filename' == $mode) ? _TADNEWS_DOWNLOAD_AFTER_READ : "<div class='well'>" . _TADNEWS_DOWNLOAD_AFTER_READ . '</div>';
+                $files = ('filename' === $mode) ? _TADNEWS_DOWNLOAD_AFTER_READ : "<div class='well'>" . _TADNEWS_DOWNLOAD_AFTER_READ . '</div>';
             }
         }
 
@@ -1658,7 +1658,7 @@ class tadnews
             return;
         }
 
-        $and_enable = ('all' == $mode) ? '' : "and enable='1'";
+        $and_enable = ('all' === $mode) ? '' : "and enable='1'";
 
         $sql = 'select font_color,color,tag from ' . $xoopsDB->prefix('tad_news_tags') . " where `tag_sn`='$tag_sn' {$and_enable}";
         $result = $xoopsDB->query($sql);
@@ -1693,12 +1693,12 @@ class tadnews
             $sql_next = 'select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where (a.start_day > '{$news['start_day']}'  or a.nsn > '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate order by a.start_day , a.nsn limit 0,1";
         }
 
-        if ('' == $mode or 'back' == $mode) {
+        if ('' == $mode or 'back' === $mode) {
             $result = $xoopsDB->query($sql_back) or web_error($sql_back);
 
             list($nsn, $news_title, $start_day, $enable_group, $ncsn, $cate_enable_group) = $xoopsDB->fetchRow($result);
 
-            if ('back' == $mode) {
+            if ('back' === $mode) {
                 $nsnsort['ncsn'] = $ncsn;
                 $nsnsort['nsn'] = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
@@ -1713,12 +1713,12 @@ class tadnews
             }
         }
 
-        if ('' == $mode or 'next' == $mode) {
+        if ('' == $mode or 'next' === $mode) {
             $result = $xoopsDB->query($sql_next) or web_error($sql_next);
 
             list($nsn, $news_title, $start_day, $enable_group, $ncsn, $cate_enable_group) = $xoopsDB->fetchRow($result);
 
-            if ('next' == $mode) {
+            if ('next' === $mode) {
                 $nsnsort['ncsn'] = $ncsn;
                 $nsnsort['nsn'] = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
@@ -1868,8 +1868,8 @@ class tadnews
         $cate = $this->get_tad_news_cate($ncsn);
         $news_title = (!isset($DBV['news_title'])) ? '' : $DBV['news_title'];
         $news_content = (!isset($DBV['news_content'])) ? '' : $DBV['news_content'];
-        $start_day = (!isset($DBV['start_day']) or '0000-00-00 00:00:00' == $DBV['start_day']) ? date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) : $DBV['start_day'];
-        $end_day = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' == $DBV['end_day']) ? '' : $DBV['end_day'];
+        $start_day = (!isset($DBV['start_day']) or '0000-00-00 00:00:00' === $DBV['start_day']) ? date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) : $DBV['start_day'];
+        $end_day = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' === $DBV['end_day']) ? '' : $DBV['end_day'];
         $enable = (!isset($DBV['enable'])) ? '' : $DBV['enable'];
         $uid = (!isset($DBV['uid'])) ? $xoopsUser->getVar('uid') : $DBV['uid'];
 
@@ -1879,7 +1879,7 @@ class tadnews
 
         $prefix_tag = (!isset($DBV['prefix_tag'])) ? '' : $DBV['prefix_tag'];
         $always_top = (!isset($DBV['always_top'])) ? '0' : $DBV['always_top'];
-        $always_top_date = (!isset($DBV['always_top_date']) or '0000-00-00 00:00:00' == $DBV['always_top_date']) ? date('Y-m-d H:i:s', time() + 7 * 86400) : $DBV['always_top_date'];
+        $always_top_date = (!isset($DBV['always_top_date']) or '0000-00-00 00:00:00' === $DBV['always_top_date']) ? date('Y-m-d H:i:s', time() + 7 * 86400) : $DBV['always_top_date'];
 
         $always_top_checked = ('1' == $always_top) ? 'checked' : '';
 
@@ -1964,7 +1964,7 @@ class tadnews
         $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = [];
-        if ('return' == $mode) {
+        if ('return' === $mode) {
             $form['jquery'] = $jquery_path;
             $form['action'] = $_SERVER['PHP_SELF'];
             $form['nsn'] = $nsn;
@@ -2131,17 +2131,17 @@ class tadnews
                 $$k = $v;
             }
 
-            $style_set = ('db' == $style) ? $description : $style;
+            $style_set = ('db' === $style) ? $description : $style;
 
             if (empty($style) and !$only_url) {
                 return;
             }
 
-            if ('big' != $mode) {
+            if ('big' !== $mode) {
                 if ($only_url) {
                     return XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}";
                 }
-                $img = ('db' == $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
 
                 return $img;
             }
@@ -2149,7 +2149,7 @@ class tadnews
                 //die(XOOPS_URL . "/uploads/tadnews/image/{$file_name}");
                 return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
             }
-            $img = ('db' == $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+            $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
             //die($img);
             return $img;
         }

@@ -40,10 +40,10 @@ function tadnews_marquee_edit($options)
 {
     $option = block_news_cate($options[1]);
 
-    $left = 'left' == $options[2] ? 'checked' : '';
-    $right = 'right' == $options[2] ? 'checked' : '';
-    $up = 'up' == $options[2] ? 'checked' : '';
-    $down = 'down' == $options[2] ? 'checked' : '';
+    $left = 'left' === $options[2] ? 'checked' : '';
+    $right = 'right' === $options[2] ? 'checked' : '';
+    $up = 'up' === $options[2] ? 'checked' : '';
+    $down = 'down' === $options[2] ? 'checked' : '';
 
     $form = "{$option['js']}
     <ol class='my-form'>

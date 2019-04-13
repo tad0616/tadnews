@@ -310,7 +310,7 @@ function member_m()
     $main = '';
     if ($xoopsUser) {
         $avatar = $xoopsUser->user_avatar();
-        $avatar_pic = (empty($avatar) or 'blank.gif' == $avatar) ? "<i class='ion-ios-person'></i>" : "<img src='" . XOOPS_URL . "/uploads/{$avatar}'>";
+        $avatar_pic = (empty($avatar) or 'blank.gif' === $avatar) ? "<i class='ion-ios-person'></i>" : "<img src='" . XOOPS_URL . "/uploads/{$avatar}'>";
         $uid_name = $xoopsUser->name();
         if (empty($uid_name)) {
             $uid_name = $xoopsUser->uname();
@@ -402,7 +402,7 @@ function member_m()
     } else {
         $tlogin = openid_login();
         foreach ($tlogin as $login) {
-            if ('btn-fb' == $login['class'] or 'btn-gl' == $login['class']) {
+            if ('btn-fb' === $login['class'] or 'btn-gl' === $login['class']) {
                 $login_list .= "<a href='{$login['link']}' class='{$login['class']} button button-big external'>{$login['fa']}</a>";
             } else {
                 $login_list .= "<a href='{$login['link']}' class='{$login['class']} external'><img src='{$login['img']}' alt='{$login['text']}'></a>";
@@ -450,11 +450,11 @@ function openid_login()
             $method_const = '_' . mb_strtoupper($method);
             $loginTitle = sprintf(_TAD_LOGIN_BY, constant($method_const));
 
-            if ('facebook' == $method) {
+            if ('facebook' === $method) {
                 $tlogin[$i]['link'] = $tad_login['facebook'];
                 $tlogin[$i]['class'] = 'btn-fb';
                 $tlogin[$i]['fa'] = '<i class="icon ion-social-facebook"></i> Facebook';
-            } elseif ('google' == $method) {
+            } elseif ('google' === $method) {
                 $tlogin[$i]['link'] = $tad_login['google'];
                 $tlogin[$i]['class'] = 'btn-gl';
                 $tlogin[$i]['fa'] = '<i class="icon ion-social-google"></i> Google';

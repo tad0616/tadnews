@@ -62,9 +62,9 @@ switch ($op) {
 
     //批次管理
     case 'batch':
-        if ('move_news' == $_POST['act']) {
+        if ('move_news' === $_POST['act']) {
             move_news($_POST['nsn_arr'], $ncsn);
-        } elseif ('del_news' == $_POST['act']) {
+        } elseif ('del_news' === $_POST['act']) {
             del_news($_POST['nsn_arr']);
         }
         header('location: ' . $_SERVER['PHP_SELF']);

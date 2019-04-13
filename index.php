@@ -235,7 +235,7 @@ switch ($op) {
             include XOOPS_ROOT_PATH . '/header.php';
             list_tad_tag_news($tag_sn);
         } elseif (!empty($ncsn)) {
-            if ('summary' == $xoopsModuleConfig['cate_show_mode']) {
+            if ('summary' === $xoopsModuleConfig['cate_show_mode']) {
                 $xoopsOption['template_main'] = 'tadnews_index_summary.tpl';
                 include XOOPS_ROOT_PATH . '/header.php';
                 list_tad_summary_news($ncsn);
@@ -245,11 +245,11 @@ switch ($op) {
                 list_tad_all_news($ncsn);
             }
         } else {
-            if ('summary' == $xoopsModuleConfig['show_mode']) {
+            if ('summary' === $xoopsModuleConfig['show_mode']) {
                 $xoopsOption['template_main'] = 'tadnews_index_summary.tpl';
                 include XOOPS_ROOT_PATH . '/header.php';
                 list_tad_summary_news(null, $show_uid);
-            } elseif ('cate' == $xoopsModuleConfig['show_mode']) {
+            } elseif ('cate' === $xoopsModuleConfig['show_mode']) {
                 $xoopsOption['template_main'] = 'tadnews_index_cate.tpl';
                 include XOOPS_ROOT_PATH . '/header.php';
                 list_tad_cate_news(null, null, $show_uid);

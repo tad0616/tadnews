@@ -3,7 +3,7 @@ include_once 'header.php';
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
 
-if ('get_pic' == $op) {
+if ('get_pic' === $op) {
     $files_sn = isset($_POST['files_sn']) ? (int)$_POST['files_sn'] : 0;
     echo $TadUpFiles->get_pic_file('images', 'url', $files_sn);
 } else {
