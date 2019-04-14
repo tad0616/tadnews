@@ -1,26 +1,26 @@
 <?php
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
+include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (滑動新聞)
 function tadnews_slidernews_show($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
 
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/lofslidernews.php")) {
-        redirect_header("index.php", 3, _MB_NEED_TADTOOLS);
+    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php')) {
+        redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/lofslidernews.php";
+    include_once XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php';
 
     $ncsn_arr = explode(',', $options[4]);
 
-    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
+    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
 
     $tadnews->set_show_num($options[2]);
     $tadnews->set_view_ncsn($ncsn_arr);
     $tadnews->set_show_mode('summary');
-    $tadnews->set_news_kind("news");
+    $tadnews->set_news_kind('news');
     $tadnews->set_summary($options[3]);
     $tadnews->set_use_star_rating(false);
     $tadnews->set_cover(false);
@@ -30,9 +30,9 @@ function tadnews_slidernews_show($options)
         return;
     }
 
-    $n             = 0;
+    $n = 0;
     $lofslidernews = new lofslidernews($options[0], $options[1], $options[3]);
-    $pic_num       = 1;
+    $pic_num = 1;
     foreach ($all_news['page'] as $news) {
         $big_image = empty($news['image_big']) ? XOOPS_URL . "/modules/tadnews/images/demo{$pic_num}.jpg" : $news['image_big'];
         $lofslidernews->add_content($news['nsn'], $news['news_title'], $news['content'], $big_image, $news['post_date'], XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}");
@@ -41,7 +41,6 @@ function tadnews_slidernews_show($options)
         if ($n >= $options[2]) {
             break;
         }
-
     }
 
     $block = $lofslidernews->render();
@@ -52,7 +51,6 @@ function tadnews_slidernews_show($options)
 //區塊編輯函式
 function tadnews_slidernews_edit($options)
 {
-
     $block_news_cate = block_news_cate($options[4]);
 
     $form = "{$block_news_cate['js']}
@@ -89,5 +87,6 @@ function tadnews_slidernews_edit($options)
             </div>
         </li>
     </ol>";
+
     return $form;
 }

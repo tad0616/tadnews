@@ -1,19 +1,16 @@
 <?php
-include_once "header.php";
+include_once 'header.php';
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
 
-if ($op == "get_pic") {
-
+if ('get_pic' === $op) {
     $files_sn = isset($_POST['files_sn']) ? (int)$_POST['files_sn'] : 0;
     echo $TadUpFiles->get_pic_file('images', 'url', $files_sn);
-
 } else {
-
     $nsn = (int)$_REQUEST['nsn'];
 
     if (empty($nsn)) {
-        $rand = rand(0, 9999);
+        $rand = mt_rand(0, 9999);
         $TadUpFiles->set_col('tmp_news_pic', $rand, 1);
     } else {
         $TadUpFiles->set_col('news_pic', $nsn, 1);

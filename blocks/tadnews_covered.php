@@ -1,17 +1,17 @@
 <?php
 
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
+include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (圖文集區塊)
 function tadnews_covered($options)
 {
     global $xoopsDB, $xoTheme;
 
-    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
+    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
     $tadnews = new tadnews();
 
     $block['jquery_path'] = get_jquery();
-    $block['randStr']     = randStr(8);
+    $block['randStr'] = randStr(8);
 
     $num = $options[0] * $options[1];
     if (empty($num)) {
@@ -19,48 +19,48 @@ function tadnews_covered($options)
     }
 
     $summary_length = (int) $options[2];
-    $summary_css    = $options[3];
+    $summary_css = $options[3];
     // $show_cover     = $block['show_cover'];
     $cover_css = '';
-    $show_ncsn = isset($options[4]) ? $options[4] : "";
-    $ncsn_arr  = explode(',', $show_ncsn);
+    $show_ncsn = isset($options[4]) ? $options[4] : '';
+    $ncsn_arr = explode(',', $show_ncsn);
 
     $tadnews->set_show_num($num);
     $tadnews->set_view_ncsn($ncsn_arr);
     $tadnews->set_show_mode('list');
-    $tadnews->set_news_kind("news");
+    $tadnews->set_news_kind('news');
     $tadnews->set_summary($summary_length);
     $tadnews->set_cover(true, $cover_css);
     $tadnews->set_use_star_rating(false);
     $news = $tadnews->get_news('return');
 
-    $block                = $news;
-    $block['num']         = 12 / $options[0];
-    $block['cols']        = $options[0];
-    $block['count']       = sizeof($news['page']);
+    $block = $news;
+    $block['num'] = 12 / $options[0];
+    $block['cols'] = $options[0];
+    $block['count'] = count($news['page']);
     $block['summary_css'] = $summary_css;
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+
     return $block;
 }
 
 //區塊編輯函式
 function tadnews_covered_edit($options)
 {
+    $options0_1 = ('1' == $options[0]) ? 'selected' : '';
+    $options0_2 = ('2' == $options[0]) ? 'selected' : '';
+    $options0_3 = ('3' == $options[0]) ? 'selected' : '';
+    $options0_4 = ('4' == $options[0]) ? 'selected' : '';
+    $options0_6 = ('6' == $options[0]) ? 'selected' : '';
+    $options0_12 = ('12' == $options[0]) ? 'selected' : '';
 
-    $options0_1  = ($options[0] == "1") ? "selected" : "";
-    $options0_2  = ($options[0] == "2") ? "selected" : "";
-    $options0_3  = ($options[0] == "3") ? "selected" : "";
-    $options0_4  = ($options[0] == "4") ? "selected" : "";
-    $options0_6  = ($options[0] == "6") ? "selected" : "";
-    $options0_12 = ($options[0] == "12") ? "selected" : "";
-
-    $options4_1 = ($options[4] == "1") ? "checked" : "";
-    $options4_0 = ($options[4] == "0") ? "checked" : "";
-    $options8_1 = ($options[8] == "list") ? "checked" : "";
-    $options8_0 = ($options[8] == "table") ? "checked" : "";
-    $chked1_0   = ($options[9] == "1") ? "checked" : "";
-    $chked1_1   = ($options[9] == "0") ? "checked" : "";
+    $options4_1 = ('1' == $options[4]) ? 'checked' : '';
+    $options4_0 = ('0' == $options[4]) ? 'checked' : '';
+    $options8_1 = ('list' === $options[8]) ? 'checked' : '';
+    $options8_0 = ('table' === $options[8]) ? 'checked' : '';
+    $chked1_0 = ('1' == $options[9]) ? 'checked' : '';
+    $chked1_1 = ('0' == $options[9]) ? 'checked' : '';
 
     $option = block_news_cate($options[4]);
 
@@ -107,5 +107,6 @@ function tadnews_covered_edit($options)
             </div>
         </li>
     </ol>";
+
     return $form;
 }

@@ -70,10 +70,10 @@ function xoops_module_update_tadnews(&$module, $old_version)
         Utility::go_update_uid();
     }
 
-    $old_fckeditor = XOOPS_ROOT_PATH . "/modules/tadnews/fckeditor";
+    $old_fckeditor = XOOPS_ROOT_PATH . '/modules/tadnews/fckeditor';
     if (is_dir($old_fckeditor)) {
         Utility::delete_directory($old_fckeditor);
-        Utility::delete_directory(XOOPS_ROOT_PATH . "/modules/tadnews/dhtmlgoodies_calendar");
+        Utility::delete_directory(XOOPS_ROOT_PATH . '/modules/tadnews/dhtmlgoodies_calendar');
     }
     Utility::chk_tadnews_block();
 

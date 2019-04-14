@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/block_function.php";
+include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (自選文章)
 function tadnews_my_page($options)
@@ -7,10 +7,10 @@ function tadnews_my_page($options)
     global $xoTheme;
 
     if (empty($options[0])) {
-        return "";
+        return '';
     }
 
-    include_once XOOPS_ROOT_PATH . "/modules/tadnews/class/tadnews.php";
+    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $nsn_arr = explode(',', $options[0]);
     $tadnews = new tadnews();
@@ -20,6 +20,7 @@ function tadnews_my_page($options)
     $block = $tadnews->get_news('return');
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+
     return $block;
 }
 
@@ -32,26 +33,26 @@ function tadnews_my_page_edit($options)
 
     $options_arr = explode(',', $options[0]);
 
-    $order = empty($options[0]) ? "" : "field( `nsn` , {$options[0]}) ,";
+    $order = empty($options[0]) ? '' : "field( `nsn` , {$options[0]}) ,";
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_news") . " where enable='1' order by  $order start_day desc";
-//die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql,__FILE__,__LINE__);
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where enable='1' order by  $order start_day desc";
+    //die($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $myts = MyTextSanitizer::getInstance();
-    $opt  = "";
+    $opt = '';
     while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
-        if (in_array($nsn, $options_arr)) {
+        if (in_array($nsn, $options_arr, true)) {
             $opt2 .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
         } else {
             $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
         }
     }
 
-    $form = "
-    <script type=\"text/javascript\" src=\"" . XOOPS_URL . "/modules/tadnews/class/tmt_core.js\"></script>
-	<script type=\"text/javascript\" src=\"" . XOOPS_URL . "/modules/tadnews/class/tmt_spry_linkedselect.js\"></script>
+    $form = '
+    <script type="text/javascript" src="' . XOOPS_URL . '/modules/tadnews/class/tmt_core.js"></script>
+	<script type="text/javascript" src="' . XOOPS_URL . "/modules/tadnews/class/tmt_spry_linkedselect.js\"></script>
 	<script type=\"text/javascript\">
 	function getOptions()
 	{
@@ -99,5 +100,6 @@ function tadnews_my_page_edit($options)
         </li>
     </ol>
 	";
+
     return $form;
 }
