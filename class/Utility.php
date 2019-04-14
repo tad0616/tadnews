@@ -140,7 +140,7 @@ class Utility
     {
         global $xoopsDB;
         //die(var_export($xoopsConfig));
-        include XOOPS_ROOT_PATH . '/modules/tadnews/xoops_version.php';
+        require XOOPS_ROOT_PATH . '/modules/tadnews/xoops_version.php';
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {
@@ -152,7 +152,7 @@ class Utility
         //找出目前所有的樣板檔
         $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
-        while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result))) {
             //假如現有的區塊和樣板對不上就刪掉
             if ($template != $tpl_file_arr[$show_func]) {
                 $sql = 'delete from ' . $xoopsDB->prefix('newblocks') . " where bid='{$bid}'";
@@ -230,7 +230,7 @@ class Utility
       ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
       ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
       ADD `description` TEXT NOT NULL AFTER `file_type`";
-        $xoopsDB->queryF($sql) or die($sql);
+        $xoopsDB->queryF($sql) || die($sql);
 
         //套入描述以及欄位名稱
         $sql = 'update ' . $xoopsDB->prefix('tadnews_files_center') . " set `col_name`='nsn', `description`=`file_name`";
@@ -239,7 +239,7 @@ class Utility
 
         $sql = 'SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM ' . $xoopsDB->prefix('tadnews_files_center') . '';
         $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, show_error($sql));
-        while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result))) {
             $kind = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
             $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . mb_substr($description, -4);
             if ('file' === $kind) {
@@ -375,7 +375,7 @@ class Utility
 
         $sql = 'SELECT DISTINCT prefix_tag FROM ' . $xoopsDB->prefix('tad_news') . " WHERE `prefix_tag`!=''";
         $result = $xoopsDB->query($sql);
-        while (list($prefix_tag) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($prefix_tag) = $xoopsDB->fetchRow($result))) {
             $arr = '';
             preg_match_all("/color[\s]*=[\s]*'([#a-zA-Z0-9]+)'[\s]*>\[(.*)\]/", $prefix_tag, $arr);
             $color = $arr[1][0];
@@ -389,7 +389,7 @@ class Utility
                 $prefix_tag = addslashes($prefix_tag);
             }
             $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
-            $xoopsDB->queryF($sql) or die($sql);
+            $xoopsDB->queryF($sql) || die($sql);
         }
     }
 
@@ -497,7 +497,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'SHOW Fields FROM ' . $xoopsDB->prefix('tad_news') . " where `Field`='news_content' and `Type`='text'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $result = $xoopsDB->queryF($sql) || die($sql);
         $all = $xoopsDB->fetchRow($result);
         if (false === $all) {
             return false;
@@ -520,7 +520,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'SELECT hash_filename FROM ' . $xoopsDB->prefix('tadnews_files_center') . " WHERE `col_name`='news_pic'";
-        $result = $xoopsDB->query($sql) or die($sql);
+        $result = $xoopsDB->query($sql) || die($sql);
         $all = $xoopsDB->fetchRow($result);
         if (false === $all) {
             return false;

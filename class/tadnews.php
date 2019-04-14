@@ -72,7 +72,7 @@ $this->get_news($mode='assign');
 $this->get_cate_news($mode='assign');
 
 //把字串換成群組
-$this->txt_to_group_name($enable_group="",$default_txt="",$syb="<br />");
+$this->txt_to_group_name($enable_group="",$default_txt="",$syb="<br>");
 
 //取得所有群組
 $this->get_all_groups();
@@ -162,18 +162,18 @@ class tadnews
     public function __construct()
     {
         global $xoopsConfig;
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadDataCenter.php';
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
-        include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadDataCenter.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+        require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
         $this->now = date('Y-m-d', xoops_getUserTimestamp(time()));
         $this->today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-        $modhandler = xoops_getHandler('module');
-        $this->tadnewsModule = $modhandler->getByDirname('tadnews');
+        $moduleHandler = xoops_getHandler('module');
+        $this->tadnewsModule = $moduleHandler->getByDirname('tadnews');
         $this->module_id = $this->tadnewsModule->getVar('mid');
-        $config_handler = xoops_getHandler('config');
-        $this->tadnewsConfig = $config_handler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
+        $configHandler = xoops_getHandler('config');
+        $this->tadnewsConfig = $configHandler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
 
         if ('1' == $this->tadnewsConfig['use_star_rating']) {
             $this->set_use_star_rating(true);
@@ -353,7 +353,7 @@ class tadnews
         $sql = 'select * from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
 
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while ($all = $xoopsDB->fetchArray($result)) {
+        while (false !== ($all = $xoopsDB->fetchArray($result))) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
             foreach ($all as $k => $v) {
                 $$k = $v;
@@ -388,7 +388,7 @@ class tadnews
     {
         $syntaxhighlighter_code = '';
         if (file_exists(TADTOOLS_PATH . '/syntaxhighlighter.php')) {
-            include_once TADTOOLS_PATH . '/syntaxhighlighter.php';
+            require_once TADTOOLS_PATH . '/syntaxhighlighter.php';
             $syntaxhighlighter = new syntaxhighlighter();
             $syntaxhighlighter_code = $syntaxhighlighter->render();
         }
@@ -487,7 +487,7 @@ class tadnews
             //找出相關資訊
             $sql2 = 'select ncsn from ' . $xoopsDB->prefix('tad_news') . " where nsn in($all_nsn)";
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-            while (list($ncsn) = $xoopsDB->fetchRow($result2)) {
+            while (false !== (list($ncsn) = $xoopsDB->fetchRow($result2))) {
                 $all_ncsn[$ncsn] = $ncsn;
             }
             $this->set_view_ncsn($all_ncsn);
@@ -524,7 +524,7 @@ class tadnews
                 // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
                 // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
                 // $ncsn_arr[] = $this->view_ncsn;
-                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
+                // while (false !== (list($sub_ncsn) = $xoopsDB->fetchRow($result2))) {
                 //     $ncsn_arr[] = $sub_ncsn;
                 // }
 
@@ -536,7 +536,7 @@ class tadnews
 
         //設定是否需要評分工具
         if ($this->use_star_rating) {
-            include_once XOOPS_ROOT_PATH . '/modules/tadtools/star_rating.php';
+            require_once XOOPS_ROOT_PATH . '/modules/tadtools/star_rating.php';
             if ('one' === $this->show_mode) {
                 $rating = new rating('tadnews', '10', '', 'simple');
             } else {
@@ -551,7 +551,7 @@ class tadnews
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
         $ncsn_ok = $cates = $cate_setup = $only_title_cate = [];
-        while ($all_cate = $xoopsDB->fetchArray($result)) {
+        while (false !== ($all_cate = $xoopsDB->fetchArray($result))) {
             foreach ($all_cate as $k => $v) {
                 $$k = $v;
             }
@@ -625,7 +625,7 @@ class tadnews
                 // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
                 // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
                 // $ncsn_arr[] = $this->view_ncsn;
-                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
+                // while (false !== (list($sub_ncsn) = $xoopsDB->fetchRow($result2))) {
                 //     $ncsn_arr[] = $sub_ncsn;
                 // }
                 // $all_ncsn   = implode(',', $ncsn_arr);
@@ -726,7 +726,7 @@ class tadnews
         $i = 0;
 
         $myts = MyTextSanitizer::getInstance();
-        while ($news = $xoopsDB->fetchArray($result)) {
+        while (false !== ($news = $xoopsDB->fetchArray($result))) {
             foreach ($news as $k => $v) {
                 $$k = $v;
             }
@@ -813,7 +813,7 @@ class tadnews
             //if(!empty($passwd) and !empty($this->summary_num)){
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+                require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
                 $token = new XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $token->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
@@ -1102,7 +1102,7 @@ class tadnews
         $i = 0;
         $only_title = false;
         $only_title_cate = [];
-        while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result))) {
             //只有可讀的分類才納入
             $cate_read_power = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, 'read');
 
@@ -1130,13 +1130,13 @@ class tadnews
             $only_title_cate = [];
 
             $myts = MyTextSanitizer::getInstance();
-            while ($news = $xoopsDB->fetchArray($result2)) {
+            while (false !== ($news = $xoopsDB->fetchArray($result2))) {
                 foreach ($news as $k => $v) {
                     $$k = $v;
                 }
 
                 if (!empty($passwd)) {
-                    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+                    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
                     $token = new XoopsFormHiddenToken();
                     $XOOPS_TOKEN = $token->render();
 
@@ -1338,7 +1338,7 @@ class tadnews
     }
 
     //把字串換成群組
-    public function txt_to_group_name($enable_group = '', $default_txt = '', $syb = '<br />')
+    public function txt_to_group_name($enable_group = '', $default_txt = '', $syb = '<br>')
     {
         $groups_array = $this->get_all_groups();
         if (empty($enable_group)) {
@@ -1360,7 +1360,7 @@ class tadnews
         global $xoopsDB;
         $sql = 'SELECT groupid,name FROM ' . $xoopsDB->prefix('groups') . '';
         $result = $xoopsDB->query($sql);
-        while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($groupid, $name) = $xoopsDB->fetchRow($result))) {
             $data[$groupid] = $name;
         }
 
@@ -1376,7 +1376,7 @@ class tadnews
         $opt = _TADNEWS_SHOW_AUTHOR_NEWS . "
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
     <option value=''></option>";
-        while (list($uid) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($uid) = $xoopsDB->fetchRow($result))) {
             $uid_name = XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
             $selected = ($this->view_uid == $uid) ? 'selected' : '';
@@ -1417,13 +1417,13 @@ class tadnews
 
             $and_not_news = (null != $not_news) ? "and not_news='{$not_news}'" : '';
 
-            $option = ($of_ncsn or !$isAdmin or false == $blank) ? '' : "<option value='0'></option>";
+            $option = ($of_ncsn or !$isAdmin or false === $blank) ? '' : "<option value='0'></option>";
 
             '' == $option;
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
             $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-            while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result))) {
                 if (!in_array($ncsn, $ok_cat, true)) {
                     continue;
                 }
@@ -1441,7 +1441,7 @@ class tadnews
             $all_ncsn = implode(',', $ok_cat);
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn in($all_ncsn) $and_not_news order by sort";
             $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-            while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result))) {
                 if (!in_array($ncsn, $ok_cat, true)) {
                     continue;
                 }
@@ -1481,7 +1481,7 @@ class tadnews
         $sql = "select ncsn,{$col} from " . $xoopsDB->prefix('tad_news_cate') . " $where";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-        while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ncsn, $power) = $xoopsDB->fetchRow($result))) {
             if ($isAdmin or 'pass' === $kind) {
                 $ok_cat[] = $ncsn;
             } else {
@@ -1542,7 +1542,7 @@ class tadnews
         }
 
         if (!empty($have_read_group)) {
-            include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+            require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $token = new XoopsFormHiddenToken();
             $XOOPS_TOKEN = $token->render();
 
@@ -1815,18 +1815,18 @@ class tadnews
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
         }
 
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
         $formValidator = new formValidator('#myForm', false);
         $formValidator_code = $formValidator->render('topLeft');
 
         if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
             redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
         }
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
         $sweet_alert = new sweet_alert();
         $sweet_alert->render('del_page_tab', "post.php?op=del_page_tab&nsn=$nsn&sort=", 'sort');
 
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
@@ -1842,7 +1842,7 @@ class tadnews
             foreach ($ncsn_arr as $ncsn) {
                 $sql = 'select not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
                 $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-                while (list($not_news) = $xoopsDB->fetchRow($result)) {
+                while (false !== (list($not_news) = $xoopsDB->fetchRow($result))) {
                     $news_cate_kind_arr[$not_news] = $not_news;
                 }
             }
@@ -1909,7 +1909,7 @@ class tadnews
         if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
             redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
         }
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
         $fck = new CKEditor('tadnews', 'news_content', $news_content);
         $fck->setHeight(350);
         $editor = $fck->render();
@@ -2022,7 +2022,7 @@ class tadnews
             $form['formValidator_code'] = $formValidator_code;
             $form['tab_arr'] = $tab_arr;
 
-            include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+            require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $token = new XoopsFormHiddenToken();
             $form['XOOPS_TOKEN'] = $token->render();
 
@@ -2084,7 +2084,7 @@ class tadnews
 
         $xoopsTpl->assign('formValidator_code', $formValidator_code);
         $xoopsTpl->assign('tab_arr', $tab_arr);
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
         $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
     }
@@ -2097,7 +2097,7 @@ class tadnews
         $sql = 'SELECT tag_sn,color,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE `enable`='1'";
         $result = $xoopsDB->query($sql);
         $option = '';
-        while (list($tag_sn, $color, $tag) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($tag_sn, $color, $tag) = $xoopsDB->fetchRow($result))) {
             $selected = ($prefix_tag == $tag_sn) ? 'selected' : '';
             $option .= "<option value='{$tag_sn}' $selected>{$tag}</option>";
         }
@@ -2125,7 +2125,7 @@ class tadnews
 
         $sql = 'select * from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while ($all = $xoopsDB->fetchArray($result)) {
+        while (false !== ($all = $xoopsDB->fetchArray($result))) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
             foreach ($all as $k => $v) {
                 $$k = $v;
@@ -2244,7 +2244,7 @@ class tadnews
         //若是頁籤模式
         if (1 == $tab_mode) {
             $tabs_content = "
-            <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css' />
+            <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
             <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
             <div id='PageTab'>";
 
@@ -2480,7 +2480,7 @@ class tadnews
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
             $tabs_content = "
-            <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css' />
+            <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
             <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
             <div id='PageTab'>";
 

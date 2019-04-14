@@ -24,7 +24,7 @@ function tadnews_page_menu($options)
     //第一層底下的文章
     $sql = 'select nsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
     $result = $xoopsDB->query($sql);
-    while (list($nsn, $news_title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($nsn, $news_title) = $xoopsDB->fetchRow($result))) {
         $page['page' . $nsn]['type'] = 'page';
         $page['page' . $nsn]['padding'] = 0;
         $page['page' . $nsn]['title'] = $myts->htmlSpecialChars($news_title);
@@ -35,7 +35,7 @@ function tadnews_page_menu($options)
         //第一層底下的目錄
         $sql = 'select ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$ncsn' order by sort";
         $result = $xoopsDB->query($sql);
-        while (list($ncsn1, $nc_title) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ncsn1, $nc_title) = $xoopsDB->fetchRow($result))) {
             $page['cate' . $ncsn1]['type'] = 'cate';
             $page['cate' . $ncsn1]['padding'] = 0;
             $page['cate' . $ncsn1]['title'] = $myts->htmlSpecialChars($nc_title);
@@ -44,7 +44,7 @@ function tadnews_page_menu($options)
             //第二層底下的文章
             $sql2 = 'select nsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn1' order by page_sort";
             $result2 = $xoopsDB->query($sql2);
-            while (list($nsn, $news_title) = $xoopsDB->fetchRow($result2)) {
+            while (false !== (list($nsn, $news_title) = $xoopsDB->fetchRow($result2))) {
                 $page['page' . $nsn]['type'] = 'page';
                 $page['page' . $nsn]['padding'] = 1;
                 $page['page' . $nsn]['title'] = $myts->htmlSpecialChars($news_title);
@@ -55,7 +55,7 @@ function tadnews_page_menu($options)
             //第三層底下的目錄
             $sql2 = 'select ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$ncsn1' order by sort";
             $result2 = $xoopsDB->query($sql2);
-            while (list($ncsn2, $nc_title) = $xoopsDB->fetchRow($result2)) {
+            while (false !== (list($ncsn2, $nc_title) = $xoopsDB->fetchRow($result2))) {
                 $page['cate' . $ncsn2]['type'] = 'cate';
                 $page['cate' . $ncsn2]['padding'] = 1;
                 $page['cate' . $ncsn2]['title'] = $myts->htmlSpecialChars($nc_title);
@@ -64,7 +64,7 @@ function tadnews_page_menu($options)
                 //第三層底下的文章
                 $sql3 = 'select nsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn2' order by page_sort";
                 $result3 = $xoopsDB->query($sql3);
-                while (list($nsn, $news_title) = $xoopsDB->fetchRow($result3)) {
+                while (false !== (list($nsn, $news_title) = $xoopsDB->fetchRow($result3))) {
                     $page['page' . $nsn]['type'] = 'page';
                     $page['page' . $nsn]['padding'] = 2;
                     $page['page' . $nsn]['title'] = $myts->htmlSpecialChars($news_title);
@@ -96,7 +96,7 @@ function tadnews_page_menu_edit($options)
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
     $mColorPicker = new mColorPicker('.color');
     $mColorPicker->render();
 

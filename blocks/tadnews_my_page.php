@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (自選文章)
 function tadnews_my_page($options)
@@ -10,7 +10,7 @@ function tadnews_my_page($options)
         return '';
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $nsn_arr = explode(',', $options[0]);
     $tadnews = new tadnews();
@@ -41,7 +41,7 @@ function tadnews_my_page_edit($options)
 
     $myts = MyTextSanitizer::getInstance();
     $opt = '';
-    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result))) {
         $news_title = $myts->htmlSpecialChars($news_title);
         if (in_array($nsn, $options_arr, true)) {
             $opt2 .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";

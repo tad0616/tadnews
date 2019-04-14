@@ -548,7 +548,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}>
                     </label>
-                    <input type="text" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height: 40px; width: 40px;" onChange="$('#demo_cover_pic').css('border-color',this.value);" />
+                    <input type="text" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height: 40px; width: 40px;" onChange="$('#demo_cover_pic').css('border-color',this.value);">
                     </div>
                 </div>
 

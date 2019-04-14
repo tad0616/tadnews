@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
+require __DIR__ . '/header.php';
 /*-----------function區--------------*/
 
 //編輯工具

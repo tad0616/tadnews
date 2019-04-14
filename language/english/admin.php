@@ -1,8 +1,8 @@
 <?php
 //global.php
-include_once 'global.php';
+require_once __DIR__ . '/global.php';
 
-include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
+require_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
 define('_MA_TADNEWS_SAVE_CATE', 'Save');
 define('_MA_TADNEWS_FUNCTION', 'Function');
 define('_MA_TADNEWS_MOVE', 'Move');

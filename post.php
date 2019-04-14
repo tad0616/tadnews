@@ -1,15 +1,15 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tadnews_post.tpl';
-include_once 'header.php';
-include XOOPS_ROOT_PATH . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_post.tpl';
+require_once __DIR__ . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 if (empty($xoopsUser)) {
     redirect_header('index.php', 3, _MD_TADNEWS_NO_POST_POWER);
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
@@ -56,4 +56,4 @@ switch ($op) {
 
 $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

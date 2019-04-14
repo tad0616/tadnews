@@ -3,9 +3,9 @@
 function tadnews_b_show_3($options)
 {
     global $xoopsDB;
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
-    $modhandler = xoops_getHandler('module');
-    $xoopsModule = $modhandler->getByDirname('tadnews');
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+    $moduleHandler = xoops_getHandler('module');
+    $xoopsModule = $moduleHandler->getByDirname('tadnews');
     $com_modid = $xoopsModule->getVar('mid');
     $sql = 'select com_id,com_text,com_itemid,com_uid from ' . $xoopsDB->prefix('xoopscomments') . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";
     //die($sql);
@@ -14,7 +14,7 @@ function tadnews_b_show_3($options)
     $block['width'] = $options[1];
     $myts = MyTextSanitizer::getInstance();
     $i = 0;
-    while (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result))) {
         $txt = strip_tags($txt);
         //支援xlanguage
         if (function_exists('xlanguage_ml')) {

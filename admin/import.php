@@ -1,20 +1,20 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tadnews_adm_import.tpl';
-include_once 'header.php';
-include_once '../function.php';
-include_once 'admin_function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_adm_import.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once __DIR__ . '/admin_function.php';
 
 /*-----------function區--------------*/
 
-$module_handler = xoops_getHandler('module');
-$news = $module_handler->getByDirname('news');
+$moduleHandler = xoops_getHandler('module');
+$news = $moduleHandler->getByDirname('news');
 if (!empty($news)) {
     $mid = $news->getVar('mid');
     $version = $news->getVar('version');
 
-    $module_handler2 = xoops_getHandler('module');
-    $tadnews = $module_handler->getByDirname('tadnews');
+    $moduleHandler2 = xoops_getHandler('module');
+    $tadnews = $moduleHandler->getByDirname('tadnews');
     $tadnews_mid = $tadnews->getVar('mid');
 }
 
@@ -26,7 +26,7 @@ function chk_news_mod($version)
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $token = new XoopsFormHiddenToken();
         $XOOPS_TOKEN = $token->render();
 
@@ -62,7 +62,7 @@ function chk_cate($topic_pid = '', $left = 0)
 
     $main = '';
 
-    while (list($topic_id, $topic_pid, $topic_title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($topic_id, $topic_pid, $topic_title) = $xoopsDB->fetchRow($result))) {
         $main .= "<tr class='even'><td style='padding-left:{$left}px'><input type='checkbox' name='cate[$topic_pid][$topic_id]' checked=checked value='{$topic_title} '><b>$topic_title</b></td></tr>";
         $main .= chk_stories($topic_id, $left);
         $main .= chk_cate($topic_id, $left);
@@ -81,7 +81,7 @@ function chk_stories($topicid = '', $left = 0)
     $sql = 'select storyid,title  from ' . $xoopsDB->prefix('stories') . " where topicid ='{$topicid}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $main = '';
-    while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($storyid, $title) = $xoopsDB->fetchRow($result))) {
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";
     }
 
@@ -135,7 +135,7 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
         $title = $myts->addSlashes($title);
 
         //bbcode 轉換
-        $news_content = $myts->makeTareaData4Show($news_content, 1, 1, 1);
+        $news_content = $myts->displayTarea($news_content, 1, 1, 1);
 
         $published = date('Y-m-d H:i:s', $published);
         $enable = (empty($expired)) ? '1' : '0';
@@ -158,7 +158,7 @@ function import_common($storyid = '', $new_nsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 
 switch ($op) {
@@ -174,4 +174,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once 'header.php';
-$xoopsOption['template_main'] = 'tadnews_archive.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_archive.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 
@@ -15,7 +15,7 @@ function month_list($now_date = '')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ym, $count) = $xoopsDB->fetchRow($result))) {
         $opt[$i]['value'] = $ym;
         $opt[$i]['count'] = $count;
         $opt[$i]['text'] = str_replace('-', '' . _MD_TADNEWS_YEAR, $ym) . _MD_TADNEWS_MONTH;
@@ -49,7 +49,7 @@ function archive($date = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
 $date = system_CleanVars($_REQUEST, 'date', date('Y-m'), 'string');
@@ -69,4 +69,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

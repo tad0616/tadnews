@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (跑馬燈區塊)
 function tadnews_marquee($options)
@@ -9,7 +9,7 @@ function tadnews_marquee($options)
     if (isset($options[1])) {
         $ncsn_arr = explode(',', $options[1]);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
 

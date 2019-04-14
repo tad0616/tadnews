@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (條列式新聞)
 function tadnews_list_content_block_show($options)

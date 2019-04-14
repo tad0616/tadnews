@@ -3,9 +3,9 @@
 if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
     redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
 $TadUpFiles = new TadUpFiles('tadnews');
 
 define('_SEPARTE', '<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>');
@@ -38,7 +38,7 @@ if (!function_exists('block_news_cate')) {
         $sql = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
         $result = $xoopsDB->query($sql);
         $option = '';
-        while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
             $js .= "if(document.getElementById('c{$ncsn}').checked){
             arr[i] = document.getElementById('c{$ncsn}').value;
             i++;
@@ -71,7 +71,7 @@ if (!function_exists('get_all_news_cate')) {
         $sql = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . ' ORDER BY sort';
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-        while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
             if (empty($ncsn_arr_str) or in_array($ncsn, $ncsn_arr, true)) {
                 $data[$ncsn] = $nc_title;
             }
@@ -89,7 +89,7 @@ if (!function_exists('get_all_news_tag')) {
         $sql = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
         $result = $xoopsDB->queryF($sql);
         $data = '';
-        while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($tag_sn, $tag) = $xoopsDB->fetchRow($result))) {
             $data[$tag_sn] = $tag;
         }
 
@@ -129,7 +129,7 @@ if (!function_exists('block_news_tags')) {
         $sql = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE enable='1' ";
         $result = $xoopsDB->query($sql);
         $option = '';
-        while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($tag_sn, $tag) = $xoopsDB->fetchRow($result))) {
             $js .= "if(document.getElementById('c{$tag_sn}').checked){
        arr[i] = document.getElementById('c{$tag_sn}').value;
        i++;

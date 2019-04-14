@@ -1,10 +1,10 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once '../../mainfile.php';
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/modinfo.php";
-include_once XOOPS_ROOT_PATH . "/modules/system/language/{$xoopsConfig['language']}/blocks.php";
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
+require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/modinfo.php";
+require_once XOOPS_ROOT_PATH . "/modules/system/language/{$xoopsConfig['language']}/blocks.php";
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
 
 /*-----------function區--------------*/
 
@@ -143,7 +143,7 @@ function get_tad_news_cate_list_m()
     $sql = 'select `ncsn`, `nc_title`, `not_news` from ' . $xoopsDB->prefix('tad_news_cate') . " where `not_news` != '1' order by `sort`";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
-    while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result))) {
         $list .= "
             <li>
                 <a href='pda.php?op=category&ncsn={$ncsn}' class='item-link item-content'>
@@ -179,7 +179,7 @@ function month_list_m()
 
     $opt = (string)($nodata);
 
-    while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ym, $count) = $xoopsDB->fetchRow($result))) {
         $opt .= "
             <li>
                 <a href='pda.php?op=archive&date={$ym}' class='item-link item-content'>
@@ -261,7 +261,7 @@ function list_newspaper_m()
 
     $main = (string)($nodata);
 
-    while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result))) {
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
         $np_date = mb_substr($np_date, 0, 10);
 
@@ -430,18 +430,18 @@ function member_m()
 function openid_login()
 {
     global $xoopsConfig;
-    $modhandler = xoops_getHandler('module');
-    $config_handler = xoops_getHandler('config');
+    $moduleHandler = xoops_getHandler('module');
+    $configHandler = xoops_getHandler('config');
 
-    $TadLoginXoopsModule = $modhandler->getByDirname('tad_login');
+    $TadLoginXoopsModule = $moduleHandler->getByDirname('tad_login');
     if ($TadLoginXoopsModule) {
-        include_once XOOPS_ROOT_PATH . '/modules/tad_login/function.php';
-        include_once XOOPS_ROOT_PATH . "/modules/tad_login/language/{$xoopsConfig['language']}/county.php";
+        require_once XOOPS_ROOT_PATH . '/modules/tad_login/function.php';
+        require_once XOOPS_ROOT_PATH . "/modules/tad_login/language/{$xoopsConfig['language']}/county.php";
         $tad_login['facebook'] = facebook_login('return');
         $tad_login['google'] = google_login('return');
 
-        $config_handler = xoops_getHandler('config');
-        $modConfig = $config_handler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
+        $configHandler = xoops_getHandler('config');
+        $modConfig = $configHandler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
 
         $auth_method = $modConfig['auth_method'];
         $i = 0;
@@ -529,19 +529,19 @@ function logout_m()
 {
     global $xoopsConfig, $xoopsUser;
     // Regenerate a new session id and destroy old session
-    $GLOBALS['sess_handler']->regenerate_id(true);
+    $GLOBALS['sessHandler']->regenerate_id(true);
     $_SESSION = [];
     setcookie($xoopsConfig['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler = xoops_getHandler('online');
-        $online_handler->destroy($xoopsUser->getVar('uid'));
+        $onlineHandler = xoops_getHandler('online');
+        $onlineHandler->destroy($xoopsUser->getVar('uid'));
     }
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');

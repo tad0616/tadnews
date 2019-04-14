@@ -1,7 +1,7 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 $tadnews = new tadnews();
-include_once 'block_function.php';
+require_once __DIR__ . '/block_function.php';
 
 //取得路徑
 function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
@@ -24,7 +24,7 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
             WHERE t1.of_ncsn = '0'";
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        while ($all = $xoopsDB->fetchArray($result)) {
+        while (false !== ($all = $xoopsDB->fetchArray($result))) {
             if (in_array($the_ncsn, $all, true)) {
                 foreach ($all as $ncsn) {
                     if (!empty($ncsn)) {
@@ -55,7 +55,7 @@ function get_tadnews_sub_cate($ncsn = '0')
     // die($sql);
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $ncsn_arr = [];
-    while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
         $ncsn_arr[$ncsn] = $nc_title;
     }
     // die(var_dump($ncsn_arr));
@@ -130,7 +130,7 @@ function preview_newspaper($npsn = '')
 function tad_news_cate_form($ncsn = '')
 {
     global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $tadnews, $isAdmin;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $ok_cat = $tadnews->chk_user_cate_power('post');
     $isOwner = in_array($ncsn, $ok_cat, true) ? true : false;
@@ -192,7 +192,7 @@ function tad_news_cate_form($ncsn = '')
     $xoopsTpl->assign('enable_post_group', $enable_post_group);
     $xoopsTpl->assign('pic', $pic);
     $xoopsTpl->assign('now_op', 'tad_news_cate_form');
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new XoopsFormHiddenToken();
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
@@ -238,8 +238,8 @@ function update_tad_news_cate($ncsn = '')
         mk_thumb($ncsn, 'cate_pic', $xoopsModuleConfig['cate_pic_width']);
     }
 
-    $modhandler = xoops_getHandler('module');
-    $TadThemesModule = $modhandler->getByDirname('tad_themes');
+    $moduleHandler = xoops_getHandler('module');
+    $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
         $sql = 'select menuid from ' . $xoopsDB->prefix('tad_themes_menu') . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);

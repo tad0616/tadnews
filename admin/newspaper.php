@@ -1,8 +1,8 @@
 <?php
-$xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
-include_once 'header.php';
-include_once '../function.php';
-include_once 'admin_function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_adm_newspaper.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once __DIR__ . '/admin_function.php';
 /*-----------function區--------------*/
 
 //找出現有電子報
@@ -13,7 +13,7 @@ function newspaper_set_table($sel_nps_sn = '')
     //找出現有設定組
     $sql = 'SELECT nps_sn,title FROM ' . $xoopsDB->prefix('tad_news_paper_setup') . '';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($nps_sn, $title) = $xoopsDB->fetchRow($result))) {
         if ($sel_nps_sn == $nps_sn) {
             $selected = 'selected';
             $ptitle = $title;
@@ -69,7 +69,7 @@ function newspaper_set_table($sel_nps_sn = '')
 
     $i = 0;
     $newspaper = [];
-    while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result))) {
         $newspaper[$i]['allnpsn'] = $allnpsn;
         $newspaper[$i]['title'] = $title;
         $newspaper[$i]['number'] = sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $number);
@@ -121,7 +121,7 @@ function open_newspaper($nps_sn = '')
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new XoopsFormHiddenToken();
     $hidden .= $token->render();
 
@@ -198,7 +198,7 @@ function add_newspaper($nps_sn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $opt = $opt2 = '';
-    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result))) {
         $news_title = $myts->htmlSpecialChars($news_title);
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
         $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
@@ -213,7 +213,7 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('opt2', $opt2);
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
@@ -259,7 +259,7 @@ function edit_newspaper($npsn = '')
         $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " $news";
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result))) {
             $news_title = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
             $pic = $tadnews->get_news_cover($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
@@ -295,7 +295,7 @@ function edit_newspaper($npsn = '')
         redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
     $ck = new CKEditor('tadnews', 'np_content', $html);
     $ck->setHeight(400);
     $editor = $ck->render();
@@ -331,7 +331,7 @@ function sendmail_form($npsn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $total = $xoopsDB->getRowsNum($result);
 
-    while (list($email) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($email) = $xoopsDB->fetchRow($result))) {
         if (empty($email)) {
             continue;
         }
@@ -342,7 +342,7 @@ function sendmail_form($npsn = '')
     //取得已寄名單
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
     $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -371,7 +371,7 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('total', sprintf(_MA_TADNEWS_MAIL_LIST, $total));
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
@@ -458,7 +458,7 @@ function newspaper_email($nps_sn = '')
 
     $main = '';
     $i = 0;
-    while (list($email, $order_date) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($email, $order_date) = $xoopsDB->fetchRow($result))) {
         $email = htmlspecialchars($email);
         $ok = (check_email_mx($email)) ? 'ok' : "<span style='color:red;'>error</span>";
 
@@ -564,7 +564,7 @@ function sendmail_log($npsn = '')
     }
 
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -586,7 +586,7 @@ function sendmail_log($npsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nps_sn = system_CleanVars($_REQUEST, 'nps_sn', 0, 'int');
 $npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
@@ -686,5 +686,5 @@ switch ($op) {
 if ('preview' === $op) {
     echo $main;
 } else {
-    include_once 'footer.php';
+    require_once __DIR__ . '/footer.php';
 }

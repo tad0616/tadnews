@@ -6,7 +6,7 @@ function mk_rss()
     $myts = MyTextSanitizer::getInstance();
     $sql = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' AND enable_group=''";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
         $ncsn_ok[] = $ncsn;
         $cates[$ncsn] = $nc_title;
     }
@@ -18,7 +18,7 @@ function mk_rss()
 
     $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
     $allItem = '';
-    while ($all_news = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all_news = $xoopsDB->fetchArray($result))) {
         foreach ($all_news as $k => $v) {
             $$k = $v;
         }

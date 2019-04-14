@@ -1,16 +1,16 @@
 <?php
-include_once 'header.php';
+require_once __DIR__ . '/header.php';
 
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
 if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php')) {
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
 
     $FooTable = new FooTable();
     $FooTableJS = $FooTable->render();
 }
 
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $num = system_CleanVars($_REQUEST, 'num', 10, 'int');
 $show_ncsn = system_CleanVars($_REQUEST, 'show_ncsn', '', 'string');
 $show_button = system_CleanVars($_REQUEST, 'show_button', 0, 'int');

@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (頁籤新聞區塊)
 function tadnews_tab_news($options)
@@ -9,7 +9,7 @@ function tadnews_tab_news($options)
 
     $ncsn_arr = explode(',', $options[0]);
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
     $tadnews = new tadnews();
     $tadnews->set_news_kind('news');
     $tadnews->set_show_mode('cate');
@@ -22,7 +22,7 @@ function tadnews_tab_news($options)
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/easy_responsive_tabs.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/easy_responsive_tabs.php';
     $randStr = randStr();
     $responsive_tabs = new easy_responsive_tabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
     $responsive_tabs->rander();
@@ -51,7 +51,7 @@ function tadnews_tab_news_edit($options)
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
     $mColorPicker = new mColorPicker('.color');
     $mColorPicker->render();
 

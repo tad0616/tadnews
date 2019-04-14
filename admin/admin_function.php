@@ -43,7 +43,7 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
     $sweet_alert = new sweet_alert();
     $sweet_alert->render('delete_tad_news_cate_func', "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
 }
@@ -62,7 +62,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
     //$catearr="";
 
     //$i=0;
-    while (list($ncsn, $of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $cate_pic, $not_news) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($ncsn, $of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $cate_pic, $not_news) = $xoopsDB->fetchRow($result))) {
         $sql2 = 'select count(*) from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}'";
         $result2 = $xoopsDB->query($sql2);
         list($counter) = $xoopsDB->fetchRow($result2);
@@ -105,7 +105,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
 function mk_thumb($ncsn = '', $col_name = '', $width = 100)
 {
     global $xoopsDB;
-    include XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
+    require XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
 
     if (file_exists(_TADNEWS_CATE_DIR . "/{$ncsn}.png")) {
         unlink(_TADNEWS_CATE_DIR . "/{$ncsn}.png");
@@ -219,7 +219,7 @@ function get_sub_cate($of_ncsn = '')
     $sql = 'select ncsn from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$of_ncsn'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     //echo "<p>$sql</p>";
-    while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($sub_ncsn) = $xoopsDB->fetchRow($result))) {
         $ccc = get_sub_cate($sub_ncsn);
         if (!empty($ccc)) {
             $aaa[] = $ccc;

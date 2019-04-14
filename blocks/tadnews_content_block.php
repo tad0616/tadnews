@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (本站最新消息)
 function tadnews_content_block_show($options)
@@ -8,7 +8,7 @@ function tadnews_content_block_show($options)
 
     $ncsn_arr = explode(',', $options[7]);
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
     $tadnews->set_show_num($options[0]);

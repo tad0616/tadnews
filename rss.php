@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
-include_once XOOPS_ROOT_PATH . '/class/template.php';
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+require __DIR__ . '/header.php';
+require_once XOOPS_ROOT_PATH . '/class/template.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 /*-----------function區--------------*/
 
 $ncsn = 0;

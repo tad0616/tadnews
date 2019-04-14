@@ -1,13 +1,13 @@
 <?php
 
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (圖文集區塊)
 function tadnews_covered($options)
 {
     global $xoopsDB, $xoTheme;
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
     $tadnews = new tadnews();
 
     $block['jquery_path'] = get_jquery();

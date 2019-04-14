@@ -1,5 +1,5 @@
 <?php
-include_once 'header.php';
+require_once __DIR__ . '/header.php';
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
 
