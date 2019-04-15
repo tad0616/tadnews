@@ -475,7 +475,7 @@ class tadnews
             $where_cate = " and ncsn='{$this->view_ncsn}'";
             $where_news = " and nsn='{$this->view_nsn}'";
 
-        //秀出一堆指定文章
+            //秀出一堆指定文章
         } elseif (!empty($this->view_nsn) and is_array($this->view_nsn)) {
             //die(var_export($this->view_nsn));
             //完整內容
@@ -497,7 +497,7 @@ class tadnews
             $kind_chk = '';
             $where_cate = empty($all_ncsn) ? '' : " and ncsn in($all_ncsn)";
             $where_news = " and nsn in($all_nsn)";
-        //秀出分類或不指定
+            //秀出分類或不指定
         } else {
             //die(var_export($this->view_nsn));
 
@@ -513,11 +513,11 @@ class tadnews
             //假如沒有指定觀看分類
             if (null === $this->view_ncsn) {
                 $where_cate = '';
-            //若指定觀看的分類是陣列（限定觀看的分類）
+                //若指定觀看的分類是陣列（限定觀看的分類）
             } elseif (is_array($this->view_ncsn)) {
                 $all_ncsn = implode(',', $this->view_ncsn);
                 $where_cate = empty($all_ncsn) ? '' : "and ncsn in($all_ncsn)";
-            //指定觀看某一個分類
+                //指定觀看某一個分類
             } elseif ($this->only_one_ncsn or $this->view_ncsn) {
                 $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
@@ -617,7 +617,7 @@ class tadnews
                 //若指定觀看的分類是陣列（限定觀看的分類）
             } elseif (is_array($this->view_ncsn)) {
                 $where_cate = empty($ok_cate) ? '' : "and ncsn in($ok_cate)";
-            //指定觀看某一個分類
+                //指定觀看某一個分類
             } elseif ($this->only_one_ncsn or $this->view_ncsn) {
                 $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
@@ -648,7 +648,7 @@ class tadnews
         } elseif (is_array($this->view_tag)) {
             $all_tag = implode(',', $this->view_tag);
             $where_tag = empty($all_tag) ? '' : "and prefix_tag in($all_tag)";
-        //指定觀看某一個分類
+            //指定觀看某一個分類
         } else {
             $where_tag = '';
         }
@@ -1347,7 +1347,7 @@ class tadnews
             $gs = explode(',', $enable_group);
             $g_txt = '';
             foreach ($gs as $gid) {
-                $g_txt .= $groups_array[$gid] . (string)($syb);
+                $g_txt .= $groups_array[$gid] . (string) ($syb);
             }
         }
 
@@ -1411,11 +1411,11 @@ class tadnews
 
         $ok_cat = $this->chk_user_cate_power();
 
+        $and_not_news = (null != $not_news) ? "and not_news='{$not_news}'" : '';
+
         if ($isAdmin) {
             $left = $level * 10;
             $level += 1;
-
-            $and_not_news = (null != $not_news) ? "and not_news='{$not_news}'" : '';
 
             $option = ($of_ncsn or !$isAdmin or false == $blank) ? '' : "<option value='0'></option>";
 
@@ -1440,8 +1440,10 @@ class tadnews
         } else {
             $all_ncsn = implode(',', $ok_cat);
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn in($all_ncsn) $and_not_news order by sort";
+
             $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
+                $ncsn = (int) $ncsn;
                 if (!in_array($ncsn, $ok_cat, true)) {
                     continue;
                 }
@@ -1469,7 +1471,7 @@ class tadnews
 
         $isAdmin = $xoopsUser->isAdmin($this->module_id);
         if ($isAdmin) {
-            $ok_cat[] = '';
+            $ok_cat[] = 0;
         }
         $user_array = $xoopsUser->getGroups();
 
@@ -1483,12 +1485,12 @@ class tadnews
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
             if ($isAdmin or 'pass' === $kind) {
-                $ok_cat[] = $ncsn;
+                $ok_cat[] = (int) $ncsn;
             } else {
                 $power_array = explode(',', $power);
                 foreach ($power_array as $gid) {
                     if (in_array($gid, $user_array, true)) {
-                        $ok_cat[] = $ncsn;
+                        $ok_cat[] = (int) $ncsn;
                         break;
                     }
                 }
@@ -1624,8 +1626,7 @@ class tadnews
         $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
         $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, show_error($sql));
         $data = $xoopsDB->fetchArray($result);
-        //die($sql);
-        //die($data['news_title']);
+
         $news_content = strip_tags($data['news_content']);
 
         //支援xlanguage
@@ -1808,7 +1809,7 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $myts = MyTextSanitizer::getInstance();
-        $ver = (int)str_replace('.', '', mb_substr(XOOPS_VERSION, 6, 5));
+        $ver = (int) str_replace('.', '', mb_substr(XOOPS_VERSION, 6, 5));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
         } else {
@@ -1817,7 +1818,7 @@ class tadnews
 
         include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
         $formValidator = new formValidator('#myForm', false);
-        $formValidator_code = $formValidator->render('topLeft');
+        $formValidator->render('topLeft');
 
         if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
             redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
@@ -1838,17 +1839,15 @@ class tadnews
         if (empty($ncsn_arr)) {
             redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . implode(';', $ncsn_arr));
         } else {
-            $news_cate_kind_arr = [];
-            foreach ($ncsn_arr as $ncsn) {
-                $sql = 'select not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
-                $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-                while (list($not_news) = $xoopsDB->fetchRow($result)) {
-                    $news_cate_kind_arr[$not_news] = $not_news;
-                }
-            }
+            // $news_cate_kind_arr = [];
+            // foreach ($ncsn_arr as $ncsn) {
+            //     $sql = 'select not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
+            //     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+            //     while (list($not_news) = $xoopsDB->fetchRow($result)) {
+            //         $news_cate_kind_arr[$ncsn] = $not_news;
+            //     }
+            // }
         }
-
-        // die(var_export($news_cate_kind_arr));
 
         //抓取預設值
         if (!empty($nsn)) {
@@ -1932,7 +1931,7 @@ class tadnews
         $pic = $pic_css = '';
         if (!empty($nsn)) {
             $pic = $this->get_news_doc_pic($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
-            //die('pic:'.$pic);
+
             if (!empty($pic)) {
                 $sql = 'select files_sn,description from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
                 $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -1960,7 +1959,7 @@ class tadnews
 
         $css = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
-        //die($pic_css);
+
         $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = [];
@@ -2011,7 +2010,7 @@ class tadnews
             $form['creat_new_cate'] = $creat_new_cate;
             $form['use_top_tool'] = $use_top_tool;
             $form['top_max_day'] = $xoopsModuleConfig['top_max_day'];
-            $form['news_cate_kind_arr'] = $news_cate_kind_arr;
+            // $form['news_cate_kind_arr'] = $news_cate_kind_arr;
 
             $this->TadUpFiles->set_col('nsn', $nsn);
             $upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
@@ -2019,7 +2018,6 @@ class tadnews
             $page_upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
             $form['page_upform'] = $page_upform;
 
-            $form['formValidator_code'] = $formValidator_code;
             $form['tab_arr'] = $tab_arr;
 
             include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -2074,7 +2072,7 @@ class tadnews
         $xoopsTpl->assign('creat_new_cate', $creat_new_cate);
         $xoopsTpl->assign('use_top_tool', $use_top_tool);
         $xoopsTpl->assign('top_max_day', $xoopsModuleConfig['top_max_day']);
-        $xoopsTpl->assign('news_cate_kind_arr', $news_cate_kind_arr);
+        // $xoopsTpl->assign('news_cate_kind_arr', $news_cate_kind_arr);
 
         $this->TadUpFiles->set_col('nsn', $nsn);
         $upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
@@ -2082,7 +2080,6 @@ class tadnews
         $page_upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
         $xoopsTpl->assign('page_upform', $page_upform);
 
-        $xoopsTpl->assign('formValidator_code', $formValidator_code);
         $xoopsTpl->assign('tab_arr', $tab_arr);
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
@@ -2146,11 +2143,10 @@ class tadnews
                 return $img;
             }
             if ($only_url) {
-                //die(XOOPS_URL . "/uploads/tadnews/image/{$file_name}");
                 return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
             }
             $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
-            //die($img);
+
             return $img;
         }
     }
@@ -2292,7 +2288,7 @@ class tadnews
         }
         $always_top = (empty($_POST['always_top'])) ? '0' : '1';
         $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
-        //die($pic_css);
+
         if (!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']) {
             $pic_css = $this->tadnewsConfig['cover_pic_css'];
         }
@@ -2309,7 +2305,7 @@ class tadnews
         $enable = (int) $_POST['enable'];
 
         $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$start_day}','{$end_day}','{$enable}','{$uid}','{$passwd}','{$enable_group}','{$prefix_tag}','{$always_top}','{$always_top_date}','{$have_read_group}')";
-        //die($sql);
+
         $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         //取得最後新增資料的流水編號
@@ -2376,7 +2372,7 @@ class tadnews
         }
 
         $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$new_cate}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
-        // die($sql);
+
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_DB_ADD_ERROR1);
         //取得最後新增資料的流水編號
         $ncsn = $xoopsDB->getInsertId();
@@ -2398,7 +2394,6 @@ class tadnews
     //把圖片的 CSS 設定整成成一般css
     private function mk_pic_css($set = '')
     {
-        //die(var_export($set));
         if (empty($set)) {
             $pic_css = '';
         } else {
@@ -2412,7 +2407,7 @@ class tadnews
             $pic_css .= null === $set['float'] ? '' : "float:{$set['float']}; ";
             $pic_css .= null === $set['margin'] ? '' : "margin:{$set['margin']}px; ";
         }
-        //die($pic_css);
+
         return $pic_css;
     }
 
@@ -2570,7 +2565,7 @@ class tadnews
 
         $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set enable = '1' where nsn='$nsn'";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        $ncsn = (int)$_POST['ncsn'];
+        $ncsn = (int) $_POST['ncsn'];
         $cate = $this->get_tad_news_cate($ncsn);
         $page = ('1' == $cate['not_news']) ? 'page' : 'index';
         header('location: ' . XOOPS_URL . "/modules/tadnews/{$page}.php?ncsn={$ncsn}&nsn={$nsn}");

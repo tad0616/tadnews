@@ -5,7 +5,6 @@
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
 
 <{$toolbar}>
-<{$formValidator_code}>
 
 <script type="text/javascript">
     $(document).ready(function() {
