@@ -1250,6 +1250,8 @@ class tadnews
             }
 
             foreach ($User_Groups as $gid) {
+                $gid = (int) $gid;
+
                 if (in_array($gid, $cate_enable_group, true) or 1 == $gid) {
                     return true;
                 }
@@ -1424,6 +1426,7 @@ class tadnews
             $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
+                $ncsn = (int) $ncsn;
                 if (!in_array($ncsn, $ok_cat, true)) {
                     continue;
                 }
@@ -1489,6 +1492,8 @@ class tadnews
             } else {
                 $power_array = explode(',', $power);
                 foreach ($power_array as $gid) {
+
+                    $gid = (int) $gid;
                     if (in_array($gid, $user_array, true)) {
                         $ok_cat[] = (int) $ncsn;
                         break;
@@ -1551,6 +1556,8 @@ class tadnews
             $have_read_group_arr = explode(',', $have_read_group);
 
             foreach ($User_Groups as $gid) {
+                $gid = (int) $gid;
+
                 if (in_array($gid, $have_read_group_arr, true)) {
                     $time = $this->chk_sign_status($uid, $nsn);
                     if (!empty($time)) {
