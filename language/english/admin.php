@@ -2,7 +2,7 @@
 //global.php
 require_once __DIR__ . '/global.php';
 
-require_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
+xoops_loadLanguage('admin_common', 'tadtools');
 define('_MA_TADNEWS_SAVE_CATE', 'Save');
 define('_MA_TADNEWS_FUNCTION', 'Function');
 define('_MA_TADNEWS_MOVE', 'Move');

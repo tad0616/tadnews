@@ -21,6 +21,7 @@ namespace XoopsModules\Tadnews;
  * @author       Mamba <mambax7@gmail.com>
  */
 
+
 /**
  * Class Utility
  */
@@ -205,14 +206,14 @@ class Utility
     public static function go_update10()
     {
         global $xoopsDB;
-        mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews');
-        mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/cate');
-        mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/file');
-        mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image');
-        mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image/.thumbs');
+        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews');
+        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/cate');
+        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/file');
+        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image');
+        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image/.thumbs');
 
         //建立電子報佈景
-        mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes');
+        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes');
         if (is_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2')) {
             tadnews_delete_directory(XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2');
         }
