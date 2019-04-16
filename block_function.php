@@ -43,7 +43,7 @@ if (!function_exists('block_news_cate')) {
             arr[i] = document.getElementById('c{$ncsn}').value;
             i++;
             }";
-            $ckecked = (in_array($ncsn, $sc, true)) ? 'checked' : '';
+            $ckecked = (in_array($ncsn, $sc)) ? 'checked' : '';
             $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$ncsn}' value='{$ncsn}' class='bbv' onChange=bbv() $ckecked><label for='c{$ncsn}'>$nc_title</label></span> ";
         }
 
@@ -72,7 +72,7 @@ if (!function_exists('get_all_news_cate')) {
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-            if (empty($ncsn_arr_str) or in_array($ncsn, $ncsn_arr, true)) {
+            if (empty($ncsn_arr_str) or in_array($ncsn, $ncsn_arr)) {
                 $data[$ncsn] = $nc_title;
             }
         }
@@ -134,7 +134,7 @@ if (!function_exists('block_news_tags')) {
        arr[i] = document.getElementById('c{$tag_sn}').value;
        i++;
       }";
-            $ckecked = (in_array($tag_sn, $sc, true)) ? 'checked' : '';
+            $ckecked = (in_array($tag_sn, $sc)) ? 'checked' : '';
             $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$tag_sn}' value='{$tag_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$tag_sn}'>$tag</label></span> ";
             $tags[$tag_sn] = $tag;
         }

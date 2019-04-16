@@ -25,7 +25,7 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
-            if (in_array($the_ncsn, $all, true)) {
+            if (in_array($the_ncsn, $all)) {
                 foreach ($all as $ncsn) {
                     if (!empty($ncsn)) {
                         if (!$include_self and $ncsn == $the_ncsn) {
@@ -204,7 +204,8 @@ function update_tad_news_cate($ncsn = '')
     global $xoopsDB, $xoopsModuleConfig, $tadnews, $isAdmin;
 
     $ok_cat = $tadnews->chk_user_cate_power('post');
-    $isOwner = in_array($ncsn, $ok_cat, true) ? true : false;
+    $ncsn = (int) $ncsn;
+    $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
     if (!$isOwner and !$isAdmin) {
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);

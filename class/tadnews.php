@@ -816,7 +816,7 @@ class tadnews
                 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
                 $token = new XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $token->render();
-                if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
+                if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
                         <div class='jumbotron'>
@@ -1141,7 +1141,7 @@ class tadnews
                     $XOOPS_TOKEN = $token->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                    if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
+                    if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                         if ('one' === $this->show_mode) {
                             $news_content = "
                         <div class='jumbotron'>
@@ -1245,14 +1245,14 @@ class tadnews
         if (!empty($enable_group)) {
             $ok = false;
             $cate_enable_group = explode(',', $enable_group);
-            if (in_array('', $cate_enable_group, true)) {
+            if (in_array('', $cate_enable_group)) {
                 return true;
             }
 
             foreach ($User_Groups as $gid) {
                 $gid = (int) $gid;
 
-                if (in_array($gid, $cate_enable_group, true) or 1 == $gid) {
+                if (in_array($gid, $cate_enable_group) or 1 == $gid) {
                     return true;
                 }
             }
@@ -1272,9 +1272,10 @@ class tadnews
             return true;
         }
 
-        $news_enable_group = explode(',', $enable_group);
+        $news_enable_group = array_map('intval', explode(',', $enable_group));
         foreach ($User_Groups as $gid) {
-            if (in_array($gid, $news_enable_group, true)) {
+            $gid = (int) $gid;
+            if (in_array($gid, $news_enable_group)) {
                 return true;
             }
         }
@@ -1427,7 +1428,7 @@ class tadnews
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
-                if (!in_array($ncsn, $ok_cat, true)) {
+                if (!in_array($ncsn, $ok_cat)) {
                     continue;
                 }
 
@@ -1447,7 +1448,7 @@ class tadnews
             $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
-                if (!in_array($ncsn, $ok_cat, true)) {
+                if (!in_array($ncsn, $ok_cat)) {
                     continue;
                 }
 
@@ -1493,7 +1494,7 @@ class tadnews
                 $power_array = explode(',', $power);
                 foreach ($power_array as $gid) {
                     // $gid = (int) $gid;
-                    if (in_array($gid, $user_array, true)) {
+                    if (in_array($gid, $user_array)) {
                         $ok_cat[] = (int) $ncsn;
                         break;
                     }
@@ -1557,7 +1558,7 @@ class tadnews
             foreach ($User_Groups as $gid) {
                 // $gid = (int) $gid;
 
-                if (in_array($gid, $have_read_group_arr, true)) {
+                if (in_array($gid, $have_read_group_arr)) {
                     $time = $this->chk_sign_status($uid, $nsn);
                     if (!empty($time)) {
                         $main = "<div class='col-sm-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . '</div>';
@@ -2211,14 +2212,14 @@ class tadnews
             redirect_header('index.php', 3, $error);
         }
 
-        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
             $enable_group = '';
         } else {
             $enable_group = implode(',', $_POST['enable_group']);
         }
 
         //需簽收群組
-        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'], true)) {
+        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'])) {
             $have_read_group = '';
         } else {
             $have_read_group = implode(',', $_POST['have_read_group']);
@@ -2453,14 +2454,14 @@ class tadnews
         }
 
         //可讀群組
-        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
             $enable_group = '';
         } else {
             $enable_group = implode(',', $_POST['enable_group']);
         }
 
         //需簽收群組
-        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'], true)) {
+        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'])) {
             $have_read_group = '';
         } else {
             $have_read_group = implode(',', $_POST['have_read_group']);

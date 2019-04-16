@@ -50,31 +50,31 @@ function mk_rss()
     }
 
     $main = '
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>' . XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)) . '</title>
-    <link>' . XOOPS_URL . '</link>
-    <description>' . XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)) . '</description>
-    <lastBuildDate>' . formatTimestamp(time(), 'rss') . '</lastBuildDate>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0">
+      <channel>
+        <title>' . XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)) . '</title>
+        <link>' . XOOPS_URL . '</link>
+        <description>' . XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)) . '</description>
+        <lastBuildDate>' . formatTimestamp(time(), 'rss') . '</lastBuildDate>
 
-    <generator>Tad News</generator>
-    <category>News</category>
-    <managingEditor>' . checkEmail($xoopsConfig['adminmail'], true) . '</managingEditor>
-    <webMaster>' . checkEmail($xoopsConfig['adminmail'], true) . '</webMaster>
-    <language>' . _LANGCODE . '</language>
-    <image>
+        <generator>Tad News</generator>
+        <category>News</category>
+        <managingEditor>' . checkEmail($xoopsConfig['adminmail'], true) . '</managingEditor>
+        <webMaster>' . checkEmail($xoopsConfig['adminmail'], true) . '</webMaster>
+        <language>' . _LANGCODE . '</language>
+        <image>
 
-      <title>' . XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)) . '</title>
-      <url>' . XOOPS_URL . '/images/logo.png</url>
-      <link>' . XOOPS_URL . "</link>
-      <width>{$width}</width>
-      <height>{$height}</height>
-    </image>
+          <title>' . XoopsLocal::convert_encoding(htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)) . '</title>
+          <url>' . XOOPS_URL . '/images/logo.png</url>
+          <link>' . XOOPS_URL . "</link>
+          <width>{$width}</width>
+          <height>{$height}</height>
+        </image>
 
-    $allItem
-  </channel>
-</rss>
+        $allItem
+      </channel>
+    </rss>
   ";
 
     return $main;
