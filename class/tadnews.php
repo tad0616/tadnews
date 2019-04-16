@@ -1449,7 +1449,7 @@ class tadnews
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
-                if (!in_array($ncsn, $ok_cat, true)) {
+                if (!in_array($ncsn, $ok_cat)) {
                     continue;
                 }
 

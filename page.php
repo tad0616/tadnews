@@ -91,6 +91,7 @@ $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 $fsn = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
 $files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
+$news_title = '';
 
 switch ($op) {
     //下載檔案
