@@ -134,7 +134,7 @@ function tad_news_cate_form($ncsn = '')
 
     $ok_cat = $tadnews->chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
-    $isOwner = in_array($ncsn, $ok_cat, true) ? true : false;
+    $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
     if (!$isOwner and !$isAdmin) {
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
@@ -211,7 +211,7 @@ function update_tad_news_cate($ncsn = '')
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
     }
 
-    if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+    if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
         $enable_group = '';
     } else {
         $enable_group = implode(',', $_POST['enable_group']);
