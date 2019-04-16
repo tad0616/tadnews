@@ -34,7 +34,7 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
         }
     }
 
-    $tadnews->get_news('assign', true);
+    $tadnews->get_news('assign');
     $xoopsTpl->assign('options', $options);
     $xoopsTpl->assign('ncsn', $the_ncsn);
     $cate = $tadnews->get_tad_news_cate($the_ncsn);
@@ -142,7 +142,7 @@ function insert_tad_news_cate()
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
-    if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+    if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
         $enable_group = '';
     } else {
         $enable_group = implode(',', $_POST['enable_group']);

@@ -70,14 +70,11 @@ switch ($op) {
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 
-    case 'add_news_cate':
-        list_tadnews_cate_tree();
-        tad_news_cate_form();
-        break;
     case 'modify_page_cate':
         list_tadnews_cate_tree($ncsn);
         tad_news_cate_form($ncsn);
         break;
+
     //新增資料
     case 'insert_tad_news_cate':
         $ncsn = insert_tad_news_cate();

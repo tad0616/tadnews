@@ -353,7 +353,7 @@ class tadnews
         $sql = 'select * from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
 
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== ($all = $xoopsDB->fetchArray($result))) {
+        while ($all = $xoopsDB->fetchArray($result)) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
             foreach ($all as $k => $v) {
                 $$k = $v;
@@ -487,7 +487,7 @@ class tadnews
             //找出相關資訊
             $sql2 = 'select ncsn from ' . $xoopsDB->prefix('tad_news') . " where nsn in($all_nsn)";
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-            while (false !== (list($ncsn) = $xoopsDB->fetchRow($result2))) {
+            while (list($ncsn) = $xoopsDB->fetchRow($result2)) {
                 $all_ncsn[$ncsn] = $ncsn;
             }
             $this->set_view_ncsn($all_ncsn);
@@ -524,7 +524,7 @@ class tadnews
                 // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
                 // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
                 // $ncsn_arr[] = $this->view_ncsn;
-                // while (false !== (list($sub_ncsn) = $xoopsDB->fetchRow($result2))) {
+                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
                 //     $ncsn_arr[] = $sub_ncsn;
                 // }
 
@@ -625,7 +625,7 @@ class tadnews
                 // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
                 // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
                 // $ncsn_arr[] = $this->view_ncsn;
-                // while (false !== (list($sub_ncsn) = $xoopsDB->fetchRow($result2))) {
+                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
                 //     $ncsn_arr[] = $sub_ncsn;
                 // }
                 // $all_ncsn   = implode(',', $ncsn_arr);
@@ -816,7 +816,7 @@ class tadnews
                 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
                 $token = new XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $token->render();
-                if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
+                if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
                         <div class='jumbotron'>
@@ -1102,7 +1102,7 @@ class tadnews
         $i = 0;
         $only_title = false;
         $only_title_cate = [];
-        while (false !== (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result))) {
+        while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
             //只有可讀的分類才納入
             $cate_read_power = $this->chk_cate_power($ncsn, $User_Groups, $enable_group, 'read');
 
@@ -1141,7 +1141,7 @@ class tadnews
                     $XOOPS_TOKEN = $token->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                    if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass, true)) {
+                    if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                         if ('one' === $this->show_mode) {
                             $news_content = "
                         <div class='jumbotron'>
@@ -1245,12 +1245,14 @@ class tadnews
         if (!empty($enable_group)) {
             $ok = false;
             $cate_enable_group = explode(',', $enable_group);
-            if (in_array('', $cate_enable_group, true)) {
+            if (in_array('', $cate_enable_group)) {
                 return true;
             }
 
             foreach ($User_Groups as $gid) {
-                if (in_array($gid, $cate_enable_group, true) or 1 == $gid) {
+                $gid = (int) $gid;
+
+                if (in_array($gid, $cate_enable_group) or 1 == $gid) {
                     return true;
                 }
             }
@@ -1270,9 +1272,10 @@ class tadnews
             return true;
         }
 
-        $news_enable_group = explode(',', $enable_group);
+        $news_enable_group = array_map('intval', explode(',', $enable_group));
         foreach ($User_Groups as $gid) {
-            if (in_array($gid, $news_enable_group, true)) {
+            $gid = (int) $gid;
+            if (in_array($gid, $news_enable_group)) {
                 return true;
             }
         }
@@ -1360,7 +1363,7 @@ class tadnews
         global $xoopsDB;
         $sql = 'SELECT groupid,name FROM ' . $xoopsDB->prefix('groups') . '';
         $result = $xoopsDB->query($sql);
-        while (false !== (list($groupid, $name) = $xoopsDB->fetchRow($result))) {
+        while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
             $data[$groupid] = $name;
         }
 
@@ -1376,7 +1379,7 @@ class tadnews
         $opt = _TADNEWS_SHOW_AUTHOR_NEWS . "
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
     <option value=''></option>";
-        while (false !== (list($uid) = $xoopsDB->fetchRow($result))) {
+        while (list($uid) = $xoopsDB->fetchRow($result)) {
             $uid_name = XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
             $selected = ($this->view_uid == $uid) ? 'selected' : '';
@@ -1423,8 +1426,9 @@ class tadnews
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
             $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-            while (false !== (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result))) {
-                if (!in_array($ncsn, $ok_cat, true)) {
+            while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
+                $ncsn = (int) $ncsn;
+                if (!in_array($ncsn, $ok_cat)) {
                     continue;
                 }
 
@@ -1445,7 +1449,6 @@ class tadnews
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
-
                 if (!in_array($ncsn, $ok_cat, true)) {
                     continue;
                 }
@@ -1485,13 +1488,14 @@ class tadnews
         $sql = "select ncsn,{$col} from " . $xoopsDB->prefix('tad_news_cate') . " $where";
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-        while (false !== (list($ncsn, $power) = $xoopsDB->fetchRow($result))) {
+        while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
             if ($isAdmin or 'pass' === $kind) {
                 $ok_cat[] = (int) $ncsn;
             } else {
                 $power_array = explode(',', $power);
                 foreach ($power_array as $gid) {
-                    if (in_array($gid, $user_array, true)) {
+                    // $gid = (int) $gid;
+                    if (in_array($gid, $user_array)) {
                         $ok_cat[] = (int) $ncsn;
                         break;
                     }
@@ -1553,7 +1557,9 @@ class tadnews
             $have_read_group_arr = explode(',', $have_read_group);
 
             foreach ($User_Groups as $gid) {
-                if (in_array($gid, $have_read_group_arr, true)) {
+                // $gid = (int) $gid;
+
+                if (in_array($gid, $have_read_group_arr)) {
                     $time = $this->chk_sign_status($uid, $nsn);
                     if (!empty($time)) {
                         $main = "<div class='col-sm-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . '</div>';
@@ -2097,7 +2103,7 @@ class tadnews
         $sql = 'SELECT tag_sn,color,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE `enable`='1'";
         $result = $xoopsDB->query($sql);
         $option = '';
-        while (false !== (list($tag_sn, $color, $tag) = $xoopsDB->fetchRow($result))) {
+        while (list($tag_sn, $color, $tag) = $xoopsDB->fetchRow($result)) {
             $selected = ($prefix_tag == $tag_sn) ? 'selected' : '';
             $option .= "<option value='{$tag_sn}' $selected>{$tag}</option>";
         }
@@ -2208,14 +2214,14 @@ class tadnews
             redirect_header('index.php', 3, $error);
         }
 
-        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
             $enable_group = '';
         } else {
             $enable_group = implode(',', $_POST['enable_group']);
         }
 
         //需簽收群組
-        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'], true)) {
+        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'])) {
             $have_read_group = '';
         } else {
             $have_read_group = implode(',', $_POST['have_read_group']);
@@ -2450,14 +2456,14 @@ class tadnews
         }
 
         //可讀群組
-        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+        if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
             $enable_group = '';
         } else {
             $enable_group = implode(',', $_POST['enable_group']);
         }
 
         //需簽收群組
-        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'], true)) {
+        if (empty($_POST['have_read_group']) or in_array('', $_POST['have_read_group'])) {
             $have_read_group = '';
         } else {
             $have_read_group = implode(',', $_POST['have_read_group']);

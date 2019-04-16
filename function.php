@@ -25,7 +25,7 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         while (false !== ($all = $xoopsDB->fetchArray($result))) {
-            if (in_array($the_ncsn, $all, true)) {
+            if (in_array($the_ncsn, $all)) {
                 foreach ($all as $ncsn) {
                     if (!empty($ncsn)) {
                         if (!$include_self and $ncsn == $the_ncsn) {
@@ -55,7 +55,7 @@ function get_tadnews_sub_cate($ncsn = '0')
     // die($sql);
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $ncsn_arr = [];
-    while (false !== (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
+    while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
     }
     // die(var_dump($ncsn_arr));
@@ -133,7 +133,8 @@ function tad_news_cate_form($ncsn = '')
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $ok_cat = $tadnews->chk_user_cate_power('post');
-    $isOwner = in_array($ncsn, $ok_cat, true) ? true : false;
+    $ncsn = (int) $ncsn;
+    $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
     if (!$isOwner and !$isAdmin) {
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
@@ -203,13 +204,14 @@ function update_tad_news_cate($ncsn = '')
     global $xoopsDB, $xoopsModuleConfig, $tadnews, $isAdmin;
 
     $ok_cat = $tadnews->chk_user_cate_power('post');
-    $isOwner = in_array($ncsn, $ok_cat, true) ? true : false;
+    $ncsn = (int) $ncsn;
+    $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
     if (!$isOwner and !$isAdmin) {
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
     }
 
-    if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'], true)) {
+    if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
         $enable_group = '';
     } else {
         $enable_group = implode(',', $_POST['enable_group']);
