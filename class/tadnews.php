@@ -1555,7 +1555,7 @@ class tadnews
             $have_read_group_arr = explode(',', $have_read_group);
 
             foreach ($User_Groups as $gid) {
-                $gid = (int) $gid;
+                // $gid = (int) $gid;
 
                 if (in_array($gid, $have_read_group_arr, true)) {
                     $time = $this->chk_sign_status($uid, $nsn);
