@@ -133,6 +133,7 @@ function tad_news_cate_form($ncsn = '')
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $ok_cat = $tadnews->chk_user_cate_power('post');
+    $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat, true) ? true : false;
 
     if (!$isOwner and !$isAdmin) {

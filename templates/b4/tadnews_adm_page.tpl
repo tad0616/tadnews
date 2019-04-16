@@ -76,7 +76,7 @@
 
       <div>
         <{if $now_op!="tad_news_cate_form" or $ncsn!=""}>
-          <a href="page.php?op=add_news_cate" class="btn btn-primary btn-block"><{$smarty.const._MA_TADNEWS_ADD_CATE}></a>
+          <a href="page.php?op=modify_page_cate" class="btn btn-primary btn-block"><{$smarty.const._MA_TADNEWS_ADD_CATE}></a>
         <{/if}>
 
       </div>

@@ -1492,8 +1492,7 @@ class tadnews
             } else {
                 $power_array = explode(',', $power);
                 foreach ($power_array as $gid) {
-
-                    $gid = (int) $gid;
+                    // $gid = (int) $gid;
                     if (in_array($gid, $user_array, true)) {
                         $ok_cat[] = (int) $ncsn;
                         break;
