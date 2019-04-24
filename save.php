@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 include_once 'header.php';
 
 add_tad_news_cate($_POST['value']);

@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 include_once 'header.php';
 
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';

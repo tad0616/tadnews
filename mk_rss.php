@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 function mk_rss()
 {
     global $xoopsDB, $xoopsConfig;

@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 //區塊主函式 (最新回應)
 function tadnews_b_show_3($options)
 {

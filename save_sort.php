@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 include_once 'header.php';
 
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');

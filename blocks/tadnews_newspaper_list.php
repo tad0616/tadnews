@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
+
 //區塊主函式 (最新回應)
 function tadnews_newspaper_list($options)
 {

@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 $xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
 include_once 'header.php';
 include_once '../function.php';

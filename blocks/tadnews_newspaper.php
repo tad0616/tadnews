@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 //區塊主函式 (訂閱 / 取消電子報)
 function tadnews_newspaper($options)
 {
