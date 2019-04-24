@@ -903,7 +903,7 @@ class tadnews
                     //$title=xoops_substr($nsnsort['back']['title'], 0, 30);
                     $title = mb_substr($nsnsort['back']['title'], 0, 20, _CHARSET) . '...';
                     $date = mb_substr($nsnsort['back']['date'], 5);
-                    $back_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn=nsn={$nsnsort['back']['ncsn']}&nsn={$nsnsort['back']['nsn']}";
+                    $back_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['back']['ncsn']}&nsn={$nsnsort['back']['nsn']}";
                     $back_news_title = ('page' === $this->kind) ? $title : "{$date} {$title}";
                 }
 
@@ -915,7 +915,7 @@ class tadnews
                     $title = mb_substr($nsnsort['next']['title'], 0, 20, _CHARSET) . '...';
                     $date = mb_substr($nsnsort['next']['date'], 5);
 
-                    $next_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn=nsn={$nsnsort['next']['ncsn']}&nsn={$nsnsort['next']['nsn']}";
+                    $next_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['next']['ncsn']}&nsn={$nsnsort['next']['nsn']}";
                     $next_news_title = ('page' === $this->kind) ? $title : "{$date} {$title}";
                 }
 

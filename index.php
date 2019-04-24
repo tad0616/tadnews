@@ -192,22 +192,22 @@ $show_uid = system_CleanVars($_REQUEST, 'show_uid', 0, 'int');
 switch ($op) {
     //下載檔案
     case 'tufdl':
-        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : '';
+        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
-        break;
+
     //刪除資料
     case 'delete_tad_news':
         $tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
-        break;
+
     //已經閱讀
     case 'have_read':
         have_read($nsn, $uid);
         header('location: ' . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
-        break;
+
     //列出簽收狀況
     case 'list_sign':
         $xoopsOption['template_main'] = 'tadnews_sign.tpl';
@@ -215,6 +215,7 @@ switch ($op) {
         list_sign($nsn);
         $xoopsTpl->assign('op', $op);
         break;
+
     //列出某人狀況
     case 'list_user_sign':
         $xoopsOption['template_main'] = 'tadnews_sign.tpl';
@@ -222,6 +223,7 @@ switch ($op) {
         list_user_sign($uid);
         $xoopsTpl->assign('op', $op);
         break;
+
     default:
 
         //把過期的置頂文徹下
