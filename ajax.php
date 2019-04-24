@@ -81,11 +81,11 @@ if (empty($show_col)) {
 
 $block = $FooTableJS;
 
-$tt['start_day'] = "<th data-hide='phone' style='width:80px;'>" . to_utf8(_MD_TADNEWS_START_DATE) . '</th>';
-$tt['news_title'] = "<th data-class='expand'>" . to_utf8(_MD_TADNEWS_NEWS_TITLE) . '</th>';
-$tt['uid'] = "<th data-hide='phone' style='width:80px;'>" . to_utf8(_MD_TADNEWS_POSTER) . '</th>';
-$tt['ncsn'] = "<th data-hide='phone' style='width:80px;'>" . to_utf8(_MD_TADNEWS_NEWS_CATE) . '</th>';
-$tt['counter'] = "<th data-hide='phone'>" . to_utf8(_MD_TADNEWS_COUNTER) . '</th>';
+$tt['start_day'] = "<th data-hide='phone' style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_START_DATE) . '</th>';
+$tt['news_title'] = "<th data-class='expand'>" . Utility::to_utf8(_MD_TADNEWS_NEWS_TITLE) . '</th>';
+$tt['uid'] = "<th data-hide='phone' style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_POSTER) . '</th>';
+$tt['ncsn'] = "<th data-hide='phone' style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_NEWS_CATE) . '</th>';
+$tt['counter'] = "<th data-hide='phone'>" . Utility::to_utf8(_MD_TADNEWS_COUNTER) . '</th>';
 $blockTitle = '';
 foreach ($show_col as $colname) {
     $blockTitle .= $tt[$colname];
@@ -112,9 +112,9 @@ if (empty($all_news['page'])) {
         $uid = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>";
         $ncsn = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>";
         $counter = "<td nowrap>{$news['counter']}</td>";
-        $news_title = to_utf8($news_title);
-        $uid = to_utf8($uid);
-        $ncsn = to_utf8($ncsn);
+        $news_title = Utility::to_utf8($news_title);
+        $uid = Utility::to_utf8($uid);
+        $ncsn = Utility::to_utf8($ncsn);
         $block .= '<tr>';
         foreach ($show_col as $colname) {
             $block .= $$colname;

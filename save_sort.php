@@ -19,7 +19,7 @@ if ('sort_tabs' === $op) {
     $xoopsDB->queryF($sql) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
 
     $sql = 'select `data_name`,`data_value` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and (`data_name`='tab_title' or `data_name`='tab_content') order by `data_sort`";
-    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = MyTextSanitizer::getInstance();
     $tab_title_div = $tab_content_div = '';
@@ -60,7 +60,7 @@ if ('sort_tabs' === $op) {
 
     $tabs_content = $myts->addSlashes($tabs_content);
     $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set news_content = '{$tabs_content}' where nsn='$nsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 } else {
     $updateRecordsArray = $_POST['tr'];
 

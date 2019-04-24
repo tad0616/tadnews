@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadnews\Update;
+use XoopsModules\Tadtools\Utility;
 
 function xoops_module_update_tadnews(&$module, $old_version)
 {
@@ -71,8 +72,8 @@ function xoops_module_update_tadnews(&$module, $old_version)
 
     $old_fckeditor = XOOPS_ROOT_PATH . '/modules/tadnews/fckeditor';
     if (is_dir($old_fckeditor)) {
-        Update::delete_directory($old_fckeditor);
-        Update::delete_directory(XOOPS_ROOT_PATH . '/modules/tadnews/dhtmlgoodies_calendar');
+        Utility::delete_directory($old_fckeditor);
+        Utility::delete_directory(XOOPS_ROOT_PATH . '/modules/tadnews/dhtmlgoodies_calendar');
     }
     Update::chk_tadnews_block();
 

@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tadnews_my_news.tpl';
 include_once 'header.php';
@@ -24,7 +26,7 @@ function list_tad_my_news()
     }
     $tadnews->get_news();
 
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 /*-----------執行動作判斷區----------*/

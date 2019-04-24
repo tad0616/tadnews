@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 $tadnews = new tadnews();
 include_once 'block_function.php';
@@ -23,7 +25,7 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
             LEFT JOIN `{$tbl}` t7 ON t7.of_ncsn = t6.ncsn
             WHERE t1.of_ncsn = '0'";
 
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             if (in_array($the_ncsn, $all)) {
                 foreach ($all as $ncsn) {
@@ -53,7 +55,7 @@ function get_tadnews_sub_cate($ncsn = '0')
     global $xoopsDB;
     $sql = 'select ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$ncsn}'";
     // die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $ncsn_arr = [];
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
@@ -67,7 +69,7 @@ function get_newspaper_set($nps_sn = '')
 {
     global $xoopsDB;
     $sql = 'select * from `' . $xoopsDB->prefix('tad_news_paper_setup') . "` where `nps_sn`='{$nps_sn}'";
-    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -78,7 +80,7 @@ function get_newspaper($npsn = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper') . " where npsn='{$npsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -94,7 +96,7 @@ function preview_newspaper($npsn = '')
 
     $np = get_newspaper($npsn);
     $sql = 'select title,head,foot,themes from ' . $xoopsDB->prefix('tad_news_paper_setup') . " where nps_sn='{$np['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $myts = MyTextSanitizer::getInstance();
@@ -234,7 +236,7 @@ function update_tad_news_cate($ncsn = '')
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . " set  of_ncsn = '{$of_ncsn}', nc_title = '{$nc_title}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$not_news}',setup='{$setup}' where ncsn='$ncsn'";
     // die($sql);
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     if (!empty($_FILES['cate_pic']['name'])) {
         mk_thumb($ncsn, 'cate_pic', $xoopsModuleConfig['cate_pic_width']);
@@ -244,11 +246,11 @@ function update_tad_news_cate($ncsn = '')
     $TadThemesModule = $modhandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
         $sql = 'select menuid from ' . $xoopsDB->prefix('tad_themes_menu') . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $RowsNum = $xoopsDB->getRowsNum($result);
         if ($RowsNum > 0) {
             $sql = 'update ' . $xoopsDB->prefix('tad_themes_menu') . " set `itemname`='{$nc_title}' where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
-            $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         }
     }
 

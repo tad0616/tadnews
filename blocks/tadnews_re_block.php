@@ -9,7 +9,7 @@ function tadnews_b_show_3($options)
     $com_modid = $xoopsModule->getVar('mid');
     $sql = 'select com_id,com_text,com_itemid,com_uid from ' . $xoopsDB->prefix('xoopscomments') . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";
     //die($sql);
-    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $block = '';
     $block['width'] = $options[1];
     $myts = MyTextSanitizer::getInstance();

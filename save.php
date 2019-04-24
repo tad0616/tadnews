@@ -14,7 +14,7 @@ function add_tad_news_cate($title = '', $no_news = '0')
     }
     $enable_group = $enable_post_group = $setup = '';
     $sql = 'SELECT max(sort) FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE of_ncsn=''";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($sort) = $xoopsDB->fetchRow($result);
     $sort++;
 

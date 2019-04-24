@@ -58,7 +58,7 @@ function chk_cate($topic_pid = '', $left = 0)
     }
 
     $sql = 'select topic_id,topic_pid,topic_title from ' . $xoopsDB->prefix('topics') . " where topic_pid='{$topic_pid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $main = '';
 
@@ -79,7 +79,7 @@ function chk_stories($topicid = '', $left = 0)
     $left += 14;
 
     $sql = 'select storyid,title  from ' . $xoopsDB->prefix('stories') . " where topicid ='{$topicid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $main = '';
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";
