@@ -382,8 +382,8 @@ class tadnews
     private function get_syntaxhighlighter()
     {
         $syntaxhighlighter_code = '';
-        if (file_exists(TADTOOLS_PATH . '/syntaxhighlighter.php')) {
-            include_once TADTOOLS_PATH . '/syntaxhighlighter.php';
+        if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/syntaxhighlighter.php')) {
+            include_once XOOPS_ROOT_PATH . '/modules/tadtools/syntaxhighlighter.php';
             $syntaxhighlighter = new syntaxhighlighter();
             $syntaxhighlighter_code = $syntaxhighlighter->render();
         }
