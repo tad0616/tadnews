@@ -961,7 +961,7 @@ class tadnews
         }
 
         $ui = 1 == $this->sort_tool ? true : false;
-        $jquery = get_jquery($ui);
+        $jquery = Utility::get_jquery($ui);
 
         if ('return' === $mode) {
             $main['jquery'] = $jquery;
@@ -1927,7 +1927,7 @@ class tadnews
         }
 
         $now = time();
-        $jquery_path = get_jquery(true);
+        $jquery_path = Utility::get_jquery(true);
 
         $css = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);

@@ -11,7 +11,7 @@ function tadnews_covered($options)
     include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
     $tadnews = new tadnews();
 
-    $block['jquery_path'] = get_jquery();
+    $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
 
     $num = $options[0] * $options[1];

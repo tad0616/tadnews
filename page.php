@@ -24,7 +24,7 @@ function list_tad_all_pages($the_ncsn = 0)
 {
     global $xoopsTpl, $xoopsDB, $tadnews;
 
-    get_jquery(true);
+    Utility::get_jquery(true);
     $tadnews->set_news_kind('page');
     $tadnews->set_show_num('none');
     $tadnews->set_view_ncsn($the_ncsn);
@@ -78,7 +78,7 @@ function tabs_sort($ncsn, $nsn)
     $xoopsTpl->assign('ncsn', $ncsn);
     $xoopsTpl->assign('nsn', $nsn);
     $xoopsTpl->assign('tab_div', $tab_div);
-    get_jquery(true);
+    Utility::get_jquery(true);
     $tadnews->set_view_nsn($nsn);
     $tadnews->set_news_kind('page');
     $tadnews->set_cover(true, 'db');

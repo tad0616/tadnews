@@ -25,7 +25,7 @@ function month_list($now_date = '')
         $i++;
     }
 
-    $jquery = get_jquery();
+    $jquery = Utility::get_jquery();
     $xoopsTpl->assign('jquery', $jquery);
     $xoopsTpl->assign('opt', $opt);
 }

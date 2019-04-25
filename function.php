@@ -186,7 +186,7 @@ function tad_news_cate_form($ncsn = '')
     $xoopsTpl->assign('cate_op', $cate_op);
     $cate_pic_width = $xoopsModuleConfig['cate_pic_width'] + 10;
     $xoopsTpl->assign('cate_pic_width', $cate_pic_width);
-    $xoopsTpl->assign('jquery', get_jquery(true));
+    $xoopsTpl->assign('jquery', Utility::get_jquery(true));
     $xoopsTpl->assign('cate_select', $cate_select);
     $xoopsTpl->assign('sort', $sort);
     $xoopsTpl->assign('ncsn', $ncsn);

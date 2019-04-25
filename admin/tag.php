@@ -35,7 +35,7 @@ function list_tad_news_tags($def_tag_sn = '')
 
     $xoopsTpl->assign('tag_sn', $def_tag_sn);
     $xoopsTpl->assign('tagarr', $tagarr);
-    $xoopsTpl->assign('jquery', get_jquery());
+    $xoopsTpl->assign('jquery', Utility::get_jquery());
     $xoopsTpl->assign('tag', $tag);
     $xoopsTpl->assign('font_color', $font_color);
     $xoopsTpl->assign('color', $color);
