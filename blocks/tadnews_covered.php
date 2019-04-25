@@ -1,5 +1,6 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (圖文集區塊)
@@ -11,7 +12,7 @@ function tadnews_covered($options)
     $tadnews = new tadnews();
 
     $block['jquery_path'] = get_jquery();
-    $block['randStr'] = randStr(8);
+    $block['randStr'] = Utility::randStr(8);
 
     $num = $options[0] * $options[1];
     if (empty($num)) {

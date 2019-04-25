@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (分類新聞區塊)
@@ -54,16 +55,16 @@ function tadnews_cate_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
-                <input type='radio' name='options[2]' value='1' " . chk($options[2], 1, '1') . '>' . _YES . "
-                <input type='radio' name='options[2]' value='0' " . chk($options[2], 0) . '>' . _NO . "
+                <input type='radio' name='options[2]' value='1' " . Utility::chk($options[2], 1, '1') . '>' . _YES . "
+                <input type='radio' name='options[2]' value='0' " . Utility::chk($options[2], 0) . '>' . _NO . "
             </div>
         </li>
 
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM3 . "</lable>
             <div class='my-content'>
-                <input type='radio' name='options[3]' value='1' " . chk($options[3], 1, '1') . '>' . _YES . "
-                <input type='radio' name='options[3]' value='0' " . chk($options[3], 0) . '>' . _NO . "
+                <input type='radio' name='options[3]' value='1' " . Utility::chk($options[3], 1, '1') . '>' . _YES . "
+                <input type='radio' name='options[3]' value='0' " . Utility::chk($options[3], 0) . '>' . _NO . "
             </div>
         </li>
 
@@ -84,18 +85,4 @@ function tadnews_cate_news_edit($options)
     ";
 
     return $form;
-}
-
-//單選回復原始資料函數
-if (!function_exists('chk')) {
-    function chk($DBV = '', $NEED_V = '', $defaul = '', $return = 'checked')
-    {
-        if ($DBV == $NEED_V) {
-            return $return;
-        } elseif (empty($DBV) && '1' == $defaul) {
-            return $return;
-        }
-
-        return '';
-    }
 }

@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (焦點新聞)
@@ -54,8 +55,8 @@ function tadnews_focus_news_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_FOCUS_EDIT_BITEM1 . "</lable>
             <div class='my-content'>
                 <select name='options[1]' class='my-input'>
-                    <option value='full' " . chk($options[1], 'full', '1', 'selected') . '>' . _MB_TADNEWS_FOCUS_FULL . "</option>
-                    <option value='summary' " . chk($options[1], 'summary', '0', 'selected') . '>' . _MB_TADNEWS_FOCUS_SUMMARY . '</option>
+                    <option value='full' " . Utility::chk($options[1], 'full', '1', 'selected') . '>' . _MB_TADNEWS_FOCUS_FULL . "</option>
+                    <option value='summary' " . Utility::chk($options[1], 'summary', '0', 'selected') . '>' . _MB_TADNEWS_FOCUS_SUMMARY . '</option>
                 </select>
             </div>
         </li>
@@ -63,18 +64,4 @@ function tadnews_focus_news_edit($options)
     ';
 
     return $form;
-}
-
-//單選回復原始資料函數
-if (!function_exists('chk')) {
-    function chk($DBV = '', $NEED_V = '', $defaul = '', $return = 'checked')
-    {
-        if ($DBV == $NEED_V) {
-            return $return;
-        } elseif (empty($DBV) && '1' == $defaul) {
-            return $return;
-        }
-
-        return '';
-    }
 }

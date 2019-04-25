@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (條列式新聞)
@@ -7,7 +8,7 @@ function tadnews_list_content_block_show($options)
     global $xoTheme;
 
     $block['jquery_path'] = get_jquery();
-    $block['randStr'] = randStr(8);
+    $block['randStr'] = Utility::randStr(8);
     $block['num'] = $options[0];
     $block['summary_length'] = $options[1];
     $block['summary_css'] = $options[2];

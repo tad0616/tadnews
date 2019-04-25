@@ -69,8 +69,8 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
         list($counter) = $xoopsDB->fetchRow($result2);
 
         $pic = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
-        $g_txt = $tadnews->txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
-        $gp_txt = $tadnews->txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
+        $g_txt = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
+        $gp_txt = Utility::txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
 
         $new_kind = ('1' == $not_news) ? 0 : 1;
         $change_text = ('1' == $not_news) ? _MA_TADNEWS_CHANGE_TO_NEWS : _MA_TADNEWS_CHANGE_TO_PAGE;

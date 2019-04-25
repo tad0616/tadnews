@@ -73,12 +73,6 @@ $this->get_news($mode='assign');
 //取得分類新聞（assign=直接套入樣板，return=傳回陣列）
 $this->get_cate_news($mode='assign');
 
-//把字串換成群組
-$this->txt_to_group_name($enable_group="",$default_txt="",$syb="<br />");
-
-//取得所有群組
-$this->get_all_groups();
-
 //取得分類下拉選單
 $this->get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL);
 
@@ -573,7 +567,7 @@ class tadnews
                 $cate_setup[$ncsn] = $setup;
                 if (!$cate_read_power) {
                     $only_title_cate[$ncsn] = $only_title;
-                    $only_title_cate_group[$ncsn] = $this->txt_to_group_name($enable_group, '', ' , ');
+                    $only_title_cate_group[$ncsn] = Utility::txt_to_group_name($enable_group, '', ' , ');
                 }
             }
         }
@@ -867,7 +861,7 @@ class tadnews
             } else {
                 $need_sign = (!empty($have_read_group)) ? XOOPS_URL . '/modules/tadnews/images/sign_s.png' : '';
             }
-            $g_txt = $this->txt_to_group_name($enable_group, _TADNEWS_ALL_OK);
+            $g_txt = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK);
 
             $show_admin_tool = ($this->admin_tool) ? 1 : 0;
 
@@ -922,7 +916,7 @@ class tadnews
                 }
 
                 $facebook_comments = ('1' == $this->tadnewsConfig['facebook_comments_width']) ? Utility::facebook_comments($this->tadnewsConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn) : '';
-                $push = push_url($this->tadnewsConfig['use_social_tools']);
+                $push = Utility::push_url($this->tadnewsConfig['use_social_tools']);
             }
 
             $all_news[$i]['nsn'] = $nsn;
@@ -1112,7 +1106,7 @@ class tadnews
                 //是否僅秀出標題
                 $only_title = false !== mb_strpos($setup, 'only_title=1') ? true : false;
                 $only_title_cate[$ncsn] = $only_title;
-                $only_title_cate_group[$ncsn] = $this->txt_to_group_name($enable_group, '', ' , ');
+                $only_title_cate_group[$ncsn] = Utility::txt_to_group_name($enable_group, '', ' , ');
                 if (!$only_title) {
                     // die($nc_title);
                     continue;
@@ -1342,35 +1336,6 @@ class tadnews
         return $js;
     }
 
-    //把字串換成群組
-    public function txt_to_group_name($enable_group = '', $default_txt = '', $syb = '<br />')
-    {
-        $groups_array = $this->get_all_groups();
-        if (empty($enable_group)) {
-            $g_txt = $default_txt;
-        } else {
-            $gs = explode(',', $enable_group);
-            $g_txt = '';
-            foreach ($gs as $gid) {
-                $g_txt .= $groups_array[$gid] . (string) ($syb);
-            }
-        }
-
-        return $g_txt;
-    }
-
-    //取得所有群組
-    public function get_all_groups()
-    {
-        global $xoopsDB;
-        $sql = 'SELECT groupid,name FROM ' . $xoopsDB->prefix('groups') . '';
-        $result = $xoopsDB->query($sql);
-        while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
-            $data[$groupid] = $name;
-        }
-
-        return $data;
-    }
 
     //列出所有作者的下拉選單
     private function news_author_select()
@@ -1998,8 +1963,8 @@ class tadnews
             $form['always_top_date'] = $always_top_date;
             $form['enable_group'] = $enable_group;
             $form['have_read_group'] = $have_read_group;
-            $form['enable_checked1'] = chk($enable, '1', '1');
-            $form['enable_checked0'] = chk($enable, '0');
+            $form['enable_checked1'] = Utility::chk($enable, '1', '1');
+            $form['enable_checked0'] = Utility::chk($enable, '0');
             $form['passwd'] = $passwd;
             $form['pic_css'] = $pic_css;
             $form['use_pic_css'] = $use_pic_css;
@@ -2060,8 +2025,8 @@ class tadnews
         $xoopsTpl->assign('always_top_date', $always_top_date);
         $xoopsTpl->assign('enable_group', $enable_group);
         $xoopsTpl->assign('have_read_group', $have_read_group);
-        $xoopsTpl->assign('enable_checked1', chk($enable, '1', '1'));
-        $xoopsTpl->assign('enable_checked0', chk($enable, '0'));
+        $xoopsTpl->assign('enable_checked1', Utility::chk($enable, '1', '1'));
+        $xoopsTpl->assign('enable_checked0', Utility::chk($enable, '0'));
         $xoopsTpl->assign('passwd', $passwd);
         $xoopsTpl->assign('pic_css', $pic_css);
         $xoopsTpl->assign('use_pic_css', $use_pic_css);
@@ -2437,8 +2402,8 @@ class tadnews
         $result2 = $xoopsDB->query($sql2);
         list($counter) = $xoopsDB->fetchRow($result2);
         $data['count'] = $counter;
-        $data['g_txt'] = $this->txt_to_group_name($data['enable_group'], _TADNEWS_ALL_OK);
-        $data['gp_txt'] = $this->txt_to_group_name($data['enable_post_group'], _MD_TADNEWS_ONLY_ROOT, ' , ');
+        $data['g_txt'] = Utility::txt_to_group_name($data['enable_group'], _TADNEWS_ALL_OK);
+        $data['gp_txt'] = Utility::txt_to_group_name($data['enable_post_group'], _MD_TADNEWS_ONLY_ROOT, ' , ');
 
         return $data;
     }

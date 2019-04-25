@@ -146,7 +146,7 @@ switch ($op) {
 // die(var_dump($arr));
 
 $arr = get_tadnews_cate_path($ncsn);
-$path = Utility::Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
+$path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
 
 $xoopsTpl->assign('breadcrumb', $path);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));

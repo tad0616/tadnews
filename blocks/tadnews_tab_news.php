@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (頁籤新聞區塊)
@@ -23,7 +24,7 @@ function tadnews_tab_news($options)
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     include_once XOOPS_ROOT_PATH . '/modules/tadtools/easy_responsive_tabs.php';
-    $randStr = randStr();
+    $randStr = Utility::randStr();
     $responsive_tabs = new easy_responsive_tabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
     $responsive_tabs->rander();
     $block['tab_news_name'] = 'tab_news_' . $randStr;
@@ -74,9 +75,9 @@ function tadnews_tab_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_TAB_NEWS_DISPLAY_TYPE . "</lable>
             <div class='my-content'>
-                <input type='radio' name='options[2]' value='default' " . chk($options[2], 'default', 1) . '>' . _MB_TADNEWS_TAB_NEWS_DEFAULT . "
-                <input type='radio' name='options[2]' value='vertical' " . chk($options[2], 'vertical', 0) . '>' . _MB_TADNEWS_TAB_NEWS_VERTICAL . "
-                <input type='radio' name='options[2]' value='accordion' " . chk($options[2], 'accordion', 0) . '>' . _MB_TADNEWS_TAB_NEWS_ACCORDION . "
+                <input type='radio' name='options[2]' value='default' " . Utility::chk($options[2], 'default', 1) . '>' . _MB_TADNEWS_TAB_NEWS_DEFAULT . "
+                <input type='radio' name='options[2]' value='vertical' " . Utility::chk($options[2], 'vertical', 0) . '>' . _MB_TADNEWS_TAB_NEWS_VERTICAL . "
+                <input type='radio' name='options[2]' value='accordion' " . Utility::chk($options[2], 'accordion', 0) . '>' . _MB_TADNEWS_TAB_NEWS_ACCORDION . "
             </div>
         </li>
         <li class='my-row'>
@@ -106,25 +107,11 @@ function tadnews_tab_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ADD_ALL_NEWS_TAB . "</lable>
             <div class='my-content'>
-                <input type='radio' name='options[7]'  value='1' " . chk($options[7], '1') . '>' . _YES . "
-                <input type='radio' name='options[7]'  value='0' " . chk($options[7], '0', 1) . '>' . _NO . '
+                <input type='radio' name='options[7]'  value='1' " . Utility::chk($options[7], '1') . '>' . _YES . "
+                <input type='radio' name='options[7]'  value='0' " . Utility::chk($options[7], '0', 1) . '>' . _NO . '
             </div>
         </li>
     </ol>';
 
     return $form;
-}
-
-//單選回復原始資料函數
-if (!function_exists('chk')) {
-    function chk($DBV = '', $NEED_V = '', $defaul = '', $return = 'checked')
-    {
-        if ($DBV == $NEED_V) {
-            return $return;
-        } elseif (empty($DBV) && '1' == $defaul) {
-            return $return;
-        }
-
-        return '';
-    }
 }
