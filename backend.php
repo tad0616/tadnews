@@ -1,9 +1,5 @@
 <?php
 include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
-if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
-    redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-}
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 echo mk_rss();
 

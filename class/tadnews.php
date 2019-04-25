@@ -160,7 +160,6 @@ class tadnews
         global $xoopsConfig;
         include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
         include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadDataCenter.php';
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
         include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
         $this->now = date('Y-m-d', xoops_getUserTimestamp(time()));
         $this->today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
@@ -1335,7 +1334,6 @@ class tadnews
 
         return $js;
     }
-
 
     //列出所有作者的下拉選單
     private function news_author_select()
