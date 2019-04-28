@@ -151,7 +151,7 @@ function insert_tad_news_cate()
     }
     $setup = mb_substr($setup, 0, -1);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $of_ncsn = (int) $_POST['of_ncsn'];
     $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];

@@ -726,7 +726,7 @@ class tadnews
         $all_news = [];
         $i = 0;
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         while (false !== ($news = $xoopsDB->fetchArray($result))) {
             foreach ($news as $k => $v) {
                 $$k = $v;
@@ -1130,7 +1130,7 @@ class tadnews
             $subnews = [];
             $only_title_cate = [];
 
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             while (false !== ($news = $xoopsDB->fetchArray($result2))) {
                 foreach ($news as $k => $v) {
                     $$k = $v;
@@ -1655,7 +1655,7 @@ class tadnews
 
         $news = $this->get_tad_news($now_nsn);
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $nsnsort = [];
 
         $and_enable = (1 == $this->show_enable) ? "and a.enable='1'" : '';
@@ -1791,7 +1791,7 @@ class tadnews
     public function tad_news_form($nsn = '', $def_ncsn = '', $mode = '')
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $ver = (int) str_replace('.', '', mb_substr(XOOPS_VERSION, 6, 5));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
@@ -2193,7 +2193,7 @@ class tadnews
             $have_read_group = implode(',', $_POST['have_read_group']);
         }
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $ncsn = (int) $_POST['ncsn'];
         $tab_mode = (int) $_POST['tab_mode'];
         $not_news = (int) $_POST['not_news'];
@@ -2340,7 +2340,7 @@ class tadnews
         $setup = ('1' == $not_news and !empty($cate['setup'])) ? $cate['setup'] : 'title=1;tool=0;comm=0;nav=1';
         $sort = $this->get_max_sort($of_ncsn);
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $new_cate = $myts->addSlashes($new_cate);
         if (empty($of_ncsn)) {
             $of_ncsn = 0;
@@ -2435,7 +2435,7 @@ class tadnews
             $have_read_group = implode(',', $_POST['have_read_group']);
         }
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         $ncsn = (int) $_POST['ncsn'];
         $new_cate = $myts->addSlashes($_POST['new_cate']);

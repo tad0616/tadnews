@@ -34,7 +34,7 @@ function tadnews_focus_news_edit($options)
 
     $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
     $option = "<select name='options[0]'>";
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $ncsn, $news_title, $passwd, $start_day, $not_news, $nc_title) = $xoopsDB->fetchRow($result)) {
         $selected = ($options[0] == $nsn) ? 'selected' : '';
         $start_day = mb_substr($start_day, 0, 10);

@@ -23,7 +23,7 @@ if ('sort_tabs' === $op) {
     $sql = 'select `data_name`,`data_value` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and (`data_name`='tab_title' or `data_name`='tab_content') order by `data_sort`";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $tab_title_div = $tab_content_div = '';
     while (list($data_name, $data_value) = $xoopsDB->fetchRow($result)) {
         if ('tab_title' === $data_name) {

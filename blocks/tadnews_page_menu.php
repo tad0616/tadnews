@@ -20,7 +20,7 @@ function tadnews_page_menu($options)
     $block['of_ncsn'] = $of_ncsn;
     $block['nc_title'] = $nc_title;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     //第一層底下的文章
     $sql = 'select nsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
     $result = $xoopsDB->query($sql);

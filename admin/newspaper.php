@@ -159,7 +159,7 @@ function save_newspaper_set($nps_sn = '')
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $title = $myts->addSlashes($_POST['title']);
     $head = $myts->addSlashes($_POST['head']);
     $foot = $myts->addSlashes($_POST['foot']);
@@ -197,7 +197,7 @@ function add_newspaper($nps_sn = '')
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
 
     $cates = get_all_news_cate();
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' ORDER BY start_day DESC";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -251,7 +251,7 @@ function edit_newspaper($npsn = '')
     $cates = get_all_news_cate();
     $newspaper = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     if (empty($newspaper['np_content'])) {
         $html = '';
@@ -309,7 +309,7 @@ function save_all($npsn = '')
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $np_content = $myts->addSlashes($_POST['np_content']);
     $np_title = $myts->addSlashes($_POST['np_title']);
 

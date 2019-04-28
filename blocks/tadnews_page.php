@@ -98,7 +98,7 @@ if (!function_exists('block_get_page_cate')) {
         $sql = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
         //die($sql);
         $result = $xoopsDB->query($sql);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             //第一層底下的目錄
             if ($the_ncsn != $ncsn) {

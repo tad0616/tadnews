@@ -70,7 +70,7 @@ function tabs_sort($ncsn, $nsn)
     $sql = 'select `data_value`,`data_sort` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and `data_name`='tab_title'  order by `data_sort`";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $tab_div = [];
     while (list($data_value, $data_sort) = $xoopsDB->fetchRow($result)) {
         $tab_div[$data_sort] = $data_value;
