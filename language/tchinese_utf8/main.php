@@ -1,6 +1,6 @@
 <?php
 //global
-include_once 'global.php';
+require_once __DIR__ . '/global.php';
 
 if (!defined('_TAD_NEED_TADTOOLS')) {
     define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
@@ -127,7 +127,6 @@ define('_MD_TADNEWS_CAN_POST_CATE_GROUP_TXT', '不選=僅站長可發');
 define('_MD_TADNEWS_DB_UPDATE_ERROR1', '無法更新tad_news_cate資料');
 define('_MD_TADNEWS_DB_DEL_ERROR1', '無法刪除tad_news_cate資料');
 define('_MD_TADNEWS_CATE_COUNTER', '文章數');
-define('_MD_TADNEWS_ONLY_ROOT', '僅管理員');
 define('_MD_TADNEWS_CAN_READ_CATE_GROUP_S', '可讀取群組');
 define('_MD_TADNEWS_CAN_POST_CATE_GROUP_S', '可管理群組');
 define('_MD_TADNEWS_NO', '否（自訂頁面的用法，搭配區塊使用）');

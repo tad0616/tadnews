@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (滑動新聞)
 function tadnews_slidernews_show($options)
@@ -9,11 +9,11 @@ function tadnews_slidernews_show($options)
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php')) {
         redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php';
 
     $ncsn_arr = explode(',', $options[4]);
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
 

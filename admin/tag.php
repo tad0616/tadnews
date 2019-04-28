@@ -2,9 +2,9 @@
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
-include_once 'header.php';
-include_once '../function.php';
-include_once 'admin_function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once __DIR__ . '/admin_function.php';
 
 /*-----------function區--------------*/
 //tad_news_tagss編輯表單
@@ -40,8 +40,8 @@ function list_tad_news_tags($def_tag_sn = '')
     $xoopsTpl->assign('font_color', $font_color);
     $xoopsTpl->assign('color', $color);
     $xoopsTpl->assign('enable', $enable);
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 
     return $main;
@@ -99,7 +99,7 @@ function tags_used_amount()
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
 
@@ -134,4 +134,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

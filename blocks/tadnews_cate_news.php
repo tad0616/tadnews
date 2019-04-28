@@ -1,6 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (分類新聞區塊)
 function tadnews_cate_news($options)
@@ -10,7 +10,7 @@ function tadnews_cate_news($options)
 
     $ncsn_arr = explode(',', $options[0]);
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
     $tadnews = new tadnews();
     $tadnews->set_news_kind('news');
     $tadnews->set_show_mode('cate');

@@ -48,7 +48,7 @@ define('_MI_TADNEWS_CATE_SHOW_MODE', '<span style="font-weight: bold;">Performin
 define('_MI_TADNEWS_CATE_SHOW_MODE_DESC', 'Digest(Default) or News titles (faster, clear)');
 
 define('_MI_TADNEWS_SHOW_BB', '<span style="font-weight: bold;">"BB Code" available?</span>');
-define('_MI_TADNEWS_SHOW_BB_DESC', '"No" is default. Old news modules use BB Code to set the font style.<br/>For example: color, size. Choose "Yes" if you have news content from old modules.');
+define('_MI_TADNEWS_SHOW_BB_DESC', '"No" is default. Old news modules use BB Code to set the font style.<br>For example: color, size. Choose "Yes" if you have news content from old modules.');
 
 define('_MI_TADNEWS_CATE_PIC_WIDTH', '<span style="font-weight: bold;">Width of Category icon</span>');
 define('_MI_TADNEWS_CATE_PIC_WIDTH_DESC', 'Default width of uploaded category icons.');

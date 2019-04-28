@@ -1,6 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (表格式新聞)
 function tadnews_table_content_block_show($options)

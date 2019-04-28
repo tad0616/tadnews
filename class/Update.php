@@ -1,19 +1,20 @@
 <?php
-use XoopsModules\Tadtools\Utility;
 
 namespace XoopsModules\Tadnews;
+
+use XoopsModules\Tadtools\Utility;
 
 /*
 Update Class Definition
 
-You may not change or alter any portion of this comment or credits of
-supporting developers from this source code or any supporting source code
-which is considered copyrighted (c) material of the original comment or credit
-authors.
+ You may not change or alter any portion of this comment or credits of
+ supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit
+ authors.
 
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
@@ -21,6 +22,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * @copyright    https://xoops.org 2001-2017 &copy; XOOPS Project
  * @author       Mamba <mambax7@gmail.com>
  */
+
 
 /**
  * Class Update
@@ -45,10 +47,10 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tadnews_files_center') . "
-        ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
-        ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
-        ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
-        ";
+    ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
+    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+    ";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $xoopsDB->error());
     }
 
@@ -57,7 +59,7 @@ class Update
     {
         global $xoopsDB;
         //die(var_export($xoopsConfig));
-        include XOOPS_ROOT_PATH . '/modules/tadnews/xoops_version.php';
+        require XOOPS_ROOT_PATH . '/modules/tadnews/xoops_version.php';
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {
@@ -141,12 +143,12 @@ class Update
 
         //修改表格
         $sql = "ALTER TABLE `" . $xoopsDB->prefix('tadnews_files_center') . "`
-        CHANGE `fsn` `files_sn` SMALLINT( 5 ) UNSIGNED NOT NULL AUTO_INCREMENT,
-        CHANGE `nsn` `col_sn` SMALLINT( 5 ) UNSIGNED NOT NULL,
-        ADD `col_name` VARCHAR( 255 ) NOT NULL AFTER `files_sn` ,
-        ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
-        ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
-        ADD `description` TEXT NOT NULL AFTER `file_type`";
+      CHANGE `fsn` `files_sn` SMALLINT( 5 ) UNSIGNED NOT NULL AUTO_INCREMENT,
+      CHANGE `nsn` `col_sn` SMALLINT( 5 ) UNSIGNED NOT NULL,
+      ADD `col_name` VARCHAR( 255 ) NOT NULL AFTER `files_sn` ,
+      ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
+      ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
+      ADD `description` TEXT NOT NULL AFTER `file_type`";
         $xoopsDB->queryF($sql) or die($sql);
 
         //套入描述以及欄位名稱

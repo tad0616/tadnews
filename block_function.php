@@ -31,7 +31,7 @@ if (!function_exists('block_news_cate')) {
               i=0;
               var arr = new Array();';
 
-        $sql    = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
+        $sql = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
         $result = $xoopsDB->query($sql);
         $option = '';
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
@@ -47,7 +47,7 @@ if (!function_exists('block_news_cate')) {
     }
     </script>";
 
-        $main['js']   = $js;
+        $main['js'] = $js;
         $main['form'] = $option;
 
         return $main;
@@ -64,7 +64,7 @@ if (!function_exists('get_all_news_cate')) {
             $ncsn_arr = explode(',', $ncsn_arr_str);
         }
 
-        $sql    = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . ' ORDER BY sort';
+        $sql = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . ' ORDER BY sort';
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
@@ -82,9 +82,9 @@ if (!function_exists('get_all_news_tag')) {
     function get_all_news_tag()
     {
         global $xoopsDB;
-        $sql    = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
+        $sql = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
         $result = $xoopsDB->queryF($sql);
-        $data   = '';
+        $data = '';
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
             $data[$tag_sn] = $tag;
         }
@@ -122,7 +122,7 @@ if (!function_exists('block_news_tags')) {
               i=0;
               var arr = new Array();';
 
-        $sql    = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE enable='1' ";
+        $sql = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE enable='1' ";
         $result = $xoopsDB->query($sql);
         $option = '';
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
@@ -139,7 +139,7 @@ if (!function_exists('block_news_tags')) {
     }
     </script>";
 
-        $main['js']   = $js;
+        $main['js'] = $js;
         $main['form'] = $option;
         $main['tags'] = $tags;
 

@@ -2,9 +2,9 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-include 'header.php';
-include_once XOOPS_ROOT_PATH . '/class/template.php';
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+require __DIR__ . '/header.php';
+require_once XOOPS_ROOT_PATH . '/class/template.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 /*-----------function區--------------*/
 
 $ncsn = 0;
@@ -18,7 +18,7 @@ if (function_exists('mb_http_output')) {
 }
 // header("Content-Type:text/xml; charset=utf-8");
 
-$tpl = new XoopsTpl();
+$tpl = new \XoopsTpl();
 $tpl->xoops_setCaching(2);
 $tpl->xoops_setCacheTime(10);
 if (!$tpl->is_cached('db:tadnews_rss.tpl')) {

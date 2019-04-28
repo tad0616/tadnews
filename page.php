@@ -2,9 +2,9 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tadnews_page.tpl';
-include_once 'header.php';
-include XOOPS_ROOT_PATH . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
+require_once __DIR__ . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 //顯示單一新聞
@@ -31,8 +31,8 @@ function list_tad_all_pages($the_ncsn = 0)
     $tadnews->get_cate_news();
 
     $link_cate_sn_arr = [];
-    $modhandler = xoops_getHandler('module');
-    $TadThemesModule = $modhandler->getByDirname('tad_themes');
+    $moduleHandler = xoops_getHandler('module');
+    $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
         $sql = 'select link_cate_sn from ' . $xoopsDB->prefix('tad_themes_menu') . " where `link_cate_name`='tadnews_page_cate'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -52,8 +52,8 @@ function add_to_menu($ncsn = '')
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $cate = $xoopsDB->fetchArray($result);
 
-    $modhandler = xoops_getHandler('module');
-    $TadThemesModule = $modhandler->getByDirname('tad_themes');
+    $moduleHandler = xoops_getHandler('module');
+    $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
         $sql = 'insert into ' . $xoopsDB->prefix('tad_themes_menu') . " (`of_level`,`position`,`itemname`,`itemurl`,`membersonly`,`status`,`mainmenu`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`, `read_group`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','0','1','0','_self','fa-angle-right', 'tadnews_page_cate','{$ncsn}', '1,2,3')";
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -87,12 +87,13 @@ function tabs_sort($ncsn, $nsn)
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 $fsn = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
 $files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
+$news_title = '';
 
 switch ($op) {
     //下載檔案
@@ -152,5 +153,5 @@ $xoopsTpl->assign('breadcrumb', $path);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 $xoopsTpl->assign('now_op', $op);
-include_once XOOPS_ROOT_PATH . '/include/comment_view.php';
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

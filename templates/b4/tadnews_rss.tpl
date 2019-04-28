@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <atom:link href="<{$xoops_url}>/modules/tadnews/rss.php" rel="self" type="application/rss+xml" />
+    <atom:link href="<{$xoops_url}>/modules/tadnews/rss.php" rel="self" type="application/rss+xml">
     <title><{$channel_title}></title>
     <link><{$channel_link}></link>
     <description><{$channel_desc}></description>

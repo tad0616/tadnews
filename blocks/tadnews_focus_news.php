@@ -1,6 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (焦點新聞)
 function tadnews_focus_news($options)
@@ -11,7 +11,7 @@ function tadnews_focus_news($options)
         return '';
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $tadnews = new tadnews();
     $tadnews->set_view_nsn($options[0]);

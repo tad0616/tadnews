@@ -3,9 +3,10 @@ use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
-include_once 'header.php';
-include_once '../function.php';
-include_once 'admin_function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once __DIR__ . '/admin_function.php';
+
 /*-----------function區--------------*/
 
 //找出現有電子報
@@ -14,12 +15,12 @@ function newspaper_set_table($sel_nps_sn = '')
     global $xoopsDB, $xoopsTpl, $op;
     $option = '';
     //找出現有設定組
-    $sql    = 'SELECT nps_sn,title FROM ' . $xoopsDB->prefix('tad_news_paper_setup') . '';
+    $sql = 'SELECT nps_sn,title FROM ' . $xoopsDB->prefix('tad_news_paper_setup') . '';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
         if ($sel_nps_sn == $nps_sn) {
             $selected = 'selected';
-            $ptitle   = $title;
+            $ptitle = $title;
         } else {
             $selected = '';
         }
@@ -33,7 +34,7 @@ function newspaper_set_table($sel_nps_sn = '')
     $sql = 'select a.npsn,a.number,b.title,a.np_date from ' . $xoopsDB->prefix('tad_news_paper') . ' as a ,' . $xoopsDB->prefix('tad_news_paper_setup') . " as b where a.nps_sn=b.nps_sn and b.nps_sn='{$sel_nps_sn}' order by a.np_date desc";
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $total  = $xoopsDB->getRowsNum($result);
+    $total = $xoopsDB->getRowsNum($result);
 
     $js = "
       <script>
@@ -70,12 +71,12 @@ function newspaper_set_table($sel_nps_sn = '')
     <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$sel_nps_sn}'\" class='btn btn-warning'>" . _MA_TADNEWS_NP_SELECT . '</button>';
     }
 
-    $i         = 0;
+    $i = 0;
     $newspaper = [];
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $newspaper[$i]['allnpsn'] = $allnpsn;
-        $newspaper[$i]['title']   = $title;
-        $newspaper[$i]['number']  = sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $number);
+        $newspaper[$i]['title'] = $title;
+        $newspaper[$i]['number'] = sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $number);
         $newspaper[$i]['np_date'] = $np_date;
         $i++;
     }
@@ -124,8 +125,8 @@ function open_newspaper($nps_sn = '')
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken();
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken();
     $hidden .= $token->render();
 
     //取得主題資料
@@ -134,7 +135,7 @@ function open_newspaper($nps_sn = '')
     //取得使用之佈景
     $nps_theme = newspaper_themes($set['themes']);
 
-    $np_title = (empty($nps_sn)) ? (string) $xoopsConfig[sitename] . _MA_TADNEWS_NP : $set['title'];
+    $np_title = (empty($nps_sn)) ? (string) $xoopsConfig['sitename'] . _MA_TADNEWS_NP : $set['title'];
 
     $author = $xoopsUser->getVar('uname');
 
@@ -158,10 +159,10 @@ function save_newspaper_set($nps_sn = '')
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
-    $myts   = MyTextSanitizer::getInstance();
-    $title  = $myts->addSlashes($_POST['title']);
-    $head   = $myts->addSlashes($_POST['head']);
-    $foot   = $myts->addSlashes($_POST['foot']);
+    $myts = MyTextSanitizer::getInstance();
+    $title = $myts->addSlashes($_POST['title']);
+    $head = $myts->addSlashes($_POST['head']);
+    $foot = $myts->addSlashes($_POST['foot']);
     $themes = $myts->addSlashes($_POST['themes']);
 
     if (empty($nps_sn)) {
@@ -182,10 +183,10 @@ function save_newspaper_set($nps_sn = '')
 function get_max_number($nps_sn = '')
 {
     global $xoopsDB;
-    $sql          = 'select max(`number`) from ' . $xoopsDB->prefix('tad_news_paper') . " where nps_sn='{$nps_sn}'";
-    $result       = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'select max(`number`) from ' . $xoopsDB->prefix('tad_news_paper') . " where nps_sn='{$nps_sn}'";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($number) = $xoopsDB->fetchRow($result);
-    $max_number   = (empty($number)) ? 1 : $number + 1;
+    $max_number = (empty($number)) ? 1 : $number + 1;
 
     return $max_number;
 }
@@ -195,14 +196,14 @@ function add_newspaper($nps_sn = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
 
-    $cates  = get_all_news_cate();
-    $myts   = MyTextSanitizer::getInstance();
-    $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' ORDER BY start_day DESC";
+    $cates = get_all_news_cate();
+    $myts = MyTextSanitizer::getInstance();
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' ORDER BY start_day DESC";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $opt = $opt2 = '';
     while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
-        $news_title   = $myts->htmlSpecialChars($news_title);
+        $news_title = $myts->htmlSpecialChars($news_title);
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
         $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
     }
@@ -216,8 +217,8 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('opt2', $opt2);
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -247,10 +248,10 @@ function save_newspaper()
 function edit_newspaper($npsn = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $tadnews;
-    $cates         = get_all_news_cate();
-    $newspaper     = get_newspaper($npsn);
+    $cates = get_all_news_cate();
+    $newspaper = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
-    $myts          = MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     if (empty($newspaper['np_content'])) {
         $html = '';
@@ -263,9 +264,9 @@ function edit_newspaper($npsn = '')
 
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
-            $news_title   = $myts->htmlSpecialChars($news_title);
+            $news_title = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-            $pic          = $tadnews->get_news_cover($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
+            $pic = $tadnews->get_news_cover($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
             if ($pic) {
                 $img = "<img src='$pic' alt='{$news_title}' align='left' style='text-align:left; margin:0px 6px 6px 0px;max-width:300px;'>";
             } else {
@@ -277,12 +278,12 @@ function edit_newspaper($npsn = '')
                     $news_content = xlanguage_ml($news_content);
                 }
                 $news_content = str_replace('<p>' . _SEPARTE2 . '</p>', _SEPARTE2, $news_content);
-                $content      = explode(_SEPARTE2, $news_content);
+                $content = explode(_SEPARTE2, $news_content);
             } else {
                 $content = explode(_SEPARTE, $news_content);
             }
 
-            $more         = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
+            $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
             $news_content = $content[0] . $more;
             $html .= "
             <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string) ($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
@@ -308,9 +309,9 @@ function save_all($npsn = '')
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts       = MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $np_content = $myts->addSlashes($_POST['np_content']);
-    $np_title   = $myts->addSlashes($_POST['np_title']);
+    $np_title = $myts->addSlashes($_POST['np_title']);
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news_paper') . " set np_content='{$np_content}',np_title='{$np_title}' where npsn='{$npsn}'";
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -325,9 +326,9 @@ function sendmail_form($npsn = '')
     $newspaper = get_newspaper($npsn);
 
     //取得郵寄名單
-    $sql    = 'select email from ' . $xoopsDB->prefix('tad_news_paper_email') . " where nps_sn='{$newspaper['nps_sn']}'";
+    $sql = 'select email from ' . $xoopsDB->prefix('tad_news_paper_email') . " where nps_sn='{$newspaper['nps_sn']}'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $total  = $xoopsDB->getRowsNum($result);
+    $total = $xoopsDB->getRowsNum($result);
 
     while (list($email) = $xoopsDB->fetchRow($result)) {
         if (empty($email)) {
@@ -338,9 +339,9 @@ function sendmail_form($npsn = '')
     }
 
     //取得已寄名單
-    $sql    = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -358,8 +359,8 @@ function sendmail_form($npsn = '')
         $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn $btn_xs btn-danger'>" . _TADNEWS_DEL . '</a>' : $mailData[$email];
 
         $logdata[$i]['checkbox'] = "<input type='checkbox' name='mail_array[]' value='$email' $checked>";
-        $logdata[$i]['email']    = $email;
-        $logdata[$i]['data']     = $data;
+        $logdata[$i]['email'] = $email;
+        $logdata[$i]['data'] = $data;
         $i++;
     }
 
@@ -369,8 +370,8 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('total', sprintf(_MA_TADNEWS_MAIL_LIST, $total));
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -381,13 +382,13 @@ function send_now($npsn = '')
 
     $mail_array = $_POST['mail_array'];
 
-    $xoopsMailer                           = &getMailer();
+    $xoopsMailer = &getMailer();
     $xoopsMailer->multimailer->ContentType = 'text/html';
     $xoopsMailer->addHeaders('MIME-Version: 1.0');
 
-    $newspaper     = get_newspaper($npsn);
+    $newspaper = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
-    $subject       = $newspaper_set['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $newspaper['number']) . ' : ' . $newspaper['np_title'];
+    $subject = $newspaper_set['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $newspaper['number']) . ' : ' . $newspaper['np_title'];
 
     $content = preview_newspaper($npsn);
     $content = str_replace('src="/', 'src="' . XOOPS_URL . '/', $content);
@@ -446,24 +447,24 @@ function newspaper_email($nps_sn = '')
     $sql = 'select email,order_date from ' . $xoopsDB->prefix('tad_news_paper_email') . " where nps_sn='{$nps_sn}' order by email";
 
     $PageBar = Utility::getPageBar($sql, 30, 10);
-    $bar     = $PageBar['bar'];
-    $sql     = $PageBar['sql'];
-    $total   = $PageBar['total'];
+    $bar = $PageBar['bar'];
+    $sql = $PageBar['sql'];
+    $total = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $memail = isset($_GET['memail']) ? htmlspecialchars($_GET['memail']) : '';
 
     $main = '';
-    $i    = 0;
+    $i = 0;
     while (list($email, $order_date) = $xoopsDB->fetchRow($result)) {
         $email = htmlspecialchars($email);
-        $ok    = (check_email_mx($email)) ? 'ok' : "<span style='color:red;'>error</span>";
+        $ok = (check_email_mx($email)) ? 'ok' : "<span style='color:red;'>error</span>";
 
-        $log[$i]['edit']       = $memail == $email ? true : false;
-        $log[$i]['email']      = $email;
+        $log[$i]['edit'] = $memail == $email ? true : false;
+        $log[$i]['email'] = $email;
         $log[$i]['order_date'] = $order_date;
-        $log[$i]['ok']         = $ok;
+        $log[$i]['ok'] = $ok;
         $i++;
     }
     $main .= '';
@@ -529,7 +530,7 @@ function email_import($email_import = '', $nps_sn = '')
 
     $email_import = str_replace("\n", '', $email_import);
     $email_import = str_replace(' ', '', $email_import);
-    $emails       = explode(',', $email_import);
+    $emails = explode(',', $email_import);
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     foreach ($emails as $email) {
@@ -550,27 +551,27 @@ function sendmail_log($npsn = '')
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig, $xoopsTpl;
 
     $newspaper = get_newspaper($npsn);
-    $np        = get_newspaper_set($newspaper['nps_sn']);
+    $np = get_newspaper_set($newspaper['nps_sn']);
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
 
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $total  = $xoopsDB->getRowsNum($result);
-    $empty  = false;
+    $total = $xoopsDB->getRowsNum($result);
+    $empty = false;
     if (empty($total)) {
         $empty = true;
     }
 
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
             $$k = $v;
         }
 
-        $main[$i]['email']     = $email;
+        $main[$i]['email'] = $email;
         $main[$i]['send_time'] = $send_time;
-        $main[$i]['log']       = $log;
+        $main[$i]['log'] = $log;
         $i++;
     }
     $newspaper_title = $np['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $newspaper['number']);
@@ -584,11 +585,11 @@ function sendmail_log($npsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op     = system_CleanVars($_REQUEST, 'op', '', 'string');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nps_sn = system_CleanVars($_REQUEST, 'nps_sn', 0, 'int');
-$npsn   = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
-$g2p    = system_CleanVars($_REQUEST, 'g2p', 0, 'int');
+$npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
+$g2p = system_CleanVars($_REQUEST, 'g2p', 0, 'int');
 
 $xoopsTpl->assign('op', $op);
 
@@ -684,5 +685,5 @@ switch ($op) {
 if ('preview' === $op) {
     echo $main;
 } else {
-    include_once 'footer.php';
+    require_once __DIR__ . '/footer.php';
 }
