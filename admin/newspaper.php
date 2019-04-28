@@ -13,7 +13,7 @@ function newspaper_set_table($sel_nps_sn = '')
     //找出現有設定組
     $sql = 'SELECT nps_sn,title FROM ' . $xoopsDB->prefix('tad_news_paper_setup') . '';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($nps_sn, $title) = $xoopsDB->fetchRow($result))) {
+    while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
         if ($sel_nps_sn == $nps_sn) {
             $selected = 'selected';
             $ptitle = $title;
@@ -69,7 +69,7 @@ function newspaper_set_table($sel_nps_sn = '')
 
     $i = 0;
     $newspaper = [];
-    while (false !== (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result))) {
+    while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $newspaper[$i]['allnpsn'] = $allnpsn;
         $newspaper[$i]['title'] = $title;
         $newspaper[$i]['number'] = sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, $number);
@@ -122,7 +122,7 @@ function open_newspaper($nps_sn = '')
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken();
+    $token = new \XoopsFormHiddenToken();
     $hidden .= $token->render();
 
     //取得主題資料
@@ -198,7 +198,7 @@ function add_newspaper($nps_sn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $opt = $opt2 = '';
-    while (false !== (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result))) {
+    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
         $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
@@ -214,7 +214,7 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -259,7 +259,7 @@ function edit_newspaper($npsn = '')
         $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " $news";
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result))) {
+        while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
             $news_title = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
             $pic = $tadnews->get_news_cover($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
@@ -331,7 +331,7 @@ function sendmail_form($npsn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $total = $xoopsDB->getRowsNum($result);
 
-    while (false !== (list($email) = $xoopsDB->fetchRow($result))) {
+    while (list($email) = $xoopsDB->fetchRow($result)) {
         if (empty($email)) {
             continue;
         }
@@ -372,7 +372,7 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -458,7 +458,7 @@ function newspaper_email($nps_sn = '')
 
     $main = '';
     $i = 0;
-    while (false !== (list($email, $order_date) = $xoopsDB->fetchRow($result))) {
+    while (list($email, $order_date) = $xoopsDB->fetchRow($result)) {
         $email = htmlspecialchars($email);
         $ok = (check_email_mx($email)) ? 'ok' : "<span style='color:red;'>error</span>";
 

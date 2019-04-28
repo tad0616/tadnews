@@ -15,7 +15,7 @@ function month_list($now_date = '')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while (false !== (list($ym, $count) = $xoopsDB->fetchRow($result))) {
+    while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt[$i]['value'] = $ym;
         $opt[$i]['count'] = $count;
         $opt[$i]['text'] = str_replace('-', '' . _MD_TADNEWS_YEAR, $ym) . _MD_TADNEWS_MONTH;

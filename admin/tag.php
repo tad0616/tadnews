@@ -14,7 +14,7 @@ function list_tad_news_tags($def_tag_sn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $tags_used_amount = tags_used_amount();
-    while (false !== (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result))) {
+    while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
         $tag_amount = (int) $tags_used_amount[$tag_sn];
 
         $tagarr[$i]['tag_sn'] = $tag_sn;
@@ -39,7 +39,7 @@ function list_tad_news_tags($def_tag_sn = '')
     $xoopsTpl->assign('color', $color);
     $xoopsTpl->assign('enable', $enable);
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 
     return $main;
@@ -89,7 +89,7 @@ function tags_used_amount()
     $sql = 'SELECT prefix_tag,count(prefix_tag) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY prefix_tag ';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $main = '';
-    while (false !== (list($prefix_tag, $count) = $xoopsDB->fetchRow($result))) {
+    while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;
     }
 

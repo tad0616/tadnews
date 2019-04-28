@@ -76,7 +76,7 @@ function show_news($nsn = '', $ncsn = '')
 
     $facebook_comments = facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
 
-    $uid_name = XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
+    $uid_name = \XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
 
     $sign_bg = (!empty($news['page'][0]['need_sign'])) ? "style='background-image:url(" . XOOPS_URL . "/modules/tadnews/images/sign_bg.png);background-position: right top;background-repeat: no-repeat;'" : '';
@@ -143,7 +143,7 @@ function get_tad_news_cate_list_m()
     $sql = 'select `ncsn`, `nc_title`, `not_news` from ' . $xoopsDB->prefix('tad_news_cate') . " where `not_news` != '1' order by `sort`";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
 
-    while (false !== (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result))) {
+    while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
         $list .= "
             <li>
                 <a href='pda.php?op=category&ncsn={$ncsn}' class='item-link item-content'>
@@ -179,7 +179,7 @@ function month_list_m()
 
     $opt = (string)($nodata);
 
-    while (false !== (list($ym, $count) = $xoopsDB->fetchRow($result))) {
+    while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt .= "
             <li>
                 <a href='pda.php?op=archive&date={$ym}' class='item-link item-content'>
@@ -261,7 +261,7 @@ function list_newspaper_m()
 
     $main = (string)($nodata);
 
-    while (false !== (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result))) {
+    while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
         $np_date = mb_substr($np_date, 0, 10);
 

@@ -14,7 +14,7 @@ function list_tadnews_cate_tree($def_ncsn = '')
 
     $sql = 'SELECT ncsn , count(*) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY ncsn';
     $result = $xoopsDB->query($sql);
-    while (false !== (list($ncsn, $counter) = $xoopsDB->fetchRow($result))) {
+    while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;
     }
     $path = get_tadnews_cate_path($def_ncsn);
@@ -24,7 +24,7 @@ function list_tadnews_cate_tree($def_ncsn = '')
 
     $sql = 'SELECT ncsn,of_ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news='1' ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
+    while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($ncsn, $path_arr) ? 'true' : 'false';
         $display_counter = empty($cate_count[$ncsn]) ? '' : " ({$cate_count[$ncsn]})";
@@ -34,7 +34,7 @@ function list_tadnews_cate_tree($def_ncsn = '')
     $json = implode(",\n", $data);
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php';
     $ztree = new ztree('page_tree', $json, 'save_drag.php', 'save_cate_sort.php', 'of_ncsn', 'ncsn');

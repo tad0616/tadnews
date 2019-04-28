@@ -16,7 +16,7 @@ if (function_exists('mb_http_output')) {
 }
 // header("Content-Type:text/xml; charset=utf-8");
 
-$tpl = new XoopsTpl();
+$tpl = new \XoopsTpl();
 $tpl->xoops_setCaching(2);
 $tpl->xoops_setCacheTime(10);
 if (!$tpl->is_cached('db:tadnews_rss.tpl')) {

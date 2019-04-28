@@ -171,12 +171,12 @@ function tad_news_cate_form($ncsn = '')
 
     $cate_select = $tadnews->get_tad_news_cate_option(0, 0, $of_ncsn, true, $ncsn, '1', '0');
 
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 3, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 3, true);
     $SelectGroup_name->addOption('', _TADNEWS_ALL_OK, false);
     $SelectGroup_name->setExtra("class='form-control'");
     $enable_group = $SelectGroup_name->render();
 
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'enable_post_group', false, $enable_post_group, 3, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_post_group', false, $enable_post_group, 3, true);
     //$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
     $SelectGroup_name->setExtra("class='form-control'");
     $enable_post_group = $SelectGroup_name->render();
@@ -194,7 +194,7 @@ function tad_news_cate_form($ncsn = '')
     $xoopsTpl->assign('pic', $pic);
     $xoopsTpl->assign('now_op', 'tad_news_cate_form');
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken();
+    $token = new \XoopsFormHiddenToken();
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 

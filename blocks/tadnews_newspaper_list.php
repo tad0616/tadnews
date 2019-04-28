@@ -11,7 +11,7 @@ function tadnews_newspaper_list($options)
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $page = [];
-    while (false !== (list($npsn, $number, $title) = $xoopsDB->fetchRow($result))) {
+    while (list($npsn, $number, $title) = $xoopsDB->fetchRow($result)) {
         $page[$i]['npsn'] = $npsn;
         $page[$i]['title'] = $title . sprintf(_MB_TADNEWS_NP_TITLE, $number);
         $i++;

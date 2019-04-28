@@ -34,7 +34,7 @@ function list_tad_all_pages($the_ncsn = 0)
     if ($TadThemesModule) {
         $sql = 'select link_cate_sn from ' . $xoopsDB->prefix('tad_themes_menu') . " where `link_cate_name`='tadnews_page_cate'";
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== (list($link_cate_sn) = $xoopsDB->fetchRow($result))) {
+        while (list($link_cate_sn) = $xoopsDB->fetchRow($result)) {
             $link_cate_sn_arr[] = $link_cate_sn;
         }
     }
@@ -70,7 +70,7 @@ function tabs_sort($ncsn, $nsn)
 
     $myts = MyTextSanitizer::getInstance();
     $tab_div = [];
-    while (false !== (list($data_value, $data_sort) = $xoopsDB->fetchRow($result))) {
+    while (list($data_value, $data_sort) = $xoopsDB->fetchRow($result)) {
         $tab_div[$data_sort] = $data_value;
     }
     $xoopsTpl->assign('ncsn', $ncsn);

@@ -79,7 +79,7 @@ if (!function_exists('block_get_all_not_news_cate')) {
         $sql = 'select ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='1' and of_ncsn='{$of_ncsn}' order by sort";
         $result = $xoopsDB->query($sql);
 
-        while (false !== (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
+        while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $selected = ($default_ncsn == $ncsn) ? 'selected' : '';
             $option .= "<option value='{$ncsn}' style='padding-left: {$left}px' $selected>{$nc_title}</option>";
             $option .= block_get_all_not_news_cate($ncsn, $default_ncsn, $level);
@@ -99,7 +99,7 @@ if (!function_exists('block_get_page_cate')) {
         //die($sql);
         $result = $xoopsDB->query($sql);
         $myts = MyTextSanitizer::getInstance();
-        while (false !== (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result))) {
+        while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             //第一層底下的目錄
             if ($the_ncsn != $ncsn) {
                 $page['title'][$ncsn] = $nc_title;
@@ -109,7 +109,7 @@ if (!function_exists('block_get_page_cate')) {
                 $the_ncsn = $ncsn;
                 $sql3 = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
                 $result3 = $xoopsDB->query($sql3);
-                while (false !== (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result3))) {
+                while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result3)) {
                     //第二層底下的目錄
                     if ($the_ncsn != $ncsn) {
                         $page['title'][$ncsn] = $nc_title;
@@ -121,7 +121,7 @@ if (!function_exists('block_get_page_cate')) {
                     $sql4 = 'select nsn,ncsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
                     $result4 = $xoopsDB->query($sql4);
                     $j = $ncsn * 10000;
-                    while (false !== (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result4))) {
+                    while (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result4)) {
                         $myts->htmlSpecialChars($news_title);
                         $page['title'][$j] = $news_title;
                         $page['of_ncsn'][$j] = $ncsn;
@@ -134,7 +134,7 @@ if (!function_exists('block_get_page_cate')) {
             //第一層底下的文章
             $sql2 = 'select nsn,ncsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
             $result2 = $xoopsDB->query($sql2);
-            while (false !== (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result2))) {
+            while (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result2)) {
                 $myts->htmlSpecialChars($news_title);
                 $page['title'][$i] = $news_title;
                 $page['of_ncsn'][$i] = $ncsn;

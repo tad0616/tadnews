@@ -23,7 +23,7 @@ if ('sort_tabs' === $op) {
 
     $myts = MyTextSanitizer::getInstance();
     $tab_title_div = $tab_content_div = '';
-    while (false !== (list($data_name, $data_value) = $xoopsDB->fetchRow($result))) {
+    while (list($data_name, $data_value) = $xoopsDB->fetchRow($result)) {
         if ('tab_title' === $data_name) {
             $tab_title_div .= "<li>$data_value</li>";
         } else {

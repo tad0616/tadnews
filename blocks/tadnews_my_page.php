@@ -41,7 +41,7 @@ function tadnews_my_page_edit($options)
 
     $myts = MyTextSanitizer::getInstance();
     $opt = '';
-    while (false !== (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result))) {
+    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         if (in_array($nsn, $options_arr)) {
             $opt2 .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";

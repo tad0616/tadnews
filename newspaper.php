@@ -22,7 +22,7 @@ function list_newspaper()
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $main = [];
-    while (false !== (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result))) {
+    while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $title = $myts->htmlSpecialChars($title);
         $main[$i]['allnpsn'] = $allnpsn;
         $main[$i]['title'] = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);

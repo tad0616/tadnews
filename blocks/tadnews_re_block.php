@@ -14,7 +14,7 @@ function tadnews_b_show_3($options)
     $block['width'] = $options[1];
     $myts = MyTextSanitizer::getInstance();
     $i = 0;
-    while (false !== (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result))) {
+    while (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result)) {
         $txt = strip_tags($txt);
         //支援xlanguage
         if (function_exists('xlanguage_ml')) {
@@ -23,7 +23,7 @@ function tadnews_b_show_3($options)
         //$txt=xoops_substr($txt , 0 , $options[1] , "...");
         $txt = mb_substr($txt, 0, $options[1], _CHARSET);
         $txt .= '...';
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
         $re['uid'] = $uid;
         $re['uid_name'] = $uid_name;

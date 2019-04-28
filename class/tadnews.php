@@ -814,7 +814,7 @@ class tadnews
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-                $token = new XoopsFormHiddenToken();
+                $token = new \XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $token->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
@@ -852,7 +852,7 @@ class tadnews
 
             $have_read_chk = $this->have_read_chk($have_read_group, $nsn);
 
-            $uid_name = XoopsUser::getUnameFromId($uid, 1);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
             $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
@@ -1137,7 +1137,7 @@ class tadnews
 
                 if (!empty($passwd)) {
                     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-                    $token = new XoopsFormHiddenToken();
+                    $token = new \XoopsFormHiddenToken();
                     $XOOPS_TOKEN = $token->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
@@ -1380,7 +1380,7 @@ class tadnews
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
     <option value=''></option>";
         while (list($uid) = $xoopsDB->fetchRow($result)) {
-            $uid_name = XoopsUser::getUnameFromId($uid, 1);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
             $selected = ($this->view_uid == $uid) ? 'selected' : '';
             $opt .= "<option value='$uid' $selected>$uid_name</option>";
@@ -1551,7 +1551,7 @@ class tadnews
 
         if (!empty($have_read_group)) {
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $token = new XoopsFormHiddenToken();
+            $token = new \XoopsFormHiddenToken();
             $XOOPS_TOKEN = $token->render();
 
             $have_read_group_arr = explode(',', $have_read_group);
@@ -1829,7 +1829,7 @@ class tadnews
         $formValidator->render('topLeft');
 
         if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-            redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+            redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
         }
         require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
         $sweet_alert = new sweet_alert();
@@ -1891,12 +1891,12 @@ class tadnews
 
         $always_top_checked = ('1' == $always_top) ? 'checked' : '';
 
-        $SelectGroup_name = new XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 4, true);
+        $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 4, true);
         $SelectGroup_name->addOption('', _TADNEWS_ALL_OK, false);
         $SelectGroup_name->setExtra("class='col-sm-12 form-control'");
         $enable_group = $SelectGroup_name->render();
 
-        $SelectGroup_name2 = new XoopsFormSelectGroup('', 'have_read_group', false, $have_read_group, 4, true);
+        $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'have_read_group', false, $have_read_group, 4, true);
         $SelectGroup_name2->addOption('', _TADNEWS_ALL_NO, false);
         $SelectGroup_name2->setExtra("class='col-sm-12 form-control'");
         $have_read_group = $SelectGroup_name2->render();
@@ -2030,7 +2030,7 @@ class tadnews
             $form['tab_arr'] = $tab_arr;
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $token = new XoopsFormHiddenToken();
+            $token = new \XoopsFormHiddenToken();
             $form['XOOPS_TOKEN'] = $token->render();
 
             return $form;
@@ -2091,7 +2091,7 @@ class tadnews
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+        $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
         $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
     }
 

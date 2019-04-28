@@ -135,8 +135,8 @@ function list_sign($nsn = '')
     $sign = '';
     $i = 0;
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($uid, $sign_time) = $xoopsDB->fetchRow($result))) {
-        $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
+        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
         $sign[$i]['uid'] = $uid;
         $sign[$i]['uid_name'] = $uid_name;
@@ -156,7 +156,7 @@ function list_user_sign($uid = '')
     global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $tadnews;
     $news = $tadnews->get_tad_news($nsn);
 
-    $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    $uid_name = \XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $sql = 'select a.nsn,a.sign_time,b.news_title from ' . $xoopsDB->prefix('tad_news_sign') . ' as a left join ' . $xoopsDB->prefix('tad_news') . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
@@ -165,7 +165,7 @@ function list_user_sign($uid = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $myts = MyTextSanitizer::getInstance();
-    while (false !== (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result))) {
+    while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         $sign[$i]['nsn'] = $nsn;
         $sign[$i]['news_title'] = $news_title;

@@ -13,7 +13,7 @@ function tadnews_newspaper($options)
     $result = $xoopsDB->query($sql);
     $i = 0;
     $option = [];
-    while (false !== (list($nps_sn, $title) = $xoopsDB->fetchRow($result))) {
+    while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
         $option[$i]['value'] = $nps_sn;
         $option[$i]['text'] = $title;
         $i++;
