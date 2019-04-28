@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 
 //列出所有tad_news資料（$kind="news","page"）
 function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
@@ -57,7 +58,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
     $level++;
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='{$not_news}' and of_ncsn='{$of_ncsn}' order by sort";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //$catearr="";
 
@@ -68,8 +69,8 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
         list($counter) = $xoopsDB->fetchRow($result2);
 
         $pic = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
-        $g_txt = $tadnews->txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
-        $gp_txt = $tadnews->txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
+        $g_txt = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
+        $gp_txt = Utility::txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
 
         $new_kind = ('1' == $not_news) ? 0 : 1;
         $change_text = ('1' == $not_news) ? _MA_TADNEWS_CHANGE_TO_NEWS : _MA_TADNEWS_CHANGE_TO_PAGE;
@@ -163,7 +164,7 @@ function insert_tad_news_cate()
     $setup = $myts->addSlashes($setup);
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $ncsn = $xoopsDB->getInsertId();
 
@@ -183,10 +184,10 @@ function delete_tad_news_cate($ncsn = '')
 
     //先找看看底下有無分類，若有將其父分類變成原分類之父分類
     $sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . "  set  of_ncsn = '{$cate_org['of_ncsn']}' where of_ncsn='$ncsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $sql = 'delete from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$ncsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //轉換分類類型
@@ -195,13 +196,13 @@ function change_kind($ncsn = '', $not_news = '')
     global $xoopsDB, $xoopsModuleConfig;
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . " set not_news='{$not_news}' , of_ncsn='0' where ncsn ='{$ncsn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //先找看看底下有無分類，若有將其也一起變
     $sub_cate = get_sub_cate($ncsn);
     if (!empty($sub_cate)) {
         $sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . " set not_news='{$not_news}' where ncsn in ($sub_cate)";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 
     if (1 == $not_news) {
@@ -217,7 +218,7 @@ function get_sub_cate($of_ncsn = '')
 {
     global $xoopsDB;
     $sql = 'select ncsn from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$of_ncsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //echo "<p>$sql</p>";
     while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {
         $ccc = get_sub_cate($sub_ncsn);
@@ -239,7 +240,7 @@ function move_to_cate($ncsn = '', $to_ncsn = '')
     global $xoopsDB;
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set ncsn='{$to_ncsn}' where ncsn='{$ncsn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //批次移動
@@ -252,7 +253,7 @@ function move_news($nsn_arr = [], $ncsn = '')
 
     foreach ($nsn_arr as $nsn) {
         $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set ncsn='{$ncsn}' where nsn='{$nsn}'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
 
@@ -266,7 +267,7 @@ function del_news($nsn_arr = [])
 
     foreach ($nsn_arr as $nsn) {
         $sql = 'delete from ' . $xoopsDB->prefix('tad_news') . " where nsn='{$nsn}'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $tadnews->delete_tad_news($nsn);
     }
 }

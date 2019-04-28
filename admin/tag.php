@@ -1,5 +1,7 @@
 <?php
-$GLOBALS['xoopsOption']['template_main'] = 'tadnews_adm_tag.tpl';
+use XoopsModules\Tadtools\Utility;
+
+$xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
@@ -11,7 +13,7 @@ function list_tad_news_tags($def_tag_sn = '')
     global $xoopsDB, $xoopsTpl, $tadnews;
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
@@ -55,7 +57,7 @@ function insert_tad_news_tags()
     }
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_news_tags') . "  (`tag` , `font_color`, `color`  , `enable`) values('{$_POST['tag']}', '{$_POST['font_color']}', '{$_POST['color']}', '{$_POST['enable']}') ";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 function update_tad_news_tags($tag_sn)
@@ -63,7 +65,7 @@ function update_tad_news_tags($tag_sn)
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_news_tags') . "  set  tag = '{$_POST['tag']}',font_color = '{$_POST['font_color']}',color = '{$_POST['color']}',enable = '{$_POST['enable']}' where tag_sn='{$tag_sn}'";
 
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 function tad_news_tags_stat($enable, $tag_sn)
@@ -71,7 +73,7 @@ function tad_news_tags_stat($enable, $tag_sn)
     global $xoopsDB;
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news_tags') . "  set enable = '{$enable}' where tag_sn='{$tag_sn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 function del_tag($tag_sn = '')
@@ -79,7 +81,7 @@ function del_tag($tag_sn = '')
     global $xoopsDB;
 
     $sql = 'delete from ' . $xoopsDB->prefix('tad_news_tags') . " where tag_sn='{$tag_sn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 function tags_used_amount()
@@ -87,7 +89,7 @@ function tags_used_amount()
     global $xoopsDB, $xoopsTpl;
 
     $sql = 'SELECT prefix_tag,count(prefix_tag) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY prefix_tag ';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $main = '';
     while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;

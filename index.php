@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 
@@ -30,7 +32,7 @@ function list_tad_summary_news($the_ncsn = '', $show_uid = '')
 
     $tadnews->get_news();
     $xoopsTpl->assign('ncsn', $the_ncsn);
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 //列出所有tad_news資料
@@ -51,7 +53,7 @@ function list_tad_all_news($the_ncsn = '', $show_uid = '')
         $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
     $tadnews->get_news();
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('ncsn', $the_ncsn);
 }
 
@@ -65,7 +67,7 @@ function list_tad_tag_news($tag_sn = '')
     $tadnews->set_view_tag($tag_sn);
 
     $tadnews->get_news();
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 //列出所有tad_news資料
@@ -80,7 +82,7 @@ function list_tad_cate_news($show_ncsn = 0, $the_level = 0, $show_uid = '')
         $tadnews->set_view_uid($show_uid);
     }
     $tadnews->get_cate_news();
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('ncsn', $show_ncsn);
 }
 
@@ -99,7 +101,7 @@ function show_news($nsn = '')
     //}
     $tadnews->get_news();
     $xoopsTpl->assign('uid', $uid);
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 //已經讀過
@@ -113,7 +115,7 @@ function have_read($nsn = '', $uid = '')
     }
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     $sql = 'insert into ' . $xoopsDB->prefix('tad_news_sign') . " (`nsn`,`uid`,`sign_time`) values('$nsn','$uid','{$now}')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //檢查置頂時間
@@ -134,7 +136,7 @@ function list_sign($nsn = '')
     $sql = 'select uid,sign_time from ' . $xoopsDB->prefix('tad_news_sign') . " where nsn='$nsn' order by sign_time";
     $sign = '';
     $i = 0;
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -147,7 +149,7 @@ function list_sign($nsn = '')
     $xoopsTpl->assign('news_title', sprintf(_MD_TADNEWS_SIGN_LOG, $news['news_title']));
     $xoopsTpl->assign('nsn', $nsn);
     $xoopsTpl->assign('sign', $sign);
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 //列出某人狀況
@@ -162,7 +164,7 @@ function list_user_sign($uid = '')
     $sql = 'select a.nsn,a.sign_time,b.news_title from ' . $xoopsDB->prefix('tad_news_sign') . ' as a left join ' . $xoopsDB->prefix('tad_news') . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
     $sign = '';
     $i = 0;
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
@@ -176,7 +178,7 @@ function list_user_sign($uid = '')
     $xoopsTpl->assign('uid', $uid);
     $xoopsTpl->assign('sign', $sign);
     $xoopsTpl->assign('uid_name', sprintf(_MD_TADNEWS_SIGN_LOG, $uid_name));
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 /*-----------執行動作判斷區----------*/
 require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
@@ -192,22 +194,22 @@ $show_uid = system_CleanVars($_REQUEST, 'show_uid', 0, 'int');
 switch ($op) {
     //下載檔案
     case 'tufdl':
-        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : '';
+        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
-        break;
+
     //刪除資料
     case 'delete_tad_news':
         $tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
-        break;
+
     //已經閱讀
     case 'have_read':
         have_read($nsn, $uid);
         header('location: ' . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
-        break;
+
     //列出簽收狀況
     case 'list_sign':
         $GLOBALS['xoopsOption']['template_main'] = 'tadnews_sign.tpl';
@@ -215,6 +217,7 @@ switch ($op) {
         list_sign($nsn);
         $xoopsTpl->assign('op', $op);
         break;
+
     //列出某人狀況
     case 'list_user_sign':
         $GLOBALS['xoopsOption']['template_main'] = 'tadnews_sign.tpl';
@@ -222,6 +225,7 @@ switch ($op) {
         list_user_sign($uid);
         $xoopsTpl->assign('op', $op);
         break;
+
     default:
 
         //把過期的置頂文徹下

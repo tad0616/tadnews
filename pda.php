@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
@@ -64,7 +65,7 @@ function show_news($nsn = '', $ncsn = '')
 
     $module_name = $xoopsModule->getVar('name');
     $cate = $tadnews->get_tad_news_cate($ncsn);
-    $navbar_title = (empty($ncsn)) ? (string)($module_name) : (string)($cate['nc_title']);
+    $navbar_title = (empty($ncsn)) ? (string) ($module_name) : (string) ($cate['nc_title']);
 
     $tadnews->set_view_nsn($nsn);
     $tadnews->set_cover(true, 'db');
@@ -74,7 +75,7 @@ function show_news($nsn = '', $ncsn = '')
     //}
     $news = $tadnews->get_news('return');
 
-    $facebook_comments = facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
+    $facebook_comments = Utility::facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
 
     $uid_name = \XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
@@ -177,7 +178,7 @@ function month_list_m()
             </div>
         </li>" : '';
 
-    $opt = (string)($nodata);
+    $opt = (string) ($nodata);
 
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt .= "
@@ -218,9 +219,9 @@ function archive_m($date = '')
             </div>
         </li>" : '';
 
-    $date_title = to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
+    $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
 
-    $list = (string)($nodata);
+    $list = (string) ($nodata);
 
     foreach ($tnews['page'] as $news) {
         $list .= "
@@ -259,7 +260,7 @@ function list_newspaper_m()
             </div>
         </li>" : '';
 
-    $main = (string)($nodata);
+    $main = (string) ($nodata);
 
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
@@ -586,7 +587,7 @@ switch ($op) {
         break;
     case 'archive':
         $archive = archive_m($date);
-        $date_title = to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH);
+        $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH);
         $main = "
             <!-- Top Navbar-->
             <div class='navbar theme-white color-white'>

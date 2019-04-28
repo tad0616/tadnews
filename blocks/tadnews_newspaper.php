@@ -1,11 +1,13 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 //區塊主函式 (訂閱 / 取消電子報)
 function tadnews_newspaper($options)
 {
     global $xoopsDB, $xoopsUser;
 
     $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_paper_email') . '';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($counter) = $xoopsDB->fetchRow($result);
 
     //找出現有設定組

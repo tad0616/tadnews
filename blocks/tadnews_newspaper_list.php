@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
+
 //區塊主函式 (最新回應)
 function tadnews_newspaper_list($options)
 {
@@ -8,7 +10,7 @@ function tadnews_newspaper_list($options)
 
     //找出現有設定組
     $sql = 'select a.npsn,a.number,b.title from ' . $xoopsDB->prefix('tad_news_paper') . ' as a ,' . $xoopsDB->prefix('tad_news_paper_setup') . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc limit 0,{$options[0]}";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $page = [];
     while (list($npsn, $number, $title) = $xoopsDB->fetchRow($result)) {

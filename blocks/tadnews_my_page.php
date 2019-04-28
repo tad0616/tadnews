@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (自選文章)
@@ -37,7 +39,7 @@ function tadnews_my_page_edit($options)
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where enable='1' order by  $order start_day desc";
     //die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = MyTextSanitizer::getInstance();
     $opt = '';

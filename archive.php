@@ -1,7 +1,9 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'tadnews_archive.tpl';
+$xoopsOption['template_main'] = 'tadnews_archive.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
@@ -13,7 +15,7 @@ function month_list($now_date = '')
 
     $sql = 'SELECT left(start_day,7) , count(*) FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' GROUP BY left(start_day,7) ORDER BY start_day DESC";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt[$i]['value'] = $ym;
@@ -43,8 +45,8 @@ function archive($date = '')
     $tadnews->set_show_month($date);
     $tadnews->set_show_enable(1);
     $tadnews->get_news();
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
-    $date_title = to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+    $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign('date_title', $date_title);
 }
 
@@ -68,5 +70,5 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -1,9 +1,10 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 
 namespace XoopsModules\Tadnews;
 
 /*
- Utility Class Definition
+Update Class Definition
 
  You may not change or alter any portion of this comment or credits of
  supporting developers from this source code or any supporting source code
@@ -23,94 +24,10 @@ namespace XoopsModules\Tadnews;
 
 
 /**
- * Class Utility
+ * Class Update
  */
-class Utility
+class Update
 {
-    //建立目錄
-    public static function mk_dir($dir = '')
-    {
-        //若無目錄名稱秀出警告訊息
-        if (empty($dir)) {
-            return;
-        }
-
-        //若目錄不存在的話建立目錄
-        if (!is_dir($dir)) {
-            umask(000);
-            //若建立失敗秀出警告訊息
-            if (!mkdir($dir, 0777) && !is_dir($dir)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
-            }
-        }
-    }
-
-    //刪除目錄
-    public static function delete_directory($dirname)
-    {
-        if (is_dir($dirname)) {
-            $dir_handle = opendir($dirname);
-        }
-
-        if (!$dir_handle) {
-            return false;
-        }
-
-        while ($file = readdir($dir_handle)) {
-            if ('.' !== $file && '..' !== $file) {
-                if (!is_dir($dirname . '/' . $file)) {
-                    unlink($dirname . '/' . $file);
-                } else {
-                    self::delete_directory($dirname . '/' . $file);
-                }
-            }
-        }
-        closedir($dir_handle);
-        rmdir($dirname);
-
-        return true;
-    }
-
-    //拷貝目錄
-    public static function full_copy($source = '', $target = '')
-    {
-        if (is_dir($source)) {
-            if (!mkdir($target) && !is_dir($target)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $target));
-            }
-            $d = dir($source);
-            while (false !== ($entry = $d->read())) {
-                if ('.' === $entry || '..' === $entry) {
-                    continue;
-                }
-
-                $Entry = $source . '/' . $entry;
-                if (is_dir($Entry)) {
-                    self::full_copy($Entry, $target . '/' . $entry);
-                    continue;
-                }
-                copy($Entry, $target . '/' . $entry);
-            }
-            $d->close();
-        } else {
-            copy($source, $target);
-        }
-    }
-
-    public static function rename_win($oldfile, $newfile)
-    {
-        if (!rename($oldfile, $newfile)) {
-            if (copy($oldfile, $newfile)) {
-                unlink($oldfile);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        return true;
-    }
 
     //新增檔案欄位
     public static function chk_fc_tag()
@@ -151,7 +68,7 @@ class Utility
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
+        $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
@@ -206,32 +123,32 @@ class Utility
     public static function go_update10()
     {
         global $xoopsDB;
-        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews');
-        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/cate');
-        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/file');
-        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image');
-        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image/.thumbs');
+        Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews');
+        Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/cate');
+        Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/file');
+        Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image');
+        Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/image/.thumbs');
 
         //建立電子報佈景
-        self::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes');
+        Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes');
         if (is_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2')) {
-            tadnews_delete_directory(XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2');
+            Utility::delete_directory(XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2');
         }
-        tadnews_full_copy(XOOPS_ROOT_PATH . '/modules/tadnews/images/bluefreedom2', XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2');
+        Utility::full_copy(XOOPS_ROOT_PATH . '/modules/tadnews/images/bluefreedom2', XOOPS_ROOT_PATH . '/uploads/tadnews/themes/bluefreedom2');
 
         //表格改名
         $sql = 'RENAME TABLE ' . $xoopsDB->prefix('tad_news_files') . '  TO ' . $xoopsDB->prefix('tadnews_files_center');
         $xoopsDB->queryF($sql);
 
         //修改表格
-        $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tadnews_files_center') . "`
+        $sql = "ALTER TABLE `" . $xoopsDB->prefix('tadnews_files_center') . "`
       CHANGE `fsn` `files_sn` SMALLINT( 5 ) UNSIGNED NOT NULL AUTO_INCREMENT,
       CHANGE `nsn` `col_sn` SMALLINT( 5 ) UNSIGNED NOT NULL,
       ADD `col_name` VARCHAR( 255 ) NOT NULL AFTER `files_sn` ,
       ADD `sort` SMALLINT UNSIGNED NOT NULL AFTER `col_sn` ,
       ADD `kind` ENUM( 'img', 'file' ) NOT NULL AFTER `sort`,
       ADD `description` TEXT NOT NULL AFTER `file_type`";
-        $xoopsDB->queryF($sql) || die($sql);
+        $xoopsDB->queryF($sql) or die($sql);
 
         //套入描述以及欄位名稱
         $sql = 'update ' . $xoopsDB->prefix('tadnews_files_center') . " set `col_name`='nsn', `description`=`file_name`";
@@ -244,9 +161,9 @@ class Utility
             $kind = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
             $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . mb_substr($description, -4);
             if ('file' === $kind) {
-                rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/file/$new_file_name");
+                Utility::rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/file/$new_file_name");
             } else {
-                rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/image/$new_file_name");
+                Utility::rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/image/$new_file_name");
             }
 
             //更新檔名
@@ -390,7 +307,7 @@ class Utility
                 $prefix_tag = addslashes($prefix_tag);
             }
             $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
-            $xoopsDB->queryF($sql) || die($sql);
+            $xoopsDB->queryF($sql) or die($sql);
         }
     }
 
@@ -498,7 +415,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'SHOW Fields FROM ' . $xoopsDB->prefix('tad_news') . " where `Field`='news_content' and `Type`='text'";
-        $result = $xoopsDB->queryF($sql) || die($sql);
+        $result = $xoopsDB->queryF($sql) or die($sql);
         $all = $xoopsDB->fetchRow($result);
         if (false === $all) {
             return false;
@@ -521,7 +438,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'SELECT hash_filename FROM ' . $xoopsDB->prefix('tadnews_files_center') . " WHERE `col_name`='news_pic'";
-        $result = $xoopsDB->query($sql) || die($sql);
+        $result = $xoopsDB->query($sql) or die($sql);
         $all = $xoopsDB->fetchRow($result);
         if (false === $all) {
             return false;

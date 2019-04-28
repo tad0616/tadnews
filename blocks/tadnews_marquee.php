@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (跑馬燈區塊)
@@ -27,7 +28,7 @@ function tadnews_marquee($options)
     $block['duration'] = empty($options[3]) ? '5000' : $options[3];
     $block['css'] = empty($options[4]) ? '' : $options[4];
     $block['item_css'] = empty($options[5]) ? '' : $options[5];
-    $block['randStr'] = randStr();
+    $block['randStr'] = Utility::randStr();
     $block['jquery'] = get_jquery();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     $xoTheme->addScript('modules/tadnews/class/jQuery.Marquee/jquery.marquee.min.js');

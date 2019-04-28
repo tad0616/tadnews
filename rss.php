@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -34,11 +36,11 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
     if (is_array($all_news['page'])) {
         $sitename = htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES);
         $slogan = htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES);
-        $tpl->assign('channel_title', to_utf8($sitename) . '-' . to_utf8($all_news['nc_title'], ENT_QUOTES));
+        $tpl->assign('channel_title', Utility::to_utf8($sitename) . '-' . Utility::to_utf8($all_news['nc_title'], ENT_QUOTES));
         $tpl->assign('channel_link', XOOPS_URL . '/');
-        $tpl->assign('channel_desc', to_utf8($slogan));
+        $tpl->assign('channel_desc', Utility::to_utf8($slogan));
         $tpl->assign('channel_lastbuild', formatTimestamp(time(), 'rss'));
-        $tpl->assign('channel_category', to_utf8($all_news['nc_title'], ENT_QUOTES));
+        $tpl->assign('channel_category', Utility::to_utf8($all_news['nc_title'], ENT_QUOTES));
         $tpl->assign('channel_generator', 'XOOPS');
         $tpl->assign('channel_language', _LANGCODE);
         $tpl->assign('image_url', XOOPS_URL . '/images/logo.gif');
@@ -60,11 +62,11 @@ if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
             $storytitle = htmlspecialchars($news['news_title'], ENT_QUOTES);
             $description = htmlspecialchars($news['content'], ENT_QUOTES);
             $tpl->append('items', [
-                'title' => to_utf8($storytitle),
+                'title' => Utility::to_utf8($storytitle),
                 'link' => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}",
                 'guid' => XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}",
                 'pubdate' => formatTimestamp(strtotime($news['post_date']), 'rss'),
-                'description' => to_utf8($description),
+                'description' => Utility::to_utf8($description),
             ]);
         }
     }

@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 require_once __DIR__ . '/header.php';
 
 require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
@@ -11,15 +13,15 @@ if ('sort_tabs' === $op) {
     foreach ($updateRecordsArray as $data_sort) {
         $data_sort = (int) $data_sort;
         $sql = 'update ' . $xoopsDB->prefix('tadnews_data_center') . " set `data_sort`='{$sort}000' where `col_name`='nsn' and `col_sn`= '{$nsn}' and `data_sort`='{$data_sort}' and (`data_name`='tab_title' or `data_name`='tab_content')";
-        $xoopsDB->queryF($sql) || die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+        $xoopsDB->queryF($sql) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
         $sort++;
     }
 
     $sql = 'update ' . $xoopsDB->prefix('tadnews_data_center') . " set `data_sort`=`data_sort`/1000 where `col_name`='nsn' and `col_sn`= '{$nsn}' and (`data_name`='tab_title' or `data_name`='tab_content')";
-    $xoopsDB->queryF($sql) || die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+    $xoopsDB->queryF($sql) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
 
     $sql = 'select `data_name`,`data_value` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and (`data_name`='tab_title' or `data_name`='tab_content') order by `data_sort`";
-    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = MyTextSanitizer::getInstance();
     $tab_title_div = $tab_content_div = '';
@@ -60,7 +62,7 @@ if ('sort_tabs' === $op) {
 
     $tabs_content = $myts->addSlashes($tabs_content);
     $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set news_content = '{$tabs_content}' where nsn='$nsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 } else {
     $updateRecordsArray = $_POST['tr'];
 
@@ -68,7 +70,7 @@ if ('sort_tabs' === $op) {
     foreach ($updateRecordsArray as $nsn) {
         $nsn = (int) $nsn;
         $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set `page_sort`='{$sort}' where `nsn`='{$nsn}'";
-        $xoopsDB->queryF($sql) || die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+        $xoopsDB->queryF($sql) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
         $sort++;
     }
 }

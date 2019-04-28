@@ -131,7 +131,6 @@ define('_MD_TADNEWS_CAN_POST_CATE_GROUP_TXT', 'None selected = Administrator Onl
 define('_MD_TADNEWS_DB_UPDATE_ERROR1', 'Failed to update data of tad_news_cate');
 define('_MD_TADNEWS_DB_DEL_ERROR1', 'Can\'t delete tad_news_cate\'s news');
 define('_MD_TADNEWS_CATE_COUNTER', 'Total: ');
-define('_MD_TADNEWS_ONLY_ROOT', 'Administrator');
 define('_MD_TADNEWS_CAN_READ_CATE_GROUP_S', 'Read');
 define('_MD_TADNEWS_CAN_POST_CATE_GROUP_S', 'Post');
 define('_MD_TADNEWS_NO', 'No (for customized pages with blocks.)');
