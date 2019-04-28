@@ -2,9 +2,10 @@
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
-include_once 'header.php';
-include_once '../function.php';
-include_once 'admin_function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once __DIR__ . '/admin_function.php';
+
 /*-----------function區--------------*/
 
 //找出現有電子報
@@ -123,8 +124,8 @@ function open_newspaper($nps_sn = '')
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken();
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken();
     $hidden .= $token->render();
 
     //取得主題資料
@@ -133,7 +134,7 @@ function open_newspaper($nps_sn = '')
     //取得使用之佈景
     $nps_theme = newspaper_themes($set['themes']);
 
-    $np_title = (empty($nps_sn)) ? (string) $xoopsConfig[sitename] . _MA_TADNEWS_NP : $set['title'];
+    $np_title = (empty($nps_sn)) ? (string)$xoopsConfig['sitename'] . _MA_TADNEWS_NP : $set['title'];
 
     $author = $xoopsUser->getVar('uname');
 
@@ -215,8 +216,8 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('opt2', $opt2);
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -284,7 +285,7 @@ function edit_newspaper($npsn = '')
             $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
             $news_content = $content[0] . $more;
             $html .= "
-            <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string) ($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
+            <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string)($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
             <div class='TadNewsPaper_content'>{$img}{$news_content}</div>
             <hr class='TadNewsPaper_hr'>";
         }
@@ -297,7 +298,7 @@ function edit_newspaper($npsn = '')
         redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
     $ck = new CKEditor('tadnews', 'np_content', $html);
     $ck->setHeight(400);
     $editor = $ck->render();
@@ -344,7 +345,7 @@ function sendmail_form($npsn = '')
     //取得已寄名單
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -373,8 +374,8 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('total', sprintf(_MA_TADNEWS_MAIL_LIST, $total));
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -566,7 +567,7 @@ function sendmail_log($npsn = '')
     }
 
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -588,7 +589,7 @@ function sendmail_log($npsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nps_sn = system_CleanVars($_REQUEST, 'nps_sn', 0, 'int');
 $npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
@@ -688,5 +689,5 @@ switch ($op) {
 if ('preview' === $op) {
     echo $main;
 } else {
-    include_once 'footer.php';
+    require_once __DIR__ . '/footer.php';
 }

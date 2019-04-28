@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Tadnews;
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -16,13 +19,19 @@
  * @since
  * @author     XOOPS Development Team
  */
-require __DIR__ . '/header.php';
-//xoops_cp_header();
 
-$adminObject = \Xmf\Module\Admin::getInstance();
+//defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-$adminObject->displayNavigation(basename(__FILE__));
-$adminObject::setPaypal('xoopsfoundation@gmail.com');
-$adminObject->displayAbout(false);
+/**
+ * class Constants
+ */
+class Constants
+{
+    /**#@+
+     * Constant definition
+     */
 
-require __DIR__ . '/footer.php';
+    const DISALLOW = 0;
+
+    /**#@-*/
+}

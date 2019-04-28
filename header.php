@@ -1,13 +1,13 @@
 <?php
-include_once '../../mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
-include_once 'function.php';
+require_once __DIR__ . '/function.php';
 
 if ('1' == $xoopsModuleConfig['use_pda'] and false === mb_strpos($_SERVER['PHP_SELF'], 'ajax.php') and false === mb_strpos($_SESSION['theme_kind'], 'bootstrap')) {
     $nsn = (isset($_REQUEST['nsn'])) ? (int) $_REQUEST['nsn'] : 0;
     $ncsn = (isset($_REQUEST['ncsn'])) ? (int) $_REQUEST['ncsn'] : 0;
     if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mobile_device_detect.php')) {
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/mobile_device_detect.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/mobile_device_detect.php';
         mobile_device_detect(true, false, true, true, true, true, true, "pda.php?nsn={$nsn}&ncsn={$ncsn}", false);
     }
 }

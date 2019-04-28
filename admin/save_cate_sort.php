@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-require_once '../../../include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $ncsn = (int) $_POST['ncsn'];
 $sort = (int) $_POST['sort'];

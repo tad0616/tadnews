@@ -1,11 +1,11 @@
 <?php
 //條列式新聞區塊
-include_once 'header.php';
+require_once __DIR__ . '/header.php';
 
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
 
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $num = system_CleanVars($_REQUEST, 'num', 10, 'int');
 $show_ncsn = system_CleanVars($_REQUEST, 'show_ncsn', '', 'string');
 $summary_length = system_CleanVars($_REQUEST, 'summary_length', 0, 'int');

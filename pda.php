@@ -1,11 +1,11 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-include_once '../../mainfile.php';
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/modinfo.php";
-include_once XOOPS_ROOT_PATH . "/modules/system/language/{$xoopsConfig['language']}/blocks.php";
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
+require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/modinfo.php";
+require_once XOOPS_ROOT_PATH . "/modules/system/language/{$xoopsConfig['language']}/blocks.php";
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
 
 /*-----------function區--------------*/
 
@@ -77,7 +77,7 @@ function show_news($nsn = '', $ncsn = '')
 
     $facebook_comments = Utility::facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
 
-    $uid_name = XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
+    $uid_name = \XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
 
     $sign_bg = (!empty($news['page'][0]['need_sign'])) ? "style='background-image:url(" . XOOPS_URL . "/modules/tadnews/images/sign_bg.png);background-position: right top;background-repeat: no-repeat;'" : '';
@@ -431,18 +431,18 @@ function member_m()
 function openid_login()
 {
     global $xoopsConfig;
-    $modhandler = xoops_getHandler('module');
-    $config_handler = xoops_getHandler('config');
+    $moduleHandler = xoops_getHandler('module');
+    $configHandler = xoops_getHandler('config');
 
-    $TadLoginXoopsModule = $modhandler->getByDirname('tad_login');
+    $TadLoginXoopsModule = $moduleHandler->getByDirname('tad_login');
     if ($TadLoginXoopsModule) {
-        include_once XOOPS_ROOT_PATH . '/modules/tad_login/function.php';
-        include_once XOOPS_ROOT_PATH . "/modules/tad_login/language/{$xoopsConfig['language']}/county.php";
+        require_once XOOPS_ROOT_PATH . '/modules/tad_login/function.php';
+        require_once XOOPS_ROOT_PATH . "/modules/tad_login/language/{$xoopsConfig['language']}/county.php";
         $tad_login['facebook'] = facebook_login('return');
         $tad_login['google'] = google_login('return');
 
-        $config_handler = xoops_getHandler('config');
-        $modConfig = $config_handler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
+        $configHandler = xoops_getHandler('config');
+        $modConfig = $configHandler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
 
         $auth_method = $modConfig['auth_method'];
         $i = 0;
@@ -536,13 +536,13 @@ function logout_m()
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler = xoops_getHandler('online');
-        $online_handler->destroy($xoopsUser->getVar('uid'));
+        $onlineHandler = xoops_getHandler('online');
+        $onlineHandler->destroy($xoopsUser->getVar('uid'));
     }
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');

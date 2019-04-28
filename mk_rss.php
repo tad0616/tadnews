@@ -20,7 +20,7 @@ function mk_rss()
 
     $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
     $allItem = '';
-    while ($all_news = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all_news = $xoopsDB->fetchArray($result))) {
         foreach ($all_news as $k => $v) {
             $$k = $v;
         }

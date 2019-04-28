@@ -1,7 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (自選文章)
 function tadnews_my_page($options)
@@ -12,7 +12,7 @@ function tadnews_my_page($options)
         return '';
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
     $nsn_arr = explode(',', $options[0]);
     $tadnews = new tadnews();

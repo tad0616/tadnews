@@ -1,9 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-include_once 'header.php';
+require_once __DIR__ . '/header.php';
 
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $nsn = system_CleanVars($_REQUEST, 'nsn', '', 'int');
 
@@ -37,7 +37,7 @@ if ('sort_tabs' === $op) {
     }
 
     $tabs_content = "
-        <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css' />
+        <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
         <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
         <div id='PageTab'>
         <ul class='resp-tabs-list vert'>

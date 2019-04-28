@@ -8,7 +8,7 @@ function tadnews_page($options)
         redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/dtree.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/dtree.php';
 
     if (empty($options[0])) {
         $sql = 'SELECT ncsn FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";

@@ -1,7 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
 $TadUpFiles = new TadUpFiles('tadnews');
 
 define('_SEPARTE', '<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>');

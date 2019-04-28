@@ -42,9 +42,9 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     $xoopsTpl->assign('cate', $cate);
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
     $sweet_alert = new sweet_alert();
     $sweet_alert->render('delete_tad_news_cate_func', "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
 }
@@ -106,7 +106,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
 function mk_thumb($ncsn = '', $col_name = '', $width = 100)
 {
     global $xoopsDB;
-    include XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
+    require XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
 
     if (file_exists(_TADNEWS_CATE_DIR . "/{$ncsn}.png")) {
         unlink(_TADNEWS_CATE_DIR . "/{$ncsn}.png");

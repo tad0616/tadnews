@@ -1,6 +1,6 @@
 <?php
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
-include_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 echo mk_rss();
 
 function mk_rss()

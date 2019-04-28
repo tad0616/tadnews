@@ -2,7 +2,7 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-require_once '../../../include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $of_ncsn = (int) $_POST['of_ncsn'];
 $ncsn = (int) $_POST['ncsn'];
