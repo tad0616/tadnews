@@ -134,7 +134,7 @@ function open_newspaper($nps_sn = '')
     //取得使用之佈景
     $nps_theme = newspaper_themes($set['themes']);
 
-    $np_title = (empty($nps_sn)) ? (string)$xoopsConfig[sitename] . _MA_TADNEWS_NP : $set['title'];
+    $np_title = (empty($nps_sn)) ? (string)$xoopsConfig['sitename'] . _MA_TADNEWS_NP : $set['title'];
 
     $author = $xoopsUser->getVar('uname');
 
