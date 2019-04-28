@@ -1,8 +1,7 @@
 <?php
-//global.php
+xoops_loadLanguage('admin_common', 'tadtools');
 include_once 'global.php';
 
-include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
 define('_MA_TADNEWS_SAVE_CATE', 'Save');
 define('_MA_TADNEWS_FUNCTION', 'Function');
 define('_MA_TADNEWS_MOVE', 'Move');

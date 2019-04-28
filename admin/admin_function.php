@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 //列出所有tad_news資料（$kind="news","page"）
@@ -41,12 +42,8 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     $cate = $tadnews->get_tad_news_cate($the_ncsn);
     $xoopsTpl->assign('cate', $cate);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_tad_news_cate_func', "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_news_cate_func', "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
 }
 
 //列出所有tad_news_cate資料
@@ -54,49 +51,49 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl, $tadnews;
     $old_level = $level;
-    $left = $level * 18 + 4;
+    $left      = $level * 18 + 4;
     $level++;
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='{$not_news}' and of_ncsn='{$of_ncsn}' order by sort";
+    $sql    = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='{$not_news}' and of_ncsn='{$of_ncsn}' order by sort";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //$catearr="";
 
     //$i=0;
     while (list($ncsn, $of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $cate_pic, $not_news) = $xoopsDB->fetchRow($result)) {
-        $sql2 = 'select count(*) from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}'";
-        $result2 = $xoopsDB->query($sql2);
+        $sql2          = 'select count(*) from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}'";
+        $result2       = $xoopsDB->query($sql2);
         list($counter) = $xoopsDB->fetchRow($result2);
 
-        $pic = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
-        $g_txt = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
+        $pic    = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
+        $g_txt  = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
         $gp_txt = Utility::txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
 
-        $new_kind = ('1' == $not_news) ? 0 : 1;
+        $new_kind    = ('1' == $not_news) ? 0 : 1;
         $change_text = ('1' == $not_news) ? _MA_TADNEWS_CHANGE_TO_NEWS : _MA_TADNEWS_CHANGE_TO_PAGE;
 
-        $catearr[$i]['left'] = $left;
-        $catearr[$i]['pic'] = $pic;
-        $catearr[$i]['nc_title'] = $nc_title;
-        $catearr[$i]['sort'] = $sort;
-        $catearr[$i]['ncsn'] = $ncsn;
-        $catearr[$i]['counter'] = $counter;
-        $catearr[$i]['g_txt'] = $g_txt;
-        $catearr[$i]['gp_txt'] = $gp_txt;
-        $catearr[$i]['new_kind'] = $new_kind;
+        $catearr[$i]['left']        = $left;
+        $catearr[$i]['pic']         = $pic;
+        $catearr[$i]['nc_title']    = $nc_title;
+        $catearr[$i]['sort']        = $sort;
+        $catearr[$i]['ncsn']        = $ncsn;
+        $catearr[$i]['counter']     = $counter;
+        $catearr[$i]['g_txt']       = $g_txt;
+        $catearr[$i]['gp_txt']      = $gp_txt;
+        $catearr[$i]['new_kind']    = $new_kind;
         $catearr[$i]['change_text'] = $change_text;
-        $catearr[$i]['offset'] = empty($old_level) ? '' : "offset{$old_level}";
+        $catearr[$i]['offset']      = empty($old_level) ? '' : "offset{$old_level}";
 
         $i++;
 
         $sub = list_tad_news_cate($ncsn, $level, $not_news, $i, $catearr);
-        $i = $sub['i'];
+        $i   = $sub['i'];
         if (!empty($sub['arr'])) {
             $catearr = $sub['arr'];
         }
     }
     //$xoopsTpl->assign( "cate" , $catearr) ;
-    $all['i'] = $i;
+    $all['i']   = $i;
     $all['arr'] = $catearr;
 
     return $all;
@@ -115,11 +112,11 @@ function mk_thumb($ncsn = '', $col_name = '', $width = 100)
     $handle = new upload($_FILES[$col_name]);
     if ($handle->uploaded) {
         $handle->file_new_name_body = $ncsn;
-        $handle->image_convert = 'png';
-        $handle->image_resize = true;
-        $handle->image_x = $width;
-        $handle->image_ratio_y = true;
-        $handle->file_overwrite = true;
+        $handle->image_convert      = 'png';
+        $handle->image_resize       = true;
+        $handle->image_x            = $width;
+        $handle->image_ratio_y      = true;
+        $handle->file_overwrite     = true;
         $handle->process(_TADNEWS_CATE_DIR);
         $handle->auto_create_dir = true;
         if ($handle->processed) {
@@ -154,14 +151,14 @@ function insert_tad_news_cate()
     }
     $setup = mb_substr($setup, 0, -1);
 
-    $myts = MyTextSanitizer::getInstance();
-    $of_ncsn = (int) $_POST['of_ncsn'];
-    $sort = (int) $_POST['sort'];
-    $not_news = (int) $_POST['not_news'];
-    $nc_title = $myts->addSlashes($_POST['nc_title']);
+    $myts              = MyTextSanitizer::getInstance();
+    $of_ncsn           = (int) $_POST['of_ncsn'];
+    $sort              = (int) $_POST['sort'];
+    $not_news          = (int) $_POST['not_news'];
+    $nc_title          = $myts->addSlashes($_POST['nc_title']);
     $enable_post_group = $myts->addSlashes($enable_post_group);
-    $enable_group = $myts->addSlashes($enable_group);
-    $setup = $myts->addSlashes($setup);
+    $enable_group      = $myts->addSlashes($enable_group);
+    $setup             = $myts->addSlashes($setup);
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -217,7 +214,7 @@ function change_kind($ncsn = '', $not_news = '')
 function get_sub_cate($of_ncsn = '')
 {
     global $xoopsDB;
-    $sql = 'select ncsn from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$of_ncsn'";
+    $sql    = 'select ncsn from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$of_ncsn'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //echo "<p>$sql</p>";
     while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {

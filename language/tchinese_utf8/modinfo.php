@@ -1,7 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
-
-//Version XXX
+xoops_loadLanguage('modinfo_common', 'tadtools');
 
 define('_MI_TADNEWS_ADMIN_HOME', '首頁');
 define('_MI_TADNEWS_ADMIN_HOME_DESC', '回首頁');

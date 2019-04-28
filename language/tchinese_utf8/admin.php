@@ -1,7 +1,6 @@
 <?php
-//global
+xoops_loadLanguage('admin_common', 'tadtools');
 include_once 'global.php';
-include_once '../../tadtools/language/' . $xoopsConfig['language'] . '/admin_common.php';
 define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 
 define('_MA_TADNEWS_SAVE_CATE', '儲存');

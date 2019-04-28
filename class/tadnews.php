@@ -1,4 +1,10 @@
 <?php
+
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\TadDataCenter;
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
 //TadNews物件
@@ -123,57 +129,55 @@ class tadnews
     public $view_tag;
     public $view_nsn;
     public $view_uid;
-    public $show_mode = 'summary'; //summary,list,cate,one
-    public $show_num = '10';
-    public $admin_tool = false;
-    public $show_enable = 1;
-    public $show_cate_select = 0;
+    public $show_mode          = 'summary'; //summary,list,cate,one
+    public $show_num           = '10';
+    public $admin_tool         = false;
+    public $show_enable        = 1;
+    public $show_cate_select   = 0;
     public $show_author_select = 0;
-    public $news_check_mode = 0;
-    public $batch_tool = '';
-    public $sort_tool = 0;
-    public $summary_num = 0;
-    public $summary_css = '';
-    public $title_length = '';
-    public $cover_use = false;
-    public $cover_css = '';
-    public $skip_news = 0;
-    public $use_star_rating = false;
-    public $view_month = '';
-    public $editor = 'ck';
+    public $news_check_mode    = 0;
+    public $batch_tool         = '';
+    public $sort_tool          = 0;
+    public $summary_num        = 0;
+    public $summary_css        = '';
+    public $title_length       = '';
+    public $cover_use          = false;
+    public $cover_css          = '';
+    public $skip_news          = 0;
+    public $use_star_rating    = false;
+    public $view_month         = '';
+    public $editor             = 'ck';
     public $TadUpFiles;
     public $tadnewsConfig;
     public $tadnewsModule;
     public $module_id;
     public $only_one_ncsn = false;
-    public $row = 'row-fluid';
-    public $span = 'span';
-    public $mini = 'mini';
-    public $inline = ' inline';
-    public $keyword = '';
-    public $start_day = '';
-    public $end_day = '';
+    public $row           = 'row-fluid';
+    public $span          = 'span';
+    public $mini          = 'mini';
+    public $inline        = ' inline';
+    public $keyword       = '';
+    public $start_day     = '';
+    public $end_day       = '';
 
     //建構函數
     public function __construct()
     {
         global $xoopsConfig;
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadDataCenter.php';
         include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
-        $this->now = date('Y-m-d', xoops_getUserTimestamp(time()));
+        $this->now   = date('Y-m-d', xoops_getUserTimestamp(time()));
         $this->today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-        $modhandler = xoops_getHandler('module');
+        $modhandler          = xoops_getHandler('module');
         $this->tadnewsModule = $modhandler->getByDirname('tadnews');
-        $this->module_id = $this->tadnewsModule->getVar('mid');
-        $config_handler = xoops_getHandler('config');
+        $this->module_id     = $this->tadnewsModule->getVar('mid');
+        $config_handler      = xoops_getHandler('config');
         $this->tadnewsConfig = $config_handler->getConfigsByCat(0, $this->tadnewsModule->getVar('mid'));
 
         if ('1' == $this->tadnewsConfig['use_star_rating']) {
             $this->set_use_star_rating(true);
         }
-        $this->TadUpFiles = new TadUpFiles('tadnews');
+        $this->TadUpFiles    = new TadUpFiles('tadnews');
         $this->TadDataCenter = new TadDataCenter('tadnews');
     }
 
@@ -193,7 +197,7 @@ class tadnews
     public function set_news_check_mode($mode = '0')
     {
         $this->news_check_mode = $mode;
-        $this->batch_tool = $this->batch_tool();
+        $this->batch_tool      = $this->batch_tool();
     }
 
     //設定編輯器
@@ -221,8 +225,8 @@ class tadnews
 
         $this->view_ncsn = $ncsn;
         if (!is_array($ncsn) and !empty($ncsn)) {
-            $sql = 'select not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
-            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $sql            = 'select not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
+            $result         = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             list($not_news) = $xoopsDB->fetchRow($result);
             if (1 == $not_news) {
                 $this->set_news_kind('page');
@@ -384,7 +388,7 @@ class tadnews
         $syntaxhighlighter_code = '';
         if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/syntaxhighlighter.php')) {
             include_once XOOPS_ROOT_PATH . '/modules/tadtools/syntaxhighlighter.php';
-            $syntaxhighlighter = new syntaxhighlighter();
+            $syntaxhighlighter      = new syntaxhighlighter();
             $syntaxhighlighter_code = $syntaxhighlighter->render();
         }
 
@@ -422,10 +426,10 @@ class tadnews
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
-            $now_uid = $xoopsUser->uid();
+            $now_uid     = $xoopsUser->uid();
         } else {
             $User_Groups = [];
-            $now_uid = 0;
+            $now_uid     = 0;
         }
 
         $where_news = '';
@@ -441,8 +445,8 @@ class tadnews
             $this->add_counter($this->view_nsn);
 
             //找出相關資訊
-            $sql2 = 'SELECT ncsn,news_content FROM ' . $xoopsDB->prefix('tad_news') . " WHERE nsn='" . $this->view_nsn . "'";
-            $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+            $sql2                      = 'SELECT ncsn,news_content FROM ' . $xoopsDB->prefix('tad_news') . " WHERE nsn='" . $this->view_nsn . "'";
+            $result2                   = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($ncsn, $news_content) = $xoopsDB->fetchRow($result2);
             if ($redirect = $this->only_url($news_content, $this->view_nsn)) {
                 header("location: {$redirect}");
@@ -451,8 +455,8 @@ class tadnews
 
             $this->set_view_ncsn($ncsn);
 
-            $sql2 = 'SELECT not_news,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE ncsn='" . $this->view_ncsn . "'";
-            $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+            $sql2                             = 'SELECT not_news,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE ncsn='" . $this->view_ncsn . "'";
+            $result2                          = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             list($not_news, $show_cate_title) = $xoopsDB->fetchRow($result2);
 
             $kind = ($not_news) ? 'page' : 'news';
@@ -480,7 +484,7 @@ class tadnews
             $all_nsn = implode(',', $this->view_nsn);
 
             //找出相關資訊
-            $sql2 = 'select ncsn from ' . $xoopsDB->prefix('tad_news') . " where nsn in($all_nsn)";
+            $sql2    = 'select ncsn from ' . $xoopsDB->prefix('tad_news') . " where nsn in($all_nsn)";
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
             while (list($ncsn) = $xoopsDB->fetchRow($result2)) {
                 $all_ncsn[$ncsn] = $ncsn;
@@ -489,7 +493,7 @@ class tadnews
             $all_ncsn = implode(',', $this->view_ncsn);
 
             //分析目前觀看得是新聞還是自訂頁面
-            $kind_chk = '';
+            $kind_chk   = '';
             $where_cate = empty($all_ncsn) ? '' : " and ncsn in($all_ncsn)";
             $where_news = " and nsn in($all_nsn)";
             //秀出分類或不指定
@@ -510,7 +514,7 @@ class tadnews
                 $where_cate = '';
                 //若指定觀看的分類是陣列（限定觀看的分類）
             } elseif (is_array($this->view_ncsn)) {
-                $all_ncsn = implode(',', $this->view_ncsn);
+                $all_ncsn   = implode(',', $this->view_ncsn);
                 $where_cate = empty($all_ncsn) ? '' : "and ncsn in($all_ncsn)";
                 //指定觀看某一個分類
             } elseif ($this->only_one_ncsn or $this->view_ncsn) {
@@ -541,7 +545,7 @@ class tadnews
 
         $ncsn = isset($ncsn) ? $ncsn : '';
         //找指定的分類
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where 1 $kind_chk $where_cate order by sort";
+        $sql    = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where 1 $kind_chk $where_cate order by sort";
         $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
@@ -562,26 +566,26 @@ class tadnews
                 //該使用者可觀看的分類編號陣列
                 $ncsn_ok[] = $ncsn;
                 //可觀看分類名稱
-                $cates[$ncsn] = $nc_title;
+                $cates[$ncsn]      = $nc_title;
                 $cate_setup[$ncsn] = $setup;
                 if (!$cate_read_power) {
-                    $only_title_cate[$ncsn] = $only_title;
+                    $only_title_cate[$ncsn]       = $only_title;
                     $only_title_cate_group[$ncsn] = Utility::txt_to_group_name($enable_group, '', ' , ');
                 }
             }
         }
 
         $ncsn_cate_setup = isset($cate_setup[$ncsn]) ? $cate_setup[$ncsn] : '';
-        $set = $this->get_setup($ncsn_cate_setup);
+        $set             = $this->get_setup($ncsn_cate_setup);
         if ('page' === $this->kind) {
             //die(var_dump($cate_setup[$ncsn]));
             //die(var_dump($set));
             //title=0;tool=0;comm=0
             if ('return' === $mode) {
                 $main['cate_set_title'] = $set['title'];
-                $main['cate_set_tool'] = $set['tool'];
-                $main['cate_set_comm'] = $set['comm'];
-                $main['cate_set_nav'] = $set['nav'];
+                $main['cate_set_tool']  = $set['tool'];
+                $main['cate_set_comm']  = $set['comm'];
+                $main['cate_set_nav']   = $set['nav'];
             } else {
                 $xoopsTpl->assign('cate_set_title', $set['title']);
                 $xoopsTpl->assign('cate_set_tool', $set['tool']);
@@ -641,7 +645,7 @@ class tadnews
         if (!empty($this->view_tag)) {
             $where_tag = "and prefix_tag='{$this->view_tag}'";
         } elseif (is_array($this->view_tag)) {
-            $all_tag = implode(',', $this->view_tag);
+            $all_tag   = implode(',', $this->view_tag);
             $where_tag = empty($all_tag) ? '' : "and prefix_tag in($all_tag)";
             //指定觀看某一個分類
         } else {
@@ -652,7 +656,7 @@ class tadnews
             $desc = 'order by ncsn , page_sort';
         } elseif (!empty($this->view_nsn) and is_array($this->view_nsn)) {
             $nsn_order = implode(',', $this->view_nsn);
-            $desc = "order by field(`nsn` , $nsn_order)";
+            $desc      = "order by field(`nsn` , $nsn_order)";
         } elseif ('news' === $this->kind) {
             $desc = 'order by always_top desc , start_day desc';
         } else {
@@ -687,15 +691,15 @@ class tadnews
         $bar = '';
         if (!empty($this->skip_news)) {
             $limit = (empty($this->show_num) or 'none' === $this->show_num) ? '' : "limit {$this->skip_news} , {$this->show_num}";
-            $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc $limit";
+            $sql   = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc $limit";
         } else {
             $limit = empty($this->show_num) ? '10' : $this->show_num;
-            $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc";
+            $sql   = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc";
             if (empty($this->view_month) and 'none' !== $this->show_num) {
                 //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
                 $PageBar = Utility::getPageBar($sql, $limit);
-                $bar = $PageBar['bar'];
-                $sql = $PageBar['sql'];
+                $bar     = $PageBar['bar'];
+                $sql     = $PageBar['sql'];
             }
         }
 
@@ -705,7 +709,7 @@ class tadnews
 
         //分類篩選工具
         if ($this->show_cate_select) {
-            $not_news = ('news' === $this->kind) ? 0 : 1;
+            $not_news    = ('news' === $this->kind) ? 0 : 1;
             $cate_select = $this->news_cate_select($not_news);
         } else {
             $cate_select = '';
@@ -718,7 +722,7 @@ class tadnews
             $author_select = '';
         }
         $all_news = [];
-        $i = 0;
+        $i        = 0;
 
         $myts = MyTextSanitizer::getInstance();
         while ($news = $xoopsDB->fetchArray($result)) {
@@ -744,18 +748,18 @@ class tadnews
             $tab_mode = (false !== mb_strpos($news_content, 'Easy-Responsive-Tabs')) ? true : false;
 
             //新聞資訊列
-            $fun = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group);
-            $end_day = ('0000-00-00 00:00:00' === $end_day) ? '' : '~ ' . $end_day;
+            $fun        = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group);
+            $end_day    = ('0000-00-00 00:00:00' === $end_day) ? '' : '~ ' . $end_day;
             $enable_txt = (1 == $enable) ? '' : "<span class='badge'>" . _TADNEWS_NEWS_UNABLE . '</span>';
 
             //製作新聞標題內容，及密碼判斷
             $have_pass = (isset($_SESSION['have_pass'])) ? $_SESSION['have_pass'] : [];
 
-            $file_mode = 'one' === $this->show_mode ? '' : 'small';
+            $file_mode     = 'one' === $this->show_mode ? '' : 'small';
             $tadnews_files = $this->get_news_files($nsn, $file_mode);
 
             if (isset($only_title_cate[$ncsn]) and !empty($only_title_cate[$ncsn])) {
-                $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
+                $news_content  = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
                 $tadnews_files = '';
             }
 
@@ -768,7 +772,7 @@ class tadnews
                 $news_content = $this->xlang($news_content);
 
                 $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
-                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>
+                $more  = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>
 " . _TADNEWS_MORE . '</a>';
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . '</div>';
@@ -778,11 +782,11 @@ class tadnews
                     $news_content = $this->xlang($news_content);
 
                     $news_content = str_replace('<p>--summary--</p>', '--summary--', $news_content);
-                    $content_arr = explode('--summary--', $news_content);
+                    $content_arr  = explode('--summary--', $news_content);
                 } else {
                     $content_arr = explode('<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>', $news_content);
                 }
-                $more = (empty($content_arr[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
+                $more         = (empty($content_arr[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
                 $news_content = $content_arr[0] . $more;
             } elseif ('full' === $this->summary_num) {
                 $news_content = str_replace('<p>--summary--</p>', '', $news_content);
@@ -796,12 +800,12 @@ class tadnews
                     //支援xlanguage
                     $news_content = $this->xlang($news_content);
                     $news_content = str_replace('<p>' . _SEPARTE2 . '</p>', _SEPARTE2, $news_content);
-                    $content = explode(_SEPARTE2, $news_content);
+                    $content      = explode(_SEPARTE2, $news_content);
                 } else {
                     $content = explode(_SEPARTE, $news_content);
                 }
 
-                $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
+                $more         = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
                 $news_content = $content[0] . $more;
             }
 
@@ -809,7 +813,7 @@ class tadnews
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-                $token = new XoopsFormHiddenToken();
+                $token       = new XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $token->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
@@ -851,7 +855,7 @@ class tadnews
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
             $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
-            $cate_name = (empty($cates[$ncsn])) ? _TADNEWS_NO_CATE : $cates[$ncsn];
+            $cate_name  = (empty($cates[$ncsn])) ? _TADNEWS_NO_CATE : $cates[$ncsn];
 
             $post_date = mb_substr($start_day, 0, 10);
             $today_pic = $this->get_news_pic($always_top, $post_date);
@@ -878,7 +882,7 @@ class tadnews
             } else {
                 $pic = '';
             }
-            $image_big = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'big', null, true);
+            $image_big   = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'big', null, true);
             $image_thumb = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'thumb', null, true);
 
             if ($this->use_star_rating) {
@@ -896,9 +900,9 @@ class tadnews
                     //支援xlanguage
                     $nsnsort['back']['title'] = $this->xlang($nsnsort['back']['title']);
                     //$title=xoops_substr($nsnsort['back']['title'], 0, 30);
-                    $title = mb_substr($nsnsort['back']['title'], 0, 20, _CHARSET) . '...';
-                    $date = mb_substr($nsnsort['back']['date'], 5);
-                    $back_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['back']['ncsn']}&nsn={$nsnsort['back']['nsn']}";
+                    $title           = mb_substr($nsnsort['back']['title'], 0, 20, _CHARSET) . '...';
+                    $date            = mb_substr($nsnsort['back']['date'], 5);
+                    $back_news_link  = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['back']['ncsn']}&nsn={$nsnsort['back']['nsn']}";
                     $back_news_title = ('page' === $this->kind) ? $title : "{$date} {$title}";
                 }
 
@@ -908,48 +912,48 @@ class tadnews
 
                     //$title=xoops_substr($nsnsort['next']['title'], 0, 30);
                     $title = mb_substr($nsnsort['next']['title'], 0, 20, _CHARSET) . '...';
-                    $date = mb_substr($nsnsort['next']['date'], 5);
+                    $date  = mb_substr($nsnsort['next']['date'], 5);
 
-                    $next_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['next']['ncsn']}&nsn={$nsnsort['next']['nsn']}";
+                    $next_news_link  = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['next']['ncsn']}&nsn={$nsnsort['next']['nsn']}";
                     $next_news_title = ('page' === $this->kind) ? $title : "{$date} {$title}";
                 }
 
                 $facebook_comments = ('1' == $this->tadnewsConfig['facebook_comments_width']) ? Utility::facebook_comments($this->tadnewsConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn) : '';
-                $push = Utility::push_url($this->tadnewsConfig['use_social_tools']);
+                $push              = Utility::push_url($this->tadnewsConfig['use_social_tools']);
             }
 
-            $all_news[$i]['nsn'] = $nsn;
+            $all_news[$i]['nsn']               = $nsn;
             $all_news[$i]['facebook_comments'] = $facebook_comments;
-            $all_news[$i]['push'] = $push;
-            $all_news[$i]['pic'] = $pic;
-            $all_news[$i]['chkbox'] = $chkbox;
-            $all_news[$i]['ncsn'] = $ncsn;
-            $all_news[$i]['cate_name'] = $cate_name;
-            $all_news[$i]['post_date'] = $post_date;
-            $all_news[$i]['prefix_tag'] = $prefix_tag;
-            $all_news[$i]['need_sign'] = $need_sign;
-            $all_news[$i]['today_pic'] = $today_pic;
-            $all_news[$i]['link_page'] = $link_page;
-            $all_news[$i]['news_title'] = $myts->htmlSpecialChars($news_title);
-            $all_news[$i]['uid'] = $uid;
-            $all_news[$i]['uid_name'] = $uid_name;
-            $all_news[$i]['counter'] = $counter;
-            $all_news[$i]['content'] = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-            $all_news[$i]['show_admin_tool'] = $show_admin_tool;
-            $all_news[$i]['passwd'] = $passwd;
-            $all_news[$i]['g_txt'] = $g_txt;
-            $all_news[$i]['files'] = $tadnews_files;
-            $all_news[$i]['fun'] = $fun;
-            $all_news[$i]['enable'] = $enable;
-            $all_news[$i]['enable_txt'] = $enable_txt;
-            $all_news[$i]['have_read_chk'] = $have_read_chk;
-            $all_news[$i]['back_news_link'] = $back_news_link;
-            $all_news[$i]['back_news_title'] = $back_news_title;
-            $all_news[$i]['next_news_link'] = $next_news_link;
-            $all_news[$i]['next_news_title'] = $next_news_title;
-            $all_news[$i]['image_big'] = $image_big;
-            $all_news[$i]['image_thumb'] = $image_thumb;
-            $all_news[$i]['not_news'] = $not_news_arr[$ncsn];
+            $all_news[$i]['push']              = $push;
+            $all_news[$i]['pic']               = $pic;
+            $all_news[$i]['chkbox']            = $chkbox;
+            $all_news[$i]['ncsn']              = $ncsn;
+            $all_news[$i]['cate_name']         = $cate_name;
+            $all_news[$i]['post_date']         = $post_date;
+            $all_news[$i]['prefix_tag']        = $prefix_tag;
+            $all_news[$i]['need_sign']         = $need_sign;
+            $all_news[$i]['today_pic']         = $today_pic;
+            $all_news[$i]['link_page']         = $link_page;
+            $all_news[$i]['news_title']        = $myts->htmlSpecialChars($news_title);
+            $all_news[$i]['uid']               = $uid;
+            $all_news[$i]['uid_name']          = $uid_name;
+            $all_news[$i]['counter']           = $counter;
+            $all_news[$i]['content']           = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
+            $all_news[$i]['show_admin_tool']   = $show_admin_tool;
+            $all_news[$i]['passwd']            = $passwd;
+            $all_news[$i]['g_txt']             = $g_txt;
+            $all_news[$i]['files']             = $tadnews_files;
+            $all_news[$i]['fun']               = $fun;
+            $all_news[$i]['enable']            = $enable;
+            $all_news[$i]['enable_txt']        = $enable_txt;
+            $all_news[$i]['have_read_chk']     = $have_read_chk;
+            $all_news[$i]['back_news_link']    = $back_news_link;
+            $all_news[$i]['back_news_title']   = $back_news_title;
+            $all_news[$i]['next_news_link']    = $next_news_link;
+            $all_news[$i]['next_news_title']   = $next_news_title;
+            $all_news[$i]['image_big']         = $image_big;
+            $all_news[$i]['image_thumb']       = $image_thumb;
+            $all_news[$i]['not_news']          = $not_news_arr[$ncsn];
 
             if ($this->use_star_rating) {
                 $all_news[$i]['star'] = "<div id='rating_nsn_{$nsn}'></div>";
@@ -960,20 +964,20 @@ class tadnews
             $i++;
         }
 
-        $ui = 1 == $this->sort_tool ? true : false;
+        $ui     = 1 == $this->sort_tool ? true : false;
         $jquery = Utility::get_jquery($ui);
 
         if ('return' === $mode) {
-            $main['jquery'] = $jquery;
-            $main['page'] = $all_news;
-            $main['show_admin_tool_title'] = $this->admin_tool;
-            $main['show_sort_tool'] = $this->sort_tool;
-            $main['action'] = $_SERVER['PHP_SELF'];
-            $main['batch_tool'] = $this->batch_tool;
-            $main['del_js'] = $this->del_js();
-            $main['cate_select'] = $cate_select;
-            $main['author_select'] = $author_select;
-            $main['bar'] = $bar;
+            $main['jquery']                 = $jquery;
+            $main['page']                   = $all_news;
+            $main['show_admin_tool_title']  = $this->admin_tool;
+            $main['show_sort_tool']         = $this->sort_tool;
+            $main['action']                 = $_SERVER['PHP_SELF'];
+            $main['batch_tool']             = $this->batch_tool;
+            $main['del_js']                 = $this->del_js();
+            $main['cate_select']            = $cate_select;
+            $main['author_select']          = $author_select;
+            $main['bar']                    = $bar;
             $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
             if ($this->use_star_rating) {
                 $main['rating_js'] = $rating_js;
@@ -1030,8 +1034,8 @@ class tadnews
             $home = [];
         }
 
-        $sql = 'select nc_title,of_ncsn,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql                                 = 'select nc_title,of_ncsn,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
+        $result                              = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($nc_title, $of_ncsn, $not_news) = $xoopsDB->fetchRow($result);
 
         $opt_sub = (!empty($of_ncsn)) ? $this->get_cate_path($of_ncsn, true) : '';
@@ -1039,7 +1043,7 @@ class tadnews
         $opt = $path = [];
 
         if (!empty($nc_title)) {
-            $page = ('1' == $not_news) ? 'page.php' : 'index.php';
+            $page           = ('1' == $not_news) ? 'page.php' : 'index.php';
             $opt[$nc_title] = XOOPS_URL . "/modules/tadnews/{$page}?ncsn=$ncsn";
         }
         if (is_array($opt_sub)) {
@@ -1065,10 +1069,10 @@ class tadnews
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
-            $now_uid = $xoopsUser->uid();
+            $now_uid     = $xoopsUser->uid();
         } else {
             $User_Groups = [];
-            $now_uid = 0;
+            $now_uid     = 0;
         }
 
         $where_news = '';
@@ -1084,18 +1088,18 @@ class tadnews
 
         if (is_array($this->view_ncsn)) {
             $show_ncsn = implode(',', $this->view_ncsn);
-            $and_cate = empty($show_ncsn) ? '' : "and ncsn in({$show_ncsn})";
+            $and_cate  = empty($show_ncsn) ? '' : "and ncsn in({$show_ncsn})";
         } elseif ('' == $this->view_ncsn) {
             $and_cate = '';
         } else {
             $and_cate = "and ncsn={$this->view_ncsn}";
         }
 
-        $sql = 'select ncsn,nc_title,enable_group,enable_post_group,cate_pic,setup from ' . $xoopsDB->prefix('tad_news_cate') . " where 1  $and_cate $kind_chk order by sort";
+        $sql    = 'select ncsn,nc_title,enable_group,enable_post_group,cate_pic,setup from ' . $xoopsDB->prefix('tad_news_cate') . " where 1  $and_cate $kind_chk order by sort";
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-        $i = 0;
-        $only_title = false;
+        $i               = 0;
+        $only_title      = false;
         $only_title_cate = [];
         while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
             //只有可讀的分類才納入
@@ -1103,8 +1107,8 @@ class tadnews
 
             if (!$cate_read_power) {
                 //是否僅秀出標題
-                $only_title = false !== mb_strpos($setup, 'only_title=1') ? true : false;
-                $only_title_cate[$ncsn] = $only_title;
+                $only_title                   = false !== mb_strpos($setup, 'only_title=1') ? true : false;
+                $only_title_cate[$ncsn]       = $only_title;
                 $only_title_cate_group[$ncsn] = Utility::txt_to_group_name($enable_group, '', ' , ');
                 if (!$only_title) {
                     // die($nc_title);
@@ -1120,8 +1124,8 @@ class tadnews
 
             $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
 
-            $j = 0;
-            $subnews = [];
+            $j               = 0;
+            $subnews         = [];
             $only_title_cate = [];
 
             $myts = MyTextSanitizer::getInstance();
@@ -1132,7 +1136,7 @@ class tadnews
 
                 if (!empty($passwd)) {
                     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-                    $token = new XoopsFormHiddenToken();
+                    $token       = new XoopsFormHiddenToken();
                     $XOOPS_TOKEN = $token->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
@@ -1180,7 +1184,7 @@ class tadnews
 
                 if (is_numeric($this->summary_num) and !empty($this->summary_num) and empty($passwd)) {
                     $news_content = strip_tags($news_content);
-                    $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
+                    $style        = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
                     //支援xlanguage
                     $news_content = $this->xlang($news_content);
 
@@ -1196,24 +1200,24 @@ class tadnews
 
                 $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
 
-                $subnews[$j]['content'] = $myts->displayTarea($content, 1, 1, 1, 1, 0);
-                $subnews[$j]['post_date'] = mb_substr($start_day, 0, 10);
+                $subnews[$j]['content']        = $myts->displayTarea($content, 1, 1, 1, 1, 0);
+                $subnews[$j]['post_date']      = mb_substr($start_day, 0, 10);
                 $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, mb_substr($start_day, 0, 10));
-                $subnews[$j]['prefix_tag'] = $this->mk_prefix_tag($prefix_tag);
-                $subnews[$j]['nsn'] = $nsn;
-                $subnews[$j]['news_title'] = $myts->htmlSpecialChars($news_title);
-                $subnews[$j]['counter'] = $counter;
-                $subnews[$j]['need_sign'] = $need_sign;
-                $subnews[$j]['files'] = $this->get_news_files($nsn, 'small');
+                $subnews[$j]['prefix_tag']     = $this->mk_prefix_tag($prefix_tag);
+                $subnews[$j]['nsn']            = $nsn;
+                $subnews[$j]['news_title']     = $myts->htmlSpecialChars($news_title);
+                $subnews[$j]['counter']        = $counter;
+                $subnews[$j]['need_sign']      = $need_sign;
+                $subnews[$j]['files']          = $this->get_news_files($nsn, 'small');
                 $j++;
             }
-            $all_news[$i]['pic_w'] = $pic_w;
+            $all_news[$i]['pic_w']    = $pic_w;
             $all_news[$i]['show_pic'] = $this->cover_use;
-            $all_news[$i]['pic'] = $pic;
+            $all_news[$i]['pic']      = $pic;
             $all_news[$i]['nc_title'] = $nc_title;
-            $all_news[$i]['ncsn'] = $ncsn;
-            $all_news[$i]['news'] = $subnews;
-            $all_news[$i]['rowspan'] = $j + 1;
+            $all_news[$i]['ncsn']     = $ncsn;
+            $all_news[$i]['news']     = $subnews;
+            $all_news[$i]['rowspan']  = $j + 1;
 
             // if ($include_sub_cate) {
             //     $this->get_cate_news('return', $include_sub_cate);
@@ -1223,7 +1227,7 @@ class tadnews
         }
 
         if ('return' === $mode) {
-            $main['all_news'] = $all_news;
+            $main['all_news']               = $all_news;
             $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
 
             return $main;
@@ -1238,7 +1242,7 @@ class tadnews
         global $xoopsDB, $xoopsUser;
 
         if (!empty($enable_group)) {
-            $ok = false;
+            $ok                = false;
             $cate_enable_group = explode(',', $enable_group);
             if (in_array('', $cate_enable_group)) {
                 return true;
@@ -1284,7 +1288,7 @@ class tadnews
         global $xoopsUser;
 
         if ($xoopsUser) {
-            $uuid = $xoopsUser->getVar('uid');
+            $uuid    = $xoopsUser->getVar('uid');
             $isAdmin = $xoopsUser->isAdmin($this->module_id);
         } else {
             $uuid = $isAdmin = '';
@@ -1339,9 +1343,9 @@ class tadnews
     private function news_author_select()
     {
         global $xoopsDB;
-        $sql = 'SELECT uid FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY uid';
+        $sql    = 'SELECT uid FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY uid';
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        $opt = _TADNEWS_SHOW_AUTHOR_NEWS . "
+        $opt    = _TADNEWS_SHOW_AUTHOR_NEWS . "
     <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
     <option value=''></option>";
         while (list($uid) = $xoopsDB->fetchRow($result)) {
@@ -1359,7 +1363,7 @@ class tadnews
     private function news_cate_select($not_news = '')
     {
         $cate_select = $this->get_tad_news_cate_option(0, 0, $this->view_ncsn, true, 0, '1', $not_news);
-        $form = _TADNEWS_SHOW_CATE_NEWS . "
+        $form        = _TADNEWS_SHOW_CATE_NEWS . "
         <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?ncsn='+this.value\">
           $cate_select
         </select>";
@@ -1388,7 +1392,7 @@ class tadnews
             $option = ($of_ncsn or !$isAdmin or false == $blank) ? '' : "<option value='0'></option>";
 
             '' == $option;
-            $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
+            $sql    = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
@@ -1402,13 +1406,13 @@ class tadnews
                 }
 
                 $selected = ($v == $ncsn) ? 'selected' : '';
-                $color = ('1' == $not_news) ? 'red' : 'black';
+                $color    = ('1' == $not_news) ? 'red' : 'black';
                 $option .= "<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
                 $option .= $this->get_tad_news_cate_option($ncsn, $level, $v, true, $this_ncsn, $no_self, $not_news);
             }
         } else {
             $all_ncsn = implode(',', $ok_cat);
-            $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn in($all_ncsn) $and_not_news order by sort";
+            $sql      = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn in($all_ncsn) $and_not_news order by sort";
 
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
@@ -1422,7 +1426,7 @@ class tadnews
                 }
 
                 $selected = ($v == $ncsn) ? 'selected' : '';
-                $color = ('1' == $not_news) ? 'red' : 'black';
+                $color    = ('1' == $not_news) ? 'red' : 'black';
                 $option .= "<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
             }
         }
@@ -1449,7 +1453,7 @@ class tadnews
         //非管理員才要檢查
         $where = ($isAdmin) ? '' : "where $col!=''";
 
-        $sql = "select ncsn,{$col} from " . $xoopsDB->prefix('tad_news_cate') . " $where";
+        $sql    = "select ncsn,{$col} from " . $xoopsDB->prefix('tad_news_cate') . " $where";
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
@@ -1507,7 +1511,7 @@ class tadnews
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
-            $uid = $xoopsUser->getVar('uid');
+            $uid         = $xoopsUser->getVar('uid');
         } else {
             //未登入者什麼也不秀出來
             return;
@@ -1515,7 +1519,7 @@ class tadnews
 
         if (!empty($have_read_group)) {
             include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $token = new XoopsFormHiddenToken();
+            $token       = new XoopsFormHiddenToken();
             $XOOPS_TOKEN = $token->render();
 
             $have_read_group_arr = explode(',', $have_read_group);
@@ -1552,8 +1556,8 @@ class tadnews
     private function chk_sign_status($uid = '', $nsn = '')
     {
         global $xoopsDB, $xoopsUser;
-        $sql = 'select sign_time from ' . $xoopsDB->prefix('tad_news_sign') . " where uid='$uid' and nsn='$nsn'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql             = 'select sign_time from ' . $xoopsDB->prefix('tad_news_sign') . " where uid='$uid' and nsn='$nsn'";
+        $result          = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($sign_time) = $xoopsDB->fetchRow($result);
 
         return $sign_time;
@@ -1595,9 +1599,9 @@ class tadnews
             return;
         }
 
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
+        $sql    = 'select * from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
         $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, show_error($sql));
-        $data = $xoopsDB->fetchArray($result);
+        $data   = $xoopsDB->fetchArray($result);
 
         $news_content = strip_tags($data['news_content']);
 
@@ -1613,7 +1617,7 @@ class tadnews
             }
 
             $isAdmin = $xoopsUser->isAdmin($this->module_id);
-            $uid = $xoopsUser->getVar('uid');
+            $uid     = $xoopsUser->getVar('uid');
             if (!$isAdmin and $uid != $data['uid']) {
                 redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
             }
@@ -1633,8 +1637,8 @@ class tadnews
 
         $and_enable = ('all' === $mode) ? '' : "and enable='1'";
 
-        $sql = 'select font_color,color,tag from ' . $xoopsDB->prefix('tad_news_tags') . " where `tag_sn`='$tag_sn' {$and_enable}";
-        $result = $xoopsDB->query($sql);
+        $sql                            = 'select font_color,color,tag from ' . $xoopsDB->prefix('tad_news_tags') . " where `tag_sn`='$tag_sn' {$and_enable}";
+        $result                         = $xoopsDB->query($sql);
         list($font_color, $color, $tag) = $xoopsDB->fetchRow($result);
 
         $prefix_tag = "<a class='badge' style='background-color:$color;font-weight:normal;color:$font_color;text-shadow:none;' href='" . XOOPS_URL . "/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>";
@@ -1649,7 +1653,7 @@ class tadnews
 
         $news = $this->get_tad_news($now_nsn);
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts    = MyTextSanitizer::getInstance();
         $nsnsort = [];
 
         $and_enable = (1 == $this->show_enable) ? "and a.enable='1'" : '';
@@ -1672,17 +1676,17 @@ class tadnews
             list($nsn, $news_title, $start_day, $enable_group, $ncsn, $cate_enable_group) = $xoopsDB->fetchRow($result);
 
             if ('back' === $mode) {
-                $nsnsort['ncsn'] = $ncsn;
-                $nsnsort['nsn'] = $nsn;
+                $nsnsort['ncsn']  = $ncsn;
+                $nsnsort['nsn']   = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
-                $nsnsort['date'] = mb_substr($start_day, 0, 10);
+                $nsnsort['date']  = mb_substr($start_day, 0, 10);
             } elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {
                 $nsnsort['back'] = $this->news_sort($nsn, $ncsn, 'back');
             } else {
-                $nsnsort['back']['ncsn'] = $ncsn;
-                $nsnsort['back']['nsn'] = $nsn;
+                $nsnsort['back']['ncsn']  = $ncsn;
+                $nsnsort['back']['nsn']   = $nsn;
                 $nsnsort['back']['title'] = $myts->htmlSpecialChars($news_title);
-                $nsnsort['back']['date'] = mb_substr($start_day, 0, 10);
+                $nsnsort['back']['date']  = mb_substr($start_day, 0, 10);
             }
         }
 
@@ -1692,17 +1696,17 @@ class tadnews
             list($nsn, $news_title, $start_day, $enable_group, $ncsn, $cate_enable_group) = $xoopsDB->fetchRow($result);
 
             if ('next' === $mode) {
-                $nsnsort['ncsn'] = $ncsn;
-                $nsnsort['nsn'] = $nsn;
+                $nsnsort['ncsn']  = $ncsn;
+                $nsnsort['nsn']   = $nsn;
                 $nsnsort['title'] = $myts->htmlSpecialChars($news_title);
-                $nsnsort['date'] = mb_substr($start_day, 0, 10);
+                $nsnsort['date']  = mb_substr($start_day, 0, 10);
             } elseif (!$this->read_power_chk($ncsn, $enable_group, $cate_enable_group)) {
                 $nsnsort['next'] = $this->news_sort($nsn, $ncsn, 'next');
             } else {
-                $nsnsort['next']['ncsn'] = $ncsn;
-                $nsnsort['next']['nsn'] = $nsn;
+                $nsnsort['next']['ncsn']  = $ncsn;
+                $nsnsort['next']['nsn']   = $nsn;
                 $nsnsort['next']['title'] = $myts->htmlSpecialChars($news_title);
-                $nsnsort['next']['date'] = mb_substr($start_day, 0, 10);
+                $nsnsort['next']['date']  = mb_substr($start_day, 0, 10);
             }
         }
 
@@ -1753,9 +1757,9 @@ class tadnews
         }
         $set = explode(';', $setup);
         foreach ($set as $s) {
-            $ss = explode('=', $s);
-            $key = $ss[0];
-            $val = $ss[1];
+            $ss        = explode('=', $s);
+            $key       = $ss[0];
+            $val       = $ss[1];
             $all[$key] = $val;
         }
 
@@ -1781,23 +1785,18 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $myts = MyTextSanitizer::getInstance();
-        $ver = (int) str_replace('.', '', mb_substr(XOOPS_VERSION, 6, 5));
+        $ver  = (int) str_replace('.', '', mb_substr(XOOPS_VERSION, 6, 5));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
         } else {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
         }
 
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
-        $formValidator = new formValidator('#myForm', false);
-        $formValidator->render('topLeft');
+        $FormValidator = new FormValidator('#myForm', false);
+        $FormValidator->render('topLeft');
 
-        if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-            redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-        }
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-        $sweet_alert = new sweet_alert();
-        $sweet_alert->render('del_page_tab', "post.php?op=del_page_tab&nsn=$nsn&sort=", 'sort');
+        $SweetAlert = new SweetAlert();
+        $SweetAlert->render('del_page_tab', "post.php?op=del_page_tab&nsn=$nsn&sort=", 'sort');
 
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         //取得目前使用者的所屬群組
@@ -1834,22 +1833,22 @@ class tadnews
 
         //預設值設定
 
-        $nsn = (!isset($DBV['nsn'])) ? $nsn : $DBV['nsn'];
-        $ncsn = (!isset($DBV['ncsn'])) ? $def_ncsn : $DBV['ncsn'];
-        $cate = $this->get_tad_news_cate($ncsn);
-        $news_title = (!isset($DBV['news_title'])) ? '' : $DBV['news_title'];
+        $nsn          = (!isset($DBV['nsn'])) ? $nsn : $DBV['nsn'];
+        $ncsn         = (!isset($DBV['ncsn'])) ? $def_ncsn : $DBV['ncsn'];
+        $cate         = $this->get_tad_news_cate($ncsn);
+        $news_title   = (!isset($DBV['news_title'])) ? '' : $DBV['news_title'];
         $news_content = (!isset($DBV['news_content'])) ? '' : $DBV['news_content'];
-        $start_day = (!isset($DBV['start_day']) or '0000-00-00 00:00:00' === $DBV['start_day']) ? date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) : $DBV['start_day'];
-        $end_day = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' === $DBV['end_day']) ? '' : $DBV['end_day'];
-        $enable = (!isset($DBV['enable'])) ? '' : $DBV['enable'];
-        $uid = (!isset($DBV['uid'])) ? $xoopsUser->getVar('uid') : $DBV['uid'];
+        $start_day    = (!isset($DBV['start_day']) or '0000-00-00 00:00:00' === $DBV['start_day']) ? date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) : $DBV['start_day'];
+        $end_day      = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' === $DBV['end_day']) ? '' : $DBV['end_day'];
+        $enable       = (!isset($DBV['enable'])) ? '' : $DBV['enable'];
+        $uid          = (!isset($DBV['uid'])) ? $xoopsUser->getVar('uid') : $DBV['uid'];
 
-        $passwd = (!isset($DBV['passwd'])) ? '' : $DBV['passwd'];
-        $enable_group = (!isset($DBV['enable_group'])) ? '' : explode(',', $DBV['enable_group']);
+        $passwd          = (!isset($DBV['passwd'])) ? '' : $DBV['passwd'];
+        $enable_group    = (!isset($DBV['enable_group'])) ? '' : explode(',', $DBV['enable_group']);
         $have_read_group = (!isset($DBV['have_read_group'])) ? '' : explode(',', $DBV['have_read_group']);
 
-        $prefix_tag = (!isset($DBV['prefix_tag'])) ? '' : $DBV['prefix_tag'];
-        $always_top = (!isset($DBV['always_top'])) ? '0' : $DBV['always_top'];
+        $prefix_tag      = (!isset($DBV['prefix_tag'])) ? '' : $DBV['prefix_tag'];
+        $always_top      = (!isset($DBV['always_top'])) ? '0' : $DBV['always_top'];
         $always_top_date = (!isset($DBV['always_top_date']) or '0000-00-00 00:00:00' === $DBV['always_top_date']) ? date('Y-m-d H:i:s', time() + 7 * 86400) : $DBV['always_top_date'];
 
         $always_top_checked = ('1' == $always_top) ? 'checked' : '';
@@ -1877,25 +1876,21 @@ class tadnews
         //取得分類數
         $cate_num = $this->get_cate_num();
 
-        if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-            redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-        }
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-        $fck = new CKEditor('tadnews', 'news_content', $news_content);
-        $fck->setHeight(350);
-        $editor = $fck->render();
+        $CkEditor = new CkEditor('tadnews', 'news_content', $news_content);
+        $CkEditor->setHeight(350);
+        $editor = $CkEditor->render();
 
         if ($tab_arr) {
             foreach ($tab_arr['tab_content'] as $k => $content) {
-                $ck = new CKEditor('tadnews', "tab_content[$k]", $content);
-                $ck->setHeight(300);
-                $tab_arr['tab_editor'][$k] = $ck->render();
-                $tab_arr['tab_title'][$k] = $myts->htmlSpecialChars($tab_arr['tab_title'][$k]);
+                $CkEditor = new CkEditor('tadnews', "tab_content[$k]", $content);
+                $CkEditor->setHeight(300);
+                $tab_arr['tab_editor'][$k] = $CkEditor->render();
+                $tab_arr['tab_title'][$k]  = $myts->htmlSpecialChars($tab_arr['tab_title'][$k]);
             }
         } else {
-            $ck = new CKEditor('tadnews', 'tab_content[1]', $tab_arr['tab_content'][1]);
-            $ck->setHeight(300);
-            $tab_editor = $ck->render();
+            $CkEditor = new CkEditor('tadnews', 'tab_content[1]', $tab_arr['tab_content'][1]);
+            $CkEditor->setHeight(300);
+            $tab_editor = $CkEditor->render();
         }
 
         $op = (empty($nsn)) ? 'insert_tad_news' : 'update_tad_news';
@@ -1905,19 +1900,19 @@ class tadnews
             $pic = $this->get_news_doc_pic($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
 
             if (!empty($pic)) {
-                $sql = 'select files_sn,description from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
-                $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+                $sql                      = 'select files_sn,description from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='news_pic' and `col_sn`='{$nsn}' order by sort limit 0,1";
+                $result                   = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
                 list($files_sn, $pic_css) = $xoopsDB->fetchRow($result);
             }
         } else {
             $files_sn = '';
-            $pic_css = '';
+            $pic_css  = '';
         }
         $use_pic_css = empty($pic_css) ? '' : 'true';
 
         //creat_cate_group
-        $new_cate_input = empty($cate_num) ? _TADNEWS_NAME : '';
-        $creat_new_cate = empty($cate_num) ? _TADNEWS_CREAT_FIRST_CATE : _TADNEWS_CREAT_NEWS_CATE;
+        $new_cate_input  = empty($cate_num) ? _TADNEWS_NAME : '';
+        $creat_new_cate  = empty($cate_num) ? _TADNEWS_CREAT_FIRST_CATE : _TADNEWS_CREAT_NEWS_CATE;
         $creat_cate_tool = ($this->chk_news_power(implode(',', $this->tadnewsConfig['creat_cate_group']), $User_Groups)) ? 1 : 0;
 
         if (!empty($this->tadnewsConfig['use_top_group'])) {
@@ -1926,74 +1921,74 @@ class tadnews
             $use_top_tool = 1;
         }
 
-        $now = time();
+        $now         = time();
         $jquery_path = Utility::get_jquery(true);
 
-        $css = $this->get_pic_css($pic_css);
+        $css     = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
 
         $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = [];
         if ('return' === $mode) {
-            $form['jquery'] = $jquery_path;
-            $form['action'] = $_SERVER['PHP_SELF'];
-            $form['nsn'] = $nsn;
-            $form['ncsn'] = $ncsn;
-            $form['uid'] = $uid;
-            $form['op'] = $op;
-            $form['cate'] = $cate;
-            $form['cate_menu'] = $cate_menu;
-            $form['cate_select'] = $cate_select;
-            $form['news_cate_select'] = $news_cate_select;
-            $form['page_cate_select'] = $page_cate_select;
-            $form['creat_cate_tool'] = $creat_cate_tool;
-            $form['prefix_tag_menu'] = $prefix_tag_menu;
-            $form['news_title'] = $news_title;
-            $form['news_content'] = $news_content;
-            $form['editor'] = $editor;
-            $form['tab_editor'] = $tab_editor;
-            $form['jquery_tabs_id'] = "jquery-tabs{$now}";
-            $form['start_day'] = $start_day;
-            $form['end_day'] = $end_day;
-            $form['always_top'] = $always_top;
-            $form['always_top_checked'] = $always_top_checked;
-            $form['always_top_date'] = $always_top_date;
-            $form['enable_group'] = $enable_group;
-            $form['have_read_group'] = $have_read_group;
-            $form['enable_checked1'] = Utility::chk($enable, '1', '1');
-            $form['enable_checked0'] = Utility::chk($enable, '0');
-            $form['passwd'] = $passwd;
-            $form['pic_css'] = $pic_css;
-            $form['use_pic_css'] = $use_pic_css;
-            $form['pic_css_width'] = $css['width'];
-            $form['pic_css_height'] = $css['height'];
-            $form['pic_css_border_width'] = $css['border_width'];
-            $form['pic_css_border_style'] = $css['border_style'];
-            $form['pic_css_border_color'] = $css['border_color'];
-            $form['pic_css_float'] = $css['float'];
-            $form['pic_css_margin'] = $css['margin'];
-            $form['pic_css_background_repeat'] = $css['background_repeat'];
+            $form['jquery']                      = $jquery_path;
+            $form['action']                      = $_SERVER['PHP_SELF'];
+            $form['nsn']                         = $nsn;
+            $form['ncsn']                        = $ncsn;
+            $form['uid']                         = $uid;
+            $form['op']                          = $op;
+            $form['cate']                        = $cate;
+            $form['cate_menu']                   = $cate_menu;
+            $form['cate_select']                 = $cate_select;
+            $form['news_cate_select']            = $news_cate_select;
+            $form['page_cate_select']            = $page_cate_select;
+            $form['creat_cate_tool']             = $creat_cate_tool;
+            $form['prefix_tag_menu']             = $prefix_tag_menu;
+            $form['news_title']                  = $news_title;
+            $form['news_content']                = $news_content;
+            $form['editor']                      = $editor;
+            $form['tab_editor']                  = $tab_editor;
+            $form['jquery_tabs_id']              = "jquery-tabs{$now}";
+            $form['start_day']                   = $start_day;
+            $form['end_day']                     = $end_day;
+            $form['always_top']                  = $always_top;
+            $form['always_top_checked']          = $always_top_checked;
+            $form['always_top_date']             = $always_top_date;
+            $form['enable_group']                = $enable_group;
+            $form['have_read_group']             = $have_read_group;
+            $form['enable_checked1']             = Utility::chk($enable, '1', '1');
+            $form['enable_checked0']             = Utility::chk($enable, '0');
+            $form['passwd']                      = $passwd;
+            $form['pic_css']                     = $pic_css;
+            $form['use_pic_css']                 = $use_pic_css;
+            $form['pic_css_width']               = $css['width'];
+            $form['pic_css_height']              = $css['height'];
+            $form['pic_css_border_width']        = $css['border_width'];
+            $form['pic_css_border_style']        = $css['border_style'];
+            $form['pic_css_border_color']        = $css['border_color'];
+            $form['pic_css_float']               = $css['float'];
+            $form['pic_css_margin']              = $css['margin'];
+            $form['pic_css_background_repeat']   = $css['background_repeat'];
             $form['pic_css_background_position'] = $css['background_position'];
-            $form['pic_css_background_size'] = $css['background_size'];
-            $form['pic'] = $pic;
-            $form['files_sn'] = $files_sn;
-            $form['new_cate_input'] = $new_cate_input;
-            $form['creat_new_cate'] = $creat_new_cate;
-            $form['use_top_tool'] = $use_top_tool;
-            $form['top_max_day'] = $xoopsModuleConfig['top_max_day'];
+            $form['pic_css_background_size']     = $css['background_size'];
+            $form['pic']                         = $pic;
+            $form['files_sn']                    = $files_sn;
+            $form['new_cate_input']              = $new_cate_input;
+            $form['creat_new_cate']              = $creat_new_cate;
+            $form['use_top_tool']                = $use_top_tool;
+            $form['top_max_day']                 = $xoopsModuleConfig['top_max_day'];
             // $form['news_cate_kind_arr'] = $news_cate_kind_arr;
 
             $this->TadUpFiles->set_col('nsn', $nsn);
-            $upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
-            $form['upform'] = $upform;
-            $page_upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
+            $upform              = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
+            $form['upform']      = $upform;
+            $page_upform         = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
             $form['page_upform'] = $page_upform;
 
             $form['tab_arr'] = $tab_arr;
 
             include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $token = new XoopsFormHiddenToken();
+            $token               = new XoopsFormHiddenToken();
             $form['XOOPS_TOKEN'] = $token->render();
 
             return $form;
@@ -2063,7 +2058,7 @@ class tadnews
     {
         global $xoopsDB;
 
-        $sql = 'SELECT tag_sn,color,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE `enable`='1'";
+        $sql    = 'SELECT tag_sn,color,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . " WHERE `enable`='1'";
         $result = $xoopsDB->query($sql);
         $option = '';
         while (list($tag_sn, $color, $tag) = $xoopsDB->fetchRow($result)) {
@@ -2080,8 +2075,8 @@ class tadnews
     private function get_cate_num()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news='0'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql         = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news='0'";
+        $result      = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($count) = $xoopsDB->fetchRow($result);
 
         return $count;
@@ -2092,7 +2087,7 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser;
 
-        $sql = 'select * from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
+        $sql    = 'select * from ' . $xoopsDB->prefix('tadnews_files_center') . " where `col_name`='{$col_name}' and `col_sn`='{$col_sn}' order by sort";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
@@ -2127,40 +2122,40 @@ class tadnews
     private function get_pic_css($pic_css = '')
     {
         if (empty($pic_css)) {
-            $css['width'] = 200;
-            $css['height'] = 150;
-            $css['border_width'] = '1';
-            $css['border_style'] = 'solid';
-            $css['border_color'] = '#909090';
+            $css['width']               = 200;
+            $css['height']              = 150;
+            $css['border_width']        = '1';
+            $css['border_style']        = 'solid';
+            $css['border_color']        = '#909090';
             $css['background_position'] = 'center center';
-            $css['background_repeat'] = 'no-repeat';
-            $css['float'] = 'right';
-            $css['margin'] = '4';
-            $css['background_size'] = 'cover';
+            $css['background_repeat']   = 'no-repeat';
+            $css['float']               = 'right';
+            $css['margin']              = '4';
+            $css['background_size']     = 'cover';
         } else {
             $cssArr = explode(';', $pic_css);
             foreach ($cssArr as $css_set) {
                 if (!empty($css_set) and false !== mb_strpos($css_set, ':')) {
                     list($k, $v) = explode(':', $css_set);
-                    $k = trim($k);
-                    $v = trim($v);
-                    $set[$k] = $v;
+                    $k           = trim($k);
+                    $v           = trim($v);
+                    $set[$k]     = $v;
                 }
             }
-            $css['width'] = null === $set['width'] ? null : str_replace('px', '', $set['width']);
+            $css['width']  = null === $set['width'] ? null : str_replace('px', '', $set['width']);
             $css['height'] = null === $set['height'] ? null : str_replace('px', '', $set['height']);
             if (null !== $set['border']) {
                 list($borderwidth, $borderstyle, $bordercolor) = explode(' ', $set['border']);
-                $css['border_width'] = null === $borderwidth ? null : str_replace('px', '', $borderwidth);
-                $css['border_style'] = null === $borderstyle ? null : $borderstyle;
-                $css['border_color'] = null === $bordercolor ? null : $bordercolor;
+                $css['border_width']                           = null === $borderwidth ? null : str_replace('px', '', $borderwidth);
+                $css['border_style']                           = null === $borderstyle ? null : $borderstyle;
+                $css['border_color']                           = null === $bordercolor ? null : $bordercolor;
             }
 
             $css['background_position'] = null === $set['background-position'] ? null : $set['background-position'];
-            $css['background_repeat'] = null === $set['background-repeat'] ? null : $set['background-repeat'];
-            $css['float'] = null === $set['float'] ? null : $set['float'];
-            $css['margin'] = null === $set['margin'] ? null : str_replace('px', '', $set['margin']);
-            $css['background_size'] = null === $set['background-size'] ? null : $set['background-size'];
+            $css['background_repeat']   = null === $set['background-repeat'] ? null : $set['background-repeat'];
+            $css['float']               = null === $set['float'] ? null : $set['float'];
+            $css['margin']              = null === $set['margin'] ? null : str_replace('px', '', $set['margin']);
+            $css['background_size']     = null === $set['background-size'] ? null : $set['background-size'];
         }
 
         return $css;
@@ -2190,15 +2185,15 @@ class tadnews
             $have_read_group = implode(',', $_POST['have_read_group']);
         }
 
-        $myts = MyTextSanitizer::getInstance();
-        $ncsn = (int) $_POST['ncsn'];
-        $tab_mode = (int) $_POST['tab_mode'];
-        $not_news = (int) $_POST['not_news'];
-        $new_cate = $myts->addSlashes($_POST['new_cate']);
-        $new_page_cate = $myts->addSlashes($_POST['new_page_cate']);
-        $news_title = $myts->addSlashes($_POST['news_title']);
+        $myts            = MyTextSanitizer::getInstance();
+        $ncsn            = (int) $_POST['ncsn'];
+        $tab_mode        = (int) $_POST['tab_mode'];
+        $not_news        = (int) $_POST['not_news'];
+        $new_cate        = $myts->addSlashes($_POST['new_cate']);
+        $new_page_cate   = $myts->addSlashes($_POST['new_page_cate']);
+        $news_title      = $myts->addSlashes($_POST['news_title']);
         $have_read_group = $myts->addSlashes($have_read_group);
-        $enable_group = $myts->addSlashes($enable_group);
+        $enable_group    = $myts->addSlashes($enable_group);
 
         //新分類
         if (!empty($new_cate)) {
@@ -2217,7 +2212,7 @@ class tadnews
             <div id='PageTab'>";
 
             $tab_title_data_arr = $tab_content_data_arr = [];
-            $tab_title_div = $tab_content_div = '';
+            $tab_title_div      = $tab_content_div      = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
                 $tab_key = $myts->addSlashes($tab_key);
                 $tab_val = $myts->addSlashes($tab_val);
@@ -2225,7 +2220,7 @@ class tadnews
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
                 $tab_title_div .= "<li>$tab_val</li>";
 
-                $tab_content_key = $myts->addSlashes($_POST['tab_content'][$tab_key]);
+                $tab_content_key                       = $myts->addSlashes($_POST['tab_content'][$tab_key]);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "
@@ -2259,7 +2254,7 @@ class tadnews
             $news_content = $myts->addSlashes($_POST['news_content']);
         }
         $always_top = (empty($_POST['always_top'])) ? '0' : '1';
-        $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
+        $pic_css    = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
         if (!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']) {
             $pic_css = $this->tadnewsConfig['cover_pic_css'];
@@ -2269,12 +2264,12 @@ class tadnews
             $_POST['end_day'] = '0000-00-00 00:00:00';
         }
 
-        $start_day = $myts->addSlashes($_POST['start_day']);
-        $end_day = $myts->addSlashes($_POST['end_day']);
-        $passwd = $myts->addSlashes($_POST['passwd']);
-        $prefix_tag = $myts->addSlashes($_POST['prefix_tag']);
+        $start_day       = $myts->addSlashes($_POST['start_day']);
+        $end_day         = $myts->addSlashes($_POST['end_day']);
+        $passwd          = $myts->addSlashes($_POST['passwd']);
+        $prefix_tag      = $myts->addSlashes($_POST['prefix_tag']);
         $always_top_date = $myts->addSlashes($_POST['always_top_date']);
-        $enable = (int) $_POST['enable'];
+        $enable          = (int) $_POST['enable'];
 
         $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$start_day}','{$end_day}','{$enable}','{$uid}','{$passwd}','{$enable_group}','{$prefix_tag}','{$always_top}','{$always_top_date}','{$have_read_group}')";
 
@@ -2296,7 +2291,7 @@ class tadnews
             $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
             $files_sn = (int) $_POST['files_sn'];
-            $sql = 'update ' . $xoopsDB->prefix('tadnews_files_center') . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
+            $sql      = 'update ' . $xoopsDB->prefix('tadnews_files_center') . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
             $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             $pic = $this->get_news_doc_pic($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
@@ -2330,14 +2325,14 @@ class tadnews
         // }
         $enable_group = $enable_post_group = $setup = $cate = '';
         if (!empty($of_ncsn)) {
-            $cate = $this->get_tad_news_cate($of_ncsn);
-            $enable_group = $cate['enable_group'];
+            $cate              = $this->get_tad_news_cate($of_ncsn);
+            $enable_group      = $cate['enable_group'];
             $enable_post_group = $cate['enable_post_group'];
         }
         $setup = ('1' == $not_news and !empty($cate['setup'])) ? $cate['setup'] : 'title=1;tool=0;comm=0;nav=1';
-        $sort = $this->get_max_sort($of_ncsn);
+        $sort  = $this->get_max_sort($of_ncsn);
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts     = MyTextSanitizer::getInstance();
         $new_cate = $myts->addSlashes($new_cate);
         if (empty($of_ncsn)) {
             $of_ncsn = 0;
@@ -2356,8 +2351,8 @@ class tadnews
     public function get_max_sort($of_ncsn = '', $not_news = 0)
     {
         global $xoopsDB;
-        $sql = 'select max(sort) from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$of_ncsn' and not_news='$not_news'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql        = 'select max(sort) from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='$of_ncsn' and not_news='$not_news'";
+        $result     = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($sort) = $xoopsDB->fetchRow($result);
 
         return ++$sort;
@@ -2391,16 +2386,16 @@ class tadnews
             return;
         }
 
-        $ncsn = (int) $ncsn;
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$ncsn'";
+        $ncsn   = (int) $ncsn;
+        $sql    = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$ncsn'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        $data = $xoopsDB->fetchArray($result);
+        $data   = $xoopsDB->fetchArray($result);
 
-        $sql2 = 'select count(*) from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}'";
-        $result2 = $xoopsDB->query($sql2);
-        list($counter) = $xoopsDB->fetchRow($result2);
-        $data['count'] = $counter;
-        $data['g_txt'] = Utility::txt_to_group_name($data['enable_group'], _TADNEWS_ALL_OK);
+        $sql2           = 'select count(*) from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}'";
+        $result2        = $xoopsDB->query($sql2);
+        list($counter)  = $xoopsDB->fetchRow($result2);
+        $data['count']  = $counter;
+        $data['g_txt']  = Utility::txt_to_group_name($data['enable_group'], _TADNEWS_ALL_OK);
         $data['gp_txt'] = Utility::txt_to_group_name($data['enable_post_group'], _MD_TADNEWS_ONLY_ROOT, ' , ');
 
         return $data;
@@ -2434,8 +2429,8 @@ class tadnews
 
         $myts = MyTextSanitizer::getInstance();
 
-        $ncsn = (int) $_POST['ncsn'];
-        $new_cate = $myts->addSlashes($_POST['new_cate']);
+        $ncsn          = (int) $_POST['ncsn'];
+        $new_cate      = $myts->addSlashes($_POST['new_cate']);
         $new_page_cate = $myts->addSlashes($_POST['new_page_cate']);
         if (!empty($_POST['new_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_cate);
@@ -2452,7 +2447,7 @@ class tadnews
             <div id='PageTab'>";
 
             $tab_title_data_arr = $tab_content_data_arr = [];
-            $tab_title_div = $tab_content_div = '';
+            $tab_title_div      = $tab_content_div      = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
                 $tab_title_div .= "<li>$tab_val</li>";
@@ -2513,7 +2508,7 @@ class tadnews
             $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
             $files_sn = (int) $_POST['files_sn'];
-            $sql = 'update ' . $xoopsDB->prefix('tadnews_files_center') . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
+            $sql      = 'update ' . $xoopsDB->prefix('tadnews_files_center') . " set col_name='news_pic' , col_sn='{$nsn}' , description='{$pic_css}' where files_sn='$files_sn'";
             $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         }
 
