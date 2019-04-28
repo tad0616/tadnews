@@ -1,4 +1,3 @@
-<{$block.syntaxhighlighter_code}>
 <{$block.rating_js}>
 <{$block.del_js}>
 <{if $block.page}>

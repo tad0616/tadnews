@@ -3,6 +3,7 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\SyntaxHighlighter;
 use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -384,19 +385,6 @@ class tadnews
         }
     }
 
-    //取得高亮度語法
-    private function get_syntaxhighlighter()
-    {
-        $syntaxhighlighter_code = '';
-        if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/syntaxhighlighter.php')) {
-            include_once XOOPS_ROOT_PATH . '/modules/tadtools/syntaxhighlighter.php';
-            $syntaxhighlighter = new syntaxhighlighter();
-            $syntaxhighlighter_code = $syntaxhighlighter->render();
-        }
-
-        return $syntaxhighlighter_code;
-    }
-
     //置頂圖示
     private function get_news_pic($always_top = '', $post_date = '')
     {
@@ -420,10 +408,10 @@ class tadnews
         if ($admin) {
             $isAdmin = $admin;
         }
-        //die(var_export($this->get_view_nsn()));
         $rating_js = '';
         //設定是否需要高亮度語法
-        $syntaxhighlighter_code = $this->get_syntaxhighlighter();
+        $SyntaxHighlighter = new SyntaxHighlighter();
+        $SyntaxHighlighter->render();
 
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
@@ -980,7 +968,6 @@ class tadnews
             $main['cate_select'] = $cate_select;
             $main['author_select'] = $author_select;
             $main['bar'] = $bar;
-            $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
             if ($this->use_star_rating) {
                 $main['rating_js'] = $rating_js;
             }
@@ -1000,7 +987,6 @@ class tadnews
         $xoopsTpl->assign('cate_select', $cate_select);
         $xoopsTpl->assign('author_select', $author_select);
         $xoopsTpl->assign('bar', $bar);
-        $xoopsTpl->assign('syntaxhighlighter_code', $syntaxhighlighter_code);
         if ($this->use_star_rating) {
             $xoopsTpl->assign('rating_js', $rating_js);
         }
@@ -1066,7 +1052,8 @@ class tadnews
 
         $pic_w = $this->tadnewsConfig['cate_pic_width'] + 10;
 
-        $syntaxhighlighter_code = $this->get_syntaxhighlighter();
+        $SyntaxHighlighter = new SyntaxHighlighter();
+        $SyntaxHighlighter->render();
 
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
@@ -1230,12 +1217,10 @@ class tadnews
 
         if ('return' === $mode) {
             $main['all_news'] = $all_news;
-            $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
 
             return $main;
         }
         $xoopsTpl->assign('all_news', $all_news);
-        $xoopsTpl->assign('syntaxhighlighter_code', $syntaxhighlighter_code);
     }
 
     //判斷本文之所屬分類是否允許該用戶之所屬群組觀看或發佈
