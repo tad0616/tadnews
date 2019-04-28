@@ -1811,7 +1811,12 @@ class tadnews
         }
     }
 
-    /*********************發布*************************/
+    /*********************發布************************
+     * @param string $nsn
+     * @param string $def_ncsn
+     * @param string $mode
+     * @return array
+     */
 
     //tad_news編輯表單
     public function tad_news_form($nsn = '', $def_ncsn = '', $mode = '')
