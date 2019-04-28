@@ -1,7 +1,8 @@
 <?php
-use XoopsModules\Tadtools\Utility;
 
 namespace XoopsModules\Tadnews;
+
+use XoopsModules\Tadtools\Utility;
 
 /*
 Update Class Definition
