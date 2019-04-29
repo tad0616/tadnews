@@ -1,9 +1,7 @@
 <?php
-
-xoops_loadLanguage('blocks', 'tadnews');
-
 //條列式新聞區塊
 require_once __DIR__ . '/header.php';
+xoops_loadLanguage('blocks', 'tadnews');
 
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 

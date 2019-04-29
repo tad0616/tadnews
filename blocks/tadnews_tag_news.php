@@ -1,6 +1,7 @@
 <?php
-use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
+use XoopsModules\Tadtools\Utility;
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (標籤新聞區塊)
@@ -13,7 +14,7 @@ function tadnews_tag_news($options)
     // die(var_export($tags));
     if (empty($options[0])) {
         $tag_sn_arr = array_keys($tags['tags']);
-    // die(var_export($tag_sn_arr));
+        // die(var_export($tag_sn_arr));
     } else {
         $tag_sn_arr = explode(',', $options[0]);
     }
@@ -36,10 +37,9 @@ function tadnews_tag_news($options)
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/easy_responsive_tabs.php';
     $randStr = Utility::randStr();
-    $responsive_tabs = new easy_responsive_tabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $responsive_tabs->rander();
+    $EasyResponsiveTabs = new EasyResponsiveTabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
+    $EasyResponsiveTabs->rander();
     $block['tag_news_name'] = 'tag_news_' . $randStr;
     $block['min_height'] = count($ncsn_arr) * 55;
 

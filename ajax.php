@@ -1,9 +1,9 @@
 <?php
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\Utility;
-xoops_loadLanguage('blocks', 'tadnews');
 
 require_once __DIR__ . '/header.php';
+xoops_loadLanguage('blocks', 'tadnews');
 
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 

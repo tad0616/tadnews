@@ -1,4 +1,8 @@
 <?php
+
+use XoopsModules\Tadtools\FlexSlider;
+use XoopsModules\Tadtools\ResponsiveSlides;
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (自動縮放的滑動新聞)
@@ -9,11 +13,6 @@ function tadnews_slidernews2_show($options)
     if (empty($options[2])) {
         $options[2] = 'ResponsiveSlides';
     }
-
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/{$options[2]}.php")) {
-        redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . "/modules/tadtools/{$options[2]}.php";
 
     $ncsn_arr = explode(',', $options[3]);
 
@@ -34,9 +33,9 @@ function tadnews_slidernews2_show($options)
         return;
     }
     if ('flexslider2' === $options[2]) {
-        $slider = new flexslider($options[1]);
+        $slider = new FlexSlider($options[1]);
     } else {
-        $slider = new slider($options[1]);
+        $slider = new ResponsiveSlides($options[1]);
     }
 
     $n = 0;

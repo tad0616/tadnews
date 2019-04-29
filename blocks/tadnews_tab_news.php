@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
@@ -24,10 +25,9 @@ function tadnews_tab_news($options)
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/easy_responsive_tabs.php';
     $randStr = Utility::randStr();
-    $responsive_tabs = new easy_responsive_tabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $responsive_tabs->rander();
+    $EasyResponsiveTabs = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
+    $EasyResponsiveTabs->rander();
     $block['tab_news_name'] = 'tab_news_' . $randStr;
     $block['min_height'] = count($ncsn_arr) * 55;
 

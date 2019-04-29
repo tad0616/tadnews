@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
@@ -43,6 +44,8 @@ function list_tad_news_tags($def_tag_sn = '')
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+    $MColorPicker = new MColorPicker('.color');
+    $MColorPicker->render();
 
     return $main;
 }

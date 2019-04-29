@@ -1,10 +1,5 @@
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
 
 <script type="text/JavaScript">
-    $(".color").mColorPicker({
-        imageFolder: "<{$xoops_url}>/modules/tadtools/mColorPicker/images/"
-    });
-
     function delete_tag(tag_sn){
         var sure = window.confirm('<{$smarty.const._TADNEWS_SURE_DEL}>');
         if (!sure)	return;

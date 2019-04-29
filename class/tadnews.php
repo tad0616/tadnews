@@ -2,6 +2,7 @@
 
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\SyntaxHighlighter;
 use XoopsModules\Tadtools\TadDataCenter;
@@ -525,11 +526,10 @@ class tadnews
 
         //設定是否需要評分工具
         if ($this->use_star_rating) {
-            require_once XOOPS_ROOT_PATH . '/modules/tadtools/star_rating.php';
             if ('one' === $this->show_mode) {
-                $rating = new rating('tadnews', '10', '', 'simple');
+                $StarRating = new StarRating('tadnews', '10', '', 'simple');
             } else {
-                $rating = new rating('tadnews', '10', 'show', 'simple');
+                $StarRating = new StarRating('tadnews', '10', 'show', 'simple');
             }
         }
 
@@ -732,7 +732,7 @@ class tadnews
             }
 
             if ($this->use_star_rating) {
-                $rating->add_rating('nsn', $nsn);
+                $StarRating->add_rating(XOOPS_URL . "/modules/tadnews/index.php", 'nsn', $nsn);
             }
 
             $tab_mode = (false !== mb_strpos($news_content, 'Easy-Responsive-Tabs')) ? true : false;
@@ -876,7 +876,7 @@ class tadnews
             $image_thumb = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'thumb', null, true);
 
             if ($this->use_star_rating) {
-                $rating_js = $rating->render();
+                $rating_js = $StarRating->render();
             }
 
             $prefix_tag = $this->mk_prefix_tag($prefix_tag);

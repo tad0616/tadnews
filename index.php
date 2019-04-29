@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -190,6 +191,10 @@ $uid = system_CleanVars($_REQUEST, 'uid', 0, 'int');
 $kind = system_CleanVars($_REQUEST, 'kind', '', 'string');
 $tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
 $show_uid = system_CleanVars($_REQUEST, 'show_uid', 0, 'int');
+$mod_name = system_CleanVars($_REQUEST, 'mod_name', '', 'string');
+$col_name = system_CleanVars($_REQUEST, 'col_name', '', 'string');
+$col_sn = system_CleanVars($_REQUEST, 'col_sn', 0, 'int');
+$rank = system_CleanVars($_REQUEST, 'rank', '', 'string');
 
 switch ($op) {
     //下載檔案
@@ -226,6 +231,9 @@ switch ($op) {
         $xoopsTpl->assign('op', $op);
         break;
 
+    case 'save_rating':
+        StarRating::save_rating($mod_name, $col_name, $col_sn, $rank);
+        break;
     default:
 
         //把過期的置頂文徹下
