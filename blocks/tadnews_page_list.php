@@ -1,5 +1,5 @@
 <?php
-
+use XoopsModules\Tadtools\MColorPicker;
 //區塊主函式 (自訂頁面列表)
 function tadnews_page_list($options)
 {
@@ -88,12 +88,8 @@ function tadnews_page_list_edit($options)
     $show_title = 0 != $options[3] ? 'checked' : '';
     $dont_show_title = 0 == $options[3] ? 'checked' : '';
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
-    $mColorPicker = new mColorPicker('.color');
-    $mColorPicker->render();
+    $MColorPicker = new MColorPicker('.color');
+    $MColorPicker->render();
 
     $form = "
     <ol class='my-form'>

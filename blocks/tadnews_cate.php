@@ -1,13 +1,10 @@
 <?php
-
+use XoopsModules\Tadtools\Dtree;
 //區塊主函式 (顯示所有新聞的類別)
 function tadnews_cate_show($options)
 {
     global $xoTheme;
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/dtree.php')) {
-        redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/dtree.php';
+
     $cate = block_get_news_cate();
     if (empty($cate)) {
         return;
@@ -16,8 +13,8 @@ function tadnews_cate_show($options)
     $home['sn'] = 0;
     $home['title'] = _MB_TADNEWS_NO_CATE;
     $home['url'] = XOOPS_URL . '/modules/tadnews/index.php?ncsn=0';
-    $dtree = new dtree('tadnews_cate_tree', $home, $cate['title'], $cate['of_ncsn'], $cate['url']);
-    $block = $dtree->render();
+    $Dtree = new Dtree('tadnews_cate_tree', $home, $cate['title'], $cate['of_ncsn'], $cate['url']);
+    $block = $Dtree->render();
 
     return $block;
 }

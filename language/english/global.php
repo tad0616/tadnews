@@ -1,4 +1,5 @@
 <?php
+xoops_loadLanguage('main', 'tadtools');
 define('_TADNEWS_NAME', 'ALL News');
 define('_TADNEWS_ALWAYS_TOP', 'Sticky');
 define('_TADNEWS_TODAY_NEWS', 'Today');

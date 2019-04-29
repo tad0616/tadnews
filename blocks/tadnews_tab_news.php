@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
@@ -49,12 +50,9 @@ function tadnews_tab_news($options)
 function tadnews_tab_news_edit($options)
 {
     $option = block_news_cate($options[0]);
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
-    $mColorPicker = new mColorPicker('.color');
-    $mColorPicker->render();
+
+    $MColorPicker = new MColorPicker('.color');
+    $MColorPicker->render();
 
     $form = "
     {$option['js']}

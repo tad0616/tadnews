@@ -1,15 +1,11 @@
 <?php
+use XoopsModules\Tadtools\LofSliderNews;
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (滑動新聞)
 function tadnews_slidernews_show($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
-
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php')) {
-        redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/lofslidernews.php';
 
     $ncsn_arr = explode(',', $options[4]);
 
@@ -31,11 +27,11 @@ function tadnews_slidernews_show($options)
     }
 
     $n = 0;
-    $lofslidernews = new lofslidernews($options[0], $options[1], $options[3]);
+    $LofSliderNews = new LofSliderNews($options[0], $options[1], $options[3]);
     $pic_num = 1;
     foreach ($all_news['page'] as $news) {
         $big_image = empty($news['image_big']) ? XOOPS_URL . "/modules/tadnews/images/demo{$pic_num}.jpg" : $news['image_big'];
-        $lofslidernews->add_content($news['nsn'], $news['news_title'], $news['content'], $big_image, $news['post_date'], XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}");
+        $LofSliderNews->add_content($news['nsn'], $news['news_title'], $news['content'], $big_image, $news['post_date'], XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}");
         $n++;
         $pic_num++;
         if ($n >= $options[2]) {
@@ -43,7 +39,7 @@ function tadnews_slidernews_show($options)
         }
     }
 
-    $block = $lofslidernews->render();
+    $block = $LofSliderNews->render();
 
     return $block;
 }
