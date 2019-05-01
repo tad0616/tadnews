@@ -1,13 +1,3 @@
-
-<script type="text/JavaScript">
-    function delete_tag(tag_sn){
-        var sure = window.confirm('<{$smarty.const._TADNEWS_SURE_DEL}>');
-        if (!sure)	return;
-        location.href="<{$xoops_url}>/modules/tadnews/admin/tag.php?op=del_tag&tag_sn=" + tag_sn;
-    }
-
-</script>
-
 <div class="container-fluid">
     <form action="tag.php" method="post" id="myForm" role="form">
         <table class="table table-striped table-bordered">

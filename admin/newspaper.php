@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
@@ -373,6 +374,9 @@ function sendmail_form($npsn = '')
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_news_email_func', "newspaper.php?op=delete_tad_news_email_npsn&npsn={$npsn}&nps_sn={$newspaper['nps_sn']}&email=", 'email');
 }
 
 //立即寄出

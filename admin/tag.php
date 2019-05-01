@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\MColorPicker;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
@@ -47,6 +48,8 @@ function list_tad_news_tags($def_tag_sn = '')
     $MColorPicker = new MColorPicker('.color');
     $MColorPicker->render();
 
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tag', "tag.php?op=del_tag&tag_sn=", 'tag_sn');
     return $main;
 }
 

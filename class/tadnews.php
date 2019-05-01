@@ -1315,15 +1315,19 @@ class tadnews
     //刪除的js
     private function del_js()
     {
-        $js = "<script>
-        function delete_tad_news_func(nsn){
-          var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-          if (!sure)  return;
-          location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
-        }
-        </script>";
 
-        return $js;
+        $SweetAlert = new SweetAlert();
+        $SweetAlert->render('delete_tad_news_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=", 'nsn');
+
+        // $js = "<script>
+        // function delete_tad_news_func(nsn){
+        //   var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
+        //   if (!sure)  return;
+        //   location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
+        // }
+        // </script>";
+
+        // return $js;
     }
 
     //列出所有作者的下拉選單
