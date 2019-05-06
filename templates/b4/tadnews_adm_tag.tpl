@@ -81,7 +81,7 @@
                         <{else}>
                             <a href='tag.php?op=stat&enable=1&tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-success'><{$smarty.const._MA_TADNEWS_TAG_ABLE}></a>
                         <{/if}>
-                        <{if $tag.enable!= '1' and $tag.tag_amount == 0}>
+                        <{if !$tag.enable and $tag.tag_amount == 0}>
                             <a href='javascript:delete_tag(<{$tag.tag_sn}>);' class='btn btn-sm btn-danger'><{$smarty.const._TADNEWS_DEL}></a>
                         <{/if}>
                     </td>
