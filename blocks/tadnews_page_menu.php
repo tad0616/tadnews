@@ -1,5 +1,9 @@
 <?php
 use XoopsModules\Tadtools\MColorPicker;
+if (!class_exists('XoopsModules\Tadtools\MColorPicker')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 //區塊主函式 (自訂頁面選單)
 function tadnews_page_menu($options)
 {

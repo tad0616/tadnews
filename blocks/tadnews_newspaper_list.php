@@ -1,6 +1,8 @@
 <?php
-
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
 //區塊主函式 (最新回應)
 function tadnews_newspaper_list($options)

@@ -2,6 +2,10 @@
 use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (標籤新聞區塊)

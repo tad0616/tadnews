@@ -1,5 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 
 //區塊主函式 (訂閱 / 取消電子報)
 function tadnews_newspaper($options)

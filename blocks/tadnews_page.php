@@ -1,6 +1,9 @@
 <?php
 
 use XoopsModules\Tadtools\Dtree;
+if (!class_exists('XoopsModules\Tadtools\Dtree')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
 //區塊主函式 (自訂頁面樹狀目錄)
 function tadnews_page($options)

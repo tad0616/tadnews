@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tadtools\Dtree;
+if (!class_exists('XoopsModules\Tadtools\Dtree')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 //區塊主函式 (顯示所有新聞的類別)
 function tadnews_cate_show($options)
 {

@@ -2,6 +2,9 @@
 
 use XoopsModules\Tadtools\FlexSlider;
 use XoopsModules\Tadtools\ResponsiveSlides;
+if (!class_exists('XoopsModules\Tadtools\ResponsiveSlides')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
