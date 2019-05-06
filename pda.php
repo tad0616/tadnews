@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -558,6 +559,7 @@ $files_sn = system_CleanVars($_REQUEST, 'files_sn', '', 'int');
 switch ($op) {
     //下載檔案
     case 'tufdl':
+        $TadUpFiles = new TadUpFiles('tadnews');
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

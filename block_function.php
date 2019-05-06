@@ -1,8 +1,5 @@
 <?php
-use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
-
-$TadUpFiles = new TadUpFiles('tadnews');
 
 define('_SEPARTE', '<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>');
 define('_SEPARTE2', '--summary--');

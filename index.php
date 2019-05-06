@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\StarRating;
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -200,6 +201,7 @@ switch ($op) {
     //下載檔案
     case 'tufdl':
         $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
+        $TadUpFiles = new TadUpFiles('tadnews');
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
 

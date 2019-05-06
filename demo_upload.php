@@ -1,5 +1,9 @@
 <?php
+use XoopsModules\Tadtools\TadUpFiles;
+
 require_once __DIR__ . '/header.php';
+$TadUpFiles = new TadUpFiles('tadnews');
+
 
 $op = isset($_POST['op']) ? $_POST['op'] : '';
 

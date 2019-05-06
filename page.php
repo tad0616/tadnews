@@ -1,5 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\TadUpFiles;
+
 
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
@@ -99,6 +101,8 @@ $news_title = '';
 switch ($op) {
     //下載檔案
     case 'tufdl':
+$TadUpFiles = new TadUpFiles('tadnews');
+
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;
 
