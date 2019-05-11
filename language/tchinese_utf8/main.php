@@ -1,5 +1,5 @@
 <?php
-//global
+xoops_loadLanguage('main', 'tadtools');
 require_once __DIR__ . '/global.php';
 
 if (!defined('_TAD_NEED_TADTOOLS')) {

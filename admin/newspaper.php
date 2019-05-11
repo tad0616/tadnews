@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
@@ -134,7 +136,7 @@ function open_newspaper($nps_sn = '')
     //取得使用之佈景
     $nps_theme = newspaper_themes($set['themes']);
 
-    $np_title = (empty($nps_sn)) ? (string)$xoopsConfig['sitename'] . _MA_TADNEWS_NP : $set['title'];
+    $np_title = (empty($nps_sn)) ? (string) $xoopsConfig['sitename'] . _MA_TADNEWS_NP : $set['title'];
 
     $author = $xoopsUser->getVar('uname');
 
@@ -158,7 +160,7 @@ function save_newspaper_set($nps_sn = '')
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $title = $myts->addSlashes($_POST['title']);
     $head = $myts->addSlashes($_POST['head']);
     $foot = $myts->addSlashes($_POST['foot']);
@@ -196,7 +198,7 @@ function add_newspaper($nps_sn = '')
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
 
     $cates = get_all_news_cate();
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' ORDER BY start_day DESC";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -250,7 +252,7 @@ function edit_newspaper($npsn = '')
     $cates = get_all_news_cate();
     $newspaper = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     if (empty($newspaper['np_content'])) {
         $html = '';
@@ -285,7 +287,7 @@ function edit_newspaper($npsn = '')
             $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 12px;'>" . _TADNEWS_MORE . '...</a></p>';
             $news_content = $content[0] . $more;
             $html .= "
-            <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string)($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
+            <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string) ($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
             <div class='TadNewsPaper_content'>{$img}{$news_content}</div>
             <hr class='TadNewsPaper_hr'>";
         }
@@ -294,14 +296,9 @@ function edit_newspaper($npsn = '')
         $html = $newspaper['np_content'];
     }
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $ck = new CKEditor('tadnews', 'np_content', $html);
-    $ck->setHeight(400);
-    $editor = $ck->render();
+    $CkEditor = new CkEditor('tadnews', 'np_content', $html);
+    $CkEditor->setHeight(400);
+    $editor = $CkEditor->render();
 
     $xoopsTpl->assign('editor', $editor);
     $xoopsTpl->assign('npsn', $npsn);
@@ -313,7 +310,7 @@ function save_all($npsn = '')
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $np_content = $myts->addSlashes($_POST['np_content']);
     $np_title = $myts->addSlashes($_POST['np_title']);
 
@@ -377,6 +374,9 @@ function sendmail_form($npsn = '')
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_news_email_func', "newspaper.php?op=delete_tad_news_email_npsn&npsn={$npsn}&nps_sn={$newspaper['nps_sn']}&email=", 'email');
 }
 
 //立即寄出

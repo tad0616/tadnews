@@ -1,5 +1,10 @@
 <?php
+use XoopsModules\Tadtools\EasyResponsiveTabs;
+use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (頁籤新聞區塊)
@@ -23,10 +28,9 @@ function tadnews_tab_news($options)
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/easy_responsive_tabs.php';
     $randStr = Utility::randStr();
-    $responsive_tabs = new easy_responsive_tabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $responsive_tabs->rander();
+    $EasyResponsiveTabs = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
+    $EasyResponsiveTabs->rander();
     $block['tab_news_name'] = 'tab_news_' . $randStr;
     $block['min_height'] = count($ncsn_arr) * 55;
 
@@ -49,12 +53,9 @@ function tadnews_tab_news($options)
 function tadnews_tab_news_edit($options)
 {
     $option = block_news_cate($options[0]);
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
-    $mColorPicker = new mColorPicker('.color');
-    $mColorPicker->render();
+
+    $MColorPicker = new MColorPicker('.color');
+    $MColorPicker->render();
 
     $form = "
     {$option['js']}

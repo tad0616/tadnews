@@ -1,4 +1,12 @@
 <?php
+
+use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\StarRating;
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\SyntaxHighlighter;
+use XoopsModules\Tadtools\TadDataCenter;
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
 //TadNews物件
@@ -72,12 +80,6 @@ $this->get_news($mode='assign');
 
 //取得分類新聞（assign=直接套入樣板，return=傳回陣列）
 $this->get_cate_news($mode='assign');
-
-//把字串換成群組
-$this->txt_to_group_name($enable_group="",$default_txt="",$syb="<br />");
-
-//取得所有群組
-$this->get_all_groups();
 
 //取得分類下拉選單
 $this->get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL);
@@ -164,10 +166,9 @@ class tadnews
     public function __construct()
     {
         global $xoopsConfig;
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadDataCenter.php';
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
-        require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
+
+        xoops_loadLanguage('main', 'tadnews');
+
         $this->now = date('Y-m-d', xoops_getUserTimestamp(time()));
         $this->today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
@@ -385,19 +386,6 @@ class tadnews
         }
     }
 
-    //取得高亮度語法
-    private function get_syntaxhighlighter()
-    {
-        $syntaxhighlighter_code = '';
-        if (file_exists(TADTOOLS_PATH . '/syntaxhighlighter.php')) {
-            require_once TADTOOLS_PATH . '/syntaxhighlighter.php';
-            $syntaxhighlighter = new syntaxhighlighter();
-            $syntaxhighlighter_code = $syntaxhighlighter->render();
-        }
-
-        return $syntaxhighlighter_code;
-    }
-
     //置頂圖示
     private function get_news_pic($always_top = '', $post_date = '')
     {
@@ -421,10 +409,10 @@ class tadnews
         if ($admin) {
             $isAdmin = $admin;
         }
-        //die(var_export($this->get_view_nsn()));
         $rating_js = '';
         //設定是否需要高亮度語法
-        $syntaxhighlighter_code = $this->get_syntaxhighlighter();
+        $SyntaxHighlighter = new SyntaxHighlighter();
+        $SyntaxHighlighter->render();
 
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
@@ -538,11 +526,10 @@ class tadnews
 
         //設定是否需要評分工具
         if ($this->use_star_rating) {
-            require_once XOOPS_ROOT_PATH . '/modules/tadtools/star_rating.php';
             if ('one' === $this->show_mode) {
-                $rating = new rating('tadnews', '10', '', 'simple');
+                $StarRating = new StarRating('tadnews', '10', '', 'simple');
             } else {
-                $rating = new rating('tadnews', '10', 'show', 'simple');
+                $StarRating = new StarRating('tadnews', '10', 'show', 'simple');
             }
         }
 
@@ -727,7 +714,7 @@ class tadnews
         $all_news = [];
         $i = 0;
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         while (false !== ($news = $xoopsDB->fetchArray($result))) {
             foreach ($news as $k => $v) {
                 $$k = $v;
@@ -745,7 +732,7 @@ class tadnews
             }
 
             if ($this->use_star_rating) {
-                $rating->add_rating('nsn', $nsn);
+                $StarRating->add_rating(XOOPS_URL . "/modules/tadnews/index.php", 'nsn', $nsn);
             }
 
             $tab_mode = (false !== mb_strpos($news_content, 'Easy-Responsive-Tabs')) ? true : false;
@@ -889,7 +876,7 @@ class tadnews
             $image_thumb = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'thumb', null, true);
 
             if ($this->use_star_rating) {
-                $rating_js = $rating->render();
+                $rating_js = $StarRating->render();
             }
 
             $prefix_tag = $this->mk_prefix_tag($prefix_tag);
@@ -968,7 +955,7 @@ class tadnews
         }
 
         $ui = 1 == $this->sort_tool ? true : false;
-        $jquery = get_jquery($ui);
+        $jquery = Utility::get_jquery($ui);
 
         if ('return' === $mode) {
             $main['jquery'] = $jquery;
@@ -981,7 +968,6 @@ class tadnews
             $main['cate_select'] = $cate_select;
             $main['author_select'] = $author_select;
             $main['bar'] = $bar;
-            $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
             if ($this->use_star_rating) {
                 $main['rating_js'] = $rating_js;
             }
@@ -1001,7 +987,6 @@ class tadnews
         $xoopsTpl->assign('cate_select', $cate_select);
         $xoopsTpl->assign('author_select', $author_select);
         $xoopsTpl->assign('bar', $bar);
-        $xoopsTpl->assign('syntaxhighlighter_code', $syntaxhighlighter_code);
         if ($this->use_star_rating) {
             $xoopsTpl->assign('rating_js', $rating_js);
         }
@@ -1067,7 +1052,8 @@ class tadnews
 
         $pic_w = $this->tadnewsConfig['cate_pic_width'] + 10;
 
-        $syntaxhighlighter_code = $this->get_syntaxhighlighter();
+        $SyntaxHighlighter = new SyntaxHighlighter();
+        $SyntaxHighlighter->render();
 
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
@@ -1131,7 +1117,7 @@ class tadnews
             $subnews = [];
             $only_title_cate = [];
 
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             while (false !== ($news = $xoopsDB->fetchArray($result2))) {
                 foreach ($news as $k => $v) {
                     $$k = $v;
@@ -1231,12 +1217,10 @@ class tadnews
 
         if ('return' === $mode) {
             $main['all_news'] = $all_news;
-            $main['syntaxhighlighter_code'] = $syntaxhighlighter_code;
 
             return $main;
         }
         $xoopsTpl->assign('all_news', $all_news);
-        $xoopsTpl->assign('syntaxhighlighter_code', $syntaxhighlighter_code);
     }
 
     //判斷本文之所屬分類是否允許該用戶之所屬群組觀看或發佈
@@ -1331,45 +1315,19 @@ class tadnews
     //刪除的js
     private function del_js()
     {
-        $js = "<script>
-        function delete_tad_news_func(nsn){
-          var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-          if (!sure)  return;
-          location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
-        }
-        </script>";
 
-        return $js;
-    }
+        $SweetAlert = new SweetAlert();
+        $SweetAlert->render('delete_tad_news_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=", 'nsn');
 
-    //把字串換成群組
-    public function txt_to_group_name($enable_group = '', $default_txt = '', $syb = '<br />')
-    {
-        $groups_array = $this->get_all_groups();
-        if (empty($enable_group)) {
-            $g_txt = $default_txt;
-        } else {
-            $gs = explode(',', $enable_group);
-            $g_txt = '';
-            foreach ($gs as $gid) {
-                $g_txt .= $groups_array[$gid] . (string) ($syb);
-            }
-        }
+        // $js = "<script>
+        // function delete_tad_news_func(nsn){
+        //   var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
+        //   if (!sure)  return;
+        //   location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
+        // }
+        // </script>";
 
-        return $g_txt;
-    }
-
-    //取得所有群組
-    public function get_all_groups()
-    {
-        global $xoopsDB;
-        $sql = 'SELECT groupid,name FROM ' . $xoopsDB->prefix('groups') . '';
-        $result = $xoopsDB->query($sql);
-        while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
-            $data[$groupid] = $name;
-        }
-
-        return $data;
+        // return $js;
     }
 
     //列出所有作者的下拉選單
@@ -1447,7 +1405,7 @@ class tadnews
             $all_ncsn = implode(',', $ok_cat);
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn in($all_ncsn) $and_not_news order by sort";
 
-            $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
                 if (!in_array($ncsn, $ok_cat)) {
@@ -1686,7 +1644,7 @@ class tadnews
 
         $news = $this->get_tad_news($now_nsn);
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $nsnsort = [];
 
         $and_enable = (1 == $this->show_enable) ? "and a.enable='1'" : '';
@@ -1822,24 +1780,19 @@ class tadnews
     public function tad_news_form($nsn = '', $def_ncsn = '', $mode = '')
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
-        $myts = MyTextSanitizer::getInstance();
-        $ver = (int) str_replace('.', '', mb_substr(XOOPS_VERSION, 6, 5));
+        $myts = \MyTextSanitizer::getInstance();
+        $ver = (int) str_replace('.', '', str_replace('XOOPS ', '', XOOPS_VERSION));
         if ($ver >= 259) {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
         } else {
             $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
         }
 
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/formValidator.php';
-        $formValidator = new formValidator('#myForm', false);
-        $formValidator->render('topLeft');
+        $FormValidator = new FormValidator('#myForm', false);
+        $FormValidator->render('topLeft');
 
-        if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-            redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-        }
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-        $sweet_alert = new sweet_alert();
-        $sweet_alert->render('del_page_tab', "post.php?op=del_page_tab&nsn=$nsn&sort=", 'sort');
+        $SweetAlert = new SweetAlert();
+        $SweetAlert->render('del_page_tab', "post.php?op=del_page_tab&nsn=$nsn&sort=", 'sort');
 
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         //取得目前使用者的所屬群組
@@ -1920,25 +1873,21 @@ class tadnews
         //取得分類數
         $cate_num = $this->get_cate_num();
 
-        if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-            redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-        }
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-        $fck = new CKEditor('tadnews', 'news_content', $news_content);
-        $fck->setHeight(350);
-        $editor = $fck->render();
+        $CkEditor = new CkEditor('tadnews', 'news_content', $news_content);
+        $CkEditor->setHeight(350);
+        $editor = $CkEditor->render();
 
         if ($tab_arr) {
             foreach ($tab_arr['tab_content'] as $k => $content) {
-                $ck = new CKEditor('tadnews', "tab_content[$k]", $content);
-                $ck->setHeight(300);
-                $tab_arr['tab_editor'][$k] = $ck->render();
+                $CkEditor = new CkEditor('tadnews', "tab_content[$k]", $content);
+                $CkEditor->setHeight(300);
+                $tab_arr['tab_editor'][$k] = $CkEditor->render();
                 $tab_arr['tab_title'][$k] = $myts->htmlSpecialChars($tab_arr['tab_title'][$k]);
             }
         } else {
-            $ck = new CKEditor('tadnews', 'tab_content[1]', $tab_arr['tab_content'][1]);
-            $ck->setHeight(300);
-            $tab_editor = $ck->render();
+            $CkEditor = new CkEditor('tadnews', 'tab_content[1]', $tab_arr['tab_content'][1]);
+            $CkEditor->setHeight(300);
+            $tab_editor = $CkEditor->render();
         }
 
         $op = (empty($nsn)) ? 'insert_tad_news' : 'update_tad_news';
@@ -1970,7 +1919,7 @@ class tadnews
         }
 
         $now = time();
-        $jquery_path = get_jquery(true);
+        $jquery_path = Utility::get_jquery(true);
 
         $css = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
@@ -2233,7 +2182,7 @@ class tadnews
             $have_read_group = implode(',', $_POST['have_read_group']);
         }
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $ncsn = (int) $_POST['ncsn'];
         $tab_mode = (int) $_POST['tab_mode'];
         $not_news = (int) $_POST['not_news'];
@@ -2380,7 +2329,7 @@ class tadnews
         $setup = ('1' == $not_news and !empty($cate['setup'])) ? $cate['setup'] : 'title=1;tool=0;comm=0;nav=1';
         $sort = $this->get_max_sort($of_ncsn);
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $new_cate = $myts->addSlashes($new_cate);
         if (empty($of_ncsn)) {
             $of_ncsn = 0;
@@ -2475,7 +2424,7 @@ class tadnews
             $have_read_group = implode(',', $_POST['have_read_group']);
         }
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         $ncsn = (int) $_POST['ncsn'];
         $new_cate = $myts->addSlashes($_POST['new_cate']);

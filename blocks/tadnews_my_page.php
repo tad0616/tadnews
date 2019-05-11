@@ -1,5 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
@@ -41,7 +45,7 @@ function tadnews_my_page_edit($options)
     //die($sql);
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $opt = '';
     while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);

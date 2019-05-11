@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
 //區塊主函式 (最新回應)
 function tadnews_b_show_3($options)
@@ -14,7 +17,7 @@ function tadnews_b_show_3($options)
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $block = '';
     $block['width'] = $options[1];
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $i = 0;
     while (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result)) {
         $txt = strip_tags($txt);

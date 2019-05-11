@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 //列出所有tad_news資料（$kind="news","page"）
@@ -41,12 +42,8 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     $cate = $tadnews->get_tad_news_cate($the_ncsn);
     $xoopsTpl->assign('cate', $cate);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_tad_news_cate_func', "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_news_cate_func', "{$page}?op=delete_tad_news_cate&ncsn=", 'ncsn');
 }
 
 //列出所有tad_news_cate資料
@@ -154,7 +151,7 @@ function insert_tad_news_cate()
     }
     $setup = mb_substr($setup, 0, -1);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $of_ncsn = (int) $_POST['of_ncsn'];
     $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];

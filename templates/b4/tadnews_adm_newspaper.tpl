@@ -73,8 +73,6 @@
         </div>
       </div>
 
-
-
       <div class="form-group row">
         <div class="col-sm-5">
           <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
@@ -137,15 +135,6 @@
 
     </form>
   <{elseif $op=="sendmail"}>
-
-    <script>
-      function delete_tad_news_email_func(email){
-        var sure = window.confirm("<{$smarty.const._TADNEWS_SURE_DEL}>");
-        if (!sure)  return;
-        location.href="newspaper.php?op=delete_tad_news_email_npsn&npsn=<{$npsn}>&nps_sn=<{$nps_sn}>&email=" + email;
-      }
-    </script>
-
     <h2><{$smarty.const._MA_TADNEWS_NP_STEP4}></h2>
 
     <div class="alert alert-info">

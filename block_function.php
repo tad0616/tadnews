@@ -1,9 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
-$TadUpFiles = new TadUpFiles('tadnews');
-
 define('_SEPARTE', '<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>');
 define('_SEPARTE2', '--summary--');
 define('_TADNEWS_FILE_DIR', XOOPS_ROOT_PATH . '/uploads/tadnews');

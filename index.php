@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\StarRating;
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -166,7 +168,7 @@ function list_user_sign($uid = '')
     $i = 0;
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         $sign[$i]['nsn'] = $nsn;
@@ -190,11 +192,16 @@ $uid = system_CleanVars($_REQUEST, 'uid', 0, 'int');
 $kind = system_CleanVars($_REQUEST, 'kind', '', 'string');
 $tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
 $show_uid = system_CleanVars($_REQUEST, 'show_uid', 0, 'int');
+$mod_name = system_CleanVars($_REQUEST, 'mod_name', '', 'string');
+$col_name = system_CleanVars($_REQUEST, 'col_name', '', 'string');
+$col_sn = system_CleanVars($_REQUEST, 'col_sn', 0, 'int');
+$rank = system_CleanVars($_REQUEST, 'rank', '', 'string');
 
 switch ($op) {
     //下載檔案
     case 'tufdl':
         $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
+        $TadUpFiles = new TadUpFiles('tadnews');
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
 
@@ -226,6 +233,9 @@ switch ($op) {
         $xoopsTpl->assign('op', $op);
         break;
 
+    case 'save_rating':
+        StarRating::save_rating($mod_name, $col_name, $col_sn, $rank);
+        break;
     default:
 
         //把過期的置頂文徹下

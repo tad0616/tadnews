@@ -1,4 +1,5 @@
 <?php
+xoops_loadLanguage('main', 'tadtools');
 define('_TADNEWS_NAME', '本站消息');
 define('_TADNEWS_ALWAYS_TOP', '置頂文章');
 define('_TADNEWS_TODAY_NEWS', '今日文章');

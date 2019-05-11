@@ -1,5 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\TadUpFiles;
+
 
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
@@ -25,7 +27,7 @@ function month_list($now_date = '')
         $i++;
     }
 
-    $jquery = get_jquery();
+    $jquery = Utility::get_jquery();
     $xoopsTpl->assign('jquery', $jquery);
     $xoopsTpl->assign('opt', $opt);
 }
@@ -60,6 +62,8 @@ $date = mb_substr($date, 0, 7);
 switch ($op) {
     //下載檔案
     case 'tufdl':
+    $TadUpFiles = new TadUpFiles('tadnews');
+
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;
         break;

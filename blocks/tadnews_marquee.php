@@ -1,5 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (跑馬燈區塊)
@@ -29,7 +33,7 @@ function tadnews_marquee($options)
     $block['css'] = empty($options[4]) ? '' : $options[4];
     $block['item_css'] = empty($options[5]) ? '' : $options[5];
     $block['randStr'] = Utility::randStr();
-    $block['jquery'] = get_jquery();
+    $block['jquery'] = Utility::get_jquery();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     $xoTheme->addScript('modules/tadnews/class/jQuery.Marquee/jquery.marquee.min.js');
 

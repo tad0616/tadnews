@@ -1,18 +1,3 @@
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
-
-<script type="text/JavaScript">
-    $(".color").mColorPicker({
-        imageFolder: "<{$xoops_url}>/modules/tadtools/mColorPicker/images/"
-    });
-
-    function delete_tag(tag_sn){
-        var sure = window.confirm('<{$smarty.const._TADNEWS_SURE_DEL}>');
-        if (!sure)	return;
-        location.href="<{$xoops_url}>/modules/tadnews/admin/tag.php?op=del_tag&tag_sn=" + tag_sn;
-    }
-
-</script>
-
 <div class="container-fluid">
     <form action="tag.php" method="post" id="myForm" role="form">
         <table class="table table-striped table-bordered">
@@ -96,7 +81,7 @@
                         <{else}>
                             <a href='tag.php?op=stat&enable=1&tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-success'><{$smarty.const._MA_TADNEWS_TAG_ABLE}></a>
                         <{/if}>
-                        <{if $tag.enable!= '1' and $tag.tag_amount == 0}>
+                        <{if !$tag.enable and $tag.tag_amount == 0}>
                             <a href='javascript:delete_tag(<{$tag.tag_sn}>);' class='btn btn-sm btn-danger'><{$smarty.const._TADNEWS_DEL}></a>
                         <{/if}>
                     </td>

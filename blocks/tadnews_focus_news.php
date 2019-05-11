@@ -1,5 +1,9 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (焦點新聞)
@@ -34,7 +38,7 @@ function tadnews_focus_news_edit($options)
 
     $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
     $option = "<select name='options[0]'>";
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $ncsn, $news_title, $passwd, $start_day, $not_news, $nc_title) = $xoopsDB->fetchRow($result)) {
         $selected = ($options[0] == $nsn) ? 'selected' : '';
         $start_day = mb_substr($start_day, 0, 10);

@@ -1,16 +1,14 @@
 <?php
+use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\Utility;
 
 require_once __DIR__ . '/header.php';
+xoops_loadLanguage('blocks', 'tadnews');
 
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/blocks.php";
-if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php')) {
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
 
-    $FooTable = new FooTable();
-    $FooTableJS = $FooTable->render();
-}
+$FooTable = new FooTable();
+$FooTable->render();
 
 require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $num = system_CleanVars($_REQUEST, 'num', 10, 'int');

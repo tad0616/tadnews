@@ -1,5 +1,7 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\TadUpFiles;
+
 
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
@@ -24,7 +26,7 @@ function list_tad_all_pages($the_ncsn = 0)
 {
     global $xoopsTpl, $xoopsDB, $tadnews;
 
-    get_jquery(true);
+    Utility::get_jquery(true);
     $tadnews->set_news_kind('page');
     $tadnews->set_show_num('none');
     $tadnews->set_view_ncsn($the_ncsn);
@@ -70,7 +72,7 @@ function tabs_sort($ncsn, $nsn)
     $sql = 'select `data_value`,`data_sort` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and `data_name`='tab_title'  order by `data_sort`";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $tab_div = [];
     while (list($data_value, $data_sort) = $xoopsDB->fetchRow($result)) {
         $tab_div[$data_sort] = $data_value;
@@ -78,7 +80,7 @@ function tabs_sort($ncsn, $nsn)
     $xoopsTpl->assign('ncsn', $ncsn);
     $xoopsTpl->assign('nsn', $nsn);
     $xoopsTpl->assign('tab_div', $tab_div);
-    get_jquery(true);
+    Utility::get_jquery(true);
     $tadnews->set_view_nsn($nsn);
     $tadnews->set_news_kind('page');
     $tadnews->set_cover(true, 'db');
@@ -93,11 +95,14 @@ $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 $fsn = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
 $files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
+
 $news_title = '';
 
 switch ($op) {
     //下載檔案
     case 'tufdl':
+$TadUpFiles = new TadUpFiles('tadnews');
+
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;
 
@@ -125,6 +130,7 @@ switch ($op) {
     case 'tabs_sort':
         tabs_sort($ncsn, $nsn);
         break;
+
     default:
         if (!empty($nsn)) {
             show_page($nsn);

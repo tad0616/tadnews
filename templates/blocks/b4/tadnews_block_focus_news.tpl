@@ -1,4 +1,3 @@
-<{$block.syntaxhighlighter_code}>
 <{$block.rating_js}>
 <{$block.del_js}>
 <{foreach item=page from=$block.page}>

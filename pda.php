@@ -1,10 +1,10 @@
 <?php
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
-require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
-require_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/modinfo.php";
-require_once XOOPS_ROOT_PATH . "/modules/system/language/{$xoopsConfig['language']}/blocks.php";
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
 
 /*-----------function區--------------*/
@@ -12,6 +12,10 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
 function list_tadnews($ncsn = '')
 {
     global $xoopsModuleConfig, $tadnews;
+
+    xoops_loadLanguage('blocks', 'tadnews');
+    xoops_loadLanguage('main', 'tadnews');
+    xoops_loadLanguage('modinfo', 'tadnews');
 
     $num = (!empty($_POST['n'])) ? (int) $_POST['n'] : 10;
     $p = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
@@ -437,7 +441,9 @@ function openid_login()
     $TadLoginXoopsModule = $moduleHandler->getByDirname('tad_login');
     if ($TadLoginXoopsModule) {
         require_once XOOPS_ROOT_PATH . '/modules/tad_login/function.php';
-        require_once XOOPS_ROOT_PATH . "/modules/tad_login/language/{$xoopsConfig['language']}/county.php";
+
+        xoops_loadLanguage('county', 'tad_login');
+
         $tad_login['facebook'] = facebook_login('return');
         $tad_login['google'] = google_login('return');
 
@@ -553,6 +559,7 @@ $files_sn = system_CleanVars($_REQUEST, 'files_sn', '', 'int');
 switch ($op) {
     //下載檔案
     case 'tufdl':
+        $TadUpFiles = new TadUpFiles('tadnews');
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;

@@ -1,4 +1,8 @@
 <?php
+use XoopsModules\Tadtools\MColorPicker;
+if (!class_exists('XoopsModules\Tadtools\MColorPicker')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
 //區塊主函式 (自訂頁面列表)
 function tadnews_page_list($options)
@@ -19,7 +23,7 @@ function tadnews_page_list($options)
 
     list($block['ncsn'], $block['of_ncsn'], $block['nc_title']) = $xoopsDB->fetchRow($result);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     //第一層底下的文章
     $sql = 'select nsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
     $result = $xoopsDB->query($sql);
@@ -88,12 +92,8 @@ function tadnews_page_list_edit($options)
     $show_title = 0 != $options[3] ? 'checked' : '';
     $dont_show_title = 0 == $options[3] ? 'checked' : '';
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/mColorPicker.php';
-    $mColorPicker = new mColorPicker('.color');
-    $mColorPicker->render();
+    $MColorPicker = new MColorPicker('.color');
+    $MColorPicker->render();
 
     $form = "
     <ol class='my-form'>

@@ -1,15 +1,14 @@
 <?php
 
+use XoopsModules\Tadtools\Dtree;
+if (!class_exists('XoopsModules\Tadtools\Dtree')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 //區塊主函式 (自訂頁面樹狀目錄)
 function tadnews_page($options)
 {
     global $xoopsDB;
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/dtree.php')) {
-        redirect_header('index.php', 3, _MB_NEED_TADTOOLS);
-    }
-
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/dtree.php';
-
     if (empty($options[0])) {
         $sql = 'SELECT ncsn FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
         $result = $xoopsDB->query($sql);
@@ -28,8 +27,8 @@ function tadnews_page($options)
 
     $page = block_get_page_cate($ncsn);
 
-    $dtree = new dtree("tadnews_mypage_tree{$ncsn}", $home, $page['title'], $page['of_ncsn'], $page['url']);
-    $block = $dtree->render($options[2]);
+    $Dtree = new Dtree("tadnews_mypage_tree{$ncsn}", $home, $page['title'], $page['of_ncsn'], $page['url']);
+    $block = $Dtree->render($options[2]);
 
     return $block;
 }
@@ -98,7 +97,7 @@ if (!function_exists('block_get_page_cate')) {
         $sql = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
         //die($sql);
         $result = $xoopsDB->query($sql);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             //第一層底下的目錄
             if ($the_ncsn != $ncsn) {

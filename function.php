@@ -99,7 +99,7 @@ function preview_newspaper($npsn = '')
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $title = $myts->htmlSpecialChars($title);
     $np['np_title'] = $myts->htmlSpecialChars($np['np_title']);
     $np['np_content'] = $myts->displayTarea($np['np_content'], 1, 1, 1, 1, 0);
@@ -186,7 +186,7 @@ function tad_news_cate_form($ncsn = '')
     $xoopsTpl->assign('cate_op', $cate_op);
     $cate_pic_width = $xoopsModuleConfig['cate_pic_width'] + 10;
     $xoopsTpl->assign('cate_pic_width', $cate_pic_width);
-    $xoopsTpl->assign('jquery', get_jquery(true));
+    $xoopsTpl->assign('jquery', Utility::get_jquery(true));
     $xoopsTpl->assign('cate_select', $cate_select);
     $xoopsTpl->assign('sort', $sort);
     $xoopsTpl->assign('ncsn', $ncsn);
@@ -225,7 +225,7 @@ function update_tad_news_cate($ncsn = '')
     }
     $setup = mb_substr($setup, 0, -1);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $of_ncsn = (int) $_POST['of_ncsn'];
     $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];

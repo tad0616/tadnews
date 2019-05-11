@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\MColorPicker;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
@@ -22,7 +24,7 @@ function list_tad_news_tags($def_tag_sn = '')
         $tagarr[$i]['tag_sn'] = $tag_sn;
         $tagarr[$i]['prefix_tag'] = $tadnews->mk_prefix_tag($tag_sn, 'all');
         $tagarr[$i]['enable'] = $enable;
-        $tagarr[$i]['tag_amount'] = $tag_amount;
+        $tagarr[$i]['tag_amount'] = (int) $tag_amount;
         $tagarr[$i]['tag'] = $tag;
         $tagarr[$i]['font_color'] = $font_color;
         $tagarr[$i]['color'] = $color;
@@ -35,15 +37,18 @@ function list_tad_news_tags($def_tag_sn = '')
 
     $xoopsTpl->assign('tag_sn', $def_tag_sn);
     $xoopsTpl->assign('tagarr', $tagarr);
-    $xoopsTpl->assign('jquery', get_jquery());
+    $xoopsTpl->assign('jquery', Utility::get_jquery());
     $xoopsTpl->assign('tag', $tag);
     $xoopsTpl->assign('font_color', $font_color);
     $xoopsTpl->assign('color', $color);
-    $xoopsTpl->assign('enable', $enable);
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+    $MColorPicker = new MColorPicker('.color');
+    $MColorPicker->render();
 
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tag', "tag.php?op=del_tag&tag_sn=", 'tag_sn');
     return $main;
 }
 

@@ -122,7 +122,7 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
     //     redirect_header("index.php", 3, $error);
     // }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     foreach ($_POST['stories'][$topicid] as $storyid) {
         //找出勾選的內容
@@ -132,7 +132,7 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
         list($storyid, $uid, $title, $published, $expired, $nohtml, $nosmiley, $hometext, $bodytext, $counter, $topicid) = $xoopsDB->fetchRow($result);
         $news_content = $hometext . $bodytext;
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $news_content = $myts->addSlashes($news_content);
         $title = $myts->addSlashes($title);
 

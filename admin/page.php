@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Ztree;
 
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_adm_page.tpl';
@@ -35,13 +36,8 @@ function list_tadnews_cate_tree($def_ncsn = '')
 
     $json = implode(",\n", $data);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php';
-    $ztree = new ztree('page_tree', $json, 'save_drag.php', 'save_cate_sort.php', 'of_ncsn', 'ncsn');
-    $ztree_code = $ztree->render();
-    $xoopsTpl->assign('ztree_code', $ztree_code);
+    $Ztree = new Ztree('page_tree', $json, 'save_drag.php', 'save_cate_sort.php', 'of_ncsn', 'ncsn');
+    $xoopsTpl->assign('ztree_code', $Ztree->render());
 
     return $data;
 }
@@ -114,5 +110,5 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
 $xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
-$xoopsTpl->assign('jquery', get_jquery(true));
+$xoopsTpl->assign('jquery', Utility::get_jquery(true));
 require_once __DIR__ . '/footer.php';

@@ -1,6 +1,5 @@
 <?php
 xoops_loadLanguage('modinfo_common', 'tadtools');
-//Version XXX
 
 define('_MI_TADNEWS_ADMIN_HOME', 'Home');
 define('_MI_TADNEWS_ADMIN_HOME_DESC', 'Back to Home');

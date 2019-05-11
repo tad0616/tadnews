@@ -1,6 +1,12 @@
 <?php
 use XoopsModules\Tadnews\Update;
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+if (!class_exists('XoopsModules\Tadnews\Update')) {
+    include dirname(__DIR__) . '/preloads/autoloader.php';
+}
 
 function xoops_module_update_tadnews(&$module, $old_version)
 {

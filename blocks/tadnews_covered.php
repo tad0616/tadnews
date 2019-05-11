@@ -1,6 +1,10 @@
 <?php
 
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (圖文集區塊)
@@ -11,7 +15,7 @@ function tadnews_covered($options)
     require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
     $tadnews = new tadnews();
 
-    $block['jquery_path'] = get_jquery();
+    $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
 
     $num = $options[0] * $options[1];
