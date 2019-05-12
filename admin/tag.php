@@ -48,7 +48,7 @@ function list_tad_news_tags($def_tag_sn = '')
     $MColorPicker->render();
 
     $SweetAlert = new SweetAlert();
-    $SweetAlert->render('delete_tag', "tag.php?op=del_tag&tag_sn=", 'tag_sn');
+    $SweetAlert->render('delete_tag', 'tag.php?op=del_tag&tag_sn=', 'tag_sn');
     return $main;
 }
 
