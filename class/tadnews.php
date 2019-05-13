@@ -732,7 +732,7 @@ class tadnews
             }
 
             if ($this->use_star_rating) {
-                $StarRating->add_rating(XOOPS_URL . "/modules/tadnews/index.php", 'nsn', $nsn);
+                $StarRating->add_rating(XOOPS_URL . '/modules/tadnews/index.php', 'nsn', $nsn);
             }
 
             $tab_mode = (false !== mb_strpos($news_content, 'Easy-Responsive-Tabs')) ? true : false;

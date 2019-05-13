@@ -69,7 +69,7 @@ class Update
         }
 
         //找出目前所有的樣板檔
-        $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
+        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
@@ -142,7 +142,7 @@ class Update
         $xoopsDB->queryF($sql);
 
         //修改表格
-        $sql = "ALTER TABLE `" . $xoopsDB->prefix('tadnews_files_center') . "`
+        $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tadnews_files_center') . "`
       CHANGE `fsn` `files_sn` SMALLINT( 5 ) UNSIGNED NOT NULL AUTO_INCREMENT,
       CHANGE `nsn` `col_sn` SMALLINT( 5 ) UNSIGNED NOT NULL,
       ADD `col_name` VARCHAR( 255 ) NOT NULL AFTER `files_sn` ,

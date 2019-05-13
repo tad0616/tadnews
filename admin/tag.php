@@ -24,7 +24,7 @@ function list_tad_news_tags($def_tag_sn = '')
         $tagarr[$i]['tag_sn'] = $tag_sn;
         $tagarr[$i]['prefix_tag'] = $tadnews->mk_prefix_tag($tag_sn, 'all');
         $tagarr[$i]['enable'] = $enable;
-        $tagarr[$i]['tag_amount'] = (int) $tag_amount;
+        $tagarr[$i]['tag_amount'] = $tag_amount;
         $tagarr[$i]['tag'] = $tag;
         $tagarr[$i]['font_color'] = $font_color;
         $tagarr[$i]['color'] = $color;
@@ -48,7 +48,7 @@ function list_tad_news_tags($def_tag_sn = '')
     $MColorPicker->render();
 
     $SweetAlert = new SweetAlert();
-    $SweetAlert->render('delete_tag', "tag.php?op=del_tag&tag_sn=", 'tag_sn');
+    $SweetAlert->render('delete_tag', 'tag.php?op=del_tag&tag_sn=', 'tag_sn');
     return $main;
 }
 

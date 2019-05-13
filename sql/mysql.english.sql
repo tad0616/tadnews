@@ -92,7 +92,7 @@ CREATE TABLE `tad_news_sign` (
   `sign_sn` mediumint(8) UNSIGNED NOT NULL auto_increment,
   `nsn` SMALLINT UNSIGNED NOT NULL  default 0,
   `uid` mediumint(8) UNSIGNED NOT NULL  default 0,
-  `sign_time` DATETIME NOT NULL,
+  `sign_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY  (`sign_sn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
