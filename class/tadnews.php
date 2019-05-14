@@ -1781,12 +1781,6 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $myts = \MyTextSanitizer::getInstance();
-        $ver = (int) str_replace('.', '', str_replace('XOOPS ', '', XOOPS_VERSION));
-        if ($ver >= 259) {
-            $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
-        } else {
-            $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
-        }
 
         $FormValidator = new FormValidator('#myForm', false);
         $FormValidator->render('topLeft');
@@ -2048,6 +2042,13 @@ class tadnews
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
         $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+
+        $ver = (int) str_replace('.', '', str_replace('XOOPS ', '', XOOPS_VERSION));
+        if ($ver >= 259) {
+            $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-3.0.0.min.js');
+        } else {
+            $xoTheme->addScript('modules/tadtools/jquery/jquery-migrate-1.4.1.min.js');
+        }
     }
 
     //標籤下拉選單
