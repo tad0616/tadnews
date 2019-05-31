@@ -28,9 +28,7 @@ function chk_news_mod($version)
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
-        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        $token = new \XoopsFormHiddenToken();
-        $XOOPS_TOKEN = $token->render();
+        $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
 
         $main = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
         $main .= "<form action='{$_SERVER['PHP_SELF']}' method='post'>

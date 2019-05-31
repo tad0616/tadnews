@@ -36,7 +36,7 @@ function tadnews_focus_news_edit($options)
 
     $sql = 'select a.nsn,a.ncsn,a.news_title,a.passwd,a.start_day,b.not_news,b.nc_title from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where a.enable='1' and a.start_day < '{$today}' and (a.end_day > '{$today}' or a.end_day='0000-00-00 00:00:00')  order by a.start_day desc";
 
-    $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $option = "<select name='options[0]'>";
     $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $ncsn, $news_title, $passwd, $start_day, $not_news, $nc_title) = $xoopsDB->fetchRow($result)) {

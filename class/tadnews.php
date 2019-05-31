@@ -437,7 +437,7 @@ class tadnews
 
             //找出相關資訊
             $sql2 = 'SELECT ncsn,news_content FROM ' . $xoopsDB->prefix('tad_news') . " WHERE nsn='" . $this->view_nsn . "'";
-            $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+            $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
             list($ncsn, $news_content) = $xoopsDB->fetchRow($result2);
             if ($redirect = $this->only_url($news_content, $this->view_nsn)) {
                 header("location: {$redirect}");
@@ -447,7 +447,7 @@ class tadnews
             $this->set_view_ncsn($ncsn);
 
             $sql2 = 'SELECT not_news,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE ncsn='" . $this->view_ncsn . "'";
-            $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+            $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
             list($not_news, $show_cate_title) = $xoopsDB->fetchRow($result2);
 
             $kind = ($not_news) ? 'page' : 'news';
@@ -476,7 +476,7 @@ class tadnews
 
             //找出相關資訊
             $sql2 = 'select ncsn from ' . $xoopsDB->prefix('tad_news') . " where nsn in($all_nsn)";
-            $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+            $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
             while (list($ncsn) = $xoopsDB->fetchRow($result2)) {
                 $all_ncsn[$ncsn] = $ncsn;
             }
@@ -511,14 +511,6 @@ class tadnews
             } elseif ($this->only_one_ncsn or $this->view_ncsn) {
                 $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
-                // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
-                // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-                // $ncsn_arr[] = $this->view_ncsn;
-                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
-                //     $ncsn_arr[] = $sub_ncsn;
-                // }
-
-                // $where_cate = "and `ncsn` in(" . implode(',', $ncsn_arr) . ")";
                 $where_cate = '';
                 //2016-06-28 避免RSS抓不到部份目錄
             }
@@ -536,7 +528,7 @@ class tadnews
         $ncsn = isset($ncsn) ? $ncsn : '';
         //找指定的分類
         $sql = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where 1 $kind_chk $where_cate order by sort";
-        $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 10, show_error($sql));
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
         $ncsn_ok = $cates = $cate_setup = $only_title_cate = [];
@@ -610,15 +602,6 @@ class tadnews
             } elseif ($this->only_one_ncsn or $this->view_ncsn) {
                 $where_cate = "and `ncsn` = '{$this->view_ncsn}'";
             } else {
-                //找出底下的子分類
-                // $sql2       = "select ncsn from " . $xoopsDB->prefix("tad_news_cate") . " where of_ncsn='" . $this->view_ncsn . "'";
-                // $result2    = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
-                // $ncsn_arr[] = $this->view_ncsn;
-                // while (list($sub_ncsn) = $xoopsDB->fetchRow($result2)) {
-                //     $ncsn_arr[] = $sub_ncsn;
-                // }
-                // $all_ncsn   = implode(',', $ncsn_arr);
-                // $where_cate = empty($all_ncsn) ? "" : "and ncsn in($all_ncsn)";
                 $where_cate = '';
                 //2016-06-28 避免RSS抓不到部份目錄
             }
@@ -802,9 +785,7 @@ class tadnews
             //if(!empty($passwd) and !empty($this->summary_num)){
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-                $token = new \XoopsFormHiddenToken();
-                $XOOPS_TOKEN = $token->render();
+                $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
@@ -1111,7 +1092,7 @@ class tadnews
 
             $sql2 = ('page' === $this->kind) ? 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable order by page_sort" : 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') order by always_top desc , start_day desc limit 0," . $this->show_num;
 
-            $result2 = $xoopsDB->query($sql2) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql2));
+            $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
 
             $j = 0;
             $subnews = [];
@@ -1124,9 +1105,7 @@ class tadnews
                 }
 
                 if (!empty($passwd)) {
-                    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-                    $token = new \XoopsFormHiddenToken();
-                    $XOOPS_TOKEN = $token->render();
+                    $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
@@ -1509,9 +1488,7 @@ class tadnews
         }
 
         if (!empty($have_read_group)) {
-            require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $token = new \XoopsFormHiddenToken();
-            $XOOPS_TOKEN = $token->render();
+            $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
 
             $have_read_group_arr = explode(',', $have_read_group);
 
@@ -1591,7 +1568,7 @@ class tadnews
         }
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
-        $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, show_error($sql));
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $data = $xoopsDB->fetchArray($result);
 
         $news_content = strip_tags($data['news_content']);
@@ -1830,7 +1807,7 @@ class tadnews
         $news_title = (!isset($DBV['news_title'])) ? '' : $DBV['news_title'];
         $news_content = (!isset($DBV['news_content'])) ? '' : $DBV['news_content'];
         $start_day = (!isset($DBV['start_day']) or '0000-00-00 00:00:00' === $DBV['start_day']) ? date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) : $DBV['start_day'];
-        $end_day = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' === $DBV['end_day']) ? '' : $DBV['end_day'];
+        $end_day = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' === $DBV['end_day']) ? null : $DBV['end_day'];
         $enable = (!isset($DBV['enable'])) ? '' : $DBV['enable'];
         $uid = (!isset($DBV['uid'])) ? $xoopsUser->getVar('uid') : $DBV['uid'];
 
@@ -1978,9 +1955,8 @@ class tadnews
 
             $form['tab_arr'] = $tab_arr;
 
-            require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $token = new \XoopsFormHiddenToken();
-            $form['XOOPS_TOKEN'] = $token->render();
+            $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+            $form['XOOPS_TOKEN'] = $XOOPS_TOKEN;
 
             return $form;
         }
@@ -2039,9 +2015,8 @@ class tadnews
         $xoopsTpl->assign('page_upform', $page_upform);
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
-        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
-        $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+        $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+        $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 
         $ver = (int) str_pad(str_replace('.', '', str_replace('XOOPS ', '', XOOPS_VERSION)), 4, 0);
         if ($ver >= 2590) {
@@ -2164,6 +2139,7 @@ class tadnews
     {
         global $xoopsDB, $xoopsUser, $isAdmin;
         $uid = $xoopsUser->uid();
+
         //安全判斷
         if (!$GLOBALS['xoopsSecurity']->check()) {
             $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
