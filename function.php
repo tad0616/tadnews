@@ -195,7 +195,9 @@ function tad_news_cate_form($ncsn = '')
     $xoopsTpl->assign('enable_post_group', $enable_post_group);
     $xoopsTpl->assign('pic', $pic);
     $xoopsTpl->assign('now_op', 'tad_news_cate_form');
-    $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
     $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 }
 

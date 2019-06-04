@@ -785,7 +785,9 @@ class tadnews
             //if(!empty($passwd) and !empty($this->summary_num)){
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+                require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
+            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
+            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
@@ -1105,7 +1107,9 @@ class tadnews
                 }
 
                 if (!empty($passwd)) {
-                    $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+                    require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
+            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
+            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
@@ -1488,7 +1492,9 @@ class tadnews
         }
 
         if (!empty($have_read_group)) {
-            $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+            require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
+            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
+            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
 
             $have_read_group_arr = explode(',', $have_read_group);
 
@@ -1502,13 +1508,13 @@ class tadnews
                     } else {
                         $main = "
                         <form action='index.php' method='post' class='form-horizontal'>
-                        <input type='hidden' name='nsn' value='$nsn'>
-                        <input type='hidden' name='uid' value='$uid'>
-                        $XOOPS_TOKEN
-                        <input type='hidden' name='op' value='have_read'>
-                        <div style='text-align:center;'>
-                        <button type='submit' class='btn btn-primary btn-large'>" . _TADNEWS_I_HAVE_READ . '</button>
-                        </div>
+                            <input type='hidden' name='nsn' value='$nsn'>
+                            <input type='hidden' name='uid' value='$uid'>
+                            $XOOPS_TOKEN
+                            <input type='hidden' name='op' value='have_read'>
+                            <div style='text-align:center;'>
+                            <button type='submit' class='btn btn-primary btn-large'>" . _TADNEWS_I_HAVE_READ . '</button>
+                            </div>
                         </form>';
                     }
 
@@ -1954,8 +1960,9 @@ class tadnews
             $form['page_upform'] = $page_upform;
 
             $form['tab_arr'] = $tab_arr;
-
-            $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+            require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
+            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
+            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
             $form['XOOPS_TOKEN'] = $XOOPS_TOKEN;
 
             return $form;
@@ -2015,7 +2022,9 @@ class tadnews
         $xoopsTpl->assign('page_upform', $page_upform);
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
-        $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+        require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
+            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
+            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
         $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 
         $ver = (int) str_pad(str_replace('.', '', str_replace('XOOPS ', '', XOOPS_VERSION)), 4, 0);

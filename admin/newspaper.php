@@ -125,8 +125,9 @@ function open_newspaper($nps_sn = '')
 
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
-
-    $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
     $hidden .= $XOOPS_TOKEN;
 
     //取得主題資料
@@ -216,8 +217,9 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('opt', $opt);
     $xoopsTpl->assign('opt2', $opt2);
     $xoopsTpl->assign('nps_sn', $nps_sn);
-
-    $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
     $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 }
 
@@ -369,7 +371,9 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('total', sprintf(_MA_TADNEWS_MAIL_LIST, $total));
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
-    $XOOPS_TOKEN = $GLOBALS['xoopsSecurity']->createToken();
+    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
     $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 
     $SweetAlert = new SweetAlert();
