@@ -171,7 +171,7 @@ function tad_news_cate_form($ncsn = '')
     $cate_op = (empty($ncsn)) ? 'insert_tad_news_cate' : 'update_tad_news_cate';
     //$op="replace_tad_news_cate";
 
-    $cate_select = $tadnews->get_tad_news_cate_option(0, 0, $of_ncsn, true, $ncsn, '1', '0');
+    $cate_select = $tadnews->get_tad_news_cate_option(0, 0, $of_ncsn, true, $ncsn, '1', $not_news);
 
     $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 3, true);
     $SelectGroup_name->addOption('', _TADNEWS_ALL_OK, false);
@@ -195,10 +195,9 @@ function tad_news_cate_form($ncsn = '')
     $xoopsTpl->assign('enable_post_group', $enable_post_group);
     $xoopsTpl->assign('pic', $pic);
     $xoopsTpl->assign('now_op', 'tad_news_cate_form');
-    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
-    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
-    $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken();
+    $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
 //更新tad_news_cate某一筆資料

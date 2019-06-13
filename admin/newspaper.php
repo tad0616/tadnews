@@ -125,10 +125,10 @@ function open_newspaper($nps_sn = '')
 
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
-    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
-    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
-    $hidden .= $XOOPS_TOKEN;
+
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken();
+    $hidden .= $token->render();
 
     //取得主題資料
     $set = (empty($nps_sn)) ? ['themes' => null, 'title' => null, 'head' => null, 'foot' => null] : get_newspaper_set($nps_sn);
@@ -217,10 +217,10 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('opt', $opt);
     $xoopsTpl->assign('opt2', $opt2);
     $xoopsTpl->assign('nps_sn', $nps_sn);
-    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
-    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
-    $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
+
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
 //儲存電子報內容
@@ -371,10 +371,9 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('total', sprintf(_MA_TADNEWS_MAIL_LIST, $total));
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
-    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
-    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
-    $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 
     $SweetAlert = new SweetAlert();
     $SweetAlert->render('delete_tad_news_email_func', "newspaper.php?op=delete_tad_news_email_npsn&npsn={$npsn}&nps_sn={$newspaper['nps_sn']}&email=", 'email');
