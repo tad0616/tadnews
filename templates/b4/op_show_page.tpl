@@ -2,7 +2,9 @@
   <p><{$toolbar}></p>
 <{/if}>
 
-<{$breadcrumb}>
+<{if $cate_set_breadcrumbs=='1'}>
+    <{$breadcrumb}>
+<{/if}>
 
 <{$rating_js}>
 <{$del_js}>

@@ -562,17 +562,15 @@ class tadnews
         if ('page' === $this->kind) {
             //die(var_dump($cate_setup[$ncsn]));
             //die(var_dump($set));
-            //title=0;tool=0;comm=0
+            //title=0;tool=0;comm=0;breadcrumbs=1
             if ('return' === $mode) {
-                $main['cate_set_title'] = $set['title'];
-                $main['cate_set_tool'] = $set['tool'];
-                $main['cate_set_comm'] = $set['comm'];
-                $main['cate_set_nav'] = $set['nav'];
+                foreach ($set as $key => $value) {
+                    $main['cate_set_'.$key] = $value;
+                }
             } else {
-                $xoopsTpl->assign('cate_set_title', $set['title']);
-                $xoopsTpl->assign('cate_set_tool', $set['tool']);
-                $xoopsTpl->assign('cate_set_comm', $set['comm']);
-                $xoopsTpl->assign('cate_set_nav', $set['nav']);
+                foreach ($set as $key => $value) {
+                    $xoopsTpl->assign('cate_set_'.$key, $value);
+                }
             }
         } else {
             $only_title = isset($set['only_title']) ? $set['only_title'] : 0;
@@ -2307,7 +2305,7 @@ if($_GET['test']=='1')die($sql);
             $enable_group = $cate['enable_group'];
             $enable_post_group = $cate['enable_post_group'];
         }
-        $setup = ('1' == $not_news and !empty($cate['setup'])) ? $cate['setup'] : 'title=1;tool=0;comm=0;nav=1';
+        $setup = ('1' == $not_news and !empty($cate['setup'])) ? $cate['setup'] : 'title=1;tool=0;comm=0;nav=1;breadcrumbs=1';
         $sort = $this->get_max_sort($of_ncsn);
 
         $myts = \MyTextSanitizer::getInstance();

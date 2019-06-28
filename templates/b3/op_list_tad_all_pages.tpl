@@ -9,6 +9,7 @@
 <{/if}>
 
 <{$breadcrumb}>
+
 <!--TadNews Start-->
 <{foreach item=all_news from=$all_news}>
     <{if $isAdmin or $all_news.ncsn|in_array:$ok_cat}>

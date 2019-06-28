@@ -2,7 +2,9 @@
     <p><{$toolbar}></p>
 <{/if}>
 
-<{$breadcrumb}>
+<{if $cate_set_breadcrumbs=='1'}>
+    <{$breadcrumb}>
+<{/if}>
 
 <h1 style="text-shadow:1px 1px 1px #aaaaaa;">
     <a href="page.php?ncsn=<{$ncsn}>&nsn=<{$nsn}>"><{$page.0.news_title}></a>

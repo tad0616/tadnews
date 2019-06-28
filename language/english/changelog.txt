@@ -1,3 +1,8 @@
+TadNews 4.13 (released from 2019-06-28)
+=========================================================
+1. Fixed the problem that the parent category menu is incorrect when editing the category
+2. Custom page plus hidden path settings
+
 TadNews 4.12 (released from 2019-06-13)
 =========================================================
 1. Fixed the problem of not being able to upload cover art
