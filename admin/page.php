@@ -70,7 +70,7 @@ switch ($op) {
 
     case 'modify_page_cate':
         list_tadnews_cate_tree($ncsn);
-        tad_news_cate_form($ncsn);
+        tad_news_cate_form($ncsn, 1);
         break;
 
     //新增資料

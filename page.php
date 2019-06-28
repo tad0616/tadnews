@@ -1,7 +1,6 @@
 <?php
-use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\TadUpFiles;
-
+use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
@@ -101,7 +100,7 @@ $news_title = '';
 switch ($op) {
     //下載檔案
     case 'tufdl':
-$TadUpFiles = new TadUpFiles('tadnews');
+        $TadUpFiles = new TadUpFiles('tadnews');
 
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;
@@ -119,7 +118,7 @@ $TadUpFiles = new TadUpFiles('tadnews');
         exit;
 
     case 'modify_page_cate':
-        tad_news_cate_form($ncsn);
+        tad_news_cate_form($ncsn, 1);
         break;
     //更新資料
     case 'update_tad_news_cate':

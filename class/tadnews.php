@@ -1357,7 +1357,7 @@ class tadnews
 
         $ok_cat = $this->chk_user_cate_power();
 
-        $and_not_news = (null !== $not_news) ? "and not_news='{$not_news}'" : '';
+        $and_not_news = (null === $not_news or '' === $not_news) ? '' : "and not_news='{$not_news}'";
 
         if ($isAdmin) {
             $left = $level * 10;
@@ -1365,10 +1365,10 @@ class tadnews
 
             $option = ($of_ncsn or !$isAdmin or false === $blank) ? '' : "<option value='0'></option>";
 
-            '' == $option;
+            // '' == $option;
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-
+if($_GET['test']=='1')die($sql);
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
                 if (!in_array($ncsn, $ok_cat)) {

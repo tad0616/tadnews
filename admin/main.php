@@ -69,7 +69,7 @@ switch ($op) {
 
     case 'modify_news_cate':
         list_tadnews_cate_tree($ncsn);
-        tad_news_cate_form($ncsn);
+        tad_news_cate_form($ncsn, 0);
         break;
     //新增資料
     case 'insert_tad_news_cate':
@@ -97,7 +97,7 @@ switch ($op) {
 
     case 'modify_page_cate':
         list_tadnews_cate_tree($ncsn);
-        tad_news_cate_form($ncsn);
+        tad_news_cate_form($ncsn, 0);
         break;
 
     //分類類型互轉

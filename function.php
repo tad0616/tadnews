@@ -129,7 +129,7 @@ function preview_newspaper($npsn = '')
     return $main;
 }
 
-function tad_news_cate_form($ncsn = '')
+function tad_news_cate_form($ncsn = '', $not_news = '0')
 {
     global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $tadnews, $isAdmin;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -158,7 +158,7 @@ function tad_news_cate_form($ncsn = '')
     $sort = (!isset($DBV['sort'])) ? $tadnews->get_max_sort() : $DBV['sort'];
     $enable_group = (!isset($DBV['enable_group'])) ? '' : explode(',', $DBV['enable_group']);
     $enable_post_group = (!isset($DBV['enable_post_group'])) ? '' : explode(',', $DBV['enable_post_group']);
-    $not_news = (!isset($DBV['not_news'])) ? '' : $DBV['not_news'];
+    $not_news = (!isset($DBV['not_news'])) ? $not_news : $DBV['not_news'];
     $cate_pic = (!isset($DBV['cate_pic'])) ? '' : $DBV['cate_pic'];
     $pic = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
     $setup = (!isset($DBV['setup'])) ? '' : $DBV['setup'];
