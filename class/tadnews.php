@@ -402,7 +402,7 @@ class tadnews
         return $today_pic;
     }
 
-    //取得新聞
+    //取得新聞 $mode = 'assign','return','app'
     public function get_news($mode = 'assign', $admin = false)
     {
         global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoTheme;
@@ -565,17 +565,19 @@ class tadnews
             //title=0;tool=0;comm=0;breadcrumbs=1
             if ('return' === $mode) {
                 foreach ($set as $key => $value) {
-                    $main['cate_set_'.$key] = $value;
+                    $main['cate_set_' . $key] = $value;
                 }
+            } elseif ('app' === $mode) {
             } else {
                 foreach ($set as $key => $value) {
-                    $xoopsTpl->assign('cate_set_'.$key, $value);
+                    $xoopsTpl->assign('cate_set_' . $key, $value);
                 }
             }
         } else {
             $only_title = isset($set['only_title']) ? $set['only_title'] : 0;
             if ('return' === $mode) {
                 $main['cate_only_title'] = $only_title;
+            } elseif ('app' === $mode) {
             } else {
                 $xoopsTpl->assign('cate_only_title', $only_title);
             }
@@ -726,8 +728,12 @@ class tadnews
             //製作新聞標題內容，及密碼判斷
             $have_pass = (isset($_SESSION['have_pass'])) ? $_SESSION['have_pass'] : [];
 
-            $file_mode = 'one' === $this->show_mode ? '' : 'small';
-            $tadnews_files = $this->get_news_files($nsn, $file_mode);
+            if ('app' === $mode) {
+                $tadnews_files = $this->get_news_files($nsn, 'app');
+            } else {
+                $file_mode = 'one' === $this->show_mode ? '' : 'small';
+                $tadnews_files = $this->get_news_files($nsn, $file_mode);
+            }
 
             if (isset($only_title_cate[$ncsn]) and !empty($only_title_cate[$ncsn])) {
                 $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
@@ -783,9 +789,9 @@ class tadnews
             //if(!empty($passwd) and !empty($this->summary_num)){
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
-            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
+                require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+                $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
@@ -820,7 +826,7 @@ class tadnews
                 }
             }
 
-            $have_read_chk = $this->have_read_chk($have_read_group, $nsn);
+            $have_read_chk = $this->have_read_chk($have_read_group, $nsn,$mode);
 
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -893,30 +899,39 @@ class tadnews
                 $push = Utility::push_url($this->tadnewsConfig['use_social_tools']);
             }
 
+            if ('app' !== $mode) {
+                $all_news[$i]['facebook_comments'] = $facebook_comments;
+                $all_news[$i]['fun'] = $fun;
+                $all_news[$i]['push'] = $push;
+                $all_news[$i]['show_admin_tool'] = $show_admin_tool;
+                $all_news[$i]['chkbox'] = $chkbox;
+                $all_news[$i]['today_pic'] = $today_pic;
+                $all_news[$i]['link_page'] = $link_page;
+                $all_news[$i]['passwd'] = $passwd;
+                $all_news[$i]['enable_txt'] = $enable_txt;
+                if ($this->use_star_rating) {
+                    $all_news[$i]['star'] = "<div id='rating_nsn_{$nsn}'></div>";
+                } else {
+                    $all_news[$i]['star'] = '';
+                }
+            } else {
+                $all_news[$i]['passwd'] = !empty($passwd) ? true : false;
+            }
             $all_news[$i]['nsn'] = $nsn;
-            $all_news[$i]['facebook_comments'] = $facebook_comments;
-            $all_news[$i]['push'] = $push;
             $all_news[$i]['pic'] = $pic;
-            $all_news[$i]['chkbox'] = $chkbox;
             $all_news[$i]['ncsn'] = $ncsn;
             $all_news[$i]['cate_name'] = $cate_name;
             $all_news[$i]['post_date'] = $post_date;
             $all_news[$i]['prefix_tag'] = $prefix_tag;
             $all_news[$i]['need_sign'] = $need_sign;
-            $all_news[$i]['today_pic'] = $today_pic;
-            $all_news[$i]['link_page'] = $link_page;
             $all_news[$i]['news_title'] = $myts->htmlSpecialChars($news_title);
             $all_news[$i]['uid'] = $uid;
             $all_news[$i]['uid_name'] = $uid_name;
             $all_news[$i]['counter'] = $counter;
             $all_news[$i]['content'] = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-            $all_news[$i]['show_admin_tool'] = $show_admin_tool;
-            $all_news[$i]['passwd'] = $passwd;
             $all_news[$i]['g_txt'] = $g_txt;
             $all_news[$i]['files'] = $tadnews_files;
-            $all_news[$i]['fun'] = $fun;
             $all_news[$i]['enable'] = $enable;
-            $all_news[$i]['enable_txt'] = $enable_txt;
             $all_news[$i]['have_read_chk'] = $have_read_chk;
             $all_news[$i]['back_news_link'] = $back_news_link;
             $all_news[$i]['back_news_title'] = $back_news_title;
@@ -925,12 +940,6 @@ class tadnews
             $all_news[$i]['image_big'] = $image_big;
             $all_news[$i]['image_thumb'] = $image_thumb;
             $all_news[$i]['not_news'] = $not_news_arr[$ncsn];
-
-            if ($this->use_star_rating) {
-                $all_news[$i]['star'] = "<div id='rating_nsn_{$nsn}'></div>";
-            } else {
-                $all_news[$i]['star'] = '';
-            }
 
             $i++;
         }
@@ -957,7 +966,10 @@ class tadnews
             }
 
             return $main;
+        } elseif ('app' === $mode) {
+            return $all_news;
         }
+
         $xoopsTpl->assign('jquery', $jquery);
         $xoopsTpl->assign('page', $all_news);
         $xoopsTpl->assign('show_admin_tool_title', $this->admin_tool);
@@ -1105,9 +1117,9 @@ class tadnews
                 }
 
                 if (!empty($passwd)) {
-                    require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
-            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
+                    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+                    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                    $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
@@ -1366,7 +1378,10 @@ class tadnews
             // '' == $option;
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-if($_GET['test']=='1')die($sql);
+            if ($_GET['test'] == '1') {
+                die($sql);
+            }
+
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
                 if (!in_array($ncsn, $ok_cat)) {
@@ -1476,7 +1491,7 @@ if($_GET['test']=='1')die($sql);
     }
 
     //判斷本文是否該用戶需簽收
-    private function have_read_chk($have_read_group = '', $nsn = '')
+    private function have_read_chk($have_read_group = '', $nsn = '', $mode = "")
     {
         global $xoopsDB, $xoopsUser;
 
@@ -1490,9 +1505,9 @@ if($_GET['test']=='1')die($sql);
         }
 
         if (!empty($have_read_group)) {
-            require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
-            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
+            require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+            $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
 
             $have_read_group_arr = explode(',', $have_read_group);
 
@@ -1502,9 +1517,16 @@ if($_GET['test']=='1')die($sql);
                 if (in_array($gid, $have_read_group_arr)) {
                     $time = $this->chk_sign_status($uid, $nsn);
                     if (!empty($time)) {
-                        $main = "<div class='col-sm-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . '</div>';
+                        if ('app' === $mode) {
+                            $main = sprintf(_TADNEWS_SIGN_OK, $time);
+                        } else {
+                            $main = "<div class='col-sm-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . '</div>';
+                        }
                     } else {
-                        $main = "
+                        if ('app' === $mode) {
+                            $main = false;
+                        } else {
+                            $main = "
                         <form action='index.php' method='post' class='form-horizontal'>
                             <input type='hidden' name='nsn' value='$nsn'>
                             <input type='hidden' name='uid' value='$uid'>
@@ -1514,6 +1536,7 @@ if($_GET['test']=='1')die($sql);
                             <button type='submit' class='btn btn-primary btn-large'>" . _TADNEWS_I_HAVE_READ . '</button>
                             </div>
                         </form>';
+                        }
                     }
 
                     return $main;
@@ -1958,9 +1981,9 @@ if($_GET['test']=='1')die($sql);
             $form['page_upform'] = $page_upform;
 
             $form['tab_arr'] = $tab_arr;
-            require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
-            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
+            require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+            $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
             $form['XOOPS_TOKEN'] = $XOOPS_TOKEN;
 
             return $form;
@@ -2020,9 +2043,9 @@ if($_GET['test']=='1')die($sql);
         $xoopsTpl->assign('page_upform', $page_upform);
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
-        require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-            $XoopsFormHiddenToken=new XoopsFormHiddenToken('XOOPS_TOKEN',360);
-            $XOOPS_TOKEN=$XoopsFormHiddenToken->render();
+        require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+        $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+        $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
         $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 
         Utility::add_migrate();
