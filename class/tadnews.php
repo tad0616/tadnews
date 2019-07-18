@@ -826,7 +826,7 @@ class tadnews
                 }
             }
 
-            $have_read_chk = $this->have_read_chk($have_read_group, $nsn,$mode);
+            $have_read_chk = $this->have_read_chk($have_read_group, $nsn, $mode);
 
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -859,6 +859,7 @@ class tadnews
             } else {
                 $pic = '';
             }
+
             $image_big = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'big', null, true);
             $image_thumb = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'thumb', null, true);
 
@@ -867,6 +868,9 @@ class tadnews
             }
 
             $prefix_tag = $this->mk_prefix_tag($prefix_tag);
+            if ('app' === $mode) {
+                $prefix_tag = strip_tags($prefix_tag);
+            }
 
             $back_news = $back_news_link = $back_news_title = $next_news_link = $next_news_title = $next_news = $push = $facebook_comments = '';
 
@@ -909,6 +913,8 @@ class tadnews
                 $all_news[$i]['link_page'] = $link_page;
                 $all_news[$i]['passwd'] = $passwd;
                 $all_news[$i]['enable_txt'] = $enable_txt;
+                $all_news[$i]['pic'] = $pic;
+
                 if ($this->use_star_rating) {
                     $all_news[$i]['star'] = "<div id='rating_nsn_{$nsn}'></div>";
                 } else {
@@ -918,7 +924,6 @@ class tadnews
                 $all_news[$i]['passwd'] = !empty($passwd) ? true : false;
             }
             $all_news[$i]['nsn'] = $nsn;
-            $all_news[$i]['pic'] = $pic;
             $all_news[$i]['ncsn'] = $ncsn;
             $all_news[$i]['cate_name'] = $cate_name;
             $all_news[$i]['post_date'] = $post_date;

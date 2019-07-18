@@ -54,9 +54,9 @@ function get_cates()
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT ncsn,of_ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
+    $sql = 'SELECT ncsn,of_ncsn,nc_title,sort FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
     $result = $xoopsDB->query($sql);
-    while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+    while (list($ncsn, $of_ncsn, $nc_title, $sort) = $xoopsDB->fetchRow($result)) {
         $cate['ncsn'] = $ncsn;
         $cate['title'] = $nc_title;
         $cate['of_ncsn'] = $of_ncsn;

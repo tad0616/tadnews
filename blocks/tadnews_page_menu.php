@@ -10,7 +10,7 @@ function tadnews_page_menu($options)
     global $xoopsDB, $xoTheme;
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vertical_menu.css');
 
-    if (empty($_GET['ncsn'])) {
+    if (empty($_GET['ncsn']) or strpos($_SERVER['REQUEST_URI'], 'page.php') === false) {
         return;
     }
 
