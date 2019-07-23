@@ -26,7 +26,7 @@ switch ($op) {
 //顯示單一新聞
 function show_news($nsn = '')
 {
-    global $tadnews, $xoopsTpl;
+    global $tadnews;
 
     $tadnews->set_show_enable(0);
     $tadnews->set_view_nsn($nsn);
@@ -38,7 +38,7 @@ function show_news($nsn = '')
 //列出所有tad_news資料
 function list_all_news($ncsn = '', $num = 10)
 {
-    global $tadnews, $xoopsTpl;
+    global $tadnews;
 
     $tadnews->set_show_enable(0);
     $tadnews->set_show_num($num);
@@ -52,7 +52,7 @@ function list_all_news($ncsn = '', $num = 10)
 
 function get_cates()
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsDB;
 
     $sql = 'SELECT ncsn,of_ncsn,nc_title,sort FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
     $result = $xoopsDB->query($sql);
