@@ -43,6 +43,7 @@ function tadnews_tab_news($options)
         $tadnews->set_cover(false);
         $tadnews->set_view_ncsn($ncsn_arr);
         $news = $tadnews->get_news('return');
+        // die(var_dump($news));
         $block['latest_news'] = $news['page'];
     }
 

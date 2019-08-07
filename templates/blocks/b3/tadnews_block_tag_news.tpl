@@ -19,7 +19,7 @@
       <div>
         <{foreach from=$block.latest_news item=news}>
           <div style="padding: 8px;">
-            <{$news.post_date}> <{$news.always_top_pic}> <{$news.prefix_tag}>
+            <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}> <{$news.prefix_tag}>
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
           </div>
         <{/foreach}>
@@ -33,7 +33,7 @@
         <{if $block.all_news.$tag_sn.page}>
           <{foreach from=$block.all_news.$tag_sn.page item=news}>
             <div style="padding: 8px;">
-              <{$news.post_date}> <{$news.always_top_pic}>
+              <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}>
               <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$news.ncsn}>"><{$news.cate_name}></a> /
               <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
             </div>
