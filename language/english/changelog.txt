@@ -1,3 +1,11 @@
+TadNews 4.15 (released from 2019-08-07)
+=========================================================
+1. Fixed the problem that the custom page failed to join the menu function.
+2. Fixed the problem that the custom page menu block example is incorrect.
+3. "All News" in the tab page will not display the problem of the top or today icon
+4. Customize the page list block to add CSS settings
+
+
 TadNews 4.14 (released from 2019-07-23)
 =========================================================
 1. Support "XOOPS Website" App

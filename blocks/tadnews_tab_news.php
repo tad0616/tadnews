@@ -109,11 +109,11 @@ function tadnews_tab_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ADD_ALL_NEWS_TAB . "</lable>
             <div class='my-content'>
-                <input type='radio' name='options[7]'  value='1' " . Utility::chk($options[7], '1') . '>' . _YES . "
-                <input type='radio' name='options[7]'  value='0' " . Utility::chk($options[7], '0', 1) . '>' . _NO . '
+                <input type='radio' name='options[7]'  value='1' " . Utility::chk($options[7], '1') . ">" . _YES . "
+                <input type='radio' name='options[7]'  value='0' " . Utility::chk($options[7], '0', 1) . ">" . _NO . "
             </div>
         </li>
-    </ol>';
+    </ol>";
 
     return $form;
 }

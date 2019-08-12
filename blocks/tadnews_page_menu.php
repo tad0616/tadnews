@@ -82,8 +82,8 @@ function tadnews_page_menu($options)
     $block['show_title'] = $options[1];
     $block['color']      = $options[2];
     $block['bgcolor']    = $options[3];
-    $block['text_css']   = $options[4];
-    $block['bg_css']     = $options[5];
+    $block['bg_css']     = $options[4];
+    $block['text_css']   = $options[5];
     $block['now_nsn']    = (int) $_GET['nsn'];
 
     return $block;
@@ -129,20 +129,20 @@ function tadnews_page_menu_edit($options)
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_PAGE_FONT_CSS . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_BG_CSS . "</lable>
             <div class='my-content'>
                 <textarea class='my-input' name='options[4]'>{$options[4]}</textarea>
                 <span class='my-example'><br>
-                padding: 4px;
+                padding: 4px; border-radius: 5px;
                 </span>
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_PAGE_BG_CSS . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_PAGE_FONT_CSS . "</lable>
             <div class='my-content'>
                 <textarea class='my-input' name='options[5]'>{$options[5]}</textarea>
                 <span class='my-example'><br>
-                font-size: 1.5em;
+                font-size: 1.3em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c; 
                 </span>
             </div>
         </li>

@@ -4,7 +4,7 @@ $modversion = [];
 $language = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADNEWS_NAME;
-$modversion['version'] = 4.14;
+$modversion['version'] = 4.15;
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author'] = 'Tad (tad0616@gmail.com)';
 $modversion['credits'] = 'geek01';
@@ -15,7 +15,7 @@ $modversion['image'] = "images/logo_{$language}.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2019-07-23';
+$modversion['release_date'] = '2019-08-07';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status'] = 'release';
@@ -279,7 +279,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_LIST_DESC;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_page_list';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_page_list.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_page_list_edit';
-$modversion['blocks'][$i]['options'] = '|#9ea200|1|1|#ffffff';
+$modversion['blocks'][$i]['options'] = '|#9ea200|1|1|#ffffff|padding: 4px; border-radius: 5px;|font-size: 1.3em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_tab_news.php';
@@ -301,12 +301,12 @@ $modversion['blocks'][$i]['options'] = '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C9
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_page_menu.php';
-$modversion['blocks'][$i]['name'] = _MI_TADNEWS_PAGE_MENU;
+$modversion['blocks'][$i]['name'] = _MI_TADNEWS_PAGE_MENU.'[hide]';
 $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_MENU_DESC;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_page_menu';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_page_menu.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_page_menu_edit';
-$modversion['blocks'][$i]['options'] = '1|1|#dbff40|#5e6b00|font-size: 1.5em;|padding: 4px;';
+$modversion['blocks'][$i]['options'] = '1|1|#dbff40|#5e6b00|padding: 4px; border-radius: 5px;|font-size: 1.3em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;';
 
 //---偏好設定---//
 $i = 1;
