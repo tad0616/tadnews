@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
@@ -14,15 +15,14 @@ function tadnews_cate_news($options)
 
     $ncsn_arr = explode(',', $options[0]);
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-    $tadnews = new tadnews();
-    $tadnews->set_news_kind('news');
-    $tadnews->set_show_mode('cate');
-    $tadnews->set_show_num($options[1]);
-    $tadnews->set_summary($options[4], $options[5]);
-    $tadnews->set_cover($options[2]);
-    $tadnews->set_view_ncsn($ncsn_arr);
-    $block = $tadnews->get_cate_news('return');
+    $Tadnews = new Tadnews();
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_show_mode('cate');
+    $Tadnews->set_show_num($options[1]);
+    $Tadnews->set_summary($options[4], $options[5]);
+    $Tadnews->set_cover($options[2]);
+    $Tadnews->set_view_ncsn($ncsn_arr);
+    $block = $Tadnews->get_cate_news('return');
     if (empty($block['all_news'])) {
         return;
     }

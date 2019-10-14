@@ -11,21 +11,21 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 //列出某人所有新聞
 function list_tad_my_news()
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $Tadnews;
 
     $uid = $xoopsUser->uid();
-    $tadnews->set_show_enable(0);
-    $tadnews->set_view_uid($uid);
-    $tadnews->set_news_kind($kind);
-    $tadnews->set_summary(0);
-    $tadnews->set_show_mode('list');
-    $tadnews->set_admin_tool(true);
-    $tadnews->set_show_num($xoopsModuleConfig['show_num']);
+    $Tadnews->set_show_enable(0);
+    $Tadnews->set_view_uid($uid);
+    $Tadnews->set_news_kind($kind);
+    $Tadnews->set_summary(0);
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_admin_tool(true);
+    $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
 
     if (!empty($the_ncsn)) {
-        $tadnews->set_view_ncsn($the_ncsn);
+        $Tadnews->set_view_ncsn($the_ncsn);
     }
-    $tadnews->get_news();
+    $Tadnews->get_news();
 
     $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
@@ -50,7 +50,7 @@ switch ($op) {
         break;
     //刪除資料
     case 'delete_tad_news':
-        $tadnews->delete_tad_news($nsn);
+        $Tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
         break;

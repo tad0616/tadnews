@@ -307,7 +307,7 @@
 
                     CKEDITOR.replace(editorId, { height: 300 ,
                     toolbar : 'my' ,
-                    contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap3/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
+                    contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap4/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
                     extraPlugins: 'syntaxhighlight,dialog,oembed,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet',
                     filebrowserBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=file&mod_dir=tadnews',
                     filebrowserImageBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=image&mod_dir=tadnews',

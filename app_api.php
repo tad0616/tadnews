@@ -26,28 +26,28 @@ switch ($op) {
 //顯示單一新聞
 function show_news($nsn = '')
 {
-    global $tadnews;
+    global $Tadnews;
 
-    $tadnews->set_show_enable(0);
-    $tadnews->set_view_nsn($nsn);
-    $tadnews->set_cover(true, 'db');
-    $tadnews->set_summary('full');
-    return $tadnews->get_news('app');
+    $Tadnews->set_show_enable(0);
+    $Tadnews->set_view_nsn($nsn);
+    $Tadnews->set_cover(true, 'db');
+    $Tadnews->set_summary('full');
+    return $Tadnews->get_news('app');
 }
 
 //列出所有tad_news資料
 function list_all_news($ncsn = '', $num = 10)
 {
-    global $tadnews;
+    global $Tadnews;
 
-    $tadnews->set_show_enable(0);
-    $tadnews->set_show_num($num);
-    $tadnews->set_news_kind('news');
+    $Tadnews->set_show_enable(0);
+    $Tadnews->set_show_num($num);
+    $Tadnews->set_news_kind('news');
     if ($ncsn > 0) {
-        $tadnews->set_view_ncsn($ncsn);
+        $Tadnews->set_view_ncsn($ncsn);
     }
-    $tadnews->set_show_mode('list');
-    return $tadnews->get_news('app');
+    $Tadnews->set_show_mode('list');
+    return $Tadnews->get_news('app');
 }
 
 function get_cates()

@@ -1,5 +1,7 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\Utility;
+
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
@@ -15,15 +17,13 @@ function tadnews_focus_news($options)
         return '';
     }
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-
-    $tadnews = new tadnews();
-    $tadnews->set_view_nsn($options[0]);
+    $Tadnews = new Tadnews();
+    $Tadnews->set_view_nsn($options[0]);
     $summary = ('summary' === $options[1]) ? 'page_preak' : 'full';
-    $tadnews->set_summary($summary);
-    $tadnews->set_cover(true, 'db');
-    $tadnews->set_use_star_rating(false);
-    $block = $tadnews->get_news('return');
+    $Tadnews->set_summary($summary);
+    $Tadnews->set_cover(true, 'db');
+    $Tadnews->set_use_star_rating(false);
+    $block = $Tadnews->get_news('return');
 
     return $block;
 }

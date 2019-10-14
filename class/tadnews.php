@@ -1,5 +1,7 @@
 <?php
 
+namespace XoopsModules\Tadnews;
+
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\StarRating;
@@ -119,10 +121,10 @@ $this->enable_tad_news($nsn="");
 
 //刪除tad_news某筆資料資料
 $tadnews=new tadnews();
-$tadnews->delete_tad_news($nsn);
+$Tadnews->delete_tad_news($nsn);
 
  */
-class tadnews
+class Tadnews
 {
     public $kind = 'news'; //news,page,mixed
     public $now;
@@ -790,7 +792,7 @@ class tadnews
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                 require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
                 $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
@@ -1123,7 +1125,7 @@ class tadnews
 
                 if (!empty($passwd)) {
                     require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                    $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                    $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
                     $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
@@ -1511,7 +1513,7 @@ class tadnews
 
         if (!empty($have_read_group)) {
             require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
             $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
 
             $have_read_group_arr = explode(',', $have_read_group);
@@ -1987,7 +1989,7 @@ class tadnews
 
             $form['tab_arr'] = $tab_arr;
             require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
             $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
             $form['XOOPS_TOKEN'] = $XOOPS_TOKEN;
 
@@ -2049,7 +2051,7 @@ class tadnews
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
         require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-        $XoopsFormHiddenToken = new XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+        $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
         $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
         $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 

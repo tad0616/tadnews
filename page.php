@@ -1,6 +1,7 @@
 <?php
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadnews\Tadnews;
 
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
@@ -11,25 +12,25 @@ require XOOPS_ROOT_PATH . '/header.php';
 //顯示單一新聞
 function show_page($nsn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
 
-    $tadnews->set_view_nsn($nsn);
-    $tadnews->set_news_kind('page');
-    $tadnews->set_cover(true, 'db');
-    $tadnews->set_summary('full');
-    $tadnews->get_news();
+    $Tadnews->set_view_nsn($nsn);
+    $Tadnews->set_news_kind('page');
+    $Tadnews->set_cover(true, 'db');
+    $Tadnews->set_summary('full');
+    $Tadnews->get_news();
 }
 
 //列出所有tad_news資料
 function list_tad_all_pages($the_ncsn = 0)
 {
-    global $xoopsTpl, $xoopsDB, $tadnews;
+    global $xoopsTpl, $xoopsDB, $Tadnews;
 
     Utility::get_jquery(true);
-    $tadnews->set_news_kind('page');
-    $tadnews->set_show_num('none');
-    $tadnews->set_view_ncsn($the_ncsn);
-    $tadnews->get_cate_news();
+    $Tadnews->set_news_kind('page');
+    $Tadnews->set_show_num('none');
+    $Tadnews->set_view_ncsn($the_ncsn);
+    $Tadnews->get_cate_news();
 
     $link_cate_sn_arr = [];
     $moduleHandler    = xoops_getHandler('module');
@@ -42,7 +43,7 @@ function list_tad_all_pages($the_ncsn = 0)
         }
     }
     $xoopsTpl->assign('link_cate_sn_arr', $link_cate_sn_arr);
-    $xoopsTpl->assign('ok_cat', $tadnews->chk_user_cate_power('post'));
+    $xoopsTpl->assign('ok_cat', $Tadnews->chk_user_cate_power('post'));
 }
 
 function add_to_menu($ncsn = '')
@@ -66,7 +67,7 @@ function add_to_menu($ncsn = '')
 //頁籤排序
 function tabs_sort($ncsn, $nsn)
 {
-    global $xoopsDB, $xoopsTpl, $tadnews;
+    global $xoopsDB, $xoopsTpl, $Tadnews;
 
     $sql    = 'select `data_value`,`data_sort` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and `data_name`='tab_title'  order by `data_sort`";
     $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -80,11 +81,11 @@ function tabs_sort($ncsn, $nsn)
     $xoopsTpl->assign('nsn', $nsn);
     $xoopsTpl->assign('tab_div', $tab_div);
     Utility::get_jquery(true);
-    $tadnews->set_view_nsn($nsn);
-    $tadnews->set_news_kind('page');
-    $tadnews->set_cover(true, 'db');
-    $tadnews->set_summary('full');
-    $tadnews->get_news();
+    $Tadnews->set_view_nsn($nsn);
+    $Tadnews->set_news_kind('page');
+    $Tadnews->set_cover(true, 'db');
+    $Tadnews->set_summary('full');
+    $Tadnews->get_news();
 }
 
 /*-----------執行動作判斷區----------*/
@@ -107,7 +108,7 @@ switch ($op) {
 
     //刪除資料
     case 'delete_tad_news':
-        $tadnews->delete_tad_news($nsn);
+        $Tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 

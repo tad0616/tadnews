@@ -2,6 +2,7 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadnews\Tadnews;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
 require_once __DIR__ . '/header.php';
@@ -248,7 +249,7 @@ function save_newspaper()
 //【步驟三】編輯電子報
 function edit_newspaper($npsn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $tadnews;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $Tadnews;
     $cates = get_all_news_cate();
     $newspaper = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
@@ -267,7 +268,7 @@ function edit_newspaper($npsn = '')
         while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
             $news_title = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-            $pic = $tadnews->get_news_cover($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
+            $pic = $Tadnews->get_news_cover($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
             if ($pic) {
                 $img = "<img src='$pic' alt='{$news_title}' align='left' style='text-align:left; margin:0px 6px 6px 0px;max-width:300px;'>";
             } else {

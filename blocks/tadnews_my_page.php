@@ -1,9 +1,10 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\Utility;
+
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
-
 
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
@@ -16,14 +17,12 @@ function tadnews_my_page($options)
         return '';
     }
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-
     $nsn_arr = explode(',', $options[0]);
-    $tadnews = new tadnews();
-    $tadnews->set_show_mode('table');
-    $tadnews->set_view_nsn($nsn_arr);
-    $tadnews->set_use_star_rating(false);
-    $block = $tadnews->get_news('return');
+    $Tadnews = new Tadnews();
+    $Tadnews->set_show_mode('table');
+    $Tadnews->set_view_nsn($nsn_arr);
+    $Tadnews->set_use_star_rating(false);
+    $block = $Tadnews->get_news('return');
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 

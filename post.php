@@ -1,6 +1,5 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_post.tpl';
 require_once __DIR__ . '/header.php';
@@ -21,36 +20,35 @@ switch ($op) {
     //新增資料
     case 'insert_tad_news':
         //die(var_export($_REQUEST));
-        $tadnews->insert_tad_news();
+        $Tadnews->insert_tad_news();
         break;
     //輸入表格
     case 'tad_news_form':
-        // $tadnews->set_news_editor($xoopsModuleConfig['editor']);
-        $tadnews->tad_news_form($nsn);
+        // $Tadnews->set_news_editor($xoopsModuleConfig['editor']);
+        $Tadnews->tad_news_form($nsn);
         break;
     //更新資料
     case 'update_tad_news':
-        $tadnews->update_tad_news($nsn);
+        $Tadnews->update_tad_news($nsn);
         break;
     //啟用文章
     case 'enable_news':
-        $tadnews->enable_tad_news($nsn);
+        $Tadnews->enable_tad_news($nsn);
         break;
     //刪除頁籤
     case 'del_page_tab':
-        $tadnews->del_page_tab($nsn, $sort);
+        $Tadnews->del_page_tab($nsn, $sort);
         header("location:post.php?op=tad_news_form&nsn=$nsn");
         exit;
 
     //刪除封面圖
     case 'delete_cover':
-        $tadnews->delete_cover($nsn);
+        $Tadnews->delete_cover($nsn);
         header("location:post.php?op=tad_news_form&nsn=$nsn");
         exit;
 
     default:
-        // $tadnews->set_news_editor($xoopsModuleConfig['editor']);
-        $tadnews->tad_news_form($nsn, $ncsn);
+        $Tadnews->tad_news_form($nsn, $ncsn);
         break;
 }
 

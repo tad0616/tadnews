@@ -81,7 +81,7 @@ if (!function_exists('get_all_news_tag')) {
         global $xoopsDB;
         $sql = 'SELECT tag_sn,tag FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
         $result = $xoopsDB->queryF($sql);
-        $data = '';
+        $data = [];
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
             $data[$tag_sn] = $tag;
         }
@@ -89,6 +89,7 @@ if (!function_exists('get_all_news_tag')) {
         return $data;
     }
 }
+
 //錯誤顯示方式
 if (!function_exists('show_error')) {
     function show_error($sql = '')

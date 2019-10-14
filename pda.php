@@ -1,6 +1,7 @@
 <?php
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadnews\Tadnews;
 
 /*-----------引入檔案區--------------*/
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
@@ -11,7 +12,7 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
 
 function list_tadnews($ncsn = '')
 {
-    global $xoopsModuleConfig, $tadnews;
+    global $xoopsModuleConfig, $Tadnews;
 
     xoops_loadLanguage('blocks', 'tadnews');
     xoops_loadLanguage('main', 'tadnews');
@@ -21,21 +22,21 @@ function list_tadnews($ncsn = '')
     $p = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
     $start = $p * $num;
 
-    $tadnews->set_show_num($num);
-    $tadnews->set_skip_news($start);
-    $tadnews->set_news_kind('news');
-    $tadnews->set_summary($xoopsModuleConfig['summary_lengths']);
+    $Tadnews->set_show_num($num);
+    $Tadnews->set_skip_news($start);
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_summary($xoopsModuleConfig['summary_lengths']);
     if ($ncsn > 0) {
-        $tadnews->set_view_ncsn($ncsn);
-        $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
+        $Tadnews->set_view_ncsn($ncsn);
+        $Tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
         $ncsn_param = "&ncsn={$ncsn}";
     } else {
-        $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
+        $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
-    //$tadnews->set_title_length(20);
-    $tadnews->set_cover(true, 'db');
+    //$Tadnews->set_title_length(20);
+    $Tadnews->set_cover(true, 'db');
 
-    $tnews = $tadnews->get_news('return');
+    $tnews = $Tadnews->get_news('return');
 
     $all_news = '';
 
@@ -65,19 +66,19 @@ function list_tadnews($ncsn = '')
 //顯示單一新聞
 function show_news($nsn = '', $ncsn = '')
 {
-    global $xoopsUser, $xoopsModule, $xoopsModuleConfig, $tadnews;
+    global $xoopsUser, $xoopsModule, $xoopsModuleConfig, $Tadnews;
 
     $module_name = $xoopsModule->getVar('name');
-    $cate = $tadnews->get_tad_news_cate($ncsn);
+    $cate = $Tadnews->get_tad_news_cate($ncsn);
     $navbar_title = (empty($ncsn)) ? (string) ($module_name) : (string) ($cate['nc_title']);
 
-    $tadnews->set_view_nsn($nsn);
-    $tadnews->set_cover(true, 'db');
-    $tadnews->set_summary('full');
+    $Tadnews->set_view_nsn($nsn);
+    $Tadnews->set_cover(true, 'db');
+    $Tadnews->set_summary('full');
     //if($xoopsModuleConfig['use_star_rating']=='1'){
-    //  $tadnews->set_use_star_rating(true);
+    //  $Tadnews->set_use_star_rating(true);
     //}
-    $news = $tadnews->get_news('return');
+    $news = $Tadnews->get_news('return');
 
     $facebook_comments = Utility::facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
 
@@ -129,7 +130,7 @@ function show_news($nsn = '', $ncsn = '')
         </div>
     ";
 
-    //$tadnews->add_counter($nsn);
+    //$Tadnews->add_counter($nsn);
 
     return $main;
 }
@@ -203,18 +204,18 @@ function month_list_m()
 //分月新聞
 function archive_m($date = '')
 {
-    global $tadnews;
+    global $Tadnews;
 
     if (empty($date)) {
         $date = date('Y-m');
     }
 
-    $tadnews->set_news_kind('news');
-    $tadnews->set_show_mode('list');
-    $tadnews->set_show_month($date);
-    $tadnews->set_show_enable(1);
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_show_month($date);
+    $Tadnews->set_show_enable(1);
 
-    $tnews = $tadnews->get_news('return');
+    $tnews = $Tadnews->get_news('return');
 
     $nodata = (empty($tnews['page'])) ? "
         <li class='item-content'>
@@ -310,7 +311,7 @@ function preview_newspaper_m($npsn = '')
 
 function member_m()
 {
-    global $xoopsUser, $xoopsModule, $tadnews;
+    global $xoopsUser, $xoopsModule, $Tadnews;
 
     $main = '';
     if ($xoopsUser) {
@@ -332,7 +333,7 @@ function member_m()
                 </li>
             ';
         }
-        $power = $tadnews->chk_user_cate_power();
+        $power = $Tadnews->chk_user_cate_power();
         if (count($power) > 0) {
             $author = "
                 <div class='list-block'>
@@ -482,9 +483,9 @@ function openid_login()
 //列出某人所有新聞
 function list_tad_my_news_m()
 {
-    global $xoopsModuleConfig, $xoopsUser, $tadnews;
+    global $xoopsModuleConfig, $xoopsUser, $Tadnews;
 
-    $power = $tadnews->chk_user_cate_power();
+    $power = $Tadnews->chk_user_cate_power();
 
     if (empty($power)) {
         header("location: {$_SERVER['PHP_SELF']}");
@@ -496,20 +497,20 @@ function list_tad_my_news_m()
     $start = $p * $num;
 
     $uid = $xoopsUser->uid();
-    $tadnews->set_show_num($num);
-    $tadnews->set_skip_news($start);
-    $tadnews->set_show_enable(0);
-    $tadnews->set_view_uid($uid);
-    $tadnews->set_news_kind($kind);
-    $tadnews->set_summary(0);
-    $tadnews->set_show_mode('list');
-    $tadnews->set_admin_tool(true);
+    $Tadnews->set_show_num($num);
+    $Tadnews->set_skip_news($start);
+    $Tadnews->set_show_enable(0);
+    $Tadnews->set_view_uid($uid);
+    $Tadnews->set_news_kind($kind);
+    $Tadnews->set_summary(0);
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_admin_tool(true);
 
     if (!empty($the_ncsn)) {
-        $tadnews->set_view_ncsn($the_ncsn);
+        $Tadnews->set_view_ncsn($the_ncsn);
     }
 
-    $tnews = $tadnews->get_news('return');
+    $tnews = $Tadnews->get_news('return');
 
     $list = '';
 
@@ -684,7 +685,7 @@ switch ($op) {
         break;
     case 'category':
         $category = list_tadnews($ncsn);
-        $cate = $tadnews->get_tad_news_cate($ncsn);
+        $cate = $Tadnews->get_tad_news_cate($ncsn);
         $main = "
             <!-- Top Navbar-->
             <div class='navbar theme-white color-white'>
@@ -798,7 +799,7 @@ switch ($op) {
         exit;
         break;
     case 'delete_tad_news':
-        $tadnews->delete_tad_news($nsn);
+        $Tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
         break;

@@ -1,14 +1,14 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\Utility;
 
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-$tadnews = new tadnews();
+$Tadnews = new Tadnews();
 require_once __DIR__ . '/block_function.php';
 
 //取得路徑
 function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
 {
-    global $xoopsDB, $tadnews;
+    global $xoopsDB, $Tadnews;
 
     $arr[0]['ncsn'] = '';
     $arr[0]['nc_title'] = "<i class='fa fa-home'></i>";
@@ -33,7 +33,7 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
                         if (!$include_self and $ncsn == $the_ncsn) {
                             break;
                         }
-                        $arr[$ncsn] = $tadnews->get_tad_news_cate($ncsn);
+                        $arr[$ncsn] = $Tadnews->get_tad_news_cate($ncsn);
                         $arr[$ncsn]['sub'] = get_tadnews_sub_cate($ncsn);
                         // die(var_dump(get_tadnews_sub_cate($ncsn)));
                         if ($ncsn == $the_ncsn) {
@@ -131,10 +131,10 @@ function preview_newspaper($npsn = '')
 
 function tad_news_cate_form($ncsn = '', $not_news = '0')
 {
-    global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $tadnews, $isAdmin;
+    global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $Tadnews, $isAdmin;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $ok_cat = $tadnews->chk_user_cate_power('post');
+    $ok_cat = $Tadnews->chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
@@ -144,7 +144,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
 
     //抓取預設值
     if (!empty($ncsn)) {
-        $DBV = $tadnews->get_tad_news_cate($ncsn);
+        $DBV = $Tadnews->get_tad_news_cate($ncsn);
         $xoopsTpl->assign('cate', $DBV);
     } else {
         $DBV = [];
@@ -155,7 +155,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
     $ncsn = (!isset($DBV['ncsn'])) ? $ncsn : $DBV['ncsn'];
     $of_ncsn = (!isset($DBV['of_ncsn'])) ? '' : $DBV['of_ncsn'];
     $nc_title = (!isset($DBV['nc_title'])) ? '' : $DBV['nc_title'];
-    $sort = (!isset($DBV['sort'])) ? $tadnews->get_max_sort() : $DBV['sort'];
+    $sort = (!isset($DBV['sort'])) ? $Tadnews->get_max_sort() : $DBV['sort'];
     $enable_group = (!isset($DBV['enable_group'])) ? '' : explode(',', $DBV['enable_group']);
     $enable_post_group = (!isset($DBV['enable_post_group'])) ? '' : explode(',', $DBV['enable_post_group']);
     $not_news = (!isset($DBV['not_news'])) ? $not_news : $DBV['not_news'];
@@ -171,7 +171,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
     $cate_op = (empty($ncsn)) ? 'insert_tad_news_cate' : 'update_tad_news_cate';
     //$op="replace_tad_news_cate";
 
-    $cate_select = $tadnews->get_tad_news_cate_option(0, 0, $of_ncsn, true, $ncsn, '1', $not_news);
+    $cate_select = $Tadnews->get_tad_news_cate_option(0, 0, $of_ncsn, true, $ncsn, '1', $not_news);
 
     $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 3, true);
     $SelectGroup_name->addOption('', _TADNEWS_ALL_OK, false);
@@ -203,9 +203,9 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
 //更新tad_news_cate某一筆資料
 function update_tad_news_cate($ncsn = '')
 {
-    global $xoopsDB, $xoopsModuleConfig, $tadnews, $isAdmin;
+    global $xoopsDB, $xoopsModuleConfig, $Tadnews, $isAdmin;
 
-    $ok_cat = $tadnews->chk_user_cate_power('post');
+    $ok_cat = $Tadnews->chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 

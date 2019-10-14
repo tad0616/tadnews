@@ -54,7 +54,7 @@ $not_news = system_CleanVars($_REQUEST, 'not_news', 1, 'int');
 switch ($op) {
     //刪除資料
     case 'delete_tad_news':
-        $tadnews->delete_tad_news($nsn);
+        $Tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 

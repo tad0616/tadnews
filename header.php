@@ -28,7 +28,7 @@ if ('1' == $xoopsModuleConfig['use_newspaper']) {
     $interface_menu[_MD_TADNEWS_NEWSPAPER] = 'newspaper.php';
 }
 
-$p = $tadnews->chk_user_cate_power();
+$p = $Tadnews->chk_user_cate_power();
 if (count($p) > 0 and $xoopsUser) {
     $and_ncsn = empty($_REQUEST['ncsn']) ? '' : "?ncsn={$_REQUEST['ncsn']}";
     $interface_menu[_MD_TADNEWS_POST] = "post.php{$and_ncsn}";

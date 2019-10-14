@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (本站最新消息)
@@ -8,19 +9,17 @@ function tadnews_content_block_show($options)
 
     $ncsn_arr = explode(',', $options[7]);
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-
-    $tadnews = new tadnews();
-    $tadnews->set_show_num($options[0]);
-    $tadnews->set_view_ncsn($ncsn_arr);
-    $tadnews->set_show_mode('summary');
-    $tadnews->set_news_kind('news');
-    $tadnews->set_summary($options[1], $options[2]);
-    $tadnews->set_title_length($options[3]);
-    $tadnews->set_cover($options[4], $options[5]);
-    $tadnews->set_skip_news($options[6]);
-    $tadnews->set_use_star_rating(false);
-    $block = $tadnews->get_news('return');
+    $Tadnews = new Tadnews();
+    $Tadnews->set_show_num($options[0]);
+    $Tadnews->set_view_ncsn($ncsn_arr);
+    $Tadnews->set_show_mode('summary');
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_summary($options[1], $options[2]);
+    $Tadnews->set_title_length($options[3]);
+    $Tadnews->set_cover($options[4], $options[5]);
+    $Tadnews->set_skip_news($options[6]);
+    $Tadnews->set_use_star_rating(false);
+    $block = $Tadnews->get_news('return');
     if (empty($block['page'])) {
         return;
     }

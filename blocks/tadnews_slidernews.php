@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\LofSliderNews;
 if (!class_exists('XoopsModules\Tadtools\LofSliderNews')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
@@ -12,18 +13,16 @@ function tadnews_slidernews_show($options)
 
     $ncsn_arr = explode(',', $options[4]);
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
+    $Tadnews = new Tadnews();
 
-    $tadnews = new tadnews();
-
-    $tadnews->set_show_num($options[2]);
-    $tadnews->set_view_ncsn($ncsn_arr);
-    $tadnews->set_show_mode('summary');
-    $tadnews->set_news_kind('news');
-    $tadnews->set_summary($options[3]);
-    $tadnews->set_use_star_rating(false);
-    $tadnews->set_cover(false);
-    $all_news = $tadnews->get_news('return');
+    $Tadnews->set_show_num($options[2]);
+    $Tadnews->set_view_ncsn($ncsn_arr);
+    $Tadnews->set_show_mode('summary');
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_summary($options[3]);
+    $Tadnews->set_use_star_rating(false);
+    $Tadnews->set_cover(false);
+    $all_news = $Tadnews->get_news('return');
 
     if (empty($all_news['page'])) {
         return;

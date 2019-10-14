@@ -12,12 +12,12 @@ require_once __DIR__ . '/admin_function.php';
 $moduleHandler = xoops_getHandler('module');
 $news = $moduleHandler->getByDirname('news');
 if (!empty($news)) {
-    $mid = $news->getVar('mid');
+    $mid_news = $news->getVar('mid');
     $version = $news->getVar('version');
 
     $moduleHandler2 = xoops_getHandler('module');
-    $tadnews = $moduleHandler->getByDirname('tadnews');
-    $tadnews_mid = $tadnews->getVar('mid');
+    $mod_tadnews = $moduleHandler->getByDirname('tadnews');
+    $mid_tadnews = $mod_tadnews->getVar('mid');
 }
 
 //檢查有無安裝新聞區模組
@@ -153,9 +153,9 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
 
 function import_common($storyid = '', $new_nsn = '')
 {
-    global $xoopsDB, $mid, $tadnews_mid;
+    global $xoopsDB, $mid_news, $mid_tadnews;
 
-    $sql = 'update ' . $xoopsDB->prefix('xoopscomments') . " set com_modid='{$tadnews_mid}',com_itemid='{$new_nsn}' where com_modid='{$mid}' and com_itemid='{$storyid}'";
+    $sql = 'update ' . $xoopsDB->prefix('xoopscomments') . " set com_modid='{$mid_tadnews}',com_itemid='{$new_nsn}' where com_modid='{$mid_news}' and com_itemid='{$storyid}'";
     $xoopsDB->query($sql);
 }
 
@@ -169,7 +169,7 @@ switch ($op) {
         import();
         header('location: index.php');
         exit;
-        break;
+
     default:
         chk_news_mod($version);
         break;

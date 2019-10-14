@@ -1,16 +1,16 @@
 <?php
 
+use XoopsModules\Tadnews\Tadnews;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 /*-----------function區--------------*/
 $myts = \MyTextSanitizer::getInstance();
 $ncsn = 0;
 $cate = [];
 if (isset($_GET['ncsn'])) {
     $ncsn = (int) $_GET['ncsn'];
-    $cate = $tadnews->get_tad_news_cate($ncsn);
+    $cate = $Tadnews->get_tad_news_cate($ncsn);
 }
 if (function_exists('mb_http_output')) {
     mb_http_output('pass');
@@ -21,14 +21,14 @@ $tpl = new \XoopsTpl();
 $tpl->xoops_setCaching(2);
 $tpl->xoops_setCacheTime(10);
 if (!$tpl->is_cached('db:tadnews_rss.tpl')) {
-    $tadnews->set_show_num(20);
-    $tadnews->set_view_ncsn($ncsn);
-    $tadnews->set_show_mode('summary');
-    $tadnews->set_news_kind('news');
-    $tadnews->set_summary('page_break');
-    $tadnews->set_use_star_rating(false);
-    $tadnews->set_cover(false);
-    $all_news = $tadnews->get_news('return');
+    $Tadnews->set_show_num(20);
+    $Tadnews->set_view_ncsn($ncsn);
+    $Tadnews->set_show_mode('summary');
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_summary('page_break');
+    $Tadnews->set_use_star_rating(false);
+    $Tadnews->set_cover(false);
+    $all_news = $Tadnews->get_news('return');
 
     $all_news['nc_title'] = empty($ncsn) ? _MD_TADNEWS_ALL_CATE : $cate['nc_title'];
 

@@ -1,7 +1,6 @@
 <?php
-use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\TadUpFiles;
-
+use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
@@ -35,18 +34,18 @@ function month_list($now_date = '')
 //分月新聞
 function archive($date = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
 
     if (empty($date)) {
         $date = date('Y-m');
     }
 
-    //$tadnews->set_show_num($xoopsModuleConfig['show_num']);
-    $tadnews->set_news_kind('news');
-    $tadnews->set_show_mode('list');
-    $tadnews->set_show_month($date);
-    $tadnews->set_show_enable(1);
-    $tadnews->get_news();
+    //$Tadnews->set_show_num($xoopsModuleConfig['show_num']);
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_show_month($date);
+    $Tadnews->set_show_enable(1);
+    $Tadnews->get_news();
     $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign('date_title', $date_title);
@@ -62,7 +61,7 @@ $date = mb_substr($date, 0, 7);
 switch ($op) {
     //下載檔案
     case 'tufdl':
-    $TadUpFiles = new TadUpFiles('tadnews');
+        $TadUpFiles = new TadUpFiles('tadnews');
 
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;

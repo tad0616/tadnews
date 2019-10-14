@@ -12,7 +12,7 @@ require_once __DIR__ . '/admin_function.php';
 //tad_news_tagss編輯表單
 function list_tad_news_tags($def_tag_sn = '')
 {
-    global $xoopsDB, $xoopsTpl, $tadnews;
+    global $xoopsDB, $xoopsTpl, $Tadnews;
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -22,7 +22,7 @@ function list_tad_news_tags($def_tag_sn = '')
         $tag_amount = (int) $tags_used_amount[$tag_sn];
 
         $tagarr[$i]['tag_sn'] = $tag_sn;
-        $tagarr[$i]['prefix_tag'] = $tadnews->mk_prefix_tag($tag_sn, 'all');
+        $tagarr[$i]['prefix_tag'] = $Tadnews->mk_prefix_tag($tag_sn, 'all');
         $tagarr[$i]['enable'] = $enable;
         $tagarr[$i]['tag_amount'] = $tag_amount;
         $tagarr[$i]['tag'] = $tag;

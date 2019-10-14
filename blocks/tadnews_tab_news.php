@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
@@ -15,18 +16,17 @@ function tadnews_tab_news($options)
 
     $ncsn_arr = explode(',', $options[0]);
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-    $tadnews = new tadnews();
-    $tadnews->set_news_kind('news');
-    $tadnews->set_show_mode('cate');
-    $tadnews->set_show_num($options[1]);
-    $tadnews->set_view_ncsn($ncsn_arr);
-    $block = $tadnews->get_cate_news('return');
+    $Tadnews = new Tadnews();
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_show_mode('cate');
+    $Tadnews->set_show_num($options[1]);
+    $Tadnews->set_view_ncsn($ncsn_arr);
+    $block = $Tadnews->get_cate_news('return');
     if (empty($block['all_news'])) {
         return;
     }
 
-    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    // $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     $randStr = Utility::randStr();
     $EasyResponsiveTabs = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
@@ -35,15 +35,14 @@ function tadnews_tab_news($options)
     $block['min_height'] = count($ncsn_arr) * 55;
 
     if ('1' == $options[7]) {
-        $tadnews = new tadnews();
-        $tadnews->set_show_mode('list');
-        $tadnews->set_show_num($options[1]);
-        $tadnews->set_news_kind('news');
-        $tadnews->set_use_star_rating(false);
-        $tadnews->set_cover(false);
-        $tadnews->set_view_ncsn($ncsn_arr);
-        $news = $tadnews->get_news('return');
-        // die(var_dump($news));
+        $Tadnews = new tadnews();
+        $Tadnews->set_show_mode('list');
+        $Tadnews->set_show_num($options[1]);
+        $Tadnews->set_news_kind('news');
+        $Tadnews->set_use_star_rating(false);
+        $Tadnews->set_cover(false);
+        $Tadnews->set_view_ncsn($ncsn_arr);
+        $news = $Tadnews->get_news('return');
         $block['latest_news'] = $news['page'];
     }
 

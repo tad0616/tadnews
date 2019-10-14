@@ -1,6 +1,8 @@
 <?php
 
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadnews\Tadnews;
+
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
@@ -11,9 +13,7 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 function tadnews_covered($options)
 {
     global $xoopsDB, $xoTheme;
-
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-    $tadnews = new tadnews();
+    $Tadnews = new Tadnews();
 
     $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
@@ -30,14 +30,14 @@ function tadnews_covered($options)
     $show_ncsn = isset($options[4]) ? $options[4] : '';
     $ncsn_arr = explode(',', $show_ncsn);
 
-    $tadnews->set_show_num($num);
-    $tadnews->set_view_ncsn($ncsn_arr);
-    $tadnews->set_show_mode('list');
-    $tadnews->set_news_kind('news');
-    $tadnews->set_summary($summary_length);
-    $tadnews->set_cover(true, $cover_css);
-    $tadnews->set_use_star_rating(false);
-    $news = $tadnews->get_news('return');
+    $Tadnews->set_show_num($num);
+    $Tadnews->set_view_ncsn($ncsn_arr);
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_summary($summary_length);
+    $Tadnews->set_cover(true, $cover_css);
+    $Tadnews->set_use_star_rating(false);
+    $news = $Tadnews->get_news('return');
 
     $block = $news;
     $block['num'] = 12 / $options[0];

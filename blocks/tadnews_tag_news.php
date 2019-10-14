@@ -1,7 +1,9 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
+
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
@@ -23,13 +25,12 @@ function tadnews_tag_news($options)
         $tag_sn_arr = explode(',', $options[0]);
     }
 
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
-    $tadnews = new tadnews();
-    $tadnews->set_news_kind('news');
+    $Tadnews = new Tadnews();
+    $Tadnews->set_news_kind('news');
     foreach ($tag_sn_arr as $tag_sn) {
-        $tadnews->set_view_tag($tag_sn);
-        $tadnews->set_show_num($options[1]);
-        $block['all_news'][$tag_sn] = $tadnews->get_news('return');
+        $Tadnews->set_view_tag($tag_sn);
+        $Tadnews->set_show_num($options[1]);
+        $block['all_news'][$tag_sn] = $Tadnews->get_news('return');
         $block['tags'][$tag_sn] = $tags['tags'][$tag_sn];
     }
 
@@ -48,14 +49,14 @@ function tadnews_tag_news($options)
     $block['min_height'] = count($ncsn_arr) * 55;
 
     if ('1' == $options[7]) {
-        $tadnews = new tadnews();
-        $tadnews->set_show_num($options[1]);
-        $tadnews->set_show_mode('list');
-        $tadnews->set_news_kind('news');
-        $tadnews->set_use_star_rating(false);
-        $tadnews->set_cover(false);
-        $tadnews->set_view_tag($tag_sn_arr);
-        $news = $tadnews->get_news('return');
+        $Tadnews = new tadnews();
+        $Tadnews->set_show_num($options[1]);
+        $Tadnews->set_show_mode('list');
+        $Tadnews->set_news_kind('news');
+        $Tadnews->set_use_star_rating(false);
+        $Tadnews->set_cover(false);
+        $Tadnews->set_view_tag($tag_sn_arr);
+        $news = $Tadnews->get_news('return');
         $block['latest_news'] = $news['page'];
     }
 

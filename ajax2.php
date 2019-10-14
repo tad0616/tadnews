@@ -1,9 +1,9 @@
 <?php
+use XoopsModules\Tadnews\Tadnews;
+
 //條列式新聞區塊
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('blocks', 'tadnews');
-
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/class/tadnews.php';
 
 require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $num = system_CleanVars($_REQUEST, 'num', 10, 'int');
@@ -35,34 +35,34 @@ if ($start <= 0) {
 
 //echo "<p>strat:{$start},p:{$p},b:{$b},n:{$n},start_from:{$start_from},num:{$num}</p>";
 
-$tadnews->set_show_num($num);
+$Tadnews->set_show_num($num);
 if ($ncsn) {
-    $tadnews->set_view_ncsn($ncsn);
+    $Tadnews->set_view_ncsn($ncsn);
 } else {
-    $tadnews->set_view_ncsn($ncsn_arr);
+    $Tadnews->set_view_ncsn($ncsn_arr);
 }
 
 if ($tag_sn) {
-    $tadnews->set_view_tag($tag_sn);
+    $Tadnews->set_view_tag($tag_sn);
 }
 
 if ($keyword) {
-    $tadnews->set_keyword($keyword);
+    $Tadnews->set_keyword($keyword);
 }
 
 if ($start_day) {
-    $tadnews->set_start_day($start_day);
+    $Tadnews->set_start_day($start_day);
 }
 
 if ($end_day) {
-    $tadnews->set_end_day($end_day);
+    $Tadnews->set_end_day($end_day);
 }
-$tadnews->set_show_mode('list');
-$tadnews->set_news_kind('news');
-$tadnews->set_summary($summary_length, $summary_css);
-$tadnews->set_title_length($title_length);
-$tadnews->set_cover($show_cover, $cover_css);
-$tadnews->set_skip_news($start);
+$Tadnews->set_show_mode('list');
+$Tadnews->set_news_kind('news');
+$Tadnews->set_summary($summary_length, $summary_css);
+$Tadnews->set_title_length($title_length);
+$Tadnews->set_cover($show_cover, $cover_css);
+$Tadnews->set_skip_news($start);
 
 $block = '';
 
@@ -73,7 +73,7 @@ if ('table' === $display_mode) {
     $block .= "
     <table class='table table-striped'>
       <tbody>";
-    $all_news = $tadnews->get_news('return');
+    $all_news = $Tadnews->get_news('return');
     if (empty($all_news['page'])) {
         die('<tr><td>' . _TADNEWS_EMPTY . '</td></tr>');
     }
@@ -102,7 +102,7 @@ if ('table' === $display_mode) {
       </table>';
 } else {
     $block .= "<ul style='list-style: disc inside;'>";
-    $all_news = $tadnews->get_news('return');
+    $all_news = $Tadnews->get_news('return');
     if (empty($all_news['page'])) {
         die('<li>' . _TADNEWS_EMPTY . '</li>');
     }
