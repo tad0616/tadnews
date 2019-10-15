@@ -751,8 +751,7 @@ class Tadnews
                 $news_content = $this->xlang($news_content);
 
                 $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
-                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>
-" . _TADNEWS_MORE . '</a>';
+                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 12px;'><i class=\"fa fa-file-text-o\"></i>" . _TADNEWS_MORE . '</a>';
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . '</div>';
             } elseif ('page_break' === $this->summary_num) {
@@ -811,15 +810,15 @@ class Tadnews
                     } else {
                         $news_content = '
                         <div>
-                        <div>' . _TADNEWS_NEWS_NEED_PASSWD . "</div>
-                        <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post' style='display:inline'>
-                            <fieldset>
-                            <input type='hidden' name='nsn' value='{$nsn}'>
-                            <input type='password' name='tadnews_passwd'>
-                            $XOOPS_TOKEN
-                            <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . '</button>
-                            </fieldset>
-                        </form>
+                            <div>' . _TADNEWS_NEWS_NEED_PASSWD . "</div>
+                            <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post' style='display:inline'>
+                                <fieldset>
+                                <input type='hidden' name='nsn' value='{$nsn}'>
+                                <input type='password' name='tadnews_passwd'>
+                                $XOOPS_TOKEN
+                                <button type='submit' class='btn btn-primary'>" . _TADNEWS_SUBMIT . '</button>
+                                </fieldset>
+                            </form>
                         </div>';
                     }
                     $tadnews_files = '';
@@ -955,7 +954,7 @@ class Tadnews
         $jquery = Utility::get_jquery($ui);
 
         if ('return' === $mode) {
-            $main['jquery'] = $jquery;
+            // $main['jquery'] = $jquery;
             $main['page'] = $all_news;
             $main['show_admin_tool_title'] = $this->admin_tool;
             $main['show_sort_tool'] = $this->sort_tool;
@@ -1105,7 +1104,7 @@ class Tadnews
                 }
             }
 
-            $pic = (empty($cate_pic)) ? XOOPS_URL . '/modules/tadnews/images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
+            $pic = (empty($cate_pic)) ? XOOPS_URL . '/modules/tadnews/images/no_cover.png' : XOOPS_URL . "/uploads/tadnews/cate/{$cate_pic}";
 
             $and_enable = (1 == $this->show_enable) ? "and enable='1'" : '';
 
@@ -1768,17 +1767,7 @@ class Tadnews
         return $all;
     }
 
-    private function show_error($sql = '')
-    {
-        global $xoopsDB;
-        if (_TAD_NEWS_ERROR_LEVEL == 1) {
-            return $xoopsDB->error() . "<p>$sql</p>";
-        } elseif (_TAD_NEWS_ERROR_LEVEL == 2) {
-            return $xoopsDB->error();
-        } elseif (_TAD_NEWS_ERROR_LEVEL == 3) {
-            return 'sql error';
-        }
-    }
+
 
     /*********************發布************************
      * @param string $nsn
@@ -2169,7 +2158,7 @@ class Tadnews
     //新增資料到tad_news中
     public function insert_tad_news()
     {
-        global $xoopsDB, $xoopsUser, $isAdmin;
+        global $xoopsDB, $xoopsUser, $isAdmin, $xoTheme;
         $uid = $xoopsUser->uid();
 
         //安全判斷
@@ -2212,10 +2201,17 @@ class Tadnews
 
         //若是頁籤模式
         if (1 == $tab_mode) {
-            $tabs_content = "
-            <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
-            <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
-            <div id='PageTab'>";
+            if($xoTheme){
+                $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
+                $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
+                $tabs_content = "
+                <div id='PageTab'>";
+            }else{
+                $tabs_content = "
+                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
+                <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
+                <div id='PageTab'>";
+            }
 
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
@@ -2447,10 +2443,17 @@ class Tadnews
         $news_title = $myts->addSlashes($_POST['news_title']);
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
-            $tabs_content = "
-            <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
-            <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
-            <div id='PageTab'>";
+            if($xoTheme){
+                $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
+                $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
+                $tabs_content = "
+                <div id='PageTab'>";
+            }else{
+                $tabs_content = "
+                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
+                <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
+                <div id='PageTab'>";
+            }
 
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';

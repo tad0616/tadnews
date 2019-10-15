@@ -95,7 +95,7 @@ function tags_used_amount()
 
     $sql = 'SELECT prefix_tag,count(prefix_tag) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY prefix_tag ';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $main = '';
+    $main = [];
     while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;
     }

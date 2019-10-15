@@ -21,15 +21,15 @@ function mk_rss()
     $allItem = '';
     foreach ($all_news['page'] as $news) {
         $allItem .= '
-    <item>
-      <title>' . XoopsLocal::convert_encoding(htmlspecialchars($news['news_title'], ENT_QUOTES)) . '</title>
-      <link>' . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}</link>
-      <description>" . XoopsLocal::convert_encoding(htmlspecialchars($news['content'], ENT_QUOTES)) . '</description>
+        <item>
+            <title>' . XoopsLocal::convert_encoding(htmlspecialchars($news['news_title'], ENT_QUOTES)) . '</title>
+            <link>' . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}</link>
+            <description>" . XoopsLocal::convert_encoding(htmlspecialchars($news['content'], ENT_QUOTES)) . '</description>
 
-      <pubDate>' . formatTimestamp(strtotime($news['post_date']), 'rss') . '</pubDate>
-      <guid>' . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}</guid>
-    </item>
-    ";
+            <pubDate>' . formatTimestamp(strtotime($news['post_date']), 'rss') . '</pubDate>
+            <guid>' . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}</guid>
+        </item>
+        ";
     }
 
     $dimension = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');

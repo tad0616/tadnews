@@ -111,5 +111,5 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
+$xoopsTpl->assign('cate_img_url', XOOPS_URL . '/uploads/tadnews/cate');
 require_once __DIR__ . '/footer.php';

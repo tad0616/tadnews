@@ -104,7 +104,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD `always_top_date` DATETIME NOT NULL';
-        $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, show_error($sql));
+        $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, $sql);
     }
 
     //建立搬移檔案新表格
@@ -157,7 +157,7 @@ class Update
         $xoopsDB->queryF($sql);
 
         $sql = 'SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM ' . $xoopsDB->prefix('tadnews_files_center') . '';
-        $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, show_error($sql));
+        $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, $sql);
         while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
             $kind = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
             $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . mb_substr($description, -4);
@@ -295,7 +295,7 @@ class Update
         $sql = 'SELECT DISTINCT prefix_tag FROM ' . $xoopsDB->prefix('tad_news') . " WHERE `prefix_tag`!=''";
         $result = $xoopsDB->query($sql);
         while (list($prefix_tag) = $xoopsDB->fetchRow($result)) {
-            $arr = '';
+            $arr = [];
             preg_match_all("/color[\s]*=[\s]*'([#a-zA-Z0-9]+)'[\s]*>\[(.*)\]/", $prefix_tag, $arr);
             $color = $arr[1][0];
             $tag = $arr[2][0];

@@ -2,7 +2,6 @@
 use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
-use XoopsModules\Tadnews\Tadnews;
 
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
@@ -137,7 +136,7 @@ function list_sign($nsn = '')
     $news = $Tadnews->get_tad_news($nsn);
 
     $sql = 'select uid,sign_time from ' . $xoopsDB->prefix('tad_news_sign') . " where nsn='$nsn' order by sign_time";
-    $sign = '';
+    $sign = [];
     $i = 0;
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
@@ -165,7 +164,7 @@ function list_user_sign($uid = '')
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $sql = 'select a.nsn,a.sign_time,b.news_title from ' . $xoopsDB->prefix('tad_news_sign') . ' as a left join ' . $xoopsDB->prefix('tad_news') . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
-    $sign = '';
+    $sign = [];
     $i = 0;
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 

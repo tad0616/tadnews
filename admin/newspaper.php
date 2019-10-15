@@ -39,19 +39,19 @@ function newspaper_set_table($sel_nps_sn = '')
     $total = $xoopsDB->getRowsNum($result);
 
     $js = "
-      <script>
-      function delete_tad_newspaper_set(){
-        var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-        if (!sure)        return;
-        location.href=\"{$_SERVER['PHP_SELF']}?op=del_newspaper_set&nps_sn={$sel_nps_sn}\";
-      }
+        <script>
+        function delete_tad_newspaper_set(){
+            var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
+            if (!sure)        return;
+            location.href=\"{$_SERVER['PHP_SELF']}?op=del_newspaper_set&nps_sn={$sel_nps_sn}\";
+        }
 
-      function delete_tad_newspaper(npsn){
-        var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-        if (!sure)        return;
-        location.href=\"{$_SERVER['PHP_SELF']}?op=del_newspaper&npsn=\" + npsn;
-      }
-      </script>";
+        function delete_tad_newspaper(npsn){
+            var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
+            if (!sure)        return;
+            location.href=\"{$_SERVER['PHP_SELF']}?op=del_newspaper&npsn=\" + npsn;
+        }
+        </script>";
 
     //刪除按鈕
     $del_btn = '';
@@ -66,11 +66,11 @@ function newspaper_set_table($sel_nps_sn = '')
     //修改按鈕
     if (!empty($sel_nps_sn)) {
         $edit_btn = "
-    <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=modify&nps_sn={$sel_nps_sn}'\" class='btn btn-info'>" . _MA_TADNEWS_NP_MODIFY . "</button>
+        <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=modify&nps_sn={$sel_nps_sn}'\" class='btn btn-info'>" . _MA_TADNEWS_NP_MODIFY . "</button>
 
-    <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn={$sel_nps_sn}'\" class='btn btn-success'>" . _MA_TADNEWS_NP_EMAIL . "</button>
+        <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn={$sel_nps_sn}'\" class='btn btn-success'>" . _MA_TADNEWS_NP_EMAIL . "</button>
 
-    <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$sel_nps_sn}'\" class='btn btn-warning'>" . _MA_TADNEWS_NP_SELECT . '</button>';
+        <button onClick=\"location.href='{$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$sel_nps_sn}'\" class='btn btn-warning'>" . _MA_TADNEWS_NP_SELECT . '</button>';
     }
 
     $i = 0;
@@ -98,15 +98,15 @@ function newspaper_set_table($sel_nps_sn = '')
 //選擇佈景
 function newspaper_themes($themes = '')
 {
-    if (is_dir(_TADNEWS_NSP_THEMES_PATH)) {
-        if ($dh = opendir(_TADNEWS_NSP_THEMES_PATH)) {
+    if (is_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes')) {
+        if ($dh = opendir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes')) {
             $select = "<select name='themes' id='themes' class='form-control'>";
             while (false !== ($file = readdir($dh))) {
                 if ('.' === $file or '..' === $file) {
                     continue;
                 }
 
-                if (is_dir(_TADNEWS_NSP_THEMES_PATH . '/' . $file)) {
+                if (is_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes/' . $file)) {
                     $selected = ($themes == $file) ? 'selected' : '';
                     $select .= "<option value='$file' $selected>$file</option>";
                 }
@@ -203,7 +203,7 @@ function add_newspaper($nps_sn = '')
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' ORDER BY start_day DESC";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $opt = $opt2 = '';
+    $opt = '';
     while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
@@ -216,7 +216,6 @@ function add_newspaper($nps_sn = '')
     $number = get_max_number($nps_sn);
     $xoopsTpl->assign('newspaper_set_title', $newspaper_set['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, "<input type='text' name='number' id='number' value='{$number}' style='width: 50px;'>"));
     $xoopsTpl->assign('opt', $opt);
-    $xoopsTpl->assign('opt2', $opt2);
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -460,7 +459,7 @@ function newspaper_email($nps_sn = '')
 
     $memail = isset($_GET['memail']) ? htmlspecialchars($_GET['memail']) : '';
 
-    $main = '';
+    $log = [];
     $i = 0;
     while (list($email, $order_date) = $xoopsDB->fetchRow($result)) {
         $email = htmlspecialchars($email);
@@ -472,7 +471,7 @@ function newspaper_email($nps_sn = '')
         $log[$i]['ok'] = $ok;
         $i++;
     }
-    $main .= '';
+
     $xoopsTpl->assign('g2p', $_GET['g2p']);
     $xoopsTpl->assign('no_email', sprintf(_MA_TADNEWS_NO_EMAIL, $nps_sn));
     $xoopsTpl->assign('log', $log);

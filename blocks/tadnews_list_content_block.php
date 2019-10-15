@@ -31,8 +31,8 @@ function tadnews_list_content_block_show($options)
     $block['HTTP_HOST'] = XOOPS_URL;
     $block['ncsn'] = get_all_news_cate($options[7]);
     $block['tag'] = get_all_news_tag();
-    // $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-    // $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
 
     return $block;
 }

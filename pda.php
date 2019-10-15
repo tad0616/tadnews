@@ -44,19 +44,19 @@ function list_tadnews($ncsn = '')
         $content = strip_tags($news['content']);
         $item_image = (empty($news['image_thumb'])) ? '' : "<div class='item-media'><img data-src='{$news['image_thumb']}' class='lazy lazy-fadein'></div>";
         $all_news .= "
-          <li>
-              <a href='pda.php?op=news&nsn={$news['nsn']}{$ncsn_param}' class='item-link item-content'>
-                  {$item_image}
-                  <div class='item-inner'>
-                      <div class='item-title-row'>
-                          <div class='item-title'>{$news['news_title']}</div>
-                          <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
-                      </div>
-                      <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
-                      <div class='item-text'>{$content}</div>
-                  </div>
-              </a>
-          </li>
+            <li>
+                <a href='pda.php?op=news&nsn={$news['nsn']}{$ncsn_param}' class='item-link item-content'>
+                    {$item_image}
+                    <div class='item-inner'>
+                        <div class='item-title-row'>
+                            <div class='item-title'>{$news['news_title']}</div>
+                            <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
+                        </div>
+                        <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
+                        <div class='item-text'>{$content}</div>
+                    </div>
+                </a>
+            </li>
       ";
     }
 
@@ -147,7 +147,7 @@ function get_tad_news_cate_list_m()
         ";
 
     $sql = 'select `ncsn`, `nc_title`, `not_news` from ' . $xoopsDB->prefix('tad_news_cate') . " where `not_news` != '1' order by `sort`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
         $list .= "
@@ -172,7 +172,7 @@ function month_list_m()
 
     $sql = 'SELECT left(a.start_day,7), count(*) FROM ' . $xoopsDB->prefix('tad_news') . ' AS a LEFT JOIN ' . $xoopsDB->prefix('tad_news_cate') . " AS b ON a.ncsn=b.ncsn WHERE a.enable='1' AND b.not_news='0' GROUP BY left(a.start_day,7) ORDER BY a.start_day DESC";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     $count = $xoopsDB->getRowsNum($result);
 
@@ -254,7 +254,7 @@ function list_newspaper_m()
 
     $sql = 'SELECT a.npsn,a.number,b.title,a.np_date FROM ' . $xoopsDB->prefix('tad_news_paper') . ' AS a ,' . $xoopsDB->prefix('tad_news_paper_setup') . " AS b WHERE a.nps_sn=b.nps_sn AND b.status='1' ORDER BY a.np_date DESC";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     $count = $xoopsDB->getRowsNum($result);
 
@@ -296,7 +296,7 @@ function preview_newspaper_m($npsn = '')
 
     $np = get_newspaper($npsn);
     $sql = 'select title,head,foot,themes from ' . $xoopsDB->prefix('tad_news_paper_setup') . " where nps_sn='{$np['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
@@ -516,17 +516,17 @@ function list_tad_my_news_m()
 
     foreach ($tnews['page'] as $news) {
         $list .= "
-          <li>
-              <a href='pda.php?nsn={$news['nsn']}' class='item-link item-content'>
-                  <div class='item-inner'>
-                      <div class='item-title-row'>
-                          <div class='item-title'>{$news['news_title']}</div>
-                          <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
-                      </div>
-                      <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
-                  </div>
-              </a>
-          </li>
+            <li>
+                <a href='pda.php?nsn={$news['nsn']}' class='item-link item-content'>
+                    <div class='item-inner'>
+                        <div class='item-title-row'>
+                            <div class='item-title'>{$news['news_title']}</div>
+                            <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
+                        </div>
+                        <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
+                    </div>
+                </a>
+            </li>
         ";
     }
 

@@ -66,7 +66,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
         $result2 = $xoopsDB->query($sql2);
         list($counter) = $xoopsDB->fetchRow($result2);
 
-        $pic = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
+        $pic = (empty($cate_pic)) ? '../images/no_cover.png' : XOOPS_URL . "/uploads/tadnews/cate/{$cate_pic}";
         $g_txt = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
         $gp_txt = Utility::txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
 
@@ -106,10 +106,10 @@ function mk_thumb($ncsn = '', $col_name = '', $width = 100)
     global $xoopsDB;
     require XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';
 
-    if (file_exists(_TADNEWS_CATE_DIR . "/{$ncsn}.png")) {
-        unlink(_TADNEWS_CATE_DIR . "/{$ncsn}.png");
+    if (file_exists(XOOPS_ROOT_PATH . "/uploads/tadnews/cate/{$ncsn}.png")) {
+        unlink(XOOPS_ROOT_PATH . "/uploads/tadnews/cate/{$ncsn}.png");
     }
-    //die(_TADNEWS_CATE_DIR);
+
     $handle = new upload($_FILES[$col_name]);
     if ($handle->uploaded) {
         $handle->file_new_name_body = $ncsn;
@@ -118,7 +118,7 @@ function mk_thumb($ncsn = '', $col_name = '', $width = 100)
         $handle->image_x = $width;
         $handle->image_ratio_y = true;
         $handle->file_overwrite = true;
-        $handle->process(_TADNEWS_CATE_DIR);
+        $handle->process(XOOPS_ROOT_PATH . '/uploads/tadnews/cate');
         $handle->auto_create_dir = true;
         if ($handle->processed) {
             $handle->clean();

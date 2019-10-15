@@ -18,7 +18,7 @@ function mk_rss()
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where enable='1' and passwd='' and enable_group='' $where_cate and start_day < '{$today}' and (end_day > '{$today}' or end_day='0000-00-00 00:00:00') order by $top_order start_day desc limit 0 , 30";
 
-    $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, $sql);
     $allItem = '';
     while (false !== ($all_news = $xoopsDB->fetchArray($result))) {
         foreach ($all_news as $k => $v) {

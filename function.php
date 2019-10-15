@@ -108,7 +108,7 @@ function preview_newspaper($npsn = '')
     $head = str_replace('{D}', mb_substr($np['np_date'], 0, 10), $head);
     $head = str_replace('{T}', $np['np_title'], $head);
 
-    $filename = _TADNEWS_NSP_THEMES_PATH . "/{$themes}/index.html";
+    $filename = XOOPS_ROOT_PATH . "/uploads/tadnews/themes/{$themes}/index.html";
     // die('filename: ' . $filename);
     $handle = fopen($filename, 'rb');
     $contents = '';
@@ -116,7 +116,7 @@ function preview_newspaper($npsn = '')
         $contents .= fread($handle, 8192);
     }
     fclose($handle);
-    $main = str_replace('{TNP_THEME}', _TADNEWS_NSP_THEMES_URL . "/{$themes}/", $contents);
+    $main = str_replace('{TNP_THEME}', XOOPS_URL . "/uploads/tadnews/themes/{$themes}/", $contents);
     $main = str_replace('{TNP_CSS}', '', $main);
     $main = str_replace('{TNP_TITLE}', $title, $main);
     $char = _CHARSET;
@@ -160,7 +160,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
     $enable_post_group = (!isset($DBV['enable_post_group'])) ? '' : explode(',', $DBV['enable_post_group']);
     $not_news = (!isset($DBV['not_news'])) ? $not_news : $DBV['not_news'];
     $cate_pic = (!isset($DBV['cate_pic'])) ? '' : $DBV['cate_pic'];
-    $pic = (empty($cate_pic)) ? '../images/no_cover.png' : _TADNEWS_CATE_URL . "/{$cate_pic}";
+    $pic = (empty($cate_pic)) ? '../images/no_cover.png' : XOOPS_URL . "/uploads/tadnews/cate/{$cate_pic}";
     $setup = (!isset($DBV['setup'])) ? '' : $DBV['setup'];
     $setup_arr = explode(';', $setup);
     foreach ($setup_arr as $set) {

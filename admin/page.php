@@ -109,6 +109,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
-$xoopsTpl->assign('cate_img_url', _TADNEWS_CATE_URL);
+$xoopsTpl->assign('cate_img_url', XOOPS_URL . '/uploads/tadnews/cate');
 $xoopsTpl->assign('jquery', Utility::get_jquery(true));
 require_once __DIR__ . '/footer.php';
