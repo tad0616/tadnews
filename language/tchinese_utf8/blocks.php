@@ -123,3 +123,4 @@ define('_MB_TADNEWS_BAR_START_DAY', '>=此日的公告');
 define('_MB_TADNEWS_BAR_END_DAY', '<=此日的公告');
 
 define('_MB_TADNEWS_SEARCHBAR', '是否加入新聞篩選工具？');
+define('_MB_TADNEWS_TAB_FONT_SIZE', '頁籤標題文字大小');

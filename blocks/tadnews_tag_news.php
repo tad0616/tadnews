@@ -17,10 +17,8 @@ function tadnews_tag_news($options)
     global $xoTheme;
 
     $tags = block_news_tags();
-    // die(var_export($tags));
     if (empty($options[0])) {
         $tag_sn_arr = array_keys($tags['tags']);
-        // die(var_export($tag_sn_arr));
     } else {
         $tag_sn_arr = explode(',', $options[0]);
     }
@@ -34,8 +32,6 @@ function tadnews_tag_news($options)
         $block['tags'][$tag_sn] = $tags['tags'][$tag_sn];
     }
 
-    // die(var_export($block['all_news'][1]));
-
     if (empty($block['all_news'])) {
         return;
     }
@@ -48,6 +44,8 @@ function tadnews_tag_news($options)
     $block['tag_news_name'] = 'tag_news_' . $randStr;
     $block['min_height'] = count($ncsn_arr) * 55;
 
+    $block['tab_font_size'] = empty($options[8]) ? 16 : (int) $options[8];
+
     if ('1' == $options[7]) {
         $Tadnews = new tadnews();
         $Tadnews->set_show_num($options[1]);
@@ -57,6 +55,7 @@ function tadnews_tag_news($options)
         $Tadnews->set_cover(false);
         $Tadnews->set_view_tag($tag_sn_arr);
         $news = $Tadnews->get_news('return');
+        // Utility::dd($news);
         $block['latest_news'] = $news['page'];
     }
 
@@ -70,6 +69,8 @@ function tadnews_tag_news_edit($options)
 
     $MColorPicker = new MColorPicker('.color');
     $MColorPicker->render();
+
+    $options[8] = empty($options[8]) ? 16 : (int) $options[8];
 
     $form = "
     {$option['js']}
@@ -123,10 +124,16 @@ function tadnews_tag_news_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_ADD_ALL_NEWS_TAB . "</lable>
             <div class='my-content'>
                 <input type='radio' name='options[7]'  value='1' " . Utility::chk($options[7], '1') . '>' . _YES . "
-                <input type='radio' name='options[7]'  value='0' " . Utility::chk($options[7], '0', 1) . '>' . _NO . '
+                <input type='radio' name='options[7]'  value='0' " . Utility::chk($options[7], '0', 1) . '>' . _NO . "
             </div>
         </li>
-    </ol>';
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_TAB_FONT_SIZE . "</lable>
+            <div class='my-content'>
+            <input type='text' class='my-input' name='options[8]' value='{$options[8]}' size=8> px
+            </div>
+        </li>
+    </ol>";
 
     return $form;
 }

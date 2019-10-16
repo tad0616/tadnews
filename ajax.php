@@ -92,7 +92,7 @@ foreach ($show_col as $colname) {
 $block .= "
 <table class='table table-striped footable'>
 <thead>
-  <tr>{$blockTitle}</tr>
+    <tr>{$blockTitle}</tr>
 </thead>
 ";
 $total = 0;

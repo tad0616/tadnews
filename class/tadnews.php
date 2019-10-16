@@ -244,6 +244,14 @@ class Tadnews
     public function set_view_tag($tag_sn = '')
     {
         $this->view_tag = $tag_sn;
+        // if (!is_array($tag_sn) and !empty($tag_sn)) {
+        //     $sql = 'select not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='{$ncsn}'";
+        //     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        //     list($not_news) = $xoopsDB->fetchRow($result);
+        //     if (1 == $not_news) {
+        //         $this->set_news_kind('page');
+        //     }
+        // }
     }
 
     //設定欲觀看文章
@@ -618,11 +626,12 @@ class Tadnews
 
         //假如有指定標籤
         if (!empty($this->view_tag)) {
-            $where_tag = "and prefix_tag='{$this->view_tag}'";
-        } elseif (is_array($this->view_tag)) {
-            $all_tag = implode(',', $this->view_tag);
-            $where_tag = empty($all_tag) ? '' : "and prefix_tag in($all_tag)";
-            //指定觀看某一個分類
+            if (is_array($this->view_tag)) {
+                $all_view_tag = implode("', '", $this->view_tag);
+                $where_tag = "and prefix_tag in('{$all_view_tag}')";
+            } else {
+                $where_tag = "and prefix_tag = '{$this->view_tag}'";
+            }
         } else {
             $where_tag = '';
         }
@@ -703,11 +712,6 @@ class Tadnews
         while (false !== ($news = $xoopsDB->fetchArray($result))) {
             foreach ($news as $k => $v) {
                 $$k = $v;
-            }
-
-            if (!$isAdmin and $uid != $now_uid and '0' == $enable) {
-                die($news_title);
-                continue;
             }
 
             //判斷本文及所屬分類是否允許該用戶之所屬群組觀看
@@ -1274,7 +1278,7 @@ class Tadnews
         global $xoopsUser;
 
         if ($xoopsUser) {
-            $uuid = $xoopsUser->getVar('uid');
+            $uuid = $xoopsUser->uid();
             $isAdmin = $xoopsUser->isAdmin($this->module_id);
         } else {
             $uuid = $isAdmin = '';
@@ -1282,10 +1286,13 @@ class Tadnews
 
         $btn_xs = 4 == $_SESSION['bootstrap'] ? 'btn-sm' : 'btn-xs';
 
+        $this->TadDataCenter->set_col('nsn', $nsn);
+        $tab_arr = $this->TadDataCenter->getData();
+        $tab_sort_btn = !empty($tab_arr) ? "<a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-sort'></i> " . _TADNEWS_TABS_SORT . '</a>' : '';
+
         $edit_cate = '';
         if (!empty($ncsn)) {
-            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>
-            <a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-sort'></i> " . _TADNEWS_TABS_SORT . '</a>' : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . '</a>';
+            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . '</a>';
         }
 
         $signbtn = '';
@@ -1504,7 +1511,7 @@ class Tadnews
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
             $User_Groups = $xoopsUser->getGroups();
-            $uid = $xoopsUser->getVar('uid');
+            $uid = $xoopsUser->uid();
         } else {
             //未登入者什麼也不秀出來
             return;
@@ -1571,7 +1578,7 @@ class Tadnews
 
         //取得目前使用者的所屬群組
         if ($xoopsUser) {
-            $reader_uid = $xoopsUser->getVar('uid');
+            $reader_uid = $xoopsUser->uid();
         } else {
             $reader_uid = '';
         }
@@ -1618,7 +1625,7 @@ class Tadnews
             }
 
             $isAdmin = $xoopsUser->isAdmin($this->module_id);
-            $uid = $xoopsUser->getVar('uid');
+            $uid = $xoopsUser->uid();
             if (!$isAdmin and $uid != $data['uid']) {
                 redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
             }
@@ -1767,8 +1774,6 @@ class Tadnews
         return $all;
     }
 
-
-
     /*********************發布************************
      * @param string $nsn
      * @param string $def_ncsn
@@ -1832,7 +1837,7 @@ class Tadnews
         $start_day = (!isset($DBV['start_day']) or '0000-00-00 00:00:00' === $DBV['start_day']) ? date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) : $DBV['start_day'];
         $end_day = (!isset($DBV['end_day']) or '0000-00-00 00:00:00' === $DBV['end_day']) ? null : $DBV['end_day'];
         $enable = (!isset($DBV['enable'])) ? '' : $DBV['enable'];
-        $uid = (!isset($DBV['uid'])) ? $xoopsUser->getVar('uid') : $DBV['uid'];
+        $uid = (!isset($DBV['uid'])) ? $xoopsUser->uid() : $DBV['uid'];
 
         $passwd = (!isset($DBV['passwd'])) ? '' : $DBV['passwd'];
         $enable_group = (!isset($DBV['enable_group'])) ? '' : explode(',', $DBV['enable_group']);
@@ -2201,12 +2206,12 @@ class Tadnews
 
         //若是頁籤模式
         if (1 == $tab_mode) {
-            if($xoTheme){
+            if ($xoTheme) {
                 $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
                 $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
                 $tabs_content = "
                 <div id='PageTab'>";
-            }else{
+            } else {
                 $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
@@ -2406,8 +2411,8 @@ class Tadnews
     //更新tad_news某一筆資料
     public function update_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser;
-        $uid = $xoopsUser->getVar('uid');
+        global $xoopsDB, $xoopsUser,$isAdmin;
+        $uid = $xoopsUser->uid();
 
         //確認有管理員或本人才能管理
         $news = $this->get_tad_news($nsn);
@@ -2443,12 +2448,12 @@ class Tadnews
         $news_title = $myts->addSlashes($_POST['news_title']);
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
-            if($xoTheme){
+            if ($xoTheme) {
                 $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
                 $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
                 $tabs_content = "
                 <div id='PageTab'>";
-            }else{
+            } else {
                 $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
@@ -2494,13 +2499,12 @@ class Tadnews
             $news_content = $myts->addSlashes($_POST['news_content']);
         }
 
-        $always_top = (empty($_POST['always_top'])) ? '0' : '1';
+        $always_top = (int) $_POST['always_top'];
 
-        if (empty($_POST['end_day'])) {
-            $_POST['end_day'] = '0000-00-00 00:00:00';
-        }
+        $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $myts->addSlashes($_POST['end_day']);
 
-        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$_POST['end_day']}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}',prefix_tag='{$_POST['prefix_tag']}',always_top='{$always_top}',always_top_date='{$_POST['always_top_date']}',have_read_group='{$have_read_group}' where nsn='$nsn'";
+        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}' where nsn='$nsn'";
+
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         if (1 == $_POST['tab_mode']) {
@@ -2531,7 +2535,7 @@ class Tadnews
     public function enable_tad_news($nsn = '')
     {
         global $xoopsDB, $xoopsUser;
-        $uid = $xoopsUser->getVar('uid');
+        $uid = $xoopsUser->uid();
 
         //確認有管理員或本人才能管理
         $news = $this->get_tad_news($nsn);
@@ -2561,7 +2565,7 @@ class Tadnews
             return true;
         }
 
-        $uid = $xoopsUser->getVar('uid');
+        $uid = $xoopsUser->uid();
         if ($uid == $author_id) {
             return true;
         }

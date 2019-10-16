@@ -1,3 +1,14 @@
+TadNews 4.16 (released from 2019-10-15)
+=========================================================
+1. Fixed the problem that the tab menu in the block search column could not be used.
+2. Streamlined block templates
+3. Fix some functions that will go wrong in PHP7.1
+4. Change the tadnews object to Tadnews and load it automatically
+5. Tabs News Blocks Add Tabs Text Size Settings
+6. Fix the problem that the label "All Messages" setting does not work properly.
+7. The page has a tab to appear the tab sort button
+
+
 TadNews 4.15 (released from 2019-08-07)
 =========================================================
 1. Fixed the problem that the custom page failed to join the menu function.

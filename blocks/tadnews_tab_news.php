@@ -33,6 +33,7 @@ function tadnews_tab_news($options)
     $EasyResponsiveTabs->rander();
     $block['tab_news_name'] = 'tab_news_' . $randStr;
     $block['min_height'] = count($ncsn_arr) * 55;
+    $block['tab_font_size'] = empty($options[8]) ? 16 : (int) $options[8];
 
     if ('1' == $options[7]) {
         $Tadnews = new tadnews();
@@ -56,6 +57,8 @@ function tadnews_tab_news_edit($options)
 
     $MColorPicker = new MColorPicker('.color');
     $MColorPicker->render();
+
+    $options[8] = empty($options[8]) ? 16 : (int) $options[8];
 
     $form = "
     {$option['js']}
@@ -110,6 +113,12 @@ function tadnews_tab_news_edit($options)
             <div class='my-content'>
                 <input type='radio' name='options[7]'  value='1' " . Utility::chk($options[7], '1') . ">" . _YES . "
                 <input type='radio' name='options[7]'  value='0' " . Utility::chk($options[7], '0', 1) . ">" . _NO . "
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_TAB_FONT_SIZE . "</lable>
+            <div class='my-content'>
+            <input type='text' class='my-input' name='options[8]' value='{$options[8]}' size=8> px
             </div>
         </li>
     </ol>";

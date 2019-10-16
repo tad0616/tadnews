@@ -99,15 +99,15 @@ if ('table' === $display_mode) {
         </tbody>
     </table>';
 } else {
-    $block .= "<ul style='list-style: disc inside;'>";
+    $block .= "<ul>";
     $all_news = $Tadnews->get_news('return');
     if (empty($all_news['page'])) {
         die('<li>' . _TADNEWS_EMPTY . '</li>');
     }
     foreach ($all_news['page'] as $news) {
-        $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}' style='margin:3px;'>" : '';
+        $need_sign = $news['need_sign'] ? "<img src='{$news['need_sign']}' align='absmiddle' alt='{$news['news_title']}'>" : '';
         $block .= "
-        <li style='margin:6px 0px;'>
+        <li>
             {$news['post_date']}
             {$news['pic']}
             {$news['prefix_tag']}

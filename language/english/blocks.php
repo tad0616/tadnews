@@ -114,3 +114,4 @@ define('_MB_TADNEWS_BAR_START_DAY', 'News >= this date');
 define('_MB_TADNEWS_BAR_END_DAY', 'News <= this date');
 
 define('_MB_TADNEWS_SEARCHBAR', 'Do you join a news search tool?');
+define('_MB_TADNEWS_TAB_FONT_SIZE', 'Tab title size');
