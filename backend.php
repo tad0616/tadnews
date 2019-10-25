@@ -9,7 +9,7 @@ function mk_rss()
     global $xoopsDB, $xoopsConfig;
     xoops_load('XoopsLocal');
 
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
     $Tadnews->set_show_num(20);
     $Tadnews->set_show_mode('summary');
     $Tadnews->set_news_kind('news');

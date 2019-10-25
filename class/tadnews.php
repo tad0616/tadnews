@@ -120,12 +120,13 @@ $this->update_tad_news($nsn="");
 $this->enable_tad_news($nsn="");
 
 //刪除tad_news某筆資料資料
-$tadnews=new tadnews();
+$tadnews=Tadnews::getInstance();
 $Tadnews->delete_tad_news($nsn);
 
  */
 class Tadnews
 {
+    private static $_instance;
     public $kind = 'news'; //news,page,mixed
     public $now;
     public $today;
@@ -165,7 +166,7 @@ class Tadnews
     public $end_day = '';
 
     //建構函數
-    public function __construct()
+    private function __construct()
     {
         global $xoopsConfig;
 
@@ -185,6 +186,20 @@ class Tadnews
         }
         $this->TadUpFiles = new TadUpFiles('tadnews');
         $this->TadDataCenter = new TadDataCenter('tadnews');
+    }
+
+    //覆蓋__clone()方法，禁止克隆
+    private function __clone()
+    {
+    }
+
+    public static function getInstance()
+    {
+        if (!(self::$_instance instanceof self)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+
     }
 
     //是否僅秀出單一分類下的文章
@@ -2411,7 +2426,7 @@ class Tadnews
     //更新tad_news某一筆資料
     public function update_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser,$isAdmin;
+        global $xoopsDB, $xoopsUser, $isAdmin;
         $uid = $xoopsUser->uid();
 
         //確認有管理員或本人才能管理

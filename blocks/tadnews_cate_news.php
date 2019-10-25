@@ -15,7 +15,7 @@ function tadnews_cate_news($options)
 
     $ncsn_arr = explode(',', $options[0]);
 
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
     $Tadnews->set_news_kind('news');
     $Tadnews->set_show_mode('cate');
     $Tadnews->set_show_num($options[1]);

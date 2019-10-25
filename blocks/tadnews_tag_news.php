@@ -23,7 +23,7 @@ function tadnews_tag_news($options)
         $tag_sn_arr = explode(',', $options[0]);
     }
 
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
     $Tadnews->set_news_kind('news');
     foreach ($tag_sn_arr as $tag_sn) {
         $Tadnews->set_view_tag($tag_sn);
@@ -47,7 +47,7 @@ function tadnews_tag_news($options)
     $block['tab_font_size'] = empty($options[8]) ? 16 : (int) $options[8];
 
     if ('1' == $options[7]) {
-        $Tadnews = new tadnews();
+        $Tadnews = Tadnews::getInstance();
         $Tadnews->set_show_num($options[1]);
         $Tadnews->set_show_mode('list');
         $Tadnews->set_news_kind('news');

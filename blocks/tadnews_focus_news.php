@@ -17,7 +17,7 @@ function tadnews_focus_news($options)
         return '';
     }
 
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
     $Tadnews->set_view_nsn($options[0]);
     $summary = ('summary' === $options[1]) ? 'page_preak' : 'full';
     $Tadnews->set_summary($summary);

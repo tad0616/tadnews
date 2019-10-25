@@ -9,7 +9,7 @@ function tadnews_content_block_show($options)
 
     $ncsn_arr = explode(',', $options[7]);
 
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
     $Tadnews->set_show_num($options[0]);
     $Tadnews->set_view_ncsn($ncsn_arr);
     $Tadnews->set_show_mode('summary');

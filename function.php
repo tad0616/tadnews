@@ -2,7 +2,7 @@
 use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\Utility;
 
-$Tadnews = new Tadnews();
+$Tadnews = Tadnews::getInstance();
 require_once __DIR__ . '/block_function.php';
 
 //取得路徑

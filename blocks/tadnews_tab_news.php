@@ -16,7 +16,7 @@ function tadnews_tab_news($options)
 
     $ncsn_arr = explode(',', $options[0]);
 
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
     $Tadnews->set_news_kind('news');
     $Tadnews->set_show_mode('cate');
     $Tadnews->set_show_num($options[1]);
@@ -36,9 +36,9 @@ function tadnews_tab_news($options)
     $block['tab_font_size'] = empty($options[8]) ? 16 : (int) $options[8];
 
     if ('1' == $options[7]) {
-        $Tadnews = new tadnews();
-        $Tadnews->set_show_mode('list');
+        $Tadnews = Tadnews::getInstance();
         $Tadnews->set_show_num($options[1]);
+        $Tadnews->set_show_mode('list');
         $Tadnews->set_news_kind('news');
         $Tadnews->set_use_star_rating(false);
         $Tadnews->set_cover(false);

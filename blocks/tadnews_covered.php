@@ -13,7 +13,7 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 function tadnews_covered($options)
 {
     global $xoopsDB, $xoTheme;
-    $Tadnews = new Tadnews();
+    $Tadnews = Tadnews::getInstance();
 
     $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
