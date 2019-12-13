@@ -2221,17 +2221,17 @@ class Tadnews
 
         //若是頁籤模式
         if (1 == $tab_mode) {
-            if ($xoTheme) {
-                $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
-                $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
-                $tabs_content = "
-                <div id='PageTab'>";
-            } else {
+            // if ($xoTheme) {
+            //     $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
+            //     $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
+            //     $tabs_content = "
+            //     <div id='PageTab'>";
+            // } else {
                 $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
                 <div id='PageTab'>";
-            }
+            // }
 
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
@@ -2463,17 +2463,17 @@ class Tadnews
         $news_title = $myts->addSlashes($_POST['news_title']);
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
-            if ($xoTheme) {
-                $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
-                $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
-                $tabs_content = "
-                <div id='PageTab'>";
-            } else {
+            // if ($xoTheme) {
+            //     $xoTheme->addStylesheet('modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css');
+            //     $xoTheme->addScript("modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
+            //     $tabs_content = "
+            //     <div id='PageTab'>";
+            // } else {
                 $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
                 <div id='PageTab'>";
-            }
+            // }
 
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
