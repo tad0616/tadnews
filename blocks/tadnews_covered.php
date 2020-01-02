@@ -1,7 +1,10 @@
 <?php
 
-use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadnews\Tadnews;
+if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
+use XoopsModules\Tadtools\Utility;
 
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';

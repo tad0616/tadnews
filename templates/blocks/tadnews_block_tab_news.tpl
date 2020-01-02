@@ -1,7 +1,4 @@
 <style type="text/css" media="screen">
-    #<{$block.tab_news_name}> .resp-tabs-container{
-        min-height: <{$block.min_height}>px;
-    }
 
     #<{$block.tab_news_name}>>ul.resp-tabs-list > li{
         font-size: <{$block.tab_font_size}>px;

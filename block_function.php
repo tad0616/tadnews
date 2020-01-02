@@ -87,6 +87,7 @@ if (!function_exists('block_news_tags')) {
     {
         global $xoopsDB;
 
+        $sc = [];
         if (!empty($selected)) {
             $sc = explode(',', $selected);
         }
@@ -101,10 +102,10 @@ if (!function_exists('block_news_tags')) {
         $option = '';
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
             $js .= "if(document.getElementById('c{$tag_sn}').checked){
-       arr[i] = document.getElementById('c{$tag_sn}').value;
-       i++;
-      }";
-            $ckecked = (in_array($tag_sn, $sc)) ? 'checked' : '';
+                arr[i] = document.getElementById('c{$tag_sn}').value;
+                i++;
+            }";
+            $ckecked = in_array($tag_sn, $sc) ? 'checked' : '';
             $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$tag_sn}' value='{$tag_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$tag_sn}'>$tag</label></span> ";
             $tags[$tag_sn] = $tag;
         }

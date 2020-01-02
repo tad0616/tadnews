@@ -83,7 +83,7 @@ function show_news($nsn = '', $ncsn = '')
     $facebook_comments = Utility::facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
 
     $uid_name = \XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
-    $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
+    $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
 
     $sign_bg = (!empty($news['page'][0]['need_sign'])) ? "style='background-image:url(" . XOOPS_URL . "/modules/tadnews/images/sign_bg.png);background-position: right top;background-repeat: no-repeat;'" : '';
 

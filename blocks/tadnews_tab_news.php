@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
 use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;

@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
 use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\Utility;
@@ -42,7 +45,7 @@ function tadnews_tag_news($options)
     $EasyResponsiveTabs = new EasyResponsiveTabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
     $EasyResponsiveTabs->rander();
     $block['tag_news_name'] = 'tag_news_' . $randStr;
-    $block['min_height'] = count($ncsn_arr) * 55;
+    $block['min_height'] = 200;
 
     $block['tab_font_size'] = empty($options[8]) ? 16 : (int) $options[8];
 

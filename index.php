@@ -141,7 +141,7 @@ function list_sign($nsn = '')
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-        $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
         $sign[$i]['uid'] = $uid;
         $sign[$i]['uid_name'] = $uid_name;
         $sign[$i]['sign_time'] = $sign_time;
@@ -161,7 +161,7 @@ function list_user_sign($uid = '')
     $news = $Tadnews->get_tad_news($nsn);
 
     $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-    $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+    $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $sql = 'select a.nsn,a.sign_time,b.news_title from ' . $xoopsDB->prefix('tad_news_sign') . ' as a left join ' . $xoopsDB->prefix('tad_news') . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
     $sign = [];

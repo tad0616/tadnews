@@ -28,7 +28,7 @@ function tadnews_b_show_3($options)
         $txt = mb_substr($txt, 0, $options[1], _CHARSET);
         $txt .= '...';
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-        $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
         $re['uid'] = $uid;
         $re['uid_name'] = $uid_name;
         $re['nsn'] = $nsn;

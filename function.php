@@ -1,6 +1,12 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/Tadtools/preloads/autoloader.php';
+}
 
 $Tadnews = Tadnews::getInstance();
 require_once __DIR__ . '/block_function.php';

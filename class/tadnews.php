@@ -849,7 +849,7 @@ class Tadnews
             $have_read_chk = $this->have_read_chk($have_read_group, $nsn, $mode);
 
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-            $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+            $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
             $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
             $cate_name = (empty($cates[$ncsn])) ? _TADNEWS_NO_CATE : $cates[$ncsn];
@@ -1299,7 +1299,7 @@ class Tadnews
             $uuid = $isAdmin = '';
         }
 
-        $btn_xs = 4 == $_SESSION['bootstrap'] ? 'btn-sm' : 'btn-xs';
+        $btn_xs = (isset($_SESSION['bootstrap']) and 4 == $_SESSION['bootstrap']) ? 'btn-sm' : 'btn-xs';
 
         $this->TadDataCenter->set_col('nsn', $nsn);
         $tab_arr = $this->TadDataCenter->getData();
@@ -1362,7 +1362,7 @@ class Tadnews
     <option value=''></option>";
         while (list($uid) = $xoopsDB->fetchRow($result)) {
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-            $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+            $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
             $selected = ($this->view_uid == $uid) ? 'selected' : '';
             $opt .= "<option value='$uid' $selected>$uid_name</option>";
         }

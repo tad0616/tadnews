@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
 require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (本站最新消息)
