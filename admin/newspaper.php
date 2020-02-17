@@ -2,7 +2,6 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
-use XoopsModules\Tadnews\Tadnews;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
 require_once __DIR__ . '/header.php';
@@ -219,7 +218,7 @@ function add_newspaper($nps_sn = '')
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $token = new \XoopsFormHiddenToken();
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 }
 
@@ -372,7 +371,7 @@ function sendmail_form($npsn = '')
     $xoopsTpl->assign('np_content', $newspaper['np_content']);
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+    $token = new \XoopsFormHiddenToken();
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
 
     $SweetAlert = new SweetAlert();

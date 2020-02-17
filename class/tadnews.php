@@ -810,7 +810,7 @@ class Tadnews
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                 require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
                 $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
@@ -1143,7 +1143,7 @@ class Tadnews
 
                 if (!empty($passwd)) {
                     require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                    $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+                    $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
                     $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
@@ -1534,7 +1534,7 @@ class Tadnews
 
         if (!empty($have_read_group)) {
             require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
             $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
 
             $have_read_group_arr = explode(',', $have_read_group);
@@ -1998,7 +1998,7 @@ class Tadnews
 
             $form['tab_arr'] = $tab_arr;
             require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+            $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
             $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
             $form['XOOPS_TOKEN'] = $XOOPS_TOKEN;
 
@@ -2060,7 +2060,7 @@ class Tadnews
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
         require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-        $XoopsFormHiddenToken = new \XoopsFormHiddenToken('XOOPS_TOKEN', 360);
+        $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
         $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
         $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 
@@ -2227,7 +2227,7 @@ class Tadnews
             //     $tabs_content = "
             //     <div id='PageTab'>";
             // } else {
-                $tabs_content = "
+            $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
                 <div id='PageTab'>";
@@ -2469,7 +2469,7 @@ class Tadnews
             //     $tabs_content = "
             //     <div id='PageTab'>";
             // } else {
-                $tabs_content = "
+            $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
                 <div id='PageTab'>";
