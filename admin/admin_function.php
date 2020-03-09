@@ -1,7 +1,6 @@
 <?php
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
-use XoopsModules\Tadnews\Tadnews;
 
 //列出所有tad_news資料（$kind="news","page"）
 function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
@@ -110,7 +109,7 @@ function mk_thumb($ncsn = '', $col_name = '', $width = 100)
         unlink(XOOPS_ROOT_PATH . "/uploads/tadnews/cate/{$ncsn}.png");
     }
 
-    $handle = new upload($_FILES[$col_name]);
+    $handle = new \Verot\Upload\Upload($_FILES[$col_name]);
     if ($handle->uploaded) {
         $handle->file_new_name_body = $ncsn;
         $handle->image_convert = 'png';
