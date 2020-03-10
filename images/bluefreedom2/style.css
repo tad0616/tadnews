@@ -48,11 +48,11 @@ background: #85ACF7 url('images/hidr.jpg');
 .header h1 {
 	padding-left: 17px;
 	padding-top: 22px;
-	font-size: 22px;
+	font-size: 1.375em;
 	color: White;
 }
 .header h1 a {
-	font-size: 22px;
+	font-size: 1.375em;
 	color: White;
 	text-decoration: none;
 }

@@ -15,7 +15,7 @@
 
   <div class="row" style="margin: 40px 0px 0px;">
     <div class="col-sm-12">
-      <a href="index.php?ncsn=<{$all_news.ncsn}>" style="font-size: 30px;"><{$all_news.nc_title}></a>
+      <a href="index.php?ncsn=<{$all_news.ncsn}>" style="font-size: 1.875em;"><{$all_news.nc_title}></a>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
       <{else}>
         <div class="row">
           <div class="col-sm-12" style="margin: 2px 0px; padding:2px;">
-            <div style="font-size: 30px; color: #cfcfcf; padding-top: 30px;">
+            <div style="font-size: 1.875em; color: #cfcfcf; padding-top: 30px;">
               <{$smarty.const._TADNEWS_EMPTY}>
             </div>
           </div>
