@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-sm-9">
           <{$page.prefix_tag}>
-          <span style="font-size: 11px;">
+          <span style="font-size: 0.6875em;">
             <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
 
           </span>

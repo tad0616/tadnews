@@ -14,7 +14,7 @@
 			  font-family: 'Lato', sans-serif;
 			}
 			small {
-				font-size: 14px;
+				font-size: 0.875em;
 			}
 			h1 {
 				margin-bottom: 20px;
@@ -76,11 +76,11 @@
 			<p>The <code>pauseOnHover</code> also works using CSS3. The plugin just prepares the setup and required CSS3 animation CSS.</p>
 			<p>Due to some reasons if you want plugin to animate always using jQuery than you need to set <code>allowCss3Support</code> option to false. Also an extra option <code>css3easing</code> is added.</p>
 			<h4>Example of same element being animated using CSS3 and jQuery</h4>
-			
-			<div style="float:left" class='marquee'>Longer text lorem ipsum dolor sit amet, consectetur adipiscing elit END.</div> 
+
+			<div style="float:left" class='marquee'>Longer text lorem ipsum dolor sit amet, consectetur adipiscing elit END.</div>
 			<= CSS3 animated (if your browser supports CSS3 animation. You can check this element in inspector.)
 			<br style="clear:both">
-			<div style="float:left" class='marquee' data-allowCss3Support=false>Longer text lorem ipsum dolor sit amet, consectetur adipiscing elit END.</div> 
+			<div style="float:left" class='marquee' data-allowCss3Support=false>Longer text lorem ipsum dolor sit amet, consectetur adipiscing elit END.</div>
 			<= Animated using jQuery by having <code>allowCss3Support=false</code> as data attribute. Inspect the element and you will see <code>margin-left</code> option being changed using jQuery.
 		</div>
 
@@ -91,13 +91,13 @@
 		<div class='marquee'>Less text here</div>
 		<div class='marquee'>Longer text lorem ipsum dolor sit amet, consectetur adipiscing elit END.</div>
 		<div class='marquee'>Very very long text lorem ipsum dolor sit amet, lorem ipsum dolor sit amet lorem ipsum dolor sit amet consectetur adipiscing elit END.</div>
-		
+
 		<h3>Options as data attributes</h3>
 <pre>
 &lt;div data-speed=&quot;2000&quot; data-direction=&quot;right&quot; class=&#39;marquee&#39;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit END.&lt;/div&gt;
-</pre>		
+</pre>
 		<div data-speed="2000" data-direction="right" class='marquee'>Lorem ipsum dolor sit amet, consectetur adipiscing elit END.</div>
-		
+
 		<h3>Overwrite the default options with following</h3>
 <pre>
 $('.marquee-with-options').marquee({
@@ -113,7 +113,7 @@ $('.marquee-with-options').marquee({
 
 		<a class='pause' href='#'>Pause the above animation</a> | <a class='resume' href='#'>Resume the paused animation</a> | <a class='toggle' href='#'>Pause on hover this link</a>
 		<br><br>
-		
+
 
 		<h3>Direction vertical with default options</h3>
 <pre>
@@ -124,22 +124,22 @@ $('.marquee-vert').marquee({
 </pre>
 		<h4>Before (no height provided to the element)</h4>
 		<div class='marquee-vert-before'>Nascetur suscipit distinctio optio commodi repudiandae aut exercitationem mauris. Blanditiis conubia hic dolorum! Vitae varius adipisci facilisis.</div>
-		
+
 		<h4>After</h4>
 		<div class='marquee-vert'>Nascetur suscipit distinctio optio commodi repudiandae aut exercitationem mauris. Blanditiis conubia hic dolorum! Vitae varius adipisci facilisis.</div>
 
-		<h3>With direction 'down' (using data attributes)</h3>	
+		<h3>With direction 'down' (using data attributes)</h3>
 		<div class='marquee-vert' data-delayBeforeStart=2000 data-direction='down' data-duplicated='true'>Nascetur suscipit distinctio optio commodi repudiandae aut exercitationem mauris. Blanditiis conubia hic dolorum! Vitae varius adipisci facilisis.</div>
-		
+
 
 		<h3>Direction vertical with duplicated option true (using data attributes) and height of 50px assigned using CSS</h3>
 		<small style="font-style: italic">Inspect the following marquee to see data attributes and style attribute</small><br><br>
 
 		<div class='marquee-vert' style='height:50px' data-gap=0 data-speed=3000 data-direction='up' data-duplicated='true'><b>Starts here</b> Nascetur suscipit distinctio optio commodi repudiandae aut exercitationem mauris. Blanditiis conubia hic dolorum! Vitae varius adipisci facilisis, laudantium ratione. Wisi! Quidem tortor, quisquam earum! Pretium necessitatibus.</div>
-		
-		<h3>With pauseOnHover and pauseOnCycle options</h3>	
+
+		<h3>With pauseOnHover and pauseOnCycle options</h3>
 		<div class='marquee-vert' data-direction='down' data-pauseOnHover='true' data-pauseOnCycle='true'>Nascetur suscipit distinctio optio commodi repudiandae aut exercitationem mauris. Blanditiis conubia hic dolorum! Vitae varius adipisci facilisis.</div>
-		
+
 <br><br>
 
 <script>
@@ -160,7 +160,7 @@ $(function(){
 		//on hover pause the marquee - using jQuery plugin https://github.com/tobia/Pause
 		pauseOnHover: true
 	});
-	
+
 	//Direction upward
 	$('.marquee-vert').marquee({
 		direction: 'up',

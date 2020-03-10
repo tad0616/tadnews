@@ -144,7 +144,7 @@
                     <{$page.today_pic}>
                     <{$page.post_date}>
                     <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                    <span style="color:gray;font-size:12px;"> (<a href="page.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
+                    <span style="color:gray;font-size: 0.75em;"> (<a href="page.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
                   </td>
                   <{if $page.show_admin_tool}>
                     <td><{$page.g_txt}></td>
