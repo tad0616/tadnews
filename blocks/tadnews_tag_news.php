@@ -47,7 +47,8 @@ function tadnews_tag_news($options)
     $block['tag_news_name'] = 'tag_news_' . $randStr;
     $block['min_height'] = 200;
 
-    $block['tab_font_size'] = empty($options[8]) ? 16 : (int) $options[8];
+    $tab_font_size = empty($options[8]) ? 16 : (int) $options[8];
+    $block['tab_font_size'] = round($tab_font_size / 16, 1);
 
     if ('1' == $options[7]) {
         $Tadnews = Tadnews::getInstance();
