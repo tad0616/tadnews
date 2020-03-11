@@ -78,8 +78,8 @@ function tadnews_page_list($options)
     $block['bgcolor'] = $options[1];
     $block['color'] = $options[4];
     $block['show_title'] = $options[3];
-    $block['bg_css']     = $options[5];
-    $block['text_css']   = $options[6];
+    $block['bg_css'] = $options[5];
+    $block['text_css'] = $options[6];
 
     return $block;
 }
@@ -147,7 +147,7 @@ function tadnews_page_list_edit($options)
             <div class='my-content'>
                 <textarea class='my-input' name='options[6]'>{$options[6]}</textarea>
                 <span class='my-example'><br>
-                font-size: 1.3em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c; 
+                font-size: 1.1em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;
                 </span>
             </div>
         </li>

@@ -1,6 +1,6 @@
 <{if $block}>
     <{if $block.show_title!='0'}>
-        <div class="text-center" style="padding: 4px;background-color:<{$block.bgcolor}>;<{$block.bg_css}>"><a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$block.ncsn}>" style="font-size: 1.3em; color: <{$block.color}>;<{$block.text_css}>"><{$block.nc_title}></a></div>
+        <div class="text-center" style="padding: 4px;background-color:<{$block.bgcolor}>;<{$block.bg_css}>"><a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$block.ncsn}>" style="font-size: 1.1em; color: <{$block.color}>;<{$block.text_css}>"><{$block.nc_title}></a></div>
     <{/if}>
     <ul class="vertical_menu">
         <{foreach from=$block.pages item=page}>
