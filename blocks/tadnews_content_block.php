@@ -59,7 +59,7 @@ function tadnews_content_block_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <textarea name='options[2]' class='my-input'>{$options[2]}</textarea>
-                <span class='my-example'>color:gray;font-size: 0.6875em;margin-top:3px;line-height:150%;</span>
+                <span class='my-example'>color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;</span>
             </div>
         </li>
         <li class='my-row'>

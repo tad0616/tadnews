@@ -32,7 +32,7 @@
                 <{/if}>
                 <{$page.enable_txt}><{$page.today_pic}>
                 <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                <span style="color:gray;font-size: 0.75em;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
+                <span style="color:gray;font-size: 0.8em;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
               </td>
             </tr>
           <{/foreach}>

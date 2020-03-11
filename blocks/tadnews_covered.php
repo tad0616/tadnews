@@ -104,7 +104,7 @@ function tadnews_covered_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <textarea name='options[3]' class='my-input'>{$options[3]}</textarea>
-                <span class='my-example'>font-size: font-size: 0.75em ;color: gray; line-height: 1.5;</span>
+                <span class='my-example'>font-size: font-size: 0.8em ;color: gray; line-height: 1.5;</span>
             </div>
         </li>
         <li class='my-row'>

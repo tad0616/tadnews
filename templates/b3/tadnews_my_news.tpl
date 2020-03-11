@@ -20,7 +20,7 @@
             <{/if}>
             <{$page.enable_txt}><{$page.today_pic}>
             <a href="<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-            <span style="color:gray;font-size: 0.75em;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
+            <span style="color:gray;font-size: 0.8em;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span> <{$page.content}>
           </td>
           <td>
             <a href="javascript:delete_tad_news_func(<{$page.nsn}>);" class='btn btn-danger btn-xs'><{$smarty.const._TAD_DEL}></a>

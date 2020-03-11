@@ -185,7 +185,7 @@ div.rmmenuicon a {
 }
 div.rmmenuicon img { margin-top: 8px; margin-bottom: 8px; }
 div.rmmenuicon a span {
-    font-size: 0.6875em;
+    font-size: 0.8em;
     font-weight: bold;
     display: block;
 }
@@ -199,7 +199,7 @@ div.rmmenuicon a:hover span{
 }
 
 div.CPbigTitle{
-    font-size: 0.75em;
+    font-size: 0.8em;
     color: #606060;
     background: no-repeat left top;
     font-weight: bold;

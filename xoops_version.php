@@ -155,7 +155,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC2;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_content_block_show';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_content_block.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_content_block_edit';
-$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.6875em;margin-top:3px;line-height:150%;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|';
+$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_re_block.php';
@@ -189,7 +189,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC6;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_cate_news';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_cate_news.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_cate_news_edit';
-$modversion['blocks'][$i]['options'] = '|10|1|0|100|color:gray;font-size: 0.6875em;margin-top:3px;line-height:150%;';
+$modversion['blocks'][$i]['options'] = '|10|1|0|100|color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_page.php';
@@ -198,7 +198,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC7;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_page';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_page.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_page_edit';
-$modversion['blocks'][$i]['options'] = '|160|12px';
+$modversion['blocks'][$i]['options'] = '|160|1em';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_focus_news.php';
@@ -225,7 +225,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC10;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_list_content_block_show';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_list_content_block.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_list_content_block_edit';
-$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.6875em;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0|0';
+$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0|0';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_table_content_block.php';
