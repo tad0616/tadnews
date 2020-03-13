@@ -1,3 +1,9 @@
+TadNews 4.18 (released from 2020-03-14)
+====================================================
+1.Fixed the issue that the classification thumbnail cannot be generated
+2. Amendment for Accessibility 2.0 AA Standard
+
+
 TadNews 4.17 (released from 2020-02-17)
 ====================================================
 1. Fixed the case that there may be an error message when the account does not have a real name
