@@ -1,4 +1,4 @@
-<div style="font-size: 0.8em; padding:4px 10px; border-radius:5px; background-color: #eee;">
+<div style="padding:4px 10px; border-radius:5px; background-color: #eee;">
     <label for="ncsn<{$block.randStr}>">
         <{$smarty.const._MB_TADNEWS_BAR_CATE}><{$smarty.const._TAD_FOR}>
     </label>

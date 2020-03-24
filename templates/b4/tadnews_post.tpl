@@ -373,6 +373,7 @@
         </div>
     </div>
 
+    <{if !$nsn or ($nsn and $cate.not_news=='1')}>
     <div id="page_setup_form" style="margin-top:20px;display: none;">
         <div class="form-group row">
             <div class="col-sm-2">
@@ -383,6 +384,7 @@
             </div>
         </div>
     </div>
+    <{/if}>
 
 
     <div class="row" style="margin: 30px 0px;">

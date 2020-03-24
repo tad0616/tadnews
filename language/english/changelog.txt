@@ -1,17 +1,21 @@
-TadNews 4.18 (released from 2020-03-14)
+TadNews 4.19 (2020-03-19 released)
+====================================================
+1.Fixed the problem that the file description cannot be modified
+
+TadNews 4.18 (2020-03-14 released)
 ====================================================
 1.Fixed the issue that the classification thumbnail cannot be generated
 2. Amendment for Accessibility 2.0 AA Standard
 
 
-TadNews 4.17 (released from 2020-02-17)
+TadNews 4.17 (2020-02-17 released)
 ====================================================
 1. Fixed the case that there may be an error message when the account does not have a real name
 2. Adjust the loading method of objects in the block to avoid error messages when loading for the first time
 3. Fixed an issue where editing could not be saved for more than 6 minutes
 
 
-TadNews 4.16 (released from 2019-10-15)
+TadNews 4.16 (2019-10-15 released)
 =========================================================
 1. Fixed the problem that the tab menu in the block search column could not be used.
 2. Streamlined block templates
@@ -22,7 +26,7 @@ TadNews 4.16 (released from 2019-10-15)
 7. The page has a tab to appear the tab sort button
 
 
-TadNews 4.15 (released from 2019-08-07)
+TadNews 4.15 (2019-08-07 released)
 =========================================================
 1. Fixed the problem that the custom page failed to join the menu function.
 2. Fixed the problem that the custom page menu block example is incorrect.
@@ -30,31 +34,31 @@ TadNews 4.15 (released from 2019-08-07)
 4. Customize the page list block to add CSS settings
 
 
-TadNews 4.14 (released from 2019-07-23)
+TadNews 4.14 (2019-07-23 released)
 =========================================================
 1. Support "XOOPS Website" App
 
 
-TadNews 4.13 (released from 2019-06-28)
+TadNews 4.13 (2019-06-28 released)
 =========================================================
 1. Fixed the problem that the parent category menu is incorrect when editing the category
 2. Custom page plus hidden path settings
 
-TadNews 4.12 (released from 2019-06-13)
+TadNews 4.12 (2019-06-13 released)
 =========================================================
 1. Fixed the problem of not being able to upload cover art
 2. Fix RSS failures
 3. Fixed incorrect problem with category editing form parent classification option
 
 
-TadNews 4.11 (released from 2019-05-10)
+TadNews 4.11 (2019-05-10 released)
 =========================================================
 1. Support XOOPS 2.5.10
 2. No longer supports PHP 5.3
 3. Remove breadcrumb and use the tad_breadcrumb function in tadtools instead.
 
 
-TadNews 4.1 (released from 2019-04-03)
+TadNews 4.1 (2019-04-03 released)
 =================================
 1. Custom page classification owners can sort and manage classifications in the foreground
 2. Add the tab delete function
@@ -66,13 +70,13 @@ TadNews 4.1 (released from 2019-04-03)
 8. Add custom page tabs to sort
 
 
-TadNews 4.0 (released from 2019-01-23)
+TadNews 4.0 (2019-01-23 released)
 =================================
 1. Fix the problem that RSS can't display
 2. Fixed an issue where custom page categories could not be placed in the navigation bar.
 
 
-TadNews 3.99 (released on 2019-01-01)
+TadNews 3.99 (2019-01-01 released)
 ================================
 1. Support BootStrap4
 2. Attached support panoramic picture
@@ -80,21 +84,21 @@ TadNews 3.99 (released on 2019-01-01)
 4. Support PHP 7.3
 
 
-TadNews 3.98 (released on 2018-09-05)
+TadNews 3.98 (2018-09-05 released)
 =========================================================== ==
 1. Custom page to foreground can be sorted directly
 2. Fix the problem that the number of labels in the news block is incorrect.
 
-TadNews 3.97 (released on 2018-08-24)
+TadNews 3.97 (2018-08-24 released)
 =========================================================== ==
 1. Custom page added tab mode
 
-TadNews 3.96 (released on 2018-05-16)
+TadNews 3.96 (2018-05-16 released)
 ================================================== ==
 1. Support database strict mode
 
 
-TadNews 3.95 (released on 2018-05-16)
+TadNews 3.95 (2018-05-16 released)
 ================================================== ==
 1. Solve the problem that XOOPS 2.5.9 cannot send e-newsletters
 2. Solve the tab news block, display the problem of "add all the latest news" content is incorrect
@@ -390,7 +394,7 @@ TadNews 3.0 RC1 (2013-05-08 released)
  9. Add the default label
 10. The monthly articles cancel ajax (convenient links)
 11. Fixed some minor bug
-12. Cancellation background publishing articles function, unified released from the front.
+12. Cancellation background publishing articles function, unified the front.
 13. Cancel "embed syntax" function, as it has tad_embed powerful.
 14. The column-type news columns from the table instead of a list of column genuine article
 15. Optional page block instead visualization tool selected articles
