@@ -1,3 +1,8 @@
+TadNews 4.20 (2020-03-31 released)
+====================================================
+1. Cancel Tadnews object single case mode
+2. Fix the problem that the category setting cannot be applied when loading the customized page of Focus News.
+
 TadNews 4.19 (2020-03-19 released)
 ====================================================
 1.Fixed the problem that the file description cannot be modified
