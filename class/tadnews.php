@@ -120,7 +120,7 @@ $this->update_tad_news($nsn="");
 $this->enable_tad_news($nsn="");
 
 //刪除tad_news某筆資料資料
-$tadnews=Tadnews::getInstance();
+$tadnews=new Tadnews();
 $Tadnews->delete_tad_news($nsn);
 
  */
@@ -166,7 +166,7 @@ class Tadnews
     public $end_day = '';
 
     //建構函數
-    private function __construct()
+    public function __construct()
     {
         global $xoopsConfig;
 
@@ -189,9 +189,9 @@ class Tadnews
     }
 
     //覆蓋__clone()方法，禁止克隆
-    private function __clone()
-    {
-    }
+    // private function __clone()
+    // {
+    // }
 
     public static function getInstance()
     {

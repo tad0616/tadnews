@@ -8,7 +8,7 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/Tadtools/preloads/autoloader.php';
 }
 
-$Tadnews = Tadnews::getInstance();
+$Tadnews = new Tadnews();
 require_once __DIR__ . '/block_function.php';
 
 //取得路徑

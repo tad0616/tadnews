@@ -20,7 +20,7 @@ function tadnews_marquee($options)
         $ncsn_arr = explode(',', $options[1]);
     }
 
-    $Tadnews = Tadnews::getInstance();
+    $Tadnews = new Tadnews();
 
     $Tadnews->set_show_num($options[0]);
     $Tadnews->set_view_ncsn($ncsn_arr);

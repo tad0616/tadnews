@@ -23,7 +23,7 @@ function tadnews_slidernews2_show($options)
 
     $ncsn_arr = explode(',', $options[3]);
 
-    $Tadnews = Tadnews::getInstance();
+    $Tadnews = new Tadnews();
 
     $Tadnews->set_show_num($options[0]);
     $Tadnews->set_view_ncsn($ncsn_arr);

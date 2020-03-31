@@ -20,14 +20,13 @@ function tadnews_focus_news($options)
         return '';
     }
 
-    $Tadnews = Tadnews::getInstance();
+    $Tadnews = new Tadnews();
     $Tadnews->set_view_nsn($options[0]);
     $summary = ('summary' === $options[1]) ? 'page_preak' : 'full';
     $Tadnews->set_summary($summary);
     $Tadnews->set_cover(true, 'db');
     $Tadnews->set_use_star_rating(false);
     $block = $Tadnews->get_news('return');
-
     return $block;
 }
 

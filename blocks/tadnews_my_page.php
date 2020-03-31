@@ -21,7 +21,7 @@ function tadnews_my_page($options)
     }
 
     $nsn_arr = explode(',', $options[0]);
-    $Tadnews = Tadnews::getInstance();
+    $Tadnews = new Tadnews();
     $Tadnews->set_show_mode('table');
     $Tadnews->set_view_nsn($nsn_arr);
     $Tadnews->set_use_star_rating(false);
