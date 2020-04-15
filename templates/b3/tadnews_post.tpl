@@ -615,12 +615,8 @@
         </div>
 
         <div id="fragment-4">
-            <div class="row">
-            <div class="col-sm-12">
-                <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>
-                <{$upform}>
-            </div>
-            </div>
+            <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}><{$deny_type}></label>
+            <{$upform}>
         </div>
 
         </div>
@@ -630,7 +626,7 @@
     <div id="page_setup_form" style="margin-top:20px;display: none;">
         <div class="form-group">
         <div class="col-sm-2">
-            <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}></label>
+            <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}><{$deny_type}></label>
         </div>
         <div class="col-sm-10">
             <{$page_upform}>

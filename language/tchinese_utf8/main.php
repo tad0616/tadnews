@@ -138,3 +138,6 @@ define('_MD_TADNEWS_CATE_SHOW_TOOL', '顯示模組工具');
 define('_MD_TADNEWS_CATE_SHOW_COMM', '使用評論功能');
 define('_MD_TADNEWS_CATE_SHOW_NAV', '使用上下頁鈕');
 define('_MD_TADNEWS_CATE_SHOW_PATH', '顯示頁面路徑');
+
+define('_MD_TADNEWS_DENY_TYPE', '（以下副檔名無法上傳：%s）');
+define('_MD_TADNEWS_AND', '、');

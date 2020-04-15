@@ -471,11 +471,10 @@ $modversion['config'][$i]['formtype'] = 'textarea';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'width:200px; height:150px; border:1px solid #909090; background-position:left top; background-repeat:no-repeat; background-size:cover; float:right; margin:4px;';
 
-// $i++;
-// $modversion['config'][$i]['name']        = 'editor';
-// $modversion['config'][$i]['title']       = '_MI_TADNEWS_EDITOR';
-// $modversion['config'][$i]['description'] = '_MI_TADNEWS_EDITOR_DESC';
-// $modversion['config'][$i]['formtype']    = 'select';
-// $modversion['config'][$i]['valuetype']   = 'text';
-// $modversion['config'][$i]['default']     = "ckeditor";
-// $modversion['config'][$i]['options']     = array('CKEditor' => 'ckeditor', 'elRTE' => 'elrte');
+$i++;
+$modversion['config'][$i]['name'] = 'upload_deny';
+$modversion['config'][$i]['title'] = '_MI_TADNEWS_UPLOAD_DENY';
+$modversion['config'][$i]['description'] = '_MI_TADNEWS_UPLOAD_DENY_DESC';
+$modversion['config'][$i]['formtype'] = 'text';
+$modversion['config'][$i]['valuetype'] = 'text';
+$modversion['config'][$i]['default'] = "";

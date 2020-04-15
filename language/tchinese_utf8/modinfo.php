@@ -126,3 +126,6 @@ define('_MI_TADNEWS_TAG_NEWS', '標籤新聞區塊');
 define('_MI_TADNEWS_TAG_NEWS_DESC', '標籤新聞區塊');
 define('_MI_TADNEWS_TOP_MAX_DAY', '置頂日數上限');
 define('_MI_TADNEWS_TOP_MAX_DAY_DESC', '新聞最多可以置頂幾天？');
+
+define('_MI_TADNEWS_UPLOAD_DENY', '不允許上傳的檔案副檔名');
+define('_MI_TADNEWS_UPLOAD_DENY_DESC', '請用分號隔開，例如：「doc;docx;doc;xls;xlsx」');

@@ -2055,6 +2055,9 @@ class Tadnews
         $this->TadUpFiles->set_col('nsn', $nsn);
         $upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'upform');
         $xoopsTpl->assign('upform', $upform);
+        $deny_type = $xoopsModuleConfig['upload_deny'] == '' ? '' : sprintf(_MD_TADNEWS_DENY_TYPE, str_replace(';', _MD_TADNEWS_AND, $xoopsModuleConfig['upload_deny']));
+
+        $xoopsTpl->assign('deny_type', $deny_type);
         $page_upform = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
         $xoopsTpl->assign('page_upform', $page_upform);
 
@@ -2306,7 +2309,7 @@ class Tadnews
 
         //處理上傳的檔案
         $this->TadUpFiles->set_col('nsn', $nsn);
-        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true);
+        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true, false, 'file_name', '', $xoopsModuleConfig['upload_deny']);
 
         //修改暫存封面圖
         if ($_POST['files_sn']) {
@@ -2426,7 +2429,7 @@ class Tadnews
     //更新tad_news某一筆資料
     public function update_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser, $isAdmin;
+        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsModuleConfig;
         $uid = $xoopsUser->uid();
 
         //確認有管理員或本人才能管理
@@ -2529,7 +2532,7 @@ class Tadnews
 
         //處理上傳的檔案
         $this->TadUpFiles->set_col('nsn', $nsn);
-        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true);
+        $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true, false, 'file_name', '', $xoopsModuleConfig['upload_deny']);
 
         //修改暫存封面圖
         if ($_POST['files_sn']) {

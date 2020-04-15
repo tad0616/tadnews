@@ -126,3 +126,6 @@ define('_MI_TADNEWS_TAG_NEWS', 'Tag News');
 define('_MI_TADNEWS_TAG_NEWS_DESC', 'Tag News');
 define('_MI_TADNEWS_TOP_MAX_DAY', 'Maximum number of days top news');
 define('_MI_TADNEWS_TOP_MAX_DAY_DESC', 'Top News limit the number of days?');
+
+define('_MI_TADNEWS_UPLOAD_DENY', 'No file extensions allowed to upload');
+define('_MI_TADNEWS_UPLOAD_DENY_DESC', 'Please separate by semicolon, e.g. "doc;docx;doc;xls;xlsx"');
