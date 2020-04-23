@@ -1678,6 +1678,21 @@ class Tadnews
 
         $myts = \MyTextSanitizer::getInstance();
         $nsnsort = [];
+        
+        //判斷是否要檢查日期
+        if (!empty($this->view_month)) {
+            $date_chk = "and a.start_day like '{$this->view_month}%'";
+        } elseif ($this->admin_tool) {
+            $date_chk = '';
+        } elseif ($this->start_day and $this->end_day) {
+            $date_chk = "and a.start_day >= '" . $this->start_day . "' and a.start_day <= '" . $this->end_day . " 23:59:59'";
+        } elseif ($this->start_day) {
+            $date_chk = "and a.start_day >= '" . $this->start_day . "'";
+        } elseif ($this->end_day) {
+            $date_chk = "and a.start_day <= '" . $this->end_day . " 23:59:59' ";
+        } else {
+            $date_chk = "and a.start_day < '" . $this->today . "' and (a.end_day > '" . $this->today . "' or a.end_day = '0000-00-00 00:00:00') ";
+        }
 
         $and_enable = (1 == $this->show_enable) ? "and a.enable='1'" : '';
 
@@ -1688,9 +1703,9 @@ class Tadnews
         } else {
             $and_cate = ($now_ncsn) ? "and a.ncsn='$now_ncsn'" : '';
 
-            $sql_back = 'select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where (a.start_day < '{$news['start_day']}' or a.nsn < '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate order by a.start_day desc, a.nsn desc limit 0,1";
+            $sql_back = 'select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where (a.start_day < '{$news['start_day']}' or a.nsn < '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate $date_chk order by a.start_day desc, a.nsn desc limit 0,1";
 
-            $sql_next = 'select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where (a.start_day > '{$news['start_day']}'  or a.nsn > '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate order by a.start_day , a.nsn limit 0,1";
+            $sql_next = 'select a.nsn, a.news_title, a.start_day, a.enable_group, a.ncsn, b.enable_group from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where (a.start_day > '{$news['start_day']}'  or a.nsn > '{$news['nsn']}') $and_enable and b.not_news='0' $and_cate $date_chk order by a.start_day , a.nsn limit 0,1";
         }
 
         if ('' == $mode or 'back' === $mode) {
