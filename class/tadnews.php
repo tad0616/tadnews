@@ -742,7 +742,8 @@ class Tadnews
             $tab_mode = (false !== mb_strpos($news_content, 'Easy-Responsive-Tabs')) ? true : false;
 
             //新聞資訊列
-            $fun = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group);
+            $fun = $this->admin_tool($uid, $nsn, $counter, $ncsn, $have_read_group, $enable_post_group);
+
             $end_day = ('0000-00-00 00:00:00' === $end_day) ? '' : '~ ' . $end_day;
             $enable_txt = (1 == $enable) ? '' : "<span class='badge'>" . _TADNEWS_NEWS_UNABLE . '</span>';
 
@@ -1288,13 +1289,14 @@ class Tadnews
     }
 
     //新聞編輯工具
-    private function admin_tool($uid, $nsn, $counter = '', $ncsn = '', $have_read_group = '')
+    private function admin_tool($uid, $nsn, $counter = '', $ncsn = '', $have_read_group = '', $enable_post_group = '')
     {
         global $xoopsUser;
 
         if ($xoopsUser) {
             $uuid = $xoopsUser->uid();
             $isAdmin = $xoopsUser->isAdmin($this->module_id);
+            $User_Groups = $xoopsUser->getGroups();
         } else {
             $uuid = $isAdmin = '';
         }
@@ -1315,7 +1317,9 @@ class Tadnews
             $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . '</a>';
         }
 
-        $admin_fun = ($uid == $uuid or $isAdmin) ? "
+        $news_post_power = $this->chk_news_power($enable_post_group, $User_Groups);
+
+        $admin_fun = ($news_post_power or $uid == $uuid or $isAdmin) ? "
         $signbtn
         <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary $btn_xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
         <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger $btn_xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
