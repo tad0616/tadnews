@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\Utility;
 
@@ -8,19 +9,18 @@ xoops_loadLanguage('blocks', 'tadnews');
 $FooTable = new FooTable();
 $FooTable->render();
 
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$num = system_CleanVars($_REQUEST, 'num', 10, 'int');
-$show_ncsn = system_CleanVars($_REQUEST, 'show_ncsn', '', 'string');
-$show_button = system_CleanVars($_REQUEST, 'show_button', 0, 'int');
-$start_from = system_CleanVars($_REQUEST, 'start_from', 0, 'int');
-$p = system_CleanVars($_REQUEST, 'p', 0, 'int');
-$randStr = system_CleanVars($_REQUEST, 'randStr', '', 'string');
-$cell = system_CleanVars($_REQUEST, 'cell', '', 'array');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
-$keyword = system_CleanVars($_REQUEST, 'keyword', '', 'string');
-$start_day = system_CleanVars($_REQUEST, 'start_day', '', 'string');
-$end_day = system_CleanVars($_REQUEST, 'end_day', '', 'string');
+$show_ncsn = Request::getString('show_ncsn');
+$randStr = Request::getString('randStr');
+$keyword = Request::getString('keyword');
+$start_day = Request::getString('start_day');
+$end_day = Request::getString('end_day');
+$num = Request::getInt('num', 10);
+$show_button = Request::getInt('show_button');
+$start_from = Request::getInt('start_from');
+$p = Request::getInt('p');
+$ncsn = Request::getInt('ncsn');
+$tag_sn = Request::getInt('tag_sn');
+$cell = Request::getArray('cell');
 
 $ncsn_arr = explode(',', $show_ncsn);
 

@@ -145,7 +145,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
     if (!$isOwner and !$isAdmin) {
-        redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+        redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
     }
 
     //抓取預設值
@@ -216,7 +216,7 @@ function update_tad_news_cate($ncsn = '')
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
     if (!$isOwner and !$isAdmin) {
-        redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+        redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
     }
 
     if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {

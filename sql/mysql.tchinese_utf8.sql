@@ -26,7 +26,7 @@ CREATE TABLE `tad_news` (
   `news_title` varchar(255) NOT NULL default '',
   `news_content` longtext NOT NULL,
   `start_day` datetime NOT NULL,
-  `end_day` datetime default NULL,
+  `end_day` datetime ,
   `enable` enum('1','0') NOT NULL default '1',
   `uid` mediumint(8) unsigned NOT NULL default 0,
   `passwd` varchar(255) NOT NULL default '',

@@ -1640,13 +1640,14 @@ class Tadnews
 
         if ($uid_chk) {
             if (empty($xoopsUser)) {
-                redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+                redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
             }
 
             $isAdmin = $xoopsUser->isAdmin($this->module_id);
             $uid = $xoopsUser->uid();
+
             if (!$isAdmin and $uid != $data['uid']) {
-                redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+                redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
             }
         }
 
@@ -1682,7 +1683,7 @@ class Tadnews
 
         $myts = \MyTextSanitizer::getInstance();
         $nsnsort = [];
-        
+
         //判斷是否要檢查日期
         if (!empty($this->view_month)) {
             $date_chk = "and a.start_day like '{$this->view_month}%'";
@@ -1837,7 +1838,7 @@ class Tadnews
 
         $ncsn_arr = $this->chk_user_cate_power('post');
         if (empty($ncsn_arr)) {
-            redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . implode(';', $ncsn_arr));
+            redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__ . implode(';', $ncsn_arr));
         } else {
 
             // $news_cate_kind_arr = [];
@@ -1856,7 +1857,7 @@ class Tadnews
             $this->TadDataCenter->set_col('nsn', $nsn);
             $tab_arr = $this->TadDataCenter->getData();
 
-            $DBV = $this->get_tad_news($nsn, true, false);
+            $DBV = $this->get_tad_news($nsn, false, false);
         } else {
             $DBV = $tab_arr = [];
         }
@@ -2452,10 +2453,10 @@ class Tadnews
         $uid = $xoopsUser->uid();
 
         //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn);
-        if (!$this->chk_who($news['uid'])) {
-            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
-        }
+        $news = $this->get_tad_news($nsn, false);
+        // if (!$this->chk_who($news['uid'])) {
+        //     redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
+        // }
 
         //可讀群組
         if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
@@ -2577,7 +2578,7 @@ class Tadnews
         //確認有管理員或本人才能管理
         $news = $this->get_tad_news($nsn);
         if (!$this->chk_who($news['uid'])) {
-            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
+            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
         }
 
         $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set enable = '1' where nsn='$nsn'";
@@ -2618,7 +2619,7 @@ class Tadnews
         //確認有管理員或本人才能管理
         $news = $this->get_tad_news($nsn);
         if (!$this->chk_who($news['uid'])) {
-            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
+            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
         }
 
         $sql = 'delete from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";

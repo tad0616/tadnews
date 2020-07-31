@@ -7,14 +7,14 @@ use XoopsModules\Tadtools\Utility;
 /*
 Update Class Definition
 
- You may not change or alter any portion of this comment or credits of
- supporting developers from this source code or any supporting source code
- which is considered copyrighted (c) material of the original comment or credit
- authors.
+You may not change or alter any portion of this comment or credits of
+supporting developers from this source code or any supporting source code
+which is considered copyrighted (c) material of the original comment or credit
+authors.
 
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
@@ -22,7 +22,6 @@ Update Class Definition
  * @copyright    https://xoops.org 2001-2017 &copy; XOOPS Project
  * @author       Mamba <mambax7@gmail.com>
  */
-
 
 /**
  * Class Update
@@ -47,10 +46,10 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tadnews_files_center') . "
-    ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
-    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
-    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
-    ";
+        ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
+        ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+        ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+        ";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $xoopsDB->error());
     }
 
@@ -211,12 +210,12 @@ class Update
     {
         global $xoopsDB;
         $sql = 'CREATE TABLE ' . $xoopsDB->prefix('tad_news_sign') . ' (
-  `sign_sn` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nsn` SMALLINT UNSIGNED NOT NULL ,
-  `uid` SMALLINT UNSIGNED NOT NULL ,
-  `sign_time` DATETIME NOT NULL,
-  PRIMARY KEY  (`sign_sn`)
-  )';
+        `sign_sn` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        `nsn` SMALLINT UNSIGNED NOT NULL ,
+        `uid` SMALLINT UNSIGNED NOT NULL ,
+        `sign_time` DATETIME NOT NULL,
+        PRIMARY KEY  (`sign_sn`)
+        )';
         $xoopsDB->queryF($sql);
     }
 
@@ -257,12 +256,12 @@ class Update
     {
         global $xoopsDB;
         $sql = 'CREATE TABLE ' . $xoopsDB->prefix('tad_news_paper_send_log') . " (
-    `npsn` SMALLINT UNSIGNED NOT NULL ,
-    `email` VARCHAR(255) NOT NULL DEFAULT '' ,
-    `send_time` DATETIME NOT NULL,
-    `log`  VARCHAR(255) NOT NULL DEFAULT '' ,
-    PRIMARY KEY  (`npsn`,`email`)
-    )";
+        `npsn` SMALLINT UNSIGNED NOT NULL ,
+        `email` VARCHAR(255) NOT NULL DEFAULT '' ,
+        `send_time` DATETIME NOT NULL,
+        `log`  VARCHAR(255) NOT NULL DEFAULT '' ,
+        PRIMARY KEY  (`npsn`,`email`)
+        )";
         $xoopsDB->queryF($sql);
     }
 
@@ -284,12 +283,12 @@ class Update
         global $xoopsDB;
 
         $sql = 'CREATE TABLE ' . $xoopsDB->prefix('tad_news_tags') . " (
-  `tag_sn` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `tag` VARCHAR(255) NOT NULL DEFAULT '',
-  `color` VARCHAR(255) NOT NULL DEFAULT '',
-  `enable` ENUM('0','1') NOT NULL,
-  PRIMARY KEY  (`tag_sn`)
-  )";
+        `tag_sn` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+        `tag` VARCHAR(255) NOT NULL DEFAULT '',
+        `color` VARCHAR(255) NOT NULL DEFAULT '',
+        `enable` ENUM('0','1') NOT NULL,
+        PRIMARY KEY  (`tag_sn`)
+        )";
         $xoopsDB->queryF($sql);
 
         $sql = 'SELECT DISTINCT prefix_tag FROM ' . $xoopsDB->prefix('tad_news') . " WHERE `prefix_tag`!=''";
