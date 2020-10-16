@@ -6,7 +6,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'tadnews_adm_import.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
-
+$_SESSION['total_news'] = $_SESSION['total_cate'] = 0;
 /*-----------function區--------------*/
 
 $moduleHandler = xoops_getHandler('module');
@@ -28,23 +28,22 @@ function chk_news_mod($version)
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
-        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        $token = new \XoopsFormHiddenToken();
-        $XOOPS_TOKEN = $token->render();
 
-        $main = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
-        $main .= "<form action='{$_SERVER['PHP_SELF']}' method='post'>
-        <center>
-        <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
+        $main = "<form action='{$_SERVER['PHP_SELF']}' method='post'>
+        <div class='bar m-3'>
+            <button type='submit' name='op' value='import' class='btn btn-primary'>" . _MA_TADNEWS_IMPORT . "</button>
+        </div>
+
         <table id='tbl'>
         <tr><th>" . _MA_TADNEWS_IMPORT_CATE . '</th></tr>';
         $main .= chk_cate();
         $main .= "</table>
-        <input type='hidden' name='op' value='import'>
-        $XOOPS_TOKEN
-        <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
-        </center>
+        <div class='bar m-3ß'>
+            <button type='submit' name='op' value='import' class='btn btn-primary'>" . _MA_TADNEWS_IMPORT . "</button>
+        </div>
         </form>";
+
+        $main .= sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version, $_SESSION['total_cate'], $_SESSION['total_news']);
     }
 
     $xoopsTpl->assign('main', $main);
@@ -65,6 +64,7 @@ function chk_cate($topic_pid = '', $left = 0)
     $main = '';
 
     while (list($topic_id, $topic_pid, $topic_title) = $xoopsDB->fetchRow($result)) {
+        $_SESSION['total_cate']++;
         $main .= "<tr class='even'><td style='padding-left:{$left}px'><input type='checkbox' name='cate[$topic_pid][$topic_id]' checked=checked value='{$topic_title} '><b>$topic_title</b></td></tr>";
         $main .= chk_stories($topic_id, $left);
         $main .= chk_cate($topic_id, $left);
@@ -84,6 +84,7 @@ function chk_stories($topicid = '', $left = 0)
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $main = '';
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
+        $_SESSION['total_news']++;
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";
     }
 
@@ -94,15 +95,11 @@ function chk_stories($topicid = '', $left = 0)
 function import($topic_pid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
-    //安全判斷
-    // if (!$GLOBALS['xoopsSecurity']->check()) {
-    //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
-    //     redirect_header("index.php", 3, $error);
-    // }
+
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
         $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (`of_ncsn`, `nc_title`, `enable_group`, `sort`) values('{$new_topic_pid}', '{$topic_title}', '', '')";
-        if ($xoopsDB->query($sql)) {
+        if ($xoopsDB->queryF($sql)) {
             $sub_new_topic_pid = $xoopsDB->getInsertId();
 
             //匯入文章
@@ -116,11 +113,6 @@ function import($topic_pid = 0, $new_topic_pid = 0)
 function import_stories($topicid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
-    //安全判斷
-    // if (!$GLOBALS['xoopsSecurity']->check()) {
-    //     $error = implode("<br>", $GLOBALS['xoopsSecurity']->getErrors());
-    //     redirect_header("index.php", 3, $error);
-    // }
 
     $myts = \MyTextSanitizer::getInstance();
 

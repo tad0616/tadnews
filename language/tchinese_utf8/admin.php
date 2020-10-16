@@ -37,7 +37,7 @@ define('_MA_TADNEWS_CHANGE_TO_PAGE', '轉為自訂頁面分類');
 
 //import.php
 define('_MA_TADNEWS_NO_NEWSMOD', '本站沒有安裝 news 新聞模組，故無須進行資料轉移。');
-define('_MA_TADNEWS_HAVE_NEWSMOD', '本站安裝的 news 新聞模組版本為 %s 版');
+define('_MA_TADNEWS_HAVE_NEWSMOD', '本站安裝的 news 新聞模組版本為 %s 版，共 %s 個分類，%s 篇文章');
 define('_MA_TADNEWS_IMPORT_CATE', '請選擇要匯入的文章類別');
 define('_MA_TADNEWS_IMPORT', '開始進行文章轉移');
 

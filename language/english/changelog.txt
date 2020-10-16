@@ -1,3 +1,8 @@
+TadNews 4.21 (Released 2020-08-12)
+=============================================================
+1. Modify the permission to a category with publish permission, you can manage all articles in that category.
+2.Fix the problem of too many articles cannot be transferred.
+
 TadNews 4.20 (2020-03-31 released)
 ====================================================
 1. Cancel Tadnews object single case mode
