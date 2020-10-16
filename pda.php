@@ -1,56 +1,62 @@
 <?php
+use XoopsModules\Tadtools\TadUpFiles;
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadnews\Tadnews;
+
 /*-----------引入檔案區--------------*/
-include_once "../../mainfile.php";
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/main.php";
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/language/{$xoopsConfig['language']}/modinfo.php";
-include_once XOOPS_ROOT_PATH . "/modules/system/language/{$xoopsConfig['language']}/blocks.php";
-include_once XOOPS_ROOT_PATH . "/modules/tadnews/function.php";
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+
+require_once XOOPS_ROOT_PATH . '/modules/tadnews/function.php';
 
 /*-----------function區--------------*/
 
 function list_tadnews($ncsn = '')
 {
-    global $xoopsModuleConfig, $tadnews;
+    global $xoopsModuleConfig, $Tadnews;
 
-    $num = (!empty($_POST['n'])) ? intval($_POST['n']) : 10;
-    $p = (!empty($_POST['p'])) ? intval($_POST['p']) : 0;
+    xoops_loadLanguage('blocks', 'tadnews');
+    xoops_loadLanguage('main', 'tadnews');
+    xoops_loadLanguage('modinfo', 'tadnews');
+
+    $num = (!empty($_POST['n'])) ? (int) $_POST['n'] : 10;
+    $p = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
     $start = $p * $num;
 
-    $tadnews->set_show_num($num);
-    $tadnews->set_skip_news($start);
-    $tadnews->set_news_kind('news');
-    $tadnews->set_summary($xoopsModuleConfig['summary_lengths']);
+    $Tadnews->set_show_num($num);
+    $Tadnews->set_skip_news($start);
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_summary($xoopsModuleConfig['summary_lengths']);
     if ($ncsn > 0) {
-        $tadnews->set_view_ncsn($ncsn);
-        $tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
+        $Tadnews->set_view_ncsn($ncsn);
+        $Tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
         $ncsn_param = "&ncsn={$ncsn}";
     } else {
-        $tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
+        $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
-    //$tadnews->set_title_length(20);
-    $tadnews->set_cover(true, 'db');
+    //$Tadnews->set_title_length(20);
+    $Tadnews->set_cover(true, 'db');
 
-    $tnews = $tadnews->get_news('return');
+    $tnews = $Tadnews->get_news('return');
 
-    $all_news = "";
+    $all_news = '';
 
     foreach ($tnews['page'] as $news) {
         $content = strip_tags($news['content']);
-        $item_image = (empty($news['image_thumb'])) ? "" : "<div class='item-media'><img data-src='{$news['image_thumb']}' class='lazy lazy-fadein'></div>";
+        $item_image = (empty($news['image_thumb'])) ? '' : "<div class='item-media'><img data-src='{$news['image_thumb']}' class='lazy lazy-fadein'></div>";
         $all_news .= "
-          <li>
-              <a href='pda.php?op=news&nsn={$news['nsn']}{$ncsn_param}' class='item-link item-content'>
-                  {$item_image}
-                  <div class='item-inner'>
-                      <div class='item-title-row'>
-                          <div class='item-title'>{$news['news_title']}</div>
-                          <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
-                      </div>
-                      <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
-                      <div class='item-text'>{$content}</div>
-                  </div>
-              </a>
-          </li>
+            <li>
+                <a href='pda.php?op=news&nsn={$news['nsn']}{$ncsn_param}' class='item-link item-content'>
+                    {$item_image}
+                    <div class='item-inner'>
+                        <div class='item-title-row'>
+                            <div class='item-title'>{$news['news_title']}</div>
+                            <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
+                        </div>
+                        <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
+                        <div class='item-text'>{$content}</div>
+                    </div>
+                </a>
+            </li>
       ";
     }
 
@@ -60,28 +66,28 @@ function list_tadnews($ncsn = '')
 //顯示單一新聞
 function show_news($nsn = '', $ncsn = '')
 {
-    global $xoopsUser, $xoopsModule, $xoopsModuleConfig, $tadnews;
+    global $xoopsUser, $xoopsModule, $xoopsModuleConfig, $Tadnews;
 
     $module_name = $xoopsModule->getVar('name');
-    $cate = $tadnews->get_tad_news_cate($ncsn);
-    $navbar_title = (empty($ncsn)) ? "{$module_name}" : "{$cate['nc_title']}";
+    $cate = $Tadnews->get_tad_news_cate($ncsn);
+    $navbar_title = (empty($ncsn)) ? (string) ($module_name) : (string) ($cate['nc_title']);
 
-    $tadnews->set_view_nsn($nsn);
-    $tadnews->set_cover(true, 'db');
-    $tadnews->set_summary('full');
+    $Tadnews->set_view_nsn($nsn);
+    $Tadnews->set_cover(true, 'db');
+    $Tadnews->set_summary('full');
     //if($xoopsModuleConfig['use_star_rating']=='1'){
-    //  $tadnews->set_use_star_rating(true);
+    //  $Tadnews->set_use_star_rating(true);
     //}
-    $news = $tadnews->get_news('return');
+    $news = $Tadnews->get_news('return');
 
-    $facebook_comments = facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
+    $facebook_comments = Utility::facebook_comments($xoopsModuleConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn);
 
-    $uid_name = XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
-    $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
+    $uid_name = \XoopsUser::getUnameFromId($news['page'][0]['uid'], 1);
+    $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($news['page'][0]['uid'], 0) : $uid_name;
 
-    $sign_bg = (!empty($news['page'][0]['need_sign'])) ? "style='background-image:url(" . XOOPS_URL . "/modules/tadnews/images/sign_bg.png);background-position: right top;background-repeat: no-repeat;'" : "";
+    $sign_bg = (!empty($news['page'][0]['need_sign'])) ? "style='background-image:url(" . XOOPS_URL . "/modules/tadnews/images/sign_bg.png);background-position: right top;background-repeat: no-repeat;'" : '';
 
-    $news_image = (!empty($news['page'][0]['image_thumb'])) ? "<div class='news-img'><img src='{$news['page'][0]['image_thumb']}' width='100%'></div>" : "";
+    $news_image = (!empty($news['page'][0]['image_thumb'])) ? "<div class='news-img'><img src='{$news['page'][0]['image_thumb']}' width='100%'></div>" : '';
 
     $main = "
         <div class='navbar theme-white color-white'>
@@ -124,7 +130,7 @@ function show_news($nsn = '', $ncsn = '')
         </div>
     ";
 
-    //$tadnews->add_counter($nsn);
+    //$Tadnews->add_counter($nsn);
 
     return $main;
 }
@@ -140,8 +146,8 @@ function get_tad_news_cate_list_m()
                 <ul>
         ";
 
-    $sql = "select `ncsn`, `nc_title`, `not_news` from " . $xoopsDB->prefix("tad_news_cate") . " where `not_news` != '1' order by `sort`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $sql = 'select `ncsn`, `nc_title`, `not_news` from ' . $xoopsDB->prefix('tad_news_cate') . " where `not_news` != '1' order by `sort`";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
         $list .= "
@@ -154,7 +160,7 @@ function get_tad_news_cate_list_m()
             </li>
         ";
     }
-    $list .= "</ul></div>";
+    $list .= '</ul></div>';
 
     return $list;
 }
@@ -164,9 +170,9 @@ function month_list_m()
 {
     global $xoopsDB;
 
-    $sql = "select left(a.start_day,7), count(*) from " . $xoopsDB->prefix("tad_news") . " as a left join " . $xoopsDB->prefix("tad_news_cate") . " as b on a.ncsn=b.ncsn where a.enable='1' and b.not_news='0' group by left(a.start_day,7) order by a.start_day desc";
+    $sql = 'SELECT left(a.start_day,7), count(*) FROM ' . $xoopsDB->prefix('tad_news') . ' AS a LEFT JOIN ' . $xoopsDB->prefix('tad_news_cate') . " AS b ON a.ncsn=b.ncsn WHERE a.enable='1' AND b.not_news='0' GROUP BY left(a.start_day,7) ORDER BY a.start_day DESC";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     $count = $xoopsDB->getRowsNum($result);
 
@@ -175,16 +181,16 @@ function month_list_m()
             <div class='item-inner'>
                 <div class='item-title'>No data available.</div>
             </div>
-        </li>" : "";
+        </li>" : '';
 
-    $opt = "{$nodata}";
+    $opt = (string) ($nodata);
 
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt .= "
             <li>
                 <a href='pda.php?op=archive&date={$ym}' class='item-link item-content'>
                     <div class='item-inner'>
-                        <div class='item-title'>" . str_replace("-", "" . _MD_TADNEWS_YEAR, $ym) . _MD_TADNEWS_MONTH . "</div>
+                        <div class='item-title'>" . str_replace('-', '' . _MD_TADNEWS_YEAR, $ym) . _MD_TADNEWS_MONTH . "</div>
                         <div class='item-after'><span class='badge'>{$count}</span></div>
                     </div>
                 </a>
@@ -196,31 +202,31 @@ function month_list_m()
 }
 
 //分月新聞
-function archive_m($date = "")
+function archive_m($date = '')
 {
-    global $tadnews;
+    global $Tadnews;
 
     if (empty($date)) {
-        $date = date("Y-m");
+        $date = date('Y-m');
     }
 
-    $tadnews->set_news_kind("news");
-    $tadnews->set_show_mode('list');
-    $tadnews->set_show_month($date);
-    $tadnews->set_show_enable(1);
+    $Tadnews->set_news_kind('news');
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_show_month($date);
+    $Tadnews->set_show_enable(1);
 
-    $tnews = $tadnews->get_news('return');
+    $tnews = $Tadnews->get_news('return');
 
     $nodata = (empty($tnews['page'])) ? "
         <li class='item-content'>
             <div class='item-inner'>
                 <div class='item-title'>No data available.</div>
             </div>
-        </li>" : "";
+        </li>" : '';
 
-    $date_title = to_utf8(str_replace("-", "" . _MD_TADNEWS_YEAR . " ", $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
+    $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
 
-    $list = "{$nodata}";
+    $list = (string) ($nodata);
 
     foreach ($tnews['page'] as $news) {
         $list .= "
@@ -246,9 +252,9 @@ function list_newspaper_m()
 {
     global $xoopsDB;
 
-    $sql = "select a.npsn,a.number,b.title,a.np_date from " . $xoopsDB->prefix("tad_news_paper") . " as a ," . $xoopsDB->prefix("tad_news_paper_setup") . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc";
+    $sql = 'SELECT a.npsn,a.number,b.title,a.np_date FROM ' . $xoopsDB->prefix('tad_news_paper') . ' AS a ,' . $xoopsDB->prefix('tad_news_paper_setup') . " AS b WHERE a.nps_sn=b.nps_sn AND b.status='1' ORDER BY a.np_date DESC";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
 
     $count = $xoopsDB->getRowsNum($result);
 
@@ -257,15 +263,16 @@ function list_newspaper_m()
             <div class='item-inner'>
                 <div class='item-title'>No data available.</div>
             </div>
-        </li>" : "";
+        </li>" : '';
 
-    $main = "{$nodata}";
+    $main = (string) ($nodata);
 
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {
-
         $np_title = $title . sprintf(_MD_TADNEWS_NP_TITLE, $number);
-        $np_date = substr($np_date, 0, 10);
+        $np_date = mb_substr($np_date, 0, 10);
+
         $main .= "
+
             <li>
                 <a href='pda.php?op=preview&npsn={$allnpsn}' class='item-link item-content'>
                     <div class='item-inner'>
@@ -274,14 +281,13 @@ function list_newspaper_m()
                 </a>
             </li>
         ";
-
     }
 
     return $main;
 }
 
 //預覽電子報
-function preview_newspaper_m($npsn = "")
+function preview_newspaper_m($npsn = '')
 {
     global $xoopsDB;
     if (empty($npsn)) {
@@ -289,13 +295,14 @@ function preview_newspaper_m($npsn = "")
     }
 
     $np = get_newspaper($npsn);
-    $sql = "select title,head,foot,themes from " . $xoopsDB->prefix("tad_news_paper_setup") . " where nps_sn='{$np['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, show_error($sql));
+    $sql = 'select title,head,foot,themes from ' . $xoopsDB->prefix('tad_news_paper_setup') . " where nps_sn='{$np['nps_sn']}'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $sql);
+
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $head = str_replace('{N}', $np['number'], $head);
     $head = str_replace('{T}', $np['np_title'], $head);
-    $head = str_replace('{D}', substr($np['np_date'], 0, 10), $head);
+    $head = str_replace('{D}', mb_substr($np['np_date'], 0, 10), $head);
 
     $main = "{$head}{$np['np_content']}{$foot}";
 
@@ -304,12 +311,12 @@ function preview_newspaper_m($npsn = "")
 
 function member_m()
 {
-    global $xoopsUser, $xoopsModule, $tadnews;
+    global $xoopsUser, $xoopsModule, $Tadnews;
 
-    $main = "";
+    $main = '';
     if ($xoopsUser) {
         $avatar = $xoopsUser->user_avatar();
-        $avatar_pic = (empty($avatar) or $avatar == 'blank.gif') ? "<i class='ion-ios-person'></i>" : "<img src='" . XOOPS_URL . "/uploads/{$avatar}'>";
+        $avatar_pic = (empty($avatar) or 'blank.gif' === $avatar) ? "<i class='ion-ios-person'></i>" : "<img src='" . XOOPS_URL . "/uploads/{$avatar}'>";
         $uid_name = $xoopsUser->name();
         if (empty($uid_name)) {
             $uid_name = $xoopsUser->uname();
@@ -320,27 +327,27 @@ function member_m()
                     <a href='" . XOOPS_URL . "/admin.php' class='item-link item-content external'>
                         <div class='item-media'><i class='icon ion-wrench'></i></div>
                         <div class='item-inner'>
-                            <div class='item-title'>" . _MB_SYSTEM_ADMENU . "</div>
+                            <div class='item-title'>" . _MB_SYSTEM_ADMENU . '</div>
                         </div>
                     </a>
                 </li>
-            ";
+            ';
         }
-        $power = $tadnews->chk_user_cate_power();
-        if (sizeof($power) > 0) {
+        $power = $Tadnews->chk_user_cate_power();
+        if (count($power) > 0) {
             $author = "
                 <div class='list-block'>
                     <ul>
                         <li>
                             <a href='pda.php?op=mynews' class='item-link item-content'>
                                 <div class='item-inner'>
-                                    <div class='item-title'>" . _MD_TADNEWS_MY . "</div>
+                                    <div class='item-title'>" . _MD_TADNEWS_MY . '</div>
                                 </div>
                             </a>
                         </li>
                     </ul>
                 </div>
-            ";
+            ';
         }
         $main = "
         <div class='avatar-wrap'>
@@ -390,18 +397,18 @@ function member_m()
                     <a href='#' class='item-link item-content logout'>
                         <div class='item-media'><i class='icon ion-power'></i></div>
                         <div class='item-inner'>
-                            <div class='item-title'>" . _MB_SYSTEM_LOUT . "</div>
+                            <div class='item-title'>" . _MB_SYSTEM_LOUT . '</div>
                         </div>
                     </a>
                 </li>
             </ul>
         </div>
 
-        ";
+        ';
     } else {
         $tlogin = openid_login();
         foreach ($tlogin as $login) {
-            if ($login['class'] == 'btn-fb' or $login['class'] == 'btn-gl') {
+            if ('btn-fb' === $login['class'] or 'btn-gl' === $login['class']) {
                 $login_list .= "<a href='{$login['link']}' class='{$login['class']} button button-big external'>{$login['fa']}</a>";
             } else {
                 $login_list .= "<a href='{$login['link']}' class='{$login['class']} external'><img src='{$login['img']}' alt='{$login['text']}'></a>";
@@ -429,31 +436,33 @@ function member_m()
 function openid_login()
 {
     global $xoopsConfig;
-    $modhandler = xoops_gethandler('module');
-    $config_handler = xoops_gethandler('config');
+    $moduleHandler = xoops_getHandler('module');
+    $configHandler = xoops_getHandler('config');
 
-    $TadLoginXoopsModule = $modhandler->getByDirname("tad_login");
+    $TadLoginXoopsModule = $moduleHandler->getByDirname('tad_login');
     if ($TadLoginXoopsModule) {
-        include_once XOOPS_ROOT_PATH . "/modules/tad_login/function.php";
-        include_once XOOPS_ROOT_PATH . "/modules/tad_login/language/{$xoopsConfig['language']}/county.php";
+        require_once XOOPS_ROOT_PATH . '/modules/tad_login/function.php';
+
+        xoops_loadLanguage('county', 'tad_login');
+
         $tad_login['facebook'] = facebook_login('return');
         $tad_login['google'] = google_login('return');
 
-        $config_handler = xoops_gethandler('config');
-        $modConfig = $config_handler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
+        $configHandler = xoops_getHandler('config');
+        $modConfig = $configHandler->getConfigsByCat(0, $TadLoginXoopsModule->getVar('mid'));
 
         $auth_method = $modConfig['auth_method'];
         $i = 0;
 
         foreach ($auth_method as $method) {
-            $method_const = "_" . strtoupper($method);
+            $method_const = '_' . mb_strtoupper($method);
             $loginTitle = sprintf(_TAD_LOGIN_BY, constant($method_const));
 
-            if ($method == "facebook") {
+            if ('facebook' === $method) {
                 $tlogin[$i]['link'] = $tad_login['facebook'];
                 $tlogin[$i]['class'] = 'btn-fb';
                 $tlogin[$i]['fa'] = '<i class="icon ion-social-facebook"></i> Facebook';
-            } elseif ($method == "google") {
+            } elseif ('google' === $method) {
                 $tlogin[$i]['link'] = $tad_login['google'];
                 $tlogin[$i]['class'] = 'btn-gl';
                 $tlogin[$i]['fa'] = '<i class="icon ion-social-google"></i> Google';
@@ -467,56 +476,57 @@ function openid_login()
             $i++;
         }
     }
+
     return $tlogin;
 }
 
 //列出某人所有新聞
 function list_tad_my_news_m()
 {
-    global $xoopsModuleConfig, $xoopsUser, $tadnews;
+    global $xoopsModuleConfig, $xoopsUser, $Tadnews;
 
-    $power = $tadnews->chk_user_cate_power();
+    $power = $Tadnews->chk_user_cate_power();
 
     if (empty($power)) {
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
     }
 
-    $num = (!empty($_POST['n'])) ? intval($_POST['n']) : 10;
-    $p = (!empty($_POST['p'])) ? intval($_POST['p']) : 0;
+    $num = (!empty($_POST['n'])) ? (int) $_POST['n'] : 10;
+    $p = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
     $start = $p * $num;
 
     $uid = $xoopsUser->uid();
-    $tadnews->set_show_num($num);
-    $tadnews->set_skip_news($start);
-    $tadnews->set_show_enable(0);
-    $tadnews->set_view_uid($uid);
-    $tadnews->set_news_kind($kind);
-    $tadnews->set_summary(0);
-    $tadnews->set_show_mode("list");
-    $tadnews->set_admin_tool(true);
+    $Tadnews->set_show_num($num);
+    $Tadnews->set_skip_news($start);
+    $Tadnews->set_show_enable(0);
+    $Tadnews->set_view_uid($uid);
+    $Tadnews->set_news_kind($kind);
+    $Tadnews->set_summary(0);
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_admin_tool(true);
 
     if (!empty($the_ncsn)) {
-        $tadnews->set_view_ncsn($the_ncsn);
+        $Tadnews->set_view_ncsn($the_ncsn);
     }
 
-    $tnews = $tadnews->get_news('return');
+    $tnews = $Tadnews->get_news('return');
 
-    $list = "";
+    $list = '';
 
     foreach ($tnews['page'] as $news) {
         $list .= "
-          <li>
-              <a href='pda.php?nsn={$news['nsn']}' class='item-link item-content'>
-                  <div class='item-inner'>
-                      <div class='item-title-row'>
-                          <div class='item-title'>{$news['news_title']}</div>
-                          <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
-                      </div>
-                      <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
-                  </div>
-              </a>
-          </li>
+            <li>
+                <a href='pda.php?nsn={$news['nsn']}' class='item-link item-content'>
+                    <div class='item-inner'>
+                        <div class='item-title-row'>
+                            <div class='item-title'>{$news['news_title']}</div>
+                            <div class='item-after'><span class='badge'>{$news['counter']}</span></div>
+                        </div>
+                        <div class='item-subtitle'>{$news['post_date']} &middot; {$news['cate_name']}</div>
+                    </div>
+                </a>
+            </li>
         ";
     }
 
@@ -527,36 +537,34 @@ function logout_m()
 {
     global $xoopsConfig, $xoopsUser;
     // Regenerate a new session id and destroy old session
-    $GLOBALS["sess_handler"]->regenerate_id(true);
-    $_SESSION = array();
+    $GLOBALS['sess_handler']->regenerate_id(true);
+    $_SESSION = [];
     setcookie($xoopsConfig['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler = xoops_gethandler('online');
-        $online_handler->destroy($xoopsUser->getVar('uid'));
+        $onlineHandler = xoops_getHandler('online');
+        $onlineHandler->destroy($xoopsUser->getVar('uid'));
     }
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
 $nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
 $npsn = system_CleanVars($_REQUEST, 'npsn', '', 'int');
-$date = system_CleanVars($_REQUEST, 'date', '', 'date');
-$date = (!isset($date)) ? date("Y-m") : date("Y-m", $date);
+$date = system_CleanVars($_REQUEST, 'date', date('Y-m'), 'string');
+$files_sn = system_CleanVars($_REQUEST, 'files_sn', '', 'int');
 
 switch ($op) {
-
     //下載檔案
-    case "tufdl":
-        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+    case 'tufdl':
+        $TadUpFiles = new TadUpFiles('tadnews');
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;
         break;
-
-    case "month_list":
+    case 'month_list':
         $month_list = month_list_m($date);
         $main = "
             <!-- Top Navbar-->
@@ -585,10 +593,9 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "archive":
+    case 'archive':
         $archive = archive_m($date);
-        $date_title = to_utf8(str_replace("-", "" . _MD_TADNEWS_YEAR . " ", $date) . _MD_TADNEWS_MONTH);
+        $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH);
         $main = "
             <!-- Top Navbar-->
             <div class='navbar theme-white color-white'>
@@ -616,8 +623,7 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "newspaper":
+    case 'newspaper':
         $newspaper = list_newspaper_m();
         $main = "
             <!-- Top Navbar-->
@@ -646,8 +652,7 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "preview":
+    case 'preview':
         $preview = preview_newspaper_m($npsn);
         $main = "
             <!-- Top Navbar-->
@@ -678,10 +683,9 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "category":
+    case 'category':
         $category = list_tadnews($ncsn);
-        $cate = $tadnews->get_tad_news_cate($ncsn);
+        $cate = $Tadnews->get_tad_news_cate($ncsn);
         $main = "
             <!-- Top Navbar-->
             <div class='navbar theme-white color-white'>
@@ -716,8 +720,7 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "member":
+    case 'member':
         $member = member_m();
         $main = "
             <!-- Top Navbar-->
@@ -744,8 +747,7 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "mynews":
+    case 'mynews':
         $mynews = list_tad_my_news_m();
         $main = "
             <!-- Top Navbar-->
@@ -781,37 +783,31 @@ switch ($op) {
         echo $main;
         exit;
         break;
-
-    case "mynews_load_more":
+    case 'mynews_load_more':
         $main = list_tad_my_news_m();
         echo $main;
         exit;
         break;
-
-    case "load_more":
+    case 'load_more':
         $main = list_tadnews($ncsn);
         echo $main;
         exit;
         break;
-
-    case "news":
+    case 'news':
         $main = show_news($nsn, $ncsn);
         echo $main;
         exit;
         break;
-
-    case "delete_tad_news":
-        $tadnews->delete_tad_news($nsn);
-        header("location: " . $_SERVER['PHP_SELF']);
+    case 'delete_tad_news':
+        $Tadnews->delete_tad_news($nsn);
+        header('location: ' . $_SERVER['PHP_SELF']);
         exit;
         break;
-
-    case "logout":
+    case 'logout':
         logout_m();
-        header("location: " . $_SERVER['PHP_SELF']);
+        header('location: ' . $_SERVER['PHP_SELF']);
         exit;
         break;
-
     default:
         if (!empty($nsn)) {
             $main = show_news($nsn, $ncsn);
@@ -863,10 +859,10 @@ echo "
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
     <title>{$module_name}</title>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/framework7.ios.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/framework7.ios.colors.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/ionicons.min.css'>
-    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/class/framework7/css/my-app.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/framework7.ios.min.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/framework7.ios.colors.min.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/ionicons.min.css'>
+    <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/framework7/css/tadnews-app.css'>
 </head>
 
 <body>
@@ -967,10 +963,10 @@ echo "
     </div>
     <!-- Framework7 Library JS-->
     <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/jquery/jquery-1.11.1.min.js'></script>
-    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadnews/class/framework7/js/framework7.min.js'></script>
+    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/framework7.min.js'></script>
     <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/fancyBox/source/jquery.fancybox.js?v=2.1.4'></script>
     <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/fancyBox/source/jquery.fancybox.css?v=2.1.4'>
-    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadnews/class/framework7/js/my-app.js'></script>
+    <script type='text/javascript' src='" . XOOPS_URL . "/modules/tadtools/framework7/js/tadnews-app.js'></script>
 </body>
 
 </html>

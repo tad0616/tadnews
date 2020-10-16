@@ -1,7 +1,7 @@
 <?php
-//global
-include_once 'global.php';
-include_once '../../tadtools/language/' . $xoopsConfig['language'] . '/admin_common.php';
+xoops_loadLanguage('admin_common', 'tadtools');
+
+require_once __DIR__ . '/global.php';
 define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 
 define('_MA_TADNEWS_SAVE_CATE', '儲存');
@@ -37,7 +37,7 @@ define('_MA_TADNEWS_CHANGE_TO_PAGE', '轉為自訂頁面分類');
 
 //import.php
 define('_MA_TADNEWS_NO_NEWSMOD', '本站沒有安裝 news 新聞模組，故無須進行資料轉移。');
-define('_MA_TADNEWS_HAVE_NEWSMOD', '本站安裝的 news 新聞模組版本為 %s 版');
+define('_MA_TADNEWS_HAVE_NEWSMOD', '本站安裝的 news 新聞模組版本為 %s 版，共 %s 個分類，%s 篇文章');
 define('_MA_TADNEWS_IMPORT_CATE', '請選擇要匯入的文章類別');
 define('_MA_TADNEWS_IMPORT', '開始進行文章轉移');
 
@@ -68,9 +68,9 @@ define('_MA_TADNEWS_NP_CONTENT_FOOT_DESC', '若欲回覆系統預設的頁首、
 define('_MA_TADNEWS_NP_TITLE_L', '《');
 define('_MA_TADNEWS_NP_TITLE_R', '》');
 
-define('_MA_TADNEWS_NP_HEAD_CONTENT', '<h5 style="color:white;float:right;">%s電子報第 {N} 期</h5><h1>{T}</h1><h2>◎ 訂閱網址：%s ◎ 發報時間：{D}</h2>');
+define('_MA_TADNEWS_NP_HEAD_CONTENT', '<h5 style="color:white;float:right;">%s電子報第 {N} 期</h5><h2>{T}</h1><h2>◎ 訂閱網址：%s ◎ 發報時間：{D}</h2>');
 
-define('_MA_TADNEWS_NP_FOOT_CONTENT', '<div class="foot"><h1>【關於本報】</h1>
+define('_MA_TADNEWS_NP_FOOT_CONTENT', '<div class="foot"><h2>【關於本報】</h1>
 <p>◎ 主編：%s</p>
 <p>本電子報智慧財產權屬於「<a href="%s" target="_blank">%s</a>」，採用<a href="http://creativecommons.org/licenses/by-sa/2.5/tw/deed.zh_TW" target="_blank">創用 CC「姓名標示－禁止改作－非商業性」授權條款臺灣 2.5 版授權</a>散布。<a href="http://creativecommons.org/licenses/by-sa/2.5/tw/legalcode" target="_blank">《授權條款全文》</a></p>
 <p>若欲為上述授權範圍以外之利用，請與「%s」（<a href="mailto:%s">%s</a>） 聯絡。</p>

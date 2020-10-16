@@ -1,13 +1,16 @@
 <?php
-//global.php
-include_once 'global.php';
+xoops_loadLanguage('admin_common', 'tadtools');
 
-include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
+require_once __DIR__ . '/global.php';
+if (!defined('_TAD_NEED_TADTOOLS')) {
+    define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
+}
+
+
 define('_MA_TADNEWS_SAVE_CATE', 'Save');
 define('_MA_TADNEWS_FUNCTION', 'Function');
 define('_MA_TADNEWS_MOVE', 'Move');
 define('_MA_TADNEWS_ADD', 'Post');
-define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
 define('_MA_TADNEWS_NEWS_TITLE', 'Title');
 define('_MA_TADNEWS_NEWS_PASSWD', 'Password');
 define('_MA_TADNEWS_CAN_READ_NEWS_GROUP', 'Available Groups');
@@ -69,9 +72,9 @@ define('_MA_TADNEWS_NP_CONTENT_FOOT_DESC', 'Keep empty and click "Next" for defa
 define('_MA_TADNEWS_NP_TITLE_L', '(');
 define('_MA_TADNEWS_NP_TITLE_R', ')');
 
-define('_MA_TADNEWS_NP_HEAD_CONTENT', "<h5 style=\"color:white;float:right;\">%s NO. {N} </h5><h1>{T}</h1><h2>* Subscribe: %s * Publish Date: {D}</h2>");
+define('_MA_TADNEWS_NP_HEAD_CONTENT', '<h5 style="color:white;float:right;">%s NO. {N} </h5><h2>{T}</h1><h2>* Subscribe: %s * Publish Date: {D}</h2>');
 
-define('_MA_TADNEWS_NP_FOOT_CONTENT', "<div class=\"foot\"><h1>[About] </h1>
+define('_MA_TADNEWS_NP_FOOT_CONTENT', "<div class=\"foot\"><h2>[About] </h1>
 <p>* Editor: %s</p>
 <p>All rights reserved by \"<a href='%s' target='_blank'>%s</a>\', and published in <a href='http://creativecommons.org/licenses/by-sa/2.5/tw/deed.zh_TW' target='_blank'>Creative Common CC\"Attribution licensing-Attribution-NoDerivs-Noncommercial\"article of authority Taiwan 2.5 version </a>. <a href='http://creativecommons.org/licenses/by-sa/2.5/tw/legalcode' target='_blank'>(Full Article of Authority)</a></p>
 <p>To use any content of newspaper out of authorized range, please contact \"%s\"(<a href='mailto:%s'>%s</a>) </p>

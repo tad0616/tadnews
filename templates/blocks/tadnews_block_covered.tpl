@@ -6,14 +6,14 @@
     <{if $i==0}>
     <div class="row">
     <{/if}>
-    <div class="col-md-<{$block.num}>" style="margin-bottom:16px;">
+    <div class="col-sm-<{$block.num}>" style="margin-bottom:16px;">
       <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>">
         <div style="height:150px;overflow:hidden;border:1px solid gray;vertical-align:middle;background-image: url('<{if $news.image_big}><{$news.image_big}><{else}><{$xoops_url}>/modules/tadnews/images/demo<{$total}>.jpg<{/if}>'); background-size: cover;">
         </div>
       </a>
-      <div style="font-size:18px; overflow:hidden;height:15pt;line-height:16pt;margin:8px 3px; "><a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a></div>
-      <div>
-        <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>" style="<{$block.summary_css}>"><{$news.content}></a>
+      <div style="font-size: 1.125em; overflow:hidden;height:15pt;line-height:16pt;margin:8px 3px; "><a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a></div>
+      <div style="<{$block.summary_css}>">
+        <{$news.content}>
       </div>
     </div>
 

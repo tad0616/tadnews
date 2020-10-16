@@ -6,7 +6,7 @@
 }
 
 .news_title a{
-  font-size: 16px;
+  font-size: 1em;
   font-weight: bolder;
   border: none;
   color:rgb(153,0,0);
@@ -20,7 +20,7 @@
 }
 
 .news_toolbar{
-  font-size:11px;
+  font-size: 0.8em;
   border:none;
   margin:2px 4px 6px 10px;
   text-align:right;

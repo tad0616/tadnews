@@ -1,21 +1,23 @@
 <?php
-/*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tadnews_adm_import.tpl';
-include_once "header.php";
-include_once "../function.php";
-include_once "admin_function.php";
+use XoopsModules\Tadtools\Utility;
 
+/*-----------引入檔案區--------------*/
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_adm_import.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
+require_once __DIR__ . '/admin_function.php';
+$_SESSION['total_news'] = $_SESSION['total_cate'] = 0;
 /*-----------function區--------------*/
 
-$module_handler = xoops_gethandler('module');
-$news           = &$module_handler->getByDirname('news');
+$moduleHandler = xoops_getHandler('module');
+$news = $moduleHandler->getByDirname('news');
 if (!empty($news)) {
-    $mid     = $news->getVar("mid");
-    $version = $news->getVar("version");
+    $mid_news = $news->getVar('mid');
+    $version = $news->getVar('version');
 
-    $module_handler2 = xoops_gethandler('module');
-    $tadnews         = &$module_handler->getByDirname('tadnews');
-    $tadnews_mid     = $tadnews->getVar("mid");
+    $moduleHandler2 = xoops_getHandler('module');
+    $mod_tadnews = $moduleHandler->getByDirname('tadnews');
+    $mid_tadnews = $mod_tadnews->getVar('mid');
 }
 
 //檢查有無安裝新聞區模組
@@ -26,25 +28,29 @@ function chk_news_mod($version)
     if (empty($version)) {
         $main = _MA_TADNEWS_NO_NEWSMOD;
     } else {
-        $main = sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version);
-        $main .= "<form action='{$_SERVER['PHP_SELF']}' method='post'>
-        <center>
-        <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
+
+        $main = "<form action='{$_SERVER['PHP_SELF']}' method='post'>
+        <div class='bar m-3'>
+            <button type='submit' name='op' value='import' class='btn btn-primary'>" . _MA_TADNEWS_IMPORT . "</button>
+        </div>
+
         <table id='tbl'>
-        <tr><th>" . _MA_TADNEWS_IMPORT_CATE . "</th></tr>";
+        <tr><th>" . _MA_TADNEWS_IMPORT_CATE . '</th></tr>';
         $main .= chk_cate();
         $main .= "</table>
-        <input type='hidden' name='op' value='import'>
-        <p><input type='submit' value='" . _MA_TADNEWS_IMPORT . "'></p>
-        </center>
+        <div class='bar m-3ß'>
+            <button type='submit' name='op' value='import' class='btn btn-primary'>" . _MA_TADNEWS_IMPORT . "</button>
+        </div>
         </form>";
+
+        $main .= sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version, $_SESSION['total_cate'], $_SESSION['total_news']);
     }
 
     $xoopsTpl->assign('main', $main);
 }
 
 //檢查分類
-function chk_cate($topic_pid = "", $left = 0)
+function chk_cate($topic_pid = '', $left = 0)
 {
     global $xoopsDB;
 
@@ -52,12 +58,13 @@ function chk_cate($topic_pid = "", $left = 0)
         $left += 14;
     }
 
-    $sql    = "select topic_id,topic_pid,topic_title from " . $xoopsDB->prefix("topics") . " where topic_pid='{$topic_pid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql = 'select topic_id,topic_pid,topic_title from ' . $xoopsDB->prefix('topics') . " where topic_pid='{$topic_pid}'";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $main = "";
+    $main = '';
 
     while (list($topic_id, $topic_pid, $topic_title) = $xoopsDB->fetchRow($result)) {
+        $_SESSION['total_cate']++;
         $main .= "<tr class='even'><td style='padding-left:{$left}px'><input type='checkbox' name='cate[$topic_pid][$topic_id]' checked=checked value='{$topic_title} '><b>$topic_title</b></td></tr>";
         $main .= chk_stories($topic_id, $left);
         $main .= chk_cate($topic_id, $left);
@@ -67,18 +74,20 @@ function chk_cate($topic_pid = "", $left = 0)
 }
 
 //檢查文章
-function chk_stories($topicid = "", $left = 0)
+function chk_stories($topicid = '', $left = 0)
 {
     global $xoopsDB;
 
     $left += 14;
 
-    $sql    = "select storyid,title  from " . $xoopsDB->prefix("stories") . " where topicid ='{$topicid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
-    $main   = "";
+    $sql = 'select storyid,title  from ' . $xoopsDB->prefix('stories') . " where topicid ='{$topicid}'";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $main = '';
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
+        $_SESSION['total_news']++;
         $main .= "<tr><td style='padding-left:{$left}px'><input type='checkbox' name='stories[$topicid][]' value='{$storyid}' checked=checked>$title</td></tr>";
     }
+
     return $main;
 }
 
@@ -86,11 +95,11 @@ function chk_stories($topicid = "", $left = 0)
 function import($topic_pid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
+
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
-
-        $sql = "insert into " . $xoopsDB->prefix("tad_news_cate") . " (`of_ncsn`, `nc_title`, `enable_group`, `sort`) values('{$new_topic_pid}', '{$topic_title}', '', '')";
-        if ($xoopsDB->query($sql)) {
+        $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (`of_ncsn`, `nc_title`, `enable_group`, `sort`) values('{$new_topic_pid}', '{$topic_title}', '', '')";
+        if ($xoopsDB->queryF($sql)) {
             $sub_new_topic_pid = $xoopsDB->getInsertId();
 
             //匯入文章
@@ -105,27 +114,27 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
 {
     global $xoopsDB;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     foreach ($_POST['stories'][$topicid] as $storyid) {
         //找出勾選的內容
-        $sql    = "SELECT `storyid`, `uid`, `title`, `published`, `expired`, `nohtml`, `nosmiley`, `hometext`, `bodytext`, `counter`, `topicid` FROM " . $xoopsDB->prefix("stories") . " WHERE `storyid` ='{$storyid}'";
+        $sql = 'SELECT `storyid`, `uid`, `title`, `published`, `expired`, `nohtml`, `nosmiley`, `hometext`, `bodytext`, `counter`, `topicid` FROM ' . $xoopsDB->prefix('stories') . " WHERE `storyid` ='{$storyid}'";
         $result = $xoopsDB->query($sql);
 
         list($storyid, $uid, $title, $published, $expired, $nohtml, $nosmiley, $hometext, $bodytext, $counter, $topicid) = $xoopsDB->fetchRow($result);
-        $news_content                                                                                                    = $hometext . $bodytext;
+        $news_content = $hometext . $bodytext;
 
-        $myts         = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $news_content = $myts->addSlashes($news_content);
-        $title        = $myts->addSlashes($title);
+        $title = $myts->addSlashes($title);
 
         //bbcode 轉換
-        $news_content = $myts->makeTareaData4Show($news_content, 1, 1, 1);
+        $news_content = $myts->displayTarea($news_content, 1, 1, 1);
 
-        $published = date("Y-m-d H:i:s", $published);
-        $enable    = (empty($expired)) ? "1" : "0";
+        $published = date('Y-m-d H:i:s', $published);
+        $enable = (empty($expired)) ? '1' : '0';
 
-        $sql = "insert into " . $xoopsDB->prefix("tad_news") . " (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) values('{$new_topic_pid}', '{$title} ', '{$news_content} ', '{$published}', '', '{$enable}', '{$uid}', '', '', '{$counter}')";
+        $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) values('{$new_topic_pid}', '{$title} ', '{$news_content} ', '{$published}', '', '{$enable}', '{$uid}', '', '', '{$counter}')";
         if ($xoopsDB->queryF($sql)) {
             $new_nsn = $xoopsDB->getInsertId();
             //匯入評論
@@ -134,26 +143,24 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
     }
 }
 
-function import_common($storyid = "", $new_nsn = "")
+function import_common($storyid = '', $new_nsn = '')
 {
-    global $xoopsDB, $mid, $tadnews_mid;
+    global $xoopsDB, $mid_news, $mid_tadnews;
 
-    $sql = "update " . $xoopsDB->prefix("xoopscomments") . " set com_modid='{$tadnews_mid}',com_itemid='{$new_nsn}' where com_modid='{$mid}' and com_itemid='{$storyid}'";
+    $sql = 'update ' . $xoopsDB->prefix('xoopscomments') . " set com_modid='{$mid_tadnews}',com_itemid='{$new_nsn}' where com_modid='{$mid_news}' and com_itemid='{$storyid}'";
     $xoopsDB->query($sql);
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 
 switch ($op) {
-
     //刪除資料
-    case "import";
+    case 'import':
         import();
-        header("location: index.php");
+        header('location: index.php');
         exit;
-        break;
 
     default:
         chk_news_mod($version);
@@ -161,4 +168,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once "footer.php";
+require_once __DIR__ . '/footer.php';

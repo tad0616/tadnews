@@ -10,12 +10,12 @@ function tadnews_search($queryarray, $andor, $limit, $offset, $userid)
             }
             $queryarray = $arr;
         } else {
-            $queryarray = array();
+            $queryarray = [];
         }
     }
-    $sql = "SELECT nsn,news_title,start_day, uid FROM " . $xoopsDB->prefix("tad_news") . " WHERE enable='1'";
-    if ($userid != 0) {
-        $sql .= " AND uid=" . $userid . " ";
+    $sql = 'SELECT nsn,news_title,start_day, uid FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1'";
+    if (0 != $userid) {
+        $sql .= ' AND uid=' . $userid . ' ';
     }
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((news_title LIKE '%$queryarray[0]%' OR news_content LIKE '%$queryarray[0]%')";
@@ -23,19 +23,20 @@ function tadnews_search($queryarray, $andor, $limit, $offset, $userid)
             $sql .= " $andor ";
             $sql .= "( news_title LIKE '%$queryarray[$i]%' OR news_content LIKE '%$queryarray[$i]%')";
         }
-        $sql .= ") ";
+        $sql .= ') ';
     }
-    $sql .= "ORDER BY start_day DESC";
+    $sql .= 'ORDER BY start_day DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret    = array();
-    $i      = 0;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret[$i]['image'] = "images/dot.gif";
-        $ret[$i]['link']  = "index.php?nsn=" . $myrow['nsn'];
+    $ret = [];
+    $i = 0;
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
+        $ret[$i]['image'] = 'images/dot.gif';
+        $ret[$i]['link'] = 'index.php?nsn=' . $myrow['nsn'];
         $ret[$i]['title'] = $myrow['news_title'];
-        $ret[$i]['time']  = strtotime($myrow['start_day']);
-        $ret[$i]['uid']   = $myrow['uid'];
+        $ret[$i]['time'] = strtotime($myrow['start_day']);
+        $ret[$i]['uid'] = $myrow['uid'];
         $i++;
     }
+
     return $ret;
 }

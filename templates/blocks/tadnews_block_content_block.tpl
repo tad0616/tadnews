@@ -1,23 +1,22 @@
-<{$block.syntaxhighlighter_code}>
 <{$block.rating_js}>
 <{$block.del_js}>
 <{if $block.page}>
   <{foreach item=page from=$block.page}>
   <div class="row" style="margin-bottom: 20px;">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <div <{if $page.need_sign}>style="background-image: url('<{$page.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
 
-        <div style="padding:10px 0px;">
-          <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size: 24px;  font-weight: normal;">
+        <h2 style="padding:10px 0px;">
+          <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>" style="font-size: 1.1em;  font-weight: normal;">
           <{$page.news_title}>
           </a>
-        </div>
+        </h2>
 
       </div>
 
       <{$page.prefix_tag}>
 
-      <span style="font-size: 11px;">
+      <span style="font-size: 0.8em;">
         <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a> - <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> | <{$page.post_date}> | <{$smarty.const._TADNEWS_HOT}><{$page.counter}>
       </span>
 

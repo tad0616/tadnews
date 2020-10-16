@@ -48,18 +48,18 @@ background: #85ACF7 url('images/hidr.jpg');
 .header h1 {
 	padding-left: 17px;
 	padding-top: 22px;
-	font-size: 22px;
+	font-size: 1.375em;
 	color: White;
 }
 .header h1 a {
-	font-size: 22px;
+	font-size: 1.375em;
 	color: White;
 	text-decoration: none;
 }
 .header h2 {
 	padding-left: 17px;
 	margin-top: 10px;
-	font-size: 16px;
+	font-size: 1em;
 	color: #FFF;
 	font-weight: normal;
 }
@@ -80,8 +80,8 @@ background: #85ACF7 url('images/hidr.jpg');
 }
 
 
-.middle h2 { color: #3B6EBF; font-size: 16px; margin-bottom: 10px; margin-top: 10px;}
-.right h2 { color: #3B6EBF; font-size: 14px; margin-top: 15px;}
+.middle h2 { color: #3B6EBF; font-size: 1em; margin-bottom: 10px; margin-top: 10px;}
+.right h2 { color: #3B6EBF; font-size: 0.9em; margin-top: 15px;}
 
 
 #clear {
@@ -96,5 +96,3 @@ background: #85ACF7 url('images/hidr.jpg');
 	text-align: center;
 	color: #666;
 }
-
-
