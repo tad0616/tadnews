@@ -17,6 +17,7 @@ function list_tadnews($ncsn = '')
     xoops_loadLanguage('blocks', 'tadnews');
     xoops_loadLanguage('main', 'tadnews');
     xoops_loadLanguage('modinfo', 'tadnews');
+    xoops_loadLanguage('blocks', 'system');
 
     $num = (!empty($_POST['n'])) ? (int) $_POST['n'] : 10;
     $p = (!empty($_POST['p'])) ? (int) $_POST['p'] : 0;
@@ -312,6 +313,8 @@ function preview_newspaper_m($npsn = '')
 function member_m()
 {
     global $xoopsUser, $xoopsModule, $Tadnews;
+    
+    xoops_loadLanguage('blocks', 'system');
 
     $main = '';
     if ($xoopsUser) {
