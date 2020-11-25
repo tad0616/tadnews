@@ -1,11 +1,11 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 require_once __DIR__ . '/header.php';
 
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$nsn = system_CleanVars($_REQUEST, 'nsn', '', 'int');
+$op = Request::getString('op');
+$nsn = Request::getInt('nsn');
 
 if ('sort_tabs' === $op) {
     $updateRecordsArray = $_POST['sort'];

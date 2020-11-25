@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\MColorPicker;
 if (!class_exists('XoopsModules\Tadtools\MColorPicker')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
@@ -10,11 +11,12 @@ function tadnews_page_menu($options)
     global $xoopsDB, $xoTheme;
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vertical_menu.css');
 
-    if (empty($_GET['ncsn']) or strpos($_SERVER['REQUEST_URI'], 'page.php') === false) {
+    $ncsn = Request::getInt('ncsn');
+    $nsn = Request::getInt('nsn');
+
+    if (empty($ncsn) or strpos($_SERVER['REQUEST_URI'], 'page.php') === false) {
         return;
     }
-
-    $ncsn = (int) $_GET['ncsn'];
 
     $sql = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='1' and `ncsn`='{$ncsn}'";
     $result = $xoopsDB->query($sql);
@@ -84,7 +86,7 @@ function tadnews_page_menu($options)
     $block['bgcolor'] = $options[3];
     $block['bg_css'] = $options[4];
     $block['text_css'] = $options[5];
-    $block['now_nsn'] = (int) $_GET['nsn'];
+    $block['now_nsn'] = $nsn;
 
     return $block;
 }

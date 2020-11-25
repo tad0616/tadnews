@@ -1,8 +1,8 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 
@@ -183,24 +183,23 @@ function list_user_sign($uid = '')
     $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
-$fsn = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
-$uid = system_CleanVars($_REQUEST, 'uid', 0, 'int');
-$kind = system_CleanVars($_REQUEST, 'kind', '', 'string');
-$tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
-$show_uid = system_CleanVars($_REQUEST, 'show_uid', 0, 'int');
-$mod_name = system_CleanVars($_REQUEST, 'mod_name', '', 'string');
-$col_name = system_CleanVars($_REQUEST, 'col_name', '', 'string');
-$col_sn = system_CleanVars($_REQUEST, 'col_sn', 0, 'int');
-$rank = system_CleanVars($_REQUEST, 'rank', '', 'string');
+$op = Request::getString('op');
+$ncsn = Request::getInt('ncsn');
+$nsn = Request::getInt('nsn');
+$fsn = Request::getInt('fsn');
+$uid = Request::getInt('uid');
+$kind = Request::getString('kind');
+$tag_sn = Request::getInt('tag_sn');
+$show_uid = Request::getInt('show_uid');
+$mod_name = Request::getString('mod_name');
+$col_name = Request::getString('col_name');
+$col_sn = Request::getInt('col_sn');
+$rank = Request::getString('rank');
+$files_sn = Request::getInt('files_sn');
 
 switch ($op) {
     //下載檔案
     case 'tufdl':
-        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
         $TadUpFiles = new TadUpFiles('tadnews');
         $TadUpFiles->add_file_counter($files_sn, $hash = false);
         exit;

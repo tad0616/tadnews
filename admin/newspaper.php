@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -440,7 +441,7 @@ function del_newspaper_set($nps_sn = '')
 }
 
 //Email 管理
-function newspaper_email($nps_sn = '')
+function newspaper_email($nps_sn = '', $memail = '', $g2p = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig, $xoopsTpl;
 
@@ -456,7 +457,7 @@ function newspaper_email($nps_sn = '')
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $memail = isset($_GET['memail']) ? htmlspecialchars($_GET['memail']) : '';
+    $memail = isset($memail) ? htmlspecialchars($memail) : '';
 
     $log = [];
     $i = 0;
@@ -471,7 +472,7 @@ function newspaper_email($nps_sn = '')
         $i++;
     }
 
-    $xoopsTpl->assign('g2p', $_GET['g2p']);
+    $xoopsTpl->assign('g2p', $g2p);
     $xoopsTpl->assign('no_email', sprintf(_MA_TADNEWS_NO_EMAIL, $nps_sn));
     $xoopsTpl->assign('log', $log);
     $xoopsTpl->assign('bar', $bar);
@@ -588,11 +589,12 @@ function sendmail_log($npsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$nps_sn = system_CleanVars($_REQUEST, 'nps_sn', 0, 'int');
-$npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
-$g2p = system_CleanVars($_REQUEST, 'g2p', 0, 'int');
+$op = Request::getString('op');
+$memail = Request::getString('memail');
+$mail = Request::getString('mail');
+$nps_sn = Request::getInt('nps_sn');
+$npsn = Request::getInt('npsn');
+$g2p = Request::getInt('g2p');
 
 $xoopsTpl->assign('op', $op);
 
@@ -653,17 +655,17 @@ switch ($op) {
         open_newspaper();
         break;
     case 'newspaper_email':
-        newspaper_email($nps_sn);
+        newspaper_email($nps_sn, $memail, $g2p);
         break;
     //刪除電子郵件
     case 'delete_tad_news_email':
-        delete_tad_news_email($_GET['email'], $nps_sn);
+        delete_tad_news_email($mail, $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
         exit;
 
     //刪除電子郵件
     case 'delete_tad_news_email_npsn':
-        delete_tad_news_email($_GET['email'], $nps_sn);
+        delete_tad_news_email($mail, $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn=$npsn");
         exit;
 

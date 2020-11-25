@@ -1,14 +1,14 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 require_once __DIR__ . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
-$fsn = system_CleanVars($_REQUEST, 'fsn', 0, 'int');
-$num = system_CleanVars($_REQUEST, 'num', 10, 'int');
+$op = Request::getString('op');
+$ncsn = Request::getInt('ncsn');
+$nsn = Request::getInt('nsn');
+$fsn = Request::getInt('fsn');
+$num = Request::getInt('num', 10);
 
 header("Content-Type: application/json; charset=utf-8");
 switch ($op) {

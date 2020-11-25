@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -37,10 +38,9 @@ function list_newspaper()
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$npsn = system_CleanVars($_REQUEST, 'npsn', 0, 'int');
+$op = Request::getString('op');
+$ncsn = Request::getInt('ncsn');
+$npsn = Request::getInt('npsn');
 
 switch ($op) {
     case 'preview':

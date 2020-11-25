@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
@@ -52,10 +53,9 @@ function archive($date = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
-$date = system_CleanVars($_REQUEST, 'date', date('Y-m'), 'string');
+$op = Request::getString('op');
+$files_sn = Request::getInt('files_sn');
+$date = Request::getString('date', date('Y-m'));
 $date = mb_substr($date, 0, 7);
 
 switch ($op) {

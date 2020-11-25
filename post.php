@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_post.tpl';
@@ -10,21 +11,18 @@ if (empty($xoopsUser)) {
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$sort = system_CleanVars($_REQUEST, 'sort', 0, 'int');
+$op = Request::getString('op');
+$nsn = Request::getInt('nsn');
+$ncsn = Request::getInt('ncsn');
+$sort = Request::getInt('sort');
 
 switch ($op) {
     //新增資料
     case 'insert_tad_news':
-        //die(var_export($_REQUEST));
         $Tadnews->insert_tad_news();
         break;
     //輸入表格
     case 'tad_news_form':
-        // $Tadnews->set_news_editor($xoopsModuleConfig['editor']);
         $Tadnews->tad_news_form($nsn);
         break;
     //更新資料

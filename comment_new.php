@@ -1,9 +1,10 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 require dirname(dirname(__DIR__)) . '/mainfile.php';
 
-$com_itemid = isset($_GET['com_itemid']) ? (int) $_GET['com_itemid'] : 0;
+$com_itemid = Request::getInt('com_itemid');
 
 if ($com_itemid > 0) {
     $sql = 'select news_title,news_content from ' . $xoopsDB->prefix('tad_news') . " where nsn='{$com_itemid}'";

@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\MColorPicker;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -104,9 +105,9 @@ function tags_used_amount()
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
+$op = Request::getString('op');
+$tag_sn = Request::getInt('tag_sn');
+$enable = Request::getInt('enable');
 
 switch ($op) {
     //新增資料
@@ -123,7 +124,7 @@ switch ($op) {
 
     //關閉資料
     case 'stat':
-        tad_news_tags_stat($_GET['enable'], $tag_sn);
+        tad_news_tags_stat($enable, $tag_sn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 

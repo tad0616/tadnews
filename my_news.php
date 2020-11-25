@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
@@ -31,21 +32,20 @@ function list_tad_my_news()
 }
 
 /*-----------執行動作判斷區----------*/
-$op = (empty($_REQUEST['op'])) ? '' : $_REQUEST['op'];
-
-$nsn = (isset($_REQUEST['nsn'])) ? (int) $_REQUEST['nsn'] : 0;
-$ncsn = (isset($_REQUEST['ncsn'])) ? (int) $_REQUEST['ncsn'] : 0;
-$fsn = (isset($_REQUEST['fsn'])) ? (int) $_REQUEST['fsn'] : 0;
-$uid = (isset($_REQUEST['uid'])) ? (int) $_REQUEST['uid'] : '';
-$kind = (empty($_REQUEST['kind'])) ? '' : $_REQUEST['kind'];
-$tag_sn = (isset($_REQUEST['tag_sn'])) ? (int) $_REQUEST['tag_sn'] : '';
+$op = Request::getString('op');
+$kind = Request::getString('kind');
+$ncsn = Request::getInt('ncsn');
+$nsn = Request::getInt('nsn');
+$fsn = Request::getInt('fsn');
+$uid = Request::getInt('uid');
+$files_sn = Request::getInt('files_sn');
+$tag_sn = Request::getInt('tag_sn');
 
 switch ($op) {
     //下載檔案
     case 'tufdl':
-        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
         $TadUpFiles = new TadUpFiles('tadnews');
-        $TadUpFiles->add_file_counter($files_sn, $hash = false);
+        $TadUpFiles->add_file_counter($files_sn, false);
         exit;
         break;
     //刪除資料

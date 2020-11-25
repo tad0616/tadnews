@@ -1,15 +1,16 @@
 <?php
-
+use Xmf\Request;
 use XoopsModules\Tadnews\Tadnews;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 /*-----------function區--------------*/
 $myts = \MyTextSanitizer::getInstance();
-$ncsn = 0;
+
+$ncsn = Request::getInt('ncsn');
+
 $cate = [];
-if (isset($_GET['ncsn'])) {
-    $ncsn = (int) $_GET['ncsn'];
+if ($ncsn) {
     $cate = $Tadnews->get_tad_news_cate($ncsn);
 }
 if (function_exists('mb_http_output')) {

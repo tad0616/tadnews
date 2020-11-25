@@ -1,27 +1,33 @@
 <?php
+use Xmf\Request;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 /*-----------function區--------------*/
 
+$newspaper_email = Request::getString('newspaper_email');
+$mode = Request::getString('mode');
+$nps_sn = Request::getInt('nps_sn');
+/*-----------執行動作判斷區----------*/
+update_mail($nps_sn, $newspaper_email, $mode);
+
 //編輯工具
-function update_mail()
+function update_mail($nps_sn = '', $newspaper_email = '', $mode = '')
 {
     global $xoopsDB, $xoopsUser;
-    $newspaper_set = get_newspaper_set($_POST['nps_sn']);
+    $newspaper_set = get_newspaper_set($nps_sn);
 
-    if (empty($_POST['newspaper_email']) or !check_email_mx($_POST['newspaper_email'])) {
-        redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ERROR_EMAIL, $_POST['newspaper_email']));
-
+    if (empty($newspaper_email) or !check_email_mx($newspaper_email)) {
+        redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ERROR_EMAIL, $newspaper_email));
         return;
     }
 
-    if ('add' === $_POST['mode']) {
+    if ('add' === $mode) {
         $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-        $sql = 'replace into ' . $xoopsDB->prefix('tad_news_paper_email') . " (nps_sn,email,order_date) values('{$_POST['nps_sn']}','{$_POST['newspaper_email']}','{$now}')";
+        $sql = 'replace into ' . $xoopsDB->prefix('tad_news_paper_email') . " (nps_sn,email,order_date) values('{$nps_sn}','{$newspaper_email}','{$now}')";
         $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_ERROR, $newspaper_set['title']));
         redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_SUCCESS, $newspaper_set['title']));
-    } elseif ('del' === $_POST['mode']) {
-        $sql = 'delete from ' . $xoopsDB->prefix('tad_news_paper_email') . " where email='{$_POST['newspaper_email']}'";
+    } elseif ('del' === $mode) {
+        $sql = 'delete from ' . $xoopsDB->prefix('tad_news_paper_email') . " where email='{$newspaper_email}'";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_ERROR, $newspaper_set['title']));
         redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_SUCCESS, $newspaper_set['title']));
     }
@@ -37,6 +43,3 @@ function check_email_mx($email)
 
     return false;
 }
-
-/*-----------執行動作判斷區----------*/
-update_mail();

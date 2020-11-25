@@ -1,13 +1,13 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\TadUpFiles;
 
 require_once __DIR__ . '/header.php';
 $TadUpFiles = new TadUpFiles('tadnews');
 
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
-$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$op = Request::getString('op');
+$files_sn = Request::getInt('files_sn');
+$nsn = Request::getInt('nsn');
 
 if ('get_pic' === $op) {
     echo $TadUpFiles->get_pic_file('images', 'url', $files_sn);

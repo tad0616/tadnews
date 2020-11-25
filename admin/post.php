@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadnews\Tadnews;
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_post.tpl';
 require_once __DIR__ . '/header.php';
@@ -6,9 +7,8 @@ require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
+$op = Request::getString('op');
+$nsn = Request::getInt('nsn');
 
 switch ($op) {
     //新增資料

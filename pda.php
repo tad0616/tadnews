@@ -1,7 +1,7 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
-use XoopsModules\Tadnews\Tadnews;
 
 /*-----------引入檔案區--------------*/
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
@@ -313,7 +313,7 @@ function preview_newspaper_m($npsn = '')
 function member_m()
 {
     global $xoopsUser, $xoopsModule, $Tadnews;
-    
+
     xoops_loadLanguage('blocks', 'system');
 
     $main = '';
@@ -552,13 +552,12 @@ function logout_m()
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$nsn = system_CleanVars($_REQUEST, 'nsn', 0, 'int');
-$npsn = system_CleanVars($_REQUEST, 'npsn', '', 'int');
-$date = system_CleanVars($_REQUEST, 'date', date('Y-m'), 'string');
-$files_sn = system_CleanVars($_REQUEST, 'files_sn', '', 'int');
+$op = Request::getString('op');
+$ncsn = Request::getInt('ncsn');
+$nsn = Request::getInt('nsn');
+$npsn = Request::getInt('npsn');
+$date = Request::getString('date', date('Y-m'));
+$files_sn = Request::getInt('files_sn');
 
 switch ($op) {
     //下載檔案

@@ -1,29 +1,29 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadnews\Tadnews;
 
 //條列式新聞區塊
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('blocks', 'tadnews');
 
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$num = system_CleanVars($_REQUEST, 'num', 10, 'int');
-$show_ncsn = system_CleanVars($_REQUEST, 'show_ncsn', '', 'string');
-$summary_length = system_CleanVars($_REQUEST, 'summary_length', 0, 'int');
-$summary_css = system_CleanVars($_REQUEST, 'summary_css', '', 'string');
-$start_from = system_CleanVars($_REQUEST, 'start_from', 0, 'int');
-$title_length = system_CleanVars($_REQUEST, 'title_length', 0, 'int');
-$show_cover = system_CleanVars($_REQUEST, 'show_cover', '', 'string');
-$cover_css = system_CleanVars($_REQUEST, 'cover_css', '', 'string');
-$display_mode = system_CleanVars($_REQUEST, 'display_mode', '', 'string');
-$show_button = system_CleanVars($_REQUEST, 'show_button', 0, 'int');
-$p = system_CleanVars($_REQUEST, 'p', 0, 'int');
-$randStr = system_CleanVars($_REQUEST, 'randStr', '', 'string');
+$num = Request::getInt('num', 10);
+$show_ncsn = Request::getString('show_ncsn');
 $ncsn_arr = explode(',', $show_ncsn);
-$ncsn = system_CleanVars($_REQUEST, 'ncsn', 0, 'int');
-$tag_sn = system_CleanVars($_REQUEST, 'tag_sn', 0, 'int');
-$keyword = system_CleanVars($_REQUEST, 'keyword', '', 'string');
-$start_day = system_CleanVars($_REQUEST, 'start_day', '', 'string');
-$end_day = system_CleanVars($_REQUEST, 'end_day', '', 'string');
+$summary_length = Request::getInt('summary_length');
+$summary_css = Request::getString('summary_css');
+$start_from = Request::getInt('start_from');
+$title_length = Request::getInt('title_length');
+$show_cover = Request::getString('show_cover');
+$cover_css = Request::getString('cover_css');
+$display_mode = Request::getString('display_mode');
+$show_button = Request::getInt('show_button');
+$p = Request::getInt('p');
+$randStr = Request::getString('randStr');
+$ncsn = Request::getInt('ncsn');
+$tag_sn = Request::getInt('tag_sn');
+$keyword = Request::getString('keyword');
+$start_day = Request::getString('start_day');
+$end_day = Request::getString('end_day');
 
 $b = $p - 1;
 $n = $p + 1;
