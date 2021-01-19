@@ -129,3 +129,9 @@ define('_MI_TADNEWS_TOP_MAX_DAY_DESC', '新聞最多可以置頂幾天？');
 
 define('_MI_TADNEWS_UPLOAD_DENY', '不允許上傳的檔案副檔名');
 define('_MI_TADNEWS_UPLOAD_DENY_DESC', '請用分號隔開，例如：「doc;docx;doc;xls;xlsx」');
+
+define('_MI_SHOW_NEXT_BTN', '是否顯示下方上下文導覽工具');
+define('_MI_SHOW_NEXT_BTN_DESC', '觀看文章時，是否要顯示最下面的上一則、下一則的文章導覽工具');
+
+define('_MI_SHOW_RSS', '是否顯示RSS的連結資訊');
+define('_MI_SHOW_RSS_DESC', '是否要在模組首頁下方顯示RSS的連結資訊');

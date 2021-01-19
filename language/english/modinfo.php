@@ -129,3 +129,9 @@ define('_MI_TADNEWS_TOP_MAX_DAY_DESC', 'Top News limit the number of days?');
 
 define('_MI_TADNEWS_UPLOAD_DENY', 'No file extensions allowed to upload');
 define('_MI_TADNEWS_UPLOAD_DENY_DESC', 'Please separate by semicolon, e.g. "doc;docx;doc;xls;xlsx"');
+
+define('_MI_SHOW_NEXT_BTN', 'Whether to display the contextual navigation tool below');
+define('_MI_SHOW_NEXT_BTN_DESC', 'Whether or not to show the previous and next article navigation tools at the bottom when viewing an article');
+
+define('_MI_SHOW_RSS', 'Whether to show RSS link information');
+define('_MI_SHOW_RSS_DESC', 'Whether to show RSS links at the bottom of the module home page');

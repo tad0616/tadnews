@@ -5,13 +5,15 @@ use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
+$xoopsOption['template_main'] = 'tadnews_index.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 
 //列出所有tad_news資料(summary模式)
 function list_tad_summary_news($the_ncsn = '', $show_uid = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $Tadnews, $xoTheme;
 
     $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
     $Tadnews->set_news_kind('news');
@@ -28,19 +30,15 @@ function list_tad_summary_news($the_ncsn = '', $show_uid = '')
     }
     $Tadnews->set_cover(true, 'db');
 
-    //if($xoopsModuleConfig['use_star_rating']=='1'){
-    //  $Tadnews->set_use_star_rating(true);
-    //}
-
     $Tadnews->get_news();
     $xoopsTpl->assign('ncsn', $the_ncsn);
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 }
 
 //列出所有tad_news資料
 function list_tad_all_news($the_ncsn = '', $show_uid = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $Tadnews, $xoTheme;
 
     $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
     $Tadnews->set_news_kind('news');
@@ -55,27 +53,26 @@ function list_tad_all_news($the_ncsn = '', $show_uid = '')
         $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
     $Tadnews->get_news();
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('ncsn', $the_ncsn);
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 }
 
 //列出所有tad_news資料
 function list_tad_tag_news($tag_sn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $Tadnews;
 
     $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
     $Tadnews->set_news_kind('news');
     $Tadnews->set_view_tag($tag_sn);
 
     $Tadnews->get_news();
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 //列出所有tad_news資料
 function list_tad_cate_news($show_ncsn = 0, $the_level = 0, $show_uid = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $Tadnews, $xoTheme;
 
     $Tadnews->set_news_kind('news');
     $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
@@ -84,26 +81,23 @@ function list_tad_cate_news($show_ncsn = 0, $the_level = 0, $show_uid = '')
         $Tadnews->set_view_uid($show_uid);
     }
     $Tadnews->get_cate_news();
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('ncsn', $show_ncsn);
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 }
 
 //顯示單一新聞
 function show_news($nsn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $Tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $Tadnews;
 
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
     $Tadnews->set_show_enable(0);
     $Tadnews->set_view_nsn($nsn);
     $Tadnews->set_cover(true, 'db');
     $Tadnews->set_summary('full');
-    //if($xoopsModuleConfig['use_star_rating']=='1'){
-    //  $Tadnews->set_use_star_rating(true);
-    //}
     $Tadnews->get_news();
     $xoopsTpl->assign('uid', $uid);
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('show_next_btn', $xoopsModuleConfig['show_next_btn']);
 }
 
 //已經讀過
@@ -132,7 +126,7 @@ function chk_always_top()
 //列出簽收狀況
 function list_sign($nsn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $interface_menu, $Tadnews;
+    global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
     $news = $Tadnews->get_tad_news($nsn);
 
     $sql = 'select uid,sign_time from ' . $xoopsDB->prefix('tad_news_sign') . " where nsn='$nsn' order by sign_time";
@@ -151,7 +145,6 @@ function list_sign($nsn = '')
     $xoopsTpl->assign('news_title', sprintf(_MD_TADNEWS_SIGN_LOG, $news['news_title']));
     $xoopsTpl->assign('nsn', $nsn);
     $xoopsTpl->assign('sign', $sign);
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 
 //列出某人狀況
@@ -180,7 +173,6 @@ function list_user_sign($uid = '')
     $xoopsTpl->assign('uid', $uid);
     $xoopsTpl->assign('sign', $sign);
     $xoopsTpl->assign('uid_name', sprintf(_MD_TADNEWS_SIGN_LOG, $uid_name));
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 }
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
@@ -219,7 +211,6 @@ switch ($op) {
     //列出簽收狀況
     case 'list_sign':
         $GLOBALS['xoopsOption']['template_main'] = 'tadnews_sign.tpl';
-        require XOOPS_ROOT_PATH . '/header.php';
         list_sign($nsn);
         $xoopsTpl->assign('op', $op);
         break;
@@ -227,7 +218,6 @@ switch ($op) {
     //列出某人狀況
     case 'list_user_sign':
         $GLOBALS['xoopsOption']['template_main'] = 'tadnews_sign.tpl';
-        require XOOPS_ROOT_PATH . '/header.php';
         list_user_sign($uid);
         $xoopsTpl->assign('op', $op);
         break;
@@ -237,38 +227,32 @@ switch ($op) {
         break;
     default:
 
+        $xoopsTpl->assign('show_rss', $xoopsModuleConfig['show_rss']);
         //把過期的置頂文徹下
         chk_always_top();
         if (!empty($nsn)) {
             $GLOBALS['xoopsOption']['template_main'] = 'tadnews_news.tpl';
-            require XOOPS_ROOT_PATH . '/header.php';
             show_news($nsn);
         } elseif (!empty($tag_sn)) {
-            $GLOBALS['xoopsOption']['template_main'] = 'tadnews_list.tpl';
-            require XOOPS_ROOT_PATH . '/header.php';
+            $op = 'tadnews_list';
             list_tad_tag_news($tag_sn);
         } elseif (!empty($ncsn)) {
             if ('summary' === $xoopsModuleConfig['cate_show_mode']) {
-                $GLOBALS['xoopsOption']['template_main'] = 'tadnews_index_summary.tpl';
-                require XOOPS_ROOT_PATH . '/header.php';
+                $op = 'tadnews_summary';
                 list_tad_summary_news($ncsn);
             } else {
-                $GLOBALS['xoopsOption']['template_main'] = 'tadnews_list.tpl';
-                require XOOPS_ROOT_PATH . '/header.php';
+                $op = 'tadnews_list';
                 list_tad_all_news($ncsn);
             }
         } else {
             if ('summary' === $xoopsModuleConfig['show_mode']) {
-                $GLOBALS['xoopsOption']['template_main'] = 'tadnews_index_summary.tpl';
-                require XOOPS_ROOT_PATH . '/header.php';
+                $op = 'tadnews_summary';
                 list_tad_summary_news(null, $show_uid);
             } elseif ('cate' === $xoopsModuleConfig['show_mode']) {
-                $GLOBALS['xoopsOption']['template_main'] = 'tadnews_index_cate.tpl';
-                require XOOPS_ROOT_PATH . '/header.php';
+                $op = 'tadnews_cate';
                 list_tad_cate_news(null, null, $show_uid);
             } else {
-                $GLOBALS['xoopsOption']['template_main'] = 'tadnews_list.tpl';
-                require XOOPS_ROOT_PATH . '/header.php';
+                $op = 'tadnews_list';
                 list_tad_all_news(null, $show_uid);
             }
         }
@@ -277,5 +261,7 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';

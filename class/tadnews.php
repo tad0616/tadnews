@@ -966,7 +966,7 @@ class Tadnews
             $all_news[$i]['image_big'] = $image_big;
             $all_news[$i]['image_thumb'] = $image_thumb;
             $all_news[$i]['not_news'] = $not_news_arr[$ncsn];
-
+            $all_news[$i]['url'] = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn=$ncsn&nsn=$nsn";
             $i++;
         }
 
@@ -1300,41 +1300,43 @@ class Tadnews
         } else {
             $uuid = $isAdmin = '';
         }
-
-        $btn_xs = (isset($_SESSION['bootstrap']) and 4 == $_SESSION['bootstrap']) ? 'btn-sm' : 'btn-xs';
+        if (empty($enable_post_group)) {
+            $enable_post_group = 1;
+        }
 
         $this->TadDataCenter->set_col('nsn', $nsn);
         $tab_arr = $this->TadDataCenter->getData();
-        $tab_sort_btn = !empty($tab_arr) ? "<a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-sort'></i> " . _TADNEWS_TABS_SORT . '</a>' : '';
+        $tab_sort_btn = !empty($tab_arr) ? "<a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-sort'></i> " . _TADNEWS_TABS_SORT . '</a>' : '';
 
         $edit_cate = '';
         if (!empty($ncsn)) {
-            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . '</a>';
+            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . '</a>';
         }
 
         $signbtn = '';
         if (!empty($have_read_group)) {
-            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . '</a>';
+            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . '</a>';
         }
 
         $news_post_power = $this->chk_news_power($enable_post_group, $User_Groups);
 
-        $admin_fun = ($news_post_power or $uid == $uuid or $isAdmin) ? "
-        $signbtn
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary $btn_xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
-        <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger $btn_xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
-        $edit_cate
-        <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning $btn_xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . '</a>' : '';
+        $admin_fun = '';
+        if ($uuid and ($news_post_power or $uid == $uuid or $isAdmin)) {
 
-        $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success $btn_xs' style='font-weight:normal;'>BBCode</a>" : '';
+            $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;'>BBCode</a>" : '';
 
-        $fun = "
-        <div class='btn-group'>
-        $admin_fun
-        $bbcode
-        </div>";
+            $admin_fun = "
+            <div class='btn-group'>
+            $signbtn
+            <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
+            <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
+            $edit_cate
+            <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>
+            $bbcode
+            </div>";
+        }
 
-        return $fun;
+        return $admin_fun;
     }
 
     //刪除的js
@@ -1505,7 +1507,7 @@ class Tadnews
         $tool = '
         <div class="row">
           <h3>' . _TADNEWS_BATCH_TOOLS . "</h3>
-          <div class='well card card-body bg-light m-1'>
+          <div class='well card card-body m-1 card card-body bg-light m-1'>
             <div class='col-sm-3'>{$move}</div>
             <div class='col-sm-3'>{$del}</div>
             <div class='col-sm-3'>
@@ -1608,7 +1610,7 @@ class Tadnews
         if ('1' == $this->tadnewsConfig['download_after_read'] and !empty($news['have_read_group'])) {
             $time = $this->chk_sign_status($reader_uid, $nsn);
             if (empty($time) and !empty($files)) {
-                $files = ('filename' === $mode) ? _TADNEWS_DOWNLOAD_AFTER_READ : "<div class='well'>" . _TADNEWS_DOWNLOAD_AFTER_READ . '</div>';
+                $files = ('filename' === $mode) ? _TADNEWS_DOWNLOAD_AFTER_READ : "<div class='well card card-body m-1'>" . _TADNEWS_DOWNLOAD_AFTER_READ . '</div>';
             }
         }
 

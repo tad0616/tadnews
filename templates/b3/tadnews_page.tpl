@@ -1,1 +1,0 @@
-<{includeq file="$xoops_rootpath/modules/tadnews/templates/b`$smarty.session.bootstrap`/op_`$now_op`.tpl"}>

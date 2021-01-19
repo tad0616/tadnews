@@ -15,6 +15,8 @@ function list_tadnews_cate_tree($def_ncsn = '')
 {
     global $xoopsDB, $xoopsTpl;
 
+    $myts = MyTextSanitizer::getInstance();
+
     $sql = 'SELECT ncsn , count(*) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY ncsn';
     $result = $xoopsDB->query($sql);
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
@@ -28,6 +30,8 @@ function list_tadnews_cate_tree($def_ncsn = '')
     $sql = 'SELECT ncsn,of_ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+        $nc_title = addslashes($nc_title);
+
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($ncsn, $path_arr) ? 'true' : 'false';
         $display_counter = empty($cate_count[$ncsn]) ? '' : " ({$cate_count[$ncsn]})";

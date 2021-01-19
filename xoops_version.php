@@ -81,8 +81,9 @@ $modversion['onUninstall'] = 'include/onUninstall.php';
 
 //---樣板設定---//
 $i = 0;
-$modversion['templates'][$i]['file'] = 'tadnews_list.tpl';
-$modversion['templates'][$i]['description'] = 'tadnews_list.tpl';
+$modversion['templates'][$i]['file'] = 'tadnews_index.tpl';
+$modversion['templates'][$i]['description'] = 'tadnews_index.tpl';
+
 $i++;
 $modversion['templates'][$i]['file'] = 'tadnews_news.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_news.tpl';
@@ -98,12 +99,7 @@ $modversion['templates'][$i]['description'] = 'tadnews_archive.tpl';
 $i++;
 $modversion['templates'][$i]['file'] = 'tadnews_page.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_page.tpl';
-$i++;
-$modversion['templates'][$i]['file'] = 'tadnews_index_summary.tpl';
-$modversion['templates'][$i]['description'] = 'tadnews_index_summary.tpl';
-$i++;
-$modversion['templates'][$i]['file'] = 'tadnews_index_cate.tpl';
-$modversion['templates'][$i]['description'] = 'tadnews_index_cate.tpl';
+
 $i++;
 $modversion['templates'][$i]['file'] = 'tadnews_newspaper.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_newspaper.tpl';
@@ -478,3 +474,19 @@ $modversion['config'][$i]['description'] = '_MI_TADNEWS_UPLOAD_DENY_DESC';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = "";
+
+$i++;
+$modversion['config'][$i]['name'] = 'show_next_btn';
+$modversion['config'][$i]['title'] = '_MI_SHOW_NEXT_BTN';
+$modversion['config'][$i]['description'] = '_MI_SHOW_NEXT_BTN_DESC';
+$modversion['config'][$i]['formtype'] = 'yesno';
+$modversion['config'][$i]['valuetype'] = 'int';
+$modversion['config'][$i]['default'] = '0';
+
+$i++;
+$modversion['config'][$i]['name'] = 'show_rss';
+$modversion['config'][$i]['title'] = '_MI_SHOW_RSS';
+$modversion['config'][$i]['description'] = '_MI_SHOW_RSS_DESC';
+$modversion['config'][$i]['formtype'] = 'yesno';
+$modversion['config'][$i]['valuetype'] = 'int';
+$modversion['config'][$i]['default'] = '0';
