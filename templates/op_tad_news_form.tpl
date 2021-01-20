@@ -1,4 +1,3 @@
-<{$jquery}>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/multiple-file-upload/jquery.MultiFile.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
@@ -90,14 +89,14 @@
             $("#new_folder_icon").hide();
             $("#new_folder_col").show();
             $("<option value='0'>/</option>").prependTo("#news_ncsn");
-            $("#news_title_input_col").removeClass("col-sm-7").addClass("col-sm-5");
+            $("#news_title_input_col").removeClass("col-md-7").addClass("col-md-5");
         });
 
         $("#new_page_folder_icon").click(function() {
             $("#new_page_folder_icon").hide();
             $("#new_page_folder_col").show();
             $("<option value='0'>/</option>").prependTo("#page_ncsn");
-            $("#page_title_input_col").removeClass("col-sm-9").addClass("col-sm-7");
+            $("#page_title_input_col").removeClass("col-md-9").addClass("col-md-7");
         });
 
         var $tabs = $("#<{$jquery_tabs_id}>").tabs({ cookie: { expires: 30 } });
@@ -148,11 +147,11 @@
     <{else}>
         <div class="row">
             <{if $pic}>
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <div style="background-image: url('<{$pic}>'); background-size: cover; width: 120px; height: 90px;"></div>
                 </div>
             <{/if}>
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 <{$smarty.const._TAD_EDIT}>
                 <{if $cate.not_news=='1'}>
                     <{$smarty.const._MD_TADNEWS_KIND_PAGE}>
@@ -167,16 +166,16 @@
 <form action="<{$action}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <{if $nsn==""}>
         <div class="form-group row">
-            <label class="col-sm-3 control-label col-form-label text-md-right">
+            <label class="col-md-3 control-label col-form-label text-md-right">
                 <{$smarty.const._MD_TADNEWS_KIND}>
             </label>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <select name="kind" id="kind" class="form-control">
                         <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
                         <option value="page"<{if $ncsn and  $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
                 </select>
             </div>
-            <div class="col-sm-5" id="tab_mode_checkbox">
+            <div class="col-md-5" id="tab_mode_checkbox">
                 <label for="tab_mode" class="checkbox">
                 <input type="checkbox" name="tab_mode" id="tab_mode" value="1"><{$smarty.const._MD_TADNEWS_USE_TAB_MODE}>
                 </label>
@@ -191,32 +190,32 @@
     <div id="add_news">
         <div class="form-group row">
             <{if $news_cate_select}>
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <select name="ncsn" id="news_ncsn" class="form-control">
                         <{$news_cate_select}>
                     </select>
                 </div>
                 <{if $creat_cate_tool}>
-                    <div class="col-sm-1" id="new_folder_icon">
+                    <div class="col-md-1" id="new_folder_icon">
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
-                    <div class="col-sm-3" id="new_folder_col" style="display: none;">
+                    <div class="col-md-3" id="new_folder_col" style="display: none;">
                         <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool}>
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
                     </div>
                 <{/if}>
             <{/if}>
 
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 <{$prefix_tag_menu}>
             </div>
 
-            <div class="col-sm-<{if $creat_cate_tool}>7<{else}>8<{/if}>" id="news_title_input_col">
+            <div class="col-md-<{if $creat_cate_tool}>7<{else}>8<{/if}>" id="news_title_input_col">
                 <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
             </div>
         </div>
@@ -225,27 +224,27 @@
     <div id="add_page">
         <div class="form-group row">
             <{if $page_cate_select}>
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <select name="ncsn" id="page_ncsn" class="form-control">
                         <{$page_cate_select}>
                     </select>
                 </div>
                 <{if $creat_cate_tool}>
-                    <div class="col-sm-1" id="new_page_folder_icon">
+                    <div class="col-md-1" id="new_page_folder_icon">
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
-                    <div class="col-sm-3" id="new_page_folder_col" style="display: none;">
+                    <div class="col-md-3" id="new_page_folder_col" style="display: none;">
                         <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool}>
-                    <div class="col-sm-3" id="new_page_folder_col">
+                    <div class="col-md-3" id="new_page_folder_col">
                         <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' value='<{$new_cate_input}>' placeholder='<{$creat_new_cate}>'>
                     </div>
                 <{/if}>
             <{/if}>
-            <div class="col-sm-<{if $creat_cate_tool}>9<{else}>10<{/if}>" id="page_title_input_col">
+            <div class="col-md-<{if $creat_cate_tool}>9<{else}>10<{/if}>" id="page_title_input_col">
                 <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control" value="<{$news_title}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
             </div>
         </div>
@@ -261,15 +260,15 @@
                 <{foreach from=$tab_arr.tab_title key=k item=title}>
                     <div class="alert alert-info">
                         <div class="form-group row">
-                            <div class="col-sm-8">
+                            <div class="col-md-8">
                                 <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
                             </div>
-                            <div class="col-sm-4">
-                                <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
+                            <div class="col-md-4">
+                                <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <{$tab_arr.tab_editor.$k}>
                             </div>
                         </div>
@@ -278,12 +277,12 @@
             <{else}>
                 <div class="alert alert-warning">
                     <div class="form-group row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                         <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <{$tab_editor}>
                         </div>
                     </div>
@@ -308,7 +307,7 @@
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
                     var editorId = 'editor_' +x;
-                    $(wrapper).append('<div class="alert alert-success"><div class="form-group row"><div class="col-sm-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row"><div class="col-sm-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div></div>'); //add input box
+                    $(wrapper).append('<div class="alert alert-success"><div class="form-group row"><div class="col-md-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row"><div class="col-md-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div></div>'); //add input box
 
                     CKEDITOR.replace(editorId, { height: 300 ,
                     toolbar : 'my' ,
@@ -381,10 +380,10 @@
     <{if !$nsn or ($nsn and $cate.not_news=='1')}>
     <div id="page_setup_form" style="margin-top:20px;display: none;">
         <div class="form-group row">
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}><{$deny_type}></label>
             </div>
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 <{$page_upform}>
             </div>
         </div>
@@ -393,7 +392,7 @@
 
 
     <div class="row" style="margin: 30px 0px;">
-        <div class="col-sm-12 text-center">
+        <div class="col-md-12 text-center">
             <input type="hidden" name="nsn" value="<{$nsn}>">
             <input type="hidden" name="uid" value="<{$uid}>">
             <input type="hidden" name="op" value="<{$op}>">

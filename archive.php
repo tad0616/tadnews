@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
-$xoopsOption['template_main'] = 'tadnews_archive.tpl';
+$xoopsOption['template_main'] = 'tadnews_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
@@ -27,8 +27,7 @@ function month_list($now_date = '')
         $i++;
     }
 
-    $jquery = Utility::get_jquery();
-    $xoopsTpl->assign('jquery', $jquery);
+    Utility::get_jquery();
     $xoopsTpl->assign('opt', $opt);
 }
 
@@ -65,13 +64,17 @@ switch ($op) {
 
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;
-        break;
+
     default:
         month_list($date);
         archive($date);
+        $op = "archive";
         break;
 }
 
 /*-----------秀出結果區--------------*/
+$xoopsTpl->assign('now_op', $op);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';

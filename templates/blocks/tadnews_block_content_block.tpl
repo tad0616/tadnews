@@ -1,9 +1,8 @@
 <{$block.rating_js}>
-<{$block.del_js}>
 <{if $block.page}>
   <{foreach item=page from=$block.page}>
   <div class="row" style="margin-bottom: 20px;">
-    <div class="col-sm-12">
+    <div class="col-md-12">
       <div <{if $page.need_sign}>style="background-image: url('<{$page.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
 
         <h2 style="padding:10px 0px;">

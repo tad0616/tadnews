@@ -2,7 +2,7 @@
 use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tadnews_post.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'tadnews_index.tpl';
 require_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
@@ -21,18 +21,22 @@ switch ($op) {
     case 'insert_tad_news':
         $Tadnews->insert_tad_news();
         break;
+
     //輸入表格
     case 'tad_news_form':
         $Tadnews->tad_news_form($nsn);
         break;
+
     //更新資料
     case 'update_tad_news':
         $Tadnews->update_tad_news($nsn);
         break;
+
     //啟用文章
     case 'enable_news':
         $Tadnews->enable_tad_news($nsn);
         break;
+
     //刪除頁籤
     case 'del_page_tab':
         $Tadnews->del_page_tab($nsn, $sort);
@@ -47,11 +51,14 @@ switch ($op) {
 
     default:
         $Tadnews->tad_news_form($nsn, $ncsn);
+        $op = 'tad_news_form';
         break;
 }
 
 /*-----------秀出結果區--------------*/
-
+$xoopsTpl->assign('now_op', $op);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';

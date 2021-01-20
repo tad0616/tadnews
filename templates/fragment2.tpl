@@ -1,13 +1,13 @@
 <div class="row">
-    <div class="col-sm-3">
+    <div class="col-md-3">
         <label><{$smarty.const._MD_TADNEWS_CAN_READ_NEWS_GROUP}><{$smarty.const._MD_TADNEWS_FOR}></label>
         <{$enable_group}>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3">
         <label><{$smarty.const._MD_TADNEWS_NEWS_HAVE_READ}><{$smarty.const._MD_TADNEWS_FOR}></label>
         <{$have_read_group}>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3">
         <label>
         <{$smarty.const._MD_TADNEWS_NEWS_ENABLE}><{$smarty.const._MD_TADNEWS_FOR}>
         </label>
@@ -19,7 +19,7 @@
         </label>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-md-3">
         <div class="row">
             <label>
                 <{$smarty.const._MD_TADNEWS_NEWS_PASSWD}><{$smarty.const._MD_TADNEWS_FOR}>

@@ -1,5 +1,4 @@
 <{$block.rating_js}>
-<{$block.del_js}>
 <{foreach item=page from=$block.page}>
     <{if $page.enable=="1" or $page.uid==$uid}>
         <div style="border-bottom: 1px dotted gray;">

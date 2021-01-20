@@ -1,5 +1,4 @@
 <{$rating_js}>
-<{$del_js}>
 <{if $page}>
     <{foreach from=$page item=page }>
         <div class="news_page_container">

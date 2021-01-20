@@ -1,13 +1,8 @@
-<!--TadNews Start-->
-<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/modules/tadtools/css/iconize.css">
-
 <{if $cate_set_tool}>
-  <p><{$toolbar}></p>
+    <{$toolbar}>
 <{/if}>
 
-
 <{$breadcrumb}>
-
 
 <!--TadNews Start-->
 <{foreach item=all_news from=$all_news}>
@@ -25,18 +20,18 @@
     </script>
     <{/if}>
 
-    <div class="h3">
-    <{if $smarty.session.tadnews_adm or $all_news.ncsn|in_array:$ok_cat}>
-        <div class="pull-right">
-            <{if !$all_news.ncsn|in_array:$link_cate_sn_arr}>
-                <a href="page.php?op=add_to_menu&ncsn=<{$all_news.ncsn}>" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></a>
-            <{/if}>
-            <a href="page.php?op=modify_page_cate&ncsn=<{$all_news.ncsn}>" class="btn btn-warning"><{$smarty.const._MD_TADNEWS_EDIT_CATE}></a>
-            <a href="post.php?ncsn=<{$all_news.ncsn}>" class="btn btn-primary"><{$smarty.const._MD_TADNEWS_POST}></a>
-        </div>
-    <{/if}>
-    <a href="page.php?ncsn=<{$all_news.ncsn}>" style="text-shadow:1px 1px 1px #aaaaaa;"><{$all_news.nc_title}></a>
-    </div>
+    <h3 class="my">
+        <{if $smarty.session.tadnews_adm or $all_news.ncsn|in_array:$ok_cat}>
+            <div class="pull-right float-right">
+                <{if !$all_news.ncsn|in_array:$link_cate_sn_arr}>
+                    <a href="page.php?op=add_to_menu&ncsn=<{$all_news.ncsn}>" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></a>
+                <{/if}>
+                <a href="page.php?op=modify_page_cate&ncsn=<{$all_news.ncsn}>" class="btn btn-warning"><{$smarty.const._MD_TADNEWS_EDIT_CATE}></a>
+                <a href="post.php?ncsn=<{$all_news.ncsn}>" class="btn btn-primary"><{$smarty.const._MD_TADNEWS_POST}></a>
+            </div>
+        <{/if}>
+        <a href="page.php?ncsn=<{$all_news.ncsn}>" style="text-shadow:1px 1px 1px #aaaaaa;"><{$all_news.nc_title}></a>
+    </h3>
     <div id="save_msg_<{$all_news.ncsn}>"></div>
 
     <ul class="list-group" id="sort_<{$all_news.ncsn}>" style="margin: 4px auto 30px;">

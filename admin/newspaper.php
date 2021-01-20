@@ -353,11 +353,10 @@ function sendmail_form($npsn = '')
 
     $i = 1;
 
-    $btn_xs = 4 == $_SESSION['bootstrap'] ? 'btn-sm' : 'btn-xs';
     foreach ($emailArr as $email) {
         $checked = empty($mailData[$email]) ? 'checked' : '';
 
-        $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn $btn_xs btn-danger'>" . _TADNEWS_DEL . '</a>' : $mailData[$email];
+        $data = empty($mailData[$email]) ? _MA_TADNEWS_NEVER_SEND . " <a href=\"javascript:delete_tad_news_email_func('$email');\" class='btn btn-sm btn-xs btn-danger'><i class='fa fa-times'></i> " . _TAD_DEL . '</a>' : $mailData[$email];
 
         $logdata[$i]['checkbox'] = "<input type='checkbox' name='mail_array[]' value='$email' $checked>";
         $logdata[$i]['email'] = $email;
@@ -690,5 +689,6 @@ switch ($op) {
 if ('preview' === $op) {
     echo $main;
 } else {
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
     require_once __DIR__ . '/footer.php';
 }

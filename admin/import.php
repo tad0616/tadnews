@@ -168,4 +168,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
 require_once __DIR__ . '/footer.php';

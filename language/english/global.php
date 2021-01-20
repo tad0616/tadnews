@@ -4,8 +4,6 @@ define('_TADNEWS_NAME', 'ALL News');
 define('_TADNEWS_ALWAYS_TOP', 'Sticky');
 define('_TADNEWS_TODAY_NEWS', 'Today');
 define('_TADNEWS_MORE', 'Read More');
-define('_TADNEWS_EDIT', 'Edit');
-define('_TADNEWS_DEL', 'Delete');
 define('_TADNEWS_ADD', 'Post');
 define('_TADNEWS_HOT', 'Count:');
 define('_TADNEWS_BATCH_TOOLS', 'Batch tools');

@@ -88,11 +88,10 @@ $i++;
 $modversion['templates'][$i]['file'] = 'tadnews_rss.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_rss.tpl';
 $i++;
+
 $modversion['templates'][$i]['file'] = 'tadnews_post.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_post.tpl';
-$i++;
-$modversion['templates'][$i]['file'] = 'tadnews_archive.tpl';
-$modversion['templates'][$i]['description'] = 'tadnews_archive.tpl';
+
 $i++;
 $modversion['templates'][$i]['file'] = 'tadnews_page.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_page.tpl';

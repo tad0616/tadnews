@@ -41,7 +41,7 @@
 <input type="hidden" name="files_sn" id="files_sn" value="<{$files_sn}>">
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-md-6">
         <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
         <input id="upfile2" type="file" name="upfile2" multiple>
     </div>
@@ -49,7 +49,7 @@
 
 <div id="show_pic_css_setup">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
             <label>
                 <{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC}>
             </label>
@@ -58,7 +58,7 @@
                 <option value="true" <{if $use_pic_css!=""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
             </select>
         </div>
-        <div class="col-sm-6">
+        <div class="col-md-6">
             <{if $pic}>
                 <a href="post.php?op=delete_cover&nsn=<{$nsn}>"><{$smarty.const._TAD_DEL}><{$smarty.const._MD_TADNEWS_NEWSPIC_TAB}></a>
             <{/if}>
@@ -68,7 +68,7 @@
     <div id="pic_css_set">
         <div class="alert alert-info">
             <div class="row" style="margin: 20px 0px;">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_WIDTH}>
                     </label>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_STYTLE}>
                     </label>
@@ -95,14 +95,14 @@
                     </select>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER}><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_WIDTH}>
                     </label>
                     <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width}>" class="form-control" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');" style="width: 80%; display: inline;"> px
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}>
                     </label>
@@ -113,7 +113,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-1">
+                <div class="col-md-1">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}>
                     </label>
@@ -122,7 +122,7 @@
             </div>
 
             <div class="row" style="margin: 10px 0px;">
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC}>
                     </label>
@@ -134,7 +134,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_SHOW}>
                     </label>
@@ -151,7 +151,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-5">
+                <div class="col-md-5">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_AND}>
                     </label>
@@ -162,7 +162,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-md-2">
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_MARGIN}>
                     </label>
@@ -172,7 +172,7 @@
         </div>
 
         <div class="row" style="margin: 10px 0px;">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="well card card-body bg-light m-1">
                     <div id="demo_cover_pic" style="background-image: url('<{$pic}>');<{$pic_css}>" title="<{$pic_css}>"></div>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>

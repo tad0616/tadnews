@@ -180,12 +180,12 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
 
     $cate_select = $Tadnews->get_tad_news_cate_option(0, 0, $of_ncsn, true, $ncsn, '1', $not_news);
 
-    $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 3, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 5, true);
     $SelectGroup_name->addOption('', _TADNEWS_ALL_OK, false);
     $SelectGroup_name->setExtra("class='form-control'");
     $enable_group = $SelectGroup_name->render();
 
-    $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_post_group', false, $enable_post_group, 3, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_post_group', false, $enable_post_group, 5, true);
     //$SelectGroup_name->addOption("", _TADNEWS_ALL_OK, false);
     $SelectGroup_name->setExtra("class='form-control'");
     $enable_post_group = $SelectGroup_name->render();

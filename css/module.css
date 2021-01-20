@@ -142,6 +142,10 @@ ul {
   margin: 0px;
 }
 
-.news_page_info_text{
+.news_page_info_text {
   font-size: 0.8rem;
+}
+
+.table {
+  margin-bottom: 0rem;
 }

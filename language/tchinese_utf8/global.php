@@ -4,8 +4,6 @@ define('_TADNEWS_NAME', '本站消息');
 define('_TADNEWS_ALWAYS_TOP', '置頂文章');
 define('_TADNEWS_TODAY_NEWS', '今日文章');
 define('_TADNEWS_MORE', '觀看完整文章');
-define('_TADNEWS_EDIT', '修改');
-define('_TADNEWS_DEL', '刪除');
 define('_TADNEWS_ADD', '發佈');
 define('_TADNEWS_HOT', '點閱數：');
 define('_TADNEWS_BATCH_TOOLS', '批次管理');

@@ -971,10 +971,9 @@ class Tadnews
         }
 
         $ui = 1 == $this->sort_tool ? true : false;
-        $jquery = Utility::get_jquery($ui);
+        Utility::get_jquery($ui);
 
         if ('return' === $mode) {
-            // $main['jquery'] = $jquery;
             $main['page'] = $all_news;
             $main['show_admin_tool_title'] = $this->admin_tool;
             $main['show_sort_tool'] = $this->sort_tool;
@@ -996,7 +995,6 @@ class Tadnews
             return $all_news;
         }
 
-        $xoopsTpl->assign('jquery', $jquery);
         $xoopsTpl->assign('page', $all_news);
         $xoopsTpl->assign('show_admin_tool_title', $this->admin_tool);
         $xoopsTpl->assign('show_sort_tool', $this->sort_tool);
@@ -1332,9 +1330,9 @@ class Tadnews
             <div class='btn-group'>
                 $signbtn
                 <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_ADD . "'><i class='fa fa-plus-circle'></i></a>
-                <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_DEL . "'><i class='fa fa-trash'></i></a>
+                <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TAD_DEL . "'><i class='fa fa-times'></i></a>
                 $edit_cate
-                <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_EDIT . "'><i class='fa fa-pencil'></i></a>
+                <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TAD_EDIT . "'><i class='fa fa-pencil'></i></a>
                 $bbcode
             </div>";
         }
@@ -1348,16 +1346,6 @@ class Tadnews
 
         $SweetAlert = new SweetAlert();
         $SweetAlert->render('delete_tad_news_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=", 'nsn');
-
-        // $js = "<script>
-        // function delete_tad_news_func(nsn){
-        //   var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-        //   if (!sure)  return;
-        //   location.href=\"{$_SERVER['PHP_SELF']}?op=delete_tad_news&nsn=\" + nsn;
-        // }
-        // </script>";
-
-        // return $js;
     }
 
     //列出所有作者的下拉選單
@@ -1506,15 +1494,15 @@ class Tadnews
         <input type='radio' name='act' value='move_news'>" . _TADNEWS_MOVE_TO . "
         </label>
         <select name='ncsn'>" . $this->get_tad_news_cate_option(0, 0, '', true, '', '1') . '</select>';
-        $del = "<label class='radio'><input type='radio' name='act' value='del_news'>" . _TADNEWS_DEL . '</label>';
+        $del = "<label class='radio'><input type='radio' name='act' value='del_news'>" . _TAD_DEL . '</label>';
 
         $tool = '
         <div class="row">
           <h3>' . _TADNEWS_BATCH_TOOLS . "</h3>
           <div class='well card card-body m-1 card card-body bg-light m-1'>
-            <div class='col-sm-3'>{$move}</div>
-            <div class='col-sm-3'>{$del}</div>
-            <div class='col-sm-3'>
+            <div class='col-md-3'>{$move}</div>
+            <div class='col-md-3'>{$del}</div>
+            <div class='col-md-3'>
             <input type='hidden' name='kind' value='{$this->kind}'>
             <input type='hidden' name='op' value='batch'>
             <input type='submit' value='" . _TADNEWS_NP_SUBMIT . "'>
@@ -1555,7 +1543,7 @@ class Tadnews
                         if ('app' === $mode) {
                             $main = sprintf(_TADNEWS_SIGN_OK, $time);
                         } else {
-                            $main = "<div class='col-sm-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . '</div>';
+                            $main = "<div class='col-md-10 offset1 well' style='background-color:#FFFF99;text-align:center;'>" . sprintf(_TADNEWS_SIGN_OK, $time) . '</div>';
                         }
                     } else {
                         if ('app' === $mode) {
@@ -1889,14 +1877,14 @@ class Tadnews
 
         $always_top_checked = ('1' == $always_top) ? 'checked' : '';
 
-        $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 4, true);
+        $SelectGroup_name = new \XoopsFormSelectGroup('', 'enable_group', false, $enable_group, 5, true);
         $SelectGroup_name->addOption('', _TADNEWS_ALL_OK, false);
-        $SelectGroup_name->setExtra("class='col-sm-12 form-control'");
+        $SelectGroup_name->setExtra("class='col-md-12 form-control'");
         $enable_group = $SelectGroup_name->render();
 
-        $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'have_read_group', false, $have_read_group, 4, true);
+        $SelectGroup_name2 = new \XoopsFormSelectGroup('', 'have_read_group', false, $have_read_group, 5, true);
         $SelectGroup_name2->addOption('', _TADNEWS_ALL_NO, false);
-        $SelectGroup_name2->setExtra("class='col-sm-12 form-control'");
+        $SelectGroup_name2->setExtra("class='col-md-12 form-control'");
         $have_read_group = $SelectGroup_name2->render();
 
         //標籤選單
@@ -1958,16 +1946,15 @@ class Tadnews
         }
 
         $now = time();
-        $jquery_path = Utility::get_jquery(true);
+        Utility::get_jquery(true);
 
         $css = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
 
-        $cate_menu = empty($cate_num) ? "<div class='col-sm-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
+        $cate_menu = empty($cate_num) ? "<div class='col-md-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = [];
         if ('return' === $mode) {
-            $form['jquery'] = $jquery_path;
             $form['action'] = $_SERVER['PHP_SELF'];
             $form['nsn'] = $nsn;
             $form['ncsn'] = $ncsn;
@@ -2029,7 +2016,7 @@ class Tadnews
 
             return $form;
         }
-        $xoopsTpl->assign('jquery', $jquery_path);
+
         $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
         $xoopsTpl->assign('nsn', $nsn);
         $xoopsTpl->assign('ncsn', $ncsn);

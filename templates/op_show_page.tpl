@@ -7,25 +7,22 @@
 <{/if}>
 
 <{$rating_js}>
-<{$del_js}>
-<{$jquery}>
-
 <{if $page}>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
         <{foreach item=page from=$page}>
             <{if $cate_set_title}>
-            <h1 style="text-shadow:1px 1px 1px #aaaaaa;">
-                <{$page.news_title}>
-            </h1>
-            <div class="pull-right" style="border-left: 1px solid #cfcfcf; padding-left:8px;">
-                <a href="page.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> /
-                <{$page.post_date}> /
-                <{$smarty.const._TADNEWS_HOT}>
-                <{$page.counter}>
-            </div>
-            <hr>
+                <h1 style="text-shadow:1px 1px 1px #aaaaaa;">
+                    <{$page.news_title}>
+                </h1>
+                <div class="pull-right float-right" style="border-left: 1px solid #cfcfcf; padding-left:8px;">
+                    <a href="page.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> /
+                    <{$page.post_date}> /
+                    <{$smarty.const._TADNEWS_HOT}>
+                    <{$page.counter}>
+                </div>
+                <hr>
             <{/if}>
 
             <div style="margin:10px auto; line-height: 2em; font-weight:normal;"><{$page.pic}><{$page.content}></div>
@@ -38,12 +35,12 @@
 
             <{if $cate_set_nav}>
                 <div class="row" style="margin:10px;">
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                     <{if $page.back_news_link}>
                         <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 align="absmiddle" alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
                     <{/if}>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                     <{if $page.next_news_link}>
                         <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 align="absmiddle" alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
                     <{/if}>
