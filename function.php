@@ -138,14 +138,14 @@ function preview_newspaper($npsn = '')
 
 function tad_news_cate_form($ncsn = '', $not_news = '0')
 {
-    global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $Tadnews, $isAdmin;
+    global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $Tadnews;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $ok_cat = $Tadnews->chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
-    if (!$isOwner and !$isAdmin) {
+    if (!$isOwner and !$_SESSION['tadnews_adm']) {
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
     }
 
@@ -210,13 +210,13 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
 //更新tad_news_cate某一筆資料
 function update_tad_news_cate($ncsn = '')
 {
-    global $xoopsDB, $xoopsModuleConfig, $Tadnews, $isAdmin;
+    global $xoopsDB, $xoopsModuleConfig, $Tadnews;
 
     $ok_cat = $Tadnews->chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
-    if (!$isOwner and !$isAdmin) {
+    if (!$isOwner and !$_SESSION['tadnews_adm']) {
         redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
     }
 

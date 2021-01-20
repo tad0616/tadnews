@@ -430,9 +430,9 @@ class Tadnews
     //取得新聞 $mode = 'assign','return','app'
     public function get_news($mode = 'assign', $admin = false)
     {
-        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoTheme;
+        global $xoopsDB, $xoopsUser, $xoopsTpl, $xoTheme;
         if ($admin) {
-            $isAdmin = $admin;
+            $_SESSION['tadnews_adm'] = $admin;
         }
         $rating_js = '';
         //設定是否需要高亮度語法
@@ -731,7 +731,7 @@ class Tadnews
 
             //判斷本文及所屬分類是否允許該用戶之所屬群組觀看
             $news_read_power = $this->chk_news_power($enable_group, $User_Groups);
-            if (!$news_read_power and $uid != $now_uid and !$isAdmin) {
+            if (!$news_read_power and $uid != $now_uid and !$_SESSION['tadnews_adm']) {
                 continue;
             }
 
@@ -1292,13 +1292,16 @@ class Tadnews
     private function admin_tool($uid, $nsn, $counter = '', $ncsn = '', $have_read_group = '', $enable_post_group = '')
     {
         global $xoopsUser;
+        //判斷是否對該模組有管理權限
+        if (!isset($_SESSION['tadnews_adm'])) {
+            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        }
 
         if ($xoopsUser) {
             $uuid = $xoopsUser->uid();
-            $isAdmin = $xoopsUser->isAdmin($this->module_id);
             $User_Groups = $xoopsUser->getGroups();
         } else {
-            $uuid = $isAdmin = '';
+            $uuid = '';
         }
         if (empty($enable_post_group)) {
             $enable_post_group = 1;
@@ -1310,29 +1313,29 @@ class Tadnews
 
         $edit_cate = '';
         if (!empty($ncsn)) {
-            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . "</a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-folder-open-o'></i> " . _TADNEWS_EDIT_CATE . '</a>';
+            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_EDIT_CATE . "'><i class='fa fa-folder-open-o'></i></a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_EDIT_CATE . "'><i class='fa fa-folder-open-o'></i></a>";
         }
 
         $signbtn = '';
         if (!empty($have_read_group)) {
-            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_DIGN_LIST . '</a>';
+            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_DIGN_LIST . "'><i class='fa fa-list'></i></a>";
         }
 
         $news_post_power = $this->chk_news_power($enable_post_group, $User_Groups);
 
         $admin_fun = '';
-        if ($uuid and ($news_post_power or $uid == $uuid or $isAdmin)) {
+        if ($uuid and ($news_post_power or $uid == $uuid or $_SESSION['tadnews_adm'])) {
 
-            $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;'>BBCode</a>" : '';
+            $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='BBCode'>BB</a>" : '';
 
             $admin_fun = "
             <div class='btn-group'>
-            $signbtn
-            <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-plus-circle'></i> " . _TADNEWS_ADD . "</a>
-            <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-trash'></i> " . _TADNEWS_DEL . "</a>
-            $edit_cate
-            <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'><i class='fa fa-pencil'></i> " . _TADNEWS_EDIT . "</a>
-            $bbcode
+                $signbtn
+                <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_ADD . "'><i class='fa fa-plus-circle'></i></a>
+                <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_DEL . "'><i class='fa fa-trash'></i></a>
+                $edit_cate
+                <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_EDIT . "'><i class='fa fa-pencil'></i></a>
+                $bbcode
             </div>";
         }
 
@@ -1393,21 +1396,20 @@ class Tadnews
     public function get_tad_news_cate_option($of_ncsn = 0, $level = 0, $v = '', $blank = true, $this_ncsn = '', $no_self = '0', $not_news = null)
     {
         global $xoopsDB, $xoopsUser;
-        if ($xoopsUser) {
-            $isAdmin = $xoopsUser->isAdmin($this->module_id);
-        } else {
-            $isAdmin = false;
+        //判斷是否對該模組有管理權限
+        if (!isset($_SESSION['tadnews_adm'])) {
+            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
 
         $ok_cat = $this->chk_user_cate_power();
 
         $and_not_news = (null === $not_news or '' === $not_news) ? '' : "and not_news='{$not_news}'";
 
-        if ($isAdmin) {
+        if ($_SESSION['tadnews_adm']) {
             $left = $level * 10;
             $level += 1;
 
-            $option = ($of_ncsn or !$isAdmin or false === $blank) ? '' : "<option value='0'></option>";
+            $option = ($of_ncsn or !$_SESSION['tadnews_adm'] or false === $blank) ? '' : "<option value='0'></option>";
 
             // '' == $option;
             $sql = 'select ncsn,nc_title,not_news from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$of_ncsn}' $and_not_news order by sort";
@@ -1459,9 +1461,11 @@ class Tadnews
         if (empty($xoopsUser)) {
             return false;
         }
-
-        $isAdmin = $xoopsUser->isAdmin($this->module_id);
-        if ($isAdmin) {
+        //判斷是否對該模組有管理權限
+        if (!isset($_SESSION['tadnews_adm'])) {
+            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        }
+        if ($_SESSION['tadnews_adm']) {
             $ok_cat[] = 0;
         }
         $user_array = $xoopsUser->getGroups();
@@ -1469,13 +1473,13 @@ class Tadnews
         $col = ('post' === $kind) ? 'enable_post_group' : 'enable_group';
 
         //非管理員才要檢查
-        $where = ($isAdmin) ? '' : "where $col!=''";
+        $where = ($_SESSION['tadnews_adm']) ? '' : "where $col!=''";
 
         $sql = "select ncsn,{$col} from " . $xoopsDB->prefix('tad_news_cate') . " $where";
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
-            if ($isAdmin or 'pass' === $kind) {
+            if ($_SESSION['tadnews_adm'] or 'pass' === $kind) {
                 $ok_cat[] = (int) $ncsn;
             } else {
                 $power_array = explode(',', $power);
@@ -1641,11 +1645,13 @@ class Tadnews
             if (empty($xoopsUser)) {
                 redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
             }
-
-            $isAdmin = $xoopsUser->isAdmin($this->module_id);
+            //判斷是否對該模組有管理權限
+            if (!isset($_SESSION['tadnews_adm'])) {
+                $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+            }
             $uid = $xoopsUser->uid();
 
-            if (!$isAdmin and $uid != $data['uid']) {
+            if (!$_SESSION['tadnews_adm'] and $uid != $data['uid']) {
                 redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
             }
         }
@@ -1818,7 +1824,7 @@ class Tadnews
     //tad_news編輯表單
     public function tad_news_form($nsn = '', $def_ncsn = '', $mode = '')
     {
-        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
+        global $xoopsDB, $xoopsUser, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $myts = \MyTextSanitizer::getInstance();
 
         $FormValidator = new FormValidator('#myForm', false);
@@ -2200,7 +2206,7 @@ class Tadnews
     //新增資料到tad_news中
     public function insert_tad_news()
     {
-        global $xoopsDB, $xoopsUser, $isAdmin, $xoTheme;
+        global $xoopsDB, $xoopsUser, $xoTheme;
         $uid = $xoopsUser->uid();
 
         //安全判斷
@@ -2448,7 +2454,7 @@ class Tadnews
     //更新tad_news某一筆資料
     public function update_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser, $isAdmin, $xoopsModuleConfig;
+        global $xoopsDB, $xoopsUser, $xoopsModuleConfig;
         $uid = $xoopsUser->uid();
 
         //確認有管理員或本人才能管理
@@ -2596,9 +2602,11 @@ class Tadnews
         if (empty($xoopsUser)) {
             return false;
         }
-
-        $isAdmin = $xoopsUser->isAdmin($this->module_id);
-        if ($isAdmin) {
+        //判斷是否對該模組有管理權限
+        if (!isset($_SESSION['tadnews_adm'])) {
+            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        }
+        if ($_SESSION['tadnews_adm']) {
             return true;
         }
 

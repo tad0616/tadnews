@@ -95,7 +95,7 @@ define('_MD_TADNEWS_NEWSPIC_NO_RESIZE', '不做任何縮放');
 define('_MD_TADNEWS_NEWSPIC_CONTAIN', '縮放以看見完整封面圖');
 define('_MD_TADNEWS_NEWSPIC_COVER', '縮放到塞滿整個圖片框長邊');
 define('_MD_TADNEWS_NEWSPIC_DEMO', '<p>所謂「封面圖」指的就是替每一篇文章上傳一個具有代表性的圖片，此圖片會用在各個區塊上，以增加版面的活潑性。每個區塊的封面圖都可以自行去設定其大小及外觀。若是您想把封面圖也放到內文中當作插圖，那麼，您可以利用此界面來做設定。</p><p>封面圖並沒有一定要多大，但由於封面圖也可以用在滑動新聞區塊上作為大張的滑動圖，因此建議您，圖的大小至少比滑動區塊大即可，預設值為 670x250，因此，建議您，封面圖盡量在這個大小範圍為佳。</p>');
-define('_MD_TADNEWS_COUNTER', '人氣');
+define('_MD_TADNEWS_COUNTER', '點閱數');
 define('_MD_TADNEWS_KIND_NEWS', '新聞文章');
 define('_MD_TADNEWS_KIND_PAGE', '自訂頁面');
 define('_MD_TADNEWS_KIND', '發布文章種類：');

@@ -148,15 +148,11 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-// $arr = get_tadnews_cate_path($ncsn);
-// die(var_dump($arr));
-
 $arr = get_tadnews_cate_path($ncsn);
 $path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
 
 $xoopsTpl->assign('breadcrumb', $path);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('isAdmin', $isAdmin);
 $xoopsTpl->assign('now_op', $op);
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';

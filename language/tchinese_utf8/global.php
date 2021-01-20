@@ -7,7 +7,7 @@ define('_TADNEWS_MORE', '觀看完整文章');
 define('_TADNEWS_EDIT', '修改');
 define('_TADNEWS_DEL', '刪除');
 define('_TADNEWS_ADD', '發佈');
-define('_TADNEWS_HOT', '人氣：');
+define('_TADNEWS_HOT', '點閱數：');
 define('_TADNEWS_BATCH_TOOLS', '批次管理');
 define('_TADNEWS_NEWS_UNABLE', '草稿');
 define('_TADNEWS_NEWS_NEED_PASSWD', '本文為加密文章，請輸入密碼觀看：');

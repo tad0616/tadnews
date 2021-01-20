@@ -18,7 +18,7 @@ define('_MB_TADNEWS_NO', '否');
 
 define('_MB_TADNEWS_NEWS_TITLE', '文章標題');
 define('_MB_TADNEWS_NEWS_CATE', '所屬分類');
-define('_MB_TADNEWS_COUNTER', '人氣');
+define('_MB_TADNEWS_COUNTER', '點閱數');
 define('_MB_TADNEWS_SHOW_ALL', '全文');
 
 define('_MB_TADNEWS_SUBMIT', '送出');

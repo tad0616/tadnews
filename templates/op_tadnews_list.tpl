@@ -1,10 +1,3 @@
-<!--TadNews Start-->
-<{if $cate}>
-    <h1><{$cate.nc_title}></h1>
-<{else}>
-    <h1 class="sr-only" style="display: none;">All News</h1>
-<{/if}>
-
 <{if $page}>
     <table class="table table-striped table-bordered">
         <tbody>

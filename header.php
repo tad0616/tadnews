@@ -13,10 +13,9 @@ if ('1' == $xoopsModuleConfig['use_pda'] and false === mb_strpos($_SERVER['PHP_S
     Utility::mobile_device_detect(true, false, true, true, true, true, true, "pda.php?nsn={$nsn}&ncsn={$ncsn}", false);
 }
 
-if ($xoopsUser) {
-    $isAdmin = $xoopsUser->isAdmin();
-} else {
-    $isAdmin = false;
+//判斷是否對該模組有管理權限
+if (!isset($_SESSION['tadnews_adm'])) {
+    $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 
 $interface_menu[_TADNEWS_NAME] = 'index.php';
@@ -36,6 +35,6 @@ if (count($p) > 0 and $xoopsUser) {
     $interface_menu[_MD_TADNEWS_MY] = 'my_news.php';
 }
 
-if ($isAdmin) {
+if ($_SESSION['tadnews_adm']) {
     $interface_menu[_MD_TADNEWS_TO_ADMIN] = 'admin/main.php';
 }
