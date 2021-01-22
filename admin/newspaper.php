@@ -398,12 +398,6 @@ function send_now($npsn = '')
 
     $headers = '';
 
-    // $xoopsMailer->setFromEmail($xoopsUser->getVar("email", "E"));
-    // $xoopsMailer->setFromName($xoopsUser->getVar("uname", "E"));
-
-    //$xoopsMailer->setSubject($subject);
-    //$xoopsMailer->setBody($content);
-
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     foreach ($mail_array as $email) {
@@ -689,6 +683,7 @@ switch ($op) {
 if ('preview' === $op) {
     echo $main;
 } else {
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
     require_once __DIR__ . '/footer.php';
 }

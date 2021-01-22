@@ -9,32 +9,31 @@
         </div>
         <div class="col-md-10">
             <{if $all_news.news}>
-
-                <div class="panel panel-default card">
-                    <table class="table table-striped table-bordered">
-                        <{foreach  item=news from=$all_news.news}>
-                            <tr>
-                                <td>
-                                    <div class="pull-right float-right"><{$news.files}></div>
-                                    <{$news.post_date}>
-                                    <{$news.prefix_tag}>
-                                    <{if $news.need_sign}>
-                                        <img src="<{$news.need_sign}>" align="absmiddle" alt="<{$news.news_title}>" style="margin:3px;">
-                                    <{/if}>
-                                    <{$news.always_top_pic}>
-                                    <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
-                                </td>
-                            </tr>
-                        <{/foreach}>
-                    </table>
-                </div>
-
+                <table class="table table-striped table-hover table-shadow">
+                    <tr class="my">
+                        <th><a href="index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></th>
+                    </tr>
+                    <{foreach item=news from=$all_news.news}>
+                        <tr>
+                            <td>
+                                <div class="pull-right float-right"><{$news.files}></div>
+                                <{$news.post_date}>
+                                <{$news.prefix_tag}>
+                                <{if $news.need_sign}>
+                                    <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
+                                <{/if}>
+                                <{$news.always_top_pic}>
+                                <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+                            </td>
+                        </tr>
+                    <{/foreach}>
+                </table>
             <{else}>
-            <div class="alert alert-warning">
-                <div style="font-size: 1.875rem; color: #cfcfcf; padding: 30px;">
-                    <{$smarty.const._TADNEWS_EMPTY}>
+                <div class="alert alert-warning">
+                    <div style="font-size: 1.875rem; color: #cfcfcf; padding: 30px;">
+                        <{$smarty.const._TADNEWS_EMPTY}>
+                    </div>
                 </div>
-            </div>
             <{/if}>
             </div>
         </div>

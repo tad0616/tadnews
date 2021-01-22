@@ -6,7 +6,6 @@ if (!defined('_TAD_NEED_TADTOOLS')) {
     define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
 }
 
-
 define('_MA_TADNEWS_SAVE_CATE', 'Save');
 define('_MA_TADNEWS_FUNCTION', 'Function');
 define('_MA_TADNEWS_MOVE', 'Move');
@@ -18,6 +17,7 @@ define('_MA_TADNEWS_NEWS_CATE', 'Category');
 define('_MA_TADNEWS_CHECK_ALL', 'Check all');
 define('_MA_TADNEWS_NO_NEWS', 'This category is no article.');
 define('_MA_TADNEWS_ALL_NEWS', 'All articles');
+define('_MA_TADNEWS_EDIT_CATE', 'Editorial Categories');
 
 //cate.php
 define('_MA_TADNEWS_ADD_CATE', 'Add Category');

@@ -66,7 +66,7 @@
     </div>
 
     <div id="pic_css_set">
-        <div class="alert alert-info">
+        <div class="alert alert-success">
             <div class="row" style="margin: 20px 0px;">
                 <div class="col-md-3">
                     <label>
@@ -173,7 +173,7 @@
 
         <div class="row" style="margin: 10px 0px;">
             <div class="col-md-12">
-                <div class="well card card-body bg-light m-1">
+                <div class="alert alert-success">
                     <div id="demo_cover_pic" style="background-image: url('<{$pic}>');<{$pic_css}>" title="<{$pic_css}>"></div>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
                 </div>

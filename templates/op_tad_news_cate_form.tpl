@@ -1,3 +1,4 @@
+<h1 class="my"><{$smarty.const._MA_TADNEWS_EDIT_CATE}></h1>
 <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <div class="alert alert-success">
         <div class="form-group row">

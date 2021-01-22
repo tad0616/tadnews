@@ -65,7 +65,7 @@
                         <{/if}>
                     </div>
                     <h3 class="my">
-                        <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
+                        <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
                         <a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
                     </h3>
                     <ul>
@@ -85,33 +85,32 @@
             </div>
         </div>
         <div class="col-md-9">
-            <{if $ncsn!=""}>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h1 class="my">
-                            <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
-                            <a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
-                        </h1>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div style="margin: 10px;">
-                            <{if $now_op!="tad_news_cate_form" and $ncsn}>
-                                <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                <a href="<{$php_self}>?not_news=0&op=change_kind&ncsn=<{$ncsn}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_NEWS}></a>
-                                <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
-                            <{/if}>
-                        </div>
-                    </div>
-                </div>
-            <{else}>
-                <h1 class="my"><{$smarty.const._MA_TADNEWS_ALL_NEWS}></h1>
-            <{/if}>
-
             <{if $now_op=="modify_page_cate"}>
                 <{includeq file="$xoops_rootpath/modules/tadnews/templates/op_`$now_op`.tpl"}>
             <{elseif $page}>
+                <{if $ncsn!=""}>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="my">
+                                <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
+                                <a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
+                            </h1>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div style="margin: 10px;">
+                                <{if $now_op!="tad_news_cate_form" and $ncsn}>
+                                    <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
+                                    <a href="<{$php_self}>?not_news=0&op=change_kind&ncsn=<{$ncsn}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_NEWS}></a>
+                                    <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                <{/if}>
+                            </div>
+                        </div>
+                    </div>
+                <{else}>
+                    <h1 class="my"><{$smarty.const._MA_TADNEWS_ALL_NEWS}></h1>
+                <{/if}>
                 <form action="page.php" method="post" class="form-horizontal" role="form">
-                    <table class="table table-sm table-condensed table-striped table-bordered">
+                    <table class="table table-striped table-hover table-shadow">
                         <tr>
                             <th nowrap>
                                 <div class="form-check-inline checkbox-inline">
@@ -162,7 +161,9 @@
                             <{/foreach}>
                         </tbody>
                     </table>
-                    <{$bar}>
+                    <p class="my-5">
+                        <{$bar}>
+                    </p>
 
                     <div class="alert alert-info" id="batch_tool" style="display: none;">
                         <div class="form-group row">

@@ -56,7 +56,7 @@
                         <{/if}>
                     </div>
                     <h3 class="my">
-                        <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
+                        <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
                         <a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
                     </h3>
                     <ul>
@@ -77,82 +77,77 @@
 
         </div>
         <div class="col-md-9">
-            <{if $ncsn!=""}>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h1 class="my">
-                            <img src="<{if $cate.cate_pic}><{$cate_img_url}>/<{$cate.cate_pic}><{else}>../images/no_cover.png<{/if}>" alt="<{$cate.nc_title}>" title="<{$cate.nc_title}>" style="width: 50px;margin: 0px 6px 4px 0px;">
-                            <a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
-                        </h1>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div style="margin: 10px;">
-                            <{if $now_op!="tad_news_cate_form" and $ncsn}>
-                                <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                <a href="<{$php_self}>?not_news=1&op=change_kind&ncsn=<{$ncsn}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_PAGE}></a>
-                                <a href="main.php?op=modify_news_cate&ncsn=<{$ncsn}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
-                            <{/if}>
-                        </div>
-                    </div>
-                </div>
-            <{else}>
-                <h1 class="my"><{$smarty.const._MA_TADNEWS_ALL_NEWS}></h1>
-            <{/if}>
-
             <{if $now_op=="tad_news_cate_form"}>
                 <{includeq file="$xoops_rootpath/modules/tadnews/templates/op_`$now_op`.tpl"}>
             <{elseif $page}>
+                <{if $ncsn!=""}>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="my">
+                                <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
+                                <a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
+                            </h1>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div style="margin: 10px;">
+                                <{if $now_op!="tad_news_cate_form" and $ncsn}>
+                                    <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
+                                    <a href="<{$php_self}>?not_news=1&op=change_kind&ncsn=<{$ncsn}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_PAGE}></a>
+                                    <a href="main.php?op=modify_news_cate&ncsn=<{$ncsn}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                <{/if}>
+                            </div>
+                        </div>
+                    </div>
+                <{else}>
+                    <h1 class="my"><{$smarty.const._MA_TADNEWS_ALL_NEWS}></h1>
+                <{/if}>
                 <form action="main.php" method="post" class="form-horizontal" role="form">
-                    <div class="panel panel-default card">
-                        <table class="table table-sm table-condensed table-striped table-bordered">
-                            <tr>
+                    <table class="table table-striped table-hover table-shadow">
+                        <tr>
                             <th nowrap>
-                                <label class="checkbox-inline">
                                 <input id="clickAll" type="checkbox">
                                 <{$smarty.const._MA_TADNEWS_NEWS_CATE}>
-                                </label>
                                 </th>
                             <th nowrap><{$smarty.const._MA_TADNEWS_NEWS_TITLE}></th>
                             <{if $show_admin_tool_title}>
                                 <th nowrap><{$smarty.const._MA_TADNEWS_CAN_READ_NEWS_GROUP}></th>
                                 <th nowrap><{$smarty.const._MA_TADNEWS_FUNCTION}></th>
                             <{/if}>
-                            </tr>
-                            <tbody>
+                        </tr>
+                        <tbody>
                             <{foreach item=page from=$page}>
                                 <tr>
-                                <td>
-                                    <label class="checkbox-inline">
-                                    <input name="nsn_arr[]" value="<{$page.nsn}>" type="checkbox" class="news">
-                                    <a href="main.php?ncsn=<{$page.ncsn}>" title="<{$page.cate_name}>"><{$page.cate_name}></a>
-                                    </label>
-                                </td>
-                                <td>
-                                    <{$page.prefix_tag}>
-                                    <{if $page.need_sign}>
-                                    <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
-                                    <{/if}>
-                                    <{$page.enable_txt}>
-                                    <{$page.today_pic}>
-                                    <{$page.post_date}>
-                                    <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                                    <span style="color:gray;font-size: 0.8em;"> (<a href="main.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
-                                </td>
-                                <{if $page.show_admin_tool}>
-                                    <td><{$page.g_txt}></td>
                                     <td>
-                                    <a href="javascript:delete_tad_news_func(<{$page.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$page.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                    <a href="<{$xoops_url}>/modules/tadnews/post.php?op=tad_news_form&nsn=<{$page.nsn}>" class="btn btn-sm btn-xs btn-warning" id="update<{$page.nsn}>"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                        <input name="nsn_arr[]" value="<{$page.nsn}>" type="checkbox" class="news">
+                                        <a href="main.php?ncsn=<{$page.ncsn}>" title="<{$page.cate_name}>"><{$page.cate_name}></a>
                                     </td>
-                                <{/if}>
+                                    <td>
+                                        <{$page.prefix_tag}>
+                                        <{if $page.need_sign}>
+                                            <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
+                                        <{/if}>
+                                        <{$page.enable_txt}>
+                                        <{$page.today_pic}>
+                                        <{$page.post_date}>
+                                        <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
+                                        <span style="color:gray;font-size: 0.8em;"> (<a href="main.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
+                                    </td>
+                                    <{if $page.show_admin_tool}>
+                                        <td><{$page.g_txt}></td>
+                                        <td>
+                                        <a href="javascript:delete_tad_news_func(<{$page.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$page.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
+                                        <a href="<{$xoops_url}>/modules/tadnews/post.php?op=tad_news_form&nsn=<{$page.nsn}>" class="btn btn-sm btn-xs btn-warning" id="update<{$page.nsn}>"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                        </td>
+                                    <{/if}>
                                 </tr>
                             <{/foreach}>
-                            </tbody>
-                        </table>
-                    </div>
-                    <{$bar}>
+                        </tbody>
+                    </table>
+                    <p class="my-5">
+                        <{$bar}>
+                    </p>
 
-                <div class="well card card-body bg-light m-1" id="batch_tool" style="display: none;">
+                <div class="alert alert-info" id="batch_tool" style="display: none;">
 
                     <div class="form-group row">
                     <label class="col-md-2 control-label col-form-label text-md-right">

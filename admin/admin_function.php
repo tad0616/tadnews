@@ -100,7 +100,7 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
 }
 
 //縮圖上傳
-function mk_thumb($ncsn = '', $col_name = '', $width = 100)
+function mk_thumb($ncsn = '', $col_name = '', $width = 480)
 {
     global $xoopsDB;
     require XOOPS_ROOT_PATH . '/modules/tadtools/upload/class.upload.php';

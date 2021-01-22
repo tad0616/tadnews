@@ -77,7 +77,7 @@ if (empty($show_col)) {
     $show_col = ['start_day', 'news_title', 'uid', 'ncsn', 'counter'];
 }
 
-$block = $FooTableJS;
+$block = '';
 
 $tt['start_day'] = "<th data-hide='phone' style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_START_DATE) . '</th>';
 $tt['news_title'] = "<th data-class='expand'>" . Utility::to_utf8(_MD_TADNEWS_NEWS_TITLE) . '</th>';

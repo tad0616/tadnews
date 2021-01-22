@@ -8,7 +8,7 @@
                 <a href="<{$page.url}>">
                     <{$page.title}>
                     <{if $page.type=="cate"}>
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        <i class="fa fa-caret-down"></i>
                     <{/if}>
                 </a>
             </li>

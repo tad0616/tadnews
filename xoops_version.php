@@ -338,7 +338,7 @@ $modversion['config'][$i]['title'] = '_MI_TADNEWS_CATE_PIC_WIDTH';
 $modversion['config'][$i]['description'] = '_MI_TADNEWS_CATE_PIC_WIDTH_DESC';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 400;
+$modversion['config'][$i]['default'] = 480;
 
 $i++;
 $modversion['config'][$i]['name'] = 'pic_width';
@@ -346,7 +346,7 @@ $modversion['config'][$i]['title'] = '_MI_TADNEWS_PIC_WIDTH';
 $modversion['config'][$i]['description'] = '_MI_TADNEWS_PIC_WIDTH_DESC';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 550;
+$modversion['config'][$i]['default'] = 1280;
 
 $i++;
 $modversion['config'][$i]['name'] = 'thumb_width';
@@ -354,7 +354,7 @@ $modversion['config'][$i]['title'] = '_MI_TADNEWS_THUMB_WIDTH';
 $modversion['config'][$i]['description'] = '_MI_TADNEWS_THUMB_WIDTH_DESC';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 400;
+$modversion['config'][$i]['default'] = 480;
 
 $i++;
 $modversion['config'][$i]['name'] = 'use_newspaper';

@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <form action="tag.php" method="post" id="myForm" class="form-horizontal" role="form">
-        <div class="panel panel-default card">
-            <table class="table table-striped table-bordered">
+        <table class="table table-striped table-hover table-shadow">
             <tr>
                 <th><{$smarty.const._MA_TADNEWS_TAG_DEMO}></th>
                 <th><{$smarty.const._MA_TADNEWS_TAG_TITLE}></th>
@@ -12,70 +11,70 @@
             </tr>
 
             <{if $tag_sn==""}>
-                <tr class="info">
-                <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
-                <td><input type="text" name="tag" value="<{$tag}>" class="form-control"></td>
-                <td>
-                    <input type="text" name="font_color" class="form-control color" value="<{$font_color}>" id="font_color" data-text="hidden" data-hex="true">
-                </td>
-                <td>
-                    <input type="text" name="color" class="form-control color" value="<{$color}>" id="color" data-text="hidden" data-hex="true">
-                </td>
-                <td>
-                    <div class="form-check-inline radio-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="enable" value="1" <{if $enable!='0'}>checked<{/if}>>
-                            <{$smarty.const._YES}>
-                        </label>
-                    </div>
-                    <div class="form-check-inline radio-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="enable" value="0" <{if $enable=='0'}>checked<{/if}>>
-                            <{$smarty.const._NO}>
-                        </label>
-                    </div>
-                </td>
-                <td>
-                    <input type="hidden" name="op" value="insert_tad_news_tags">
-                    <{$XOOPS_TOKEN}>
-                    <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
-                </td>
-                </tr>
-            <{/if}>
-
-            <{foreach item=tag from=$tagarr}>
-                <{if $tag.mode=="edit"}>
-                <tr class="warning">
-                    <td><{$tag.prefix_tag}></td>
-                    <td><input type="text" name="tag" value="<{$tag.tag}>" class="form-control"></td>
-
+                <tr style="background-color: antiquewhite;">
+                    <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
+                    <td><input type="text" name="tag" value="<{$tag}>" class="form-control"></td>
                     <td>
-                    <input type="text" name="font_color" class="form-control color" value="<{$tag.font_color}>" id="font_color" data-text="hidden" data-hex="true">
+                        <input type="text" name="font_color" class="form-control color" value="<{$font_color}>" id="font_color" data-text="hidden" data-hex="true">
                     </td>
                     <td>
-                    <input type="text" name="color" class="form-control color" value="<{$tag.color}>" id="color" data-text="hidden" data-hex="true">
+                        <input type="text" name="color" class="form-control color" value="<{$color}>" id="color" data-text="hidden" data-hex="true">
                     </td>
-
                     <td>
                         <div class="form-check-inline radio-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="enable" value="1" <{if $tag.checked=='1' or $tag.checked==''}>checked<{/if}>>
+                                <input class="form-check-input" type="radio" name="enable" value="1" <{if $enable!='0'}>checked<{/if}>>
                                 <{$smarty.const._YES}>
                             </label>
                         </div>
                         <div class="form-check-inline radio-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="enable" value="0" <{if $tag.checked=='0'}>checked<{/if}>>
+                                <input class="form-check-input" type="radio" name="enable" value="0" <{if $enable=='0'}>checked<{/if}>>
                                 <{$smarty.const._NO}>
                             </label>
                         </div>
                     </td>
                     <td>
-                    <input type="hidden" name="tag_sn" value="<{$tag_sn}>">
-                    <input type="hidden" name="op" value="update_tad_news_tags">
-                    <{$XOOPS_TOKEN}>
-                    <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
-                    </td></tr>
+                        <input type="hidden" name="op" value="insert_tad_news_tags">
+                        <{$XOOPS_TOKEN}>
+                        <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+                    </td>
+                </tr>
+            <{/if}>
+
+            <{foreach item=tag from=$tagarr}>
+                <{if $tag.mode=="edit"}>
+                    <tr style="background-color: antiquewhite;">
+                        <td><{$tag.prefix_tag}></td>
+                        <td><input type="text" name="tag" value="<{$tag.tag}>" class="form-control"></td>
+
+                        <td>
+                            <input type="text" name="font_color" class="form-control color" value="<{$tag.font_color}>" id="font_color" data-text="hidden" data-hex="true">
+                        </td>
+                        <td>
+                            <input type="text" name="color" class="form-control color" value="<{$tag.color}>" id="color" data-text="hidden" data-hex="true">
+                        </td>
+                        <td>
+                            <div class="form-check-inline radio-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="enable" value="1" <{if $tag.checked=='1' or $tag.checked==''}>checked<{/if}>>
+                                    <{$smarty.const._YES}>
+                                </label>
+                            </div>
+                            <div class="form-check-inline radio-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="enable" value="0" <{if $tag.checked=='0'}>checked<{/if}>>
+                                    <{$smarty.const._NO}>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                        <input type="hidden" name="tag_sn" value="<{$tag_sn}>">
+                        <input type="hidden" name="op" value="update_tad_news_tags">
+                        <{$XOOPS_TOKEN}>
+                        <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+                        </td>
+                    </tr>
                 <{else}>
                     <tr>
                         <td><{$tag.prefix_tag}></td>
@@ -98,7 +97,6 @@
                 <{/if}>
             <{/foreach}>
 
-            </table>
-        </div>
+        </table>
     </form>
 </div>

@@ -1,6 +1,6 @@
+<h1 class="my"><{$smarty.const._MA_TADNEWS_EDIT_CATE}></h1>
 <form action="page.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-
-    <div class="well card card-body bg-light m-1" style="background-color:#EEFFCC;">
+    <div class="alert alert-success">
 
         <div class="form-group row">
             <label class="col-md-2 control-label col-form-label text-md-right">

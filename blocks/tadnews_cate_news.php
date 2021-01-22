@@ -31,6 +31,7 @@ function tadnews_cate_news($options)
     }
 
     $block['show_line'] = ('1' == $options[3]) ? 'table' : '';
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     return $block;
