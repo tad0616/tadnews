@@ -1,41 +1,47 @@
 <?php
-use XoopsModules\Tadtools\Dtree;
-if (!class_exists('XoopsModules\Tadtools\Dtree')) {
+use XoopsModules\Tadtools\Ztree;
+if (!class_exists('XoopsModules\Tadtools\Ztree')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
+
 //區塊主函式 (顯示所有新聞的類別)
 function tadnews_cate_show($options)
 {
-    global $xoTheme;
+    global $xoTheme, $xoopsDB;
 
-    $cate = block_get_news_cate();
-    if (empty($cate)) {
-        return;
+    $cates = $counter = [];
+    $sql = 'SELECT count(*), `ncsn` FROM ' . $xoopsDB->prefix('tad_news') . " where `enable`=1 group by `ncsn` ";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    while (list($count, $ncsn) = $xoopsDB->fetchRow($result)) {
+        $counter[$ncsn] = $count;
+    }
+    // Utility::dd($counter);
+
+    $sql = 'SELECT ncsn, of_ncsn, nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
+    $result = $xoopsDB->query($sql);
+    while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
+        $cates['title'][$ncsn] = $nc_title;
+        $cates['of_ncsn'][$ncsn] = $of_ncsn;
+        $cates['url'][$ncsn] = XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}";
     }
 
-    $home['sn'] = 0;
-    $home['title'] = _MB_TADNEWS_NO_CATE;
-    $home['url'] = XOOPS_URL . '/modules/tadnews/index.php?ncsn=0';
-    $Dtree = new Dtree('tadnews_cate_tree', $home, $cate['title'], $cate['of_ncsn'], $cate['url']);
-    $block = $Dtree->render();
+    if (empty($cates)) {
+        $block = '';
+    } else {
+
+        $data[] = "{ id:0, pId:0, name:'" . _MB_TADNEWS_NO_CATE . "', url:'" . XOOPS_URL . "/modules/tadnews/index.php?ncsn=0', target:'_self', open:true}";
+
+        foreach ($cates['title'] as $ncsn => $title) {
+            $nc_title = addslashes($title);
+            $c = $counter[$ncsn] ? "({$counter[$ncsn]})" : '';
+            $data[] = "{ id:{$ncsn}, pId:{$cates['of_ncsn'][$ncsn]}, name:'{$nc_title} {$c}', url:'{$cates['url'][$ncsn]}', open: true ,target:'_self' }";
+        }
+        // Utility::dd($data);
+        $json = implode(",\n", $data);
+
+        $Ztree = new Ztree('tadnews_cate_tree', $json, '', '', 'of_ncsn', 'ncsn');
+        $block = $Ztree->render();
+    }
 
     return $block;
-}
-
-//取得所有類別標題
-if (!function_exists('block_get_news_cate')) {
-    function block_get_news_cate()
-    {
-        global $xoopsDB;
-
-        $sql = 'SELECT ncsn,of_ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
-        $result = $xoopsDB->query($sql);
-        while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-            $cate['title'][$ncsn] = $nc_title;
-            $cate['of_ncsn'][$ncsn] = $of_ncsn;
-            $cate['url'][$ncsn] = XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}";
-        }
-
-        return $cate;
-    }
 }
