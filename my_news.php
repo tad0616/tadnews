@@ -13,7 +13,9 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 function list_tad_my_news()
 {
     global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $Tadnews;
-
+    if (!$xoopsUser) {
+        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+    }
     $uid = $xoopsUser->uid();
     $Tadnews->set_show_enable(0);
     $Tadnews->set_view_uid($uid);
