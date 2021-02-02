@@ -15,7 +15,7 @@ $modversion['image'] = "images/logo_{$language}.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2021-01-20';
+$modversion['release_date'] = '2021-01-22';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
 $modversion['module_status'] = 'release';
@@ -144,7 +144,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC2;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_content_block_show';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_content_block.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_content_block_edit';
-$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|';
+$modversion['blocks'][$i]['options'] = '5|100|color: #707070; font-size: 0.95rem; margin-top:3px; line-height:150%; white-space: pre-line;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_re_block.php';
@@ -178,7 +178,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC6;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_cate_news';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_cate_news.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_cate_news_edit';
-$modversion['blocks'][$i]['options'] = '|10|1|0|100|color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;';
+$modversion['blocks'][$i]['options'] = '|10|1|0|100|color:#707070; font-size: 0.75rem; margin-top:3px; line-height:180%;';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_page.php';
@@ -214,7 +214,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_BDESC10;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_list_content_block_show';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_list_content_block.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_list_content_block_edit';
-$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0|0';
+$modversion['blocks'][$i]['options'] = '5|100|color:gray;font-size: 0.8rem; margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0|0';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_table_content_block.php';
@@ -259,7 +259,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_COVERED_DESC;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_covered';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_covered.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_covered_edit';
-$modversion['blocks'][$i]['options'] = '3|2|66|font-size: 0.8125em ;color: gray; line-height: 1.5; font-family:PMingLiU;|';
+$modversion['blocks'][$i]['options'] = '3|2|66|font-size: 0.8rem; color: #707070; line-height: 180%;|';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_page_list.php';
@@ -268,7 +268,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_LIST_DESC;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_page_list';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_page_list.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_page_list_edit';
-$modversion['blocks'][$i]['options'] = '|#9ea200|1|1|#ffffff|padding: 4px; border-radius: 5px;|font-size: 1.1em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;';
+$modversion['blocks'][$i]['options'] = '|#9ea200|1|1|#ffffff|padding: 4px; border-radius: 5px;|font-size: 1.1rem; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_tab_news.php';
@@ -295,7 +295,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_PAGE_MENU_DESC;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_page_menu';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_page_menu.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_page_menu_edit';
-$modversion['blocks'][$i]['options'] = '1|1|#dbff40|#5e6b00|padding: 4px; border-radius: 5px;|font-size: 1.1em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;';
+$modversion['blocks'][$i]['options'] = '1|1|#dbff40|#5e6b00|padding: 4px; border-radius: 5px;|font-size: 1.1rem; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;';
 
 //---偏好設定---//
 $i = 1;
@@ -483,3 +483,11 @@ $modversion['config'][$i]['description'] = '_MI_SHOW_RSS_DESC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = '0';
+
+$i++;
+$modversion['config'][$i]['name'] = 'use_table_shadow';
+$modversion['config'][$i]['title'] = '_MI_USE_TABLE_SHADOW';
+$modversion['config'][$i]['description'] = '_MI_USE_TABLE_SHADOW_DESC';
+$modversion['config'][$i]['formtype'] = 'yesno';
+$modversion['config'][$i]['valuetype'] = 'int';
+$modversion['config'][$i]['default'] = '1';

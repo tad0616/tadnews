@@ -144,7 +144,7 @@ function tadnews_page_menu_edit($options)
             <div class='my-content'>
                 <textarea class='my-input' name='options[5]'>{$options[5]}</textarea>
                 <span class='my-example'><br>
-                font-size: 1.1em; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;
+                font-size: 1.1rem; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;
                 </span>
             </div>
         </li>

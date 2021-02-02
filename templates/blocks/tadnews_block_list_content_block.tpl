@@ -23,7 +23,7 @@
 
 
     function tadnew_list_content<{$block.randStr}>(p){
-        $.post("<{$block.HTTP_HOST}>/modules/tadnews/ajax2.php", {
+        $.post("<{$xoops_url}>/modules/tadnews/ajax_list_content.php", {
             randStr:"<{$block.randStr}>" ,
             num: "<{$block.num}>",
             p: p ,

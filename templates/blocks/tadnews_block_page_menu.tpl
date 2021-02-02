@@ -4,7 +4,7 @@
     <{/if}>
     <ul class="vertical_menu">
         <{foreach from=$block.pages item=page}>
-            <li style="padding-left: <{$page.padding}>em;<{if $block.now_nsn==$page.nsn}>background: #efefef;<{/if}>">
+            <li style="padding-left: <{$page.padding}>rem;<{if $block.now_nsn==$page.nsn}>background: #efefef;<{/if}>">
                 <a href="<{$page.url}>">
                     <{$page.title}>
                     <{if $page.type=="cate"}>

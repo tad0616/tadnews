@@ -142,13 +142,13 @@
                                     <td>
                                         <{$page.prefix_tag}>
                                         <{if $page.need_sign}>
-                                            <img src="<{$page.need_sign}>" align="absmiddle" alt="<{$page.news_title}>" style="margin:3px;">
+                                            <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
                                         <{/if}>
                                         <{$page.enable_txt}>
                                         <{$page.today_pic}>
                                         <{$page.post_date}>
                                         <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                                        <span style="color:gray;font-size: 0.8em;"> (<a href="page.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
+                                        <span style="color:gray;font-size: 0.8rem;"> (<a href="page.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
                                     </td>
                                     <{if $page.show_admin_tool}>
                                         <td><{$page.g_txt}></td>

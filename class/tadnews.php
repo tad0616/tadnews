@@ -771,7 +771,7 @@ class Tadnews
                 $news_content = $this->xlang($news_content);
 
                 $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
-                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9em;'><i class=\"fa fa-file-text-o\"></i>" . _TADNEWS_MORE . '</a>';
+                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9rem;'><i class=\"fa fa-file-text-o\"></i> " . _TADNEWS_MORE . '</a>';
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . '</div>';
             } elseif ('page_break' === $this->summary_num) {
@@ -784,7 +784,7 @@ class Tadnews
                 } else {
                     $content_arr = explode('<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>', $news_content);
                 }
-                $more = (empty($content_arr[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9em;'>" . _TADNEWS_MORE . '...</a></p>';
+                $more = (empty($content_arr[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9rem;'>" . _TADNEWS_MORE . '...</a></p>';
                 $news_content = $content_arr[0] . $more;
             } elseif ('full' === $this->summary_num) {
                 $news_content = str_replace('<p>--summary--</p>', '', $news_content);
@@ -803,7 +803,7 @@ class Tadnews
                     $content = explode(_SEPARTE, $news_content);
                 }
 
-                $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9em;'>" . _TADNEWS_MORE . '...</a></p>';
+                $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9rem;'>" . _TADNEWS_MORE . '...</a></p>';
                 $news_content = $content[0] . $more;
             }
 

@@ -80,7 +80,7 @@ define('_MB_TADNEWS_MARQUEE_DIRECTION_LEFT', '←');
 define('_MB_TADNEWS_MARQUEE_DIRECTION_RIGHT', '→');
 define('_MB_TADNEWS_MARQUEE_DIRECTION_UP', '↑');
 define('_MB_TADNEWS_MARQUEE_DIRECTION_DOWN', '↓');
-define('_MB_TADNEWS_MARQUEE_DIRECTION_DESC', '「上下」的速度約 5000 左右；「左右」的速度約 15000 左右（高度也要調整為 height:1em;）');
+define('_MB_TADNEWS_MARQUEE_DIRECTION_DESC', '「上下」的速度約 5000 左右；「左右」的速度約 15000 左右（高度也要調整為 height:1rem;）');
 define('_MB_TADNEWS_MARQUEE_DURATION', '速度（數字越大越慢）');
 define('_MB_TADNEWS_MARQUEE_CSS', 'CSS設定（可不設）');
 define('_MB_TADNEWS_MARQUEE_CSS_DEFAULT', '目前CSS預設值：');

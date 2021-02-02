@@ -18,7 +18,6 @@ function tadnews_covered($options)
     global $xoopsDB, $xoTheme;
     $Tadnews = new Tadnews();
 
-    $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
 
     $num = $options[0] * $options[1];
@@ -49,6 +48,14 @@ function tadnews_covered($options)
     $block['summary_css'] = $summary_css;
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $modhandler = xoops_gethandler('module');
+    $xoopsModule = $modhandler->getByDirname("tadnews");
+    $config_handler = xoops_gethandler('config');
+    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
+    if ($xoopsModuleConfig['use_table_shadow']) {
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+    }
 
     return $block;
 }
@@ -104,7 +111,7 @@ function tadnews_covered_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <textarea name='options[3]' class='my-input'>{$options[3]}</textarea>
-                <span class='my-example'>font-size: font-size: 0.8em ;color: gray; line-height: 1.5;</span>
+                <span class='my-example'>font-size: 0.8rem; color: #707070; line-height: 180%;</span>
             </div>
         </li>
         <li class='my-row'>

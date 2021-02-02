@@ -28,6 +28,15 @@ function tadnews_content_block_show($options)
     }
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $modhandler = xoops_gethandler('module');
+    $xoopsModule = $modhandler->getByDirname("tadnews");
+    $config_handler = xoops_gethandler('config');
+    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
+
+    if ($xoopsModuleConfig['use_table_shadow']) {
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+    }
 
     return $block;
 }
@@ -59,7 +68,7 @@ function tadnews_content_block_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <textarea name='options[2]' class='my-input'>{$options[2]}</textarea>
-                <span class='my-example'>color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;</span>
+                <span class='my-example'>color: #707070; font-size: 0.95rem; margin-top:3px; line-height:150%; white-space: pre-line;</span>
             </div>
         </li>
         <li class='my-row'>

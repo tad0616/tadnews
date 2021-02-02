@@ -21,7 +21,7 @@
     });
 
     function view_content<{$block.randStr}>(p){
-        $.post("<{$block.HTTP_HOST}>/modules/tadnews/ajax.php", {
+        $.post("<{$xoops_url}>/modules/tadnews/ajax_table_content.php", {
             num: "<{$block.num}>",
             p: p ,
             show_button:"<{$block.show_button}>",

@@ -11,7 +11,6 @@ function tadnews_table_content_block_show($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme;
 
-    $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
     $block['num'] = $options[0];
     $block['show_button'] = $options[1];
@@ -23,11 +22,18 @@ function tadnews_table_content_block_show($options)
     $block['start_from'] = $options[7];
     $block['show_ncsn'] = isset($options[8]) ? $options[8] : '';
     $block['searchbar'] = $options[9];
-    $block['HTTP_HOST'] = XOOPS_URL;
 
     $block['ncsn'] = get_all_news_cate($options[8]);
     $block['tag'] = get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $modhandler = xoops_gethandler('module');
+    $xoopsModule = $modhandler->getByDirname("tadnews");
+    $config_handler = xoops_gethandler('config');
+    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
+    if ($xoopsModuleConfig['use_table_shadow']) {
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+    }
     $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
 
     return $block;

@@ -135,3 +135,6 @@ define('_MI_SHOW_NEXT_BTN_DESC', 'Whether or not to show the previous and next a
 
 define('_MI_SHOW_RSS', 'Whether to show RSS link information');
 define('_MI_SHOW_RSS_DESC', 'Whether to show RSS links at the bottom of the module home page');
+
+define('_MI_USE_TABLE_SHADOW', 'Whether to use table shading');
+define('_MI_USE_TABLE_SHADOW_DESC', 'Whether to add shading to the news table');

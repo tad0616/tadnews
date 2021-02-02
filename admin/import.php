@@ -170,4 +170,7 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+if ($xoopsModuleConfig['use_table_shadow']) {
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+}
 require_once __DIR__ . '/footer.php';

@@ -16,7 +16,7 @@
                 <{$smarty.const._MD_TADNEWS_ALWAYS_TOP}>
             </label>
             <span id="top_date_input">
-                <input type="text" name="always_top_date"  class="form-control" id="always_top_date"  value="<{$always_top_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',startDate:'%y-%M-{%d+7} %H:%m',maxDate:'%y-%M-{%d+<{$top_max_day}>} %H:%m'})" align="absmiddle">
+                <input type="text" name="always_top_date"  class="form-control" id="always_top_date"  value="<{$always_top_date}>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',startDate:'%y-%M-{%d+7} %H:%m',maxDate:'%y-%M-{%d+<{$top_max_day}>} %H:%m'})">
             </span>
         <{/if}>
     </div>

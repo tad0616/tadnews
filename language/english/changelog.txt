@@ -1,3 +1,16 @@
+TadNews 4.22 (Released 2021-01-22)
+================================================
+1.Support XOOPS 2.5.11
+2.Filter all foreign variables to enhance security
+3.New preference setting for hidden top and bottom page buttons
+4.Add preference for hiding RSS link information
+5. Consolidate B3 and B4 templates
+6. Fix the problem that the toolbar will be seen even if you are not logged in when you do not specify the group you can publish.
+7. Fix the problem that the tree directory disappears in the background when the category name has quotation marks.
+8.Remove unnecessary files
+9. Optimize the interface of all blocks
+
+
 TadNews 4.21 (Released 2020-08-12)
 =============================================================
 1. Modify the permission to a category with publish permission, you can manage all articles in that category.

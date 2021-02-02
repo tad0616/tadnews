@@ -25,7 +25,7 @@
                 <hr>
             <{/if}>
 
-            <div style="margin:10px auto; line-height: 2em; font-weight:normal;"><{$page.pic}><{$page.content}></div>
+            <div style="margin:10px auto; line-height: 2rem; font-weight:normal;"><{$page.pic}><{$page.content}></div>
 
             <{$page.files}>
 
@@ -37,12 +37,12 @@
                 <div class="row" style="margin:10px;">
                     <div class="col-md-6">
                     <{if $page.back_news_link}>
-                        <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 align="absmiddle" alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
+                        <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
                     <{/if}>
                     </div>
                     <div class="col-md-6">
                     <{if $page.next_news_link}>
-                        <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 align="absmiddle" alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
+                        <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
                     <{/if}>
                     </div>
                 </div>

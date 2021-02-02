@@ -11,7 +11,6 @@ function tadnews_list_content_block_show($options)
 {
     global $xoTheme;
 
-    $block['jquery_path'] = Utility::get_jquery();
     $block['randStr'] = Utility::randStr(8);
     $block['num'] = $options[0];
     $block['summary_length'] = $options[1];
@@ -28,12 +27,19 @@ function tadnews_list_content_block_show($options)
     $block['show_ncsn'] = isset($options[7]) ? $options[7] : '';
     $block['display_mode'] = empty($options[8]) ? 'list' : $options[8];
     $block['show_button'] = $options[9];
-    $block['HTTP_HOST'] = XOOPS_URL;
     $block['ncsn'] = get_all_news_cate($options[7]);
     $block['tag'] = get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $modhandler = xoops_gethandler('module');
+    $xoopsModule = $modhandler->getByDirname("tadnews");
+    $config_handler = xoops_gethandler('config');
+    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
+    if ($xoopsModuleConfig['use_table_shadow']) {
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+    }
 
+    $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
     return $block;
 }
 
@@ -70,7 +76,7 @@ function tadnews_list_content_block_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_LIST_CONTENT_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <textarea name='options[2]' class='my-input'>{$options[2]}</textarea>
-                <span class='my-example'>color:gray;font-size: 0.8em;margin-top:3px;line-height:150%;</span>
+                <span class='my-example'>color:#707070; font-size: 0.75rem; margin-top:3px; line-height:180%; </span>
             </div>
         </li>
         <li class='my-row'>

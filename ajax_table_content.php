@@ -1,13 +1,9 @@
 <?php
 use Xmf\Request;
-use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\Utility;
 
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('blocks', 'tadnews');
-
-$FooTable = new FooTable();
-$FooTable->render();
 
 $show_ncsn = Request::getString('show_ncsn');
 $randStr = Request::getString('randStr');
@@ -79,20 +75,20 @@ if (empty($show_col)) {
 
 $block = '';
 
-$tt['start_day'] = "<th data-hide='phone' style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_START_DATE) . '</th>';
-$tt['news_title'] = "<th data-class='expand'>" . Utility::to_utf8(_MD_TADNEWS_NEWS_TITLE) . '</th>';
-$tt['uid'] = "<th data-hide='phone' style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_POSTER) . '</th>';
-$tt['ncsn'] = "<th data-hide='phone' style='width:86px;' nowrap>" . Utility::to_utf8(_MD_TADNEWS_NEWS_CATE) . '</th>';
-$tt['counter'] = "<th data-hide='phone'>" . Utility::to_utf8(_MD_TADNEWS_COUNTER) . '</th>';
+$tt['start_day'] = "<th style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_START_DATE) . '</th>';
+$tt['news_title'] = "<th>" . Utility::to_utf8(_MD_TADNEWS_NEWS_TITLE) . '</th>';
+$tt['uid'] = "<th style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_POSTER) . '</th>';
+$tt['ncsn'] = "<th  style='width:86px;' nowrap>" . Utility::to_utf8(_MD_TADNEWS_NEWS_CATE) . '</th>';
+$tt['counter'] = "<th>" . Utility::to_utf8(_MD_TADNEWS_COUNTER) . '</th>';
 $blockTitle = '';
 foreach ($show_col as $colname) {
     $blockTitle .= $tt[$colname];
 }
 
 $block .= "
-<table class='table table-striped footable'>
+<table class='table table-striped table-shadow'>
 <thead>
-    <tr>{$blockTitle}</tr>
+    <tr class='my'>{$blockTitle}</tr>
 </thead>
 ";
 $total = 0;
@@ -107,8 +103,8 @@ if (empty($all_news['page'])) {
         $start_day = "<td nowrap>{$news['post_date']}</td>";
         $news_title = "<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>";
 
-        $uid = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>";
-        $ncsn = "<td nowrap style='text-align:center;'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>";
+        $uid = "<td nowrap class='c'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>";
+        $ncsn = "<td nowrap class='c'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>";
         $counter = "<td nowrap>{$news['counter']}</td>";
         $news_title = Utility::to_utf8($news_title);
         $uid = Utility::to_utf8($uid);

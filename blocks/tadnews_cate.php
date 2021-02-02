@@ -7,7 +7,7 @@ if (!class_exists('XoopsModules\Tadtools\Ztree')) {
 //區塊主函式 (顯示所有新聞的類別)
 function tadnews_cate_show($options)
 {
-    global $xoTheme, $xoopsDB;
+    global $xoopsDB;
 
     $cates = $counter = [];
     $sql = 'SELECT count(*), `ncsn` FROM ' . $xoopsDB->prefix('tad_news') . " where `enable`=1 group by `ncsn` ";
@@ -15,7 +15,6 @@ function tadnews_cate_show($options)
     while (list($count, $ncsn) = $xoopsDB->fetchRow($result)) {
         $counter[$ncsn] = $count;
     }
-    // Utility::dd($counter);
 
     $sql = 'SELECT ncsn, of_ncsn, nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
     $result = $xoopsDB->query($sql);

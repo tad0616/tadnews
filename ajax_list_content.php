@@ -69,7 +69,7 @@ $total = 0;
 //die('display_mode:' . $display_mode);
 if ('table' === $display_mode) {
     $block .= "
-    <table class='table table-striped'>
+    <table class='table table-striped table-hover table-shadow'>
         <tbody>";
     $all_news = $Tadnews->get_news('return');
 
@@ -89,7 +89,7 @@ if ('table' === $display_mode) {
                 {$news['enable_txt']}{$news['today_pic']}
                 <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?nsn={$news['nsn']}'>{$news['news_title']}</a>
 
-                <span style='color:gray;font-size: 0.8em;'> (<a href='" . XOOPS_URL . "/modules/tadnews/index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
+                <span style='color:gray;font-size: 0.8rem;'> (<a href='" . XOOPS_URL . "/modules/tadnews/index.php?show_uid={$news['uid']}'>{$news['uid_name']}</a> / {$news['counter']} / <a href='" . XOOPS_URL . "/modules/tadnews/{$news['link_page']}?ncsn={$news['ncsn']}'>{$news['cate_name']}</a>)</span> {$news['content']}
             </td>
         </tr>";
         $total++;

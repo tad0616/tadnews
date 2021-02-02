@@ -91,7 +91,7 @@ function tadnews_marquee_edit($options)
             <textarea name='options[4]' class='my-input'>{$options[4]}</textarea>
                 <span class='my-example'><br>
                 width: 100%; /* 跑馬燈寬度 */<br>
-                height:4em; /* 跑馬燈高度 */<br>
+                height:4rem; /* 跑馬燈高度 */<br>
                 line-height:1.8; /* 跑馬燈行高 */<br>
                 border:1px solid #cfcfcf; /* 跑馬燈邊框 */<br>
                 background-color:#FCFCFC; /* 跑馬燈底色 */<br>

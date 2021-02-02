@@ -135,3 +135,6 @@ define('_MI_SHOW_NEXT_BTN_DESC', '觀看文章時，是否要顯示最下面的�
 
 define('_MI_SHOW_RSS', '是否顯示RSS的連結資訊');
 define('_MI_SHOW_RSS_DESC', '是否要在模組首頁下方顯示RSS的連結資訊');
+
+define('_MI_USE_TABLE_SHADOW', '是否使用表格陰影');
+define('_MI_USE_TABLE_SHADOW_DESC', '是否要在新聞表格加入陰影');

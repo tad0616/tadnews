@@ -32,6 +32,13 @@ function tadnews_cate_news($options)
 
     $block['show_line'] = ('1' == $options[3]) ? 'table' : '';
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $modhandler = xoops_gethandler('module');
+    $xoopsModule = $modhandler->getByDirname("tadnews");
+    $config_handler = xoops_gethandler('config');
+    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
+    if ($xoopsModuleConfig['use_table_shadow']) {
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+    }
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     return $block;

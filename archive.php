@@ -15,7 +15,7 @@ function month_list($now_date = '')
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT left(start_day,7) , count(*) FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' GROUP BY left(start_day,7) ORDER BY start_day DESC";
+    $sql = 'SELECT left(start_day,7) , count(*) FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1'  GROUP BY left(start_day,7) ORDER BY start_day DESC";
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
@@ -40,8 +40,6 @@ function archive($date = '')
         $date = date('Y-m');
     }
 
-    //$Tadnews->set_show_num($xoopsModuleConfig['show_num']);
-    $Tadnews->set_news_kind('news');
     $Tadnews->set_show_mode('list');
     $Tadnews->set_show_month($date);
     $Tadnews->set_show_enable(1);
@@ -76,5 +74,8 @@ switch ($op) {
 $xoopsTpl->assign('now_op', $op);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+if ($xoopsModuleConfig['use_table_shadow']) {
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+}
 $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';

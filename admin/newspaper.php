@@ -284,7 +284,7 @@ function edit_newspaper($npsn = '')
                 $content = explode(_SEPARTE, $news_content);
             }
 
-            $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 0.9em;'>" . _TADNEWS_MORE . '...</a></p>';
+            $more = (empty($content[1])) ? '' : "<p><a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' style='font-size: 0.9rem;'>" . _TADNEWS_MORE . '...</a></p>';
             $news_content = $content[0] . $more;
             $html .= "
             <h3 class='TadNewsPaper_title'>" . _MA_TADNEWS_NP_TITLE_L . (string) ($cates[$ncsn]) . _MA_TADNEWS_NP_TITLE_R . "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}' target='_blank'>{$news_title}</a></h3>
@@ -685,5 +685,8 @@ if ('preview' === $op) {
 } else {
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    if ($xoopsModuleConfig['use_table_shadow']) {
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+    }
     require_once __DIR__ . '/footer.php';
 }
