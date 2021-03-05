@@ -8,8 +8,10 @@ require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 $op = Request::getString('op');
 $ncsn = Request::getInt('ncsn');
 $nsn = Request::getInt('nsn');
-$num = Request::getInt('num', 10);
+$num = Request::getInt('num', 20);
+$token = Request::getString('token');
 // $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjEsImV4cCI6MTYxNzQ1NzE3Mn0.9Uvxd6kWLzJiZQr9K145BThC5v6OgiX8p4IihRutIW4';
+// $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjIsImV4cCI6MTYxNzQ5OTcwN30.eGrbLC52czGECLfeJ5vLCCKWAML6RWEAgQDbB-PWD8g';
 
 $TadNewsRest = new TadNewsRest($token);
 
@@ -25,5 +27,9 @@ switch ($op) {
 
     case 'show_news':
         echo $TadNewsRest->show_news($nsn);
+        break;
+
+    default:
+        echo $TadNewsRest->user();
         break;
 }

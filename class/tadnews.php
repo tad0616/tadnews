@@ -168,7 +168,7 @@ class Tadnews
     private $groups = [];
 
     //建構函數
-    public function __construct($uid = '', $groups = [])
+    public function __construct($uid = null, $groups = null)
     {
         global $xoopsConfig, $xoopsUser;
 
@@ -189,13 +189,13 @@ class Tadnews
         $this->TadUpFiles = new TadUpFiles('tadnews');
         $this->TadDataCenter = new TadDataCenter('tadnews');
 
-        if (!empty($uid)) {
+        if (!is_null($uid)) {
             $this->uid = $uid;
         } elseif ($xoopsUser) {
             $this->uid = $xoopsUser->uid();
         }
 
-        if (!empty($groups)) {
+        if (!is_null($groups)) {
             $this->groups = $groups;
         } elseif ($xoopsUser) {
             $this->groups = $xoopsUser->getGroups();
@@ -551,7 +551,8 @@ class Tadnews
             $not_news_arr[$ncsn] = $not_news;
 
             //只有可讀的分類才納入(或者允許看標題的也可以納入
-            $cate_read_power = $this->chk_cate_power($this->groups, $enable_group);
+            $cate_read_power = $this->chk_cate_power($enable_group);
+
             if ($cate_read_power or $only_title) {
                 //該使用者可觀看的分類編號陣列
                 $ncsn_ok[] = $ncsn;
@@ -713,7 +714,7 @@ class Tadnews
             }
 
             //判斷本文及所屬分類是否允許該用戶之所屬群組觀看
-            $news_read_power = $this->chk_news_power($enable_group, $this->groups);
+            $news_read_power = $this->chk_news_power($enable_group);
             if (!$news_read_power and $uid != $this->uid and !$_SESSION['tadnews_adm']) {
                 continue;
             }
@@ -1083,7 +1084,7 @@ class Tadnews
         $only_title_cate = [];
         while (list($ncsn, $nc_title, $enable_group, $enable_post_group, $cate_pic, $setup) = $xoopsDB->fetchRow($result)) {
             //只有可讀的分類才納入
-            $cate_read_power = $this->chk_cate_power($this->groups, $enable_group);
+            $cate_read_power = $this->chk_cate_power($enable_group);
 
             if (!$cate_read_power) {
                 //是否僅秀出標題
@@ -1157,11 +1158,6 @@ class Tadnews
                     $news_content = sprintf(_TADNEWS_NEED_LOGIN, $only_title_cate_group[$ncsn]);
                 }
 
-                // $news_read_power = $this->chk_news_power($enable_group, $User_Groups);
-                // if (!$news_read_power) {
-                //     continue;
-                // }
-
                 if (is_numeric($this->summary_num) and !empty($this->summary_num) and empty($passwd)) {
                     $news_content = strip_tags($news_content);
                     $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
@@ -1215,7 +1211,7 @@ class Tadnews
     }
 
     //判斷本文之所屬分類是否允許該用戶之所屬群組觀看或發佈
-    private function chk_cate_power($User_Groups = '', $enable_group = '')
+    private function chk_cate_power($enable_group = '')
     {
         global $xoopsDB, $xoopsUser;
 
@@ -1225,8 +1221,8 @@ class Tadnews
             if (in_array('', $cate_enable_group)) {
                 return true;
             }
-
-            foreach ($User_Groups as $gid) {
+            // Utility::dd($this->groups);
+            foreach ($this->groups as $gid) {
                 $gid = (int) $gid;
 
                 if (in_array($gid, $cate_enable_group) or 1 == $gid) {
@@ -1241,7 +1237,7 @@ class Tadnews
     }
 
     //判斷本文是否允許該用戶之所屬群組觀看或發佈
-    private function chk_news_power($enable_group = '', $User_Groups = '')
+    private function chk_news_power($enable_group = '')
     {
         global $xoopsDB, $xoopsUser;
 
@@ -1250,7 +1246,7 @@ class Tadnews
         }
 
         $news_enable_group = array_map('intval', explode(',', $enable_group));
-        foreach ($User_Groups as $gid) {
+        foreach ($this->groups as $gid) {
             $gid = (int) $gid;
             if (in_array($gid, $news_enable_group)) {
                 return true;
@@ -1293,7 +1289,7 @@ class Tadnews
             </a>";
         }
 
-        $news_post_power = $this->chk_news_power($enable_post_group, $this->groups);
+        $news_post_power = $this->chk_news_power($enable_post_group);
 
         $admin_fun = '';
         if ($this->uid and ($news_post_power or $uid == $this->uid or $_SESSION['tadnews_adm'])) {
@@ -1722,12 +1718,12 @@ class Tadnews
         global $xoopsDB, $xoopsUser;
 
         //判斷本文之所屬分類是否允許該用戶之所屬群組觀看
-        if (!$this->chk_cate_power($this->groups, $cate_enable_group)) {
+        if (!$this->chk_cate_power($cate_enable_group)) {
             return false;
         }
 
         //判斷本文是否允許該用戶之所屬群組觀看
-        if (!$this->chk_news_power($enable_group, $this->groups)) {
+        if (!$this->chk_news_power($enable_group)) {
             return false;
         }
 
@@ -1891,10 +1887,10 @@ class Tadnews
         //creat_cate_group
         $new_cate_input = empty($cate_num) ? _TADNEWS_NAME : '';
         $creat_new_cate = empty($cate_num) ? _TADNEWS_CREAT_FIRST_CATE : _TADNEWS_CREAT_NEWS_CATE;
-        $creat_cate_tool = ($this->chk_news_power(implode(',', $this->tadnewsConfig['creat_cate_group']), $this->groups)) ? 1 : 0;
+        $creat_cate_tool = ($this->chk_news_power(implode(',', $this->tadnewsConfig['creat_cate_group']))) ? 1 : 0;
 
         if (!empty($this->tadnewsConfig['use_top_group'])) {
-            $use_top_tool = ($this->chk_news_power(implode(',', $this->tadnewsConfig['use_top_group']), $this->groups)) ? 1 : 0;
+            $use_top_tool = ($this->chk_news_power(implode(',', $this->tadnewsConfig['use_top_group']))) ? 1 : 0;
         } else {
             $use_top_tool = 1;
         }

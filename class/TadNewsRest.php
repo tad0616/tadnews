@@ -1,7 +1,6 @@
 <?php
 namespace XoopsModules\Tadnews;
 
-use Xmf\Jwt\TokenReader;
 use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\SimpleRest;
 
@@ -16,23 +15,26 @@ if (!class_exists('XoopsModules\Tadtools\SimpleRest')) {
 class TadNewsRest extends SimpleRest
 {
     private $Tadnews;
-    private $uid;
-    private $user;
-    private $groups;
+    public $uid = '';
+    public $user = [];
+    public $groups = [];
 
     public function __construct($token = '')
     {
         if ($token) {
-            $rememberClaims = TokenReader::fromString('rememberme', $token);
-            // Utility::dd($rememberClaims->uid);
-            if (false !== $rememberClaims && !empty($rememberClaims->uid)) {
-                $this->uid = $rememberClaims->uid;
-                $member_handler = xoops_gethandler('member');
-                $this->user = $member_handler->getUser($rememberClaims->uid);
-                $this->groups = $this->user->getGroups();
-            }
+            $User = $this->getAll($token);
+            $this->uid = $User['uid'];
+            $this->groups = $User['groups'];
+            $this->user = $User['user'];
         }
+        // Utility::dd($this->groups);
         $this->Tadnews = new Tadnews($this->uid, $this->groups);
+    }
+
+    public function user()
+    {
+        $data = ['uid' => $this->uid, 'groups' => $this->groups, 'user' => $this->user];
+        return $this->encodeJson($data);
     }
 
     // 取得所有文章的 json
