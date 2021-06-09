@@ -16,7 +16,6 @@ $token = Request::getString('token');
 $TadNewsRest = new TadNewsRest($token);
 
 switch ($op) {
-
     case 'get_cates':
         echo $TadNewsRest->get_cates();
         break;

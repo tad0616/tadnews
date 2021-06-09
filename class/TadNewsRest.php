@@ -22,7 +22,7 @@ class TadNewsRest extends SimpleRest
     public function __construct($token = '')
     {
         if ($token) {
-            $User = $this->getAll($token);
+            $User = $this->user($token);
             $this->uid = $User['uid'];
             $this->groups = $User['groups'];
             $this->user = $User['user'];

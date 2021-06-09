@@ -1333,8 +1333,8 @@ class Tadnews
         $sql = 'SELECT uid FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY uid';
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $opt = _TADNEWS_SHOW_AUTHOR_NEWS . "
-    <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
-    <option value=''></option>";
+        <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
+        <option value=''></option>";
         while (list($uid) = $xoopsDB->fetchRow($result)) {
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -2251,7 +2251,7 @@ class Tadnews
         $always_top_date = $myts->addSlashes($_POST['always_top_date']);
         $enable = (int) $_POST['enable'];
 
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$start_day}','{$end_day}','{$enable}','{$uid}','{$passwd}','{$enable_group}','{$prefix_tag}','{$always_top}','{$always_top_date}','{$have_read_group}')";
+        $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$start_day}','{$end_day}','{$enable}','{$this->uid}','{$passwd}','{$enable_group}','{$prefix_tag}','{$always_top}','{$always_top_date}','{$have_read_group}')";
 
         $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -2465,7 +2465,7 @@ class Tadnews
 
         $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $myts->addSlashes($_POST['end_day']);
 
-        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}' where nsn='$nsn'";
+        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}', uid='{$this->uid}' where nsn='$nsn'";
 
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 

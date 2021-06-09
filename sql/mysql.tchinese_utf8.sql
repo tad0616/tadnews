@@ -140,6 +140,7 @@ CREATE TABLE `tadnews_data_center` (
   `data_value` text NOT NULL COMMENT '儲存值',
   `data_sort` mediumint(9) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `col_id` varchar(100) NOT NULL DEFAULT '' COMMENT '辨識字串',
+  `sort` mediumint(9) unsigned COMMENT '顯示順序',
   `update_time` datetime NOT NULL COMMENT '更新時間',
 PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
