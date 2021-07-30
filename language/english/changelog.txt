@@ -1,3 +1,9 @@
+TadNews 4.23 (Released 2021-07-30)
+================================================
+1.Modify API to add identity check
+2.Adjust tadnews_data_center field
+3.Comply with 2021/07 AA accessibility standard
+
 TadNews 4.22 (Released 2021-01-22)
 ================================================
 1.Support XOOPS 2.5.11
