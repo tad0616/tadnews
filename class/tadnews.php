@@ -390,14 +390,14 @@ class Tadnews
                 if ($only_url) {
                     return XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}";
                 }
-                $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+                $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='color:transparent; background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name});{$style_set}'>image</div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/.thumbs/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
 
                 return $img;
             }
             if ($only_url) {
                 return XOOPS_URL . "/uploads/tadnews/image/{$file_name}";
             }
-            $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'></div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
+            $img = ('db' === $style) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn'><div id='$id' style='color:transparent; background-image:url(" . XOOPS_URL . "/uploads/tadnews/image/{$file_name});{$style_set}'>image</div></a>" : "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn=$col_sn' class='thumbnails' style='{$style_set}'><img src='" . XOOPS_URL . "/uploads/tadnews/image/{$file_name}' alt='{$file_name}' title='{$file_name}' style='width: 100%;'></a>";
 
             return $img;
         }

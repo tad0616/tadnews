@@ -23,6 +23,8 @@
                     <{$page.counter}>
                 </div>
                 <hr>
+            <{else}>
+                <h2 class="sr-only"><{$page.news_title}></h2>
             <{/if}>
 
             <div style="margin:10px auto; line-height: 2rem; font-weight:normal;"><{$page.pic}><{$page.content}></div>
@@ -37,12 +39,12 @@
                 <div class="row" style="margin:10px;">
                     <div class="col-md-6">
                     <{if $page.back_news_link}>
-                        <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 alt="<{$page.back_news_title}>" title="<{$page.back_news_title}>"><{$page.back_news_title}></a>
+                        <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 alt="Previous"><{$page.back_news_title}></a>
                     <{/if}>
                     </div>
                     <div class="col-md-6">
                     <{if $page.next_news_link}>
-                        <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 alt="<{$page.next_news_title}>" title="<{$page.next_news_title}>"></a>
+                        <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
                     <{/if}>
                     </div>
                 </div>
@@ -73,6 +75,7 @@
         </div>
     </div>
 <{else}>
+    <h2 class="sr-only"><{$smarty.const._MD_TADNEWS_HIDDEN}></h2>
     <div class="alert alert-danger">
         <p><{$smarty.const._MD_TADNEWS_HIDDEN}></p>
     </div>

@@ -4,7 +4,7 @@
             <{assign var="i" value=$smarty.foreach.nn.iteration|substr:-1}>
             <div class="col-sm-<{$block.num}>" style="margin-bottom:16px;">
                 <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>">
-                    <div style="height:150px;overflow:hidden;border:1px solid gray;background-image: url('<{if $news.image_big}><{$news.image_big}><{else}><{$xoops_url}>/modules/tadnews/images/demo<{$i}>.jpg<{/if}>'); background-size: cover;background-position: center center;">
+                    <div style="height:150px;overflow:hidden;border:1px solid gray;background-image: url('<{if $news.image_big}><{$news.image_big}><{else}><{$xoops_url}>/modules/tadnews/images/demo<{$i}>.jpg<{/if}>'); background-size: cover;background-position: center center; color: transparent;"><{$news.news_title}>
                     </div>
                 </a>
                 <h5 class="my">

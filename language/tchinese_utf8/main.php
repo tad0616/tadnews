@@ -138,3 +138,4 @@ define('_MD_TADNEWS_CATE_SHOW_PATH', '顯示頁面路徑');
 
 define('_MD_TADNEWS_DENY_TYPE', '（以下副檔名無法上傳：%s）');
 define('_MD_TADNEWS_AND', '、');
+define('_MD_TADNEWS_LIST', '文章列表');

@@ -174,7 +174,7 @@
         <div class="row" style="margin: 10px 0px;">
             <div class="col-md-12">
                 <div class="alert alert-success">
-                    <div id="demo_cover_pic" style="background-image: url('<{$pic}>');<{$pic_css}>" title="<{$pic_css}>"></div>
+                    <div id="demo_cover_pic" style="color:transparent; background-image: url('<{$pic}>');<{$pic_css}>"><{$pic_css}></div>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
                 </div>
             </div>

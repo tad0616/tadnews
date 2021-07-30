@@ -142,3 +142,4 @@ define('_MD_TADNEWS_CATE_SHOW_PATH', 'Show breadcrumbs');
 
 define('_MD_TADNEWS_DENY_TYPE', '(The following file name is not uploadable: %s)');
 define('_MD_TADNEWS_AND', ', ');
+define('_MD_TADNEWS_LIST', 'Article List');

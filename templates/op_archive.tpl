@@ -5,7 +5,8 @@
             <div class="input-group-prepend input-group-addon">
                 <span class="input-group-text"><{$smarty.const._MD_TADNEWS_ARCHIVE}></span>
             </div>
-            <select onChange="location.href='archive.php?date='+this.value" class="form-control">
+            <label class="sr-only" for="select">Preference</label>
+            <select onChange="location.href='archive.php?date='+this.value" class="form-control" id="select">
                 <option value=""></option>
                 <{foreach item=opt from=$opt}>
                     <option value="<{$opt.value}>" <{$opt.selected}>><{$opt.text}> (<{$opt.count}>)</option>
@@ -17,7 +18,7 @@
 
 
 <{if $page}>
-    <div class="panel panel-default card">
+    <div class="panel panel-default card mb-5">
         <table class="table table-striped table-bordered">
             <tr><th><{$date_title}></th></tr>
             <{foreach item=page from=$page}>
