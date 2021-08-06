@@ -683,6 +683,7 @@ class Tadnews
                 $PageBar = Utility::getPageBar($sql, $limit);
                 $bar = $PageBar['bar'];
                 $sql = $PageBar['sql'];
+                $total = $PageBar['total'];
             }
         }
 
@@ -967,6 +968,7 @@ class Tadnews
             $main['cate_select'] = $cate_select;
             $main['author_select'] = $author_select;
             $main['bar'] = $bar;
+            $main['total'] = $total;
             if ($this->use_star_rating) {
                 $main['rating_js'] = $rating_js;
             }
@@ -988,6 +990,7 @@ class Tadnews
         $xoopsTpl->assign('cate_select', $cate_select);
         $xoopsTpl->assign('author_select', $author_select);
         $xoopsTpl->assign('bar', $bar);
+        $xoopsTpl->assign('total', $total);
         if ($this->use_star_rating) {
             $xoopsTpl->assign('rating_js', $rating_js);
         }

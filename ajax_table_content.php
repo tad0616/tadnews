@@ -120,9 +120,9 @@ if (empty($all_news['page'])) {
     }
 }
 
-$b_button = ($b < 0) ? '' : "<button onClick='view_content{$randStr}({$b})' class='btn'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . '</button>';
+$b_button = ($b < 0) ? '' : "<button onClick='view_content{$randStr}({$b})' class='btn btn-info'>" . sprintf(_TADNEWS_BLOCK_BACK, $num) . '</button>';
 
-$n_button = ($total < $num) ? '' : "<button style='float:right;' onClick='view_content{$randStr}({$n})' class='btn'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . '</button>';
+$n_button = ($all_news['total'] < $num) ? "<span class='sr-only'>{$all_news['total']}</span>" : "<button style='float:right;' onClick='view_content{$randStr}({$n})' class='btn btn-info' title='total: {$all_news['total']}'>" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . '</button>';
 
 $button = ($show_button) ? "{$n_button}{$b_button}" : '';
 //$button="{$n_button}{$b_button}";
