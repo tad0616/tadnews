@@ -382,7 +382,7 @@ class Tadnews
             $style_set = ('db' === $style) ? $description : $style;
             //die($style_set);
 
-            if (empty($style) and !$only_url) {
+            if (empty($style_set) and !$only_url) {
                 return;
             }
 
@@ -860,6 +860,9 @@ class Tadnews
                 $news_title .= '...';
             }
 
+            // if ($_GET['test'] == 1) {
+            //     Utility::dd($this->cover_use);
+            // }
             if ($this->cover_use) {
                 $pic = $this->get_news_cover($ncsn, 'news_pic', $nsn, 'big', $this->cover_css, null, 'demo_cover_pic');
             } else {
