@@ -1631,7 +1631,7 @@ class Tadnews
         $result = $xoopsDB->query($sql);
         list($font_color, $color, $tag) = $xoopsDB->fetchRow($result);
 
-        $prefix_tag = "<a class='badge' style='background-color:$color;font-weight:normal;color:$font_color;text-shadow:none;' href='" . XOOPS_URL . "/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>";
+        $prefix_tag = $tag ? "<a class='badge' style='background-color: $color; font-weight: normal; color: $font_color; text-shadow:none;' href='" . XOOPS_URL . "/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>" : '';
 
         return $prefix_tag;
     }
