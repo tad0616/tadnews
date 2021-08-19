@@ -10,6 +10,7 @@ use XoopsModules\Tadtools\SyntaxHighlighter;
 use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Wcag;
 
 //TadNews物件
 /*
@@ -2206,7 +2207,8 @@ class Tadnews
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
                 $tab_title_div .= "<li>$tab_val</li>";
 
-                $tab_content_key = $myts->addSlashes($_POST['tab_content'][$tab_key]);
+                $tab_content_key = Wcag::amend($_POST['tab_content'][$tab_key]);
+                $tab_content_key = $myts->addSlashes($tab_content_key);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "
@@ -2237,7 +2239,8 @@ class Tadnews
             ";
             $news_content = $myts->addSlashes($tabs_content);
         } else {
-            $news_content = $myts->addSlashes($_POST['news_content']);
+            $news_content = Wcag::amend($_POST['news_content']);
+            $news_content = $myts->addSlashes($news_content);
         }
         $always_top = (empty($_POST['always_top'])) ? '0' : '1';
         $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
@@ -2431,14 +2434,19 @@ class Tadnews
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
+                $tab_key = $myts->addSlashes($tab_key);
+                $tab_val = $myts->addSlashes($tab_val);
+
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
                 $tab_title_div .= "<li>$tab_val</li>";
 
-                $tab_data_arr['tab_content'][$tab_key] = $_POST['tab_content'][$tab_key];
+                $tab_content_key = Wcag::amend($_POST['tab_content'][$tab_key]);
+                $tab_content_key = $myts->addSlashes($tab_content_key);
+                $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "
                 <div>
-                    {$_POST['tab_content'][$tab_key]}
+                    {$tab_content_key}
                 </div>";
             }
 
@@ -2464,7 +2472,8 @@ class Tadnews
             ";
             $news_content = $myts->addSlashes($tabs_content);
         } else {
-            $news_content = $myts->addSlashes($_POST['news_content']);
+            $news_content = Wcag::amend($_POST['news_content']);
+            $news_content = $myts->addSlashes($news_content);
         }
 
         $always_top = (int) $_POST['always_top'];
