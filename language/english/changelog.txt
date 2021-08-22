@@ -1,3 +1,11 @@
+TadNews 4.24 (Released 2021-08-22)
+================================================
+1. Fix for the new version 2021/07 AA accessibility standard
+2. Fix the problem that the "Page Up and Page Down buttons" of the bar and table format blocks do not appear in some cases.
+3. Fix the problem that the cover image is not displayed properly.
+4. Add barrier-free 2.1 AA auto-correction function.
+
+
 TadNews 4.23 (Released 2021-07-30)
 ================================================
 1.Modify API to add identity check
@@ -170,7 +178,7 @@ TadNews 3.9 (2017-01-11 released)
 
 TadNews 3.8.9 (2017-01-07 released)
 ====================================================
-1.Change the col-md of boootstrap to col-sm
+1.Change the col-md of bootstrap to col-sm
 
 TadNews 3.8.8 (2016-10-14 released)
 ==================================================
