@@ -116,3 +116,9 @@ define('_MB_TADNEWS_BAR_END_DAY', 'News <= this date');
 
 define('_MB_TADNEWS_SEARCHBAR', 'Do you join a news search tool?');
 define('_MB_TADNEWS_TAB_FONT_SIZE', 'Tab title size');
+
+define('_MB_TADNEWS_COVERED_OPT5', 'Display Mode');
+define('_MB_TADNEWS_COVERED_OPT5_1', 'Original image collection mode');
+define('_MB_TADNEWS_COVERED_OPT5_2', 'Horizontal column mode');
+define('_MB_TADNEWS_COVERED_OPT6', 'Width of the picture in Horizontal column mode (BootStrap\'s columns?)');
+define('_MB_TADNEWS_COVERED_OPT7', 'Height of the picture in Horizontal column mode (set with CSS)');

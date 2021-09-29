@@ -15,7 +15,7 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 //區塊主函式 (圖文集區塊)
 function tadnews_covered($options)
 {
-    global $xoopsDB, $xoTheme;
+    global $xoTheme;
     $Tadnews = new Tadnews();
 
     $block['randStr'] = Utility::randStr(8);
@@ -46,8 +46,12 @@ function tadnews_covered($options)
     $block['cols'] = $options[0];
     $block['count'] = count($news['page']);
     $block['summary_css'] = $summary_css;
+    $block['display_mode'] = $options[5];
+    $block['width_left'] = $options[6] ? $options[6] : 1;
+    $block['width_right'] = 12 - $block['width_left'];
+    $block['height'] = $options[7] ? $options[7] : '80px';
 
-    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addStylesheet(XOOPS_URL . 'modules/tadtools/css/iconize.css');
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
     $modhandler = xoops_gethandler('module');
     $xoopsModule = $modhandler->getByDirname("tadnews");
@@ -70,12 +74,14 @@ function tadnews_covered_edit($options)
     $options0_6 = ('6' == $options[0]) ? 'selected' : '';
     $options0_12 = ('12' == $options[0]) ? 'selected' : '';
 
-    $options4_1 = ('1' == $options[4]) ? 'checked' : '';
-    $options4_0 = ('0' == $options[4]) ? 'checked' : '';
-    $options8_1 = ('list' === $options[8]) ? 'checked' : '';
-    $options8_0 = ('table' === $options[8]) ? 'checked' : '';
-    $chked1_0 = ('1' == $options[9]) ? 'checked' : '';
-    $chked1_1 = ('0' == $options[9]) ? 'checked' : '';
+    $options5_1 = ('1' == $options[5]) ? 'selected' : '';
+    $options5_2 = ('2' == $options[5]) ? 'selected' : '';
+
+    $options6_1 = ('1' == $options[6]) ? 'selected' : '';
+    $options6_2 = ('2' == $options[6]) ? 'selected' : '';
+    $options6_3 = ('3' == $options[6]) ? 'selected' : '';
+    $options6_4 = ('4' == $options[6]) ? 'selected' : '';
+    $options6_6 = ('6' == $options[6]) ? 'selected' : '';
 
     $option = block_news_cate($options[4]);
 
@@ -86,12 +92,12 @@ function tadnews_covered_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_COVERED_OPT1 . "</lable>
             <div class='my-content'>
                 <select name='options[0]' class='my-input'>
-                    <option vaue='1' $options0_1>1</option>
-                    <option vaue='2' $options0_2>2</option>
-                    <option vaue='3' $options0_3>3</option>
-                    <option vaue='4' $options0_4>4</option>
-                    <option vaue='6' $options0_6>6</option>
-                    <option vaue='12' $options0_12>12</option>
+                    <option value='1' $options0_1>1</option>
+                    <option value='2' $options0_2>2</option>
+                    <option value='3' $options0_3>3</option>
+                    <option value='4' $options0_4>4</option>
+                    <option value='6' $options0_6>6</option>
+                    <option value='12' $options0_12>12</option>
                 </select>
             </div>
         </li>
@@ -117,8 +123,35 @@ function tadnews_covered_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_CATE_NEWS_EDIT_BITEM0 . "</lable>
             <div class='my-content'>
-            {$option['form']}
-            <input type='hidden' name='options[4]' id='bb' value='{$options[4]}'>
+                {$option['form']}
+                <input type='hidden' name='options[4]' id='bb' value='{$options[4]}'>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_COVERED_OPT5 . "</lable>
+            <div class='my-content'>
+                <select name='options[5]' class='my-input'>
+                    <option value='1' $options5_1>" . _MB_TADNEWS_COVERED_OPT5_1 . "</option>
+                    <option value='2' $options5_2>" . _MB_TADNEWS_COVERED_OPT5_2 . "</option>
+                </select>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_COVERED_OPT6 . "</lable>
+            <div class='my-content'>
+                <select name='options[6]' class='my-input'>
+                    <option value='1' $options6_1>1</option>
+                    <option value='2' $options6_2>2</option>
+                    <option value='3' $options6_3>3</option>
+                    <option value='4' $options6_4>4</option>
+                    <option value='6' $options6_6>6</option>
+                </select>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_COVERED_OPT7 . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[7]' value='{$options[7]}' size=6>
             </div>
         </li>
     </ol>";

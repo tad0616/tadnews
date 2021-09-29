@@ -674,6 +674,10 @@ class Tadnews
         //die($this->view_month);
         $bar = '';
         if (!empty($this->skip_news)) {
+            $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk $desc";
+            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $total = $xoopsDB->getRowsNum($result);
+
             $limit = (empty($this->show_num) or 'none' === $this->show_num) ? '' : "limit {$this->skip_news} , {$this->show_num}";
             $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc $limit";
         } else {
@@ -688,6 +692,7 @@ class Tadnews
             }
         }
 
+        $show_sql = $sql;
         // die($sql);
 
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -973,6 +978,8 @@ class Tadnews
             $main['author_select'] = $author_select;
             $main['bar'] = $bar;
             $main['total'] = $total;
+            $main['show_sql'] = $show_sql;
+
             if ($this->use_star_rating) {
                 $main['rating_js'] = $rating_js;
             }
@@ -2195,6 +2202,7 @@ class Tadnews
         if (1 == $tab_mode) {
             $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
+                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
                 <div id='PageTab'>";
 
@@ -2208,7 +2216,7 @@ class Tadnews
                 $tab_title_div .= "<li>$tab_val</li>";
 
                 $tab_content_key = Wcag::amend($_POST['tab_content'][$tab_key]);
-                $tab_content_key = $myts->addSlashes($tab_content_key);
+                // $tab_content_key = $myts->addSlashes($tab_content_key);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "
@@ -2428,6 +2436,7 @@ class Tadnews
         if (1 == $_POST['tab_mode']) {
             $tabs_content = "
                 <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
+                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/css/easy-responsive-tabs.css' type='text/css'>
                 <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
                 <div id='PageTab'>";
 
@@ -2441,7 +2450,7 @@ class Tadnews
                 $tab_title_div .= "<li>$tab_val</li>";
 
                 $tab_content_key = Wcag::amend($_POST['tab_content'][$tab_key]);
-                $tab_content_key = $myts->addSlashes($tab_content_key);
+                // $tab_content_key = $myts->addSlashes($tab_content_key);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "

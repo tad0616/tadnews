@@ -125,3 +125,9 @@ define('_MB_TADNEWS_BAR_END_DAY', '<=此日的公告');
 
 define('_MB_TADNEWS_SEARCHBAR', '是否加入新聞篩選工具？');
 define('_MB_TADNEWS_TAB_FONT_SIZE', '頁籤標題文字大小');
+
+define('_MB_TADNEWS_COVERED_OPT5', '顯示模式');
+define('_MB_TADNEWS_COVERED_OPT5_1', '原圖文集模式');
+define('_MB_TADNEWS_COVERED_OPT5_2', '橫列模式');
+define('_MB_TADNEWS_COVERED_OPT6', '橫列模式的圖片寬度（BootStrap 的幾欄？）');
+define('_MB_TADNEWS_COVERED_OPT7', '橫列模式的圖片高度（用CSS設定）');

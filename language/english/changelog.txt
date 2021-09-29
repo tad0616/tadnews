@@ -1,3 +1,15 @@
+TadNews 4.26 (Released 2021-09-29)
+====================================
+1. Enlarge the label text of custom page tab mode
+2. Fix the problem of incomplete display of the top and bottom pages of tabbed and columnar blocks
+3. Add horizontal column mode to the image set block
+
+
+TadNews 4.25 (Released 2021-08-24)
+====================================
+1.Search function security correction
+
+
 TadNews 4.24 (Released 2021-08-22)
 ================================================
 1. Fix for the new version 2021/07 AA accessibility standard

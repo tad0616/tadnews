@@ -2,16 +2,14 @@
 function tadnews_search($queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB;
-    //處理許功蓋
-    if (get_magic_quotes_gpc()) {
-        if (is_array($queryarray)) {
-            foreach ($queryarray as $k => $v) {
-                $arr[$k] = addslashes($v);
-            }
-            $queryarray = $arr;
-        } else {
-            $queryarray = [];
+    $myts = \MyTextSanitizer::getInstance();
+    if (is_array($queryarray)) {
+        foreach ($queryarray as $k => $v) {
+            $arr[$k] = $myts->addSlashes($v);
         }
+        $queryarray = $arr;
+    } else {
+        $queryarray = [];
     }
     $sql = 'SELECT nsn,news_title,start_day, uid FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1'";
     if (0 != $userid) {
