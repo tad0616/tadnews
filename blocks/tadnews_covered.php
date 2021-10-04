@@ -51,8 +51,8 @@ function tadnews_covered($options)
     $block['width_right'] = 12 - $block['width_left'];
     $block['height'] = $options[7] ? $options[7] : '80px';
 
-    $xoTheme->addStylesheet(XOOPS_URL . 'modules/tadtools/css/iconize.css');
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+    $xoTheme->addStylesheet('modules/tadnews/css/module.css');
     $modhandler = xoops_gethandler('module');
     $xoopsModule = $modhandler->getByDirname("tadnews");
     $config_handler = xoops_gethandler('config');

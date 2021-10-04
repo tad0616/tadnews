@@ -29,7 +29,7 @@ function tadnews_tab_news($options)
         return;
     }
 
-    $xoTheme->addStylesheet(XOOPS_URL . 'modules/tadtools/css/iconize.css');
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     $randStr = Utility::randStr();
     $EasyResponsiveTabs = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
