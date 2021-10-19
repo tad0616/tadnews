@@ -169,8 +169,10 @@
             </label>
             <div class="col-md-4">
                 <select name="kind" id="kind" class="form-control">
-                        <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
+                    <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
+                    <{if $page_cate_select || $creat_cate_tool}>
                         <option value="page"<{if $ncsn and  $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
+                    <{/if}>
                 </select>
             </div>
             <div class="col-md-5" id="tab_mode_checkbox">
