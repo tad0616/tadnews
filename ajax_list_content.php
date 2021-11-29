@@ -128,7 +128,7 @@ $b_button = ($b < 0) ? '' : "<button onClick='tadnew_list_content{$randStr}({$b}
 $n_button = ($all_news['total'] < $num) ? "<span class='sr-only'>{$all_news['total']}</span>" : "<button onClick='tadnew_list_content{$randStr}({$n})' onfocus='tadnew_list_content{$randStr}({$n})' class='btn btn-info' title=\"total: {$all_news['total']}\">" . sprintf(_TADNEWS_BLOCK_NEXT, $num) . '</button>';
 
 $m_button = ($all_news['total'] < $num) ? '' : "<a href='" . XOOPS_URL . "/modules/tadnews/' class='btn btn-info' title=\"total: {$all_news['total']}\">more</a>";
-$button = ($show_button) ? "<div class='row'><div class='col-md-4 text-left'>{$b_button}</div><div class='col-md-4 text-center'>{$m_button}</div><div class='col-md-4 text-right'>{$n_button}</div></div>" : '';
+$button = ($show_button) ? "<div class='row'><div class='col-md-4 text-left text-start'>{$b_button}</div><div class='col-md-4 text-center'>{$m_button}</div><div class='col-md-4 text-right text-end'>{$n_button}</div></div>" : '';
 
 $block .= "
 {$button}";

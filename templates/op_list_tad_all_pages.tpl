@@ -46,7 +46,7 @@
     </ul>
 
 
-    <{if $all_news.ncsn|in_array:$link_cate_sn_arr or ($smarty.session.tadnews_adm and $all_news.ncsn|in_array:$ok_cat)}>
+    <{if $all_news.ncsn|in_array:$link_cate_sn_arr and ($smarty.session.tadnews_adm or $all_news.ncsn|in_array:$ok_cat)}>
         <div class="alert alert-warning"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT|sprintf:$all_news.nc_title}></div>
     <{/if}>
 <{foreachelse}>

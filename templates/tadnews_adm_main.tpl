@@ -88,7 +88,7 @@
                                 <a href="../index.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
                             </h1>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-6 text-right text-end">
                             <div style="margin: 10px;">
                                 <{if $now_op!="tad_news_cate_form" and $ncsn}>
                                     <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
@@ -134,9 +134,9 @@
                                     </td>
                                     <{if $page.show_admin_tool}>
                                         <td><{$page.g_txt}></td>
-                                        <td>
-                                        <a href="javascript:delete_tad_news_func(<{$page.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$page.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                        <a href="<{$xoops_url}>/modules/tadnews/post.php?op=tad_news_form&nsn=<{$page.nsn}>" class="btn btn-sm btn-xs btn-warning" id="update<{$page.nsn}>"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                        <td nowrap>
+                                            <a href="javascript:delete_tad_news_func(<{$page.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$page.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
+                                            <a href="<{$xoops_url}>/modules/tadnews/post.php?op=tad_news_form&nsn=<{$page.nsn}>" class="btn btn-sm btn-xs btn-warning" id="update<{$page.nsn}>"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
                                         </td>
                                     <{/if}>
                                 </tr>
@@ -149,7 +149,7 @@
 
                 <div class="alert alert-info" id="batch_tool" style="display: none;">
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                     <label class="col-md-2 control-label col-form-label text-md-right">
                         <input type='radio' name='act' value='del_news'>
                         <{$smarty.const._TAD_DEL}>

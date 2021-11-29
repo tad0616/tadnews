@@ -1,3 +1,7 @@
+TadNews 4.27 (Released 2021-11-29)
+====================================
+1. Support BootStrap5
+
 TadNews 4.26 (Released 2021-09-29)
 ====================================
 1. Enlarge the label text of custom page tab mode

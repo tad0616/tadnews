@@ -163,7 +163,7 @@
 
 <form action="<{$action}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <{if $nsn==""}>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-md-3 control-label col-form-label text-md-right">
                 <{$smarty.const._MD_TADNEWS_KIND}>
             </label>
@@ -188,7 +188,7 @@
     <{/if}>
 
     <div id="add_news">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <{if $news_cate_select}>
                 <div class="col-md-2">
                     <select name="ncsn" id="news_ncsn" class="form-control">
@@ -222,7 +222,7 @@
     </div>
 
     <div id="add_page">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <{if $page_cate_select}>
                 <div class="col-md-2">
                     <select name="ncsn" id="page_ncsn" class="form-control">
@@ -259,7 +259,7 @@
             <{if $tab_arr}>
                 <{foreach from=$tab_arr.tab_title key=k item=title}>
                     <div class="alert alert-info">
-                        <div class="form-group row">
+                        <div class="form-group row mb-3">
                             <div class="col-md-8">
                                 <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
                             </div>
@@ -267,7 +267,7 @@
                                 <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row mb-3">
                             <div class="col-md-12">
                                 <{$tab_arr.tab_editor.$k}>
                             </div>
@@ -276,12 +276,12 @@
                 <{/foreach}>
             <{else}>
                 <div class="alert alert-warning">
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                         <div class="col-md-12">
                         <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row mb-3">
                         <div class="col-md-12">
                             <{$tab_editor}>
                         </div>
@@ -307,7 +307,7 @@
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
                     var editorId = 'editor_' +x;
-                    $(wrapper).append('<div class="alert alert-success"><div class="form-group row"><div class="col-md-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row"><div class="col-md-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div></div>'); //add input box
+                    $(wrapper).append('<div class="alert alert-success"><div class="form-group row mb-3"><div class="col-md-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row mb-3"><div class="col-md-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div></div>'); //add input box
 
                     CKEDITOR.replace(editorId, { height: 300 ,
                     toolbar : 'my' ,
@@ -379,7 +379,7 @@
 
     <{if !$nsn or ($nsn and $cate.not_news=='1')}>
     <div id="page_setup_form" style="margin-top:20px;display: none;">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <div class="col-md-2">
                 <label><{$smarty.const._MD_TADNEWS_NEWS_FILES}><{$deny_type}></label>
             </div>

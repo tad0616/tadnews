@@ -20,7 +20,7 @@
 </div>
 <div id="save_msg"></div>
 
-<div class="text-right">
+<div class="text-right text-end">
         <{$page.0.fun}>
 </div>
 <script>

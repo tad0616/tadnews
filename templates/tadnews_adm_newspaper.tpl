@@ -13,25 +13,25 @@
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_STEP1}></h1>
 
         <form action="newspaper.php" method="post" id="myForm" role="form">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label for="themes">
                 <{$smarty.const._MA_TADNEWS_NP_THEMES}>
                 </label>
                 <{$nps_theme}>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label for="title"><{$smarty.const._MA_TADNEWS_NP_TITLE}></label>
                 <input type="text" name="title" id="title" value="<{$np_title}>" class="form-control">
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label for="head"><{$smarty.const._MA_TADNEWS_NP_CONTENT_HEAD}></label>
                 <textarea name="head" id="head" class="form-control"><{$head}></textarea>
                 <div class="alert alert-default"><{$smarty.const._MA_TADNEWS_NP_CONTENT_HEAD_DESC}></div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label for="foot"><{$smarty.const._MA_TADNEWS_NP_CONTENT_FOOT}></label>
                 <textarea name="foot" id="foot"  class="form-control"><{$foot}></textarea>
                 <div class="alert alert-default"><{$smarty.const._MA_TADNEWS_NP_CONTENT_FOOT_DESC}></div>
@@ -62,7 +62,7 @@
 
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_STEP2}></h1>
         <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <div class="col-md-11">
                     <div class="alert alert-info">
                         <{$newspaper_set_title}>
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <div class="col-md-5">
                     <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
                         <{$opt}>
@@ -102,7 +102,7 @@
     <{elseif $op=="edit_newspaper"}>
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_STEP3}></h1>
         <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-md-2 control-label col-form-label text-md-right">
                     <{$smarty.const._MA_TADNEWS_NP_SUB_TITLE}>
                 </label>
@@ -111,7 +111,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <div class="col-md-12">
                     <{$editor}>
                 </div>

@@ -1915,7 +1915,7 @@ class Tadnews
         $css = $this->get_pic_css($pic_css);
         $pic_css = empty($use_pic_css) ? '' : $this->mk_pic_css($css);
 
-        $cate_menu = empty($cate_num) ? "<div class='col-md-2 text-right'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
+        $cate_menu = empty($cate_num) ? "<div class='col-md-2 text-right text-end'>" . _TADNEWS_CREAT_FIRST_CATE . _TAD_FOR . '</div>' : "<select name='ncsn' id='ncsn' class='form-control'>$cate_select</select>";
 
         $form = [];
         if ('return' === $mode) {

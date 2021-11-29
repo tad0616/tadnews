@@ -24,7 +24,7 @@
                     </span>
                     <{$page.star}>
                 </div>
-                <div class="col-md-6 text-right"><{$page.fun}></div>
+                <div class="col-md-6 text-right text-end"><{$page.fun}></div>
             </div>
         <{/if}>
 

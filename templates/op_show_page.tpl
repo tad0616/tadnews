@@ -31,7 +31,7 @@
 
             <{$page.files}>
 
-            <div class="text-right">
+            <div class="text-right text-end">
             <{$page.fun}>
             </div>
 

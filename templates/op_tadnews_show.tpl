@@ -29,7 +29,7 @@
                             </span>
                             <{$page.star}>
                         </div>
-                        <div class="col-md-6 text-right"><{$page.fun}></div>
+                        <div class="col-md-6 text-right text-end"><{$page.fun}></div>
                     </div>
                     <div style="margin: 30px;">
                         <{$page.pic}>
@@ -53,7 +53,7 @@
 
 
                 <{if $page.push}>
-                    <div class="text-right" style="margin: 30px 0px;">
+                    <div class="text-right text-end" style="margin: 30px 0px;">
                         <{$page.push}>
                     </div>
                 <{/if}>
