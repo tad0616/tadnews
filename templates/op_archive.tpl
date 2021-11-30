@@ -5,7 +5,7 @@
             <div class="input-group-prepend input-group-addon">
                 <span class="input-group-text"><{$smarty.const._MD_TADNEWS_ARCHIVE}></span>
             </div>
-            <label class="sr-only" for="select">Preference</label>
+            <label class="sr-only visually-hidden" for="select">Preference</label>
             <select onChange="location.href='archive.php?date='+this.value" class="form-control" id="select">
                 <option value=""></option>
                 <{foreach item=opt from=$opt}>

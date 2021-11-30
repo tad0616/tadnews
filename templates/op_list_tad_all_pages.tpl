@@ -50,5 +50,5 @@
         <div class="alert alert-warning"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT|sprintf:$all_news.nc_title}></div>
     <{/if}>
 <{foreachelse}>
-    <h3 class="sr-only">Title:<{$all_news.nc_title}></h3>
+    <h3 class="sr-only visually-hidden">Title:<{$all_news.nc_title}></h3>
 <{/foreach}>

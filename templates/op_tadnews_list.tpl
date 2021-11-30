@@ -1,4 +1,4 @@
-<h2 class="sr-only"><{$smarty.const._MD_TADNEWS_LIST}></h2>
+<h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADNEWS_LIST}></h2>
 <{if $page}>
     <table class="table table-striped table-hover table-shadow">
         <tbody>

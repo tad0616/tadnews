@@ -76,7 +76,7 @@
                 </div>
             </div>
         <{else}>
-            <h2 class="sr-only"><{$smarty.const._MD_TADNEWS_HIDDEN}></h2>
+            <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADNEWS_HIDDEN}></h2>
             <div class="alert alert-danger">
                 <p><{$smarty.const._MD_TADNEWS_HIDDEN}></p>
             </div>
@@ -84,7 +84,7 @@
 
         <{if $show_next_btn}>
             <div class="row" style="margin-bottom: 30px;">
-                <div class="col-md-6">
+                <div class="col-md-6 d-grid gap-2">
                     <{if $page.back_news_link}>
                         <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block">
                         <img src="images/left.png" hspace=2 alt="Previous">
@@ -92,7 +92,7 @@
                         </a>
                     <{/if}>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 d-grid gap-2">
                     <{if $page.next_news_link}>
                         <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
                     <{/if}>
@@ -101,7 +101,7 @@
         <{/if}>
     <{/foreach}>
 <{else}>
-    <h2 class="sr-only"><{$smarty.const._MD_TADNEWS_HIDDEN}></h2>
+    <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADNEWS_HIDDEN}></h2>
     <div class="alert alert-danger">
         <p><{$smarty.const._MD_TADNEWS_HIDDEN}></p>
     </div>

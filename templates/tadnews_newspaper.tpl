@@ -2,7 +2,7 @@
 <{$toolbar}>
 </p>
 
-<h1 class="sr-only" style="display: none;"><{$smarty.const._MD_TADNEWS_NEWSPAPER}></h1>
+<h1 class="sr-only visually-hidden" style="display: none;"><{$smarty.const._MD_TADNEWS_NEWSPAPER}></h1>
 
 <{if $page}>
     <table class="table table-striped table-hover table-shadow">

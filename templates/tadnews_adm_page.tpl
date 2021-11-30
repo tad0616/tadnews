@@ -76,7 +76,7 @@
                 </div>
             <{/if}>
 
-            <div>
+            <div class="d-grid gap-2">
                 <{if $now_op!="tad_news_cate_form" or $ncsn!=""}>
                     <a href="page.php?op=modify_page_cate" class="btn btn-primary btn-block">
                         <i class="fa fa-plus"></i> <{$smarty.const._MA_TADNEWS_ADD_CATE}>

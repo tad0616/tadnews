@@ -26,7 +26,7 @@
         <{$smarty.const._MB_TADNEWS_BAR_DATE}><{$smarty.const._TAD_FOR}>
     </label>
     <input type="text" id="start_day<{$block.randStr}>" size=8 onClick="WdatePicker({dateFmt:'yyyy-MM-dd', startDate:'%y-%M-%d'})" placeholder="<{$smarty.const._MB_TADNEWS_BAR_START_DAY}>">-
-    <label for="end_day<{$block.randStr}>" class="sr-only">
+    <label for="end_day<{$block.randStr}>" class="sr-only visually-hidden">
         <{$smarty.const._MB_TADNEWS_BAR_DATE}><{$smarty.const._TAD_FOR}>
     </label><input type="text" id="end_day<{$block.randStr}>" size=8 onClick="WdatePicker({dateFmt:'yyyy-MM-dd', startDate:'%y-%M-%d'})" placeholder="<{$smarty.const._MB_TADNEWS_BAR_END_DAY}>">
 </div>
