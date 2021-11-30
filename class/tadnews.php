@@ -90,8 +90,8 @@ $this->get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0"
 //判斷目前登入者在哪些類別中有發表的權利 post,pass,read
 $this->chk_user_cate_power($kind="post");
 
-//以流水號取得某筆tad_news資料 $mode=full （不經過xlanguage）
-$this->get_tad_news($nsn="",$uid_chk=false,$pass_xlanguage='');
+//以流水號取得某筆tad_news資料
+$this->get_tad_news($nsn="",$uid_chk=false);
 
 //前置字串 ($mode='all' 不管啟動或關閉，一律顯示，適用於管理界面)
 $this->mk_prefix_tag($tag_sn,$mode='');
@@ -758,18 +758,12 @@ class Tadnews
                 $news_content = str_replace('--summary--', '', $news_content);
                 $news_content = trim($news_content);
 
-                //支援xlanguage
-                $news_content = $this->xlang($news_content);
-
                 $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
                 $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9rem;'><i class=\"fa fa-file-text-o\"></i> " . _TADNEWS_MORE . '</a>';
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . '</div>';
             } elseif ('page_break' === $this->summary_num) {
                 if (preg_match('/--summary--/', $news_content)) {
-                    //支援xlanguage
-                    $news_content = $this->xlang($news_content);
-
                     $news_content = str_replace('<p>--summary--</p>', '--summary--', $news_content);
                     $content_arr = explode('--summary--', $news_content);
                 } else {
@@ -780,14 +774,10 @@ class Tadnews
             } elseif ('full' === $this->summary_num) {
                 $news_content = str_replace('<p>--summary--</p>', '', $news_content);
                 $news_content = str_replace('--summary--', '', $news_content);
-                //支援xlanguage
-                $news_content = $this->xlang($news_content);
             } elseif (empty($this->summary_num)) {
                 $news_content = '';
             } else {
                 if (preg_match('/' . _SEPARTE2 . '/', $news_content)) {
-                    //支援xlanguage
-                    $news_content = $this->xlang($news_content);
                     $news_content = str_replace('<p>' . _SEPARTE2 . '</p>', _SEPARTE2, $news_content);
                     $content = explode(_SEPARTE2, $news_content);
                 } else {
@@ -893,9 +883,6 @@ class Tadnews
                 $nsnsort = $this->news_sort($nsn);
 
                 if (isset($nsnsort['back']) and !empty($nsnsort['back']['nsn'])) {
-                    //支援xlanguage
-                    $nsnsort['back']['title'] = $this->xlang($nsnsort['back']['title']);
-                    //$title=xoops_substr($nsnsort['back']['title'], 0, 30);
                     $title = mb_substr($nsnsort['back']['title'], 0, 20, _CHARSET) . '...';
                     $date = mb_substr($nsnsort['back']['date'], 5);
                     $back_news_link = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn={$nsnsort['back']['ncsn']}&nsn={$nsnsort['back']['nsn']}";
@@ -903,8 +890,6 @@ class Tadnews
                 }
 
                 if (isset($nsnsort['next']) and !empty($nsnsort['next']['nsn'])) {
-                    //支援xlanguage
-                    $nsnsort['next']['title'] = $this->xlang($nsnsort['next']['title']);
 
                     //$title=xoops_substr($nsnsort['next']['title'], 0, 30);
                     $title = mb_substr($nsnsort['next']['title'], 0, 20, _CHARSET) . '...';
@@ -1175,8 +1160,6 @@ class Tadnews
                 if (is_numeric($this->summary_num) and !empty($this->summary_num) and empty($passwd)) {
                     $news_content = strip_tags($news_content);
                     $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
-                    //支援xlanguage
-                    $news_content = $this->xlang($news_content);
 
                     $content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . '...</div>';
                 } else {
@@ -1588,7 +1571,7 @@ class Tadnews
     }
 
     //以流水號取得某筆tad_news資料
-    public function get_tad_news($nsn = '', $uid_chk = false, $xlanguage = true)
+    public function get_tad_news($nsn = '', $uid_chk = false)
     {
         global $xoopsDB, $xoopsUser;
         if (empty($nsn)) {
@@ -1600,9 +1583,6 @@ class Tadnews
         $data = $xoopsDB->fetchArray($result);
 
         $news_content = strip_tags($data['news_content']);
-
-        //支援xlanguage
-        $news_content = $this->xlang($news_content, $xlanguage);
 
         //$data['news_description']=xoops_substr($news_content, 0, 300);
         $data['news_description'] = mb_substr($news_content, 0, 300, _CHARSET);
@@ -1814,7 +1794,7 @@ class Tadnews
             $this->TadDataCenter->set_col('nsn', $nsn);
             $tab_arr = $this->TadDataCenter->getData();
 
-            $DBV = $this->get_tad_news($nsn, false, false);
+            $DBV = $this->get_tad_news($nsn, false);
         } else {
             $DBV = $tab_arr = [];
         }
@@ -2576,16 +2556,6 @@ class Tadnews
         $this->TadUpFiles->set_col('nsn', $nsn);
         $this->TadUpFiles->del_files();
         $this->delete_cover($nsn);
-    }
-
-    //支援xlanguage
-    private function xlang($news_content = '', $xlanguage = true)
-    {
-        if ($xlanguage and function_exists('xlanguage_ml')) {
-            $news_content = xlanguage_ml($news_content);
-        }
-
-        return $news_content;
     }
 
     public function delete_cover($nsn = '')

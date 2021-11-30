@@ -20,11 +20,7 @@ function tadnews_b_show_3($options)
     $i = 0;
     while (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result)) {
         $txt = strip_tags($txt);
-        //支援xlanguage
-        if (function_exists('xlanguage_ml')) {
-            $txt = xlanguage_ml($txt);
-        }
-        //$txt=xoops_substr($txt , 0 , $options[1] , "...");
+        $txt = xoops_substr($txt, 0, $options[1], "...");
         $txt = mb_substr($txt, 0, $options[1], _CHARSET);
         $txt .= '...';
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);

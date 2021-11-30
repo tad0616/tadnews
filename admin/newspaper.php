@@ -274,10 +274,6 @@ function edit_newspaper($npsn = '')
                 $img = '';
             }
             if (preg_match('/' . _SEPARTE2 . '/', $news_content)) {
-                //支援xlanguage
-                if (function_exists('xlanguage_ml')) {
-                    $news_content = xlanguage_ml($news_content);
-                }
                 $news_content = str_replace('<p>' . _SEPARTE2 . '</p>', _SEPARTE2, $news_content);
                 $content = explode(_SEPARTE2, $news_content);
             } else {
