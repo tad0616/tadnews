@@ -23,6 +23,7 @@
             $("#upform").prop("disabled",true);
             $("#page_upform").prop("disabled",false);
             $("#tab_mode_checkbox").show();
+            $("#page_mode").prop("disabled",false);
         <{else}>
             $("#add_page").hide();
             $("#add_news").show();
@@ -37,6 +38,7 @@
             $("#upform").prop("disabled",false);
             $("#page_upform").prop("disabled",true);
             $("#tab_mode_checkbox").hide();
+            $("#page_mode").prop("disabled",true);
         <{/if}>
 
         <{if $nsn==""}>
@@ -55,6 +57,7 @@
                     $("#upform").prop("disabled",true);
                     $("#page_upform").prop("disabled",false);
                     $("#tab_mode_checkbox").show();
+                    $("#page_mode").prop("disabled",false);
                 }else{
                     $("#add_page").hide();
                     $("#add_news").show();
@@ -69,6 +72,7 @@
                     $("#upform").prop("disabled",false);
                     $("#page_upform").prop("disabled",true);
                     $("#tab_mode_checkbox").hide();
+                    $("#page_mode").prop("disabled",true);
                 }
             });
             // $("#tab_editor").hide();
@@ -399,6 +403,8 @@
 
             <{if $cate.not_news!='1'}>
                 <button class="btn btn-success" type="button" id="show_input_form"><{$smarty.const._MD_TADNEWS_ADV_SETUP}></button>
+            <{else}>
+                <input type="hidden" name="page_mode" id="page_mode" value="not_news">
             <{/if}>
             <{$XOOPS_TOKEN}>
             <button class="btn btn-primary" type="submit"><{$smarty.const._MD_TADNEWS_SAVE_NEWS}></button>

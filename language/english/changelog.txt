@@ -1,6 +1,7 @@
 TadNews 4.27 (Released 2021-11-29)
 ====================================
 1. Support BootStrap5
+2. Remove obsolete xlanguage syntax
 
 TadNews 4.26 (Released 2021-09-29)
 ====================================

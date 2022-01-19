@@ -647,7 +647,7 @@ class Tadnews
             $desc = 'order by always_top desc , start_day desc';
         }
 
-        //判斷是否要檢查日期
+        //判斷是否要檢查日期（自訂頁面不用）
         if (!empty($this->view_month)) {
             $date_chk = "and start_day like '{$this->view_month}%'";
         } elseif ($this->admin_tool) {
@@ -658,7 +658,7 @@ class Tadnews
             $date_chk = "and start_day >= '" . $this->start_day . "'";
         } elseif ($this->end_day) {
             $date_chk = "and start_day <= '" . $this->end_day . " 23:59:59' ";
-        } else {
+        } elseif ('news' === $this->kind) {
             $date_chk = "and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') ";
         }
 
@@ -2467,9 +2467,10 @@ class Tadnews
 
         $always_top = (int) $_POST['always_top'];
 
+        $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : $myts->addSlashes($_POST['start_day']);
         $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $myts->addSlashes($_POST['end_day']);
 
-        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$_POST['start_day']}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}', uid='{$this->uid}' where nsn='$nsn'";
+        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$start_day}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}', uid='{$this->uid}' where nsn='$nsn'";
 
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
