@@ -1268,20 +1268,20 @@ class Tadnews
 
         $this->TadDataCenter->set_col('nsn', $nsn);
         $tab_arr = $this->TadDataCenter->getData();
-        $tab_sort_btn = !empty($tab_arr) ? "<a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_TABS_SORT . "'>
+        $tab_sort_btn = !empty($tab_arr) ? "<a href='" . XOOPS_URL . "/modules/tadnews/page.php?op=tabs_sort&ncsn=$ncsn&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_TABS_SORT . "'>
         <i class='fa fa-sort'></i>
         </a>" : '';
 
         $edit_cate = '';
         if (!empty($ncsn)) {
-            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_EDIT_CATE . "'><i class='fa fa-folder-open-o'></i></a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_EDIT_CATE . "'>
+            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_EDIT_CATE . "'><i class='fa fa-folder-open-o'></i></a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_EDIT_CATE . "'>
             <i class='fa fa-folder-open-o'></i>
             </a>";
         }
 
         $signbtn = '';
         if (!empty($have_read_group)) {
-            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_DIGN_LIST . "'>
+            $signbtn = "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?op=list_sign&ncsn={$ncsn}&nsn=$nsn' class='btn btn-info btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_DIGN_LIST . "'>
             <i class='fa fa-list'></i>
             </a>";
         }
@@ -1291,22 +1291,22 @@ class Tadnews
         $admin_fun = '';
         if ($this->uid and ($news_post_power or $uid == $this->uid or $_SESSION['tadnews_adm'])) {
 
-            $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='BBCode'>
+            $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='BBCode'>
             BB
             </a>" : '';
 
             $admin_fun = "
             <div class='btn-group'>
                 $signbtn
-                <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TADNEWS_ADD . "'>
-                <i class='fa fa-plus-circle'></i>
+                <a href='" . XOOPS_URL . "/modules/tadnews/post.php' class='btn btn-primary btn-sm btn-xs' style='font-weight:normal;'>
+                <span data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_ADD . "'><i class='fa fa-plus-circle'></i></span>
                 </a>
-                <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TAD_DEL . "'>
-                <i class='fa fa-times'></i>
+                <a href=\"javascript:delete_tad_news_func($nsn);\" class='btn btn-danger btn-sm btn-xs' style='font-weight:normal;'>
+                <span data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TAD_DEL . "'><i class='fa fa-times'></i></span>
                 </a>
                 $edit_cate
-                <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' title='" . _TAD_EDIT . "'>
-                <i class='fa fa-pencil'></i>
+                <a href='" . XOOPS_URL . "/modules/tadnews/post.php?op=tad_news_form&ncsn={$ncsn}&nsn=$nsn' class='btn btn-warning btn-sm btn-xs' style='font-weight:normal;'>
+                <span data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TAD_EDIT . "'><i class='fa fa-pencil'></i></span>
                 </a>
                 $bbcode
             </div>";
@@ -2569,8 +2569,8 @@ class Tadnews
     public function del_page_tab($nsn, $sort)
     {
         $this->TadDataCenter->set_col('nsn', $nsn);
-        $this->TadDataCenter->delData('tab_title', $sort, __FILE__, __LINE__);
-        $this->TadDataCenter->delData('tab_content', $sort, __FILE__, __LINE__);
+        $this->TadDataCenter->delData('tab_title', $sort, null, null, __FILE__, __LINE__);
+        $this->TadDataCenter->delData('tab_content', $sort, null, null, __FILE__, __LINE__);
     }
 
     // 檢查內容是不是只有一行網址
