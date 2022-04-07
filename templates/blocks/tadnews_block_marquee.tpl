@@ -9,7 +9,8 @@
         box-shadow: 0px 1px 2px 1px #cfcfcf inset;
         <{$block.css}>
     }
-    .news_marquee_item_<{$block.randStr}>{
+    .news_marquee_item_<{$block.randStr}>,
+    .news_marquee_item_<{$block.randStr}> a {
         line-height:1.4;
         margin:5px;
         <{$block.item_css}>
