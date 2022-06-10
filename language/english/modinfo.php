@@ -138,3 +138,6 @@ define('_MI_SHOW_RSS_DESC', 'Whether to show RSS links at the bottom of the modu
 
 define('_MI_USE_TABLE_SHADOW', 'Whether to use table shading');
 define('_MI_USE_TABLE_SHADOW_DESC', 'Whether to add shading to the news table');
+
+define('_MI_UPDATE_UID_CHK', 'Are only publishers allowed to edit or delete articles?');
+define('_MI_UPDATE_UID_CHK_DESC', 'If you select "No", both the administrator and the person with permission to publish the article category can edit the article.');

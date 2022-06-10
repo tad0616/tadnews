@@ -11,6 +11,8 @@ define('_MD_TADNEWS_FILES', '附檔');
 define('_MD_TADNEWS_POSTER', '發佈者');
 define('_MD_TADNEWS_FOR', '：');
 define('_MD_TADNEWS_NEWS_PIC', '上傳文章封面圖');
+define('_MD_TADNEWS_NEWS_PIC_NOTE', '欲使用自訂預設封面圖，可準備 demo0.jpg ~
+demo9.jpg 十張圖（800x400）並上傳至 ' . XOOPS_ROOT_PATH . '/uploads/tadnews/demo/ 下即可');
 define('_MD_TADNEWS_ORDER_SUCCESS', '訂閱「%s」完成！');
 define('_MD_TADNEWS_ORDER_ERROR', '訂閱「%s」失敗！');
 define('_TADNEWS_DEL_SUCCESS', '取消訂閱「%s」完成！');

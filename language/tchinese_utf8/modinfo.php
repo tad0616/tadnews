@@ -138,3 +138,6 @@ define('_MI_SHOW_RSS_DESC', '是否要在模組首頁下方顯示RSS的連結資
 
 define('_MI_USE_TABLE_SHADOW', '是否使用表格陰影');
 define('_MI_USE_TABLE_SHADOW_DESC', '是否要在新聞表格加入陰影');
+
+define('_MI_UPDATE_UID_CHK', '是否只有發布者才可以修改或刪除文章？');
+define('_MI_UPDATE_UID_CHK_DESC', '選「否」的話，管理員及具備該文章分類發布權限者都可以修改該文章（避免發布者離職無人管）');

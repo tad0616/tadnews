@@ -41,9 +41,12 @@
 <input type="hidden" name="files_sn" id="files_sn" value="<{$files_sn}>">
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <label><{$smarty.const._MD_TADNEWS_NEWS_PIC}></label>
         <input id="upfile2" type="file" name="upfile2" multiple>
+        <div class="alert alert-success mt-2">
+            <{$smarty.const._MD_TADNEWS_NEWS_PIC_NOTE}>
+        </div>
     </div>
 </div>
 

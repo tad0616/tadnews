@@ -1,3 +1,9 @@
+TadNews 4.28 (Released on 2022-06-10)
+====================================
+1. Solve the problem that the date is not updated when modifying the custom page
+2. Fix the problem that the links in the runner block cannot be applied to the style
+3. New setting item of "whether to edit or delete the article by the publisher himself".
+
 TadNews 4.27 (Released 2021-11-29)
 ====================================
 1. Support BootStrap5

@@ -1627,7 +1627,7 @@ class Tadnews
     //抓出目前新聞的上下文編號
     private function news_sort($now_nsn = '', $now_ncsn = '', $mode = '')
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB;
 
         $news = $this->get_tad_news($now_nsn);
 
@@ -2381,10 +2381,10 @@ class Tadnews
     //更新tad_news某一筆資料
     public function update_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser, $xoopsModuleConfig;
+        global $xoopsDB, $xoopsModuleConfig;
 
         //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn, false);
+        $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
 
         //可讀群組
         if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
@@ -2501,10 +2501,10 @@ class Tadnews
     //啟動tad_news某一筆資料
     public function enable_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB, $xoopsModuleConfig;
 
         //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn);
+        $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
         if (!$this->chk_who($news['uid'])) {
             redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
         }
@@ -2543,10 +2543,10 @@ class Tadnews
     //刪除tad_news某筆資料資料
     public function delete_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB, $xoopsModuleConfig;
 
         //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn);
+        $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
         if (!$this->chk_who($news['uid'])) {
             redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
         }

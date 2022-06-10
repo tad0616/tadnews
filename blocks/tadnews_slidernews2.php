@@ -45,8 +45,9 @@ function tadnews_slidernews2_show($options)
 
     $n = 0;
     $pic_num = 1;
+    $demo_path = is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/demo") ? XOOPS_URL . "/uploads/tadnews/demo" : XOOPS_URL . "/modules/tadnews/images";
     foreach ($all_news['page'] as $news) {
-        $big_image = empty($news['image_big']) ? XOOPS_URL . "/modules/tadnews/images/demo{$pic_num}.jpg" : $news['image_big'];
+        $big_image = empty($news['image_big']) ? "{$demo_path}/demo{$pic_num}.jpg" : $news['image_big'];
         $slider->add_content($news['nsn'], $news['news_title'], $news['content'], $big_image, $news['post_date'], XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}");
         $n++;
         $pic_num++;

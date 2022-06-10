@@ -15,7 +15,6 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 function tadnews_my_page($options)
 {
     global $xoTheme;
-
     if (empty($options[0])) {
         return '';
     }

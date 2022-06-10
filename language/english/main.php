@@ -11,6 +11,8 @@ define('_MD_TADNEWS_FILES', 'Attachments');
 define('_MD_TADNEWS_POSTER', 'Poster');
 define('_MD_TADNEWS_FOR', ': ');
 define('_MD_TADNEWS_NEWS_PIC', 'Upload news cover image');
+define('_MD_TADNEWS_NEWS_PIC_NOTE', 'To use a custom default cover image, you can prepare demo0.jpg ~
+demo9.jpg ten images (800x400) and upload them to ' . XOOPS_ROOT_PATH . '/uploads/tadnews/demo/');
 define('_MD_TADNEWS_ORDER_SUCCESS', '"%s" subscribed!');
 define('_MD_TADNEWS_ORDER_ERROR', 'Scbscribe to "%s" failed!');
 define('_TADNEWS_DEL_SUCCESS', 'Subscription to "%s" cancelled!');
