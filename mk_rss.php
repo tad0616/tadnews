@@ -28,15 +28,15 @@ function mk_rss()
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
 
         $allItem .= '
-    <item>
-      <title>' . XoopsLocal::convert_encoding(htmlspecialchars($news_title, ENT_QUOTES)) . '</title>
-      <link>' . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}</link>
-      <description>" . XoopsLocal::convert_encoding(htmlspecialchars($news_content, ENT_QUOTES)) . '</description>
+        <item>
+          <title>' . XoopsLocal::convert_encoding(htmlspecialchars($news_title, ENT_QUOTES)) . '</title>
+          <link>' . XOOPS_URL . "/modules/tadnews/index.php?nsn={$nsn}</link>
+          <description>" . XoopsLocal::convert_encoding(htmlspecialchars($news_content, ENT_QUOTES)) . '</description>
 
-      <pubDate>' . formatTimestamp(strtotime($start_day), 'rss') . '</pubDate>
-      <guid>' . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}</guid>
-    </item>
-    ";
+          <pubDate>' . formatTimestamp(strtotime($start_day), 'rss') . '</pubDate>
+          <guid>' . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}</guid>
+        </item>
+        ";
     }
 
     $dimension = getimagesize(XOOPS_ROOT_PATH . '/images/logo.png');
