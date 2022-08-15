@@ -141,3 +141,7 @@ define('_MD_TADNEWS_CATE_SHOW_PATH', '顯示頁面路徑');
 define('_MD_TADNEWS_DENY_TYPE', '（以下副檔名無法上傳：%s）');
 define('_MD_TADNEWS_AND', '、');
 define('_MD_TADNEWS_LIST', '文章列表');
+
+define('_MD_TADNEWS_CONTENT_AT_TABS_TOP', '頁籤上方內容');
+define('_MD_TADNEWS_CONTENT_AT_TABS', '設定各個頁籤內容');
+define('_MD_TADNEWS_SAME_UID', '維持原發布者，不將發布者改為目前編輯者');

@@ -260,6 +260,10 @@
 
     <div id="tab_editor" <{if !$tab_arr}>style="display: none;"<{/if}>>
         <div class="input_fields_wrap">
+            <h3><{$smarty.const._MD_TADNEWS_CONTENT_AT_TABS_TOP}></h3>
+            <{$tab_editor0}>
+
+            <h3><{$smarty.const._MD_TADNEWS_CONTENT_AT_TABS}></h3>
             <{if $tab_arr}>
                 <{foreach from=$tab_arr.tab_title key=k item=title}>
                     <div class="alert alert-info">
@@ -408,6 +412,14 @@
             <{/if}>
             <{$XOOPS_TOKEN}>
             <button class="btn btn-primary" type="submit"><{$smarty.const._MD_TADNEWS_SAVE_NEWS}></button>
+
+            <{if $nsn && $uid!=$now_uid}>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="same_uid" value="1"> <{$smarty.const._MD_TADNEWS_SAME_UID}>
+                    </label>
+                </div>
+            <{/if}>
         </div>
     </div>
 </form>

@@ -1369,7 +1369,8 @@ class Tadnews
         $and_not_news = (null === $not_news or '' === $not_news) ? '' : "and not_news='{$not_news}'";
 
         if ($_SESSION['tadnews_adm']) {
-            $left = $level * 10;
+            // &nbsp;
+            $left = str_repeat('-', $level * 4);
             $level += 1;
 
             $option = ($of_ncsn or !$_SESSION['tadnews_adm'] or false === $blank) ? '' : "<option value='0'></option>";
@@ -1390,7 +1391,7 @@ class Tadnews
 
                 $selected = ($v == $ncsn) ? 'selected' : '';
                 $color = ('1' == $not_news) ? 'red' : 'black';
-                $option .= "<option value='{$ncsn}' style='padding-left: {$left}px;color:{$color};' $selected>{$nc_title}</option>";
+                $option .= "<option value='{$ncsn}' style='color:{$color};' $selected>{$left}{$nc_title}</option>";
                 $option .= $this->get_tad_news_cate_option($ncsn, $level, $v, true, $this_ncsn, $no_self, $not_news);
             }
         } else {
@@ -1765,6 +1766,8 @@ class Tadnews
         global $xoopsDB, $xoopsUser, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $myts = \MyTextSanitizer::getInstance();
 
+        $xoopsTpl->assign('now_uid', $xoopsUser->uid());
+
         $FormValidator = new FormValidator('#myForm', false);
         $FormValidator->render('topLeft');
 
@@ -1848,6 +1851,9 @@ class Tadnews
         $CkEditor->setHeight(350);
         $editor = $CkEditor->render();
 
+        $CkEditor = new CkEditor('tadnews', 'tab_content[0]', $tab_arr['tab_content'][0]);
+        $CkEditor->setHeight(100);
+        $tab_editor0 = $CkEditor->render();
         if ($tab_arr) {
             foreach ($tab_arr['tab_content'] as $k => $content) {
                 $CkEditor = new CkEditor('tadnews', "tab_content[$k]", $content);
@@ -1914,6 +1920,7 @@ class Tadnews
             $form['news_title'] = $news_title;
             $form['news_content'] = $news_content;
             $form['editor'] = $editor;
+            $form['tab_editor0'] = $tab_editor0;
             $form['tab_editor'] = $tab_editor;
             $form['jquery_tabs_id'] = "jquery-tabs{$now}";
             $form['start_day'] = $start_day;
@@ -1976,6 +1983,7 @@ class Tadnews
         $xoopsTpl->assign('news_title', $news_title);
         $xoopsTpl->assign('news_content', $news_content);
         $xoopsTpl->assign('editor', $editor);
+        $xoopsTpl->assign('tab_editor0', $tab_editor0);
         $xoopsTpl->assign('tab_editor', $tab_editor);
         $xoopsTpl->assign('jquery_tabs_id', "jquery-tabs{$now}");
         $xoopsTpl->assign('start_day', $start_day);
@@ -2180,11 +2188,15 @@ class Tadnews
 
         //若是頁籤模式
         if (1 == $tab_mode) {
-            $tabs_content = "
-                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
-                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/css/easy-responsive-tabs.css' type='text/css'>
-                <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
-                <div id='PageTab'>";
+
+            $tabs_content0 = Wcag::amend($_POST['tab_content'][0]);
+            $tab_data_arr['tab_content'][0] = $tabs_content0;
+
+            $tabs_content = "<link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>\n";
+            $tabs_content .= "<link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/css/easy-responsive-tabs.css' type='text/css'>\n";
+            $tabs_content .= "<script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>\n";
+            $tabs_content .= "{$tabs_content0}\n";
+            $tabs_content .= "<div id='PageTab'>\n";
 
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
@@ -2196,7 +2208,6 @@ class Tadnews
                 $tab_title_div .= "<li>$tab_val</li>";
 
                 $tab_content_key = Wcag::amend($_POST['tab_content'][$tab_key]);
-                // $tab_content_key = $myts->addSlashes($tab_content_key);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "
@@ -2414,11 +2425,15 @@ class Tadnews
         $news_title = $myts->addSlashes($_POST['news_title']);
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
-            $tabs_content = "
-                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>
-                <link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/css/easy-responsive-tabs.css' type='text/css'>
-                <script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>
-                <div id='PageTab'>";
+
+            $tabs_content0 = Wcag::amend($_POST['tab_content'][0]);
+            $tab_data_arr['tab_content'][0] = $tabs_content0;
+
+            $tabs_content = "<link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css' type='text/css'>\n";
+            $tabs_content .= "<link rel='stylesheet' href='" . XOOPS_URL . "/modules/tadnews/css/easy-responsive-tabs.css' type='text/css'>\n";
+            $tabs_content .= "<script src='" . XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js' type='text/javascript'></script>\n";
+            $tabs_content .= "{$tabs_content0}\n";
+            $tabs_content .= "<div id='PageTab'>\n";
 
             $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
@@ -2470,7 +2485,9 @@ class Tadnews
         $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : $myts->addSlashes($_POST['start_day']);
         $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $myts->addSlashes($_POST['end_day']);
 
-        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$start_day}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}', uid='{$this->uid}' where nsn='$nsn'";
+        $uid = $_POST['same_uid'] == 1 ? (int) $_POST['uid'] : $this->uid;
+
+        $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set  ncsn = '{$ncsn}', news_title = '{$news_title}', news_content = '{$news_content}', start_day = '{$start_day}', end_day = '{$end_day}', enable = '{$_POST['enable']}', passwd = '{$_POST['passwd']}', enable_group = '{$enable_group}', prefix_tag='{$_POST['prefix_tag']}', always_top='{$always_top}', always_top_date='{$_POST['always_top_date']}', have_read_group='{$have_read_group}', uid='{$uid}' where nsn='$nsn'";
 
         $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 

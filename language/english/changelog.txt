@@ -1,3 +1,9 @@
+TadNews 4.30 (Released on 2022-08-15)
+====================================
+1. Tab mode adds the ability to add content to the top of tabs
+2. Edit other people's files, you can set the publisher to remain unchanged
+3. Fix the problem of no indentation of subcategories in the category menu when editing.
+
 TadNews 4.29 (Released 2022-08-13)
 ====================================
 1. CSS reduce the introduction of external style files
