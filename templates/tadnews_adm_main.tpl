@@ -47,7 +47,7 @@
 
             <{if $ncsn}>
                 <div class="alert alert-info">
-                    <div class="pull-right float-right">
+                    <div class="pull-right float-right float-end">
                         <{if $now_op!="tad_news_cate_form" and $ncsn}>
                             <{if !$cate.count}>
                                 <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-sm btn-xs btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
@@ -150,12 +150,12 @@
                 <div class="alert alert-info" id="batch_tool" style="display: none;">
 
                     <div class="form-group row mb-3">
-                    <label class="col-md-2 control-label col-form-label text-md-right">
+                    <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                         <input type='radio' name='act' value='del_news'>
                         <{$smarty.const._TAD_DEL}>
                     </label>
 
-                    <label class="col-md-2 control-label col-form-label text-md-right">
+                    <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                         <input type='radio' name='act' value='move_news' id="move">
                         <{$smarty.const._TADNEWS_MOVE_TO}>
                     </label>

@@ -117,6 +117,8 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
 if ($xoopsModuleConfig['use_table_shadow']) {
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
 }

@@ -22,7 +22,6 @@ define('_MD_TADNEWS_ERROR_EMAIL', 'Illegal Email: %s');
 
 define('_MD_TADNEWS_POST', 'Post');
 define('_MD_TADNEWS_SIGN_LOG', '"%s" read log');
-
 //post.php
 define('_MD_TADNEWS_NO_POST_POWER', 'Please login first for posting news.');
 define('_MD_TADNEWS_ADD_NEWS', 'Edit News');

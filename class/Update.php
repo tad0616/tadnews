@@ -29,6 +29,49 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 class Update
 {
 
+    // 建立索引
+    public static function add_index()
+    {
+        global $xoopsDB;
+        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='ncsn'";
+        $result = $xoopsDB->query($sql);
+        if (empty($result->num_rows)) {
+            $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `ncsn` (`ncsn`)';
+            $xoopsDB->queryF($sql);
+        } else {
+            die(var_dump($result));
+        }
+
+        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='start_day'";
+        $result = $xoopsDB->query($sql);
+        if (empty($result->num_rows)) {
+            $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `start_day` (`start_day`)';
+            $xoopsDB->queryF($sql);
+        }
+
+        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='end_day'";
+        $result = $xoopsDB->query($sql);
+        if (empty($result->num_rows)) {
+            $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `end_day` (`end_day`)';
+            $xoopsDB->queryF($sql);
+        }
+
+        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='always_top_always_top_date'";
+        $result = $xoopsDB->query($sql);
+        if (empty($result->num_rows)) {
+            $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `always_top_always_top_date` (`always_top`, `always_top_date`)';
+            $xoopsDB->queryF($sql);
+        }
+
+        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='enable'";
+        $result = $xoopsDB->query($sql);
+        if (empty($result)) {
+            $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `enable` (`enable`)';
+            $xoopsDB->queryF($sql);
+        }
+
+    }
+
     //data_center 加入 sort
     public static function chk_dc_sort()
     {

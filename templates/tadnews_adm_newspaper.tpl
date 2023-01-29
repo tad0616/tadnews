@@ -103,7 +103,7 @@
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_STEP3}></h1>
         <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
             <div class="form-group row mb-3">
-                <label class="col-md-2 control-label col-form-label text-md-right">
+                <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                     <{$smarty.const._MA_TADNEWS_NP_SUB_TITLE}>
                 </label>
                 <div class="col-md-10">

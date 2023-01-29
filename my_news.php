@@ -30,7 +30,7 @@ function list_tad_my_news()
     }
     $Tadnews->get_news();
 
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 }
 
 /*-----------執行動作判斷區----------*/
@@ -70,7 +70,7 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 
 $xoopsTpl->assign('now_op', $op);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
 if ($xoopsModuleConfig['use_table_shadow']) {
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');

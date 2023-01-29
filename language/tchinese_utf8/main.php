@@ -109,7 +109,7 @@ define('_MD_TADNEWS_USE_TAB_MODE', '使用頁籤模式');
 define('_MD_TADNEWS_TAB_TITLE', '請輸入頁籤 %s 標題');
 define('_MD_TADNEWS_ADD_TAB', '新增頁籤');
 define('_MD_TADNEWS_DEL_TAB', '移除頁籤');
-define('_MD_TADNEWS_DELETE_TAB', '刪除「%s」除頁籤');
+define('_MD_TADNEWS_DELETE_TAB', '刪除「%s」頁籤');
 
 define('_MD_TADNEWS_TAB_TITLE1', '請輸入頁籤');
 define('_MD_TADNEWS_TAB_TITLE2', '標題');

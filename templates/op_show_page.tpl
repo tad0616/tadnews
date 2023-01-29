@@ -16,7 +16,7 @@
                 <h1 style="text-shadow:1px 1px 1px #aaaaaa;">
                     <{$page.news_title}>
                 </h1>
-                <div class="pull-right float-right" style="border-left: 1px solid #cfcfcf; padding-left:8px;">
+                <div class="pull-right float-right float-end" style="border-left: 1px solid #cfcfcf; padding-left:8px;">
                     <a href="page.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> /
                     <{$page.post_date}> /
                     <{$smarty.const._TADNEWS_HOT}>

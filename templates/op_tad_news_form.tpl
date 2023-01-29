@@ -1,5 +1,4 @@
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/multiple-file-upload/jquery.MultiFile.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
 
@@ -168,7 +167,7 @@
 <form action="<{$action}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <{if $nsn==""}>
         <div class="form-group row mb-3">
-            <label class="col-md-3 control-label col-form-label text-md-right">
+            <label class="col-md-3 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_KIND}>
             </label>
             <div class="col-md-4">
@@ -266,21 +265,23 @@
             <h3><{$smarty.const._MD_TADNEWS_CONTENT_AT_TABS}></h3>
             <{if $tab_arr}>
                 <{foreach from=$tab_arr.tab_title key=k item=title}>
-                    <div class="alert alert-info">
-                        <div class="form-group row mb-3">
-                            <div class="col-md-8">
-                                <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                    <{if $k >0}>
+                        <div class="alert alert-info">
+                            <div class="form-group row mb-3">
+                                <div class="col-md-8">
+                                    <input type="text" name="tab_title[<{$k}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title}>">
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <a href="javascript:del_page_tab('<{$k}>')" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
+                            <div class="form-group row mb-3">
+                                <div class="col-md-12">
+                                    <{$tab_arr.tab_editor.$k}>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row mb-3">
-                            <div class="col-md-12">
-                                <{$tab_arr.tab_editor.$k}>
-                            </div>
-                        </div>
-                    </div>
+                    <{/if}>
                 <{/foreach}>
             <{else}>
                 <div class="alert alert-warning">
@@ -305,8 +306,8 @@
             var max_fields      = 20; //maximum input boxes allowed
             var wrapper         = $(".input_fields_wrap"); //Fields wrapper
             var add_button      = $("#add_field_button"); //Add button ID
-            <{if $k}>
-            var x = <{$k}>; //initlal text box count
+            <{if $tab_arr.tab_title}>
+            var x = <{$tab_arr.tab_title|@count}>-1; //初始值
             <{else}>
             var x = 1; //initlal text box count
             <{/if}>
@@ -319,14 +320,11 @@
 
                     CKEDITOR.replace(editorId, { height: 300 ,
                     toolbar : 'my' ,
-                    contentsCss : ['<{$xoops_url}>/modules/tadtools/<{$smarty.session.bootstrap}>/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
+                    contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap<{$smarty.session.bootstrap}>/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
                     extraPlugins: 'syntaxhighlight,dialog,oembed,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet',
                     filebrowserBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=file&mod_dir=tadnews',
                     filebrowserImageBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=image&mod_dir=tadnews',
                     filebrowserFlashBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=flash&mod_dir=tadnews',
-                    filebrowserUploadUrl : '<{$xoops_url}>/modules/tadtools/upload.php?type=file&mod_dir=tadnews',
-                    filebrowserImageUploadUrl : '<{$xoops_url}>/modules/tadtools/upload.php?type=image&mod_dir=tadnews',
-                    filebrowserFlashUploadUrl : '<{$xoops_url}>/modules/tadtools/upload.php?type=flash&mod_dir=tadnews',
                     qtRows: 10, // Count of rows
                     qtColumns: 10, // Count of columns
                     qtBorder: '1', // Border of inserted table

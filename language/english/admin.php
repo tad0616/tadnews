@@ -14,7 +14,6 @@ define('_MA_TADNEWS_NEWS_CATE', 'Category');
 define('_MA_TADNEWS_CHECK_ALL', 'Check all');
 define('_MA_TADNEWS_NO_NEWS', 'This category is no article.');
 define('_MA_TADNEWS_ALL_NEWS', 'All articles');
-define('_MA_TADNEWS_EDIT_CATE', 'Editorial Categories');
 
 //cate.php
 define('_MA_TADNEWS_ADD_CATE', 'Add Category');

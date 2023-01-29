@@ -5,7 +5,7 @@
     <form action="<{$xoops_url}>/modules/tadnews/email.php" method="post">
 
         <div class="form-group row mb-3">
-            <label class="col-md-4 control-label col-form-label text-md-right" for="newspaper"><{$smarty.const._MB_TADNEWS_TITLE}></label>
+            <label class="col-md-4 control-label col-form-label text-md-right text-md-end" for="newspaper"><{$smarty.const._MB_TADNEWS_TITLE}></label>
             <div class="col-md-8">
                 <select name="nps_sn" class="form-control" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
                     <{foreach item=opt from=$block.option}>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label class="col-md-4 control-label col-form-label text-md-right" for="newspaper_email"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
+            <label class="col-md-4 control-label col-form-label text-md-right text-md-end" for="newspaper_email"><{$smarty.const._MB_TADNEWS_EMAIL}></label>
             <div class="col-md-8">
                 <input type="text" name="newspaper_email" id="newspaper_email" placeholder="<{$smarty.const._MB_TADNEWS_EMAIL}>" value="<{$block.email}>" class="form-control">
             </div>

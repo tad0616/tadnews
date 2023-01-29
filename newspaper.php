@@ -57,6 +57,6 @@ if ('preview' === $op) {
 } else {
     $xoopsTpl->assign('xoops_showrblock', 0);
 
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
     require_once XOOPS_ROOT_PATH . '/footer.php';
 }

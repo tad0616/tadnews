@@ -10,7 +10,6 @@ if (!class_exists('XoopsModules\Tadnews\Update')) {
 
 function xoops_module_update_tadnews(&$module, $old_version)
 {
-    global $xoopsDB;
 
     if (!Update::chk_chk9()) {
         Update::go_update9();
@@ -97,5 +96,7 @@ function xoops_module_update_tadnews(&$module, $old_version)
     if (Update::chk_dc_sort()) {
         Update::go_dc_sort();
     }
+
+    Update::add_index();
     return true;
 }

@@ -44,7 +44,7 @@ function archive($date = '')
     $Tadnews->set_show_month($date);
     $Tadnews->set_show_enable(1);
     $Tadnews->get_news();
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
     $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign('date_title', $date_title);
 }
@@ -72,7 +72,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
 if ($xoopsModuleConfig['use_table_shadow']) {
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');

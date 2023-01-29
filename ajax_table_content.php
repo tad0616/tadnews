@@ -79,7 +79,7 @@ $tt['start_day'] = "<th style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_STA
 $tt['news_title'] = "<th>" . Utility::to_utf8(_MD_TADNEWS_NEWS_TITLE) . '</th>';
 $tt['uid'] = "<th style='width:80px;'>" . Utility::to_utf8(_MD_TADNEWS_POSTER) . '</th>';
 $tt['ncsn'] = "<th  style='width:86px;' nowrap>" . Utility::to_utf8(_MD_TADNEWS_NEWS_CATE) . '</th>';
-$tt['counter'] = "<th>" . Utility::to_utf8(_MD_TADNEWS_COUNTER) . '</th>';
+$tt['counter'] = "<th nowrap>" . Utility::to_utf8(_MD_TADNEWS_COUNTER) . '</th>';
 $blockTitle = '';
 foreach ($show_col as $colname) {
     $blockTitle .= $tt[$colname];
@@ -131,4 +131,5 @@ $button
 <div style='clear:both;'></div>
 ";
 
+header('HTTP/1.1 200 OK');
 echo $block;

@@ -8,7 +8,7 @@ $TadUpFiles = new TadUpFiles('tadnews');
 $op = Request::getString('op');
 $files_sn = Request::getInt('files_sn');
 $nsn = Request::getInt('nsn');
-
+header('HTTP/1.1 200 OK');
 if ('get_pic' === $op) {
     echo $TadUpFiles->get_pic_file('images', 'url', $files_sn);
 } else {

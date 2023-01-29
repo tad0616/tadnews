@@ -1,9 +1,9 @@
 <div class="panel panel-default card">
     <table class="table table-striped">
     <tr>
-        <th><{$smarty.const._MB_TADNEWS_NEWS_CATE}></th>
+        <th nowrap><{$smarty.const._MB_TADNEWS_NEWS_CATE}></th>
         <th><{$smarty.const._MB_TADNEWS_NEWS_TITLE}></th>
-        <th><{$smarty.const._MB_TADNEWS_COUNTER}></th>
+        <th nowrap><{$smarty.const._MB_TADNEWS_COUNTER}></th>
     </tr>
         <{foreach item=page from=$block.page}>
             <tr>

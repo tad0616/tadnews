@@ -22,7 +22,7 @@
 
     <h3>
         <{if $smarty.session.tadnews_adm or $all_news.ncsn|in_array:$ok_cat}>
-            <div class="pull-right float-right">
+            <div class="pull-right float-right float-end">
                 <{if !$all_news.ncsn|in_array:$link_cate_sn_arr}>
                     <a href="page.php?op=add_to_menu&ncsn=<{$all_news.ncsn}>" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></a>
                 <{/if}>
@@ -37,6 +37,8 @@
     <ul class="list-group" id="sort_<{$all_news.ncsn}>" style="margin: 4px auto 30px;">
         <{foreach from=$all_news.news item=news}>
             <li class="list-group-item d-flex justify-content-between align-items-center" <{if $smarty.session.tadnews_adm or $all_news.ncsn|in_array:$ok_cat}>id="tr_<{$news.nsn}>"<{/if}>>
+
+                <span class="badge badge-secondary bg-secondary rounded-pill"><{$news.page_sort}></span>
                 <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$all_news.ncsn}>&nsn=<{$news.nsn}>">
                     <{$news.news_title}>
                 </a>

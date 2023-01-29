@@ -22,7 +22,7 @@
                     <{foreach item=news from=$all_news.news}>
                         <tr>
                             <td>
-                                <div class="pull-right float-right"><{$news.files}></div>
+                                <div class="pull-right float-right float-end"><{$news.files}></div>
                                 <{$news.post_date}>
                                 <{$news.prefix_tag}>
                                 <{if $news.need_sign}>

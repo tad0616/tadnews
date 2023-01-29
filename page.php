@@ -1,8 +1,8 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
 require_once __DIR__ . '/header.php';
@@ -12,13 +12,15 @@ require XOOPS_ROOT_PATH . '/header.php';
 //顯示單一新聞
 function show_page($nsn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
+    global $Tadnews;
 
     $Tadnews->set_view_nsn($nsn);
     $Tadnews->set_news_kind('page');
     $Tadnews->set_cover(true, 'db');
     $Tadnews->set_summary('full');
     $Tadnews->get_news();
+
+    BootstrapTable::render();
 }
 
 //列出所有tad_news資料
@@ -152,7 +154,7 @@ $arr = get_tadnews_cate_path($ncsn);
 $path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
 
 $xoopsTpl->assign('breadcrumb', $path);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 $xoopsTpl->assign('now_op', $op);
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
 if ($xoopsModuleConfig['use_table_shadow']) {

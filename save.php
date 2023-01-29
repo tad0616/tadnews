@@ -31,5 +31,5 @@ function add_tad_news_cate($title = '', $no_news = '0')
 
     return $ncsn;
 }
-
+header('HTTP/1.1 200 OK');
 echo $_POST['value'];

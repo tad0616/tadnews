@@ -93,6 +93,9 @@ $this->chk_user_cate_power($kind="post");
 //以流水號取得某筆tad_news資料
 $this->get_tad_news($nsn="",$uid_chk=false);
 
+// 所有前置字串
+$this->prefix_tags();
+
 //前置字串 ($mode='all' 不管啟動或關閉，一律顯示，適用於管理界面)
 $this->mk_prefix_tag($tag_sn,$mode='');
 
@@ -140,6 +143,7 @@ class Tadnews
     public $show_enable = 1;
     public $show_cate_select = 0;
     public $show_author_select = 0;
+    public $show_files = true;
     public $news_check_mode = 0;
     public $batch_tool = '';
     public $sort_tool = 0;
@@ -201,6 +205,10 @@ class Tadnews
         } elseif ($xoopsUser) {
             $this->groups = $xoopsUser->getGroups();
         }
+    }
+    public function set_var($name = '', $val = '')
+    {
+        $this->$name = $val;
     }
 
     //是否僅秀出單一分類下的文章
@@ -714,6 +722,7 @@ class Tadnews
         $all_news = [];
         $i = 0;
 
+        $prefix_tags = $this->prefix_tags();
         $myts = \MyTextSanitizer::getInstance();
         while (false !== ($news = $xoopsDB->fetchArray($result))) {
             foreach ($news as $k => $v) {
@@ -872,7 +881,8 @@ class Tadnews
                 $rating_js = $StarRating->render();
             }
 
-            $prefix_tag = $this->mk_prefix_tag($prefix_tag);
+            $prefix_tag = $prefix_tags[$prefix_tag];
+
             if ('app' === $mode) {
                 $prefix_tag = strip_tags($prefix_tag);
             }
@@ -946,9 +956,14 @@ class Tadnews
             $all_news[$i]['image_thumb'] = $image_thumb;
             $all_news[$i]['not_news'] = $not_news_arr[$ncsn];
             $all_news[$i]['url'] = XOOPS_URL . "/modules/tadnews/{$link_page}?ncsn=$ncsn&nsn=$nsn";
+            $all_news[$i]['page_sort'] = $page_sort;
+
             $i++;
         }
 
+        // if ($_GET['test'] == 1) {
+        //     Utility::dd($all_news);
+        // }
         $ui = 1 == $this->sort_tool ? true : false;
         Utility::get_jquery($ui);
 
@@ -1055,6 +1070,7 @@ class Tadnews
         $SyntaxHighlighter = new SyntaxHighlighter();
         $SyntaxHighlighter->render();
 
+        $prefix_tags = $this->prefix_tags();
         $where_news = '';
 
         //分析目前觀看得是新聞還是自訂頁面
@@ -1176,7 +1192,7 @@ class Tadnews
                 $subnews[$j]['content'] = $myts->displayTarea($content, 1, 1, 1, 1, 0);
                 $subnews[$j]['post_date'] = mb_substr($start_day, 0, 10);
                 $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, mb_substr($start_day, 0, 10));
-                $subnews[$j]['prefix_tag'] = $this->mk_prefix_tag($prefix_tag);
+                $subnews[$j]['prefix_tag'] = $prefix_tags[$prefix_tag];
                 $subnews[$j]['nsn'] = $nsn;
                 $subnews[$j]['news_title'] = $myts->htmlSpecialChars($news_title);
                 $subnews[$j]['counter'] = $counter;
@@ -1551,9 +1567,11 @@ class Tadnews
     }
 
     //取得附檔
-    private function get_news_files($nsn = '', $mode = '')
+    public function get_news_files($nsn = '', $mode = '')
     {
-        global $xoopsUser, $xoopsDB;
+        if ($this->show_files === false) {
+            return;
+        }
 
         $this->TadUpFiles->set_col('nsn', $nsn);
         $files = $this->TadUpFiles->show_files('upfile', true, $mode, true, false, null, XOOPS_URL . '/modules/tadnews/index.php', null, 0);
@@ -1606,9 +1624,23 @@ class Tadnews
     }
 
     //前置字串
+    public function prefix_tags()
+    {
+        global $xoopsDB;
+        $prefix_tags = [];
+        $sql = 'select `tag_sn`, `font_color`, `color`, `tag` from ' . $xoopsDB->prefix('tad_news_tags') . "";
+        $result = $xoopsDB->query($sql);
+        while (list($tag_sn, $font_color, $color, $tag) = $xoopsDB->fetchRow($result)) {
+
+            $prefix_tags[$tag_sn] = "<a class='badge' style='background-color: $color; font-weight: normal; color: $font_color; text-shadow:none;' href='" . XOOPS_URL . "/modules/tadnews/index.php?tag_sn=$tag_sn'>$tag</a>";
+        }
+        return $prefix_tags;
+    }
+
+    //前置字串
     public function mk_prefix_tag($tag_sn, $mode = '1')
     {
-        global $xoopsUser, $xoopsDB;
+        global $xoopsDB;
 
         if (empty($tag_sn)) {
             return;
@@ -2198,7 +2230,6 @@ class Tadnews
             $tabs_content .= "{$tabs_content0}\n";
             $tabs_content .= "<div id='PageTab'>\n";
 
-            $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
                 $tab_key = $myts->addSlashes($tab_key);
@@ -2435,7 +2466,6 @@ class Tadnews
             $tabs_content .= "{$tabs_content0}\n";
             $tabs_content .= "<div id='PageTab'>\n";
 
-            $tab_title_data_arr = $tab_content_data_arr = [];
             $tab_title_div = $tab_content_div = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
                 $tab_key = $myts->addSlashes($tab_key);

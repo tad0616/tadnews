@@ -29,7 +29,7 @@
                         <{if $page.need_sign}>
                             <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
                         <{/if}>
-                        <div class="pull-right float-right"><{$page.files}></div>
+                        <div class="pull-right float-right float-end"><{$page.files}></div>
                         <a href="index.php?nsn=<{$page.nsn}>"><{$page.news_title}></a>
                         (<{$page.uid_name}>)
                     </td>

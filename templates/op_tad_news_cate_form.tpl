@@ -1,8 +1,8 @@
-<h1 class="my"><{$smarty.const._MA_TADNEWS_EDIT_CATE}></h1>
+<h1 class="my"><{$smarty.const._MD_TADNEWS_EDIT_CATE}></h1>
 <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <div class="alert alert-success">
         <div class="form-group row mb-3">
-            <label class="col-md-2 control-label col-form-label text-md-right">
+            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_TADNEWS_CATE_TITLE}>
             </label>
             <div class="col-md-10">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label class="col-md-2 control-label col-form-label text-md-right">
+            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_TADNEWS_PARENT_CATE}>
             </label>
             <div class="col-md-4">
@@ -19,7 +19,7 @@
                 <{$cate_select}>
                 </select>
             </div>
-            <label class="col-md-2 control-label col-form-label text-md-right">
+            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_TADNEWS_CATE_PIC}>
             </label>
             <div class="col-md-4">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label class="col-md-2 control-label col-form-label text-md-right">
+            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_TADNEWS_CAN_READ_CATE_GROUP}><br>
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}>
             </label>
@@ -36,7 +36,7 @@
                 <{$enable_group}>
             </div>
 
-            <label class="col-md-2 control-label col-form-label text-md-right">
+            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP}><br>
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}>
             </label>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label class="col-md-2 control-label col-form-label text-md-right">
+            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MA_TADNEWS_NO_PERMISSION}><{$smarty.const._TAD_FOR}>
             </label>
             <div class="col-md-4">

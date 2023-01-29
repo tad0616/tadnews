@@ -24,7 +24,12 @@ function tadnews_tab_news($options)
     $Tadnews->set_show_mode('cate');
     $Tadnews->set_show_num($options[1]);
     $Tadnews->set_view_ncsn($ncsn_arr);
+    $Tadnews->set_var('show_files', false);
     $block = $Tadnews->get_cate_news('return');
+
+    // if ($_GET['test'] == 1) {
+    //     Utility::dd($block['all_news']);
+    // }
     if (empty($block['all_news'])) {
         return;
     }
