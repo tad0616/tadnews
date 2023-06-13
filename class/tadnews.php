@@ -429,16 +429,19 @@ class Tadnews
     }
 
     //取得新聞 $mode = 'assign','return','app'
-    public function get_news($mode = 'assign', $admin = false)
+    public function get_news($mode = 'assign', $admin = false, $highlighter = false)
     {
         global $xoopsDB, $xoopsUser, $xoopsTpl, $xoTheme;
         if ($admin) {
             $_SESSION['tadnews_adm'] = $admin;
         }
+
         $rating_js = '';
-        //設定是否需要高亮度語法
-        $SyntaxHighlighter = new SyntaxHighlighter();
-        $SyntaxHighlighter->render();
+        if ($highlighter) {
+            //設定是否需要高亮度語法
+            $SyntaxHighlighter = new SyntaxHighlighter();
+            $SyntaxHighlighter->render();
+        }
 
         $where_news = '';
 
@@ -1067,8 +1070,10 @@ class Tadnews
 
         $pic_w = $this->tadnewsConfig['cate_pic_width'] + 10;
 
-        $SyntaxHighlighter = new SyntaxHighlighter();
-        $SyntaxHighlighter->render();
+        if ($highlighter) {
+            $SyntaxHighlighter = new SyntaxHighlighter();
+            $SyntaxHighlighter->render();
+        }
 
         $prefix_tags = $this->prefix_tags();
         $where_news = '';
