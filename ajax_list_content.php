@@ -8,7 +8,6 @@ xoops_loadLanguage('blocks', 'tadnews');
 
 $num = Request::getInt('num', 10);
 $show_ncsn = Request::getString('show_ncsn');
-$ncsn_arr = explode(',', $show_ncsn);
 $summary_length = Request::getInt('summary_length');
 $summary_css = Request::getString('summary_css');
 $start_from = Request::getInt('start_from');
@@ -24,6 +23,16 @@ $tag_sn = Request::getInt('tag_sn');
 $keyword = Request::getString('keyword');
 $start_day = Request::getString('start_day');
 $end_day = Request::getString('end_day');
+
+$ncsn_explode = explode(',', $show_ncsn);
+$ncsn_arr = [];
+foreach ($ncsn_explode as $k => $v) {
+    $ncsn_arr[$k] = (int) $v;
+}
+$start_day = date("Y-m-d H:i:s", strtotime($start_day));
+$end_day = date("Y-m-d H:i:s", strtotime($end_day));
+//randStr過濾
+$randStr = preg_replace("/[^a-zA-Z0-9]+/", "", $randStr);
 
 $b = $p - 1;
 $n = $p + 1;

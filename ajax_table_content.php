@@ -18,7 +18,15 @@ $ncsn = Request::getInt('ncsn');
 $tag_sn = Request::getInt('tag_sn');
 $cell = Request::getArray('cell');
 
-$ncsn_arr = explode(',', $show_ncsn);
+$ncsn_explode = explode(',', $show_ncsn);
+$ncsn_arr = [];
+foreach ($ncsn_explode as $k => $v) {
+    $ncsn_arr[$k] = (int) $v;
+}
+$start_day = date("Y-m-d H:i:s", strtotime($start_day));
+$end_day = date("Y-m-d H:i:s", strtotime($end_day));
+//randStr過濾
+$randStr = preg_replace("/[^a-zA-Z0-9]+/", "", $randStr);
 
 $b = $p - 1;
 $n = $p + 1;
