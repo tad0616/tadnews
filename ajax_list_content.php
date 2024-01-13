@@ -29,8 +29,8 @@ $ncsn_arr = [];
 foreach ($ncsn_explode as $k => $v) {
     $ncsn_arr[$k] = (int) $v;
 }
-$start_day = date("Y-m-d H:i:s", strtotime($start_day));
-$end_day = date("Y-m-d H:i:s", strtotime($end_day));
+$start_day = $start_day ? date("Y-m-d H:i:s", strtotime($start_day)) : '';
+$end_day = $end_day ? date("Y-m-d H:i:s", strtotime($end_day)) : '';
 //randStr過濾
 $randStr = preg_replace("/[^a-zA-Z0-9]+/", "", $randStr);
 
