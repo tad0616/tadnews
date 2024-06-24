@@ -49,7 +49,7 @@
 </script>
 
 <{if $block.searchbar==1}>
-    <{includeq file="$xoops_rootpath/modules/tadnews/templates/blocks/searchbar.tpl"}>
+    <{include file="$xoops_rootpath/modules/tadnews/templates/blocks/searchbar.tpl"}>
 <{/if}>
 
 <div id="msg_results<{$block.randStr}>">

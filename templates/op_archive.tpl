@@ -21,17 +21,17 @@
     <div class="panel panel-default card mb-5">
         <table class="table table-striped table-bordered">
             <tr><th><{$date_title}></th></tr>
-            <{foreach item=page from=$page}>
+            <{foreach from=$page item=news}>
                 <tr>
                     <td>
-                        <{$page.post_date}>
+                        <{$news.post_date}>
 
-                        <{if $page.need_sign}>
-                            <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
+                        <{if $news.need_sign}>
+                            <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                         <{/if}>
-                        <div class="pull-right float-right float-end"><{$page.files}></div>
-                        <a href="index.php?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                        (<{$page.uid_name}>)
+                        <div class="pull-right float-right float-end"><{$news.files}></div>
+                        <a href="index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+                        (<{$news.uid_name}>)
                     </td>
                 </tr>
             <{/foreach}>

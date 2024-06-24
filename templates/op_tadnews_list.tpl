@@ -7,26 +7,26 @@
                     <th><{$cate.nc_title}></th>
                 </tr>
             <{/if}>
-            <{foreach item=page from=$page}>
+            <{foreach from=$page item=news}>
                 <tr>
                     <td>
-                        <{$page.chkbox}>
-                        <{$page.post_date}>
+                        <{$news.chkbox}>
+                        <{$news.post_date}>
 
-                        <{$page.prefix_tag}>
-                        <{if $page.need_sign}>
-                            <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
+                        <{$news.prefix_tag}>
+                        <{if $news.need_sign}>
+                            <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                         <{/if}>
-                        <{$page.enable_txt}>
-                        <{$page.today_pic}>
-                        <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                        <span style="color:gray;font-size: 0.8rem;"> (<a href="index.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}> / <a href="index.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>)</span>
-                        <{$page.content}>
+                        <{$news.enable_txt}>
+                        <{$news.today_pic}>
+                        <a href="<{$xoops_url}>/modules/tadnews/<{$news.link_page}>?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+                        <span style="color:gray;font-size: 0.8rem;"> (<a href="index.php?show_uid=<{$news.uid}>"><{$news.uid_name}></a> / <{$news.counter}> / <a href="index.php?ncsn=<{$news.ncsn}>"><{$news.cate_name}></a>)</span>
+                        <{$news.content}>
                     </td>
                 </tr>
             <{/foreach}>
         </tbody>
     </table>
     <{$bar}>
-    <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_rss.tpl"}>
+    <{include file="$xoops_rootpath/modules/tadnews/templates/sub_rss.tpl"}>
 <{/if}>

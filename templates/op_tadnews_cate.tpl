@@ -40,4 +40,4 @@
 
 <{/foreach}>
 
-<{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_rss.tpl"}>
+<{include file="$xoops_rootpath/modules/tadnews/templates/sub_rss.tpl"}>

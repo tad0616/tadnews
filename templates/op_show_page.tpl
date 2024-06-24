@@ -11,40 +11,40 @@
 
     <div class="row">
         <div class="col-md-12">
-        <{foreach item=page from=$page}>
+        <{foreach from=$page item=news}>
             <{if $cate_set_title}>
                 <h1 style="text-shadow:1px 1px 1px #aaaaaa;">
-                    <{$page.news_title}>
+                    <{$news.news_title}>
                 </h1>
                 <div class="pull-right float-right float-end" style="border-left: 1px solid #cfcfcf; padding-left:8px;">
-                    <a href="page.php?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a> /
-                    <{$page.post_date}> /
+                    <a href="page.php?ncsn=<{$news.ncsn}>"><{$news.cate_name}></a> /
+                    <{$news.post_date}> /
                     <{$smarty.const._TADNEWS_HOT}>
-                    <{$page.counter}>
+                    <{$news.counter}>
                 </div>
                 <hr>
             <{else}>
-                <h2 class="sr-only visually-hidden"><{$page.news_title}></h2>
+                <h2 class="sr-only visually-hidden"><{$news.news_title}></h2>
             <{/if}>
 
-            <div style="margin:10px auto; line-height: 2rem; font-weight:normal;"><{$page.pic}><{$page.content}></div>
+            <div style="margin:10px auto; line-height: 2rem; font-weight:normal;"><{$news.pic}><{$news.content}></div>
 
-            <{$page.files}>
+            <{$news.files}>
 
             <div class="text-right text-end">
-            <{$page.fun}>
+            <{$news.fun}>
             </div>
 
             <{if $cate_set_nav}>
                 <div class="row" style="margin:10px;">
                     <div class="col-md-6 d-grid gap-2">
-                    <{if $page.back_news_link}>
-                        <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 alt="Previous"><{$page.back_news_title}></a>
+                    <{if $news.back_news_link}>
+                        <a href="<{$news.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 alt="Previous"><{$news.back_news_title}></a>
                     <{/if}>
                     </div>
                     <div class="col-md-6 d-grid gap-2">
-                    <{if $page.next_news_link}>
-                        <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
+                    <{if $news.next_news_link}>
+                        <a href="<{$news.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$news.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
                     <{/if}>
                     </div>
                 </div>

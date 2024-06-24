@@ -65,7 +65,7 @@
                         <{/if}>
                     </div>
                     <h3 class="my">
-                        <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
+                        <{include file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
                         <a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
                     </h3>
                     <ul>
@@ -86,13 +86,13 @@
         </div>
         <div class="col-md-9">
             <{if $now_op=="modify_page_cate"}>
-                <{includeq file="$xoops_rootpath/modules/tadnews/templates/op_`$now_op`.tpl"}>
+                <{include file="$xoops_rootpath/modules/tadnews/templates/op_`$now_op`.tpl"}>
             <{elseif $page}>
                 <{if $ncsn!=""}>
                     <div class="row">
                         <div class="col-md-6">
                             <h1 class="my">
-                                <{includeq file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
+                                <{include file="$xoops_rootpath/modules/tadnews/templates/sub_cate_pic.tpl"}>
                                 <a href="../page.php?ncsn=<{$cate.ncsn}>"><{$cate.nc_title}></a>
                             </h1>
                         </div>
@@ -129,33 +129,33 @@
                             <{/if}>
                         </tr>
                         <tbody id="sort">
-                            <{foreach item=page from=$page}>
-                                <tr id="tr_<{$page.nsn}>">
+                            <{foreach from=$page item=news}>
+                                <tr id="tr_<{$news.nsn}>">
                                     <td>
                                         <div class="form-check-inline checkbox-inline">
                                             <label class="form-check-label">
-                                                <input name="nsn_arr[]" value="<{$page.nsn}>" type="checkbox" class="news form-check-input">
-                                                <a href="page.php?ncsn=<{$page.ncsn}>" title="<{$page.cate_name}>"><{$page.cate_name}></a>
+                                                <input name="nsn_arr[]" value="<{$news.nsn}>" type="checkbox" class="news form-check-input">
+                                                <a href="page.php?ncsn=<{$news.ncsn}>" title="<{$news.cate_name}>"><{$news.cate_name}></a>
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="badge badge-secondary bg-secondary rounded-pill"><{$page.page_sort}></span>
-                                        <{$page.prefix_tag}>
-                                        <{if $page.need_sign}>
-                                            <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
+                                        <span class="badge badge-secondary bg-secondary rounded-pill"><{$news.page_sort}></span>
+                                        <{$news.prefix_tag}>
+                                        <{if $news.need_sign}>
+                                            <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                                         <{/if}>
-                                        <{$page.enable_txt}>
-                                        <{$page.today_pic}>
-                                        <{$page.post_date}>
-                                        <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?nsn=<{$page.nsn}>"><{$page.news_title}></a>
-                                        <span style="color:gray;font-size: 0.8rem;"> (<a href="page.php?show_uid=<{$page.uid}>"><{$page.uid_name}></a> / <{$page.counter}>)</span> <{$page.passwd}>
+                                        <{$news.enable_txt}>
+                                        <{$news.today_pic}>
+                                        <{$news.post_date}>
+                                        <a href="<{$xoops_url}>/modules/tadnews/<{$news.link_page}>?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+                                        <span style="color:gray;font-size: 0.8rem;"> (<a href="page.php?show_uid=<{$news.uid}>"><{$news.uid_name}></a> / <{$news.counter}>)</span> <{$news.passwd}>
                                     </td>
-                                    <{if $page.show_admin_tool}>
-                                        <td><{$page.g_txt}></td>
+                                    <{if $news.show_admin_tool}>
+                                        <td><{$news.g_txt}></td>
                                         <td nowrap>
-                                            <a href="javascript:delete_tad_news_func(<{$page.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$page.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                            <a href="<{$xoops_url}>/modules/tadnews/post.php?op=tad_news_form&nsn=<{$page.nsn}>" class="btn btn-sm btn-xs btn-warning" id="update<{$page.nsn}>"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                            <a href="javascript:delete_tad_news_func(<{$news.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$news.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
+                                            <a href="<{$xoops_url}>/modules/tadnews/post.php?op=tad_news_form&nsn=<{$news.nsn}>" class="btn btn-sm btn-xs btn-warning" id="update<{$news.nsn}>"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
                                         </td>
                                     <{/if}>
                                 </tr>

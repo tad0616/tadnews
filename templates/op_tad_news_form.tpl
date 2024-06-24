@@ -365,19 +365,19 @@
             </ul>
 
             <div id="fragment-1">
-                <{includeq file="$xoops_rootpath/modules/tadnews/templates/fragment1.tpl"}>
+                <{include file="$xoops_rootpath/modules/tadnews/templates/fragment1.tpl"}>
             </div>
 
             <div id="fragment-2">
-                <{includeq file="$xoops_rootpath/modules/tadnews/templates/fragment2.tpl"}>
+                <{include file="$xoops_rootpath/modules/tadnews/templates/fragment2.tpl"}>
             </div>
 
             <div id="fragment-3">
-                <{includeq file="$xoops_rootpath/modules/tadnews/templates/fragment3.tpl"}>
+                <{include file="$xoops_rootpath/modules/tadnews/templates/fragment3.tpl"}>
             </div>
 
             <div id="fragment-4">
-                <{includeq file="$xoops_rootpath/modules/tadnews/templates/fragment4.tpl"}>
+                <{include file="$xoops_rootpath/modules/tadnews/templates/fragment4.tpl"}>
             </div>
 
         </div>

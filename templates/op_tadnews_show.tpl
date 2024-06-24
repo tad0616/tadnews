@@ -1,13 +1,13 @@
 <{$rating_js}>
 
 <{if $page}>
-    <{foreach item=page from=$page}>
-        <{if $page.enable=="1" or $page.uid==$uid}>
+    <{foreach from=$page item=news}>
+        <{if $news.enable=="1" or $news.uid==$uid}>
             <div class="news_page_container">
-                <div <{if $page.need_sign}>style="background-image: url('<{$page.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
+                <div <{if $news.need_sign}>style="background-image: url('<{$news.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
                     <h3 class="my">
-                        <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$page.nsn}>">
-                        <{$page.news_title}>
+                        <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>">
+                        <{$news.news_title}>
                         </a>
                     </h3>
                 </div>
@@ -15,50 +15,50 @@
                 <div class="news_page_content">
                     <div class="row news_page_info">
                         <div class="col-md-6">
-                            <{$page.prefix_tag}>
+                            <{$news.prefix_tag}>
 
                             <span class="news_page_info_text">
-                                <a href="<{$xoops_url}>/userinfo.php?uid=<{$page.uid}>"><{$page.uid_name}></a>
+                                <a href="<{$xoops_url}>/userinfo.php?uid=<{$news.uid}>"><{$news.uid_name}></a>
                                 -
-                                <a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a>
+                                <a href="<{$xoops_url}>/modules/tadnews/<{$news.link_page}>?ncsn=<{$news.ncsn}>"><{$news.cate_name}></a>
                                 |
-                                <{$page.post_date}>
+                                <{$news.post_date}>
                                 |
                                 <{$smarty.const._TADNEWS_HOT}>
-                                <{$page.counter}>
+                                <{$news.counter}>
                             </span>
-                            <{$page.star}>
+                            <{$news.star}>
                         </div>
-                        <div class="col-md-6 text-right text-end"><{$page.fun}></div>
+                        <div class="col-md-6 text-right text-end"><{$news.fun}></div>
                     </div>
                     <div style="margin: 30px;">
-                        <{$page.pic}>
-                        <{$page.content}>
+                        <{$news.pic}>
+                        <{$news.content}>
                     </div>
 
                     <div style="clear:both;"></div>
                 </div>
 
-                <{if $page.files}>
+                <{if $news.files}>
                     <div style="margin: 30px 0px;">
-                        <{$page.files}>
+                        <{$news.files}>
                     </div>
                 <{/if}>
 
-                <{if $page.have_read_chk}>
+                <{if $news.have_read_chk}>
                     <div class="text-center" style="margin: 30px 0px;">
-                        <{$page.have_read_chk}>
+                        <{$news.have_read_chk}>
                     </div>
                 <{/if}>
 
 
-                <{if $page.push}>
+                <{if $news.push}>
                     <div class="text-right text-end" style="margin: 30px 0px;">
-                        <{$page.push}>
+                        <{$news.push}>
                     </div>
                 <{/if}>
 
-                <{$page.facebook_comments}>
+                <{$news.facebook_comments}>
 
                 <div style="text-align: center; padding: 3px; margin: 3px;">
                     <{$commentsnav}>
@@ -85,16 +85,16 @@
         <{if $show_next_btn}>
             <div class="row" style="margin-bottom: 30px;">
                 <div class="col-md-6 d-grid gap-2">
-                    <{if $page.back_news_link}>
-                        <a href="<{$page.back_news_link}>" class="btn btn-default btn-outline-info btn-block">
+                    <{if $news.back_news_link}>
+                        <a href="<{$news.back_news_link}>" class="btn btn-default btn-outline-info btn-block">
                         <img src="images/left.png" hspace=2 alt="Previous">
-                        <{$page.back_news_title}>
+                        <{$news.back_news_title}>
                         </a>
                     <{/if}>
                 </div>
                 <div class="col-md-6 d-grid gap-2">
-                    <{if $page.next_news_link}>
-                        <a href="<{$page.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$page.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
+                    <{if $news.next_news_link}>
+                        <a href="<{$news.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$news.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
                     <{/if}>
                 </div>
             </div>

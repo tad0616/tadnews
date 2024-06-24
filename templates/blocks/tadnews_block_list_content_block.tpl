@@ -49,6 +49,6 @@
 </script>
 
 <{if $block.searchbar==1}>
-    <{includeq file="$xoops_rootpath/modules/tadnews/templates/blocks/searchbar.tpl"}>
+    <{include file="$xoops_rootpath/modules/tadnews/templates/blocks/searchbar.tpl"}>
 <{/if}>
 <div id="tadnew_list_content<{$block.randStr}>"><{$smarty.const._MB_TADNEWS_LOADING}></div>

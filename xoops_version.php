@@ -4,7 +4,8 @@ $modversion = [];
 $language = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADNEWS_NAME;
-$modversion['version'] = 4.3;
+// $modversion['version'] = 4.3;
+$modversion['version'] = $xoops_version >= 20511 ? '5.0.0-Stable' : '5.0';
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author'] = 'Tad (tad0616@gmail.com)';
 $modversion['credits'] = 'geek01';

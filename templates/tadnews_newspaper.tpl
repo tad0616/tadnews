@@ -7,11 +7,11 @@
 <{if $page}>
     <table class="table table-striped table-hover table-shadow">
         <tbody>
-            <{foreach item=page from=$page}>
+            <{foreach from=$page item=news}>
                 <tr>
-                    <td class="col-md-3"><{$page.np_date}></td>
-                    <td><a href="<{$xoops_url}>/modules/tadnews/newspaper.php?op=preview&npsn=<{$page.allnpsn}>" target="_blank">
-                    <{$page.title}></a>
+                    <td class="col-md-3"><{$news.np_date}></td>
+                    <td><a href="<{$xoops_url}>/modules/tadnews/newspaper.php?op=preview&npsn=<{$news.allnpsn}>" target="_blank">
+                    <{$news.title}></a>
                     </td>
                 </tr>
             <{/foreach}>

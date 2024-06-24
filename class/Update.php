@@ -39,7 +39,7 @@ class Update
             $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `ncsn` (`ncsn`)';
             $xoopsDB->queryF($sql);
         } else {
-            die(var_dump($result));
+            // die(var_dump($result));
         }
 
         $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='start_day'";
