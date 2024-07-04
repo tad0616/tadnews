@@ -9,7 +9,7 @@ if (!function_exists('block_news_cate')) {
     function block_news_cate($selected = '')
     {
         global $xoopsDB;
-
+        $sc = [];
         if (!empty($selected)) {
             $sc = explode(',', $selected);
         }

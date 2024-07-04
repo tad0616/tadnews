@@ -2,7 +2,6 @@
 use Xmf\Request;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
-/*-----------function區--------------*/
 
 $newspaper_email = Request::getString('newspaper_email');
 $mode = Request::getString('mode');
@@ -10,6 +9,7 @@ $nps_sn = Request::getInt('nps_sn');
 /*-----------執行動作判斷區----------*/
 update_mail($nps_sn, $newspaper_email, $mode);
 
+/*-----------function區--------------*/
 //編輯工具
 function update_mail($nps_sn = '', $newspaper_email = '', $mode = '')
 {

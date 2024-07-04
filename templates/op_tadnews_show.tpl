@@ -58,8 +58,6 @@
                     </div>
                 <{/if}>
 
-                <{$news.facebook_comments}>
-
                 <div style="text-align: center; padding: 3px; margin: 3px;">
                     <{$commentsnav}>
                     <{$lang_notice}>

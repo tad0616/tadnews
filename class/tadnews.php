@@ -843,7 +843,7 @@ class Tadnews
             $have_read_chk = $this->have_read_chk($have_read_group, $nsn, $mode);
 
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-            $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+            $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
             $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
             $cate_name = (empty($cates[$ncsn])) ? _TADNEWS_NO_CATE : $cates[$ncsn];
@@ -890,7 +890,7 @@ class Tadnews
                 $prefix_tag = strip_tags($prefix_tag);
             }
 
-            $back_news = $back_news_link = $back_news_title = $next_news_link = $next_news_title = $next_news = $push = $facebook_comments = '';
+            $back_news = $back_news_link = $back_news_title = $next_news_link = $next_news_title = $next_news = $push = '';
 
             if (!empty($this->view_nsn) and is_numeric($this->view_nsn)) {
                 $nsnsort = $this->news_sort($nsn);
@@ -912,12 +912,10 @@ class Tadnews
                     $next_news_title = ('page' === $this->kind) ? $title : "{$date} {$title}";
                 }
 
-                $facebook_comments = ('1' == $this->tadnewsConfig['facebook_comments_width']) ? Utility::facebook_comments($this->tadnewsConfig['facebook_comments_width'], 'tadnews', 'index.php', 'nsn', $nsn) : '';
                 $push = Utility::push_url($this->tadnewsConfig['use_social_tools']);
             }
 
             if ('app' !== $mode) {
-                $all_news[$i]['facebook_comments'] = $facebook_comments;
                 $all_news[$i]['fun'] = $fun;
                 $all_news[$i]['push'] = $push;
                 $all_news[$i]['show_admin_tool'] = $show_admin_tool;
@@ -1355,7 +1353,7 @@ class Tadnews
         <option value=''></option>";
         while (list($uid) = $xoopsDB->fetchRow($result)) {
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-            $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+            $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
             $selected = ($this->view_uid == $uid) ? 'selected' : '';
             $opt .= "<option value='$uid' $selected>$uid_name</option>";
         }
@@ -2068,7 +2066,7 @@ class Tadnews
         $XOOPS_TOKEN = $XoopsFormHiddenToken->render();
         $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
 
-        Utility::add_migrate();
+        // Utility::add_migrate();
     }
 
     //標籤下拉選單

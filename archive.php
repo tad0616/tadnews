@@ -8,6 +8,37 @@ require_once __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tadnews_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$files_sn = Request::getInt('files_sn');
+$date = Request::getString('date', date('Y-m'));
+$date = mb_substr($date, 0, 7);
+
+switch ($op) {
+    //下載檔案
+    case 'tufdl':
+        $TadUpFiles = new TadUpFiles('tadnews');
+
+        $TadUpFiles->add_file_counter($files_sn, false);
+        exit;
+
+    default:
+        month_list($date);
+        archive($date);
+        $op = "archive";
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+if ($xoopsModuleConfig['use_table_shadow']) {
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+}
+$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';
+
 /*-----------function區--------------*/
 
 //列出月份
@@ -48,34 +79,3 @@ function archive($date = '')
     $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign('date_title', $date_title);
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$files_sn = Request::getInt('files_sn');
-$date = Request::getString('date', date('Y-m'));
-$date = mb_substr($date, 0, 7);
-
-switch ($op) {
-    //下載檔案
-    case 'tufdl':
-        $TadUpFiles = new TadUpFiles('tadnews');
-
-        $TadUpFiles->add_file_counter($files_sn, false);
-        exit;
-
-    default:
-        month_list($date);
-        archive($date);
-        $op = "archive";
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign('now_op', $op);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
-if ($xoopsModuleConfig['use_table_shadow']) {
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
-}
-$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-require_once XOOPS_ROOT_PATH . '/footer.php';

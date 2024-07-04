@@ -42,7 +42,7 @@
                 </tr>
             <{/if}>
 
-            <{foreach item=tag from=$tagarr}>
+            <{foreach from=$tagarr item=tag}>
                 <{if $tag.mode=="edit"}>
                     <tr style="background-color: antiquewhite;">
                         <td><{$tag.prefix_tag}></td>

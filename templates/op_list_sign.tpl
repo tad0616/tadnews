@@ -4,10 +4,10 @@
 
 <div class="panel panel-default card">
     <table class="table table-bordered">
-        <{foreach item=sign from=$sign}>
+        <{foreach from=$sign item=data}>
         <tr>
-            <td><a href="index.php?uid=<{$sign.uid}>&op=list_user_sign"><{$sign.uid_name}></a></td>
-            <td><{$sign.sign_time}></td>
+            <td><a href="index.php?uid=<{$data.uid}>&op=list_user_sign"><{$data.uid_name}></a></td>
+            <td><{$data.sign_time}></td>
         </tr>
         <{/foreach}>
     </table>

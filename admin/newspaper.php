@@ -9,6 +9,111 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$memail = Request::getString('memail');
+$mail = Request::getString('mail');
+$nps_sn = Request::getInt('nps_sn');
+$npsn = Request::getInt('npsn');
+$g2p = Request::getInt('g2p');
+
+$xoopsTpl->assign('op', $op);
+
+switch ($op) {
+    case 'save_newspaper_set':
+        $nps_sn = save_newspaper_set($nps_sn);
+        header("location: {$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$nps_sn}");
+        exit;
+
+    //刪除電子報設定組
+    case 'del_newspaper_set':
+        del_newspaper_set($nps_sn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //編輯資料
+    case 'add_newspaper':
+        add_newspaper($nps_sn);
+        break;
+    case 'save_newspaper':
+        $npsn = save_newspaper();
+        header("location: {$_SERVER['PHP_SELF']}?op=edit_newspaper&npsn={$npsn}");
+        exit;
+
+    //編輯電子報資料
+    case 'edit_newspaper':
+        edit_newspaper($npsn);
+        break;
+    case 'save_all':
+        save_all($npsn);
+        header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn={$npsn}");
+        exit;
+
+    //刪除電子報
+    case 'del_newspaper':
+        del_newspaper($npsn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    case 'sendmail':
+        sendmail_form($npsn);
+        break;
+    case 'send_now':
+        send_now($npsn);
+        header("location: {$_SERVER['PHP_SELF']}?op=sendmail_log&npsn={$npsn}");
+        exit;
+
+    case 'sendmail_log':
+        sendmail_log($npsn);
+        break;
+    case 'preview':
+        $main = preview_newspaper($npsn);
+        break;
+    case 'modify':
+        open_newspaper($nps_sn);
+        break;
+    case 'creat_newspaper':
+        open_newspaper();
+        break;
+    case 'newspaper_email':
+        newspaper_email($nps_sn, $memail, $g2p);
+        break;
+    //刪除電子郵件
+    case 'delete_tad_news_email':
+        delete_tad_news_email($mail, $nps_sn);
+        header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
+        exit;
+
+    //刪除電子郵件
+    case 'delete_tad_news_email_npsn':
+        delete_tad_news_email($mail, $nps_sn);
+        header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn=$npsn");
+        exit;
+
+    //更新電子郵件
+    case 'update_email':
+        update_email($_POST['old_email'], $_POST['new_email'], $nps_sn);
+        header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
+        exit;
+
+    //匯入電子郵件
+    case 'email_import':
+        email_import($_POST['email_import'], $nps_sn);
+        header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn");
+        exit;
+
+    default:
+        newspaper_set_table($nps_sn);
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+if ('preview' === $op) {
+    echo $main;
+} else {
+    require_once __DIR__ . '/footer.php';
+}
+
 /*-----------function區--------------*/
 
 //找出現有電子報
@@ -575,116 +680,4 @@ function sendmail_log($npsn = '')
     $xoopsTpl->assign('nps_sn', $newspaper['nps_sn']);
     $xoopsTpl->assign('npsn', $npsn);
     $xoopsTpl->assign('back', sprintf(_MA_TADNEWS_BACK_TO, $newspaper_title));
-}
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$memail = Request::getString('memail');
-$mail = Request::getString('mail');
-$nps_sn = Request::getInt('nps_sn');
-$npsn = Request::getInt('npsn');
-$g2p = Request::getInt('g2p');
-
-$xoopsTpl->assign('op', $op);
-
-switch ($op) {
-    case 'save_newspaper_set':
-        $nps_sn = save_newspaper_set($nps_sn);
-        header("location: {$_SERVER['PHP_SELF']}?op=add_newspaper&nps_sn={$nps_sn}");
-        exit;
-
-    //刪除電子報設定組
-    case 'del_newspaper_set':
-        del_newspaper_set($nps_sn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //編輯資料
-    case 'add_newspaper':
-        add_newspaper($nps_sn);
-        break;
-    case 'save_newspaper':
-        $npsn = save_newspaper();
-        header("location: {$_SERVER['PHP_SELF']}?op=edit_newspaper&npsn={$npsn}");
-        exit;
-
-    //編輯電子報資料
-    case 'edit_newspaper':
-        edit_newspaper($npsn);
-        break;
-    case 'save_all':
-        save_all($npsn);
-        header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn={$npsn}");
-        exit;
-
-    //刪除電子報
-    case 'del_newspaper':
-        del_newspaper($npsn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    case 'sendmail':
-        sendmail_form($npsn);
-        break;
-    case 'send_now':
-        send_now($npsn);
-        header("location: {$_SERVER['PHP_SELF']}?op=sendmail_log&npsn={$npsn}");
-        exit;
-
-    case 'sendmail_log':
-        sendmail_log($npsn);
-        break;
-    case 'preview':
-        $main = preview_newspaper($npsn);
-        break;
-    case 'modify':
-        open_newspaper($nps_sn);
-        break;
-    case 'creat_newspaper':
-        open_newspaper();
-        break;
-    case 'newspaper_email':
-        newspaper_email($nps_sn, $memail, $g2p);
-        break;
-    //刪除電子郵件
-    case 'delete_tad_news_email':
-        delete_tad_news_email($mail, $nps_sn);
-        header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
-        exit;
-
-    //刪除電子郵件
-    case 'delete_tad_news_email_npsn':
-        delete_tad_news_email($mail, $nps_sn);
-        header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn=$npsn");
-        exit;
-
-    //更新電子郵件
-    case 'update_email':
-        update_email($_POST['old_email'], $_POST['new_email'], $nps_sn);
-        header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
-        exit;
-
-    //匯入電子郵件
-    case 'email_import':
-        email_import($_POST['email_import'], $nps_sn);
-        header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn");
-        exit;
-
-    default:
-        newspaper_set_table($nps_sn);
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-if ('preview' === $op) {
-    echo $main;
-} else {
-    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
-    $xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-    $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
-    if ($xoopsModuleConfig['use_table_shadow']) {
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
-    }
-    require_once __DIR__ . '/footer.php';
 }

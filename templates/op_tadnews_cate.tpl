@@ -1,19 +1,19 @@
-<{foreach item=all_news from=$all_news}>
+<{foreach from=$all_news item=news_data}>
     <div class="row" style="margin-bottom: 40px;">
         <div class="col-md-2">
-            <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
-                <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" style="width: 100%;">
+            <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$news_data.ncsn}>">
+                <img src="<{$news_data.pic}>" alt="<{$news_data.nc_title}>" title="<{$news_data.nc_title}>" style="width: 100%;">
             </a>
 
-            <h4 class="my"><a href="index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></h4>
+            <h4 class="my"><a href="index.php?ncsn=<{$news_data.ncsn}>"><{$news_data.nc_title}></a></h4>
         </div>
         <div class="col-md-10">
-            <{if $all_news.news}>
+            <{if $news_data.news}>
                 <table class="table table-striped table-hover table-shadow">
                     <tr class="my">
-                        <th><a href="index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></th>
+                        <th><a href="index.php?ncsn=<{$news_data.ncsn}>"><{$news_data.nc_title}></a></th>
                     </tr>
-                    <{foreach item=news from=$all_news.news}>
+                    <{foreach from=$news_data.news item=news}>
                         <tr>
                             <td>
                                 <div class="pull-right float-right float-end"><{$news.files}></div>

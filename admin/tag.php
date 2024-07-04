@@ -9,6 +9,44 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$tag_sn = Request::getInt('tag_sn');
+$enable = Request::getInt('enable');
+
+switch ($op) {
+    //新增資料
+    case 'insert_tad_news_tags':
+        $tag_sn = insert_tad_news_tags();
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    //更新資料
+    case 'update_tad_news_tags':
+        update_tad_news_tags($tag_sn);
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    //關閉資料
+    case 'stat':
+        tad_news_tags_stat($enable, $tag_sn);
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    //刪除資料
+    case 'del_tag':
+        del_tag($tag_sn);
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    default:
+        list_tad_news_tags($tag_sn);
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+require_once __DIR__ . '/footer.php';
+
 /*-----------function區--------------*/
 //tad_news_tagss編輯表單
 function list_tad_news_tags($def_tag_sn = '')
@@ -103,48 +141,3 @@ function tags_used_amount()
 
     return $main;
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$tag_sn = Request::getInt('tag_sn');
-$enable = Request::getInt('enable');
-
-switch ($op) {
-    //新增資料
-    case 'insert_tad_news_tags':
-        $tag_sn = insert_tad_news_tags();
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    //更新資料
-    case 'update_tad_news_tags':
-        update_tad_news_tags($tag_sn);
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    //關閉資料
-    case 'stat':
-        tad_news_tags_stat($enable, $tag_sn);
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    //刪除資料
-    case 'del_tag':
-        del_tag($tag_sn);
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    default:
-        list_tad_news_tags($tag_sn);
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
-$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
-if ($xoopsModuleConfig['use_table_shadow']) {
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
-}
-require_once __DIR__ . '/footer.php';

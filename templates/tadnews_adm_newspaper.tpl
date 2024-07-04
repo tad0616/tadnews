@@ -136,14 +136,14 @@
                 <table class="table table-sm table-condensed">
                 <{assign var="i" value=0}>
 
-                <{foreach item=log from=$log }>
+                <{foreach from=$log item=data}>
                     <{if !$i}><tr><{/if}>
                     <td>
                         <label class="checkbox-inline">
-                        <{$log.checkbox}><{$log.email}>
+                        <{$data.checkbox}><{$data.email}>
                         </label>
                     </td>
-                    <td><{$log.data}></td>
+                    <td><{$data.data}></td>
                     <{assign var="i" value=$i+1}>
                     <{if $i == 2}></tr><{assign var="i" value=0}><{/if}>
                 <{/foreach}>
@@ -177,13 +177,13 @@
             <table class="table table-striped">
                 <{assign var="i" value=0}>
 
-                <{foreach item=log from=$log }>
+                <{foreach from=$log item=data}>
                 <{if !$i}><tr><{/if}>
-                    <{if $log.edit}>
+                    <{if $data.edit}>
                     <td colspan=5>
                         <form action="newspaper.php" method="post">
-                            <input type="text" name="new_email" value="<{$log.email}>" style="width:100%;background-color:#FFFF99;color:black;"></td><td>
-                            <input type="hidden" name="old_email" value="<{$log.email}>">
+                            <input type="text" name="new_email" value="<{$data.email}>" style="width:100%;background-color:#FFFF99;color:black;"></td><td>
+                            <input type="hidden" name="old_email" value="<{$data.email}>">
                             <input type="hidden" name="op" value="update_email">
                             <input type="hidden" name="nps_sn" value="<{$nps_sn}>">
                             <input type="hidden" name="g2p" value="<{$g2p}>">
@@ -192,21 +192,21 @@
                         </form>
                     </td>
                     <{else}>
-                    <td><{$log.email}></td>
+                    <td><{$data.email}></td>
                     <td>
-                    <{if $log.ok=="ok"}>
-                        <span class="badge badge-info"><{$log.ok}></span>
+                    <{if $data.ok=="ok"}>
+                        <span class="badge badge-info"><{$data.ok}></span>
                     <{else}>
-                        <span class="badge badge-important"><{$log.ok}></span>
+                        <span class="badge badge-important"><{$data.ok}></span>
                     <{/if}>
                     </td>
-                    <td><{$log.order_date}></td>
+                    <td><{$data.order_date}></td>
                     <td>
-                        <a href="newspaper.php?op=newspaper_email&nps_sn=<{$nps_sn}>&memail=<{$log.email}>&g2p=<{$g2p}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
-                        <a href="javascript:delete_tad_news_email_func('<{$log.email}>');" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
+                        <a href="newspaper.php?op=newspaper_email&nps_sn=<{$nps_sn}>&memail=<{$data.email}>&g2p=<{$g2p}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                        <a href="javascript:delete_tad_news_email_func('<{$data.email}>');" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
                     </td>
                     <td>
-                        <{$log.data}>
+                        <{$data.data}>
                     </td>
                     <{/if}>
                 <{assign var="i" value=$i+1}>
@@ -242,10 +242,10 @@
         <{else}>
             <table class="table table-striped">
                 <{assign var="i" value=0}>
-                <{foreach item=log from=$log }>
-                <td><{$log.email}></td>
-                <td><{$log.send_time}></td>
-                <td><span class="badge badge-info"><{$log.log}></span></td>
+                <{foreach from=$log item=data}>
+                <td><{$data.email}></td>
+                <td><{$data.send_time}></td>
+                <td><span class="badge badge-info"><{$data.log}></span></td>
                 <{assign var="i" value=$i+1}>
                 <{if $i == 2}></tr><{assign var="i" value=0}><{/if}>
                 <{/foreach}>

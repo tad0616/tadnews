@@ -8,7 +8,6 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
 $_SESSION['total_news'] = $_SESSION['total_cate'] = 0;
-/*-----------function區--------------*/
 
 $moduleHandler = xoops_getHandler('module');
 $news = $moduleHandler->getByDirname('news');
@@ -21,6 +20,25 @@ if (!empty($news)) {
     $mid_tadnews = $mod_tadnews->getVar('mid');
 }
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+
+switch ($op) {
+    //刪除資料
+    case 'import':
+        import();
+        header('location: index.php');
+        exit;
+
+    default:
+        chk_news_mod($version);
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+require_once __DIR__ . '/footer.php';
+
+/*-----------function區--------------*/
 //檢查有無安裝新聞區模組
 function chk_news_mod($version)
 {
@@ -151,28 +169,3 @@ function import_common($storyid = '', $new_nsn = '')
     $sql = 'update ' . $xoopsDB->prefix('xoopscomments') . " set com_modid='{$mid_tadnews}',com_itemid='{$new_nsn}' where com_modid='{$mid_news}' and com_itemid='{$storyid}'";
     $xoopsDB->query($sql);
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-
-switch ($op) {
-    //刪除資料
-    case 'import':
-        import();
-        header('location: index.php');
-        exit;
-
-    default:
-        chk_news_mod($version);
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
-$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
-if ($xoopsModuleConfig['use_table_shadow']) {
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
-}
-require_once __DIR__ . '/footer.php';

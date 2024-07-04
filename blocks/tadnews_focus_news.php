@@ -14,7 +14,6 @@ require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 //區塊主函式 (焦點新聞)
 function tadnews_focus_news($options)
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
 
     if (empty($options[0])) {
         return '';
@@ -22,7 +21,7 @@ function tadnews_focus_news($options)
 
     $Tadnews = new Tadnews();
     $Tadnews->set_view_nsn($options[0]);
-    $summary = ('summary' === $options[1]) ? 'page_preak' : 'full';
+    $summary = ('summary' === $options[1]) ? 'page_break' : 'full';
     $Tadnews->set_summary($summary);
     $Tadnews->set_cover(true, 'db');
     $Tadnews->set_use_star_rating(false);
@@ -33,7 +32,7 @@ function tadnews_focus_news($options)
 //區塊編輯函式
 function tadnews_focus_news_edit($options)
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption;
+    global $xoopsDB;
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     $sql = 'select a.nsn,a.ncsn,a.news_title,a.passwd,a.start_day,b.not_news,b.nc_title from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where a.enable='1' and a.start_day < '{$today}' and (a.end_day > '{$today}' or a.end_day='0000-00-00 00:00:00')  order by a.start_day desc";

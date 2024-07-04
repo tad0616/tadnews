@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\Utility;
 //列出所有tad_news資料（$kind="news","page"）
 function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption, $xoopsModuleConfig, $Tadnews, $xoopsTpl;
+    global $xoopsModuleConfig, $Tadnews, $xoopsTpl;
 
     if (!empty($show_uid)) {
         $Tadnews->set_view_uid($show_uid);
@@ -145,7 +145,7 @@ function insert_tad_news_cate()
     } else {
         $enable_group = implode(',', $_POST['enable_group']);
     }
-    $enable_post_group = implode(',', $_POST['enable_post_group']);
+    $enable_post_group = isset($_POST['enable_post_group']) ? implode(',', $_POST['enable_post_group']) : '1';
     foreach ($_POST['setup'] as $key => $val) {
         $setup .= "{$key}=$val;";
     }

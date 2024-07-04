@@ -4,10 +4,10 @@
 
 <div class="panel panel-default card">
     <table class="table table-bordered">
-        <{foreach item=sign from=$sign}>
+        <{foreach from=$sign item=data}>
             <tr>
-                <td>[<{$sign.nsn}>] <a href='<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$sign.nsn}>'><{$sign.news_title}></a></td>
-                <td><{$sign.sign_time}></td>
+                <td>[<{$data.nsn}>] <a href='<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$data.nsn}>'><{$data.news_title}></a></td>
+                <td><{$data.sign_time}></td>
             </tr>
         <{/foreach}>
     </table>

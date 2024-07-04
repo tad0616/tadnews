@@ -8,8 +8,8 @@
             <label class="sr-only visually-hidden" for="select">Preference</label>
             <select onChange="location.href='archive.php?date='+this.value" class="form-control" id="select">
                 <option value=""></option>
-                <{foreach item=opt from=$opt}>
-                    <option value="<{$opt.value}>" <{$opt.selected}>><{$opt.text}> (<{$opt.count}>)</option>
+                <{foreach from=$opt item=data}>
+                    <option value="<{$data.value}>" <{$data.selected}>><{$data.text}> (<{$data.count}>)</option>
                 <{/foreach}>
             </select>
         </div>

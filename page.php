@@ -7,6 +7,81 @@ use XoopsModules\Tadtools\Utility;
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_page.tpl';
 require_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/header.php';
+
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$ncsn = Request::getInt('ncsn');
+$nsn = Request::getInt('nsn');
+$fsn = Request::getInt('fsn');
+$files_sn = Request::getInt('files_sn');
+
+$news_title = '';
+
+switch ($op) {
+    //下載檔案
+    case 'tufdl':
+        $TadUpFiles = new TadUpFiles('tadnews');
+
+        $TadUpFiles->add_file_counter($files_sn, false);
+        exit;
+
+    //刪除資料
+    case 'delete_tad_news':
+        $Tadnews->delete_tad_news($nsn);
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    //新增至選單
+    case 'add_to_menu':
+        add_to_menu($ncsn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    case 'modify_page_cate':
+        tad_news_cate_form($ncsn, 1);
+        break;
+    //更新資料
+    case 'update_tad_news_cate':
+        update_tad_news_cate($ncsn);
+        header("location: {$_SERVER['PHP_SELF']}?ncsn=$ncsn");
+        exit;
+
+    case 'tabs_sort':
+        tabs_sort($ncsn, $nsn);
+        break;
+
+    default:
+        if (!empty($nsn)) {
+            show_page($nsn);
+
+            $sql = 'select news_title from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
+            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            list($news_title) = $xoopsDB->fetchRow($result);
+
+            $op = 'show_page';
+        } else {
+            list_tad_all_pages($ncsn);
+            $op = 'list_tad_all_pages';
+        }
+
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$arr = get_tadnews_cate_path($ncsn);
+$path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
+
+$xoopsTpl->assign('breadcrumb', $path);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('now_op', $op);
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+if ($xoopsModuleConfig['use_table_shadow']) {
+    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+}
+$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';
+
 /*-----------function區--------------*/
 
 //顯示單一新聞
@@ -89,77 +164,3 @@ function tabs_sort($ncsn, $nsn)
     $Tadnews->set_summary('full');
     $Tadnews->get_news();
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$ncsn = Request::getInt('ncsn');
-$nsn = Request::getInt('nsn');
-$fsn = Request::getInt('fsn');
-$files_sn = Request::getInt('files_sn');
-
-$news_title = '';
-
-switch ($op) {
-    //下載檔案
-    case 'tufdl':
-        $TadUpFiles = new TadUpFiles('tadnews');
-
-        $TadUpFiles->add_file_counter($files_sn, false);
-        exit;
-
-    //刪除資料
-    case 'delete_tad_news':
-        $Tadnews->delete_tad_news($nsn);
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    //新增至選單
-    case 'add_to_menu':
-        add_to_menu($ncsn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    case 'modify_page_cate':
-        tad_news_cate_form($ncsn, 1);
-        break;
-    //更新資料
-    case 'update_tad_news_cate':
-        update_tad_news_cate($ncsn);
-        header("location: {$_SERVER['PHP_SELF']}?ncsn=$ncsn");
-        exit;
-
-    case 'tabs_sort':
-        tabs_sort($ncsn, $nsn);
-        break;
-
-    default:
-        if (!empty($nsn)) {
-            show_page($nsn);
-
-            $sql = 'select news_title from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
-            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-            list($news_title) = $xoopsDB->fetchRow($result);
-
-            $op = 'show_page';
-        } else {
-            list_tad_all_pages($ncsn);
-            $op = 'list_tad_all_pages';
-        }
-
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$arr = get_tadnews_cate_path($ncsn);
-$path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
-
-$xoopsTpl->assign('breadcrumb', $path);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
-$xoopsTpl->assign('now_op', $op);
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
-if ($xoopsModuleConfig['use_table_shadow']) {
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
-}
-$xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
-require_once XOOPS_ROOT_PATH . '/footer.php';

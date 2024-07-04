@@ -4,8 +4,7 @@ $modversion = [];
 $language = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADNEWS_NAME;
-// $modversion['version'] = 4.3;
-$modversion['version'] = $xoops_version >= 20511 ? '5.0.0-Stable' : '5.0';
+$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '5.0.0-Stable' : '5.0';
 $modversion['description'] = _MI_TADNEWS_DESC;
 $modversion['author'] = 'Tad (tad0616@gmail.com)';
 $modversion['credits'] = 'geek01';
@@ -420,22 +419,6 @@ $modversion['config'][$i]['description'] = '_MI_TADNEWS_SUMMARY_LENGTHS_DESC';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 100;
-
-$i++;
-$modversion['config'][$i]['name'] = 'facebook_comments_width';
-$modversion['config'][$i]['title'] = '_MI_FBCOMMENT_TITLE';
-$modversion['config'][$i]['description'] = '_MI_FBCOMMENT_TITLE_DESC';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = '0';
-
-$i++;
-$modversion['config'][$i]['name'] = 'use_pda';
-$modversion['config'][$i]['title'] = '_MI_USE_PDA_TITLE';
-$modversion['config'][$i]['description'] = '_MI_USE_PDA_TITLE_DESC';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = '0';
 
 $i++;
 $modversion['config'][$i]['name'] = 'use_social_tools';

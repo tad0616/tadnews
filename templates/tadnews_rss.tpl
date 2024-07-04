@@ -6,7 +6,7 @@
     <description><{$channel_desc}></description>
 
 
-    <{foreach item=item from=$items}>
+    <{foreach from=$items item=item}>
     <item>
         <title><{$item.title}></title>
         <link><{$item.link}></link>

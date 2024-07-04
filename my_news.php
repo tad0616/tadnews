@@ -7,31 +7,6 @@ use XoopsModules\Tadtools\Utility;
 $GLOBALS['xoopsOption']['template_main'] = 'tadnews_my_news.tpl';
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
-/*-----------function區--------------*/
-
-//列出某人所有新聞
-function list_tad_my_news()
-{
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $Tadnews;
-    if (!$xoopsUser) {
-        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
-    }
-    $uid = $xoopsUser->uid();
-    $Tadnews->set_show_enable(0);
-    $Tadnews->set_view_uid($uid);
-    $Tadnews->set_news_kind($kind);
-    $Tadnews->set_summary(0);
-    $Tadnews->set_show_mode('list');
-    $Tadnews->set_admin_tool(true);
-    $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
-
-    if (!empty($the_ncsn)) {
-        $Tadnews->set_view_ncsn($the_ncsn);
-    }
-    $Tadnews->get_news();
-
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
-}
 
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
@@ -78,3 +53,29 @@ if ($xoopsModuleConfig['use_table_shadow']) {
 $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';
+
+/*-----------function區--------------*/
+
+//列出某人所有新聞
+function list_tad_my_news()
+{
+    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $Tadnews;
+    if (!$xoopsUser) {
+        redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+    }
+    $uid = $xoopsUser->uid();
+    $Tadnews->set_show_enable(0);
+    $Tadnews->set_view_uid($uid);
+    $Tadnews->set_news_kind($kind);
+    $Tadnews->set_summary(0);
+    $Tadnews->set_show_mode('list');
+    $Tadnews->set_admin_tool(true);
+    $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
+
+    if (!empty($the_ncsn)) {
+        $Tadnews->set_view_ncsn($the_ncsn);
+    }
+    $Tadnews->get_news();
+
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+}
