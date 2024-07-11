@@ -4,6 +4,7 @@ TadNews 5.0 (尚未釋出)
 2.預設不載入 SyntaxHighlighter
 3.移除pda.php、FaceBook留言之設定及相關界面
 4.焦點新聞無法正確顯示問題
+5.用$xoopsDB->escape()取代$myts->addSlashes()
 
 TadNews 4.30 (2022-08-15 釋出)
 ====================================

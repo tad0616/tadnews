@@ -61,7 +61,7 @@ if ('sort_tabs' === $op) {
     </script>
     ";
 
-    $tabs_content = $myts->addSlashes($tabs_content);
+    $tabs_content = $xoopsDB->escape($tabs_content);
     $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set news_content = '{$tabs_content}' where nsn='$nsn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 } else {

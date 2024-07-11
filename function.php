@@ -236,10 +236,10 @@ function update_tad_news_cate($ncsn = '')
     $of_ncsn = (int) $_POST['of_ncsn'];
     $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];
-    $nc_title = $myts->addSlashes($_POST['nc_title']);
-    $enable_post_group = $myts->addSlashes($enable_post_group);
-    $enable_group = $myts->addSlashes($enable_group);
-    $setup = $myts->addSlashes($setup);
+    $nc_title = $xoopsDB->escape($_POST['nc_title']);
+    $enable_post_group = $xoopsDB->escape($enable_post_group);
+    $enable_group = $xoopsDB->escape($enable_group);
+    $setup = $xoopsDB->escape($setup);
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . " set  of_ncsn = '{$of_ncsn}', nc_title = '{$nc_title}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$not_news}',setup='{$setup}' where ncsn='$ncsn'";
     // die($sql);

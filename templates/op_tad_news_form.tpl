@@ -40,7 +40,7 @@
             $("#page_mode").prop("disabled",true);
         <{/if}>
 
-        <{if $nsn==""}>
+        <{if !$nsn}>
             $("#kind").change(function() {
                 if ($("#kind").val()=="page") {
                     $("#add_page").show();
@@ -143,7 +143,7 @@
 </script>
 
 <h1>
-    <{if $nsn==""}>
+    <{if !$nsn}>
         <{$smarty.const._MD_TADNEWS_ADD_NEWS}>
     <{else}>
         <div class="row">
@@ -165,7 +165,7 @@
 </h1>
 
 <form action="<{$action}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-    <{if $nsn==""}>
+    <{if !$nsn}>
         <div class="form-group row mb-3">
             <label class="col-md-3 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_KIND}>
@@ -321,7 +321,7 @@
                     CKEDITOR.replace(editorId, { height: 300 ,
                     toolbar : 'my' ,
                     contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap<{$smarty.session.bootstrap}>/css/bootstrap.css','<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css'],
-                    extraPlugins: 'syntaxhighlight,dialog,oembed,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet',
+                    extraPlugins: 'editorplaceholder,pasteUploadImage,sourcearea,font,syntaxhighlight,dialog,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet,undo,autoembed,autolink,clipboard,toolbar,button,dialogui,notification,textmatch,embed,embedbase,widgetselection,notificationaggregator,embedsemantic,panel,floatpanel,menu',
                     filebrowserBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=file&mod_dir=tadnews',
                     filebrowserImageBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=image&mod_dir=tadnews',
                     filebrowserFlashBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=flash&mod_dir=tadnews',

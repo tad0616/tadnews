@@ -267,10 +267,10 @@ function save_newspaper_set($nps_sn = '')
         redirect_header('index.php', 3, $error);
     }
     $myts = \MyTextSanitizer::getInstance();
-    $title = $myts->addSlashes($_POST['title']);
-    $head = $myts->addSlashes($_POST['head']);
-    $foot = $myts->addSlashes($_POST['foot']);
-    $themes = $myts->addSlashes($_POST['themes']);
+    $title = $xoopsDB->escape($_POST['title']);
+    $head = $xoopsDB->escape($_POST['head']);
+    $foot = $xoopsDB->escape($_POST['foot']);
+    $themes = $xoopsDB->escape($_POST['themes']);
 
     if (empty($nps_sn)) {
         $sql = 'insert into ' . $xoopsDB->prefix('tad_news_paper_setup') . " (title,head,foot,themes,status) values('{$title}','{$head}','{$foot}','{$themes}','1')";
@@ -412,8 +412,8 @@ function save_all($npsn = '')
     global $xoopsDB, $xoopsUser;
 
     $myts = \MyTextSanitizer::getInstance();
-    $np_content = $myts->addSlashes($_POST['np_content']);
-    $np_title = $myts->addSlashes($_POST['np_title']);
+    $np_content = $xoopsDB->escape($_POST['np_content']);
+    $np_title = $xoopsDB->escape($_POST['np_title']);
 
     $sql = 'update ' . $xoopsDB->prefix('tad_news_paper') . " set np_content='{$np_content}',np_title='{$np_title}' where npsn='{$npsn}'";
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);

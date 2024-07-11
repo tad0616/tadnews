@@ -2180,14 +2180,13 @@ class Tadnews
     //新增資料到tad_news中
     public function insert_tad_news()
     {
-        global $xoopsDB, $xoopsUser, $xoTheme;
-        // $uid = $xoopsUser->uid();
+        global $xoopsDB, $xoopsUser;
 
         //安全判斷
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
-            redirect_header('index.php', 3, $error);
-        }
+        // if (!$GLOBALS['xoopsSecurity']->check()) {
+        //     $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
+        //     redirect_header('index.php', 3, $error);
+        // }
 
         if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
             $enable_group = '';
@@ -2206,11 +2205,11 @@ class Tadnews
         $ncsn = (int) $_POST['ncsn'];
         $tab_mode = (int) $_POST['tab_mode'];
         $not_news = (int) $_POST['not_news'];
-        $new_cate = $myts->addSlashes($_POST['new_cate']);
-        $new_page_cate = $myts->addSlashes($_POST['new_page_cate']);
-        $news_title = $myts->addSlashes($_POST['news_title']);
-        $have_read_group = $myts->addSlashes($have_read_group);
-        $enable_group = $myts->addSlashes($enable_group);
+        $new_cate = $xoopsDB->escape($_POST['new_cate']);
+        $new_page_cate = $xoopsDB->escape($_POST['new_page_cate']);
+        $news_title = $xoopsDB->escape($_POST['news_title']);
+        $have_read_group = $xoopsDB->escape($have_read_group);
+        $enable_group = $xoopsDB->escape($enable_group);
 
         //新分類
         if (!empty($new_cate)) {
@@ -2235,8 +2234,8 @@ class Tadnews
 
             $tab_title_div = $tab_content_div = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
-                $tab_key = $myts->addSlashes($tab_key);
-                $tab_val = $myts->addSlashes($tab_val);
+                $tab_key = $xoopsDB->escape($tab_key);
+                $tab_val = $xoopsDB->escape($tab_val);
 
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
                 $tab_title_div .= "<li>$tab_val</li>";
@@ -2270,10 +2269,10 @@ class Tadnews
                 });
             </script>
             ";
-            $news_content = $myts->addSlashes($tabs_content);
+            $news_content = $xoopsDB->escape($tabs_content);
         } else {
             $news_content = Wcag::amend($_POST['news_content']);
-            $news_content = $myts->addSlashes($news_content);
+            $news_content = $xoopsDB->escape($news_content);
         }
         $always_top = (empty($_POST['always_top'])) ? '0' : '1';
         $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
@@ -2286,15 +2285,16 @@ class Tadnews
             $_POST['end_day'] = '0000-00-00 00:00:00';
         }
 
-        $start_day = $myts->addSlashes($_POST['start_day']);
-        $end_day = $myts->addSlashes($_POST['end_day']);
-        $passwd = $myts->addSlashes($_POST['passwd']);
-        $prefix_tag = $myts->addSlashes($_POST['prefix_tag']);
-        $always_top_date = $myts->addSlashes($_POST['always_top_date']);
+        $start_day = $xoopsDB->escape($_POST['start_day']);
+        $end_day = $xoopsDB->escape($_POST['end_day']);
+        $passwd = $xoopsDB->escape($_POST['passwd']);
+        $prefix_tag = $xoopsDB->escape($_POST['prefix_tag']);
+        $always_top_date = $xoopsDB->escape($_POST['always_top_date']);
         $enable = (int) $_POST['enable'];
 
         $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (ncsn,news_title,news_content,start_day,end_day,enable,uid,passwd,enable_group,prefix_tag,always_top,always_top_date,have_read_group) values('{$ncsn}','{$news_title}','{$news_content}','{$start_day}','{$end_day}','{$enable}','{$this->uid}','{$passwd}','{$enable_group}','{$prefix_tag}','{$always_top}','{$always_top_date}','{$have_read_group}')";
 
+        // Utility::dd($sql);
         $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         //取得最後新增資料的流水編號
@@ -2355,7 +2355,7 @@ class Tadnews
         $sort = $this->get_max_sort($of_ncsn);
 
         $myts = \MyTextSanitizer::getInstance();
-        $new_cate = $myts->addSlashes($new_cate);
+        $new_cate = $xoopsDB->escape($new_cate);
         if (empty($of_ncsn)) {
             $of_ncsn = 0;
         }
@@ -2448,15 +2448,15 @@ class Tadnews
         $myts = \MyTextSanitizer::getInstance();
 
         $ncsn = (int) $_POST['ncsn'];
-        $new_cate = $myts->addSlashes($_POST['new_cate']);
-        $new_page_cate = $myts->addSlashes($_POST['new_page_cate']);
+        $new_cate = $xoopsDB->escape($_POST['new_cate']);
+        $new_page_cate = $xoopsDB->escape($_POST['new_page_cate']);
         if (!empty($_POST['new_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_cate);
         } elseif (!empty($_POST['new_page_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_page_cate, 1);
         }
 
-        $news_title = $myts->addSlashes($_POST['news_title']);
+        $news_title = $xoopsDB->escape($_POST['news_title']);
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
 
@@ -2471,14 +2471,14 @@ class Tadnews
 
             $tab_title_div = $tab_content_div = '';
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
-                $tab_key = $myts->addSlashes($tab_key);
-                $tab_val = $myts->addSlashes($tab_val);
+                $tab_key = $xoopsDB->escape($tab_key);
+                $tab_val = $xoopsDB->escape($tab_val);
 
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
                 $tab_title_div .= "<li>$tab_val</li>";
 
                 $tab_content_key = Wcag::amend($_POST['tab_content'][$tab_key]);
-                // $tab_content_key = $myts->addSlashes($tab_content_key);
+                // $tab_content_key = $xoopsDB->escape($tab_content_key);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
 
                 $tab_content_div .= "
@@ -2507,16 +2507,16 @@ class Tadnews
                 });
             </script>
             ";
-            $news_content = $myts->addSlashes($tabs_content);
+            $news_content = $xoopsDB->escape($tabs_content);
         } else {
             $news_content = Wcag::amend($_POST['news_content']);
-            $news_content = $myts->addSlashes($news_content);
+            $news_content = $xoopsDB->escape($news_content);
         }
 
         $always_top = (int) $_POST['always_top'];
 
-        $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : $myts->addSlashes($_POST['start_day']);
-        $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $myts->addSlashes($_POST['end_day']);
+        $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : $xoopsDB->escape($_POST['start_day']);
+        $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $xoopsDB->escape($_POST['end_day']);
 
         $uid = $_POST['same_uid'] == 1 ? (int) $_POST['uid'] : $this->uid;
 

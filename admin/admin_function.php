@@ -155,10 +155,10 @@ function insert_tad_news_cate()
     $of_ncsn = (int) $_POST['of_ncsn'];
     $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];
-    $nc_title = $myts->addSlashes($_POST['nc_title']);
-    $enable_post_group = $myts->addSlashes($enable_post_group);
-    $enable_group = $myts->addSlashes($enable_group);
-    $setup = $myts->addSlashes($setup);
+    $nc_title = $xoopsDB->escape($_POST['nc_title']);
+    $enable_post_group = $xoopsDB->escape($enable_post_group);
+    $enable_group = $xoopsDB->escape($enable_group);
+    $setup = $xoopsDB->escape($setup);
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (of_ncsn,nc_title,enable_group,enable_post_group,sort,not_news,setup) values('{$of_ncsn}','{$nc_title}','{$enable_group}','{$enable_post_group}','{$sort}','{$not_news}','{$setup}')";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);

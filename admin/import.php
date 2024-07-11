@@ -144,8 +144,8 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
         $news_content = $hometext . $bodytext;
 
         $myts = \MyTextSanitizer::getInstance();
-        $news_content = $myts->addSlashes($news_content);
-        $title = $myts->addSlashes($title);
+        $news_content = $xoopsDB->escape($news_content);
+        $title = $xoopsDB->escape($title);
 
         //bbcode 轉換
         $news_content = $myts->displayTarea($news_content, 1, 1, 1);
