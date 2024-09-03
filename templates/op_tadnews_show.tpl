@@ -57,21 +57,6 @@
                         <{$news.push}>
                     </div>
                 <{/if}>
-
-                <div style="text-align: center; padding: 3px; margin: 3px;">
-                    <{$commentsnav}>
-                    <{$lang_notice}>
-                </div>
-
-                <div style="margin: 3px; padding: 3px;">
-                    <{if $comment_mode == "flat"}>
-                        <{include file="db:system_comments_flat.html"}>
-                    <{elseif $comment_mode == "thread"}>
-                        <{include file="db:system_comments_thread.html"}>
-                    <{elseif $comment_mode == "nest"}>
-                        <{include file="db:system_comments_nest.html"}>
-                    <{/if}>
-                </div>
             </div>
         <{else}>
             <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADNEWS_HIDDEN}></h2>

@@ -17,6 +17,7 @@ if (function_exists('mb_http_output')) {
     mb_http_output('pass');
 }
 header("Content-Type:text/xml; charset=utf-8");
+header('Access-Control-Allow-Origin: *');
 
 $tpl = new \XoopsTpl();
 $tpl->xoops_setCaching(2);
