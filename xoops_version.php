@@ -120,9 +120,7 @@ $modversion['templates'][$i]['file'] = 'tadnews_adm_import.tpl';
 $modversion['templates'][$i]['description'] = 'tadnews_adm_import.tpl';
 
 //---評論設定---//
-$modversion['hasComments'] = 1;
-$modversion['comments']['pageName'] = 'index.php';
-$modversion['comments']['itemName'] = 'nsn';
+$modversion['hasComments'] = 0;
 
 //---搜尋設定---//
 $modversion['hasSearch'] = 1;
