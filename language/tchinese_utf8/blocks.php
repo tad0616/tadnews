@@ -64,11 +64,11 @@ define('_MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_5', '人氣');
 define('_MB_TADNEWS_START_FROM', '跳過最新的幾篇文章？');
 define('_MB_TADNEWS_HIDE', '不顯示');
 
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM0', '顯示區寬度');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM1', '顯示區高度');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2', '列出文章數');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3', '文章摘要字數');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4', '使用的滑動圖文外掛');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM0', '顯示區寬度');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM1', '顯示區高度');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM2', '列出文章數');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM3', '文章摘要字數');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM4', '使用的滑動圖文外掛');
 
 define('_MB_TADNEWS_FOCUS_EDIT_BITEM1', '顯示全文或摘要？');
 define('_MB_TADNEWS_FOCUS_FULL', '全文');
@@ -108,7 +108,7 @@ define('_MB_TADNEWS_TAB_NEWS_VERTICAL', '垂直頁籤');
 define('_MB_TADNEWS_TAB_NEWS_ACCORDION', '伸縮選單');
 
 define('_MB_TADNEWS_ACTIVE_BG', '作用中的頁籤底色');
-define('_MB_TADNEWS_INACTIV_BG', '未作用的頁籤底色');
+define('_MB_TADNEWS_INACTIVE_BG', '未作用的頁籤底色');
 define('_MB_TADNEWS_ACTIVE_BORDER_COLOR', '作用中的頁籤上邊框顏色');
 define('_MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR', '作用中的頁籤內容邊框顏色');
 define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', '加入所有最新消息頁籤（不分類）到最前面');
@@ -131,3 +131,5 @@ define('_MB_TADNEWS_COVERED_OPT5_1', '原圖文集模式');
 define('_MB_TADNEWS_COVERED_OPT5_2', '橫列模式');
 define('_MB_TADNEWS_COVERED_OPT6', '橫列模式的圖片寬度（BootStrap 的幾欄？）');
 define('_MB_TADNEWS_COVERED_OPT7', '橫列模式的圖片高度（用CSS設定）');
+
+define('_MB_TADNEWS_SHOW_AUTHOR', '使否顯示發布者');

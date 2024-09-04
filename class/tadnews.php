@@ -431,7 +431,7 @@ class Tadnews
     //取得新聞 $mode = 'assign','return','app'
     public function get_news($mode = 'assign', $admin = false, $highlighter = false)
     {
-        global $xoopsDB, $xoopsUser, $xoopsTpl, $xoTheme;
+        global $xoopsDB, $xoopsTpl, $xoTheme;
         if ($admin) {
             $_SESSION['tadnews_adm'] = $admin;
         }
@@ -1064,14 +1064,14 @@ class Tadnews
     //取得分類新聞
     public function get_cate_news($mode = 'assign', $include_sub_cate = false)
     {
-        global $xoopsDB, $xoopsTpl, $xoopsUser;
+        global $xoopsDB, $xoopsTpl;
 
         $pic_w = $this->tadnewsConfig['cate_pic_width'] + 10;
 
-        if ($highlighter) {
-            $SyntaxHighlighter = new SyntaxHighlighter();
-            $SyntaxHighlighter->render();
-        }
+        // if ($highlighter) {
+        //     $SyntaxHighlighter = new SyntaxHighlighter();
+        //     $SyntaxHighlighter->render();
+        // }
 
         $prefix_tags = $this->prefix_tags();
         $where_news = '';
@@ -1190,6 +1190,9 @@ class Tadnews
                     $need_sign = (!empty($have_read_group)) ? XOOPS_URL . '/modules/tadnews/images/sign_s.png' : '';
                 }
 
+                $uid_name = \XoopsUser::getUnameFromId($uid, 1);
+                $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+
                 $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
 
                 $subnews[$j]['content'] = $myts->displayTarea($content, 1, 1, 1, 1, 0);
@@ -1201,6 +1204,7 @@ class Tadnews
                 $subnews[$j]['counter'] = $counter;
                 $subnews[$j]['need_sign'] = $need_sign;
                 $subnews[$j]['files'] = $this->get_news_files($nsn, 'small');
+                $subnews[$j]['uid_name'] = $uid_name;
                 $j++;
             }
             $all_news[$i]['pic_w'] = $pic_w;

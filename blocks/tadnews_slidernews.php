@@ -57,25 +57,25 @@ function tadnews_slidernews_edit($options)
     $form = "{$block_news_cate['js']}
     <ol class='my-form'>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM0 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM0 . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>px
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM1 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM1 . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>px
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input' name='options[2]' value='{$options[2]}' size=6>
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM3 . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input' name='options[3]' value='{$options[3]}' size=6>
             </div>

@@ -71,19 +71,19 @@ function tadnews_slidernews2_edit($options)
     $form = "{$block_news_cate['js']}
     <ol class='my-form'>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM2 . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM3 . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input' name='options[1]' value='{$options[1]}' size=6>
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4 . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM4 . "</lable>
             <div class='my-content'>
                 <select name='options[2]' class='my-input'>
                     <option value='ResponsiveSlides' $ResponsiveSlides>ResponsiveSlides</option>

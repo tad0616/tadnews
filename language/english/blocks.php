@@ -60,11 +60,11 @@ define('_MB_TADNEWS_TABLE_CONTENT_SHOW_CELL_5', 'Counter');
 define('_MB_TADNEWS_START_FROM', 'Start form:');
 define('_MB_TADNEWS_HIDE', 'Hide');
 
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM0', 'Slide Width');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM1', 'Slide Height');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM2', 'List news numbers?');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM3', 'News summary lengths');
-define('_MB_TADNEWS_SLIDERNEWS_BLOCK_EDIT_BITEM4', 'Responsive Slider:');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM0', 'Slide Width');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM1', 'Slide Height');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM2', 'List news numbers?');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM3', 'News summary lengths');
+define('_MB_TADNEWS_SLIDE_NEWS_BLOCK_EDIT_BITEM4', 'Responsive Slider:');
 
 define('_MB_TADNEWS_FOCUS_EDIT_BITEM1', 'Show Full content or Summary?');
 define('_MB_TADNEWS_FOCUS_FULL', 'Full content');
@@ -104,7 +104,7 @@ define('_MB_TADNEWS_TAB_NEWS_VERTICAL', 'Vertical Tabs');
 define('_MB_TADNEWS_TAB_NEWS_ACCORDION', 'Accordion');
 
 define('_MB_TADNEWS_ACTIVE_BG', 'Active tab background color');
-define('_MB_TADNEWS_INACTIV_BG', 'Inactive tab background color');
+define('_MB_TADNEWS_INACTIVE_BG', 'Inactive tab background color');
 define('_MB_TADNEWS_ACTIVE_BORDER_COLOR', 'Active tab border color');
 define('_MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR', 'Active tab content border color');
 define('_MB_TADNEWS_ADD_ALL_NEWS_TAB', 'Add all the latest news tab to the left');
@@ -122,3 +122,5 @@ define('_MB_TADNEWS_COVERED_OPT5_1', 'Original image collection mode');
 define('_MB_TADNEWS_COVERED_OPT5_2', 'Horizontal column mode');
 define('_MB_TADNEWS_COVERED_OPT6', 'Width of the picture in Horizontal column mode (BootStrap\'s columns?)');
 define('_MB_TADNEWS_COVERED_OPT7', 'Height of the picture in Horizontal column mode (set with CSS)');
+
+define('_MB_TADNEWS_SHOW_AUTHOR', 'Displays publishers');

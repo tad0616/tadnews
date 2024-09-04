@@ -28,7 +28,7 @@ function tadnews_tab_news($options)
     $block = $Tadnews->get_cate_news('return');
 
     // if ($_GET['test'] == 1) {
-    //     Utility::dd($block['all_news']);
+    // Utility::dd($block['all_news']);
     // }
     if (empty($block['all_news'])) {
         return;
@@ -43,6 +43,7 @@ function tadnews_tab_news($options)
     $block['min_height'] = 200;
     $tab_font_size = empty($options[8]) ? 16 : (int) $options[8];
     $block['tab_font_size'] = round($tab_font_size / 16, 1);
+    $block['show_author'] = $options[9];
 
     if ('1' == $options[7]) {
         $Tadnews = new Tadnews();
@@ -100,7 +101,7 @@ function tadnews_tab_news_edit($options)
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_INACTIV_BG . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_INACTIVE_BG . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input color' data-hex='true' name='options[4]' value='{$options[4]}' size=6>
             </div>
@@ -128,6 +129,13 @@ function tadnews_tab_news_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_TAB_FONT_SIZE . "</lable>
             <div class='my-content'>
             <input type='text' class='my-input' name='options[8]' value='{$options[8]}' size=8> px
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADNEWS_SHOW_AUTHOR . "</lable>
+            <div class='my-content'>
+                <input type='radio' name='options[9]'  value='1' " . Utility::chk($options[9], '1') . ">" . _YES . "
+                <input type='radio' name='options[9]'  value='0' " . Utility::chk($options[9], '0', 1) . ">" . _NO . "
             </div>
         </li>
     </ol>";

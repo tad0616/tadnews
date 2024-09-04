@@ -23,6 +23,9 @@
                     <div style="padding: 8px;">
                         <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}> <{$news.prefix_tag}>
                         <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+                        <{if $block.show_author}>
+                            <span class="text-muted">(<{$news.uid_name}>)</span>
+                        <{/if}>
                     </div>
                 <{/foreach}>
                 <div class="text-right text-end">
@@ -36,6 +39,9 @@
                     <div style="padding: 8px;">
                         <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}> <{$news.prefix_tag}>
                         <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
+                        <{if $block.show_author}>
+                            <span class="text-muted">(<{$news.uid_name}>)</span>
+                        <{/if}>
                     </div>
                 <{/foreach}>
                 <div class="text-right text-end">

@@ -107,7 +107,7 @@ function tadnews_tag_news_edit($options)
             </div>
         </li>
         <li class='my-row'>
-            <lable class='my-label'>" . _MB_TADNEWS_INACTIV_BG . "</lable>
+            <lable class='my-label'>" . _MB_TADNEWS_INACTIVE_BG . "</lable>
             <div class='my-content'>
                 <input type='text' class='my-input color' data-hex='true' name='options[4]' value='{$options[4]}' size=6>
             </div>
