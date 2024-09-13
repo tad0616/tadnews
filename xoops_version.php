@@ -344,7 +344,7 @@ $modversion['config'][$i]['title'] = '_MI_TADNEWS_PIC_WIDTH';
 $modversion['config'][$i]['description'] = '_MI_TADNEWS_PIC_WIDTH_DESC';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 1280;
+$modversion['config'][$i]['default'] = 1920;
 
 $i++;
 $modversion['config'][$i]['name'] = 'thumb_width';

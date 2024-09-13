@@ -809,7 +809,7 @@ class Tadnews
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
-                        <div class='jumbotron'>
+                        <div class='jumbotron bg-light p-5 rounded-lg m-3'>
                         <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
                         <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post'>
                             <fieldset>
@@ -1142,7 +1142,7 @@ class Tadnews
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                         if ('one' === $this->show_mode) {
                             $news_content = "
-                        <div class='jumbotron'>
+                        <div class='jumbotron bg-light p-5 rounded-lg m-3'>
                         <p>" . _TADNEWS_NEWS_NEED_PASSWD . "</p>
                         <form action='" . XOOPS_URL . "/modules/tadnews/index.php' method='post'>
                                 <fieldset>
