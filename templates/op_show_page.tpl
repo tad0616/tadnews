@@ -1,4 +1,4 @@
-<{if $cate_set_tool}>
+<{if $cate_set_tool|default:false}>
     <p><{$toolbar}></p>
 <{/if}>
 
@@ -7,12 +7,12 @@
 <{/if}>
 
 <{$rating_js}>
-<{if $page}>
+<{if $page|default:false}>
 
     <div class="row">
         <div class="col-md-12">
         <{foreach from=$page item=news}>
-            <{if $cate_set_title}>
+            <{if $cate_set_title|default:false}>
                 <h1 style="text-shadow:1px 1px 1px #aaaaaa;">
                     <{$news.news_title}>
                 </h1>
@@ -35,15 +35,15 @@
             <{$news.fun}>
             </div>
 
-            <{if $cate_set_nav}>
+            <{if $cate_set_nav|default:false}>
                 <div class="row" style="margin:10px;">
                     <div class="col-md-6 d-grid gap-2">
-                    <{if $news.back_news_link}>
+                    <{if $news.back_news_link|default:false}>
                         <a href="<{$news.back_news_link}>" class="btn btn-default btn-outline-info btn-block"><img src="images/left.png" hspace=2 alt="Previous"><{$news.back_news_title}></a>
                     <{/if}>
                     </div>
                     <div class="col-md-6 d-grid gap-2">
-                    <{if $news.next_news_link}>
+                    <{if $news.next_news_link|default:false}>
                         <a href="<{$news.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$news.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
                     <{/if}>
                     </div>

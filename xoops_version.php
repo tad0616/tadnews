@@ -275,7 +275,7 @@ $modversion['blocks'][$i]['description'] = _MI_TADNEWS_TAB_NEWS_DESC;
 $modversion['blocks'][$i]['show_func'] = 'tadnews_tab_news';
 $modversion['blocks'][$i]['template'] = 'tadnews_block_tab_news.tpl';
 $modversion['blocks'][$i]['edit_func'] = 'tadnews_tab_news_edit';
-$modversion['blocks'][$i]['options'] = '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0|16';
+$modversion['blocks'][$i]['options'] = '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0|16|0';
 
 $i++;
 $modversion['blocks'][$i]['file'] = 'tadnews_tag_news.php';

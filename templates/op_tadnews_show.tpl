@@ -1,10 +1,10 @@
 <{$rating_js}>
 
-<{if $page}>
+<{if $page|default:false}>
     <{foreach from=$page item=news}>
         <{if $news.enable=="1" or $news.uid==$uid}>
             <div class="news_page_container">
-                <div <{if $news.need_sign}>style="background-image: url('<{$news.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
+                <div <{if $news.need_sign|default:false}>style="background-image: url('<{$news.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
                     <h3 class="my">
                         <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>">
                         <{$news.news_title}>
@@ -39,20 +39,20 @@
                     <div style="clear:both;"></div>
                 </div>
 
-                <{if $news.files}>
+                <{if $news.files|default:false}>
                     <div style="margin: 30px 0px;">
                         <{$news.files}>
                     </div>
                 <{/if}>
 
-                <{if $news.have_read_chk}>
+                <{if $news.have_read_chk|default:false}>
                     <div class="text-center" style="margin: 30px 0px;">
                         <{$news.have_read_chk}>
                     </div>
                 <{/if}>
 
 
-                <{if $news.push}>
+                <{if $news.push|default:false}>
                     <div class="text-right text-end" style="margin: 30px 0px;">
                         <{$news.push}>
                     </div>
@@ -65,10 +65,10 @@
             </div>
         <{/if}>
 
-        <{if $show_next_btn}>
+        <{if $show_next_btn|default:false}>
             <div class="row" style="margin-bottom: 30px;">
                 <div class="col-md-6 d-grid gap-2">
-                    <{if $news.back_news_link}>
+                    <{if $news.back_news_link|default:false}>
                         <a href="<{$news.back_news_link}>" class="btn btn-default btn-outline-info btn-block">
                         <img src="images/left.png" hspace=2 alt="Previous">
                         <{$news.back_news_title}>
@@ -76,7 +76,7 @@
                     <{/if}>
                 </div>
                 <div class="col-md-6 d-grid gap-2">
-                    <{if $news.next_news_link}>
+                    <{if $news.next_news_link|default:false}>
                         <a href="<{$news.next_news_link}>" class="btn btn-default btn-outline-info btn-block"><{$news.next_news_title}><img src="images/right.png" hspace=2 alt="Next"></a>
                     <{/if}>
                 </div>

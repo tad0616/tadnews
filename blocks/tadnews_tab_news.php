@@ -43,7 +43,7 @@ function tadnews_tab_news($options)
     $block['min_height'] = 200;
     $tab_font_size = empty($options[8]) ? 16 : (int) $options[8];
     $block['tab_font_size'] = round($tab_font_size / 16, 1);
-    $block['show_author'] = $options[9];
+    $block['show_author'] = isset($options[9]) ? $options[9] : 0;
 
     if ('1' == $options[7]) {
         $Tadnews = new Tadnews();

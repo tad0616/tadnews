@@ -1,4 +1,4 @@
-<{if $block.page}>
+<{if $block.page|default:false}>
     <ul class="vertical_menu">
         <{foreach item=page from=$block.page}>
             <li>

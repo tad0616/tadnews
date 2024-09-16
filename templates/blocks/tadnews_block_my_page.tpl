@@ -10,7 +10,7 @@
                 <td><a href="<{$xoops_url}>/modules/tadnews/<{$page.link_page}>?ncsn=<{$page.ncsn}>"><{$page.cate_name}></a></td>
                 <td>
                 <{$page.prefix_tag}>
-                <{if $page.need_sign}>
+                <{if $page.need_sign|default:false}>
                 <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
             <{/if}>
             <a href="<{$xoops_url}>/modules/tadnews/<{$page.index}>?nsn=<{$page.nsn}>"><{$page.news_title}></a></td>

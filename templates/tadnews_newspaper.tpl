@@ -4,7 +4,7 @@
 
 <h1 class="sr-only visually-hidden" style="display: none;"><{$smarty.const._MD_TADNEWS_NEWSPAPER}></h1>
 
-<{if $page}>
+<{if $page|default:false}>
     <table class="table table-striped table-hover table-shadow">
         <tbody>
             <{foreach from=$page item=news}>

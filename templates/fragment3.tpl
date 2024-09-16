@@ -1,6 +1,6 @@
 
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/jquery.upload-1.0.2.min.js"></script>
-<{if $pic}>
+<{if $pic|default:false}>
     <script type="text/javascript">
         d = new Date();
         $(function() {
@@ -62,7 +62,7 @@
             </select>
         </div>
         <div class="col-md-6">
-            <{if $pic}>
+            <{if $pic|default:false}>
                 <a href="post.php?op=delete_cover&nsn=<{$nsn}>"><{$smarty.const._TAD_DEL}><{$smarty.const._MD_TADNEWS_NEWSPIC_TAB}></a>
             <{/if}>
         </div>

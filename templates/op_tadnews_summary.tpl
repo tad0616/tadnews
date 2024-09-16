@@ -1,6 +1,6 @@
 <{$rating_js}>
 <h2><{$smarty.const._MD_TADNEWS_LIST}></h2>
-<{if $page}>
+<{if $page|default:false}>
     <{foreach from=$page item=data }>
         <{include file="$xoops_rootpath/modules/tadnews/templates/sub_summary.tpl"}>
     <{/foreach}>

@@ -1,5 +1,5 @@
 <div class="news_page_container">
-    <div <{if $data.need_sign}>style="background-image: url('<{$data.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
+    <div <{if $data.need_sign|default:false}>style="background-image: url('<{$data.need_sign}>'); background-position: right top; background-repeat: no-repeat;"<{/if}>>
         <h4 class="my">
             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$data.nsn}>">
             <{$data.news_title}>

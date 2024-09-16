@@ -8,7 +8,7 @@
 
 <div id="<{$block.tab_news_name}>">
     <ul class="resp-tabs-list vert">
-        <{if $block.latest_news}>
+        <{if $block.latest_news|default:false}>
             <li><{$smarty.const._MB_TADNEWS_LATEST_NEWS_TAB}></li>
         <{/if}>
         <{foreach item=all_news from=$block.all_news}>
@@ -17,13 +17,13 @@
     </ul>
 
     <div class="resp-tabs-container vert">
-        <{if $block.latest_news}>
+        <{if $block.latest_news|default:false}>
             <div>
                 <{foreach from=$block.latest_news item=news}>
                     <div style="padding: 8px;">
-                        <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}> <{$news.prefix_tag}>
+                        <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic|default:''}> <{$news.prefix_tag}>
                         <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
-                        <{if $block.show_author}>
+                        <{if $block.show_author|default:false}>
                             <span class="text-muted">(<{$news.uid_name}>)</span>
                         <{/if}>
                     </div>
@@ -37,9 +37,9 @@
             <div>
                 <{foreach from=$all_news.news item=news}>
                     <div style="padding: 8px;">
-                        <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}> <{$news.prefix_tag}>
+                        <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic|default:''}> <{$news.prefix_tag}>
                         <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
-                        <{if $block.show_author}>
+                        <{if $block.show_author|default:false}>
                             <span class="text-muted">(<{$news.uid_name}>)</span>
                         <{/if}>
                     </div>

@@ -17,7 +17,7 @@
 </div>
 
 
-<{if $page}>
+<{if $page|default:false}>
     <div class="panel panel-default card mb-5">
         <table class="table table-striped table-bordered">
             <tr><th><{$date_title}></th></tr>
@@ -26,7 +26,7 @@
                     <td>
                         <{$news.post_date}>
 
-                        <{if $news.need_sign}>
+                        <{if $news.need_sign|default:false}>
                             <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                         <{/if}>
                         <div class="pull-right float-right float-end"><{$news.files}></div>

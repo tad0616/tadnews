@@ -1,8 +1,8 @@
 <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADNEWS_LIST}></h2>
-<{if $page}>
+<{if $page|default:false}>
     <table class="table table-striped table-hover table-shadow">
         <tbody>
-            <{if $cate.nc_title}>
+            <{if $cate.nc_title|default:false}>
                 <tr class="my">
                     <th><{$cate.nc_title}></th>
                 </tr>
@@ -14,7 +14,7 @@
                         <{$news.post_date}>
 
                         <{$news.prefix_tag}>
-                        <{if $news.need_sign}>
+                        <{if $news.need_sign|default:false}>
                             <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                         <{/if}>
                         <{$news.enable_txt}>

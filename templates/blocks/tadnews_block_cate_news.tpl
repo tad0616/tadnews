@@ -1,7 +1,7 @@
 <{foreach item=all_news from=$block.all_news}>
-    <{if $all_news.news}>
+    <{if $all_news.news|default:false}>
         <div class="row">
-            <{if $all_news.show_pic}>
+            <{if $all_news.show_pic|default:false}>
                 <div class="col-md-2">
                     <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>">
                         <img src="<{$all_news.pic}>" alt="<{$all_news.nc_title}>" title="<{$all_news.nc_title}>" style="width: 100%;">
@@ -14,7 +14,7 @@
                 <div class="col-md-12">
             <{/if}>
 
-            <{if $all_news.news}>
+            <{if $all_news.news|default:false}>
                 <table class="table table-striped table-hover table-shadow">
                     <tr class="my">
                         <th><a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$all_news.ncsn}>"><{$all_news.nc_title}></a></th>
@@ -25,7 +25,7 @@
                                 <div class="pull-right float-right float-end"><{$news.files}></div>
                                 <{$news.post_date}>
                                 <{$news.prefix_tag}>
-                                <{if $news.need_sign}>
+                                <{if $news.need_sign|default:false}>
                                     <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                                 <{/if}>
                                 <{$news.always_top_pic}>

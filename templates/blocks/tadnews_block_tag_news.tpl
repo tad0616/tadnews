@@ -7,7 +7,7 @@
 
 <div id="<{$block.tag_news_name}>">
     <ul class="resp-tabs-list vert">
-        <{if $block.latest_news}>
+        <{if $block.latest_news|default:false}>
             <li><{$smarty.const._MB_TADNEWS_LATEST_NEWS_TAB}></li>
         <{/if}>
         <{foreach from=$block.tags key=tag_sn item=tag}>
@@ -16,7 +16,7 @@
     </ul>
 
     <div class="resp-tabs-container vert">
-        <{if $block.latest_news}>
+        <{if $block.latest_news|default:false}>
             <div>
                 <{foreach from=$block.latest_news item=news}>
                     <div style="padding: 8px;">

@@ -2,7 +2,7 @@
   <{$toolbar}>
 </p>
 
-<{if $page}>
+<{if $page|default:false}>
     <div class="panel panel-default card">
         <table class="table table-striped table-bordered">
             <tbody>
@@ -12,7 +12,7 @@
                             <{$news.chkbox}>
                             <{$news.post_date}>
                             <{$news.prefix_tag}>
-                            <{if $news.need_sign}>
+                            <{if $news.need_sign|default:false}>
                                 <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                             <{/if}>
                             <{$news.enable_txt}>

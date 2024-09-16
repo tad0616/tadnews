@@ -35,7 +35,7 @@
 </script>
 
 
-<{if $block.page}>
+<{if $block.page|default:false}>
     <div id="news_marquee_<{$block.randStr}>">
         <{if $block.direction=="left" or $block.direction=="right"}><div class="news_marquee_item_<{$block.randStr}>"><{/if}>
             <{foreach item=page from=$block.page}>
@@ -47,7 +47,7 @@
                 <{$page.post_date}>
                 <{$page.pic}>
                 <{$page.prefix_tag}>
-                <{if $page.need_sign}>
+                <{if $page.need_sign|default:false}>
                     <img src="<{$page.need_sign}>" alt="<{$page.news_title}>" style="margin:3px;">
                 <{/if}>
                 <{$page.enable_txt}>

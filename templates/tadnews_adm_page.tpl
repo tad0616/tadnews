@@ -54,7 +54,7 @@
                 <{$ztree_code}>
             </div>
 
-            <{if $ncsn}>
+            <{if $ncsn|default:false}>
                 <div class="alert alert-info">
                     <div class="pull-right float-right float-end">
                         <{if $now_op!="tad_news_cate_form" and $ncsn}>
@@ -123,7 +123,7 @@
                             <th nowrap>
                                 <{$smarty.const._MA_TADNEWS_NEWS_TITLE}>
                             </th>
-                            <{if $show_admin_tool_title}>
+                            <{if $show_admin_tool_title|default:false}>
                                 <th nowrap><{$smarty.const._MA_TADNEWS_CAN_READ_NEWS_GROUP}></th>
                                 <th nowrap><{$smarty.const._MA_TADNEWS_FUNCTION}></th>
                             <{/if}>
@@ -142,7 +142,7 @@
                                     <td>
                                         <span class="badge badge-secondary bg-secondary rounded-pill"><{$news.page_sort}></span>
                                         <{$news.prefix_tag}>
-                                        <{if $news.need_sign}>
+                                        <{if $news.need_sign|default:false}>
                                             <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                                         <{/if}>
                                         <{$news.enable_txt}>
@@ -151,7 +151,7 @@
                                         <a href="<{$xoops_url}>/modules/tadnews/<{$news.link_page}>?nsn=<{$news.nsn}>"><{$news.news_title}></a>
                                         <span style="color:gray;font-size: 0.8rem;"> (<a href="page.php?show_uid=<{$news.uid}>"><{$news.uid_name}></a> / <{$news.counter}>)</span> <{$news.passwd}>
                                     </td>
-                                    <{if $news.show_admin_tool}>
+                                    <{if $news.show_admin_tool|default:false}>
                                         <td><{$news.g_txt}></td>
                                         <td nowrap>
                                             <a href="javascript:delete_tad_news_func(<{$news.nsn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$news.nsn}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>

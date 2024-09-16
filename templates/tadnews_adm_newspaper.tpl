@@ -131,7 +131,7 @@
         <{$total}>
         </div>
 
-        <{if $log}>
+        <{if $log|default:false}>
             <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
                 <table class="table table-sm table-condensed">
                 <{assign var="i" value=0}>
@@ -170,7 +170,7 @@
             </div>
         </div>
 
-        <{if $log}>
+        <{if $log|default:false}>
             <div class="text-center">
                 <{$bar}>
             </div>
@@ -179,7 +179,7 @@
 
                 <{foreach from=$log item=data}>
                 <{if !$i}><tr><{/if}>
-                    <{if $data.edit}>
+                    <{if $data.edit|default:false}>
                     <td colspan=5>
                         <form action="newspaper.php" method="post">
                             <input type="text" name="new_email" value="<{$data.email}>" style="width:100%;background-color:#FFFF99;color:black;"></td><td>
@@ -235,7 +235,7 @@
             </div>
         </div>
 
-        <{if $empty}>
+        <{if $empty|default:false}>
             <div class="alert alert-danger">
                 <{$smarty.const._MA_TADNEWS_EMPTY_LOG}>
             </div>
@@ -268,7 +268,7 @@
             </div>
         </div>
 
-        <{if $nps_sn}>
+        <{if $nps_sn|default:false}>
             <table class="table table-striped table-hover table-shadow">
                 <tr>
                     <th><{$smarty.const._MA_TADNEWS_NP_TITLE}></th>

@@ -1198,7 +1198,7 @@ class Tadnews
                 $subnews[$j]['content'] = $myts->displayTarea($content, 1, 1, 1, 1, 0);
                 $subnews[$j]['post_date'] = mb_substr($start_day, 0, 10);
                 $subnews[$j]['always_top_pic'] = $this->get_news_pic($always_top, mb_substr($start_day, 0, 10));
-                $subnews[$j]['prefix_tag'] = $prefix_tags[$prefix_tag];
+                $subnews[$j]['prefix_tag'] = isset($prefix_tags[$prefix_tag]) ? $prefix_tags[$prefix_tag] : '';
                 $subnews[$j]['nsn'] = $nsn;
                 $subnews[$j]['news_title'] = $myts->htmlSpecialChars($news_title);
                 $subnews[$j]['counter'] = $counter;

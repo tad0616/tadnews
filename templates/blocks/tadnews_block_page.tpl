@@ -1,3 +1,3 @@
-<{if $block}>
+<{if $block|default:false}>
   <{$block}>
 <{/if}>

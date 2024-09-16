@@ -8,7 +8,7 @@
             <h4 class="my"><a href="index.php?ncsn=<{$news_data.ncsn}>"><{$news_data.nc_title}></a></h4>
         </div>
         <div class="col-md-10">
-            <{if $news_data.news}>
+            <{if $news_data.news|default:false}>
                 <table class="table table-striped table-hover table-shadow">
                     <tr class="my">
                         <th><a href="index.php?ncsn=<{$news_data.ncsn}>"><{$news_data.nc_title}></a></th>
@@ -19,7 +19,7 @@
                                 <div class="pull-right float-right float-end"><{$news.files}></div>
                                 <{$news.post_date}>
                                 <{$news.prefix_tag}>
-                                <{if $news.need_sign}>
+                                <{if $news.need_sign|default:false}>
                                     <img src="<{$news.need_sign}>" alt="<{$news.news_title}>" style="margin:3px;">
                                 <{/if}>
                                 <{$news.always_top_pic}>

@@ -1,4 +1,4 @@
-<{if $cate_set_tool}>
+<{if $cate_set_tool|default:false}>
     <{$toolbar}>
 <{/if}>
 
