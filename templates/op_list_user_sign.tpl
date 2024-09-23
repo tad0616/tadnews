@@ -1,5 +1,5 @@
 <h2 class="my">
-    <a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$uid_name}></a>
+    <a href="<{$xoops_url}>/userinfo.php?uid=<{$uid|default:''}>"><{$uid_name|default:''}></a>
 </h2>
 
 <div class="panel panel-default card">

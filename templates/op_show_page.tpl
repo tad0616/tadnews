@@ -1,12 +1,12 @@
 <{if $cate_set_tool|default:false}>
-    <p><{$toolbar}></p>
+    <p><{$toolbar|default:''}></p>
 <{/if}>
 
 <{if $cate_set_breadcrumbs=='1'}>
-    <{$breadcrumb}>
+    <{$breadcrumb|default:''}>
 <{/if}>
 
-<{$rating_js}>
+<{$rating_js|default:''}>
 <{if $page|default:false}>
 
     <div class="row">

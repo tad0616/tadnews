@@ -443,7 +443,7 @@ class Tadnews
             $SyntaxHighlighter->render();
         }
 
-        $where_news = '';
+        $where_news = $show_cate_title = '';
 
         //看目前是列出所有文章？還是指定目錄文章？還是單獨一頁？還是一堆指定文章
 
@@ -884,7 +884,7 @@ class Tadnews
                 $rating_js = $StarRating->render();
             }
 
-            $prefix_tag = $prefix_tags[$prefix_tag];
+            $prefix_tag = isset($prefix_tags[$prefix_tag]) ? $prefix_tags[$prefix_tag] : '';
 
             if ('app' === $mode) {
                 $prefix_tag = strip_tags($prefix_tag);
@@ -1719,7 +1719,7 @@ class Tadnews
                 $nsnsort['back']['ncsn'] = $ncsn;
                 $nsnsort['back']['nsn'] = $nsn;
                 $nsnsort['back']['title'] = $myts->htmlSpecialChars($news_title);
-                $nsnsort['back']['date'] = mb_substr($start_day, 0, 10);
+                $nsnsort['back']['date'] = !empty($start_day) ? mb_substr($start_day, 0, 10) : '';
             }
         }
 
@@ -1739,7 +1739,7 @@ class Tadnews
                 $nsnsort['next']['ncsn'] = $ncsn;
                 $nsnsort['next']['nsn'] = $nsn;
                 $nsnsort['next']['title'] = $myts->htmlSpecialChars($news_title);
-                $nsnsort['next']['date'] = mb_substr($start_day, 0, 10);
+                $nsnsort['next']['date'] = !empty($start_day) ? mb_substr($start_day, 0, 10) : '';
             }
         }
 

@@ -11,7 +11,7 @@
             <li><{$smarty.const._MB_TADNEWS_LATEST_NEWS_TAB}></li>
         <{/if}>
         <{foreach from=$block.tags key=tag_sn item=tag}>
-            <li><{$tag}></li>
+            <li><{$tag|default:''}></li>
         <{/foreach}>
     </ul>
 
@@ -20,7 +20,7 @@
             <div>
                 <{foreach from=$block.latest_news item=news}>
                     <div style="padding: 8px;">
-                        <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}> <{$news.prefix_tag}>
+                        <{$news.post_date|default:''}> <{$news.always_top_pic|default:''}><{$news.today_pic|default:''}> <{$news.prefix_tag|default:''}>
                         <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
                     </div>
                 <{/foreach}>
@@ -34,13 +34,13 @@
                 <{if $block.all_news.$tag_sn.page}>
                     <{foreach from=$block.all_news.$tag_sn.page item=news}>
                         <div style="padding: 8px;">
-                            <{$news.post_date}> <{$news.always_top_pic}><{$news.today_pic}>
+                            <{$news.post_date|default:''}> <{$news.always_top_pic|default:''}><{$news.today_pic|default:''}>
                             <a href="<{$xoops_url}>/modules/tadnews/index.php?ncsn=<{$news.ncsn}>"><{$news.cate_name}></a> /
                             <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>"><{$news.news_title}></a>
                         </div>
                     <{/foreach}>
                     <div class="text-right text-end">
-                        [ <a href="<{$xoops_url}>/modules/tadnews/index.php?tag_sn=<{$tag_sn}>">more...</a> ]
+                        [ <a href="<{$xoops_url}>/modules/tadnews/index.php?tag_sn=<{$tag_sn|default:''}>">more...</a> ]
                     </div>
                 <{/if}>
             </div>

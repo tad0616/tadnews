@@ -1,5 +1,5 @@
 <p>
-  <{$toolbar}>
+  <{$toolbar|default:''}>
 </p>
 
 <{if $page|default:false}>
@@ -32,6 +32,6 @@
             </tbody>
         </table>
     </div>
-    <{$bar}>
+    <{$bar|default:''}>
 
 <{/if}>

@@ -27,6 +27,6 @@
             <{/foreach}>
         </tbody>
     </table>
-    <{$bar}>
+    <{$bar|default:''}>
     <{include file="$xoops_rootpath/modules/tadnews/templates/sub_rss.tpl"}>
 <{/if}>

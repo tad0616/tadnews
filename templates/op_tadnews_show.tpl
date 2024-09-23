@@ -1,4 +1,4 @@
-<{$rating_js}>
+<{$rating_js|default:''}>
 
 <{if $page|default:false}>
     <{foreach from=$page item=news}>

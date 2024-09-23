@@ -1,7 +1,7 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 <!--TadNews Start-->
 <div style="margin-bottom: 30px;">
-    <{$path}>
+    <{$path|default:''}>
 </div>
 
 <{include file="$xoops_rootpath/modules/tadnews/templates/op_`$now_op`.tpl"}>

@@ -1,3 +1,3 @@
 <{if $block|default:false}>
-  <{$block}>
+  <{$block|default:''}>
 <{/if}>

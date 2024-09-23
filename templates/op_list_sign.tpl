@@ -1,5 +1,5 @@
 <h2 class="my">
-    <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$nsn}>"><{$news_title}></a>
+    <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$nsn|default:''}>"><{$news_title|default:''}></a>
 </h2>
 
 <div class="panel panel-default card">

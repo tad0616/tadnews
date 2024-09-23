@@ -1,8 +1,8 @@
 <{if $cate_set_tool|default:false}>
-    <{$toolbar}>
+    <{$toolbar|default:''}>
 <{/if}>
 
-<{$breadcrumb}>
+<{$breadcrumb|default:''}>
 
 <!--TadNews Start-->
 <{foreach from=$all_news item=news}>

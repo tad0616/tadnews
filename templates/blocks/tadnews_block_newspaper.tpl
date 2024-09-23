@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <{$XOOPS_TOKEN}>
+                <{$XOOPS_TOKEN|default:''}>
             <button type="submit" class="btn btn-info"><{$smarty.const._MB_TADNEWS_SUBMIT}></button>
             </div>
         </div>

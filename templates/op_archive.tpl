@@ -20,7 +20,7 @@
 <{if $page|default:false}>
     <div class="panel panel-default card mb-5">
         <table class="table table-striped table-bordered">
-            <tr><th><{$date_title}></th></tr>
+            <tr><th><{$date_title|default:''}></th></tr>
             <{foreach from=$page item=news}>
                 <tr>
                     <td>

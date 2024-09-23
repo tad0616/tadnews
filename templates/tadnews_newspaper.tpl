@@ -1,5 +1,5 @@
 <p>
-<{$toolbar}>
+<{$toolbar|default:''}>
 </p>
 
 <h1 class="sr-only visually-hidden" style="display: none;"><{$smarty.const._MD_TADNEWS_NEWSPAPER}></h1>
@@ -17,5 +17,5 @@
             <{/foreach}>
         </tbody>
     </table>
-    <div class="my-5"><{$bar}></div>
+    <div class="my-5"><{$bar|default:''}></div>
 <{/if}>

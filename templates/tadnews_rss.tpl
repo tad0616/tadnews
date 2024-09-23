@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-    <title><{$channel_title}></title>
-    <link><{$channel_link}></link>
-    <description><{$channel_desc}></description>
+    <title><{$channel_title|default:''}></title>
+    <link><{$channel_link|default:''}></link>
+    <description><{$channel_desc|default:''}></description>
 
 
     <{foreach from=$items item=item}>

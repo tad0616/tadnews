@@ -6,7 +6,7 @@
         $(function() {
         $('#show_pic_css_setup').show();
         $('#upfile2').change(function() {
-            $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn}>'}, function(res) {
+            $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn|default:''}>'}, function(res) {
             $('#files_sn').val(res);
             $.post("demo_upload.php", { op: "get_pic", files_sn: res }, function(data) {
                 $('#demo_cover_pic').css('background-image','url('+data+'?'+d.getTime()+')');
@@ -25,7 +25,7 @@
         $(function() {
         $('#show_pic_css_setup').hide();
         $('#upfile2').change(function() {
-            $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn}>'}, function(res) {
+            $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn|default:''}>'}, function(res) {
             $('#show_pic_css_setup').show();
             $('#files_sn').val(res);
 
@@ -38,7 +38,7 @@
     </script>
 <{/if}>
 
-<input type="hidden" name="files_sn" id="files_sn" value="<{$files_sn}>">
+<input type="hidden" name="files_sn" id="files_sn" value="<{$files_sn|default:''}>">
 
 <div class="row">
     <div class="col-md-12">
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-6">
             <{if $pic|default:false}>
-                <a href="post.php?op=delete_cover&nsn=<{$nsn}>"><{$smarty.const._TAD_DEL}><{$smarty.const._MD_TADNEWS_NEWSPIC_TAB}></a>
+                <a href="post.php?op=delete_cover&nsn=<{$nsn|default:''}>"><{$smarty.const._TAD_DEL}><{$smarty.const._MD_TADNEWS_NEWSPIC_TAB}></a>
             <{/if}>
         </div>
     </div>
@@ -76,8 +76,8 @@
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_WIDTH}>
                     </label>
                     <div>
-                        <input type="text" name="pic_css[width]" value="<{$pic_css_width}>" class="form-control" onChange="$('#demo_cover_pic').css('width',this.value+'px');" style="width: 60px; display: inline;"> x
-                        <input type="text" name="pic_css[height]" value="<{$pic_css_height}>" class="form-control" onChange="$('#demo_cover_pic').css('height',this.value+'px');" style="width: 60px; display: inline;"> px
+                        <input type="text" name="pic_css[width]" value="<{$pic_css_width|default:''}>" class="form-control" onChange="$('#demo_cover_pic').css('width',this.value+'px');" style="width: 60px; display: inline;"> x
+                        <input type="text" name="pic_css[height]" value="<{$pic_css_height|default:''}>" class="form-control" onChange="$('#demo_cover_pic').css('height',this.value+'px');" style="width: 60px; display: inline;"> px
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER}><{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_WIDTH}>
                     </label>
-                    <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width}>" class="form-control" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');" style="width: 80%; display: inline;"> px
+                    <input type="text" name="pic_css[border_width]" value="<{$pic_css_border_width|default:''}>" class="form-control" onChange="$('#demo_cover_pic').css('border-width',this.value+'px');" style="width: 80%; display: inline;"> px
                 </div>
 
                 <div class="col-md-3">
@@ -120,7 +120,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_COLOR}>
                     </label>
-                    <input type="text" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color}>" data-text="hidden" data-hex="true" style="height: 40px; width: 40px;" onChange="$('#demo_cover_pic').css('border-color',this.value);">
+                    <input type="text" name="pic_css[border_color]" id="border_color" value="<{$pic_css_border_color|default:''}>" data-text="hidden" data-hex="true" style="height: 40px; width: 40px;" onChange="$('#demo_cover_pic').css('border-color',this.value);">
                 </div>
             </div>
 
@@ -169,7 +169,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_MARGIN}>
                     </label>
-                    <input type="text" name="pic_css[margin]" value="<{$pic_css_margin}>" class="form-control" onChange="$('#demo_cover_pic').css('margin',this.value + 'px');" style="width: 80%; display: inline;"> px
+                    <input type="text" name="pic_css[margin]" value="<{$pic_css_margin|default:''}>" class="form-control" onChange="$('#demo_cover_pic').css('margin',this.value + 'px');" style="width: 80%; display: inline;"> px
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
         <div class="row" style="margin: 10px 0px;">
             <div class="col-md-12">
                 <div class="alert alert-success">
-                    <div id="demo_cover_pic" style="color:transparent; background-image: url('<{$pic}>');<{$pic_css}>"><{$pic_css}></div>
+                    <div id="demo_cover_pic" style="color:transparent; background-image: url('<{$pic|default:''}>');<{$pic_css|default:''}>"><{$pic_css|default:''}></div>
                     <{$smarty.const._MD_TADNEWS_NEWSPIC_DEMO}>
                 </div>
             </div>

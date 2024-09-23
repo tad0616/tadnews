@@ -5,7 +5,7 @@
     <select id="ncsn<{$block.randStr}>">
         <option value=""></option>
         <{foreach from=$block.ncsn key=ncsn item=title}>
-            <option value="<{$ncsn}>"><{$title}></option>
+            <option value="<{$ncsn|default:''}>"><{$title|default:''}></option>
         <{/foreach}>
     </select>
     <label for="tag_sn<{$block.randStr}>">
@@ -14,7 +14,7 @@
     <select id="tag_sn<{$block.randStr}>">
         <option value=""></option>
         <{foreach from=$block.tag key=tag_sn item=tag}>
-            <option value="<{$tag_sn}>"><{$tag}></option>
+            <option value="<{$tag_sn|default:''}>"><{$tag|default:''}></option>
         <{/foreach}>
     </select>
     <label for="keyword<{$block.randStr}>">

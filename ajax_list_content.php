@@ -6,6 +6,9 @@ use XoopsModules\Tadnews\Tadnews;
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('blocks', 'tadnews');
 
+error_reporting(0);
+$xoopsLogger->activated = false;
+
 $num = Request::getInt('num', 10);
 $show_ncsn = Request::getString('show_ncsn');
 $summary_length = Request::getInt('summary_length');

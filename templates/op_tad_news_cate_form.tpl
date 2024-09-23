@@ -6,7 +6,7 @@
                 <{$smarty.const._MA_TADNEWS_CATE_TITLE}>
             </label>
             <div class="col-md-10">
-                <input type="text" name="nc_title" id="nc_title" class="form-control" value="<{$nc_title}>">
+                <input type="text" name="nc_title" id="nc_title" class="form-control" value="<{$nc_title|default:''}>">
             </div>
         </div>
 
@@ -16,7 +16,7 @@
             </label>
             <div class="col-md-4">
                 <select name="of_ncsn" size=1 id="of_ncsn" class="form-control">
-                <{$cate_select}>
+                <{$cate_select|default:''}>
                 </select>
             </div>
             <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
@@ -33,7 +33,7 @@
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}>
             </label>
             <div class="col-md-4">
-                <{$enable_group}>
+                <{$enable_group|default:''}>
             </div>
 
             <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
@@ -41,7 +41,7 @@
                 <{$smarty.const._MA_TADNEWS_CAN_POST_CATE_GROUP_TXT}>
             </label>
             <div class="col-md-4">
-                <{$enable_post_group}>
+                <{$enable_post_group|default:''}>
             </div>
         </div>
 
@@ -68,9 +68,9 @@
 
     <div class="text-center">
         <input type="hidden" name="not_news" value="0">
-        <input type="hidden" name="ncsn" value="<{$ncsn}>">
-        <input type="hidden" name="op" value="<{$cate_op}>">
-        <{$XOOPS_TOKEN}>
+        <input type="hidden" name="ncsn" value="<{$ncsn|default:''}>">
+        <input type="hidden" name="op" value="<{$cate_op|default:''}>">
+        <{$XOOPS_TOKEN|default:''}>
         <button type="submit" class="btn btn-info">
         <{if $ncsn==""}>
             <{$smarty.const._MA_TADNEWS_ADD_CATE}>

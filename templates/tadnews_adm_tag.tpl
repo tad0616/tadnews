@@ -13,12 +13,12 @@
             <{if $tag_sn==""}>
                 <tr style="background-color: antiquewhite;">
                     <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
-                    <td><input type="text" name="tag" value="<{$tag}>" class="form-control"></td>
+                    <td><input type="text" name="tag" value="<{$tag|default:''}>" class="form-control"></td>
                     <td>
-                        <input type="text" name="font_color" class="form-control color" value="<{$font_color}>" id="font_color" data-text="hidden" data-hex="true">
+                        <input type="text" name="font_color" class="form-control color" value="<{$font_color|default:''}>" id="font_color" data-text="hidden" data-hex="true">
                     </td>
                     <td>
-                        <input type="text" name="color" class="form-control color" value="<{$color}>" id="color" data-text="hidden" data-hex="true">
+                        <input type="text" name="color" class="form-control color" value="<{$color|default:''}>" id="color" data-text="hidden" data-hex="true">
                     </td>
                     <td>
                         <div class="form-check-inline radio-inline">
@@ -36,7 +36,7 @@
                     </td>
                     <td>
                         <input type="hidden" name="op" value="insert_tad_news_tags">
-                        <{$XOOPS_TOKEN}>
+                        <{$XOOPS_TOKEN|default:''}>
                         <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
                     </td>
                 </tr>
@@ -69,9 +69,9 @@
                             </div>
                         </td>
                         <td>
-                        <input type="hidden" name="tag_sn" value="<{$tag_sn}>">
+                        <input type="hidden" name="tag_sn" value="<{$tag_sn|default:''}>">
                         <input type="hidden" name="op" value="update_tad_news_tags">
-                        <{$XOOPS_TOKEN}>
+                        <{$XOOPS_TOKEN|default:''}>
                         <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
                         </td>
                     </tr>

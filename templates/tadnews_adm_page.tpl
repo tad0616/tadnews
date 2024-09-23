@@ -51,7 +51,7 @@
         <div class="col-md-3">
             <div id="save_msg"></div>
             <div style="max-height: 300px; overflow: auto;">
-                <{$ztree_code}>
+                <{$ztree_code|default:''}>
             </div>
 
             <{if $ncsn|default:false}>
@@ -61,7 +61,7 @@
                             <{if !$cate.count}>
                                 <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-sm btn-xs btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
                             <{/if}>
-                            <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                            <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn|default:''}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
                         <{/if}>
                     </div>
                     <h3 class="my">
@@ -100,8 +100,8 @@
                             <div style="margin: 10px;">
                                 <{if $now_op!="tad_news_cate_form" and $ncsn}>
                                     <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                    <a href="<{$php_self}>?not_news=0&op=change_kind&ncsn=<{$ncsn}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_NEWS}></a>
-                                    <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
+                                    <a href="<{$php_self|default:''}>?not_news=0&op=change_kind&ncsn=<{$ncsn|default:''}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_NEWS}></a>
+                                    <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn|default:''}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
                                 <{/if}>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                         </tbody>
                     </table>
                     <p class="my-5">
-                        <{$bar}>
+                        <{$bar|default:''}>
                     </p>
 
                     <div class="alert alert-info" id="batch_tool" style="display: none;">
@@ -177,12 +177,12 @@
                                 <{$smarty.const._TADNEWS_MOVE_TO}>
                             </label>
                             <div class="col-md-4">
-                                <select name='ncsn' class="form-control" onChange="check_one('move',false)"><{$options}></select>
+                                <select name='ncsn' class="form-control" onChange="check_one('move',false)"><{$options|default:''}></select>
                             </div>
                             <div class="col-md-3">
                                 <input type='hidden' name='kind' value='news'>
                                 <input type='hidden' name='op' value='batch'>
-                                <{$XOOPS_TOKEN}>
+                                <{$XOOPS_TOKEN|default:''}>
                                 <button type='submit' class='btn btn-primary'><{$smarty.const._TAD_SUBMIT}></button>
                             </div>
                         </div>

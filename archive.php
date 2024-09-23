@@ -13,6 +13,8 @@ $op = Request::getString('op');
 $files_sn = Request::getInt('files_sn');
 $date = Request::getString('date', date('Y-m'));
 $date = mb_substr($date, 0, 7);
+list($year, $month) = explode('-', $date);
+$date = checkdate($year, $month, 1) ? $date : date('Y-m');
 
 switch ($op) {
     //下載檔案
