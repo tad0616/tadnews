@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Ztree;
 if (!class_exists('XoopsModules\Tadtools\Ztree')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
@@ -10,14 +11,16 @@ function tadnews_cate_show($options)
     global $xoopsDB;
 
     $cates = $counter = [];
-    $sql = 'SELECT count(*), `ncsn` FROM ' . $xoopsDB->prefix('tad_news') . " where `enable`=1 group by `ncsn` ";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT COUNT(*), `ncsn` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 GROUP BY `ncsn`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($count, $ncsn) = $xoopsDB->fetchRow($result)) {
         $counter[$ncsn] = $count;
     }
 
-    $sql = 'SELECT ncsn, of_ncsn, nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
-    $result = $xoopsDB->query($sql);
+    $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? ORDER BY `sort`';
+    $result = Utility::query($sql, 's', ['1']);
+
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $cates['title'][$ncsn] = $nc_title;
         $cates['of_ncsn'][$ncsn] = $of_ncsn;

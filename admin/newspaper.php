@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -119,11 +120,12 @@ if ('preview' === $op) {
 //找出現有電子報
 function newspaper_set_table($sel_nps_sn = '')
 {
-    global $xoopsDB, $xoopsTpl, $op;
+    global $xoopsDB, $xoopsTpl;
     $option = '';
     //找出現有設定組
-    $sql = 'SELECT nps_sn,title FROM ' . $xoopsDB->prefix('tad_news_paper_setup') . '';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `nps_sn`,`title` FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
         if ($sel_nps_sn == $nps_sn) {
             $selected = 'selected';
@@ -138,9 +140,9 @@ function newspaper_set_table($sel_nps_sn = '')
         header("location:{$_SERVER['PHP_SELF']}?op=creat_newspaper");
     }
 
-    $sql = 'select a.npsn,a.number,b.title,a.np_date from ' . $xoopsDB->prefix('tad_news_paper') . ' as a ,' . $xoopsDB->prefix('tad_news_paper_setup') . " as b where a.nps_sn=b.nps_sn and b.nps_sn='{$sel_nps_sn}' order by a.np_date desc";
+    $sql = 'SELECT a.npsn, a.number, b.title, a.np_date FROM `' . $xoopsDB->prefix('tad_news_paper') . '` AS a, `' . $xoopsDB->prefix('tad_news_paper_setup') . '` AS b WHERE a.nps_sn = b.nps_sn AND b.nps_sn =? ORDER BY a.np_date DESC';
+    $result = Utility::query($sql, 'i', [$sel_nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $total = $xoopsDB->getRowsNum($result);
 
     $js = "
@@ -227,7 +229,7 @@ function newspaper_themes($themes = '')
 //建立電子報
 function open_newspaper($nps_sn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig, $xoopsTpl, $op;
+    global $xoopsUser, $xoopsConfig, $xoopsTpl;
 
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
@@ -260,25 +262,27 @@ function open_newspaper($nps_sn = '')
 //儲存電子報設定
 function save_newspaper_set($nps_sn = '')
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
     //安全判斷
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
-    $myts = \MyTextSanitizer::getInstance();
-    $title = $xoopsDB->escape($_POST['title']);
-    $head = $xoopsDB->escape($_POST['head']);
-    $foot = $xoopsDB->escape($_POST['foot']);
-    $themes = $xoopsDB->escape($_POST['themes']);
+
+    $title = $_POST['title'];
+    $head = $_POST['head'];
+    $foot = $_POST['foot'];
+    $themes = $_POST['themes'];
 
     if (empty($nps_sn)) {
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_news_paper_setup') . " (title,head,foot,themes,status) values('{$title}','{$head}','{$foot}','{$themes}','1')";
-    } else {
-        $sql = 'update ' . $xoopsDB->prefix('tad_news_paper_setup') . " set title='{$title}',head='{$head}',foot='{$foot}',themes='{$themes}' where nps_sn='{$nps_sn}'";
-    }
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_paper_setup') . '` (`title`, `head`, `foot`, `themes`, `status`) VALUES (?, ?, ?, ?, ?)';
+        Utility::query($sql, 'ssssi', [$title, $head, $foot, $themes, 1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    } else {
+        $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_paper_setup') . '` SET `title`=?, `head`=?, `foot`=?, `themes`=? WHERE `nps_sn`=?';
+        Utility::query($sql, 'ssssi', [$title, $head, $foot, $themes, $nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
+    }
 
     //取得最後新增資料的流水編號
     $nps_sn = (empty($nps_sn)) ? $xoopsDB->getInsertId() : $nps_sn;
@@ -290,8 +294,9 @@ function save_newspaper_set($nps_sn = '')
 function get_max_number($nps_sn = '')
 {
     global $xoopsDB;
-    $sql = 'select max(`number`) from ' . $xoopsDB->prefix('tad_news_paper') . " where nps_sn='{$nps_sn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT MAX(`number`) FROM `' . $xoopsDB->prefix('tad_news_paper') . '` WHERE `nps_sn`=?';
+    $result = Utility::query($sql, 'i', [$nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($number) = $xoopsDB->fetchRow($result);
     $max_number = (empty($number)) ? 1 : $number + 1;
 
@@ -301,12 +306,12 @@ function get_max_number($nps_sn = '')
 //選擇電子報內容
 function add_newspaper($nps_sn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
-    $cates = get_all_news_cate();
+    $cates = Tools::get_all_news_cate();
     $myts = \MyTextSanitizer::getInstance();
-    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1' ORDER BY start_day DESC";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 ORDER BY `start_day` DESC';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $opt = '';
     while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
@@ -331,7 +336,7 @@ function add_newspaper($nps_sn = '')
 //儲存電子報內容
 function save_newspaper()
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
     //安全判斷
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
@@ -341,8 +346,8 @@ function save_newspaper()
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_news_paper') . " (`nps_sn`, `number`, `nsn_array`,`np_content`, `np_date`) values('{$_POST['nps_sn']}','{$_POST['number']}','{$all_news}','','$now')";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_paper') . '` (`nps_sn`, `number`, `nsn_array`, `np_content`, `np_date`) VALUES (?, ?, ?, ?, ?)';
+    Utility::query($sql, 'issss', [$_POST['nps_sn'], $_POST['number'], $all_news, '', $now]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $npsn = $xoopsDB->getInsertId();
@@ -353,8 +358,8 @@ function save_newspaper()
 //【步驟三】編輯電子報
 function edit_newspaper($npsn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $Tadnews;
-    $cates = get_all_news_cate();
+    global $xoopsDB, $xoopsTpl, $Tadnews;
+    $cates = Tools::get_all_news_cate();
     $newspaper = get_newspaper($npsn);
     $newspaper_set = get_newspaper_set($newspaper['nps_sn']);
     $myts = \MyTextSanitizer::getInstance();
@@ -362,13 +367,18 @@ function edit_newspaper($npsn = '')
     if (empty($newspaper['np_content'])) {
         $html = '';
         if (empty($newspaper['nsn_array'])) {
-            $news = 'limit 0,10';
+            $news = 'LIMIT 0, 10';
         } else {
-            $news = "where nsn in({$newspaper['nsn_array']}) order by find_in_set(nsn,'{$newspaper['nsn_array']}');";
+            $news = "WHERE `nsn` IN ({$newspaper['nsn_array']})
+                     ORDER BY FIND_IN_SET(`nsn`, '{$newspaper['nsn_array']}')";
         }
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " $news";
 
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT *
+                FROM `' . $xoopsDB->prefix('tad_news') . '`
+                ' . $news;
+
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
         while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
             $news_title = $myts->htmlSpecialChars($news_title);
             $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
@@ -409,14 +419,10 @@ function edit_newspaper($npsn = '')
 //儲存所有內容
 function save_all($npsn = '')
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $np_content = $xoopsDB->escape($_POST['np_content']);
-    $np_title = $xoopsDB->escape($_POST['np_title']);
-
-    $sql = 'update ' . $xoopsDB->prefix('tad_news_paper') . " set np_content='{$np_content}',np_title='{$np_title}' where npsn='{$npsn}'";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_paper') . '` SET `np_content`=?, `np_title`=? WHERE `npsn`=?';
+    Utility::query($sql, 'ssi', [$_POST['np_content'], $_POST['np_title'], $npsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $npsn;
 }
@@ -424,12 +430,13 @@ function save_all($npsn = '')
 //寄信表單
 function sendmail_form($npsn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
     $newspaper = get_newspaper($npsn);
 
     //取得郵寄名單
-    $sql = 'select email from ' . $xoopsDB->prefix('tad_news_paper_email') . " where nps_sn='{$newspaper['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `email` FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `nps_sn` =?';
+    $result = Utility::query($sql, 'i', [$newspaper['nps_sn']]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $total = $xoopsDB->getRowsNum($result);
 
     while (list($email) = $xoopsDB->fetchRow($result)) {
@@ -441,8 +448,9 @@ function sendmail_form($npsn = '')
     }
 
     //取得已寄名單
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_paper_send_log') . '` WHERE `npsn`=? ORDER BY `send_time`';
+    $result = Utility::query($sql, 'i', [$npsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $npsn, $email, $send_time, $log
         foreach ($all as $k => $v) {
@@ -482,7 +490,7 @@ function sendmail_form($npsn = '')
 //立即寄出
 function send_now($npsn = '')
 {
-    global $xoopsConfig, $xoopsUser, $xoopsDB;
+    global $xoopsDB;
 
     $mail_array = $_POST['mail_array'];
 
@@ -507,11 +515,11 @@ function send_now($npsn = '')
         }
 
         if ($xoopsMailer->sendMail($email, $subject, $content, $headers)) {
-            $sql = 'replace into ' . $xoopsDB->prefix('tad_news_paper_send_log') . " (npsn,email,send_time,log) values('{$npsn}','{$email}','{$now}', 'success')";
-            $xoopsDB->queryF($sql);
+            $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_news_paper_send_log') . '` (`npsn`, `email`, `send_time`, `log`) VALUES (?, ?, ?, ?)';
+            Utility::query($sql, 'isss', [$npsn, $email, $now, 'success']);
         } else {
-            $sql = 'replace into ' . $xoopsDB->prefix('tad_news_paper_send_log') . " (npsn,email,send_time,log) values('{$npsn}','{$email}','{$now}','fail')";
-            $xoopsDB->queryF($sql);
+            $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_news_paper_send_log') . '` (`npsn`, `email`, `send_time`, `log`) VALUES (?, ?, ?, ?)';
+            Utility::query($sql, 'isss', [$npsn, $email, $now, 'fail']);
         }
     }
 }
@@ -521,8 +529,9 @@ function del_newspaper($npsn = '')
 {
     global $xoopsDB;
 
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_news_paper') . " where npsn='{$npsn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper') . '` WHERE `npsn`=?';
+    Utility::query($sql, 'i', [$npsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 //刪除電子報設定組
@@ -530,14 +539,15 @@ function del_newspaper_set($nps_sn = '')
 {
     global $xoopsDB;
 
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_news_paper_setup') . " where nps_sn='{$nps_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '` WHERE `nps_sn`=?';
+    Utility::query($sql, 'i', [$nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 //Email 管理
 function newspaper_email($nps_sn = '', $memail = '', $g2p = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
     $np = get_newspaper_set($nps_sn);
 
@@ -600,28 +610,29 @@ function check_email_mx($email)
 //刪除Email
 function delete_tad_news_email($email = '', $nps_sn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
+    global $xoopsDB;
 
     $email_part = mb_substr($email, 0, 15);
 
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_news_paper_email') . " where email like '{$email_part}%' and nps_sn='{$nps_sn}'";
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `email` LIKE ? AND `nps_sn`=?';
+    Utility::query($sql, 'si', [$email_part . '%', $nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //更新Email
 function update_email($old_email, $new_email, $nps_sn)
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
+    global $xoopsDB;
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_news_paper_email') . " set email='$new_email' where email='$old_email' and nps_sn='{$nps_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_paper_email') . '` SET `email`=? WHERE `email`=? AND `nps_sn`=?';
+    Utility::query($sql, 'ssi', [$new_email, $old_email, $nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 //匯入Email
 function email_import($email_import = '', $nps_sn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
+    global $xoopsDB;
     if (empty($email_import)) {
         return;
     }
@@ -637,8 +648,9 @@ function email_import($email_import = '', $nps_sn = '')
         $email = str_replace('"', '', $email);
 
         if (!empty($email)) {
-            $sql = 'replace into ' . $xoopsDB->prefix('tad_news_paper_email') . " (`nps_sn`,`email`,`order_date`) values('$nps_sn','$email','{$now}')";
-            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_news_paper_email') . '` (`nps_sn`, `email`, `order_date`) VALUES (?, ?, ?)';
+            Utility::query($sql, 'iss', [$nps_sn, $email, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
+
         }
     }
 }
@@ -646,14 +658,14 @@ function email_import($email_import = '', $nps_sn = '')
 //秀出郵寄結果
 function sendmail_log($npsn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
     $newspaper = get_newspaper($npsn);
     $np = get_newspaper_set($newspaper['nps_sn']);
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper_send_log') . " where `npsn`='$npsn' order by send_time";
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_paper_send_log') . '` WHERE `npsn`=? ORDER BY `send_time`';
+    $result = Utility::query($sql, 'i', [$npsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $total = $xoopsDB->getRowsNum($result);
     $empty = false;
     if (empty($total)) {

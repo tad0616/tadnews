@@ -15,10 +15,14 @@
                     <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
                     <td><input type="text" name="tag" value="<{$tag|default:''}>" class="form-control"></td>
                     <td>
-                        <input type="text" name="font_color" class="form-control color" value="<{$font_color|default:''}>" id="font_color" data-text="hidden" data-hex="true">
+                        <div class="input-group">
+                            <input type="text" name="font_color" class="form-control color-picker" value="<{$font_color|default:''}>" id="font_color"  data-hex="true">
+                        </div>
                     </td>
                     <td>
-                        <input type="text" name="color" class="form-control color" value="<{$color|default:''}>" id="color" data-text="hidden" data-hex="true">
+                        <div class="input-group">
+                            <input type="text" name="color" class="form-control color-picker" value="<{$color|default:''}>" id="color"  data-hex="true">
+                        </div>
                     </td>
                     <td>
                         <div class="form-check-inline radio-inline">
@@ -49,10 +53,14 @@
                         <td><input type="text" name="tag" value="<{$tag.tag}>" class="form-control"></td>
 
                         <td>
-                            <input type="text" name="font_color" class="form-control color" value="<{$tag.font_color}>" id="font_color" data-text="hidden" data-hex="true">
+                            <div class="input-group">
+                                <input type="text" name="font_color" class="form-control color-picker" value="<{$tag.font_color}>" id="font_color" data-hex="true">
+                            </div>
                         </td>
                         <td>
-                            <input type="text" name="color" class="form-control color" value="<{$tag.color}>" id="color" data-text="hidden" data-hex="true">
+                            <div class="input-group">
+                                <input type="text" name="color" class="form-control color-picker" value="<{$tag.color}>" id="color" data-hex="true">
+                            </div>
                         </td>
                         <td>
                             <div class="form-check-inline radio-inline">

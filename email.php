@@ -23,12 +23,13 @@ function update_mail($nps_sn = '', $newspaper_email = '', $mode = '')
 
     if ('add' === $mode) {
         $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-        $sql = 'replace into ' . $xoopsDB->prefix('tad_news_paper_email') . " (nps_sn,email,order_date) values('{$nps_sn}','{$newspaper_email}','{$now}')";
-        $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_ERROR, $newspaper_set['title']));
+        $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_news_paper_email') . '` (`nps_sn`, `email`, `order_date`) VALUES (?, ?, ?)';
+        Utility::query($sql, 'iss', [$nps_sn, $newspaper_email, $now]) or redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_ERROR, $newspaper_set['title']));
         redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_SUCCESS, $newspaper_set['title']));
     } elseif ('del' === $mode) {
-        $sql = 'delete from ' . $xoopsDB->prefix('tad_news_paper_email') . " where email='{$newspaper_email}'";
-        $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_ERROR, $newspaper_set['title']));
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `email`=?';
+        Utility::query($sql, 's', [$newspaper_email]) or redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_ERROR, $newspaper_set['title']));
+
         redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_SUCCESS, $newspaper_set['title']));
     }
 }

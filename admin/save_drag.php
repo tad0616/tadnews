@@ -11,8 +11,8 @@ if (chk_cate_path($ncsn, $of_ncsn)) {
     die('不可移至自己的子目錄下');
 }
 
-$sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . " set `of_ncsn`='{$of_ncsn}' where `ncsn`='{$ncsn}'";
-$xoopsDB->queryF($sql) or die('Reset Fail! (' . date('Y-m-d H:i:s') . ')');
+$sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `of_ncsn`=? WHERE `ncsn`=?';
+Utility::query($sql, 'ii', [$of_ncsn, $ncsn]) or die('Reset Fail! (' . date('Y-m-d H:i:s') . ')');
 
 echo _MA_TREETABLE_MOVE_OK . ' (' . date('Y-m-d H:i:s') . ')';
 
@@ -21,8 +21,9 @@ function chk_cate_path($ncsn, $to_ncsn)
 {
     global $xoopsDB;
     //抓出子目錄的編號
-    $sql = 'select ncsn from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$ncsn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn` = ?';
+    $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {
         if (chk_cate_path($sub_ncsn, $to_ncsn)) {
             return true;

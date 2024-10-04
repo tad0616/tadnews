@@ -87,10 +87,9 @@ function list_tadnews_cate_tree($def_ncsn = '')
 {
     global $xoopsDB, $xoopsTpl;
 
-    $myts = MyTextSanitizer::getInstance();
+    $sql = 'SELECT `ncsn`, COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `ncsn`';
+    $result = Utility::query($sql);
 
-    $sql = 'SELECT ncsn , count(*) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY ncsn';
-    $result = $xoopsDB->query($sql);
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;
     }
@@ -99,8 +98,9 @@ function list_tadnews_cate_tree($def_ncsn = '')
 
     $data[] = "{ id:0, pId:0, name:'" . _MA_TADNEWS_ALL_NEWS . "', url:'main.php', target:'_self', open:true}";
 
-    $sql = 'SELECT ncsn,of_ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' ORDER BY sort";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=\'1\' ORDER BY `sort`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $nc_title = addslashes($nc_title);
 

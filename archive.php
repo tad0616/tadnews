@@ -48,9 +48,9 @@ function month_list($now_date = '')
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT left(start_day,7) , count(*) FROM ' . $xoopsDB->prefix('tad_news') . " WHERE enable='1'  GROUP BY left(start_day,7) ORDER BY start_day DESC";
+    $sql = 'SELECT LEFT(`start_day`, 7), COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 GROUP BY LEFT(`start_day`, 7) ORDER BY `start_day` DESC';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
         $opt[$i]['value'] = $ym;

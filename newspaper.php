@@ -36,7 +36,7 @@ if ('preview' === $op) {
 //列出newspaper資料
 function list_newspaper()
 {
-    global $xoopsDB, $xoopsOption, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
 
     $myts = \MyTextSanitizer::getInstance();
 
@@ -47,7 +47,7 @@ function list_newspaper()
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $main = [];
     while (list($allnpsn, $number, $title, $np_date) = $xoopsDB->fetchRow($result)) {

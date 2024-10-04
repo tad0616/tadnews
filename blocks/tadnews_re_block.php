@@ -8,15 +8,15 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 function tadnews_b_show_3($options)
 {
     global $xoopsDB;
-    require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+
     $moduleHandler = xoops_getHandler('module');
     $xoopsModule = $moduleHandler->getByDirname('tadnews');
     $com_modid = $xoopsModule->getVar('mid');
-    $sql = 'select com_id,com_text,com_itemid,com_uid from ' . $xoopsDB->prefix('xoopscomments') . " where com_modid='$com_modid' order by com_modified desc limit 0,{$options[0]}";
-    //die($sql);
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `com_id`, `com_text`, `com_itemid`, `com_uid` FROM `' . $xoopsDB->prefix('xoopscomments') . '` WHERE `com_modid`=? ORDER BY `com_modified` DESC LIMIT 0, ?';
+    $result = Utility::query($sql, 'ii', [$com_modid, $options[0]]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $block['width'] = $options[1];
-    $myts = \MyTextSanitizer::getInstance();
+
     $i = 0;
     while (list($com_id, $txt, $nsn, $uid) = $xoopsDB->fetchRow($result)) {
         $txt = strip_tags($txt);
@@ -24,7 +24,7 @@ function tadnews_b_show_3($options)
         $txt = mb_substr($txt, 0, $options[1], _CHARSET);
         $txt .= '...';
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-        $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
         $re['uid'] = $uid;
         $re['uid_name'] = $uid_name;
         $re['nsn'] = $nsn;

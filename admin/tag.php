@@ -53,12 +53,13 @@ function list_tad_news_tags($def_tag_sn = '')
 {
     global $xoopsDB, $xoopsTpl, $Tadnews;
 
-    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_news_tags') . '';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $i = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
-        $tag_amount = (int) $tags_used_amount[$tag_sn];
+        $tag_amount = isset($tags_used_amount[$tag_sn]) ? (int) $tags_used_amount[$tag_sn] : 0;
 
         $tagarr[$i]['tag_sn'] = $tag_sn;
         $tagarr[$i]['prefix_tag'] = $Tadnews->mk_prefix_tag($tag_sn, 'all');
@@ -83,12 +84,11 @@ function list_tad_news_tags($def_tag_sn = '')
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new \XoopsFormHiddenToken();
     $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
-    $MColorPicker = new MColorPicker('.color');
-    $MColorPicker->render();
+    $MColorPicker = new MColorPicker('.color-picker');
+    $MColorPicker->render('bootstrap');
 
     $SweetAlert = new SweetAlert();
     $SweetAlert->render('delete_tag', 'tag.php?op=del_tag&tag_sn=', 'tag_sn');
-    return $main;
 }
 
 function insert_tad_news_tags()
@@ -100,40 +100,44 @@ function insert_tad_news_tags()
         redirect_header('index.php', 3, $error);
     }
 
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_news_tags') . "  (`tag` , `font_color`, `color`  , `enable`) values('{$_POST['tag']}', '{$_POST['font_color']}', '{$_POST['color']}', '{$_POST['enable']}') ";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_tags') . '` (`tag`, `font_color`, `color`, `enable`) VALUES (?, ?, ?, ?)';
+    Utility::query($sql, 'ssss', [$_POST['tag'], $_POST['font_color'], $_POST['color'], $_POST['enable']]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 function update_tad_news_tags($tag_sn)
 {
     global $xoopsDB;
-    $sql = 'update ' . $xoopsDB->prefix('tad_news_tags') . "  set  tag = '{$_POST['tag']}',font_color = '{$_POST['font_color']}',color = '{$_POST['color']}',enable = '{$_POST['enable']}' where tag_sn='{$tag_sn}'";
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_tags') . '` SET `tag`=?, `font_color`=?, `color`=?, `enable`=? WHERE `tag_sn`=?';
+    Utility::query($sql, 'ssssi', [$_POST['tag'], $_POST['font_color'], $_POST['color'], $_POST['enable'], $tag_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 function tad_news_tags_stat($enable, $tag_sn)
 {
     global $xoopsDB;
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_news_tags') . "  set enable = '{$enable}' where tag_sn='{$tag_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_tags') . '` SET `enable` = ? WHERE `tag_sn` = ?';
+    Utility::query($sql, 'ii', [$enable, $tag_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 function del_tag($tag_sn = '')
 {
     global $xoopsDB;
 
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_news_tags') . " where tag_sn='{$tag_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `tag_sn`=?';
+    Utility::query($sql, 'i', [$tag_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 function tags_used_amount()
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsDB;
 
-    $sql = 'SELECT prefix_tag,count(prefix_tag) FROM ' . $xoopsDB->prefix('tad_news') . ' GROUP BY prefix_tag ';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `prefix_tag`, COUNT(`prefix_tag`) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `prefix_tag`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $main = [];
     while (list($prefix_tag, $count) = $xoopsDB->fetchRow($result)) {
         $main[$prefix_tag] = $count;

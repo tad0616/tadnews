@@ -6,19 +6,32 @@ function mk_rss()
     global $xoopsDB, $xoopsConfig;
     xoops_load('XoopsLocal');
     $myts = \MyTextSanitizer::getInstance();
-    $sql = 'SELECT ncsn,nc_title FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news!='1' AND enable_group=''";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `ncsn`,`nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? AND `enable_group`=?';
+    $result = Utility::query($sql, 'ss', ['1', '']) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_ok[] = $ncsn;
         $cates[$ncsn] = $nc_title;
     }
 
     $ok_cate = implode(',', $ncsn_ok);
-    $where_cate = (empty($ok_cate)) ? "and ncsn='0'" : "and (ncsn in($ok_cate) or ncsn='0')";
+    $where_cate = empty($ok_cate) ? "AND ncsn = '0'" : "AND (ncsn IN ($ok_cate) OR ncsn = '0')";
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_news') . " where enable='1' and passwd='' and enable_group='' $where_cate and start_day < '{$today}' and (end_day > '{$today}' or end_day='0000-00-00 00:00:00') order by $top_order start_day desc limit 0 , 30";
 
-    $result = $xoopsDB->query($sql) or redirect_header(XOOPS_URL, 3, $sql);
+    $sql = 'SELECT *
+        FROM `' . $xoopsDB->prefix('tad_news') . '`
+        WHERE `enable` = ?
+        AND `passwd` = ?
+        AND `enable_group` = ?
+        ' . $where_cate . '
+        AND `start_day` < ?
+        AND (`end_day` > ? OR `end_day` = ?)
+        ORDER BY `start_day` DESC
+        LIMIT 0, 30';
+
+    $params = ['1', '', '', $today, $today, '0000-00-00 00:00:00'];
+    $result = Utility::query($sql, str_repeat('s', count($params)), $params) or redirect_header(XOOPS_URL, 3, $sql);
+
     $allItem = '';
     while (false !== ($all_news = $xoopsDB->fetchArray($result))) {
         foreach ($all_news as $k => $v) {

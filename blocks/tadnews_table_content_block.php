@@ -1,15 +1,18 @@
 <?php
-use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
 
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
+use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadnews\Tools')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
 
 //區塊主函式 (表格式新聞)
 function tadnews_table_content_block_show($options)
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme;
+    global $xoopsModule, $xoTheme;
 
     $block['randStr'] = Utility::randStr(8);
     $block['num'] = $options[0];
@@ -23,8 +26,8 @@ function tadnews_table_content_block_show($options)
     $block['show_ncsn'] = isset($options[8]) ? $options[8] : '';
     $block['searchbar'] = $options[9];
 
-    $block['ncsn'] = get_all_news_cate($options[8]);
-    $block['tag'] = get_all_news_tag();
+    $block['ncsn'] = Tools::get_all_news_cate($options[8]);
+    $block['tag'] = Tools::get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
     $modhandler = xoops_gethandler('module');
@@ -75,7 +78,7 @@ function tadnews_table_content_block_edit($options)
         </li>";
     }
 
-    $option = block_news_cate($options[8]);
+    $option = Tools::block_news_cate($options[8]);
 
     $form = "{$option['js']}
     <ol class='my-form'>

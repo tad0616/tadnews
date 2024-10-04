@@ -77,8 +77,8 @@ function chk_cate($topic_pid = '', $left = 0)
         $left += 14;
     }
 
-    $sql = 'select topic_id,topic_pid,topic_title from ' . $xoopsDB->prefix('topics') . " where topic_pid='{$topic_pid}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `topic_id`, `topic_pid`, `topic_title` FROM `' . $xoopsDB->prefix('topics') . '` WHERE `topic_pid`=?';
+    $result = Utility::query($sql, 'i', [$topic_pid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $main = '';
 
@@ -99,8 +99,9 @@ function chk_stories($topicid = '', $left = 0)
 
     $left += 14;
 
-    $sql = 'select storyid,title  from ' . $xoopsDB->prefix('stories') . " where topicid ='{$topicid}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `storyid`, `title` FROM `' . $xoopsDB->prefix('stories') . '` WHERE `topicid` =?';
+    $result = Utility::query($sql, 'i', [$topicid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $main = '';
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         $_SESSION['total_news']++;
@@ -117,8 +118,8 @@ function import($topic_pid = 0, $new_topic_pid = 0)
 
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_news_cate') . " (`of_ncsn`, `nc_title`, `enable_group`, `sort`) values('{$new_topic_pid}', '{$topic_title}', '', '')";
-        if ($xoopsDB->queryF($sql)) {
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "` (`of_ncsn`, `nc_title`, `enable_group`, `sort`) VALUES (?, ?, '', '')";
+        if (Utility::query($sql, 'is', [$new_topic_pid, $topic_title])) {
             $sub_new_topic_pid = $xoopsDB->getInsertId();
 
             //匯入文章
@@ -137,15 +138,13 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
 
     foreach ($_POST['stories'][$topicid] as $storyid) {
         //找出勾選的內容
-        $sql = 'SELECT `storyid`, `uid`, `title`, `published`, `expired`, `nohtml`, `nosmiley`, `hometext`, `bodytext`, `counter`, `topicid` FROM ' . $xoopsDB->prefix('stories') . " WHERE `storyid` ='{$storyid}'";
-        $result = $xoopsDB->query($sql);
+        $sql = 'SELECT `storyid`, `uid`, `title`, `published`, `expired`, `nohtml`, `nosmiley`, `hometext`, `bodytext`, `counter`, `topicid` FROM `' . $xoopsDB->prefix('stories') . '` WHERE `storyid` =?';
+        $result = Utility::query($sql, 'i', [$storyid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         list($storyid, $uid, $title, $published, $expired, $nohtml, $nosmiley, $hometext, $bodytext, $counter, $topicid) = $xoopsDB->fetchRow($result);
         $news_content = $hometext . $bodytext;
 
         $myts = \MyTextSanitizer::getInstance();
-        $news_content = $xoopsDB->escape($news_content);
-        $title = $xoopsDB->escape($title);
 
         //bbcode 轉換
         $news_content = $myts->displayTarea($news_content, 1, 1, 1);
@@ -153,8 +152,8 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
         $published = date('Y-m-d H:i:s', $published);
         $enable = (empty($expired)) ? '1' : '0';
 
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_news') . " (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) values('{$new_topic_pid}', '{$title} ', '{$news_content} ', '{$published}', '', '{$enable}', '{$uid}', '', '', '{$counter}')";
-        if ($xoopsDB->queryF($sql)) {
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) VALUES (?, ?, ?, ?, \'\', ?, ?, \'\', \'\', ?)';
+        if (Utility::query($sql, 'issssii', [$new_topic_pid, $title, $news_content, $published, $enable, $uid, $counter])) {
             $new_nsn = $xoopsDB->getInsertId();
             //匯入評論
             import_common($storyid, $new_nsn);
@@ -166,6 +165,6 @@ function import_common($storyid = '', $new_nsn = '')
 {
     global $xoopsDB, $mid_news, $mid_tadnews;
 
-    $sql = 'update ' . $xoopsDB->prefix('xoopscomments') . " set com_modid='{$mid_tadnews}',com_itemid='{$new_nsn}' where com_modid='{$mid_news}' and com_itemid='{$storyid}'";
-    $xoopsDB->query($sql);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('xoopscomments') . '` SET `com_modid`=?, `com_itemid`=? WHERE `com_modid`=? AND `com_itemid`=?';
+    Utility::query($sql, 'iiii', [$mid_tadnews, $new_nsn, $mid_news, $storyid]);
 }

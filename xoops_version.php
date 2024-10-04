@@ -1,6 +1,7 @@
 <?php
 //---基本設定---//
 $modversion = [];
+global $xoopsConfig;
 $language = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADNEWS_NAME;

@@ -10,8 +10,6 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 
 $Tadnews = new Tadnews();
 
-require_once __DIR__ . '/block_function.php';
-
 //取得路徑
 function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
 {
@@ -22,17 +20,17 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
     $arr[0]['sub'] = get_tadnews_sub_cate(0);
     if (!empty($the_ncsn)) {
         $tbl = $xoopsDB->prefix('tad_news_cate');
-        $sql = "SELECT t1.ncsn AS lev1, t2.ncsn as lev2, t3.ncsn as lev3, t4.ncsn as lev4, t5.ncsn as lev5, t6.ncsn as lev6, t7.ncsn as lev7
-            FROM `{$tbl}` t1
-            LEFT JOIN `{$tbl}` t2 ON t2.of_ncsn = t1.ncsn
-            LEFT JOIN `{$tbl}` t3 ON t3.of_ncsn = t2.ncsn
-            LEFT JOIN `{$tbl}` t4 ON t4.of_ncsn = t3.ncsn
-            LEFT JOIN `{$tbl}` t5 ON t5.of_ncsn = t4.ncsn
-            LEFT JOIN `{$tbl}` t6 ON t6.of_ncsn = t5.ncsn
-            LEFT JOIN `{$tbl}` t7 ON t7.of_ncsn = t6.ncsn
-            WHERE t1.of_ncsn = '0'";
+        $sql = 'SELECT t1.ncsn AS lev1, t2.ncsn as lev2, t3.ncsn as lev3, t4.ncsn as lev4, t5.ncsn as lev5, t6.ncsn as lev6, t7.ncsn as lev7
+        FROM `' . $tbl . '` t1
+        LEFT JOIN `' . $tbl . '` t2 ON t2.of_ncsn = t1.ncsn
+        LEFT JOIN `' . $tbl . '` t3 ON t3.of_ncsn = t2.ncsn
+        LEFT JOIN `' . $tbl . '` t4 ON t4.of_ncsn = t3.ncsn
+        LEFT JOIN `' . $tbl . '` t5 ON t5.of_ncsn = t4.ncsn
+        LEFT JOIN `' . $tbl . '` t6 ON t6.of_ncsn = t5.ncsn
+        LEFT JOIN `' . $tbl . '` t7 ON t7.of_ncsn = t6.ncsn
+        WHERE t1.of_ncsn = ?';
+        $result = Utility::query($sql, 'i', [0]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (false !== ($all = $xoopsDB->fetchArray($result))) {
             if (in_array($the_ncsn, $all)) {
                 foreach ($all as $ncsn) {
@@ -60,9 +58,9 @@ function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
 function get_tadnews_sub_cate($ncsn = '0')
 {
     global $xoopsDB;
-    $sql = 'select ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where of_ncsn='{$ncsn}'";
-    // die($sql);
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn` =?';
+    $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $ncsn_arr = [];
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_arr[$ncsn] = $nc_title;
@@ -75,8 +73,8 @@ function get_tadnews_sub_cate($ncsn = '0')
 function get_newspaper_set($nps_sn = '')
 {
     global $xoopsDB;
-    $sql = 'select * from `' . $xoopsDB->prefix('tad_news_paper_setup') . "` where `nps_sn`='{$nps_sn}'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '` WHERE `nps_sn`=?';
+    $result = Utility::query($sql, 'i', [$nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -85,9 +83,10 @@ function get_newspaper_set($nps_sn = '')
 //取得電子報資料
 function get_newspaper($npsn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsConfig;
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_news_paper') . " where npsn='{$npsn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    global $xoopsDB;
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_paper') . '` WHERE `npsn`=?';
+    $result = Utility::query($sql, 'i', [$npsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -102,8 +101,9 @@ function preview_newspaper($npsn = '')
     }
 
     $np = get_newspaper($npsn);
-    $sql = 'select title,head,foot,themes from ' . $xoopsDB->prefix('tad_news_paper_setup') . " where nps_sn='{$np['nps_sn']}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `title`, `head`, `foot`, `themes` FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '` WHERE `nps_sn` =?';
+    $result = Utility::query($sql, 'i', [$np['nps_sn']]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
 
     $myts = \MyTextSanitizer::getInstance();
@@ -232,18 +232,12 @@ function update_tad_news_cate($ncsn = '')
     }
     $setup = mb_substr($setup, 0, -1);
 
-    $myts = \MyTextSanitizer::getInstance();
     $of_ncsn = (int) $_POST['of_ncsn'];
-    $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];
-    $nc_title = $xoopsDB->escape($_POST['nc_title']);
-    $enable_post_group = $xoopsDB->escape($enable_post_group);
-    $enable_group = $xoopsDB->escape($enable_group);
-    $setup = $xoopsDB->escape($setup);
+    $nc_title = $_POST['nc_title'];
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_news_cate') . " set  of_ncsn = '{$of_ncsn}', nc_title = '{$nc_title}', enable_group = '{$enable_group}', enable_post_group = '{$enable_post_group}',not_news='{$not_news}',setup='{$setup}' where ncsn='$ncsn'";
-    // die($sql);
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `of_ncsn`=?, `nc_title`=?, `enable_group`=?, `enable_post_group`=?, `not_news`=?, `setup`=? WHERE `ncsn`=?';
+    Utility::query($sql, 'isssssi', [$of_ncsn, $nc_title, $enable_group, $enable_post_group, $not_news, $setup, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     if (!empty($_FILES['cate_pic']['name'])) {
         mk_thumb($ncsn, 'cate_pic', $xoopsModuleConfig['cate_pic_width']);
@@ -252,12 +246,14 @@ function update_tad_news_cate($ncsn = '')
     $moduleHandler = xoops_getHandler('module');
     $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
-        $sql = 'select menuid from ' . $xoopsDB->prefix('tad_themes_menu') . " where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT `menuid` FROM `' . $xoopsDB->prefix('tad_themes_menu') . '` WHERE `link_cate_name`=? AND `link_cate_sn`=?';
+        $result = Utility::query($sql, 'si', ['tadnews_page_cate', $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
         $RowsNum = $xoopsDB->getRowsNum($result);
         if ($RowsNum > 0) {
-            $sql = 'update ' . $xoopsDB->prefix('tad_themes_menu') . " set `itemname`='{$nc_title}' where `link_cate_name`='tadnews_page_cate' and `link_cate_sn`='{$ncsn}'";
-            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $sql = 'UPDATE `' . $xoopsDB->prefix('tad_themes_menu') . '` SET `itemname`=? WHERE `link_cate_name`=\'tadnews_page_cate\' AND `link_cate_sn`=?';
+            Utility::query($sql, 'si', [$nc_title, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
         }
     }
 

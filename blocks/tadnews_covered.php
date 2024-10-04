@@ -1,6 +1,7 @@
 <?php
 
 use XoopsModules\Tadnews\Tadnews;
+use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
@@ -9,8 +10,6 @@ use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
-
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (圖文集區塊)
 function tadnews_covered($options)
@@ -84,7 +83,7 @@ function tadnews_covered_edit($options)
     $options6_4 = ('4' == $options[6]) ? 'selected' : '';
     $options6_6 = ('6' == $options[6]) ? 'selected' : '';
 
-    $option = block_news_cate($options[4]);
+    $option = Tools::block_news_cate($options[4]);
 
     $form = "{$option['js']}
 

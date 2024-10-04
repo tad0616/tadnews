@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\LofSliderNews;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
@@ -8,7 +9,6 @@ use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\LofSliderNews')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (滑動新聞)
 function tadnews_slidernews_show($options)
@@ -52,7 +52,7 @@ function tadnews_slidernews_show($options)
 //區塊編輯函式
 function tadnews_slidernews_edit($options)
 {
-    $block_news_cate = block_news_cate($options[4]);
+    $block_news_cate = Tools::block_news_cate($options[4]);
 
     $form = "{$block_news_cate['js']}
     <ol class='my-form'>

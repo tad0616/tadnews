@@ -229,8 +229,9 @@ function have_read($nsn = '', $uid = '')
         redirect_header('index.php', 3, $error);
     }
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_news_sign') . " (`nsn`,`uid`,`sign_time`) values('$nsn','$uid','{$now}')";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_sign') . '` (`nsn`, `uid`, `sign_time`) VALUES (?, ?, ?)';
+    Utility::query($sql, 'iis', [$nsn, $uid, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 //檢查置頂時間
@@ -238,8 +239,9 @@ function chk_always_top()
 {
     global $xoopsDB, $xoopsUser;
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set always_top='0' WHERE always_top_date <='{$now}' and always_top_date!='0000-00-00 00:00:00'";
-    $xoopsDB->queryF($sql);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `always_top`=0 WHERE `always_top_date` <=? AND `always_top_date`!=\'0000-00-00 00:00:00\'';
+    Utility::query($sql, 's', [$now]);
+
 }
 
 //列出簽收狀況
@@ -248,10 +250,11 @@ function list_sign($nsn = '')
     global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
     $news = $Tadnews->get_tad_news($nsn);
 
-    $sql = 'select uid,sign_time from ' . $xoopsDB->prefix('tad_news_sign') . " where nsn='$nsn' order by sign_time";
     $sign = [];
     $i = 0;
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `uid`, `sign_time` FROM `' . $xoopsDB->prefix('tad_news_sign') . '` WHERE `nsn`=? ORDER BY `sign_time`';
+    $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -275,10 +278,10 @@ function list_user_sign($uid = '')
     $uid_name = \XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
-    $sql = 'select a.nsn,a.sign_time,b.news_title from ' . $xoopsDB->prefix('tad_news_sign') . ' as a left join ' . $xoopsDB->prefix('tad_news') . " as b on a.nsn=b.nsn where a.uid='$uid' order by a.sign_time desc";
     $sign = [];
     $i = 0;
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT a.nsn, a.sign_time, b.news_title FROM `' . $xoopsDB->prefix('tad_news_sign') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('tad_news') . '` AS b ON a.nsn = b.nsn WHERE a.uid =? ORDER BY a.sign_time DESC';
+    $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {

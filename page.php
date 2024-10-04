@@ -54,8 +54,9 @@ switch ($op) {
         if (!empty($nsn)) {
             show_page($nsn);
 
-            $sql = 'select news_title from ' . $xoopsDB->prefix('tad_news') . " where nsn='$nsn'";
-            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $sql = 'SELECT `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn`=?';
+            $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
             list($news_title) = $xoopsDB->fetchRow($result);
 
             $op = 'show_page';
@@ -112,8 +113,9 @@ function list_tad_all_pages($the_ncsn = 0)
     $moduleHandler = xoops_getHandler('module');
     $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
-        $sql = 'select link_cate_sn from ' . $xoopsDB->prefix('tad_themes_menu') . " where `link_cate_name`='tadnews_page_cate'";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT `link_cate_sn` FROM `' . $xoopsDB->prefix('tad_themes_menu') . '` WHERE `link_cate_name`=?';
+        $result = Utility::query($sql, 's', ['tadnews_page_cate']) or Utility::web_error($sql, __FILE__, __LINE__);
+
         while (list($link_cate_sn) = $xoopsDB->fetchRow($result)) {
             $link_cate_sn_arr[] = $link_cate_sn;
         }
@@ -126,17 +128,19 @@ function add_to_menu($ncsn = '')
 {
     global $xoopsDB;
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$ncsn'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `ncsn`=?';
+    $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $cate = $xoopsDB->fetchArray($result);
 
     $moduleHandler = xoops_getHandler('module');
     $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_themes_menu') . " (`of_level`,`position`,`itemname`,`itemurl`,`status`,`target`,`icon`, `link_cate_name` ,`link_cate_sn`, `read_group`) values('0','1','{$cate['nc_title']}','" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}','1','_self','', 'tadnews_page_cate','{$ncsn}', '')";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_themes_menu') . '` (`of_level`, `position`, `itemname`, `itemurl`, `status`, `target`, `icon`, `link_cate_name`, `link_cate_sn`, `read_group`) VALUES (0, 1, ?, ?, 1, "_self", "", "tadnews_page_cate", ?, "")';
+        Utility::query($sql, 'ssi', [$cate['nc_title'], XOOPS_URL . '/modules/tadnews/page.php?ncsn=' . $ncsn, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
         //取得最後新增資料的流水編號
-        $menuid = $xoopsDB->getInsertId();
+        $xoopsDB->getInsertId();
     }
 }
 
@@ -145,8 +149,8 @@ function tabs_sort($ncsn, $nsn)
 {
     global $xoopsDB, $xoopsTpl, $Tadnews;
 
-    $sql = 'select `data_value`,`data_sort` from ' . $xoopsDB->prefix('tadnews_data_center') . " where `col_name`='nsn' and `col_sn`= '{$nsn}' and `data_name`='tab_title'  order by `data_sort`";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `data_value`, `data_sort` FROM `' . $xoopsDB->prefix('tadnews_data_center') . '` WHERE `col_name` = \'nsn\' AND `col_sn` =? AND `data_name` = \'tab_title\' ORDER BY `data_sort`';
+    $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = \MyTextSanitizer::getInstance();
     $tab_div = [];

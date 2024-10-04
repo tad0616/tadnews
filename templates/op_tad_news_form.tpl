@@ -1,13 +1,8 @@
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/mColorPicker/javascripts/mColorPicker.js" charset="UTF-8"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#color').mColorPicker({
-            imageFolder: "<{$xoops_url}>/modules/tadtools/mColorPicker/images/"
-        });
-
         <{if $cate.not_news=='1'}>
             $("#add_page").show();
             $("#add_news").hide();

@@ -11,8 +11,9 @@ function tadnews_newspaper_list($options)
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     //找出現有設定組
-    $sql = 'select a.npsn,a.number,b.title from ' . $xoopsDB->prefix('tad_news_paper') . ' as a ,' . $xoopsDB->prefix('tad_news_paper_setup') . " as b where a.nps_sn=b.nps_sn and b.status='1' order by a.np_date desc limit 0,{$options[0]}";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT a.npsn, a.number, b.title FROM `' . $xoopsDB->prefix('tad_news_paper') . '` AS a, `' . $xoopsDB->prefix('tad_news_paper_setup') . '` AS b WHERE a.nps_sn = b.nps_sn AND b.status = ? ORDER BY a.np_date DESC LIMIT 0, ?';
+    $result = Utility::query($sql, 'si', ['1', $options[0]]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $i = 0;
     $page = [];
     while (list($npsn, $number, $title) = $xoopsDB->fetchRow($result)) {

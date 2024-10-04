@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
@@ -9,7 +10,6 @@ use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (頁籤新聞區塊)
 function tadnews_tab_news($options)
@@ -63,14 +63,19 @@ function tadnews_tab_news($options)
 //區塊編輯函式
 function tadnews_tab_news_edit($options)
 {
-    $option = block_news_cate($options[0]);
+    $option = Tools::block_news_cate($options[0]);
 
-    $MColorPicker = new MColorPicker('.color');
-    $MColorPicker->render();
+    $MColorPicker = new MColorPicker('.color-picker');
+    $MColorPicker->render('bootstrap');
 
     $options[8] = empty($options[8]) ? 16 : (int) $options[8];
 
     $form = "
+    .color-picker {
+        width: 80%;
+        display: inline-block;
+    }
+    </style>
     {$option['js']}
     <ol class='my-form'>
         <li class='my-row'>
@@ -97,25 +102,33 @@ function tadnews_tab_news_edit($options)
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BG . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input color' data-hex='true' name='options[3]' value='{$options[3]}' size=6>
+                <div class='input-group'>
+                    <input type='text' class='my-input color-picker' data-hex='true' name='options[3]' value='{$options[3]}' size=6>
+                </div>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_INACTIVE_BG . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input color' data-hex='true' name='options[4]' value='{$options[4]}' size=6>
+                <div class='input-group'>
+                    <input type='text' class='my-input color-picker' data-hex='true' name='options[4]' value='{$options[4]}' size=6>
+                </div>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_BORDER_COLOR . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input color' data-hex='true' name='options[5]' value='{$options[5]}' size=8>
+                <div class='input-group'>
+                    <input type='text' class='my-input color-picker' data-hex='true' name='options[5]' value='{$options[5]}' size=8>
+                </div>
             </div>
         </li>
         <li class='my-row'>
             <lable class='my-label'>" . _MB_TADNEWS_ACTIVE_CONTENT_BORDER_COLOR . "</lable>
             <div class='my-content'>
-                <input type='text' class='my-input color' data-hex='true' name='options[6]' value='{$options[6]}' size=8>
+                <div class='input-group'>
+                    <input type='text' class='my-input color-picker' data-hex='true' name='options[6]' value='{$options[6]}' size=8>
+                </div>
             </div>
         </li>
         <li class='my-row'>

@@ -246,3 +246,8 @@ table.table-shadow tr.my th a {
   color: white;
   font-family: "Microsoft JhengHei", Arial, Helvetica, sans-serif;
 }
+
+.color-picker {
+  width: 80%;
+  display: inline-block;
+}

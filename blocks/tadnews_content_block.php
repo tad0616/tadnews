@@ -1,9 +1,9 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (本站最新消息)
 function tadnews_content_block_show($options)
@@ -47,7 +47,7 @@ function tadnews_content_block_edit($options)
     $options4_1 = ('1' == $options[4]) ? 'checked' : '';
     $options4_0 = ('0' == $options[4]) ? 'checked' : '';
 
-    $block_news_cate = block_news_cate($options[7]);
+    $block_news_cate = Tools::block_news_cate($options[7]);
 
     $form = "{$block_news_cate['js']}
     <ol class='my-form'>

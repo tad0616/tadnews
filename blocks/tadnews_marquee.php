@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
@@ -8,8 +9,6 @@ use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
-
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
 
 //區塊主函式 (跑馬燈區塊)
 function tadnews_marquee($options)
@@ -47,7 +46,7 @@ function tadnews_marquee($options)
 //區塊編輯函式
 function tadnews_marquee_edit($options)
 {
-    $option = block_news_cate($options[1]);
+    $option = Tools::block_news_cate($options[1]);
 
     $left = 'left' === $options[2] ? 'checked' : '';
     $right = 'right' === $options[2] ? 'checked' : '';

@@ -9,8 +9,6 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
 
-require_once XOOPS_ROOT_PATH . '/modules/tadnews/block_function.php';
-
 //區塊主函式 (焦點新聞)
 function tadnews_focus_news($options)
 {
@@ -35,9 +33,9 @@ function tadnews_focus_news_edit($options)
     global $xoopsDB;
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $sql = 'select a.nsn,a.ncsn,a.news_title,a.passwd,a.start_day,b.not_news,b.nc_title from ' . $xoopsDB->prefix('tad_news') . ' as a left join ' . $xoopsDB->prefix('tad_news_cate') . " as b on a.ncsn=b.ncsn where a.enable='1' and a.start_day < '{$today}' and (a.end_day > '{$today}' or a.end_day='0000-00-00 00:00:00')  order by a.start_day desc";
+    $sql = 'SELECT a.nsn, a.ncsn, a.news_title, a.passwd, a.start_day, b.not_news, b.nc_title FROM `' . $xoopsDB->prefix('tad_news') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('tad_news_cate') . '` AS b ON a.ncsn = b.ncsn WHERE a.enable = 1 AND a.start_day < ? AND (a.end_day > ? OR a.end_day = ?) ORDER BY a.start_day DESC';
+    $result = Utility::query($sql, 'sss', [$today, $today, '0000-00-00 00:00:00']) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $option = "<select name='options[0]'>";
     $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $ncsn, $news_title, $passwd, $start_day, $not_news, $nc_title) = $xoopsDB->fetchRow($result)) {

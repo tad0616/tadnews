@@ -1,5 +1,9 @@
 <?php
 
+use XoopsModules\Tadnews\Tools;
+if (!class_exists('XoopsModules\Tadnews\Tools')) {
+    require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
+}
 use XoopsModules\Tadtools\Dtree;
 if (!class_exists('XoopsModules\Tadtools\Dtree')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
@@ -10,22 +14,23 @@ function tadnews_page($options)
 {
     global $xoopsDB;
     if (empty($options[0])) {
-        $sql = 'SELECT ncsn FROM ' . $xoopsDB->prefix('tad_news_cate') . " WHERE not_news='1' AND of_ncsn=0 ORDER BY ncsn LIMIT 0,1";
-        $result = $xoopsDB->query($sql);
+        $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=1 AND `of_ncsn`=0 ORDER BY `ncsn` LIMIT 0,1';
+        $result = Utility::query($sql);
         list($ncsn) = $xoopsDB->fetchRow($result);
+
     } else {
         $ncsn = (int) $options[0];
     }
 
-    $sql = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='1' and `ncsn`='{$ncsn}'";
-    $result = $xoopsDB->query($sql);
+    $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=1 AND `ncsn`=?';
+    $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
     list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result);
 
     $home['sn'] = $ncsn;
     $home['title'] = $nc_title;
     $home['url'] = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}";
 
-    $page = block_get_page_cate($ncsn);
+    $page = Tools::block_get_page_cate($ncsn);
 
     $Dtree = new Dtree("tadnews_mypage_tree{$ncsn}", $home, $page['title'], $page['of_ncsn'], $page['url']);
     $block = $Dtree->render($options[2]);
@@ -75,8 +80,8 @@ if (!function_exists('block_get_all_not_news_cate')) {
         $level += 1;
 
         $option = ($of_ncsn) ? '' : "<option value='0'></option>";
-        $sql = 'select ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where not_news='1' and of_ncsn='{$of_ncsn}' order by sort";
-        $result = $xoopsDB->query($sql);
+        $sql = 'SELECT `ncsn`,`nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=1 AND `of_ncsn`=? ORDER BY `sort`';
+        $result = Utility::query($sql, 'i', [$of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $selected = ($default_ncsn == $ncsn) ? 'selected' : '';
@@ -85,63 +90,5 @@ if (!function_exists('block_get_all_not_news_cate')) {
         }
 
         return $option;
-    }
-}
-
-//樹狀選項
-if (!function_exists('block_get_page_cate')) {
-    function block_get_page_cate($the_ncsn = 0, $i = 10000)
-    {
-        global $xoopsDB;
-
-        $sql = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
-        //die($sql);
-        $result = $xoopsDB->query($sql);
-        $myts = \MyTextSanitizer::getInstance();
-        while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-            //第一層底下的目錄
-            if ($the_ncsn != $ncsn) {
-                $page['title'][$ncsn] = $nc_title;
-                $page['of_ncsn'][$ncsn] = $of_ncsn;
-                $page['url'][$ncsn] = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}";
-
-                $the_ncsn = $ncsn;
-                $sql3 = 'select ncsn,of_ncsn,nc_title from ' . $xoopsDB->prefix('tad_news_cate') . " where ncsn='$the_ncsn' or of_ncsn='$the_ncsn' order by sort";
-                $result3 = $xoopsDB->query($sql3);
-                while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result3)) {
-                    //第二層底下的目錄
-                    if ($the_ncsn != $ncsn) {
-                        $page['title'][$ncsn] = $nc_title;
-                        $page['of_ncsn'][$ncsn] = $of_ncsn;
-                        $page['url'][$ncsn] = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}";
-                    }
-
-                    //第二層底下的文章
-                    $sql4 = 'select nsn,ncsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
-                    $result4 = $xoopsDB->query($sql4);
-                    $j = $ncsn * 10000;
-                    while (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result4)) {
-                        $myts->htmlSpecialChars($news_title);
-                        $page['title'][$j] = $news_title;
-                        $page['of_ncsn'][$j] = $ncsn;
-                        $page['url'][$j] = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
-                        $j++;
-                    }
-                }
-            }
-
-            //第一層底下的文章
-            $sql2 = 'select nsn,ncsn,news_title from ' . $xoopsDB->prefix('tad_news') . " where ncsn='$ncsn' order by page_sort";
-            $result2 = $xoopsDB->query($sql2);
-            while (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result2)) {
-                $myts->htmlSpecialChars($news_title);
-                $page['title'][$i] = $news_title;
-                $page['of_ncsn'][$i] = $ncsn;
-                $page['url'][$i] = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}";
-                $i++;
-            }
-        }
-
-        return $page;
     }
 }
