@@ -69,8 +69,8 @@ class TadNewsRest extends SimpleRest
         global $xoopsDB;
         $data = [];
 
-        $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title`, `sort`, `enable_group` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=\'1\' ORDER BY `sort`';
-        $result = Utility::query($sql);
+        $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title`, `sort`, `enable_group` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? ORDER BY `sort`';
+        $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
         while (list($ncsn, $of_ncsn, $nc_titl
         e, $sort, $enable_group) = $xoopsDB->fetchRow($result)) {
             if ($enable_group) {

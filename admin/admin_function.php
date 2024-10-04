@@ -50,13 +50,13 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
 //列出所有tad_news_cate資料
 function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $catearr = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl, $Tadnews;
+    global $xoopsDB;
     $old_level = $level;
     $left = $level * 18 + 4;
     $level++;
 
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news` =? AND `of_ncsn` =? ORDER BY `sort`';
-    $result = Utility::query($sql, 'ii', [$not_news, $of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql, 'si', [$not_news, $of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //$catearr="";
 
@@ -163,7 +163,7 @@ function insert_tad_news_cate()
     $nc_title = $_POST['nc_title'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . '` (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `not_news`, `setup`) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    Utility::query($sql, 'isssiis', [$of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $not_news, $setup]) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'isssiss', [$of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $not_news, $setup]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $ncsn = $xoopsDB->getInsertId();
@@ -197,13 +197,13 @@ function change_kind($ncsn = '', $not_news = '')
     global $xoopsDB;
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `not_news`=?, `of_ncsn`="0" WHERE `ncsn`=?';
-    Utility::query($sql, 'ii', [$not_news, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'si', [$not_news, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //先找看看底下有無分類，若有將其也一起變
     $sub_cate = get_sub_cate($ncsn);
     if (!empty($sub_cate)) {
         $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `not_news`=? WHERE `ncsn` IN (?)';
-        Utility::query($sql, 'is', [$not_news, $sub_cate]) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql, 'ss', [$not_news, $sub_cate]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     }
 

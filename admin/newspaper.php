@@ -310,11 +310,11 @@ function add_newspaper($nps_sn = '')
 
     $cates = Tools::get_all_news_cate();
     $myts = \MyTextSanitizer::getInstance();
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 ORDER BY `start_day` DESC';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `nsn`, `ncsn`, `news_title`, `news_content` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? ORDER BY `start_day` DESC';
+    $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $opt = '';
-    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
+    while (list($nsn, $ncsn, $news_title, $news_content) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
         $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";

@@ -10,65 +10,6 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 
 $Tadnews = new Tadnews();
 
-//取得路徑
-function get_tadnews_cate_path($the_ncsn = '', $include_self = true)
-{
-    global $xoopsDB, $Tadnews;
-
-    $arr[0]['ncsn'] = '';
-    $arr[0]['nc_title'] = "&#xf015;";
-    $arr[0]['sub'] = get_tadnews_sub_cate(0);
-    if (!empty($the_ncsn)) {
-        $tbl = $xoopsDB->prefix('tad_news_cate');
-        $sql = 'SELECT t1.ncsn AS lev1, t2.ncsn as lev2, t3.ncsn as lev3, t4.ncsn as lev4, t5.ncsn as lev5, t6.ncsn as lev6, t7.ncsn as lev7
-        FROM `' . $tbl . '` t1
-        LEFT JOIN `' . $tbl . '` t2 ON t2.of_ncsn = t1.ncsn
-        LEFT JOIN `' . $tbl . '` t3 ON t3.of_ncsn = t2.ncsn
-        LEFT JOIN `' . $tbl . '` t4 ON t4.of_ncsn = t3.ncsn
-        LEFT JOIN `' . $tbl . '` t5 ON t5.of_ncsn = t4.ncsn
-        LEFT JOIN `' . $tbl . '` t6 ON t6.of_ncsn = t5.ncsn
-        LEFT JOIN `' . $tbl . '` t7 ON t7.of_ncsn = t6.ncsn
-        WHERE t1.of_ncsn = ?';
-        $result = Utility::query($sql, 'i', [0]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-        while (false !== ($all = $xoopsDB->fetchArray($result))) {
-            if (in_array($the_ncsn, $all)) {
-                foreach ($all as $ncsn) {
-                    if (!empty($ncsn)) {
-                        if (!$include_self and $ncsn == $the_ncsn) {
-                            break;
-                        }
-                        $arr[$ncsn] = $Tadnews->get_tad_news_cate($ncsn);
-                        $arr[$ncsn]['sub'] = get_tadnews_sub_cate($ncsn);
-                        // die(var_dump(get_tadnews_sub_cate($ncsn)));
-                        if ($ncsn == $the_ncsn) {
-                            break;
-                        }
-                    }
-                }
-                //$main.="<br>";
-                break;
-            }
-        }
-    }
-
-    return $arr;
-}
-
-function get_tadnews_sub_cate($ncsn = '0')
-{
-    global $xoopsDB;
-    $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn` =?';
-    $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    $ncsn_arr = [];
-    while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-        $ncsn_arr[$ncsn] = $nc_title;
-    }
-    // die(var_dump($ncsn_arr));
-    return $ncsn_arr;
-}
-
 //取得電子報設定資料
 function get_newspaper_set($nps_sn = '')
 {
@@ -138,7 +79,7 @@ function preview_newspaper($npsn = '')
 
 function tad_news_cate_form($ncsn = '', $not_news = '0')
 {
-    global $xoopsDB, $xoopsTpl, $xoopsOption, $xoopsModuleConfig, $Tadnews;
+    global $xoopsTpl, $xoopsModuleConfig, $Tadnews;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $ok_cat = $Tadnews->chk_user_cate_power('post');

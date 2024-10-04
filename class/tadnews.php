@@ -1066,39 +1066,33 @@ class Tadnews
     }
 
     //取得分類新聞
-    public function get_cate_news($mode = 'assign', $include_sub_cate = false)
+    public function get_cate_news($mode = 'assign')
     {
         global $xoopsDB, $xoopsTpl;
 
         $pic_w = $this->tadnewsConfig['cate_pic_width'] + 10;
 
-        // if ($highlighter) {
-        //     $SyntaxHighlighter = new SyntaxHighlighter();
-        //     $SyntaxHighlighter->render();
-        // }
-
         $prefix_tags = $this->prefix_tags();
-        $where_news = '';
 
         //分析目前觀看得是新聞還是自訂頁面
         if ('news' === $this->kind) {
-            $kind_chk = "and not_news!='1'";
+            $kind_chk = "AND `not_news`!='1'";
         } elseif ('page' === $this->kind) {
-            $kind_chk = "and not_news='1'";
+            $kind_chk = "AND `not_news`='1'";
         } else {
             $kind_chk = '';
         }
 
         if (is_array($this->view_ncsn)) {
             $show_ncsn = implode(',', $this->view_ncsn);
-            $and_cate = empty($show_ncsn) ? '' : "and ncsn in({$show_ncsn})";
-        } elseif ('' == $this->view_ncsn) {
-            $and_cate = '';
+            $and_cate = empty($show_ncsn) ? '' : "AND `ncsn` in({$show_ncsn})";
+        } elseif (!empty($this->view_ncsn)) {
+            $and_cate = "AND `ncsn`={$this->view_ncsn}";
         } else {
-            $and_cate = "and ncsn={$this->view_ncsn}";
+            $and_cate = '';
         }
 
-        $sql = 'SELECT `ncsn`,`nc_title`,`enable_group`,`enable_post_group`,`cate_pic`,`setup` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE 1 ' . $and_cate . $kind_chk . ' ORDER BY `sort`';
+        $sql = 'SELECT `ncsn`,`nc_title`,`enable_group`,`enable_post_group`,`cate_pic`,`setup` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE 1 ' . $and_cate . ' ' . $kind_chk . ' ORDER BY `sort`';
         $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $i = 0;
@@ -2076,8 +2070,8 @@ class Tadnews
     {
         global $xoopsDB;
 
-        $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `enable`=1';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `enable`=?';
+        $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $option = '';
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
@@ -2094,8 +2088,8 @@ class Tadnews
     private function get_cate_num()
     {
         global $xoopsDB;
-        $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=0';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=?';
+        $result = Utility::query($sql, 's', [0]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         list($count) = $xoopsDB->fetchRow($result);
 
@@ -2293,7 +2287,7 @@ class Tadnews
         $enable = (int) $_POST['enable'];
 
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        Utility::query($sql, 'issssiissssss', [$ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $this->uid, $passwd, $enable_group, $prefix_tag, $always_top, $always_top_date, $have_read_group]) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql, 'isssssissssss', [$ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $this->uid, $passwd, $enable_group, $prefix_tag, $always_top, $always_top_date, $have_read_group]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         //取得最後新增資料的流水編號
         $nsn = $xoopsDB->getInsertId();
@@ -2357,7 +2351,7 @@ class Tadnews
         }
 
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . '` (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `not_news`, `setup`) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        Utility::query($sql, 'isssiis', [$of_ncsn, $new_cate, $enable_group, $enable_post_group, $sort, $not_news, $setup]) or redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_DB_ADD_ERROR1);
+        Utility::query($sql, 'isssiss', [$of_ncsn, $new_cate, $enable_group, $enable_post_group, $sort, $not_news, $setup]) or redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_DB_ADD_ERROR1);
 
         //取得最後新增資料的流水編號
         $ncsn = $xoopsDB->getInsertId();
@@ -2370,7 +2364,7 @@ class Tadnews
     {
         global $xoopsDB;
         $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn`=? AND `not_news`=?';
-        $result = Utility::query($sql, 'ii', [$of_ncsn, $not_news]) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = Utility::query($sql, 'is', [$of_ncsn, $not_news]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         list($sort) = $xoopsDB->fetchRow($result);
 
@@ -2528,7 +2522,7 @@ class Tadnews
             `have_read_group` = ?,
             `uid` = ?
         WHERE `nsn` = ?';
-        Utility::query($sql, 'issssisssissii', [
+        Utility::query($sql, 'issssissssssii', [
             $ncsn, $news_title, $news_content, $start_day, $end_day,
             $_POST['enable'], $_POST['passwd'], $enable_group,
             $_POST['prefix_tag'], $always_top, $_POST['always_top_date'],
@@ -2572,7 +2566,7 @@ class Tadnews
         }
 
         $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `enable` = ? WHERE `nsn` = ?';
-        Utility::query($sql, 'ii', [1, $nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql, 'si', [1, $nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $ncsn = (int) $_POST['ncsn'];
         $cate = $this->get_tad_news_cate($ncsn);

@@ -6,6 +6,7 @@ if (!class_exists('XoopsModules\Tadnews\Tools')) {
 }
 
 use XoopsModules\Tadtools\MColorPicker;
+use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\MColorPicker')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
@@ -23,7 +24,7 @@ function tadnews_page_menu($options)
     }
 
     $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `ncsn`=?';
-    $result = Utility::query($sql, 'ii', [1, $ncsn]);
+    $result = Utility::query($sql, 'si', [1, $ncsn]);
     $row = $xoopsDB->fetchRow($result);
 
     $block = [
@@ -33,7 +34,7 @@ function tadnews_page_menu($options)
     ];
 
     // 遞迴獲取所有層級的分類和文章
-    $block['pages'] = get_pages_recursive($ncsn, 0, $options[0]);
+    $block['pages'] = Tools::get_pages_recursive($ncsn, 0, $options[0]);
 
     $block['show_title'] = $options[1];
     $block['color'] = $options[2];

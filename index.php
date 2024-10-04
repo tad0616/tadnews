@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -132,7 +133,8 @@ function list_tad_summary_news($the_ncsn = '', $show_uid = '')
     //目前路徑
     if ($the_ncsn) {
         $path = [];
-        $arr = get_tadnews_cate_path($the_ncsn);
+        $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
+        $arr = $categoryHelper->getCategoryPath($the_ncsn);
         $path = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
         $xoopsTpl->assign('path', $path);
     }
@@ -162,7 +164,8 @@ function list_tad_all_news($the_ncsn = '', $show_uid = '')
     //目前路徑
     if ($the_ncsn) {
         $path = [];
-        $arr = get_tadnews_cate_path($the_ncsn);
+        $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
+        $arr = $categoryHelper->getCategoryPath($the_ncsn);
         $path = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
         $xoopsTpl->assign('path', $path);
     }
@@ -197,7 +200,9 @@ function list_tad_cate_news($the_ncsn = 0, $the_level = 0, $show_uid = '')
     //目前路徑
     if ($the_ncsn) {
         $path = [];
-        $arr = get_tadnews_cate_path($the_ncsn);
+
+        $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
+        $arr = $categoryHelper->getCategoryPath($the_ncsn);
         $path = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
         $xoopsTpl->assign('path', $path);
     }
@@ -239,8 +244,8 @@ function chk_always_top()
 {
     global $xoopsDB, $xoopsUser;
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `always_top`=0 WHERE `always_top_date` <=? AND `always_top_date`!=\'0000-00-00 00:00:00\'';
-    Utility::query($sql, 's', [$now]);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `always_top`=? WHERE `always_top_date` <=? AND `always_top_date`!=\'0000-00-00 00:00:00\'';
+    Utility::query($sql, 'ss', [0, $now]);
 
 }
 

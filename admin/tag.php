@@ -118,7 +118,7 @@ function tad_news_tags_stat($enable, $tag_sn)
     global $xoopsDB;
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_tags') . '` SET `enable` = ? WHERE `tag_sn` = ?';
-    Utility::query($sql, 'ii', [$enable, $tag_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'si', [$enable, $tag_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
 

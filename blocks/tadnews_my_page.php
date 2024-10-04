@@ -41,12 +41,12 @@ function tadnews_my_page_edit($options)
 
     $order = empty($options[0]) ? '' : "field( `nsn` , {$options[0]}) ,";
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 ORDER BY `start_day` DESC';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `nsn`, `ncsn`, `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? ORDER BY `start_day` DESC';
+    $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = \MyTextSanitizer::getInstance();
     $opt = '';
-    while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
+    while (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
         if (in_array($nsn, $options_arr)) {
             $opt2 .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";

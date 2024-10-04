@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 

@@ -7,7 +7,7 @@ function mk_rss()
     xoops_load('XoopsLocal');
     $myts = \MyTextSanitizer::getInstance();
     $sql = 'SELECT `ncsn`,`nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? AND `enable_group`=?';
-    $result = Utility::query($sql, 'ss', ['1', '']) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql, 'ss', [1, '']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $ncsn_ok[] = $ncsn;

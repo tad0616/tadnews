@@ -12,9 +12,10 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 $op = Request::getString('op');
 $files_sn = Request::getInt('files_sn');
 $date = Request::getString('date', date('Y-m'));
+
 $date = mb_substr($date, 0, 7);
 list($year, $month) = explode('-', $date);
-$date = checkdate($year, $month, 1) ? $date : date('Y-m');
+$date = checkdate($month, 1, $year) ? $date : date('Y-m');
 
 switch ($op) {
     //下載檔案
@@ -48,8 +49,8 @@ function month_list($now_date = '')
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT LEFT(`start_day`, 7), COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 GROUP BY LEFT(`start_day`, 7) ORDER BY `start_day` DESC';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT LEFT(`start_day`, 7), COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? GROUP BY LEFT(`start_day`, 7) ORDER BY `start_day` DESC';
+    $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $i = 1;
     while (list($ym, $count) = $xoopsDB->fetchRow($result)) {

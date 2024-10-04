@@ -91,17 +91,17 @@ function list_tadnews_cate_tree($def_ncsn = '')
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;
     }
-    $path = get_tadnews_cate_path($def_ncsn);
-    $path_arr = array_keys($path);
+
+    // $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
+    // $path = $categoryHelper->getCategoryPath($def_ncsn);
 
     $data[] = "{ id:0, pId:0, name:'" . _MA_TADNEWS_ALL_NEWS . "', url:'page.php', target:'_self', open:true}";
 
-    $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=1 ORDER BY `sort`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? ORDER BY `sort`';
+    $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
-        //$open            = in_array($ncsn, $path_arr) ? 'true' : 'false';
         $display_counter = empty($cate_count[$ncsn]) ? '' : " ({$cate_count[$ncsn]})";
         $data[] = "{ id:{$ncsn}, pId:{$of_ncsn}, name:'{$nc_title}{$display_counter}', url:'page.php?ncsn={$ncsn}', open: true ,target:'_self' {$font_style}}";
     }

@@ -21,8 +21,8 @@ function tadnews_page_list($options)
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vertical_menu.css');
 
     if (empty($options[0])) {
-        $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=1 AND `of_ncsn`=0 ORDER BY `ncsn` LIMIT 0,1';
-        $result = Utility::query($sql);
+        $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `of_ncsn`=0 ORDER BY `ncsn` LIMIT 0,1';
+        $result = Utility::query($sql, 's', [1]);
         $row = $xoopsDB->fetchRow($result);
         $ncsn = $row[0] ?? 0;
     } else {
@@ -30,7 +30,7 @@ function tadnews_page_list($options)
     }
 
     $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `ncsn` =?';
-    $result = Utility::query($sql, 'ii', [1, $ncsn]);
+    $result = Utility::query($sql, 'si', [1, $ncsn]);
 
     $row = $xoopsDB->fetchRow($result);
     $block = [
@@ -40,7 +40,7 @@ function tadnews_page_list($options)
     ];
 
     // 遞迴獲取所有層級的分類和文章
-    $block['pages'] = get_pages_recursive($ncsn, 0, $options[2]);
+    $block['pages'] = Tools::get_pages_recursive($ncsn, 0, $options[2]);
 
     $block['bgcolor'] = $options[1];
     $block['color'] = $options[4];
@@ -142,8 +142,8 @@ if (!function_exists('block_get_all_not_news_cate')) {
         $level += 1;
 
         $option = ($of_ncsn) ? '' : "<option value='0'></option>";
-        $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=1 AND `of_ncsn`=? ORDER BY `sort`';
-        $result = Utility::query($sql, 'i', [$of_ncsn]);
+        $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `of_ncsn`=? ORDER BY `sort`';
+        $result = Utility::query($sql, 'si', [1, $of_ncsn]);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             $selected = ($default_ncsn == $ncsn) ? 'selected' : '';

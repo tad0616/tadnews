@@ -6,7 +6,7 @@ use XoopsModules\Tadtools\Utility;
 
 class Tools
 {
-    function get_pages_recursive($ncsn, $padding, $include_subcategories)
+    public static function get_pages_recursive($ncsn, $padding, $include_subcategories)
     {
         global $xoopsDB;
         $pages = [];
@@ -47,7 +47,7 @@ class Tools
                 ];
 
                 // 遞迴獲取子分類的頁面
-                $sub_pages = get_pages_recursive($sub_ncsn, $padding + 1, $include_subcategories);
+                $sub_pages = self::get_pages_recursive($sub_ncsn, $padding + 1, $include_subcategories);
                 $pages = array_merge($pages, $sub_pages);
             }
         }
@@ -55,7 +55,7 @@ class Tools
         return $pages;
     }
 
-//取得所有類別標題
+    //取得所有類別標題
     public static function block_news_cate($selected = '')
     {
         global $xoopsDB;
@@ -70,7 +70,7 @@ class Tools
             var arr = new Array();';
 
         $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? ORDER BY `sort`';
-        $result = Utility::query($sql, 's', ['1']);
+        $result = Utility::query($sql, 's', [1]);
 
         $option = '';
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
@@ -92,7 +92,7 @@ class Tools
         return $main;
     }
 
-//取得所有類別標題
+    //取得所有類別標題
     public static function get_all_news_cate($ncsn_arr_str = '')
     {
         global $xoopsDB;
@@ -113,7 +113,7 @@ class Tools
         return $data;
     }
 
-//取得所有標籤
+    //取得所有標籤
     public static function get_all_news_tag()
     {
         global $xoopsDB;
@@ -128,7 +128,7 @@ class Tools
         return $data;
     }
 
-//取得所有標籤
+    //取得所有標籤
     public static function block_news_tags($selected = '')
     {
         global $xoopsDB;
@@ -143,8 +143,8 @@ class Tools
               i=0;
               var arr = new Array();';
 
-        $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `enable`=1';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `enable`=?';
+        $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $option = '';
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {

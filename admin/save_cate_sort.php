@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 

@@ -152,8 +152,8 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
         $published = date('Y-m-d H:i:s', $published);
         $enable = (empty($expired)) ? '1' : '0';
 
-        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) VALUES (?, ?, ?, ?, \'\', ?, ?, \'\', \'\', ?)';
-        if (Utility::query($sql, 'issssii', [$new_topic_pid, $title, $news_content, $published, $enable, $uid, $counter])) {
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) VALUES (?, ?, ?, ?, ?, ?, ?,?, ?, ?)';
+        if (Utility::query($sql, 'isssssissi', [$new_topic_pid, $title, $news_content, $published, '', $enable, $uid, '', '', $counter])) {
             $new_nsn = $xoopsDB->getInsertId();
             //匯入評論
             import_common($storyid, $new_nsn);

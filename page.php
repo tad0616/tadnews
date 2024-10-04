@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadtools\BootstrapTable;
+use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
@@ -69,7 +70,10 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$arr = get_tadnews_cate_path($ncsn);
+
+$categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
+$arr = $categoryHelper->getCategoryPath($ncsn);
+
 $path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
 
 $xoopsTpl->assign('breadcrumb', $path);

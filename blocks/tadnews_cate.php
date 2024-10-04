@@ -11,15 +11,15 @@ function tadnews_cate_show($options)
     global $xoopsDB;
 
     $cates = $counter = [];
-    $sql = 'SELECT COUNT(*), `ncsn` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=1 GROUP BY `ncsn`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT COUNT(*), `ncsn` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? GROUP BY `ncsn`';
+    $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($count, $ncsn) = $xoopsDB->fetchRow($result)) {
         $counter[$ncsn] = $count;
     }
 
     $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? ORDER BY `sort`';
-    $result = Utility::query($sql, 's', ['1']);
+    $result = Utility::query($sql, 's', [1]);
 
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
         $cates['title'][$ncsn] = $nc_title;
