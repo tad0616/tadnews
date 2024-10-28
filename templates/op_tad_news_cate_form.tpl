@@ -15,7 +15,7 @@
                 <{$smarty.const._MA_TADNEWS_PARENT_CATE}>
             </label>
             <div class="col-md-4">
-                <select name="of_ncsn" size=1 id="of_ncsn" class="form-control">
+                <select name="of_ncsn" size=1 id="of_ncsn" class="form-select">
                 <{$cate_select|default:''}>
                 </select>
             </div>

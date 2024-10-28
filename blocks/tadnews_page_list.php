@@ -18,7 +18,7 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 function tadnews_page_list($options)
 {
     global $xoopsDB, $xoTheme;
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vertical_menu.css');
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     if (empty($options[0])) {
         $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `of_ncsn`=0 ORDER BY `ncsn` LIMIT 0,1';

@@ -16,7 +16,7 @@
                 <{$smarty.const._MD_TADNEWS_PARENT_CATE}>
             </label>
             <div class="col-md-4">
-                <select name="of_ncsn" size=1 id="of_ncsn" class="form-control">
+                <select name="of_ncsn" size=1 id="of_ncsn" class="form-select">
                 <{$cate_select|default:''}>
                 </select>
             </div>
@@ -150,6 +150,6 @@
         <input type="hidden" name="ncsn" value="<{$ncsn|default:''}>">
         <input type="hidden" name="op" value="<{$cate_op|default:''}>">
         <{$XOOPS_TOKEN|default:''}>
-        <button type="submit" class="btn btn-info"><{if $ncsn==""}><{$smarty.const._MD_TADNEWS_ADD_CATE}><{else}><{$smarty.const._TAD_SAVE}><{/if}></button>
+        <button type="submit" class="btn btn-info"><{if $ncsn==""}><{$smarty.const._MD_TADNEWS_ADD_CATE}><{else}><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SAVE}><{/if}></button>
     </div>
 </form>

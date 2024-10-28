@@ -3,7 +3,8 @@ use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-
+// 關閉除錯訊息
+$xoopsLogger->activated = false;
 $of_ncsn = (int) $_POST['of_ncsn'];
 $ncsn = (int) $_POST['ncsn'];
 

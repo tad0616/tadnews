@@ -4,9 +4,9 @@ use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tools')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
-use XoopsModules\Tadtools\Dtree;
 use XoopsModules\Tadtools\Utility;
-if (!class_exists('XoopsModules\Tadtools\Dtree')) {
+use XoopsModules\Tadtools\Ztree;
+if (!class_exists('XoopsModules\Tadtools\Ztree')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
 
@@ -16,26 +16,30 @@ function tadnews_page($options)
     global $xoopsDB;
     if (empty($options[0])) {
         $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `of_ncsn`=0 ORDER BY `ncsn` LIMIT 0,1';
-        $result = Utility::query($sql, 's', [1]);
+        $result = Utility::query($sql, 's', ['1']);
         list($ncsn) = $xoopsDB->fetchRow($result);
 
     } else {
         $ncsn = (int) $options[0];
     }
 
-    $sql = 'SELECT `ncsn`,  `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `ncsn`=?';
-    $result = Utility::query($sql, 'si', [1, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-    list($ncsn, $nc_title) = $xoopsDB->fetchRow($result);
+    $pages = Tools::get_pages_recursive($ncsn, 0, true);
 
-    $home['sn'] = $ncsn;
-    $home['title'] = $nc_title;
-    $home['url'] = XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}";
+    $mydata[] = "{ id:'cate{$ncsn}', pId:0, name:'All', url:'" . XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}', target:'_self', open:true}";
+    foreach ($pages as $id => $page) {
+        if ($page['type'] == 'cate') {
+            $pId = "cate{$page['of_ncsn']}";
+            $font_style = (int) $_GET['ncsn'] == $page['ncsn'] ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+        } else {
+            $pId = "cate{$page['ncsn']}";
+            $font_style = (int) $_GET['nsn'] == $page['nsn'] ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+        }
+        $mydata[] = "{ id:'{$id}', pId:'{$pId}', name:'{$page['title']}', url:'{$page['url']}', target:'_self', open:true {$font_style}}";
+    }
 
-    $page = Tools::block_get_page_cate($ncsn);
-
-    $Dtree = new Dtree("tadnews_mypage_tree{$ncsn}", $home, $page['title'], $page['of_ncsn'], $page['url']);
-    $block = $Dtree->render($options[2]);
-
+    $page_json = implode(',', $mydata);
+    $ztree = new Ztree("tadnews_mypage_tree_{$ncsn}", $page_json, '', '', "of_ncsn", "ncsn");
+    $block = $ztree->render();
     return $block;
 }
 
@@ -81,7 +85,7 @@ if (!function_exists('block_get_all_not_news_cate')) {
         $level += 1;
 
         $option = ($of_ncsn) ? '' : "<option value='0'></option>";
-        $sql = 'SELECT `ncsn`,`nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `of_ncsn`=? ORDER BY `sort`';
+        $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? AND `of_ncsn`=? ORDER BY `sort`';
         $result = Utility::query($sql, 'si', [1, $of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {

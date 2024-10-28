@@ -71,30 +71,10 @@
             </div>
 
             <div class="form-group row mb-3">
-                <div class="col-md-5">
-                    <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
-                        <{$opt|default:''}>
-                    </select>
-                </div>
-                <div class="col-md-1 text-center">
-                    <img src="../images/right.png" onclick="tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();"><br>
-                    <img src="../images/left.png" onclick="tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();"><br><br>
-
-                    <img src="../images/up.png" onclick="tmt.spry.linkedselect.util.moveOptionUp('destination');getOptions();"><br>
-                    <img src="../images/down.png" onclick="tmt.spry.linkedselect.util.moveOptionDown('destination');getOptions();">
-                </div>
-
-                <div class="col-md-5">
-                    <select id="destination" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
-                    <{$opt2|default:''}>
-                    </select>
-                </div>
+                <{$tmt_box}>
             </div>
 
             <div class="text-center">
-                <input type="hidden" name="op" value="save_newspaper">
-                <input type="hidden" name="nps_sn" value="<{$nps_sn|default:''}>">
-                <input type="hidden" name="all_news" id="all_news">
                 <{$XOOPS_TOKEN|default:''}>
                 <button type="submit" class="btn btn-primary"><{$smarty.const._TADNEWS_NP_SUBMIT}></button>
             </div>
@@ -253,10 +233,9 @@
         <{/if}>
     <{else}>
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_LIST}></h1>
-        <{$js|default:''}>
         <div class="row" style="margin:10px;">
             <div class="col-md-5">
-                <select name="nps_sn" id="nps_sn" class="form-control col-md-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
+                <select name="nps_sn" id="nps_sn" class="form-select col-md-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
                 <option value=""><{$smarty.const._MA_TADNEWS_NP_OPTION}></option>
                 <{$option|default:''}>
                 </select>

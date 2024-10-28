@@ -3,6 +3,7 @@ use Xmf\Request;
 use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Tmt;
 use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
@@ -145,20 +146,11 @@ function newspaper_set_table($sel_nps_sn = '')
 
     $total = $xoopsDB->getRowsNum($result);
 
-    $js = "
-        <script>
-        function delete_tad_newspaper_set(){
-            var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-            if (!sure)        return;
-            location.href=\"{$_SERVER['PHP_SELF']}?op=del_newspaper_set&nps_sn={$sel_nps_sn}\";
-        }
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render("delete_tad_newspaper_set", "{$_SERVER['PHP_SELF']}?op=del_newspaper_set&nps_sn={$sel_nps_sn}", '');
 
-        function delete_tad_newspaper(npsn){
-            var sure = window.confirm('" . _TADNEWS_SURE_DEL . "');
-            if (!sure)        return;
-            location.href=\"{$_SERVER['PHP_SELF']}?op=del_newspaper&npsn=\" + npsn;
-        }
-        </script>";
+    $SweetAlert2 = new SweetAlert();
+    $SweetAlert2->render("delete_tad_newspaper", "{$_SERVER['PHP_SELF']}?op=del_newspaper&npsn=", 'npsn');
 
     //刪除按鈕
     $del_btn = '';
@@ -192,7 +184,6 @@ function newspaper_set_table($sel_nps_sn = '')
 
     $create_btn = "<a href='{$_SERVER['PHP_SELF']}?op=creat_newspaper' class='btn btn-info'>" . _MA_TADNEWS_NP_CREATE . '</a>';
 
-    $xoopsTpl->assign('js', $js);
     $xoopsTpl->assign('del_btn', $del_btn);
     $xoopsTpl->assign('edit_btn', $edit_btn);
     $xoopsTpl->assign('create_btn', $create_btn);
@@ -207,7 +198,7 @@ function newspaper_themes($themes = '')
 {
     if (is_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes')) {
         if ($dh = opendir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes')) {
-            $select = "<select name='themes' id='themes' class='form-control'>";
+            $select = "<select name='themes' id='themes' class='form-select'>";
             while (false !== ($file = readdir($dh))) {
                 if ('.' === $file or '..' === $file) {
                     continue;
@@ -310,22 +301,26 @@ function add_newspaper($nps_sn = '')
 
     $cates = Tools::get_all_news_cate();
     $myts = \MyTextSanitizer::getInstance();
-    $sql = 'SELECT `nsn`, `ncsn`, `news_title`, `news_content` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? ORDER BY `start_day` DESC';
+    $sql = 'SELECT `nsn`, `ncsn`, `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? ORDER BY `start_day` DESC';
     $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $opt = '';
-    while (list($nsn, $ncsn, $news_title, $news_content) = $xoopsDB->fetchRow($result)) {
+    $from_arr = [];
+    while (list($nsn, $ncsn, $news_title) = $xoopsDB->fetchRow($result)) {
         $news_title = $myts->htmlSpecialChars($news_title);
-        $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
-        $opt .= "<option value=\"$nsn\">[{$nsn}][ {$cates[$ncsn]} ] {$news_title}</option>";
+        $from_arr[$nsn] = "[{$nsn}][ {$cates[$ncsn]} ] {$news_title}";
     }
+
+    $to_arr = [];
+    $hidden_arr['nps_sn'] = $nps_sn;
+    $hidden_arr['op'] = 'save_newspaper';
+    $tmt_box = Tmt::render('all_news', $from_arr, $to_arr, $hidden_arr, false, false);
+    $xoopsTpl->assign('tmt_box', $tmt_box);
 
     $newspaper_set = get_newspaper_set($nps_sn);
 
     //自動抓數字
     $number = get_max_number($nps_sn);
     $xoopsTpl->assign('newspaper_set_title', $newspaper_set['title'] . sprintf(_MA_TADNEWS_NP_NUMBER_INPUT, "<input type='text' name='number' id='number' value='{$number}' style='width: 50px;'>"));
-    $xoopsTpl->assign('opt', $opt);
     $xoopsTpl->assign('nps_sn', $nps_sn);
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

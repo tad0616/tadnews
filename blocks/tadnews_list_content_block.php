@@ -32,13 +32,13 @@ function tadnews_list_content_block_show($options)
     $block['ncsn'] = Tools::get_all_news_cate($options[7]);
     $block['tag'] = Tools::get_all_news_tag();
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module.css');
+    $xoTheme->addStylesheet('modules/tadnews/css/module.css');
     $modhandler = xoops_gethandler('module');
     $xoopsModule = $modhandler->getByDirname("tadnews");
     $config_handler = xoops_gethandler('config');
     $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
     if ($xoopsModuleConfig['use_table_shadow']) {
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadnews/css/module2.css');
+        $xoTheme->addStylesheet('modules/tadnews/css/module2.css');
     }
 
     $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');

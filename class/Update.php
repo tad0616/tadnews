@@ -364,10 +364,6 @@ class Update
             $sql = 'insert into ' . $xoopsDB->prefix('tad_news_tags') . " (`tag` , `color` , `enable`) values('{$tag}' , '{$color}' , '1')";
             $xoopsDB->queryF($sql);
             $tag_sn = $xoopsDB->getInsertId();
-
-            if (!get_magic_quotes_runtime()) {
-                $prefix_tag = addslashes($prefix_tag);
-            }
             $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
             $xoopsDB->queryF($sql) or die($sql);
         }

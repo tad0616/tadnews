@@ -1,6 +1,3 @@
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/jqueryCookie/jquery.cookie.js"></script>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadtools/My97DatePicker/WdatePicker.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function() {
         <{if $cate.not_news=='1'}>
@@ -166,7 +163,7 @@
                 <{$smarty.const._MD_TADNEWS_KIND}>
             </label>
             <div class="col-md-4">
-                <select name="kind" id="kind" class="form-control">
+                <select name="kind" id="kind" class="form-select">
                     <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
                     <{if $page_cate_select || $creat_cate_tool}>
                         <option value="page"<{if $ncsn and  $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
@@ -189,7 +186,7 @@
         <div class="form-group row mb-3">
             <{if $news_cate_select|default:false}>
                 <div class="col-md-2">
-                    <select name="ncsn" id="news_ncsn" class="form-control">
+                    <select name="ncsn" id="news_ncsn" class="form-select">
                         <{$news_cate_select|default:''}>
                     </select>
                 </div>
@@ -223,7 +220,7 @@
         <div class="form-group row mb-3">
             <{if $page_cate_select|default:false}>
                 <div class="col-md-2">
-                    <select name="ncsn" id="page_ncsn" class="form-control">
+                    <select name="ncsn" id="page_ncsn" class="form-select">
                         <{$page_cate_select|default:''}>
                     </select>
                 </div>

@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\Utility;
 require_once __DIR__ . '/header.php';
 xoops_loadLanguage('blocks', 'tadnews');
 
-error_reporting(0);
+// 關閉除錯訊息
 $xoopsLogger->activated = false;
 
 $show_ncsn = Request::getString('show_ncsn');

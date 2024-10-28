@@ -91,7 +91,7 @@
                         <td><{$tag.color}></td>
                         <td><{$tag.enable_txt}><{$tag.amount}></td>
                         <td>
-                            <a href='tag.php?tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-xs btn-info'><{$smarty.const._TAD_EDIT}></a>
+                            <a href='tag.php?tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-xs btn-info'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
                             <{if $tag.enable|default:false}>
                                 <a href='tag.php?op=stat&enable=0&tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-xs btn-warning'><{$smarty.const._MA_TADNEWS_TAG_UNABLE}></a>
                             <{else}>

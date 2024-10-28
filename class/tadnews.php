@@ -6,7 +6,6 @@ use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\SweetAlert;
-use XoopsModules\Tadtools\SyntaxHighlighter;
 use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -440,8 +439,7 @@ class Tadnews
         $rating_js = '';
         if ($highlighter) {
             //設定是否需要高亮度語法
-            $SyntaxHighlighter = new SyntaxHighlighter();
-            $SyntaxHighlighter->render();
+            Utility::prism();
         }
 
         $where_news = $show_cate_title = '';
@@ -1804,6 +1802,8 @@ class Tadnews
     public function tad_news_form($nsn = '', $def_ncsn = '', $mode = '')
     {
         global $xoopsDB, $xoopsUser, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
+        $xoTheme->addScript('modules/tadtools/jqueryCookie/jquery.cookie.js');
+        $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
         $myts = \MyTextSanitizer::getInstance();
 
         $xoopsTpl->assign('now_uid', $xoopsUser->uid());
@@ -2079,7 +2079,7 @@ class Tadnews
             $option .= "<option value='{$tag_sn}' $selected>{$tag}</option>";
         }
 
-        $select = "<select name='prefix_tag' class='form-control'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
+        $select = "<select name='prefix_tag' class='form-select'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
 
         return $select;
     }

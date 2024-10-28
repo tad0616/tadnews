@@ -3,12 +3,14 @@ use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 require_once __DIR__ . '/header.php';
+// 關閉除錯訊息
+$xoopsLogger->activated = false;
 
 $op = Request::getString('op');
 $nsn = Request::getInt('nsn');
 
 if ('sort_tabs' === $op) {
-    $updateRecordsArray = $_POST['sort'];
+    $updateRecordsArray = Request::getVar('sort', [], null, 'array', 4);
     $sort = 1;
     foreach ($updateRecordsArray as $data_sort) {
         $data_sort = (int) $data_sort;
@@ -20,13 +22,13 @@ if ('sort_tabs' === $op) {
         AND (`data_name` = ? OR `data_name` = ?)';
 
         $params = ["{$sort}000", 'nsn', $nsn, $data_sort, 'tab_title', 'tab_content'];
-        Utility::query($sql, 'ssiiss', $params) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+        Utility::query($sql, 'ssiiss', $params) or die(_TAD_SORT_FAIL . ' (' . date('Y-m-d H:i:s') . ')');
 
         $sort++;
     }
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tadnews_data_center') . '` SET `data_sort`=`data_sort`/1000 WHERE `col_name`=? AND `col_sn`=? AND (`data_name`=? OR `data_name`=?)';
-    Utility::query($sql, 'siss', ['nsn', $nsn, 'tab_title', 'tab_content']) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+    Utility::query($sql, 'siss', ['nsn', $nsn, 'tab_title', 'tab_content']) or die(_TAD_SORT_FAIL . ' (' . date('Y-m-d H:i:s') . ')');
 
     $sql = 'SELECT `data_name`, `data_value` FROM `' . $xoopsDB->prefix('tadnews_data_center') . '` WHERE `col_name`=? AND `col_sn`=? AND (`data_name`=? OR `data_name`=?) ORDER BY `data_sort`';
     $result = Utility::query($sql, 'siss', ['nsn', $nsn, 'tab_title', 'tab_content']) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -73,16 +75,16 @@ if ('sort_tabs' === $op) {
     Utility::query($sql, 'si', [$tabs_content, $nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 } else {
-    $updateRecordsArray = $_POST['tr'];
+    $updateRecordsArray = Request::getVar('tr', [], null, 'array', 4);
 
     $sort = 1;
     foreach ($updateRecordsArray as $nsn) {
         $nsn = (int) $nsn;
         $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `page_sort`=? WHERE `nsn`=?';
-        Utility::query($sql, 'ii', [$sort, $nsn]) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+        Utility::query($sql, 'ii', [$sort, $nsn]) or die(_TAD_SORT_FAIL . ' (' . date('Y-m-d H:i:s') . ')');
 
         $sort++;
     }
 }
 header('HTTP/1.1 200 OK');
-echo 'Save Sort OK! (' . date('Y-m-d H:i:s') . ')';
+echo _TAD_SORTED . "(" . date("Y-m-d H:i:s") . ")";

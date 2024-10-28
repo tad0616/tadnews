@@ -14,7 +14,7 @@ if (!class_exists('XoopsModules\Tadtools\MColorPicker')) {
 function tadnews_page_menu($options)
 {
     global $xoopsDB, $xoTheme;
-    $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vertical_menu.css');
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     $ncsn = Request::getInt('ncsn');
     $nsn = Request::getInt('nsn');

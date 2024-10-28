@@ -43,6 +43,7 @@ class Tools
                     'padding' => $padding,
                     'title' => $myts->htmlSpecialChars($nc_title),
                     'url' => XOOPS_URL . "/modules/tadnews/page.php?ncsn={$sub_ncsn}",
+                    'ncsn' => $sub_ncsn,
                     'of_ncsn' => $of_ncsn,
                 ];
 

@@ -29,7 +29,7 @@ if ('1' == $xoopsModuleConfig['use_newspaper']) {
 }
 
 $p = $Tadnews->chk_user_cate_power();
-if ($xoopsUser && count($p) > 0) {
+if ($xoopsUser && is_array($p) && count($p) > 0) {
     $and_ncsn = empty($ncsn) ? '' : "?ncsn={$ncsn}";
     $interface_menu[_MD_TADNEWS_POST] = "post.php{$and_ncsn}";
     $interface_icon[_MD_TADNEWS_POST] = 'fa-pencil-square-o';
