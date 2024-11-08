@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadnews\Tadnews;
+use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
@@ -82,7 +83,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
     global $xoopsTpl, $xoopsModuleConfig, $Tadnews;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $ok_cat = $Tadnews->chk_user_cate_power('post');
+    $ok_cat = Tools::chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
@@ -153,7 +154,7 @@ function update_tad_news_cate($ncsn = '')
 {
     global $xoopsDB, $xoopsModuleConfig, $Tadnews;
 
-    $ok_cat = $Tadnews->chk_user_cate_power('post');
+    $ok_cat = Tools::chk_user_cate_power('post');
     $ncsn = (int) $ncsn;
     $isOwner = in_array($ncsn, $ok_cat) ? true : false;
 
@@ -175,7 +176,7 @@ function update_tad_news_cate($ncsn = '')
 
     $of_ncsn = (int) $_POST['of_ncsn'];
     $not_news = (int) $_POST['not_news'];
-    $nc_title = $_POST['nc_title'];
+    $nc_title = (string) $_POST['nc_title'];
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `of_ncsn`=?, `nc_title`=?, `enable_group`=?, `enable_post_group`=?, `not_news`=?, `setup`=? WHERE `ncsn`=?';
     Utility::query($sql, 'isssssi', [$of_ncsn, $nc_title, $enable_group, $enable_post_group, $not_news, $setup, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);

@@ -145,5 +145,4 @@ $button = ($show_button) ? "<div class='row'><div class='col-md-4 text-left text
 $block .= "
 {$button}";
 
-header('HTTP/1.1 200 OK');
 echo $block;

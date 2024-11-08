@@ -45,10 +45,10 @@ function tadnews_covered($options)
     $block['cols'] = $options[0];
     $block['count'] = count($news['page']);
     $block['summary_css'] = $summary_css;
-    $block['display_mode'] = $options[5];
-    $block['width_left'] = $options[6] ? $options[6] : 1;
+    $block['display_mode'] = isset($options[5]) && !empty($options[5]) ? $options[5] : 1;
+    $block['width_left'] = isset($options[6]) && !empty($options[6]) ? $options[6] : 1;
     $block['width_right'] = 12 - $block['width_left'];
-    $block['height'] = $options[7] ? $options[7] : '80px';
+    $block['height'] = isset($options[7]) && !empty($options[7]) ? $options[7] : '80px';
     $block['demo_path'] = is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/demo") ? XOOPS_URL . "/uploads/tadnews/demo" : XOOPS_URL . "/modules/tadnews/images";
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');

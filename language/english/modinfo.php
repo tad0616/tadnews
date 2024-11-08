@@ -22,8 +22,6 @@ define('_MI_TADNEWS_BNAME1', 'Categories');
 define('_MI_TADNEWS_BDESC1', 'Show All Categories');
 define('_MI_TADNEWS_BNAME2', 'Last News');
 define('_MI_TADNEWS_BDESC2', 'Show News Content');
-define('_MI_TADNEWS_BNAME3', 'Last Replies');
-define('_MI_TADNEWS_BDESC3', 'List the Last Comments');
 define('_MI_TADNEWS_BNAME4', 'Subscribe / Cancel Newspaper');
 define('_MI_TADNEWS_BDESC4', 'The Block of Subscription');
 define('_MI_TADNEWS_BNAME5', 'Newspaper List');

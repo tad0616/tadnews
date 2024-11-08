@@ -153,18 +153,6 @@ function import_stories($topicid = 0, $new_topic_pid = 0)
         $enable = (empty($expired)) ? '1' : '0';
 
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`) VALUES (?, ?, ?, ?, ?, ?, ?,?, ?, ?)';
-        if (Utility::query($sql, 'isssssissi', [$new_topic_pid, $title, $news_content, $published, '', $enable, $uid, '', '', $counter])) {
-            $new_nsn = $xoopsDB->getInsertId();
-            //匯入評論
-            import_common($storyid, $new_nsn);
-        }
+        Utility::query($sql, 'isssssissi', [$new_topic_pid, $title, $news_content, $published, '', $enable, $uid, '', '', $counter]);
     }
-}
-
-function import_common($storyid = '', $new_nsn = '')
-{
-    global $xoopsDB, $mid_news, $mid_tadnews;
-
-    $sql = 'UPDATE `' . $xoopsDB->prefix('xoopscomments') . '` SET `com_modid`=?, `com_itemid`=? WHERE `com_modid`=? AND `com_itemid`=?';
-    Utility::query($sql, 'iiii', [$mid_tadnews, $new_nsn, $mid_news, $storyid]);
 }

@@ -242,7 +242,7 @@ function have_read($nsn = '', $uid = '')
 //檢查置頂時間
 function chk_always_top()
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `always_top`=? WHERE `always_top_date` <=? AND `always_top_date`!=\'0000-00-00 00:00:00\'';
     Utility::query($sql, 'ss', [0, $now]);
@@ -262,7 +262,7 @@ function list_sign($nsn = '')
 
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-        $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
         $sign[$i]['uid'] = $uid;
         $sign[$i]['uid_name'] = $uid_name;
         $sign[$i]['sign_time'] = $sign_time;
@@ -281,7 +281,7 @@ function list_user_sign($uid = '')
     $news = $Tadnews->get_tad_news($nsn);
 
     $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-    $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+    $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $sign = [];
     $i = 0;

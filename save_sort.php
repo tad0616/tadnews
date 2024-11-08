@@ -86,5 +86,5 @@ if ('sort_tabs' === $op) {
         $sort++;
     }
 }
-header('HTTP/1.1 200 OK');
+
 echo _TAD_SORTED . "(" . date("Y-m-d H:i:s") . ")";

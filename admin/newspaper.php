@@ -220,7 +220,8 @@ function newspaper_themes($themes = '')
 //建立電子報
 function open_newspaper($nps_sn = '')
 {
-    global $xoopsUser, $xoopsConfig, $xoopsTpl;
+    global $xoopsUser, $xoopsConfig, $xoopsTpl, $xoTheme;
+    $xoTheme->addScript('modules/tadnews/class/nicEdit.js');
 
     //修改模式
     $hidden = (empty($nps_sn)) ? '' : "<input type='hidden' name='nps_sn' value='{$nps_sn}'>";
@@ -260,10 +261,10 @@ function save_newspaper_set($nps_sn = '')
         redirect_header('index.php', 3, $error);
     }
 
-    $title = $_POST['title'];
-    $head = $_POST['head'];
-    $foot = $_POST['foot'];
-    $themes = $_POST['themes'];
+    $title = (string) $_POST['title'];
+    $head = (string) $_POST['head'];
+    $foot = (string) $_POST['foot'];
+    $themes = (string) $_POST['themes'];
 
     if (empty($nps_sn)) {
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_paper_setup') . '` (`title`, `head`, `foot`, `themes`, `status`) VALUES (?, ?, ?, ?, ?)';
@@ -487,7 +488,7 @@ function send_now($npsn = '')
 {
     global $xoopsDB;
 
-    $mail_array = $_POST['mail_array'];
+    $mail_array = (array) $_POST['mail_array'];
 
     $xoopsMailer = &getMailer();
     $xoopsMailer->multimailer->ContentType = 'text/html';

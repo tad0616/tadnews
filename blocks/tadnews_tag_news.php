@@ -15,7 +15,6 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 //區塊主函式 (標籤新聞區塊)
 function tadnews_tag_news($options)
 {
-    //$block=list_block_cate_news($options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);
     global $xoTheme;
 
     $tags = Tools::block_news_tags();
@@ -42,7 +41,7 @@ function tadnews_tag_news($options)
 
     $randStr = Utility::randStr();
     $EasyResponsiveTabs = new EasyResponsiveTabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $EasyResponsiveTabs->rander();
+    $EasyResponsiveTabs->render();
     $block['tag_news_name'] = 'tag_news_' . $randStr;
     $block['min_height'] = 200;
 

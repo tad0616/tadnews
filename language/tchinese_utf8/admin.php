@@ -1,5 +1,6 @@
 <?php
 xoops_loadLanguage('admin_common', 'tadtools');
+xoops_loadLanguage('main', 'tadtools');
 
 require_once __DIR__ . '/global.php';
 define('_MA_TADNEWS_SAVE_CATE', '儲存');

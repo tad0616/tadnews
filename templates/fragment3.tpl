@@ -1,5 +1,4 @@
 
-<script type="text/javascript" src="<{$xoops_url}>/modules/tadnews/class/jquery.upload-1.0.2.min.js"></script>
 <{if $pic|default:false}>
     <script type="text/javascript">
         d = new Date();

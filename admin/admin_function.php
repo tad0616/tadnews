@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 
@@ -23,7 +24,7 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     //$Tadnews->set_news_cate_select(1);
     //$Tadnews->set_news_author_select(1);
     $Tadnews->set_news_check_mode(1);
-    $Tadnews->chk_user_cate_power('pass');
+    Tools::chk_user_cate_power('pass');
     $options = $Tadnews->get_tad_news_cate_option(0, 0, '', true, '', '1');
 
     $page = 'main.php';
@@ -160,7 +161,7 @@ function insert_tad_news_cate()
     $of_ncsn = (int) $_POST['of_ncsn'];
     $sort = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];
-    $nc_title = $_POST['nc_title'];
+    $nc_title = (string) $_POST['nc_title'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . '` (`of_ncsn`, `nc_title`, `enable_group`, `enable_post_group`, `sort`, `not_news`, `setup`) VALUES (?, ?, ?, ?, ?, ?, ?)';
     Utility::query($sql, 'isssiss', [$of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $not_news, $setup]) or Utility::web_error($sql, __FILE__, __LINE__);

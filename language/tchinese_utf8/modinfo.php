@@ -22,8 +22,6 @@ define('_MI_TADNEWS_BNAME1', '文章類別');
 define('_MI_TADNEWS_BDESC1', '顯示所有文章的類別');
 define('_MI_TADNEWS_BNAME2', '本站最新消息');
 define('_MI_TADNEWS_BDESC2', '顯示文章內容');
-define('_MI_TADNEWS_BNAME3', '最新回應');
-define('_MI_TADNEWS_BDESC3', '列出最新的文章評論');
 define('_MI_TADNEWS_BNAME4', '訂閱 / 取消電子報');
 define('_MI_TADNEWS_BDESC4', '讓使者訂閱電子報的區塊');
 define('_MI_TADNEWS_BNAME5', '電子報一覽');

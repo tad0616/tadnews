@@ -142,5 +142,4 @@ $button
 <div style='clear:both;'></div>
 ";
 
-header('HTTP/1.1 200 OK');
 echo $block;

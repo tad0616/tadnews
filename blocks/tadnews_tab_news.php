@@ -27,9 +27,6 @@ function tadnews_tab_news($options)
     $Tadnews->set_var('show_files', false);
     $block = $Tadnews->get_cate_news('return');
 
-    // if ($_GET['test'] == 1) {
-    // Utility::dd($block['all_news']);
-    // }
     if (empty($block['all_news'])) {
         return;
     }
@@ -38,7 +35,7 @@ function tadnews_tab_news($options)
 
     $randStr = Utility::randStr();
     $EasyResponsiveTabs = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $EasyResponsiveTabs->rander();
+    $EasyResponsiveTabs->render();
     $block['tab_news_name'] = 'tab_news_' . $randStr;
     $block['min_height'] = 200;
     $tab_font_size = empty($options[8]) ? 16 : (int) $options[8];

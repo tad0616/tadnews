@@ -2,6 +2,7 @@
 
 namespace XoopsModules\Tadnews;
 
+use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\StarRating;
@@ -86,9 +87,6 @@ $this->get_cate_news($mode='assign');
 //取得分類下拉選單
 $this->get_tad_news_cate_option(0,0,$v="",$blank=true,$this_ncsn="",$no_self="0",$not_news=NULL);
 
-//判斷目前登入者在哪些類別中有發表的權利 post,pass,read
-$this->chk_user_cate_power($kind="post");
-
 //以流水號取得某筆tad_news資料
 $this->get_tad_news($nsn="",$uid_chk=false);
 
@@ -166,26 +164,19 @@ class Tadnews
     private $TadUpFiles;
     private $TadDataCenter;
     private $tadnewsConfig;
-    private $tadnewsModule;
-    private $module_id;
     private $uid;
     private $groups = [];
 
     //建構函數
     public function __construct($uid = null, $groups = null)
     {
-        global $xoopsConfig, $xoopsUser;
+        global $xoopsUser;
 
         xoops_loadLanguage('main', 'tadnews');
 
         $this->now = date('Y-m-d', xoops_getUserTimestamp(time()));
         $this->today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-
-        $moduleHandler = xoops_getHandler('module');
-        $this->tadnewsModule = $moduleHandler->getByDirname('tadnews');
-        $this->module_id = $this->tadnewsModule->mid();
-        $configHandler = xoops_getHandler('config');
-        $this->tadnewsConfig = $configHandler->getConfigsByCat(0, $this->module_id);
+        $this->tadnewsConfig = Utility::getXoopsModuleConfig('tadnews');
 
         if ('1' == $this->tadnewsConfig['use_star_rating']) {
             $this->set_use_star_rating(true);
@@ -845,7 +836,7 @@ class Tadnews
             $have_read_chk = $this->have_read_chk($have_read_group, $nsn, $mode);
 
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-            $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+            $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
             $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
             $cate_name = (empty($cates[$ncsn])) ? _TADNEWS_NO_CATE : $cates[$ncsn];
@@ -1186,7 +1177,7 @@ class Tadnews
                 }
 
                 $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-                $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+                $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
                 $news_title = (empty($news_title)) ? _TADNEWS_NO_TITLE : $news_title;
 
@@ -1277,7 +1268,7 @@ class Tadnews
         global $xoopsUser;
         //判斷是否對該模組有管理權限
         if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
 
         if (empty($enable_post_group)) {
@@ -1353,7 +1344,7 @@ class Tadnews
         <option value=''></option>";
         while (list($uid) = $xoopsDB->fetchRow($result)) {
             $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-            $uid_name = (empty($uid_name))?\XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+            $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
             $selected = ($this->view_uid == $uid) ? 'selected' : '';
             $opt .= "<option value='$uid' $selected>$uid_name</option>";
         }
@@ -1380,10 +1371,10 @@ class Tadnews
         global $xoopsDB, $xoopsUser;
         //判斷是否對該模組有管理權限
         if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
 
-        $ok_cat = $this->chk_user_cate_power();
+        $ok_cat = Tools::chk_user_cate_power();
 
         $and_not_news = (null === $not_news or '' === $not_news) ? '' : "and not_news='{$not_news}'";
 
@@ -1435,46 +1426,6 @@ class Tadnews
         }
 
         return $option;
-    }
-
-    //判斷目前登入者在哪些類別中有發表的權利
-    public function chk_user_cate_power($kind = 'post')
-    {
-        global $xoopsDB, $xoopsUser;
-        if (empty($xoopsUser)) {
-            return false;
-        }
-        //判斷是否對該模組有管理權限
-        if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
-        }
-        if ($_SESSION['tadnews_adm']) {
-            $ok_cat[] = 0;
-        }
-
-        $col = ('post' === $kind) ? 'enable_post_group' : 'enable_group';
-
-        //非管理員才要檢查
-        $where = ($_SESSION['tadnews_adm']) ? '' : 'WHERE `' . $col . '` != \'\'';
-        $sql = 'SELECT `ncsn`, `' . $col . '` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ' . $where;
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-
-        while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
-            if ($_SESSION['tadnews_adm'] or 'pass' === $kind) {
-                $ok_cat[] = (int) $ncsn;
-            } else {
-                $power_array = explode(',', $power);
-                foreach ($power_array as $gid) {
-                    // $gid = (int) $gid;
-                    if (in_array($gid, $this->groups)) {
-                        $ok_cat[] = (int) $ncsn;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $ok_cat;
     }
 
     //批次工具
@@ -1616,7 +1567,7 @@ class Tadnews
             }
             //判斷是否對該模組有管理權限
             if (!isset($_SESSION['tadnews_adm'])) {
-                $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+                $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
             }
 
             if (!$_SESSION['tadnews_adm'] and $this->uid != $data['uid']) {
@@ -1804,6 +1755,7 @@ class Tadnews
         global $xoopsDB, $xoopsUser, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
         $xoTheme->addScript('modules/tadtools/jqueryCookie/jquery.cookie.js');
         $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
+        $xoTheme->addScript('modules/tadnews/class/jquery.upload-1.0.2.min.js');
         $myts = \MyTextSanitizer::getInstance();
 
         $xoopsTpl->assign('now_uid', $xoopsUser->uid());
@@ -1816,7 +1768,7 @@ class Tadnews
 
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-        $ncsn_arr = $this->chk_user_cate_power('post');
+        $ncsn_arr = Tools::chk_user_cate_power('post');
         if (empty($ncsn_arr)) {
             redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__ . implode(';', $ncsn_arr));
         }
@@ -2204,9 +2156,9 @@ class Tadnews
         $ncsn = (int) $_POST['ncsn'];
         $tab_mode = (int) $_POST['tab_mode'];
         $not_news = (int) $_POST['not_news'];
-        $new_cate = $_POST['new_cate'];
-        $new_page_cate = $_POST['new_page_cate'];
-        $news_title = $_POST['news_title'];
+        $new_cate = (string) $_POST['new_cate'];
+        $new_page_cate = (string) $_POST['new_page_cate'];
+        $news_title = (string) $_POST['news_title'];
 
         //新分類
         if (!empty($new_cate)) {
@@ -2279,11 +2231,11 @@ class Tadnews
             $_POST['end_day'] = '0000-00-00 00:00:00';
         }
 
-        $start_day = $_POST['start_day'];
-        $end_day = $_POST['end_day'];
-        $passwd = $_POST['passwd'];
-        $prefix_tag = $_POST['prefix_tag'];
-        $always_top_date = $_POST['always_top_date'];
+        $start_day = (string) $_POST['start_day'];
+        $end_day = (string) $_POST['end_day'];
+        $passwd = (string) $_POST['passwd'];
+        $prefix_tag = (string) $_POST['prefix_tag'];
+        $always_top_date = (string) $_POST['always_top_date'];
         $enable = (int) $_POST['enable'];
 
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news') . '` (`ncsn`, `news_title`, `news_content`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -2439,15 +2391,15 @@ class Tadnews
         }
 
         $ncsn = (int) $_POST['ncsn'];
-        $new_cate = $_POST['new_cate'];
-        $new_page_cate = $_POST['new_page_cate'];
+        $new_cate = (string) $_POST['new_cate'];
+        $new_page_cate = (string) $_POST['new_page_cate'];
         if (!empty($_POST['new_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_cate);
         } elseif (!empty($_POST['new_page_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_page_cate, 1);
         }
 
-        $news_title = $_POST['news_title'];
+        $news_title = (string) $_POST['news_title'];
         //若是頁籤模式
         if (1 == $_POST['tab_mode']) {
 
@@ -2505,7 +2457,7 @@ class Tadnews
         $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : $_POST['start_day'];
         $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $_POST['end_day'];
 
-        $uid = $_POST['same_uid'] == 1 ? (int) $_POST['uid'] : $this->uid;
+        $uid = $_POST['same_uid'] ? (int) $_POST['uid'] : $this->uid;
 
         $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '`
         SET `ncsn` = ?,
@@ -2584,7 +2536,7 @@ class Tadnews
         }
         //判斷是否對該模組有管理權限
         if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
         if ($_SESSION['tadnews_adm']) {
             return true;

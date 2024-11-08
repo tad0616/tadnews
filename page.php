@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\TadUpFiles;
@@ -22,7 +23,6 @@ switch ($op) {
     //下載檔案
     case 'tufdl':
         $TadUpFiles = new TadUpFiles('tadnews');
-
         $TadUpFiles->add_file_counter($files_sn, false);
         exit;
 
@@ -70,7 +70,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-
 $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
 $arr = $categoryHelper->getCategoryPath($ncsn);
 
@@ -125,7 +124,7 @@ function list_tad_all_pages($the_ncsn = 0)
         }
     }
     $xoopsTpl->assign('link_cate_sn_arr', $link_cate_sn_arr);
-    $xoopsTpl->assign('ok_cat', $Tadnews->chk_user_cate_power('post'));
+    $xoopsTpl->assign('ok_cat', Tools::chk_user_cate_power('post'));
 }
 
 function add_to_menu($ncsn = '')

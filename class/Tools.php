@@ -195,4 +195,45 @@ class Tools
 
         return $result;
     }
+
+    //判斷目前登入者在哪些類別中有發表的權利
+    public static function chk_user_cate_power($kind = 'post')
+    {
+        global $xoopsDB, $xoopsUser;
+        if (empty($xoopsUser)) {
+            return false;
+        }
+        //判斷是否對該模組有管理權限
+        if (!isset($_SESSION['tadnews_adm'])) {
+            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        }
+        if ($_SESSION['tadnews_adm']) {
+            $ok_cat[] = 0;
+        }
+
+        $col = ('post' === $kind) ? 'enable_post_group' : 'enable_group';
+
+        //非管理員才要檢查
+        $where = ($_SESSION['tadnews_adm']) ? '' : "WHERE `{$col}` != ''";
+        $sql = 'SELECT `ncsn`, `' . $col . '` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ' . $where;
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
+        while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
+            if ($_SESSION['tadnews_adm'] or 'pass' === $kind) {
+                $ok_cat[] = (int) $ncsn;
+            } else {
+                $power_array = explode(',', $power);
+                foreach ($power_array as $gid) {
+                    // $gid = (int) $gid;
+                    if (in_array($gid, $xoopsUser->getGroups())) {
+                        $ok_cat[] = (int) $ncsn;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $ok_cat;
+    }
+
 }

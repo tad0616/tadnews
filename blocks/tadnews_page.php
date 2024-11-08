@@ -1,5 +1,6 @@
 <?php
 
+use Xmf\Request;
 use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tools')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
@@ -29,10 +30,12 @@ function tadnews_page($options)
     foreach ($pages as $id => $page) {
         if ($page['type'] == 'cate') {
             $pId = "cate{$page['of_ncsn']}";
-            $font_style = (int) $_GET['ncsn'] == $page['ncsn'] ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+            $ncsn = Request::getInt('ncsn');
+            $font_style = (int) $ncsn == (int) $page['ncsn'] ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         } else {
             $pId = "cate{$page['ncsn']}";
-            $font_style = (int) $_GET['nsn'] == $page['nsn'] ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+            $nsn = Request::getInt('nsn');
+            $font_style = (int) $nsn == (int) $page['nsn'] ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         }
         $mydata[] = "{ id:'{$id}', pId:'{$pId}', name:'{$page['title']}', url:'{$page['url']}', target:'_self', open:true {$font_style}}";
     }

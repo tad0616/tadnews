@@ -1,7 +1,6 @@
 <div class="container-fluid">
 
     <{if $op=="creat_newspaper" or $op=="modify"}>
-        <script type="text/javascript" src="../class/nicEdit.js"></script>
         <script type="text/javascript">
             //bkLib.onDomLoaded(function() { nicEditors.allTextAreas()});
             bkLib.onDomLoaded(function() {
@@ -45,21 +44,6 @@
             </div>
         </form>
     <{elseif $op=="add_newspaper"}>
-        <script type="text/javascript" src="../class/tmt_core.js"></script>
-        <script type="text/javascript" src="../class/tmt_spry_linkedselect.js"></script>
-        <script type="text/javascript">
-        function getOptions()
-        {
-            var x=document.getElementById("destination");
-            txt="";
-            for (i=0;i<x.length;i++)
-            {
-                txt=txt + "," + x.options[i].value;
-            }
-            document.getElementById("all_news").value=txt;
-        }
-        </script>
-
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_STEP2}></h1>
         <form action="newspaper.php" method="post" id="myForm" class="form-horizontal" role="form">
             <div class="form-group row mb-3">
