@@ -1,50 +1,39 @@
 <?php
-$adminmenu = [];
-$i = 1;
-
-$adminmenu[$i]['title'] = _MI_TADNEWS_ADMIN_HOME;
-$adminmenu[$i]['link'] = 'admin/index.php';
-$adminmenu[$i]['desc'] = _MI_TADNEWS_ADMIN_HOME_DESC;
-$adminmenu[$i]['icon'] = 'images/admin/home.png';
-$i++;
-
-$adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU1;
-$adminmenu[$i]['link'] = 'admin/main.php';
-$adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU1;
-$adminmenu[$i]['icon'] = 'images/admin/folder_txt.png';
-$i++;
-
-$adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU5;
-$adminmenu[$i]['link'] = 'admin/newspaper.php';
-$adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU5;
-$adminmenu[$i]['icon'] = 'images/admin/newsletter.png';
-$i++;
-
-$adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU7;
-$adminmenu[$i]['link'] = 'admin/page.php';
-$adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU7;
-$adminmenu[$i]['icon'] = 'images/admin/content.png';
-
-$i++;
-
-$adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU8;
-$adminmenu[$i]['link'] = 'admin/tag.php';
-$adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU8;
-$adminmenu[$i]['icon'] = 'images/admin/groupmod.png';
-$i++;
+$adminmenu = [
+    [
+        'title' => _MI_TADNEWS_ADMENU1,
+        'link' => 'admin/main.php',
+        'icon' => 'images/admin/folder_txt.png',
+    ],
+    [
+        'title' => _MI_TADNEWS_ADMENU5,
+        'link' => 'admin/newspaper.php',
+        'icon' => 'images/admin/newsletter.png',
+    ],
+    [
+        'title' => _MI_TADNEWS_ADMENU7,
+        'link' => 'admin/page.php',
+        'icon' => 'images/admin/content.png',
+    ],
+    [
+        'title' => _MI_TADNEWS_ADMENU8,
+        'link' => 'admin/tag.php',
+        'icon' => 'images/admin/groupmod.png',
+    ],
+];
 
 $moduleHandler = xoops_getHandler('module');
 $newsxoopsModule = $moduleHandler->getByDirname('news');
 if ($newsxoopsModule) {
-    $adminmenu[$i]['title'] = _MI_TADNEWS_ADMENU4;
-    $adminmenu[$i]['link'] = 'admin/import.php';
-    $adminmenu[$i]['desc'] = _MI_TADNEWS_ADMENU4;
-    $adminmenu[$i]['icon'] = 'images/admin/synchronized.png';
-    $i++;
+    $adminmenu[] = [
+        'title' => _MI_TADNEWS_ADMENU4,
+        'link' => 'admin/import.php',
+        'icon' => 'images/admin/synchronized.png',
+    ];
 }
 
-$i++;
-$adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
-$adminmenu[$i]['link'] = 'admin/about.php';
-$adminmenu[$i]['desc'] = _MI_TAD_ADMIN_ABOUT_DESC;
-$adminmenu[$i]['icon'] = 'images/admin/about.png';
+$adminmenu[] = [
+    'title' => _MI_TAD_ADMIN_ABOUT,
+    'link' => 'admin/about.php',
+    'icon' => 'images/admin/about.png',
+];
