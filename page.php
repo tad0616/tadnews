@@ -78,6 +78,7 @@ $path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $ne
 $xoopsTpl->assign('breadcrumb', $path);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 $xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('tadnews_adm', $tadnews_adm);
 $xoTheme->addStylesheet('modules/tadnews/css/module.css');
 if ($xoopsModuleConfig['use_table_shadow']) {
     $xoTheme->addStylesheet('modules/tadnews/css/module2.css');

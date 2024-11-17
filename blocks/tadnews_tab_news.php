@@ -14,7 +14,6 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 //區塊主函式 (頁籤新聞區塊)
 function tadnews_tab_news($options)
 {
-    //$block=list_block_cate_news($options[0],$options[1],$options[2],$options[3],$options[4],$options[5]);
     global $xoTheme;
 
     $ncsn_arr = explode(',', $options[0]);
@@ -68,6 +67,7 @@ function tadnews_tab_news_edit($options)
     $options[8] = empty($options[8]) ? 16 : (int) $options[8];
 
     $form = "
+    <style>
     .color-picker {
         width: 80%;
         display: inline-block;

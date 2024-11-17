@@ -370,8 +370,8 @@ class Tadnews
     {
         global $xoopsDB;
 
-        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tadnews_files_center') . '` WHERE `col_name`=? AND `col_sn`=? ORDER BY `sort`';
-        $result = Utility::query($sql, 'si', [$col_name, $col_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tadnews_files_center') . "` WHERE `col_name`='{$col_name}' AND `col_sn`='{$col_sn}' ORDER BY `sort`";
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while ($all = $xoopsDB->fetchArray($result)) {
             //以下會產生這些變數： $files_sn, $col_name, $col_sn, $sort, $kind, $file_name, $file_type, $file_size, $description
@@ -422,9 +422,9 @@ class Tadnews
     //取得新聞 $mode = 'assign','return','app'
     public function get_news($mode = 'assign', $admin = false, $highlighter = true)
     {
-        global $xoopsDB, $xoopsTpl, $xoTheme;
+        global $xoopsDB, $xoopsTpl, $xoTheme, $tadnews_adm;
         if ($admin) {
-            $_SESSION['tadnews_adm'] = $admin;
+            $tadnews_adm = $admin;
         }
 
         $rating_js = '';
@@ -541,7 +541,7 @@ class Tadnews
         $ncsn = isset($ncsn) ? $ncsn : '';
         //找指定的分類
         $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE 1 ' . $kind_chk . ' ' . $where_cate . ' ORDER BY `sort`';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         //$ncsn , $of_ncsn , $nc_title , $enable_group , $enable_post_group , $sort , $cate_pic , $not_news , $setup
         $ncsn_ok = $cates = $cate_setup = $only_title_cate = [];
@@ -717,9 +717,9 @@ class Tadnews
         }
         $all_news = [];
         $i = 0;
-
         $prefix_tags = $this->prefix_tags();
         $myts = \MyTextSanitizer::getInstance();
+
         while (false !== ($news = $xoopsDB->fetchArray($result))) {
             foreach ($news as $k => $v) {
                 $$k = $v;
@@ -727,7 +727,7 @@ class Tadnews
 
             //判斷本文及所屬分類是否允許該用戶之所屬群組觀看
             $news_read_power = $this->chk_news_power($enable_group);
-            if (!$news_read_power and $uid != $this->uid and !$_SESSION['tadnews_adm']) {
+            if (!$news_read_power and $uid != $this->uid and !$tadnews_adm) {
                 continue;
             }
 
@@ -1082,7 +1082,7 @@ class Tadnews
         }
 
         $sql = 'SELECT `ncsn`,`nc_title`,`enable_group`,`enable_post_group`,`cate_pic`,`setup` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE 1 ' . $and_cate . ' ' . $kind_chk . ' ORDER BY `sort`';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $i = 0;
         $only_title = false;
@@ -1265,10 +1265,10 @@ class Tadnews
     //新聞編輯工具
     private function admin_tool($uid, $nsn, $counter = '', $ncsn = '', $have_read_group = '', $enable_post_group = '')
     {
-        global $xoopsUser;
+        global $xoopsUser, $tadnews_adm;
         //判斷是否對該模組有管理權限
-        if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        if (!isset($tadnews_adm)) {
+            $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
 
         if (empty($enable_post_group)) {
@@ -1298,7 +1298,7 @@ class Tadnews
         $news_post_power = $this->chk_news_power($enable_post_group);
 
         $admin_fun = '';
-        if ($this->uid and ($news_post_power or $uid == $this->uid or $_SESSION['tadnews_adm'])) {
+        if ($this->uid and ($news_post_power or $uid == $this->uid or $tadnews_adm)) {
 
             $bbcode = (isset($this->tadnewsConfig['show_bbcode']) and '1' == $this->tadnewsConfig['show_bbcode']) ? "<a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}&bb=1' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='BBCode'>
             BB
@@ -1337,7 +1337,7 @@ class Tadnews
     {
         global $xoopsDB;
         $sql = 'SELECT `uid` FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `uid`';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $opt = _TADNEWS_SHOW_AUTHOR_NEWS . "
         <select onChange=\"window.location.href='{$_SERVER['PHP_SELF']}?show_uid='+this.value\">
@@ -1368,22 +1368,22 @@ class Tadnews
     //取得分類下拉選單
     public function get_tad_news_cate_option($of_ncsn = 0, $level = 0, $v = '', $blank = true, $this_ncsn = '', $no_self = '0', $not_news = null)
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB, $xoopsUser, $tadnews_adm;
         //判斷是否對該模組有管理權限
-        if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        if (!isset($tadnews_adm)) {
+            $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
 
         $ok_cat = Tools::chk_user_cate_power();
 
         $and_not_news = (null === $not_news or '' === $not_news) ? '' : "and not_news='{$not_news}'";
 
-        if ($_SESSION['tadnews_adm']) {
+        if ($tadnews_adm) {
             // &nbsp;
             $left = str_repeat('-', $level * 4);
             $level += 1;
 
-            $option = ($of_ncsn or !$_SESSION['tadnews_adm'] or false === $blank) ? '' : "<option value='0'></option>";
+            $option = ($of_ncsn or !$tadnews_adm or false === $blank) ? '' : "<option value='0'></option>";
 
             // '' == $option;
             $sql = 'SELECT `ncsn`, `nc_title`, `not_news` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn`=? ' . $and_not_news . ' ORDER BY `sort`';
@@ -1407,7 +1407,7 @@ class Tadnews
         } else {
             $all_ncsn = implode(',', $ok_cat);
             $sql = 'SELECT `ncsn`, `nc_title`, `not_news` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `ncsn` IN(' . $all_ncsn . ") $and_not_news ORDER BY `sort`";
-            $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             while (list($ncsn, $nc_title, $not_news) = $xoopsDB->fetchRow($result)) {
                 $ncsn = (int) $ncsn;
@@ -1546,14 +1546,14 @@ class Tadnews
     //以流水號取得某筆tad_news資料
     public function get_tad_news($nsn = '', $uid_chk = false)
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB, $xoopsUser, $tadnews_adm;
         if (empty($nsn)) {
             return;
         }
+        $nsn = (int) $nsn;
 
-        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn` = ?';
-        $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn` = ' . $nsn;
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         $data = $xoopsDB->fetchArray($result);
 
         $news_content = strip_tags($data['news_content']);
@@ -1566,11 +1566,11 @@ class Tadnews
                 redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
             }
             //判斷是否對該模組有管理權限
-            if (!isset($_SESSION['tadnews_adm'])) {
-                $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+            if (!isset($tadnews_adm)) {
+                $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
             }
 
-            if (!$_SESSION['tadnews_adm'] and $this->uid != $data['uid']) {
+            if (!$tadnews_adm and $this->uid != $data['uid']) {
                 redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
             }
         }
@@ -1584,7 +1584,7 @@ class Tadnews
         global $xoopsDB;
         $prefix_tags = [];
         $sql = 'SELECT `tag_sn`, `font_color`, `color`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($tag_sn, $font_color, $color, $tag) = $xoopsDB->fetchRow($result)) {
 
@@ -1753,11 +1753,11 @@ class Tadnews
     public function tad_news_form($nsn = '', $def_ncsn = '', $mode = '')
     {
         global $xoopsDB, $xoopsUser, $xoopsTpl, $xoopsModuleConfig, $xoTheme;
+
         $xoTheme->addScript('modules/tadtools/jqueryCookie/jquery.cookie.js');
         $xoTheme->addScript('modules/tadtools/My97DatePicker/WdatePicker.js');
         $xoTheme->addScript('modules/tadnews/class/jquery.upload-1.0.2.min.js');
         $myts = \MyTextSanitizer::getInstance();
-
         $xoopsTpl->assign('now_uid', $xoopsUser->uid());
 
         $FormValidator = new FormValidator('#myForm', false);
@@ -2530,15 +2530,15 @@ class Tadnews
     //身份查核
     private function chk_who($author_id = '')
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB, $xoopsUser, $tadnews_adm;
         if (!$xoopsUser) {
             return false;
         }
         //判斷是否對該模組有管理權限
-        if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        if (!isset($tadnews_adm)) {
+            $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
-        if ($_SESSION['tadnews_adm']) {
+        if ($tadnews_adm) {
             return true;
         }
 

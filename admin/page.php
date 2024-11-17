@@ -75,6 +75,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('tadnews_adm', $tadnews_adm);
 $xoopsTpl->assign('cate_img_url', XOOPS_URL . '/uploads/tadnews/cate');
 require_once __DIR__ . '/footer.php';
 
@@ -86,7 +87,7 @@ function list_tadnews_cate_tree($def_ncsn = '')
     global $xoopsDB, $xoopsTpl;
 
     $sql = 'SELECT `ncsn`, COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `ncsn`';
-    $result = Utility::query($sql);
+    $result = $xoopsDB->query($sql);
 
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;

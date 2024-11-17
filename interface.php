@@ -14,8 +14,8 @@ $nsn = Request::getInt('nsn');
 $ncsn = Request::getInt('ncsn');
 
 //判斷是否對該模組有管理權限
-if (!isset($_SESSION['tadnews_adm'])) {
-    $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+if (!isset($tadnews_adm)) {
+    $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 
 $interface_menu[_TADNEWS_NAME] = 'index.php';
@@ -47,7 +47,7 @@ if (isset($xoopsUser) && \is_object($xoopsUser) && is_array($p) && count($p) > 0
     $interface_icon[_MD_TADNEWS_MY] = 'fa-address-book';
 }
 
-if ($_SESSION['tadnews_adm']) {
+if ($tadnews_adm) {
     $interface_menu[_MD_TADNEWS_TO_ADMIN] = 'admin/main.php';
     $interface_icon[_MD_TADNEWS_TO_ADMIN] = 'fa-sign-in';
 }

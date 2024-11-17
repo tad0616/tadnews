@@ -1,7 +1,6 @@
 <?php
-//---基本設定---//
 $modversion = [];
-global $xoopsConfig;
+
 $language = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADNEWS_NAME;
@@ -100,15 +99,17 @@ $modversion['hasComments'] = 0;
 $modversion['hasSearch'] = 1;
 $modversion['search']['file'] = 'include/search.php';
 $modversion['search']['func'] = 'tadnews_search';
+
+//---區塊設定 (索引為固定值，若欲刪除區塊記得補上索引，避免區塊重複)---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'tadnews_cate.php',
         'name' => _MI_TADNEWS_BNAME1,
         'description' => _MI_TADNEWS_BDESC1,
         'show_func' => 'tadnews_cate_show',
         'template' => 'tadnews_block_cate.tpl',
     ],
-    [
+    2 => [
         'file' => 'tadnews_content_block.php',
         'name' => _MI_TADNEWS_BNAME2,
         'description' => _MI_TADNEWS_BDESC2,
@@ -117,14 +118,14 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_content_block_edit',
         'options' => '5|100|color: #707070; font-size: 0.95rem; margin-top:3px; line-height:150%; white-space: pre-line;|0|1|width:80px;height:60px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0|',
     ],
-    [
+    4 => [
         'file' => 'tadnews_newspaper.php',
         'name' => _MI_TADNEWS_BNAME4,
         'description' => _MI_TADNEWS_BDESC4,
         'show_func' => 'tadnews_newspaper',
         'template' => 'tadnews_block_newspaper.tpl',
     ],
-    [
+    5 => [
         'file' => 'tadnews_newspaper_list.php',
         'name' => _MI_TADNEWS_BNAME5,
         'description' => _MI_TADNEWS_BDESC5,
@@ -133,7 +134,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_newspaper_list_edit',
         'options' => '10',
     ],
-    [
+    6 => [
         'file' => 'tadnews_cate_news.php',
         'name' => _MI_TADNEWS_BNAME6,
         'description' => _MI_TADNEWS_BDESC6,
@@ -142,7 +143,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_cate_news_edit',
         'options' => '|10|1|0|100|color:#707070; font-size: 0.75rem; margin-top:3px; line-height:180%;',
     ],
-    [
+    7 => [
         'file' => 'tadnews_page.php',
         'name' => _MI_TADNEWS_BNAME7,
         'description' => _MI_TADNEWS_BDESC7,
@@ -151,7 +152,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_page_edit',
         'options' => '|160|1em',
     ],
-    [
+    8 => [
         'file' => 'tadnews_focus_news.php',
         'name' => _MI_TADNEWS_BNAME8,
         'description' => _MI_TADNEWS_BDESC8,
@@ -160,7 +161,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_focus_news_edit',
         'options' => '|full',
     ],
-    [
+    9 => [
         'file' => 'tadnews_my_page.php',
         'name' => _MI_TADNEWS_BNAME9,
         'description' => _MI_TADNEWS_BDESC9,
@@ -169,7 +170,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_my_page_edit',
         'options' => '',
     ],
-    [
+    10 => [
         'file' => 'tadnews_list_content_block.php',
         'name' => _MI_TADNEWS_BNAME10,
         'description' => _MI_TADNEWS_BDESC10,
@@ -178,7 +179,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_list_content_block_edit',
         'options' => '5|100|color:gray;font-size: 0.8rem; margin-top:3px;line-height:150%;|0|1|width:60px;height:30px;float:left;border:0px solid #9999CC;margin:0px 4px 4px 0px;overflow:hidden;background-size:cover;|0||list|0|0',
     ],
-    [
+    11 => [
         'file' => 'tadnews_table_content_block.php',
         'name' => _MI_TADNEWS_BNAME11,
         'description' => _MI_TADNEWS_BDESC11,
@@ -187,7 +188,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_table_content_block_edit',
         'options' => '6|1|start_day|news_title|uid|ncsn|counter|0||0',
     ],
-    [
+    12 => [
         'file' => 'tadnews_slidernews.php',
         'name' => _MI_TADNEWS_BNAME13,
         'description' => _MI_TADNEWS_BDESC13,
@@ -196,7 +197,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_slidernews_edit',
         'options' => '670|250|5|90|',
     ],
-    [
+    13 => [
         'file' => 'tadnews_slidernews2.php',
         'name' => _MI_TADNEWS_BNAME14,
         'description' => _MI_TADNEWS_BDESC14,
@@ -205,7 +206,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_slidernews2_edit',
         'options' => '5|90|ResponsiveSlides|',
     ],
-    [
+    14 => [
         'file' => 'tadnews_marquee.php',
         'name' => _MI_TADNEWS_MARQUEE,
         'description' => _MI_TADNEWS_MARQUEE_DESC,
@@ -214,7 +215,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_marquee_edit',
         'options' => '5|0|down|5000||',
     ],
-    [
+    15 => [
         'file' => 'tadnews_covered.php',
         'name' => _MI_TADNEWS_COVERED,
         'description' => _MI_TADNEWS_COVERED_DESC,
@@ -223,7 +224,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_covered_edit',
         'options' => '3|2|66|font-size: 0.8rem; color: #707070; line-height: 180%;||1|1|80px',
     ],
-    [
+    16 => [
         'file' => 'tadnews_page_list.php',
         'name' => _MI_TADNEWS_PAGE_LIST,
         'description' => _MI_TADNEWS_PAGE_LIST_DESC,
@@ -232,7 +233,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_page_list_edit',
         'options' => '|#9ea200|1|1|#ffffff|padding: 4px; border-radius: 5px;|font-size: 1.1rem; text-shadow: 0px 1px #0d4e5c, 1px 0px #0d4e5c, -1px 0px #0d4e5c, 0px -1px #0d4e5c, -1px -1px #0d4e5c, 1px 1px #0d4e5c, 1px -1px #0d4e5c, -1px 1px #0d4e5c;',
     ],
-    [
+    17 => [
         'file' => 'tadnews_tab_news.php',
         'name' => _MI_TADNEWS_TAB_NEWS,
         'description' => _MI_TADNEWS_TAB_NEWS_DESC,
@@ -241,7 +242,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_tab_news_edit',
         'options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0|16|0',
     ],
-    [
+    18 => [
         'file' => 'tadnews_tag_news.php',
         'name' => _MI_TADNEWS_TAG_NEWS,
         'description' => _MI_TADNEWS_TAG_NEWS_DESC,
@@ -250,7 +251,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tadnews_tag_news_edit',
         'options' => '|10|default|#FFFFFF|#E0D9D9|#9C905C|#9C905C|0|16|0',
     ],
-    [
+    19 => [
         'file' => 'tadnews_page_menu.php',
         'name' => _MI_TADNEWS_PAGE_MENU . '[hide]',
         'description' => _MI_TADNEWS_PAGE_MENU_DESC,

@@ -125,7 +125,7 @@ function newspaper_set_table($sel_nps_sn = '')
     $option = '';
     //找出現有設定組
     $sql = 'SELECT `nps_sn`,`title` FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($nps_sn, $title) = $xoopsDB->fetchRow($result)) {
         if ($sel_nps_sn == $nps_sn) {
@@ -373,7 +373,7 @@ function edit_newspaper($npsn = '')
                 FROM `' . $xoopsDB->prefix('tad_news') . '`
                 ' . $news;
 
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($nsn, $ncsn, $news_title, $news_content, $start_day, $end_day, $enable, $uid, $passwd, $enable_group) = $xoopsDB->fetchRow($result)) {
             $news_title = $myts->htmlSpecialChars($news_title);

@@ -88,7 +88,7 @@ function list_tadnews_cate_tree($def_ncsn = '')
     global $xoopsDB, $xoopsTpl;
 
     $sql = 'SELECT `ncsn`, COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `ncsn`';
-    $result = Utility::query($sql);
+    $result = $xoopsDB->query($sql);
 
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;

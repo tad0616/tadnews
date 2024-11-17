@@ -45,6 +45,7 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 
 $xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('tadnews_adm', $tadnews_adm);
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 $xoTheme->addStylesheet('modules/tadnews/css/module.css');
 if ($xoopsModuleConfig['use_table_shadow']) {

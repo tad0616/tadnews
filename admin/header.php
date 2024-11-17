@@ -37,4 +37,4 @@ $xoTheme->addStylesheet('modules/' . $xoopsModule->getVar('dirname') . '/css/adm
 //$xoTheme->addScript("browse.php?Frameworks/jquery/jquery.js");
 //$xoTheme->addScript("browse.php?modules/" . $xoopsModule->getVar("dirname") . "/js/admin.js");
 
-$_SESSION['tadnews_adm'] = true;
+$tadnews_adm = true;

@@ -10,12 +10,12 @@ function tadnews_newspaper($options)
     global $xoopsDB, $xoopsUser;
 
     $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($counter) = $xoopsDB->fetchRow($result);
 
     //找出現有設定組
     $sql = 'SELECT `nps_sn`, `title` FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '` WHERE `status`=1';
-    $result = Utility::query($sql);
+    $result = $xoopsDB->query($sql);
 
     $i = 0;
     $option = [];

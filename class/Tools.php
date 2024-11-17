@@ -103,7 +103,7 @@ class Tools
         }
 
         $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ORDER BY `sort`';
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
             if (empty($ncsn_arr_str) or in_array($ncsn, $ncsn_arr)) {
@@ -119,7 +119,7 @@ class Tools
     {
         global $xoopsDB;
         $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
-        $result = Utility::query($sql);
+        $result = $xoopsDB->query($sql);
 
         $data = [];
         while (list($tag_sn, $tag) = $xoopsDB->fetchRow($result)) {
@@ -199,27 +199,27 @@ class Tools
     //判斷目前登入者在哪些類別中有發表的權利
     public static function chk_user_cate_power($kind = 'post')
     {
-        global $xoopsDB, $xoopsUser;
+        global $xoopsDB, $xoopsUser, $tadnews_adm;
         if (empty($xoopsUser)) {
             return false;
         }
         //判斷是否對該模組有管理權限
-        if (!isset($_SESSION['tadnews_adm'])) {
-            $_SESSION['tadnews_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        if (!isset($tadnews_adm)) {
+            $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
-        if ($_SESSION['tadnews_adm']) {
+        if ($tadnews_adm) {
             $ok_cat[] = 0;
         }
 
         $col = ('post' === $kind) ? 'enable_post_group' : 'enable_group';
 
         //非管理員才要檢查
-        $where = ($_SESSION['tadnews_adm']) ? '' : "WHERE `{$col}` != ''";
+        $where = ($tadnews_adm) ? '' : "WHERE `{$col}` != ''";
         $sql = 'SELECT `ncsn`, `' . $col . '` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ' . $where;
-        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {
-            if ($_SESSION['tadnews_adm'] or 'pass' === $kind) {
+            if ($tadnews_adm or 'pass' === $kind) {
                 $ok_cat[] = (int) $ncsn;
             } else {
                 $power_array = explode(',', $power);
