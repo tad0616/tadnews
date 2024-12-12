@@ -28,21 +28,21 @@ if (!isset($xoopsModuleConfig)) {
 
 if ('1' == $tadnewsModuleConfig['use_archive']) {
     $interface_menu[_MD_TADNEWS_ARCHIVE] = 'archive.php';
-    $interface_icon[_MD_TADNEWS_ARCHIVE] = 'fa-files-o';
+    $interface_icon[_MD_TADNEWS_ARCHIVE] = 'fa-file';
 }
 
 if ('1' == $tadnewsModuleConfig['use_newspaper']) {
     $interface_menu[_MD_TADNEWS_NEWSPAPER] = 'newspaper.php';
-    $interface_icon[_MD_TADNEWS_NEWSPAPER] = 'fa-newspaper-o';
+    $interface_icon[_MD_TADNEWS_NEWSPAPER] = 'fa-newspaper';
 }
 
 $p = Tools::chk_user_cate_power();
 if (isset($xoopsUser) && \is_object($xoopsUser) && is_array($p) && count($p) > 0) {
     $and_ncsn = empty($ncsn) ? '' : "?ncsn={$ncsn}";
     $interface_menu[_MD_TADNEWS_POST] = "post.php{$and_ncsn}";
-    $interface_icon[_MD_TADNEWS_POST] = 'fa-pencil-square-o';
+    $interface_icon[_MD_TADNEWS_POST] = 'fa-pencil';
     $interface_menu[_MD_TADNEWS_KIND_PAGE] = 'page.php';
-    $interface_icon[_MD_TADNEWS_KIND_PAGE] = 'fa-file-text-o';
+    $interface_icon[_MD_TADNEWS_KIND_PAGE] = 'fa-file-text';
     $interface_menu[_MD_TADNEWS_MY] = 'my_news.php';
     $interface_icon[_MD_TADNEWS_MY] = 'fa-address-book';
 }

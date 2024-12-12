@@ -6,7 +6,7 @@
                 <span class="input-group-text"><{$smarty.const._MD_TADNEWS_ARCHIVE}></span>
             </div>
             <label class="sr-only visually-hidden" for="select">Preference</label>
-            <select onChange="location.href='archive.php?date='+this.value" class="form-select" id="select">
+            <select onChange="location.href='archive.php?date='+this.value" class="form-control form-select" id="select">
                 <option value=""></option>
                 <{foreach from=$opt item=data}>
                     <option value="<{$data.value}>" <{$data.selected}>><{$data.text}> (<{$data.count}>)</option>

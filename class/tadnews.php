@@ -764,7 +764,7 @@ class Tadnews
                 $news_content = trim($news_content);
 
                 $style = (empty($this->summary_css)) ? '' : "style='{$this->summary_css}'";
-                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9rem;'><i class=\"fa fa-file-text-o\"></i> " . _TADNEWS_MORE . '</a>';
+                $more = mb_strlen($news_content) <= $this->summary_num ? '' : "... <a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$ncsn}&nsn={$nsn}' style='font-size: 0.9rem;'><i class=\"fa fa-file-text\"></i> " . _TADNEWS_MORE . '</a>';
 
                 $news_content = "<div $style>" . mb_substr($news_content, 0, $this->summary_num, _CHARSET) . $more . '</div>';
             } elseif ('page_break' === $this->summary_num) {
@@ -1283,8 +1283,8 @@ class Tadnews
 
         $edit_cate = '';
         if (!empty($ncsn)) {
-            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_EDIT_CATE . "'><i class='fa fa-folder-open-o'></i></a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_EDIT_CATE . "'>
-            <i class='fa fa-folder-open-o'></i>
+            $edit_cate = ('page' === $this->kind) ? "<a href='" . XOOPS_URL . "/modules/tadnews/admin/page.php?op=modify_page_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_EDIT_CATE . "'><i class='fa fa-folder-open'></i></a>{$tab_sort_btn}" : "<a href='" . XOOPS_URL . "/modules/tadnews/admin/main.php?op=modify_news_cate&ncsn=$ncsn' class='btn btn-success btn-sm btn-xs' style='font-weight:normal;' data-toggle='tooltip' data-placement='bottom' data-bs-toggle='tooltip' data-bs-placement='bottom' title='" . _TADNEWS_EDIT_CATE . "'>
+            <i class='fa fa-folder-open'></i>
             </a>";
         }
 
@@ -2031,7 +2031,7 @@ class Tadnews
             $option .= "<option value='{$tag_sn}' $selected>{$tag}</option>";
         }
 
-        $select = "<select name='prefix_tag' class='form-select'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
+        $select = "<select name='prefix_tag' class='form-control form-select'><option value=''>" . _TADNEWS_PREFIX_TAG . "</option>$option</select>";
 
         return $select;
     }
@@ -2454,8 +2454,8 @@ class Tadnews
 
         $always_top = (int) $_POST['always_top'];
 
-        $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : $_POST['start_day'];
-        $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : $_POST['end_day'];
+        $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : (string) $_POST['start_day'];
+        $end_day = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : (string) $_POST['end_day'];
 
         $uid = $_POST['same_uid'] ? (int) $_POST['uid'] : $this->uid;
 

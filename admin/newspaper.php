@@ -198,7 +198,7 @@ function newspaper_themes($themes = '')
 {
     if (is_dir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes')) {
         if ($dh = opendir(XOOPS_ROOT_PATH . '/uploads/tadnews/themes')) {
-            $select = "<select name='themes' id='themes' class='form-select'>";
+            $select = "<select name='themes' id='themes' class='form-control form-select'>";
             while (false !== ($file = readdir($dh))) {
                 if ('.' === $file or '..' === $file) {
                     continue;

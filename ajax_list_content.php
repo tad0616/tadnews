@@ -7,6 +7,7 @@ require_once __DIR__ . '/header.php';
 xoops_loadLanguage('blocks', 'tadnews');
 
 // 關閉除錯訊息
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 
 $num = Request::getInt('num', 10);

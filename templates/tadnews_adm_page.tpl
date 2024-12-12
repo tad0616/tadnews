@@ -14,7 +14,7 @@
             coint_checked();
         });
 
-        $(".news").change(function(event) {
+        $(".news").on('change', function(event) {
             coint_checked();
         });
 
@@ -177,13 +177,13 @@
                                 <{$smarty.const._TADNEWS_MOVE_TO}>
                             </label>
                             <div class="col-md-4">
-                                <select name='ncsn' class="form-select" onChange="check_one('move',false)"><{$options|default:''}></select>
+                                <select name='ncsn' class="form-control form-select" onChange="check_one('move',false)"><{$options|default:''}></select>
                             </div>
                             <div class="col-md-3">
                                 <input type='hidden' name='kind' value='news'>
                                 <input type='hidden' name='op' value='batch'>
                                 <{$XOOPS_TOKEN|default:''}>
-                                <button type='submit' class='btn btn-primary'><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SUBMIT}></button>
+                                <button type='submit' class='btn btn-primary'><i class="fa fa-floppy-disk" aria-hidden="true"></i>  <{$smarty.const._TAD_SUBMIT}></button>
                             </div>
                         </div>
                     </div>

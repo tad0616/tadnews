@@ -55,7 +55,7 @@
             </div>
 
             <div class="form-group row mb-3">
-                <{$tmt_box}>
+                <{$tmt_box|default:''}>
             </div>
 
             <div class="text-center">
@@ -219,7 +219,7 @@
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_LIST}></h1>
         <div class="row" style="margin:10px;">
             <div class="col-md-5">
-                <select name="nps_sn" id="nps_sn" class="form-select col-md-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
+                <select name="nps_sn" id="nps_sn" class="form-control form-select col-md-6" onChange="window.location.href='newspaper.php?nps_sn='+this.value ">
                 <option value=""><{$smarty.const._MA_TADNEWS_NP_OPTION}></option>
                 <{$option|default:''}>
                 </select>

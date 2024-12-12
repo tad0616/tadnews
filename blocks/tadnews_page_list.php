@@ -65,6 +65,7 @@ function tadnews_page_list_edit($options)
     $MColorPicker->render('bootstrap');
 
     $form = "
+    <style>
     .color-picker {
         width: 80%;
         display: inline-block;

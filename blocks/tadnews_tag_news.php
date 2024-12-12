@@ -75,6 +75,7 @@ function tadnews_tag_news_edit($options)
     $options[8] = empty($options[8]) ? 16 : (int) $options[8];
 
     $form = "
+    <style>
     .color-picker {
         width: 80%;
         display: inline-block;

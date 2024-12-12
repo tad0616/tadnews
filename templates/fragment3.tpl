@@ -4,7 +4,7 @@
         d = new Date();
         $(function() {
         $('#show_pic_css_setup').show();
-        $('#upfile2').change(function() {
+        $('#upfile2').on('change', function() {
             $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn|default:''}>'}, function(res) {
             $('#files_sn').val(res);
             $.post("demo_upload.php", { op: "get_pic", files_sn: res }, function(data) {
@@ -23,7 +23,7 @@
         d = new Date();
         $(function() {
         $('#show_pic_css_setup').hide();
-        $('#upfile2').change(function() {
+        $('#upfile2').on('change', function() {
             $(this).upload('demo_upload.php',{op:'upload' , nsn:'<{$nsn|default:''}>'}, function(res) {
             $('#show_pic_css_setup').show();
             $('#files_sn').val(res);
@@ -55,7 +55,7 @@
             <label>
                 <{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC}>
             </label>
-            <select class="form-select" name="pic_css[use_pic_css]" id="pic_css">
+            <select class="form-control form-select" name="pic_css[use_pic_css]" id="pic_css">
                 <option value="" <{if $use_pic_css==""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_NO}></option>
                 <option value="true" <{if $use_pic_css!=""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_ENABLE_NEWSPIC_YES}></option>
             </select>
@@ -84,7 +84,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_BORDER_STYTLE}>
                     </label>
-                    <select class="form-select" name="pic_css[border_style]" onChange="$('#demo_cover_pic').css('border-style',this.value);">
+                    <select class="form-control form-select" name="pic_css[border_style]" onChange="$('#demo_cover_pic').css('border-style',this.value);">
                         <option value="solid" <{if $pic_css_border_style=="solid"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_SOLID}> </option>
                         <option value="dashed" <{if $pic_css_border_style=="dashed"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DASHED}></option>
                         <option value="double" <{if $pic_css_border_style=="double"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_DOUBLE}></option>
@@ -108,7 +108,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT}>
                     </label>
-                    <select class="form-select" name="pic_css[float]" onChange="$('#demo_cover_pic').css('float',this.value);">
+                    <select class="form-control form-select" name="pic_css[float]" onChange="$('#demo_cover_pic').css('float',this.value);">
                         <option value="left" <{if $pic_css_float=="left"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_LEFT}></option>
                         <option value="right" <{if $pic_css_float=="right"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_RIGHT}></option>
                         <option value="none" <{if $pic_css_float=="none"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_FLOAT_NONE}></option>
@@ -128,7 +128,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC}>
                     </label>
-                    <select class="form-select" name="pic_css[background_repeat]" onChange="$('#demo_cover_pic').css('background-repeat',this.value);">
+                    <select class="form-control form-select" name="pic_css[background_repeat]" onChange="$('#demo_cover_pic').css('background-repeat',this.value);">
                         <option value="no-repeat" <{if $pic_css_background_repeat=="no-repeat"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_REPEAT}></option>
                         <option value="repeat" <{if $pic_css_background_repeat=="repeat"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_REPEAT}></option>
                         <option value="repeat-x" <{if $pic_css_background_repeat=="repeat-x"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_X_REPEAT}></option>
@@ -140,7 +140,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_SHOW}>
                     </label>
-                    <select class="form-select" name="pic_css[background_position]" onChange="$('#demo_cover_pic').css('background-position',this.value);">
+                    <select class="form-control form-select" name="pic_css[background_position]" onChange="$('#demo_cover_pic').css('background-position',this.value);">
                         <option value="left top" <{if $pic_css_background_position=="left top"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_TOP}></option>
                         <option value="left center" <{if $pic_css_background_position=="left center"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_CENTER}></option>
                         <option value="left bottom" <{if $pic_css_background_position=="left bottom"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_LEFT_BOTTOM}></option>
@@ -157,7 +157,7 @@
                     <label>
                         <{$smarty.const._MD_TADNEWS_NEWSPIC_AND}>
                     </label>
-                    <select class="form-select" name="pic_css[background_size]" onChange="$('#demo_cover_pic').css('background-size',this.value);">
+                    <select class="form-control form-select" name="pic_css[background_size]" onChange="$('#demo_cover_pic').css('background-size',this.value);">
                         <option value="" <{if $pic_css_background_size==""}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_NO_RESIZE}></option>
                         <option value="contain" <{if $pic_css_background_size=="contain"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_CONTAIN}></option>
                         <option value="cover" <{if $pic_css_background_size=="cover"}>selected="selected"<{/if}>><{$smarty.const._MD_TADNEWS_NEWSPIC_COVER}></option>

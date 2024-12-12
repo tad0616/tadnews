@@ -7,7 +7,7 @@
         <div class="form-group row mb-3">
             <label class="col-md-4 control-label col-form-label text-md-right text-md-end" for="newspaper"><{$smarty.const._MB_TADNEWS_TITLE}></label>
             <div class="col-md-8">
-                <select name="nps_sn" class="form-select" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
+                <select name="nps_sn" class="form-control form-select" id="newspaper" placeholder="<{$smarty.const._MB_TADNEWS_TITLE}>">
                     <{foreach item=opt from=$block.option}>
                     <option value="<{$opt.value}>"><{$opt.text}></option>
                     <{/foreach}>

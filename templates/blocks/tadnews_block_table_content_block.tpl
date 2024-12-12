@@ -2,14 +2,14 @@
     $(document).ready(function(){
             view_content<{$block.randStr}>(0);
 
-            $('#ncsn<{$block.randStr}>').change(function(){
+            $('#ncsn<{$block.randStr}>').on('change', function(){
                 view_content<{$block.randStr}>(0);
             })
 
-            $('#tag_sn<{$block.randStr}>').change(function(){
+            $('#tag_sn<{$block.randStr}>').on('change', function(){
                 view_content<{$block.randStr}>(0);
             })
-            $('#keyword<{$block.randStr}>').change(function(){
+            $('#keyword<{$block.randStr}>').on('change', function(){
                 view_content<{$block.randStr}>(0);
             })
             $('#start_day<{$block.randStr}>').focusout(function(){
