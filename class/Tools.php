@@ -183,7 +183,7 @@ class Tools
             if ($page['type'] === 'cate') {
                 $ncsn = substr($key, 4);
                 $result['title'][$ncsn] = $page['title'];
-                $result['of_ncsn'][$ncsn] = $page['of_ncsn'] ?? $the_ncsn;
+                $result['of_ncsn'][$ncsn] = isset($page['of_ncsn']) ? $page['of_ncsn'] : $the_ncsn;
                 $result['url'][$ncsn] = $page['url'];
             } else {
                 $result['title'][$i] = $page['title'];
