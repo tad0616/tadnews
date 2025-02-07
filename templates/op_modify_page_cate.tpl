@@ -50,7 +50,7 @@
             <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_CATE_SHOW_TITLE}><{$smarty.const._TAD_FOR}>
             </label>
-            <div class="col-md-4">
+            <div class="col-md-4 pt-2">
                 <div class="form-check-inline radio-inline">
                     <label class="form-check-label">
                         <input class="form-check-input" type="radio" name="setup[title]" value="1" <{if $title!='0'}>checked<{/if}>>
@@ -68,7 +68,7 @@
             <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_CATE_SHOW_TOOL}><{$smarty.const._TAD_FOR}>
             </label>
-            <div class="col-md-4">
+            <div class="col-md-4 pt-2">
                 <div class="form-check-inline radio-inline">
                     <label class="form-check-label">
                         <input class="form-check-input" type="radio" name="setup[tool]" value="1" <{if $tool!='0'}>checked<{/if}>>
@@ -84,30 +84,11 @@
             </div>
         </div>
 
-
         <div class="form-group row mb-3">
-            <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
-                <{$smarty.const._MD_TADNEWS_CATE_SHOW_COMM}><{$smarty.const._TAD_FOR}>
-            </label>
-            <div class="col-md-4">
-                <div class="form-check-inline radio-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="setup[comm]" value="1" <{if $comm=='1'}>checked<{/if}>>
-                        <{$smarty.const._YES}>
-                    </label>
-                </div>
-                <div class="form-check-inline radio-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="setup[comm]" value="0" <{if $comm!='1'}>checked<{/if}>>
-                        <{$smarty.const._NO}>
-                    </label>
-                </div>
-            </div>
-
             <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_CATE_SHOW_NAV}><{$smarty.const._TAD_FOR}>
             </label>
-            <div class="col-md-4">
+            <div class="col-md-4 pt-2">
                 <div class="form-check-inline radio-inline">
                     <label class="form-check-label">
                         <input class="form-check-input" type="radio" name="setup[nav]" value="1" <{if $nav!='0'}>checked<{/if}>>
@@ -121,13 +102,11 @@
                     </label>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group row mb-3">
             <label class="col-md-2 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_CATE_SHOW_PATH}><{$smarty.const._TAD_FOR}>
             </label>
-            <div class="col-md-4">
+            <div class="col-md-4 pt-2">
                 <div class="form-check-inline radio-inline">
                     <label class="form-check-label">
                         <input class="form-check-input" type="radio" name="setup[breadcrumbs]" value="1" <{if $breadcrumbs=='1'}>checked<{/if}>>
@@ -141,7 +120,6 @@
                     </label>
                 </div>
             </div>
-
         </div>
     </div>
 

@@ -91,7 +91,6 @@ define('_MA_TADNEWS_NO_EMAIL', '目前沒有任何電子郵件，可至<a href="
 //page
 define('_MA_TADNEWS_CATE_SHOW_TITLE', '顯示文章標題');
 define('_MA_TADNEWS_CATE_SHOW_TOOL', '顯示模組工具');
-define('_MA_TADNEWS_CATE_SHOW_COMM', '使用評論功能');
 define('_MA_TADNEWS_CATE_SHOW_NAV', '使用上下頁鈕');
 
 //tag.php
