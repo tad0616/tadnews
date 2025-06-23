@@ -53,49 +53,49 @@ function list_tad_news_cate($of_ncsn = 0, $level = 0, $not_news = '0', $i = 0, $
 {
     global $xoopsDB;
     $old_level = $level;
-    $left = $level * 18 + 4;
+    $left      = $level * 18 + 4;
     $level++;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news` =? AND `of_ncsn` =? ORDER BY `sort`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news` =? AND `of_ncsn` =? ORDER BY `sort`';
     $result = Utility::query($sql, 'si', [$not_news, $of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //$catearr="";
 
     //$i=0;
     while (list($ncsn, $of_ncsn, $nc_title, $enable_group, $enable_post_group, $sort, $cate_pic, $not_news) = $xoopsDB->fetchRow($result)) {
-        $sql2 = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `ncsn`=?';
-        $result2 = Utility::query($sql2, 'i', [$ncsn]);
+        $sql2          = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `ncsn`=?';
+        $result2       = Utility::query($sql2, 'i', [$ncsn]);
         list($counter) = $xoopsDB->fetchRow($result2);
 
-        $pic = (empty($cate_pic)) ? '../images/no_cover.png' : XOOPS_URL . "/uploads/tadnews/cate/{$cate_pic}";
-        $g_txt = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
+        $pic    = (empty($cate_pic)) ? '../images/no_cover.png' : XOOPS_URL . "/uploads/tadnews/cate/{$cate_pic}";
+        $g_txt  = Utility::txt_to_group_name($enable_group, _TADNEWS_ALL_OK, ' , ');
         $gp_txt = Utility::txt_to_group_name($enable_post_group, _MA_TADNEWS_ONLY_ROOT, ' , ');
 
-        $new_kind = ('1' == $not_news) ? 0 : 1;
+        $new_kind    = ('1' == $not_news) ? 0 : 1;
         $change_text = ('1' == $not_news) ? _MA_TADNEWS_CHANGE_TO_NEWS : _MA_TADNEWS_CHANGE_TO_PAGE;
 
-        $catearr[$i]['left'] = $left;
-        $catearr[$i]['pic'] = $pic;
-        $catearr[$i]['nc_title'] = $nc_title;
-        $catearr[$i]['sort'] = $sort;
-        $catearr[$i]['ncsn'] = $ncsn;
-        $catearr[$i]['counter'] = $counter;
-        $catearr[$i]['g_txt'] = $g_txt;
-        $catearr[$i]['gp_txt'] = $gp_txt;
-        $catearr[$i]['new_kind'] = $new_kind;
+        $catearr[$i]['left']        = $left;
+        $catearr[$i]['pic']         = $pic;
+        $catearr[$i]['nc_title']    = $nc_title;
+        $catearr[$i]['sort']        = $sort;
+        $catearr[$i]['ncsn']        = $ncsn;
+        $catearr[$i]['counter']     = $counter;
+        $catearr[$i]['g_txt']       = $g_txt;
+        $catearr[$i]['gp_txt']      = $gp_txt;
+        $catearr[$i]['new_kind']    = $new_kind;
         $catearr[$i]['change_text'] = $change_text;
-        $catearr[$i]['offset'] = empty($old_level) ? '' : "offset{$old_level}";
+        $catearr[$i]['offset']      = empty($old_level) ? '' : "offset{$old_level}";
 
         $i++;
 
         $sub = list_tad_news_cate($ncsn, $level, $not_news, $i, $catearr);
-        $i = $sub['i'];
+        $i   = $sub['i'];
         if (!empty($sub['arr'])) {
             $catearr = $sub['arr'];
         }
     }
     //$xoopsTpl->assign( "cate" , $catearr) ;
-    $all['i'] = $i;
+    $all['i']   = $i;
     $all['arr'] = $catearr;
 
     return $all;
@@ -114,11 +114,11 @@ function mk_thumb($ncsn = '', $col_name = '', $width = 480)
     $handle = new \Verot\Upload\Upload($_FILES[$col_name]);
     if ($handle->uploaded) {
         $handle->file_new_name_body = $ncsn;
-        $handle->image_convert = 'png';
-        $handle->image_resize = true;
-        $handle->image_x = $width;
-        $handle->image_ratio_y = true;
-        $handle->file_overwrite = true;
+        $handle->image_convert      = 'png';
+        $handle->image_resize       = true;
+        $handle->image_x            = $width;
+        $handle->image_ratio_y      = true;
+        $handle->file_overwrite     = true;
         $handle->process(XOOPS_ROOT_PATH . '/uploads/tadnews/cate');
         $handle->auto_create_dir = true;
         if ($handle->processed) {
@@ -143,7 +143,7 @@ function insert_tad_news_cate()
     global $xoopsDB, $xoopsModuleConfig;
     //安全判斷
     if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br>', (Array) $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
     if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
@@ -151,15 +151,15 @@ function insert_tad_news_cate()
     } else {
         $enable_group = implode(',', $_POST['enable_group']);
     }
-    $enable_post_group = isset($_POST['enable_post_group']) ? implode(',', $_POST['enable_post_group']) : '1';
-    $setup = '';
+    $enable_post_group = isset($_POST['enable_post_group']) ? implode(',', (Array) $_POST['enable_post_group']) : '1';
+    $setup             = '';
     foreach ($_POST['setup'] as $key => $val) {
         $setup .= "{$key}=$val;";
     }
     $setup = mb_substr($setup, 0, -1);
 
-    $of_ncsn = (int) $_POST['of_ncsn'];
-    $sort = (int) $_POST['sort'];
+    $of_ncsn  = (int) $_POST['of_ncsn'];
+    $sort     = (int) $_POST['sort'];
     $not_news = (int) $_POST['not_news'];
     $nc_title = (string) $_POST['nc_title'];
 
@@ -220,7 +220,7 @@ function change_kind($ncsn = '', $not_news = '')
 function get_sub_cate($of_ncsn = '')
 {
     global $xoopsDB;
-    $sql = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn` = ?';
+    $sql    = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn` = ?';
     $result = Utility::query($sql, 'i', [$of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($sub_ncsn) = $xoopsDB->fetchRow($result)) {
@@ -231,7 +231,7 @@ function get_sub_cate($of_ncsn = '')
 
         $aaa[] = $sub_ncsn;
     }
-    $bbb = implode(',', $aaa);
+    $bbb = implode(',', (Array) $aaa);
     //echo "<p style='color:red;'>$bbb</p>";
 
     return $bbb;

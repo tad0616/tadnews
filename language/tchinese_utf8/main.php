@@ -5,7 +5,7 @@ require_once __DIR__ . '/global.php';
 define('_MD_TADNEWS_TO_MOD', '回模組首頁');
 define('_MD_TADNEWS_TO_ADMIN', '管理介面');
 define('_MD_TADNEWS_MY', '我的文章');
-define('_MD_TADNEWS_HIDDEN', '本文已不開放！');
+define('_MD_TADNEWS_HIDDEN', '文章不存在');
 define('_MD_TADNEWS_ALL_CATE', '所有分類');
 define('_MD_TADNEWS_FILES', '附檔');
 define('_MD_TADNEWS_POSTER', '發佈者');

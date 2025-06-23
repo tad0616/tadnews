@@ -5,7 +5,7 @@ require_once __DIR__ . '/global.php';
 define('_MD_TADNEWS_TO_MOD', 'Back to Module');
 define('_MD_TADNEWS_TO_ADMIN', 'Admin');
 define('_MD_TADNEWS_MY', 'My News');
-define('_MD_TADNEWS_HIDDEN', 'No public access for this News so far!');
+define('_MD_TADNEWS_HIDDEN', 'The article doesn\'t exist.');
 define('_MD_TADNEWS_ALL_CATE', 'All Categories');
 define('_MD_TADNEWS_FILES', 'Attachments');
 define('_MD_TADNEWS_POSTER', 'Poster');

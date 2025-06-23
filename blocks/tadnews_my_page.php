@@ -40,7 +40,7 @@ function tadnews_my_page_edit($options)
 
     $option_arr = explode(',', $options[0]);
 
-    $sql = 'SELECT `nsn`, `ncsn`, `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=?  ORDER BY `start_day` DESC';
+    $sql    = 'SELECT `nsn`, `ncsn`, `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=?  ORDER BY `nsn` DESC';
     $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = \MyTextSanitizer::getInstance();
@@ -59,7 +59,7 @@ function tadnews_my_page_edit($options)
         $new_to_arr[$nsn] = $to_arr[$nsn];
     }
     $hidden_arr = [];
-    $tmt_box = Tmt::render('all_my_news', $from_arr, $new_to_arr, $hidden_arr, false, true, '15rem', 'repository', 'destination', ',', '', [], 'options[0]');
+    $tmt_box    = Tmt::render('all_my_news', $from_arr, $new_to_arr, $hidden_arr, false, true, '15rem', 'repository', 'destination', ',', '', [], 'options[0]');
 
     $form = "
     <ol class='my-form'>

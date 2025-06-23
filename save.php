@@ -11,12 +11,12 @@ function add_tad_news_cate($title = '', $no_news = '0')
     global $xoopsDB, $xoopsModuleConfig;
     //安全判斷
     if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br>', (Array) $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
     $enable_group = $enable_post_group = $setup = '';
-    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn`=?';
-    $result = Utility::query($sql, 's', ['']) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql          = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn`=?';
+    $result       = Utility::query($sql, 's', ['']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     list($sort) = $xoopsDB->fetchRow($result);
     $sort++;

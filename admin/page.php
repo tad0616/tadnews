@@ -10,11 +10,11 @@ require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$ncsn = Request::getInt('ncsn');
-$nsn = Request::getInt('nsn');
+$op       = Request::getString('op');
+$ncsn     = Request::getInt('ncsn');
+$nsn      = Request::getInt('nsn');
 $show_uid = Request::getInt('show_uid');
-$to_ncsn = Request::getInt('to_ncsn');
+$to_ncsn  = Request::getInt('to_ncsn');
 $not_news = Request::getInt('not_news', 1);
 
 switch ($op) {
@@ -86,28 +86,25 @@ function list_tadnews_cate_tree($def_ncsn = '')
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT `ncsn`, COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `ncsn`';
+    $sql    = 'SELECT `ncsn`, COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `ncsn`';
     $result = $xoopsDB->query($sql);
 
     while (list($ncsn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$ncsn] = $counter;
     }
 
-    // $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-    // $path = $categoryHelper->getCategoryPath($def_ncsn);
-
     $data[] = "{ id:0, pId:0, name:'" . _MA_TADNEWS_ALL_NEWS . "', url:'page.php', target:'_self', open:true}";
 
-    $sql = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? ORDER BY `sort`';
+    $sql    = 'SELECT `ncsn`, `of_ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`=? ORDER BY `sort`';
     $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($ncsn, $of_ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-        $font_style = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+        $font_style      = $def_ncsn == $ncsn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         $display_counter = empty($cate_count[$ncsn]) ? '' : " ({$cate_count[$ncsn]})";
-        $data[] = "{ id:{$ncsn}, pId:{$of_ncsn}, name:'{$nc_title}{$display_counter}', url:'page.php?ncsn={$ncsn}', open: true ,target:'_self' {$font_style}}";
+        $data[]          = "{ id:{$ncsn}, pId:{$of_ncsn}, name:'{$nc_title}{$display_counter}', url:'page.php?ncsn={$ncsn}', open: true ,target:'_self' {$font_style}}";
     }
 
-    $json = implode(",\n", $data);
+    $json = implode(",\n", (Array) $data);
 
     $Ztree = new Ztree('page_tree', $json, 'save_drag.php', 'save_cate_sort.php', 'of_ncsn', 'ncsn');
     $xoopsTpl->assign('ztree_code', $Ztree->render());

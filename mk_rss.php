@@ -5,18 +5,18 @@ function mk_rss()
 {
     global $xoopsDB, $xoopsConfig;
     xoops_load('XoopsLocal');
-    $myts = \MyTextSanitizer::getInstance();
-    $sql = 'SELECT `ncsn`,`nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? AND `enable_group`=?';
+    $myts   = \MyTextSanitizer::getInstance();
+    $sql    = 'SELECT `ncsn`,`nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? AND `enable_group`=?';
     $result = Utility::query($sql, 'ss', [1, '']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
-        $ncsn_ok[] = $ncsn;
+        $ncsn_ok[]    = $ncsn;
         $cates[$ncsn] = $nc_title;
     }
 
-    $ok_cate = implode(',', $ncsn_ok);
+    $ok_cate    = implode(',', (Array) $ncsn_ok);
     $where_cate = empty($ok_cate) ? "AND ncsn = '0'" : "AND (ncsn IN ($ok_cate) OR ncsn = '0')";
-    $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+    $today      = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
     $sql = 'SELECT *
         FROM `' . $xoopsDB->prefix('tad_news') . '`
@@ -37,7 +37,7 @@ function mk_rss()
         foreach ($all_news as $k => $v) {
             $$k = $v;
         }
-        $news_title = $myts->htmlSpecialChars($news_title);
+        $news_title   = $myts->htmlSpecialChars($news_title);
         $news_content = $myts->displayTarea($news_content, 1, 1, 1, 1, 0);
 
         $allItem .= '

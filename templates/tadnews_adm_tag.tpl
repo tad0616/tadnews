@@ -10,41 +10,6 @@
                 <th><{$smarty.const._MA_TADNEWS_TAG_FUNC}></th>
             </tr>
 
-            <{if $tag_sn==""}>
-                <tr style="background-color: antiquewhite;">
-                    <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
-                    <td><input type="text" name="tag" value="<{$tag|default:''}>" class="form-control"></td>
-                    <td>
-                        <div class="input-group">
-                            <input type="text" name="font_color" class="form-control color-picker" value="<{$font_color|default:''}>" id="font_color"  data-hex="true">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input type="text" name="color" class="form-control color-picker" value="<{$color|default:''}>" id="color"  data-hex="true">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="form-check-inline radio-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="enable" value="1" <{if $enable!='0'}>checked<{/if}>>
-                                <{$smarty.const._YES}>
-                            </label>
-                        </div>
-                        <div class="form-check-inline radio-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="enable" value="0" <{if $enable=='0'}>checked<{/if}>>
-                                <{$smarty.const._NO}>
-                            </label>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="hidden" name="op" value="insert_tad_news_tags">
-                        <{$XOOPS_TOKEN|default:''}>
-                        <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
-                    </td>
-                </tr>
-            <{/if}>
 
             <{foreach from=$tagarr item=tag}>
                 <{if $tag.mode=="edit"}>
@@ -105,6 +70,39 @@
                 <{/if}>
             <{/foreach}>
 
+            <tr style="background-color: antiquewhite;">
+                <td><{$smarty.const._MA_TADNEWS_TAG_NEW}></td>
+                <td><input type="text" name="tag" value="<{$tag|default:''}>" class="form-control"></td>
+                <td>
+                    <div class="input-group">
+                        <input type="text" name="font_color" class="form-control color-picker" value="<{$font_color|default:''}>" id="font_color"  data-hex="true">
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="text" name="color" class="form-control color-picker" value="<{$color|default:''}>" id="color"  data-hex="true">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-check-inline radio-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="enable" value="1" <{if $enable!='0'}>checked<{/if}>>
+                            <{$smarty.const._YES}>
+                        </label>
+                    </div>
+                    <div class="form-check-inline radio-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="enable" value="0" <{if $enable=='0'}>checked<{/if}>>
+                            <{$smarty.const._NO}>
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    <input type="hidden" name="op" value="insert_tad_news_tags">
+                    <{$XOOPS_TOKEN|default:''}>
+                    <button class="btn btn-sm btn-xs btn-primary" type="submit"><{$smarty.const._MA_TADNEWS_SAVE_CATE}></button>
+                </td>
+            </tr>
         </table>
     </form>
 </div>

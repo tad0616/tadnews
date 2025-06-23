@@ -1,5 +1,4 @@
 <?php
-
 namespace XoopsModules\Tadnews;
 
 use XoopsModules\Tadtools\Utility;
@@ -10,46 +9,46 @@ class Tools
     {
         global $xoopsDB;
         $pages = [];
-        $myts = \MyTextSanitizer::getInstance();
+        $myts  = \MyTextSanitizer::getInstance();
 
         // 獲取當前分類下的文章
-        $sql = 'SELECT `nsn`, `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `ncsn`=? ORDER BY `page_sort`';
+        $sql    = 'SELECT `nsn`, `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `ncsn`=? ORDER BY `page_sort`';
         $result = Utility::query($sql, 'i', [$ncsn]);
 
         while ($row = $xoopsDB->fetchRow($result)) {
-            $nsn = $row[0];
-            $news_title = $row[1];
+            $nsn                 = $row[0];
+            $news_title          = $row[1];
             $pages["page{$nsn}"] = [
-                'type' => 'page',
+                'type'    => 'page',
                 'padding' => $padding,
-                'title' => $myts->htmlSpecialChars($news_title),
-                'url' => XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}",
-                'nsn' => $nsn,
-                'ncsn' => $ncsn,
+                'title'   => $myts->htmlSpecialChars($news_title),
+                'url'     => XOOPS_URL . "/modules/tadnews/page.php?ncsn={$ncsn}&nsn={$nsn}",
+                'nsn'     => $nsn,
+                'ncsn'    => $ncsn,
             ];
         }
 
         // 如果需要包含子分類
         if ($include_subcategories) {
-            $sql = 'SELECT `ncsn`, `nc_title`, `of_ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn`=? ORDER BY `sort`';
+            $sql    = 'SELECT `ncsn`, `nc_title`, `of_ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn`=? ORDER BY `sort`';
             $result = Utility::query($sql, 'i', [$ncsn]);
 
             while ($row = $xoopsDB->fetchRow($result)) {
-                $sub_ncsn = $row[0];
-                $nc_title = $row[1];
-                $of_ncsn = $row[2];
+                $sub_ncsn                 = $row[0];
+                $nc_title                 = $row[1];
+                $of_ncsn                  = $row[2];
                 $pages["cate{$sub_ncsn}"] = [
-                    'type' => 'cate',
+                    'type'    => 'cate',
                     'padding' => $padding,
-                    'title' => $myts->htmlSpecialChars($nc_title),
-                    'url' => XOOPS_URL . "/modules/tadnews/page.php?ncsn={$sub_ncsn}",
-                    'ncsn' => $sub_ncsn,
+                    'title'   => $myts->htmlSpecialChars($nc_title),
+                    'url'     => XOOPS_URL . "/modules/tadnews/page.php?ncsn={$sub_ncsn}",
+                    'ncsn'    => $sub_ncsn,
                     'of_ncsn' => $of_ncsn,
                 ];
 
                 // 遞迴獲取子分類的頁面
                 $sub_pages = self::get_pages_recursive($sub_ncsn, $padding + 1, $include_subcategories);
-                $pages = array_merge($pages, $sub_pages);
+                $pages     = array_merge($pages, $sub_pages);
             }
         }
 
@@ -61,7 +60,7 @@ class Tools
     {
         global $xoopsDB;
         $sc = [];
-        if (!empty($selected)) {
+        if (! empty($selected)) {
             $sc = explode(',', $selected);
         }
 
@@ -70,7 +69,7 @@ class Tools
             i=0;
             var arr = new Array();';
 
-        $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? ORDER BY `sort`';
+        $sql    = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `not_news`!=? ORDER BY `sort`';
         $result = Utility::query($sql, 's', [1]);
 
         $option = '';
@@ -87,7 +86,7 @@ class Tools
     }
     </script>";
 
-        $main['js'] = $js;
+        $main['js']   = $js;
         $main['form'] = $option;
 
         return $main;
@@ -102,7 +101,7 @@ class Tools
             $ncsn_arr = explode(',', $ncsn_arr_str);
         }
 
-        $sql = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ORDER BY `sort`';
+        $sql    = 'SELECT `ncsn`, `nc_title` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ORDER BY `sort`';
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $nc_title) = $xoopsDB->fetchRow($result)) {
@@ -118,7 +117,7 @@ class Tools
     public static function get_all_news_tag()
     {
         global $xoopsDB;
-        $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
+        $sql    = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
         $result = $xoopsDB->query($sql);
 
         $data = [];
@@ -135,7 +134,7 @@ class Tools
         global $xoopsDB;
 
         $sc = [];
-        if (!empty($selected)) {
+        if (! empty($selected)) {
             $sc = explode(',', $selected);
         }
 
@@ -144,7 +143,7 @@ class Tools
               i=0;
               var arr = new Array();';
 
-        $sql = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `enable`=?';
+        $sql    = 'SELECT `tag_sn`, `tag` FROM `' . $xoopsDB->prefix('tad_news_tags') . '` WHERE `enable`=?';
         $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $option = '';
@@ -162,7 +161,7 @@ class Tools
     }
     </script>";
 
-        $main['js'] = $js;
+        $main['js']   = $js;
         $main['form'] = $option;
         $main['tags'] = $tags;
 
@@ -171,24 +170,24 @@ class Tools
 
     public static function block_get_page_cate($the_ncsn = 0)
     {
-        $pages = self::get_pages_recursive($the_ncsn, 0, true);
+        $pages  = self::get_pages_recursive($the_ncsn, 0, true);
         $result = [
-            'title' => [],
+            'title'   => [],
             'of_ncsn' => [],
-            'url' => [],
+            'url'     => [],
         ];
 
         $i = 10000;
         foreach ($pages as $key => $page) {
             if ($page['type'] === 'cate') {
-                $ncsn = substr($key, 4);
-                $result['title'][$ncsn] = $page['title'];
+                $ncsn                     = substr($key, 4);
+                $result['title'][$ncsn]   = $page['title'];
                 $result['of_ncsn'][$ncsn] = isset($page['of_ncsn']) ? $page['of_ncsn'] : $the_ncsn;
-                $result['url'][$ncsn] = $page['url'];
+                $result['url'][$ncsn]     = $page['url'];
             } else {
-                $result['title'][$i] = $page['title'];
+                $result['title'][$i]   = $page['title'];
                 $result['of_ncsn'][$i] = $page['ncsn'];
-                $result['url'][$i] = $page['url'];
+                $result['url'][$i]     = $page['url'];
                 $i++;
             }
         }
@@ -201,10 +200,10 @@ class Tools
     {
         global $xoopsDB, $xoopsUser, $tadnews_adm;
         if (empty($xoopsUser)) {
-            return false;
+            return [];
         }
         //判斷是否對該模組有管理權限
-        if (!isset($tadnews_adm)) {
+        if (! isset($tadnews_adm)) {
             $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
         if ($tadnews_adm) {
@@ -214,8 +213,8 @@ class Tools
         $col = ('post' === $kind) ? 'enable_post_group' : 'enable_group';
 
         //非管理員才要檢查
-        $where = ($tadnews_adm) ? '' : "WHERE `{$col}` != ''";
-        $sql = 'SELECT `ncsn`, `' . $col . '` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ' . $where;
+        $where  = ($tadnews_adm) ? '' : "WHERE `{$col}` != ''";
+        $sql    = 'SELECT `ncsn`, `' . $col . '` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` ' . $where;
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($ncsn, $power) = $xoopsDB->fetchRow($result)) {

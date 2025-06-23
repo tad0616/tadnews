@@ -10,7 +10,7 @@ require_once dirname(__DIR__) . '/function.php';
 require_once __DIR__ . '/admin_function.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op     = Request::getString('op');
 $tag_sn = Request::getInt('tag_sn');
 $enable = Request::getInt('enable');
 
@@ -53,25 +53,25 @@ function list_tad_news_tags($def_tag_sn = '')
 {
     global $xoopsDB, $xoopsTpl, $Tadnews;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_tags') . '`';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $i = 0;
+    $i                = 0;
     $tags_used_amount = tags_used_amount();
     while (list($tag_sn, $tag, $font_color, $color, $enable) = $xoopsDB->fetchRow($result)) {
         $tag_amount = isset($tags_used_amount[$tag_sn]) ? (int) $tags_used_amount[$tag_sn] : 0;
 
-        $tagarr[$i]['tag_sn'] = $tag_sn;
+        $tagarr[$i]['tag_sn']     = $tag_sn;
         $tagarr[$i]['prefix_tag'] = $Tadnews->mk_prefix_tag($tag_sn, 'all');
-        $tagarr[$i]['enable'] = $enable;
+        $tagarr[$i]['enable']     = $enable;
         $tagarr[$i]['tag_amount'] = $tag_amount;
-        $tagarr[$i]['tag'] = $tag;
+        $tagarr[$i]['tag']        = $tag;
         $tagarr[$i]['font_color'] = $font_color;
-        $tagarr[$i]['color'] = $color;
+        $tagarr[$i]['color']      = $color;
         $tagarr[$i]['enable_txt'] = ('1' == $enable) ? _YES : _NO;
-        $tagarr[$i]['mode'] = ($def_tag_sn == $tag_sn) ? 'edit' : 'show';
-        $tagarr[$i]['checked'] = ($def_tag_sn == $tag_sn) ? 1 : '';
-        $tagarr[$i]['amount'] = sprintf(_MA_TADNEWS_TAG_AMOUNT, $tag_amount);
+        $tagarr[$i]['mode']       = ($def_tag_sn == $tag_sn) ? 'edit' : 'show';
+        $tagarr[$i]['checked']    = ($def_tag_sn == $tag_sn) ? 1 : '';
+        $tagarr[$i]['amount']     = sprintf(_MA_TADNEWS_TAG_AMOUNT, $tag_amount);
         $i++;
     }
 
@@ -96,7 +96,7 @@ function insert_tad_news_tags()
     global $xoopsDB;
     //安全判斷
     if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br>', (Array) $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
 
@@ -135,7 +135,7 @@ function tags_used_amount()
 {
     global $xoopsDB;
 
-    $sql = 'SELECT `prefix_tag`, COUNT(`prefix_tag`) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `prefix_tag`';
+    $sql    = 'SELECT `prefix_tag`, COUNT(`prefix_tag`) FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `prefix_tag`';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $main = [];

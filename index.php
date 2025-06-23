@@ -10,18 +10,18 @@ $xoopsOption['template_main'] = 'tadnews_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$ncsn = Request::getInt('ncsn');
-$nsn = Request::getInt('nsn');
-$fsn = Request::getInt('fsn');
-$uid = Request::getInt('uid');
-$kind = Request::getString('kind');
-$tag_sn = Request::getInt('tag_sn');
+$op       = Request::getString('op');
+$ncsn     = Request::getInt('ncsn');
+$nsn      = Request::getInt('nsn');
+$fsn      = Request::getInt('fsn');
+$uid      = Request::getInt('uid');
+$kind     = Request::getString('kind');
+$tag_sn   = Request::getInt('tag_sn');
 $show_uid = Request::getInt('show_uid');
 $mod_name = Request::getString('mod_name');
 $col_name = Request::getString('col_name');
-$col_sn = Request::getInt('col_sn');
-$rank = Request::getString('rank');
+$col_sn   = Request::getInt('col_sn');
+$rank     = Request::getString('rank');
 $files_sn = Request::getInt('files_sn');
 
 switch ($op) {
@@ -133,10 +133,10 @@ function list_tad_summary_news($the_ncsn = '', $show_uid = '')
 
     //目前路徑
     if ($the_ncsn) {
-        $path = [];
+        $path           = [];
         $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-        $arr = $categoryHelper->getCategoryPath($the_ncsn);
-        $path = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
+        $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
+        $path           = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
         $xoopsTpl->assign('path', $path);
     }
 }
@@ -164,10 +164,10 @@ function list_tad_all_news($the_ncsn = '', $show_uid = '')
 
     //目前路徑
     if ($the_ncsn) {
-        $path = [];
+        $path           = [];
         $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-        $arr = $categoryHelper->getCategoryPath($the_ncsn);
-        $path = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
+        $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
+        $path           = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
         $xoopsTpl->assign('path', $path);
     }
 }
@@ -203,8 +203,8 @@ function list_tad_cate_news($the_ncsn = 0, $the_level = 0, $show_uid = '')
         $path = [];
 
         $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-        $arr = $categoryHelper->getCategoryPath($the_ncsn);
-        $path = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
+        $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
+        $path           = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
         $xoopsTpl->assign('path', $path);
     }
 }
@@ -231,7 +231,7 @@ function have_read($nsn = '', $uid = '')
     global $xoopsDB, $xoopsUser;
     //安全判斷
     if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br>', (Array) $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header('index.php', 3, $error);
     }
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
@@ -256,16 +256,16 @@ function list_sign($nsn = '')
     global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
     $news = $Tadnews->get_tad_news($nsn);
 
-    $sign = [];
-    $i = 0;
-    $sql = 'SELECT `uid`, `sign_time` FROM `' . $xoopsDB->prefix('tad_news_sign') . '` WHERE `nsn`=? ORDER BY `sign_time`';
+    $sign   = [];
+    $i      = 0;
+    $sql    = 'SELECT `uid`, `sign_time` FROM `' . $xoopsDB->prefix('tad_news_sign') . '` WHERE `nsn`=? ORDER BY `sign_time`';
     $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
-        $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-        $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
-        $sign[$i]['uid'] = $uid;
-        $sign[$i]['uid_name'] = $uid_name;
+        $uid_name              = \XoopsUser::getUnameFromId($uid, 1);
+        $uid_name              = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
+        $sign[$i]['uid']       = $uid;
+        $sign[$i]['uid_name']  = $uid_name;
         $sign[$i]['sign_time'] = $sign_time;
         $i++;
     }
@@ -284,17 +284,17 @@ function list_user_sign($uid = '')
     $uid_name = \XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
-    $sign = [];
-    $i = 0;
-    $sql = 'SELECT a.nsn, a.sign_time, b.news_title FROM `' . $xoopsDB->prefix('tad_news_sign') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('tad_news') . '` AS b ON a.nsn = b.nsn WHERE a.uid =? ORDER BY a.sign_time DESC';
+    $sign   = [];
+    $i      = 0;
+    $sql    = 'SELECT a.nsn, a.sign_time, b.news_title FROM `' . $xoopsDB->prefix('tad_news_sign') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('tad_news') . '` AS b ON a.nsn = b.nsn WHERE a.uid =? ORDER BY a.sign_time DESC';
     $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $myts = \MyTextSanitizer::getInstance();
     while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
-        $news_title = $myts->htmlSpecialChars($news_title);
-        $sign[$i]['nsn'] = $nsn;
+        $news_title             = $myts->htmlSpecialChars($news_title);
+        $sign[$i]['nsn']        = $nsn;
         $sign[$i]['news_title'] = $news_title;
-        $sign[$i]['sign_time'] = $sign_time;
+        $sign[$i]['sign_time']  = $sign_time;
         $i++;
     }
 

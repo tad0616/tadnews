@@ -11,10 +11,10 @@ require_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$ncsn = Request::getInt('ncsn');
-$nsn = Request::getInt('nsn');
-$fsn = Request::getInt('fsn');
+$op       = Request::getString('op');
+$ncsn     = Request::getInt('ncsn');
+$nsn      = Request::getInt('nsn');
+$fsn      = Request::getInt('fsn');
 $files_sn = Request::getInt('files_sn');
 
 $news_title = '';
@@ -55,7 +55,7 @@ switch ($op) {
         if (!empty($nsn)) {
             show_page($nsn);
 
-            $sql = 'SELECT `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn`=?';
+            $sql    = 'SELECT `news_title` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn`=?';
             $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
             list($news_title) = $xoopsDB->fetchRow($result);
@@ -71,7 +71,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-$arr = $categoryHelper->getCategoryPath($ncsn);
+$arr            = $categoryHelper->getCategoryPath($ncsn, 'tad_news');
 
 $path = Utility::tad_breadcrumb($ncsn, $arr, 'page.php', 'ncsn', 'nc_title', $news_title);
 
@@ -114,10 +114,10 @@ function list_tad_all_pages($the_ncsn = 0)
     $Tadnews->get_cate_news();
 
     $link_cate_sn_arr = [];
-    $moduleHandler = xoops_getHandler('module');
-    $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
+    $moduleHandler    = xoops_getHandler('module');
+    $TadThemesModule  = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
-        $sql = 'SELECT `link_cate_sn` FROM `' . $xoopsDB->prefix('tad_themes_menu') . '` WHERE `link_cate_name`=?';
+        $sql    = 'SELECT `link_cate_sn` FROM `' . $xoopsDB->prefix('tad_themes_menu') . '` WHERE `link_cate_name`=?';
         $result = Utility::query($sql, 's', ['tadnews_page_cate']) or Utility::web_error($sql, __FILE__, __LINE__);
 
         while (list($link_cate_sn) = $xoopsDB->fetchRow($result)) {
@@ -132,12 +132,12 @@ function add_to_menu($ncsn = '')
 {
     global $xoopsDB;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `ncsn`=?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `ncsn`=?';
     $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $cate = $xoopsDB->fetchArray($result);
 
-    $moduleHandler = xoops_getHandler('module');
+    $moduleHandler   = xoops_getHandler('module');
     $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
     if ($TadThemesModule) {
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_themes_menu') . '` (`of_level`, `position`, `itemname`, `itemurl`, `status`, `target`, `icon`, `link_cate_name`, `link_cate_sn`, `read_group`) VALUES (0, 1, ?, ?, 1, "_self", "", "tadnews_page_cate", ?, "")';
@@ -153,10 +153,10 @@ function tabs_sort($ncsn, $nsn)
 {
     global $xoopsDB, $xoopsTpl, $Tadnews;
 
-    $sql = 'SELECT `data_value`, `data_sort` FROM `' . $xoopsDB->prefix('tadnews_data_center') . '` WHERE `col_name` = \'nsn\' AND `col_sn` =? AND `data_name` = \'tab_title\' ORDER BY `data_sort`';
+    $sql    = 'SELECT `data_value`, `data_sort` FROM `' . $xoopsDB->prefix('tadnews_data_center') . '` WHERE `col_name` = \'nsn\' AND `col_sn` =? AND `data_name` = \'tab_title\' ORDER BY `data_sort`';
     $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $myts = \MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $tab_div = [];
     while (list($data_value, $data_sort) = $xoopsDB->fetchRow($result)) {
         $tab_div[$data_sort] = $data_value;

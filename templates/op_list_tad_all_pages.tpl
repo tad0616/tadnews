@@ -6,7 +6,7 @@
 
 <!--TadNews Start-->
 <{foreach from=$all_news item=news}>
-    <{if $tadnews_adm or $news.ncsn|in_array:$ok_cat}>
+    <{if $tadnews_adm or (isset($ok_cat) && $news.ncsn|in_array:$ok_cat)}>
         <script language="JavaScript">
         $().ready(function(){
             $('#sort_<{$news.ncsn}>').sortable({ opacity: 0.6, cursor: 'move', update: function() {
@@ -21,7 +21,7 @@
     <{/if}>
 
     <h3>
-        <{if $tadnews_adm or $news.ncsn|in_array:$ok_cat}>
+        <{if $tadnews_adm or (isset($ok_cat) && $news.ncsn|in_array:$ok_cat)}>
             <div class="pull-right float-right float-end">
                 <{if !$news.ncsn|in_array:$link_cate_sn_arr}>
                     <a href="page.php?op=add_to_menu&ncsn=<{$news.ncsn}>" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></a>
@@ -36,7 +36,7 @@
 
     <ul class="list-group" id="sort_<{$news.ncsn}>" style="margin: 4px auto 30px;">
         <{foreach from=$news.news item=news}>
-            <li class="list-group-item d-flex justify-content-between align-items-center" <{if $tadnews_adm or $news.ncsn|in_array:$ok_cat}>id="tr_<{$news.nsn}>"<{/if}>>
+            <li class="list-group-item d-flex justify-content-between align-items-center" <{if $tadnews_adm or (isset($ok_cat) && $news.ncsn|in_array:$ok_cat)}>id="tr_<{$news.nsn}>"<{/if}>>
 
                 <span class="badge badge-secondary bg-secondary rounded-pill"><{$news.page_sort}></span>
                 <a href="<{$xoops_url}>/modules/tadnews/page.php?ncsn=<{$news.ncsn}>&nsn=<{$news.nsn}>">
@@ -48,7 +48,7 @@
     </ul>
 
 
-    <{if $news.ncsn|in_array:$link_cate_sn_arr and ($tadnews_adm or $news.ncsn|in_array:$ok_cat)}>
+    <{if $news.ncsn|in_array:$link_cate_sn_arr and ($tadnews_adm or (isset($ok_cat) && $news.ncsn|in_array:$ok_cat))}>
         <div class="alert alert-warning"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT|sprintf:$news.nc_title}></div>
     <{/if}>
 <{foreachelse}>
