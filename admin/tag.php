@@ -81,9 +81,7 @@ function list_tad_news_tags($def_tag_sn = '')
     $xoopsTpl->assign('tag', $tag);
     $xoopsTpl->assign('font_color', $font_color);
     $xoopsTpl->assign('color', $color);
-    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new \XoopsFormHiddenToken();
-    $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+    $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
     $MColorPicker = new MColorPicker('.color-picker');
     $MColorPicker->render('bootstrap');
 

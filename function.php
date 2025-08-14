@@ -144,9 +144,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
     $xoopsTpl->assign('enable_post_group', $enable_post_group);
     $xoopsTpl->assign('pic', $pic);
     $xoopsTpl->assign('now_op', 'tad_news_cate_form');
-    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $token = new \XoopsFormHiddenToken();
-    $xoopsTpl->assign('XOOPS_TOKEN', $token->render());
+    $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
 }
 
 //更新tad_news_cate某一筆資料

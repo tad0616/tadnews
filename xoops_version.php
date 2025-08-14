@@ -3,27 +3,27 @@ $modversion = [];
 
 $language = isset($xoopsConfig['language']) ? $xoopsConfig['language'] : 'tchinese_utf8';
 //---模組基本資訊---//
-$modversion['name'] = _MI_TADNEWS_NAME;
-$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '5.0.0-Stable' : '5.0';
+$modversion['name']        = _MI_TADNEWS_NAME;
+$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '5.0.1-Stable' : '5.01';
 $modversion['description'] = _MI_TADNEWS_DESC;
-$modversion['author'] = 'Tad (tad0616@gmail.com)';
-$modversion['credits'] = 'geek01';
-$modversion['help'] = 'page=help';
-$modversion['license'] = 'GNU GPL 2.0';
+$modversion['author']      = 'Tad (tad0616@gmail.com)';
+$modversion['credits']     = 'geek01';
+$modversion['help']        = 'page=help';
+$modversion['license']     = 'GNU GPL 2.0';
 $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['image'] = "images/logo_{$language}.png";
-$modversion['dirname'] = basename(__DIR__);
+$modversion['image']       = "images/logo_{$language}.png";
+$modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2024-12-12';
-$modversion['module_website_url'] = 'https://tad0616.net/';
+$modversion['release_date']        = '2025-08-09';
+$modversion['module_website_url']  = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TADNEWS_WEB;
-$modversion['module_status'] = 'release';
-$modversion['author_website_url'] = 'https://tad0616.net/';
+$modversion['module_status']       = 'release';
+$modversion['author_website_url']  = 'https://tad0616.net/';
 $modversion['author_website_name'] = 'Tad';
-$modversion['min_php'] = '5.4';
-$modversion['min_xoops'] = '2.5.10';
-$modversion['min_db'] = ['mysql' => '5.0.7', 'mysqli' => '5.0.7'];
+$modversion['min_php']             = '5.4';
+$modversion['min_xoops']           = '2.5.10';
+$modversion['min_db']              = ['mysql' => '5.0.7', 'mysqli' => '5.0.7'];
 
 //---paypal資訊---//
 $modversion['paypal'] = [
@@ -35,7 +35,7 @@ $modversion['paypal'] = [
 
 //---資料表架構---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.{$language}.sql";
-$modversion['tables'] = [
+$modversion['tables']           = [
     'tad_news',
     'tad_news_cate',
     'tadnews_files_center',
@@ -53,9 +53,9 @@ $modversion['tables'] = [
 $modversion['system_menu'] = 1;
 
 //---管理介面設定---//
-$modversion['hasAdmin'] = 1;
+$modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu'] = 'admin/menu.php';
+$modversion['adminmenu']  = 'admin/menu.php';
 
 //---使用者主選單設定---//
 $modversion['hasMain'] = 1;
@@ -75,10 +75,10 @@ if (isset($xoopsModuleConfig['show_submenu'])) {
     }
 }
 
-$modversion['onInstall'] = 'include/onInstall.php';
-$modversion['onUpdate'] = 'include/onUpdate.php';
+$modversion['onInstall']   = 'include/onInstall.php';
+$modversion['onUpdate']    = 'include/onUpdate.php';
 $modversion['onUninstall'] = 'include/onUninstall.php';
-$modversion['templates'] = [
+$modversion['templates']   = [
     ['file' => 'tadnews_index.tpl', 'description' => 'tadnews_index.tpl'],
     ['file' => 'tadnews_rss.tpl', 'description' => 'tadnews_rss.tpl'],
     ['file' => 'tadnews_post.tpl', 'description' => 'tadnews_post.tpl'],
@@ -96,7 +96,7 @@ $modversion['templates'] = [
 $modversion['hasComments'] = 0;
 
 //---搜尋設定---//
-$modversion['hasSearch'] = 1;
+$modversion['hasSearch']      = 1;
 $modversion['search']['file'] = 'include/search.php';
 $modversion['search']['func'] = 'tadnews_search';
 

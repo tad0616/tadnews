@@ -261,7 +261,7 @@ class Tadnews
     }
 
     //設定欲觀看文章
-    public function set_view_nsn($nsn = '')
+    public function set_view_nsn($nsn)
     {
         $this->view_nsn = $nsn;
     }
@@ -486,13 +486,17 @@ class Tadnews
             $all_nsn = implode(',', (Array) $this->view_nsn);
 
             //找出相關資訊
-            $sql2    = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn` IN (?)';
-            $result2 = Utility::query($sql2, 's', [$all_nsn]) or Utility::web_error($sql2, __FILE__, __LINE__);
+            $sql2    = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news') . '` GROUP BY `ncsn`';
+            $result2 = Utility::query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
 
             while (list($ncsn) = $xoopsDB->fetchRow($result2)) {
                 $all_ncsn[$ncsn] = $ncsn;
             }
+
+            // Utility::dd($all_ncsn);
+
             $this->set_view_ncsn($all_ncsn);
+
             $all_ncsn = implode(',', (Array) $this->view_ncsn);
 
             //分析目前觀看得是新聞還是自訂頁面
@@ -795,9 +799,7 @@ class Tadnews
             //if(!empty($passwd) and !empty($this->summary_num)){
             if (!empty($passwd)) {
                 $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
-                require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
-                $XOOPS_TOKEN          = $XoopsFormHiddenToken->render();
+                $XOOPS_TOKEN   = Utility::token_form('return');
                 if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
                     if ('one' === $this->show_mode) {
                         $news_content = "
@@ -1088,9 +1090,7 @@ class Tadnews
                 }
 
                 if (!empty($passwd)) {
-                    require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-                    $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
-                    $XOOPS_TOKEN          = $XoopsFormHiddenToken->render();
+                    $XOOPS_TOKEN = Utility::token_form('return');
 
                     $tadnews_passw = (isset($_POST['tadnews_passwd'])) ? $_POST['tadnews_passwd'] : '';
                     if ($tadnews_passw != $passwd and !in_array($nsn, $have_pass)) {
@@ -1436,9 +1436,7 @@ class Tadnews
         }
 
         if (!empty($have_read_group)) {
-            require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
-            $XOOPS_TOKEN          = $XoopsFormHiddenToken->render();
+            $XOOPS_TOKEN = Utility::token_form('return');
 
             $have_read_group_arr = explode(',', $have_read_group);
 
@@ -1910,11 +1908,8 @@ class Tadnews
             $page_upform         = $this->TadUpFiles->upform(true, 'upfile', null, true, null, true, 'page_upform');
             $form['page_upform'] = $page_upform;
 
-            $form['tab_arr'] = $tab_arr;
-            require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-            $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
-            $XOOPS_TOKEN          = $XoopsFormHiddenToken->render();
-            $form['XOOPS_TOKEN']  = $XOOPS_TOKEN;
+            $form['tab_arr']     = $tab_arr;
+            $form['XOOPS_TOKEN'] = Utility::token_form('return');
 
             return $form;
         }
@@ -1990,10 +1985,7 @@ class Tadnews
         }
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
-        require_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-        $XoopsFormHiddenToken = new \XoopsFormHiddenToken();
-        $XOOPS_TOKEN          = $XoopsFormHiddenToken->render();
-        $xoopsTpl->assign('XOOPS_TOKEN', $XOOPS_TOKEN);
+        $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
 
         // Utility::add_migrate();
     }
