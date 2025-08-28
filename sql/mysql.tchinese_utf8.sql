@@ -1,6 +1,6 @@
 CREATE TABLE `tadnews_files_center` (
   `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
-  `col_name` varchar(255) NOT NULL default '' COMMENT '欄位名稱',
+  `col_name` varchar(100) NOT NULL default '' COMMENT '欄位名稱',
   `col_sn` mediumint(59) unsigned NOT NULL default 0 COMMENT '欄位編號',
   `sort` smallint(5) unsigned NOT NULL default 0 COMMENT '排序',
   `kind` enum('img','file') NOT NULL default 'img' COMMENT '檔案種類',
@@ -15,8 +15,9 @@ CREATE TABLE `tadnews_files_center` (
   `upload_date` datetime NOT NULL COMMENT '上傳時間',
   `uid` mediumint(8) unsigned NOT NULL default 0 COMMENT '上傳者',
   `tag` varchar(255) NOT NULL default '' COMMENT '註記',
-  PRIMARY KEY (`files_sn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`files_sn`),
+  KEY `col_name_col_sn` (`col_name`,`col_sn`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -38,7 +39,7 @@ CREATE TABLE `tad_news` (
   `have_read_group` varchar(255) NOT NULL default '',
   `page_sort` SMALLINT(5) UNSIGNED NOT NULL default 0,
   PRIMARY KEY  (`nsn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -53,7 +54,7 @@ CREATE TABLE `tad_news_cate` (
   `not_news` enum('0','1') NOT NULL,
   `setup` TEXT NOT NULL,
   PRIMARY KEY  (`ncsn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -66,7 +67,7 @@ CREATE TABLE `tad_news_paper` (
   `np_content` text NOT NULL,
   `np_date` datetime NOT NULL,
   PRIMARY KEY  (`npsn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `tad_news_paper_email` (
@@ -74,7 +75,7 @@ CREATE TABLE `tad_news_paper_email` (
   `email` varchar(100) NOT NULL default '',
   `order_date` datetime NOT NULL,
   PRIMARY KEY  (`nps_sn`,`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `tad_news_paper_setup` (
@@ -85,7 +86,7 @@ CREATE TABLE `tad_news_paper_setup` (
   `themes` varchar(255) NOT NULL default '',
   `status` enum('1','0') NOT NULL default '1',
   PRIMARY KEY  (`nps_sn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `tad_news_sign` (
@@ -94,7 +95,7 @@ CREATE TABLE `tad_news_sign` (
   `uid` mediumint(8) UNSIGNED NOT NULL  default 0,
   `sign_time` DATETIME NOT NULL,
   PRIMARY KEY  (`sign_sn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `tad_news_paper_send_log` (
   `npsn` smallint(5) unsigned NOT NULL default 0,
@@ -102,7 +103,7 @@ CREATE TABLE `tad_news_paper_send_log` (
   `send_time` datetime NOT NULL,
   `log` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`npsn`,`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `tad_news_tags` (
@@ -112,7 +113,7 @@ CREATE TABLE `tad_news_tags` (
   `color` varchar(255) NOT NULL default '',
   `enable` enum('0','1') NOT NULL default '1',
   PRIMARY KEY  (`tag_sn`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `tad_news_tags` (`tag_sn`, `tag`, `font_color`, `color`, `enable`) VALUES
 (1, '公告', 'white', 'blue', '1'),
@@ -130,7 +131,7 @@ CREATE TABLE `tadnews_rank` (
   `uid` mediumint(8) unsigned NOT NULL default 0,
   `rank_date` datetime NOT NULL,
   PRIMARY KEY (`col_name`,`col_sn`,`uid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `tadnews_data_center` (
   `mid` mediumint(9) unsigned NOT NULL AUTO_INCREMENT COMMENT '模組編號',
@@ -143,4 +144,4 @@ CREATE TABLE `tadnews_data_center` (
   `sort` mediumint(9) unsigned COMMENT '顯示順序',
   `update_time` datetime NOT NULL COMMENT '更新時間',
 PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;

@@ -28,12 +28,49 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 class Update
 {
+    public static function add_files_center_index()
+    {
+        global $xoopsDB;
+
+        $table = $xoopsDB->prefix('tadnews_files_center');
+
+        // 1. 檢查欄位長度
+        $sql = "SELECT CHARACTER_MAXIMUM_LENGTH
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = '{$table}'
+            AND COLUMN_NAME = 'col_name'";
+        $result       = $xoopsDB->queryF($sql);
+        list($length) = $xoopsDB->fetchRow($result);
+
+        if ($length > 100) {
+            $alter = "ALTER TABLE `{$table}`
+                CHANGE `col_name` `col_name` VARCHAR(100)
+                NOT NULL DEFAULT ''
+                COMMENT '欄位名稱' AFTER `files_sn`";
+            if (!$xoopsDB->queryF($alter)) {
+                return false;
+            }
+        }
+
+        // 2. 檢查索引是否存在
+        $sql    = "SHOW INDEX FROM `{$table}` WHERE Key_name = 'col_name_col_sn'";
+        $result = $xoopsDB->queryF($sql);
+        if ($xoopsDB->getRowsNum($result) == 0) {
+            $alter = "ALTER TABLE `{$table}`
+                ADD INDEX `col_name_col_sn` (`col_name`, `col_sn`)";
+            if (!$xoopsDB->queryF($alter)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     // 建立索引
     public static function add_index()
     {
         global $xoopsDB;
-        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='ncsn'";
+        $sql    = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='ncsn'";
         $result = $xoopsDB->query($sql);
         if (empty($result->num_rows)) {
             $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `ncsn` (`ncsn`)';
@@ -42,28 +79,28 @@ class Update
             // die(var_dump($result));
         }
 
-        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='start_day'";
+        $sql    = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='start_day'";
         $result = $xoopsDB->query($sql);
         if (empty($result->num_rows)) {
             $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `start_day` (`start_day`)';
             $xoopsDB->queryF($sql);
         }
 
-        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='end_day'";
+        $sql    = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='end_day'";
         $result = $xoopsDB->query($sql);
         if (empty($result->num_rows)) {
             $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `end_day` (`end_day`)';
             $xoopsDB->queryF($sql);
         }
 
-        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='always_top_always_top_date'";
+        $sql    = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='always_top_always_top_date'";
         $result = $xoopsDB->query($sql);
         if (empty($result->num_rows)) {
             $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `always_top_always_top_date` (`always_top`, `always_top_date`)';
             $xoopsDB->queryF($sql);
         }
 
-        $sql = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='enable'";
+        $sql    = 'show keys from ' . $xoopsDB->prefix('tad_news') . " where Key_name='enable'";
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_news') . ' ADD INDEX `enable` (`enable`)';
@@ -76,7 +113,7 @@ class Update
     public static function chk_dc_sort()
     {
         global $xoopsDB;
-        $sql = 'select count(`sort`) from ' . $xoopsDB->prefix('tadnews_data_center');
+        $sql    = 'select count(`sort`) from ' . $xoopsDB->prefix('tadnews_data_center');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -95,7 +132,7 @@ class Update
     public static function chk_fc_tag()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`tag`) FROM ' . $xoopsDB->prefix('tadnews_files_center');
+        $sql    = 'SELECT count(`tag`) FROM ' . $xoopsDB->prefix('tadnews_files_center');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -124,13 +161,13 @@ class Update
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {
-            $show_func = $block['show_func'];
+            $show_func                = $block['show_func'];
             $tpl_file_arr[$show_func] = $block['template'];
             $tpl_desc_arr[$show_func] = $block['description'];
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
+        $sql    = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
@@ -152,7 +189,7 @@ class Update
     public static function chk_chk9()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`always_top_date`) FROM ' . $xoopsDB->prefix('tad_news');
+        $sql    = 'SELECT count(`always_top_date`) FROM ' . $xoopsDB->prefix('tad_news');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -217,10 +254,10 @@ class Update
 
         $xoopsDB->queryF($sql);
 
-        $sql = 'SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM ' . $xoopsDB->prefix('tadnews_files_center') . '';
+        $sql    = 'SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM ' . $xoopsDB->prefix('tadnews_files_center') . '';
         $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 3, $sql);
         while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
-            $kind = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
+            $kind          = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
             $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . mb_substr($description, -4);
             if ('file' === $kind) {
                 Utility::rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/file/$new_file_name");
@@ -239,7 +276,7 @@ class Update
     public static function chk_chk11()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`have_read_group`) FROM ' . $xoopsDB->prefix('tad_news');
+        $sql    = 'SELECT count(`have_read_group`) FROM ' . $xoopsDB->prefix('tad_news');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -259,7 +296,7 @@ class Update
     public static function chk_chk12()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_sign');
+        $sql    = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_sign');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -285,7 +322,7 @@ class Update
     public static function chk_chk13()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`page_sort`) FROM ' . $xoopsDB->prefix('tad_news');
+        $sql    = 'SELECT count(`page_sort`) FROM ' . $xoopsDB->prefix('tad_news');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -305,7 +342,7 @@ class Update
     public static function chk_chk14()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_paper_send_log');
+        $sql    = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_paper_send_log');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -331,7 +368,7 @@ class Update
     public static function chk_chk15()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_tags');
+        $sql    = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_news_tags');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -353,18 +390,18 @@ class Update
         )";
         $xoopsDB->queryF($sql);
 
-        $sql = 'SELECT DISTINCT prefix_tag FROM ' . $xoopsDB->prefix('tad_news') . " WHERE `prefix_tag`!=''";
+        $sql    = 'SELECT DISTINCT prefix_tag FROM ' . $xoopsDB->prefix('tad_news') . " WHERE `prefix_tag`!=''";
         $result = $xoopsDB->query($sql);
         while (list($prefix_tag) = $xoopsDB->fetchRow($result)) {
             $arr = [];
             preg_match_all("/color[\s]*=[\s]*'([#a-zA-Z0-9]+)'[\s]*>\[(.*)\]/", $prefix_tag, $arr);
             $color = $arr[1][0];
-            $tag = $arr[2][0];
+            $tag   = $arr[2][0];
 
             $sql = 'insert into ' . $xoopsDB->prefix('tad_news_tags') . " (`tag` , `color` , `enable`) values('{$tag}' , '{$color}' , '1')";
             $xoopsDB->queryF($sql);
             $tag_sn = $xoopsDB->getInsertId();
-            $sql = 'update ' . $xoopsDB->prefix('tad_news') . " set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
+            $sql    = 'update ' . $xoopsDB->prefix('tad_news') . " set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
             $xoopsDB->queryF($sql) or die($sql);
         }
     }
@@ -373,7 +410,7 @@ class Update
     public static function chk_chk16()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tadnews_rank');
+        $sql    = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tadnews_rank');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -400,7 +437,7 @@ class Update
     public static function chk_chk17()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`np_title`) FROM ' . $xoopsDB->prefix('tad_news_paper');
+        $sql    = 'SELECT count(`np_title`) FROM ' . $xoopsDB->prefix('tad_news_paper');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -420,7 +457,7 @@ class Update
     public static function chk_chk18()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`original_filename`) FROM ' . $xoopsDB->prefix('tadnews_files_center');
+        $sql    = 'SELECT count(`original_filename`) FROM ' . $xoopsDB->prefix('tadnews_files_center');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -447,7 +484,7 @@ class Update
     public static function chk_chk19()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(`font_color`) FROM ' . $xoopsDB->prefix('tad_news_tags');
+        $sql    = 'SELECT count(`font_color`) FROM ' . $xoopsDB->prefix('tad_news_tags');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return false;
@@ -472,9 +509,9 @@ class Update
     public static function chk_chk20()
     {
         global $xoopsDB;
-        $sql = 'SHOW Fields FROM ' . $xoopsDB->prefix('tad_news') . " where `Field`='news_content' and `Type`='text'";
+        $sql    = 'SHOW Fields FROM ' . $xoopsDB->prefix('tad_news') . " where `Field`='news_content' and `Type`='text'";
         $result = $xoopsDB->queryF($sql) or die($sql);
-        $all = $xoopsDB->fetchRow($result);
+        $all    = $xoopsDB->fetchRow($result);
         if (false === $all) {
             return false;
         }
@@ -495,9 +532,9 @@ class Update
     public static function chk_chk21()
     {
         global $xoopsDB;
-        $sql = 'SELECT hash_filename FROM ' . $xoopsDB->prefix('tadnews_files_center') . " WHERE `col_name`='news_pic'";
+        $sql    = 'SELECT hash_filename FROM ' . $xoopsDB->prefix('tadnews_files_center') . " WHERE `col_name`='news_pic'";
         $result = $xoopsDB->query($sql) or die($sql);
-        $all = $xoopsDB->fetchRow($result);
+        $all    = $xoopsDB->fetchRow($result);
         if (false === $all) {
             return false;
         }
@@ -518,7 +555,7 @@ class Update
     public static function chk_chk22()
     {
         global $xoopsDB;
-        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tadnews_data_center');
+        $sql    = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tadnews_data_center');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -540,7 +577,7 @@ class Update
         `col_id` varchar(100) NOT NULL,
         `update_time` datetime NOT NULL,
       PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
-      ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;";
         $xoopsDB->queryF($sql);
     }
 
@@ -550,7 +587,7 @@ class Update
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
     WHERE table_name = '" . $xoopsDB->prefix('tadnews_files_center') . "' AND COLUMN_NAME = 'col_sn'";
-        $result = $xoopsDB->query($sql);
+        $result     = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
         if ('smallint' === $type) {
             return true;
@@ -573,7 +610,7 @@ class Update
     public static function chk_data_center_col_id()
     {
         global $xoopsDB;
-        $sql = 'SELECT Fields FROM `' . $xoopsDB->prefix('tadnews_data_center') . "` where `Field`='col_id' and `Default` IS NULL";
+        $sql    = 'SELECT Fields FROM `' . $xoopsDB->prefix('tadnews_data_center') . "` where `Field`='col_id' and `Default` IS NULL";
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -598,7 +635,7 @@ class Update
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
     WHERE table_name = '" . $xoopsDB->prefix('tad_news') . "' AND COLUMN_NAME = 'uid'";
-        $result = $xoopsDB->query($sql);
+        $result     = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
         if ('smallint' === $type) {
             return true;

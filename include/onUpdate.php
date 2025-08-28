@@ -98,5 +98,6 @@ function xoops_module_update_tadnews(&$module, $old_version)
     }
 
     Update::add_index();
+    Update::add_files_center_index();
     return true;
 }
