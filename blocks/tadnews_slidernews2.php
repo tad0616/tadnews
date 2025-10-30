@@ -5,7 +5,6 @@ use XoopsModules\Tadnews\Tools;
 if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
     require XOOPS_ROOT_PATH . '/modules/tadnews/preloads/autoloader.php';
 }
-use XoopsModules\Tadtools\FlexSlider;
 use XoopsModules\Tadtools\ResponsiveSlides;
 if (!class_exists('XoopsModules\Tadtools\ResponsiveSlides')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
@@ -37,13 +36,13 @@ function tadnews_slidernews2_show($options)
         return;
     }
     if ('flexslider2' === $options[2]) {
-        $slider = new FlexSlider($options[1]);
+        $slider = new ResponsiveSlides($options[1]);
     } else {
         $slider = new ResponsiveSlides($options[1]);
     }
 
-    $n = 0;
-    $pic_num = 1;
+    $n         = 0;
+    $pic_num   = 1;
     $demo_path = is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/demo") ? XOOPS_URL . "/uploads/tadnews/demo" : XOOPS_URL . "/modules/tadnews/images";
     foreach ($all_news['page'] as $news) {
         $big_image = empty($news['image_big']) ? "{$demo_path}/demo{$pic_num}.jpg" : $news['image_big'];
@@ -63,7 +62,6 @@ function tadnews_slidernews2_show($options)
 function tadnews_slidernews2_edit($options)
 {
     $ResponsiveSlides = 'ResponsiveSlides' === $options[2] ? 'selected' : '';
-    $flexslider2 = 'flexslider2' === $options[2] ? 'selected' : '';
 
     $block_news_cate = Tools::block_news_cate($options[3]);
 
@@ -86,7 +84,6 @@ function tadnews_slidernews2_edit($options)
             <div class='my-content'>
                 <select name='options[2]' class='my-input'>
                     <option value='ResponsiveSlides' $ResponsiveSlides>ResponsiveSlides</option>
-                    <option value='flexslider2' $flexslider2>flexslider2</option>
                 </select>
             </div>
         </li>
