@@ -19,17 +19,17 @@ function tadnews_covered($options)
 
     $block['randStr'] = Utility::randStr(8);
 
-    $num = $options[0] * $options[1];
+    $num = (int) $options[0] * (int) $options[1];
     if (empty($num)) {
         $num = 12;
     }
 
     $summary_length = (int) $options[2];
-    $summary_css = $options[3];
+    $summary_css    = $options[3];
     // $show_cover     = $block['show_cover'];
     $cover_css = '';
     $show_ncsn = isset($options[4]) ? $options[4] : '';
-    $ncsn_arr = explode(',', $show_ncsn);
+    $ncsn_arr  = explode(',', $show_ncsn);
 
     $Tadnews->set_show_num($num);
     $Tadnews->set_view_ncsn($ncsn_arr);
@@ -40,22 +40,22 @@ function tadnews_covered($options)
     $Tadnews->set_use_star_rating(false);
     $news = $Tadnews->get_news('return');
 
-    $block = $news;
-    $block['num'] = 12 / $options[0];
-    $block['cols'] = $options[0];
-    $block['count'] = count($news['page']);
-    $block['summary_css'] = $summary_css;
+    $block                 = $news;
+    $block['num']          = $options[0] ? 12 / (int) $options[0] : 12;
+    $block['cols']         = (int) $options[0];
+    $block['count']        = count($news['page']);
+    $block['summary_css']  = $summary_css;
     $block['display_mode'] = isset($options[5]) && !empty($options[5]) ? $options[5] : 1;
-    $block['width_left'] = isset($options[6]) && !empty($options[6]) ? $options[6] : 1;
-    $block['width_right'] = 12 - $block['width_left'];
-    $block['height'] = isset($options[7]) && !empty($options[7]) ? $options[7] : '80px';
-    $block['demo_path'] = is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/demo") ? XOOPS_URL . "/uploads/tadnews/demo" : XOOPS_URL . "/modules/tadnews/images";
+    $block['width_left']   = isset($options[6]) && !empty($options[6]) ? $options[6] : 1;
+    $block['width_right']  = 12 - $block['width_left'];
+    $block['height']       = isset($options[7]) && !empty($options[7]) ? $options[7] : '80px';
+    $block['demo_path']    = is_dir(XOOPS_ROOT_PATH . "/uploads/tadnews/demo") ? XOOPS_URL . "/uploads/tadnews/demo" : XOOPS_URL . "/modules/tadnews/images";
 
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
     $xoTheme->addStylesheet('modules/tadnews/css/module.css');
-    $modhandler = xoops_gethandler('module');
-    $xoopsModule = $modhandler->getByDirname("tadnews");
-    $config_handler = xoops_gethandler('config');
+    $modhandler        = xoops_gethandler('module');
+    $xoopsModule       = $modhandler->getByDirname("tadnews");
+    $config_handler    = xoops_gethandler('config');
     $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->mid());
     if ($xoopsModuleConfig['use_table_shadow']) {
         $xoTheme->addStylesheet('modules/tadnews/css/module2.css');
@@ -67,11 +67,11 @@ function tadnews_covered($options)
 //區塊編輯函式
 function tadnews_covered_edit($options)
 {
-    $options0_1 = ('1' == $options[0]) ? 'selected' : '';
-    $options0_2 = ('2' == $options[0]) ? 'selected' : '';
-    $options0_3 = ('3' == $options[0]) ? 'selected' : '';
-    $options0_4 = ('4' == $options[0]) ? 'selected' : '';
-    $options0_6 = ('6' == $options[0]) ? 'selected' : '';
+    $options0_1  = ('1' == $options[0]) ? 'selected' : '';
+    $options0_2  = ('2' == $options[0]) ? 'selected' : '';
+    $options0_3  = ('3' == $options[0]) ? 'selected' : '';
+    $options0_4  = ('4' == $options[0]) ? 'selected' : '';
+    $options0_6  = ('6' == $options[0]) ? 'selected' : '';
     $options0_12 = ('12' == $options[0]) ? 'selected' : '';
 
     $options5_1 = ('1' == $options[5]) ? 'selected' : '';

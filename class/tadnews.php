@@ -234,7 +234,7 @@ class Tadnews
     //設定是否秀出草稿
     public function set_show_enable($enable = '1')
     {
-        $this->show_enable = $enable;
+        $this->show_enable = (int) $enable;
     }
 
     //設定欲觀看分類
@@ -257,37 +257,40 @@ class Tadnews
     //設定欲觀看標籤
     public function set_view_tag($tag_sn = '')
     {
-        $this->view_tag = $tag_sn;
+        $this->view_tag = (int) $tag_sn;
     }
 
     //設定欲觀看文章
     public function set_view_nsn($nsn)
     {
-        $this->view_nsn = $nsn;
+        $this->view_nsn = (int) $nsn;
     }
 
     //設定關鍵字
     public function set_keyword($keyword = '')
     {
-        $this->keyword = $keyword;
+        global $xoopsDB;
+        $this->keyword = $xoopsDB->escape($keyword);
     }
 
     //設定起始日期
     public function set_start_day($start_day = '')
     {
-        $this->start_day = $start_day;
+        global $xoopsDB;
+        $this->start_day = $xoopsDB->escape($start_day);
     }
 
     //設定結束日期
     public function set_end_day($end_day = '')
     {
-        $this->end_day = $end_day;
+        global $xoopsDB;
+        $this->end_day = $xoopsDB->escape($end_day);
     }
 
     //取得欲觀看文章
     public function get_view_nsn()
     {
-        return $this->view_nsn;
+        return (int) $this->view_nsn;
     }
 
     //設定欲觀看文章
@@ -299,7 +302,7 @@ class Tadnews
     //設定欲觀看作者
     public function set_view_uid($uid = '')
     {
-        $this->view_uid = $uid;
+        $this->view_uid = (int) $uid;
     }
 
     //設定顯示方式，summary,list,cate
@@ -1074,9 +1077,11 @@ class Tadnews
 
             $pic = (empty($cate_pic)) ? XOOPS_URL . '/modules/tadnews/images/no_cover.png' : XOOPS_URL . "/uploads/tadnews/cate/{$cate_pic}";
 
-            $and_enable = (1 == $this->show_enable) ? "and enable='1'" : '';
+            $and_enable     = (1 == $this->show_enable) ? "and enable='1'" : '';
+            $this->show_num = empty($this->show_num) ? 10 : $this->show_num;
 
-            $sql2    = ('page' === $this->kind) ? 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable order by page_sort" : 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') order by always_top desc , start_day desc limit 0," . $this->show_num;
+            $sql2 = ('page' === $this->kind) ? 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable order by page_sort" : 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') order by always_top desc , start_day desc limit 0," . $this->show_num;
+            // die($sql2);
             $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
 
             $j               = 0;
