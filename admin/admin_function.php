@@ -41,7 +41,7 @@ function list_tad_news($the_ncsn = '0', $kind = 'news', $show_uid = '')
     $Tadnews->get_news('assign');
     $xoopsTpl->assign('options', $options);
     $xoopsTpl->assign('ncsn', $the_ncsn);
-    $cate = $Tadnews->get_tad_news_cate($the_ncsn);
+    $cate = $Tadnews->get_tad_news_cate($the_ncsn, true);
     $xoopsTpl->assign('cate', $cate);
 
     $SweetAlert = new SweetAlert();

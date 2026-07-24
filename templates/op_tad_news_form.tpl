@@ -195,13 +195,13 @@
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
                     <div class="col-md-3" id="new_folder_col" style="display: none;">
-                        <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_cate' id='new_cate_input' class='form-control' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool|default:false}>
                     <div class="col-md-3">
-                        <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{/if}>
@@ -229,13 +229,13 @@
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
                     <div class="col-md-3" id="new_page_folder_col" style="display: none;">
-                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool|default:false}>
                     <div class="col-md-3" id="new_page_folder_col">
-                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{/if}>

@@ -122,7 +122,7 @@ function list_tad_summary_news($the_ncsn = '', $show_uid = '')
     if ($the_ncsn > 0) {
         $Tadnews->set_view_ncsn($the_ncsn);
         $Tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
-        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn));
+        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn, true));
     } else {
         $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
@@ -154,7 +154,7 @@ function list_tad_all_news($the_ncsn = '', $show_uid = '')
     if ($the_ncsn > 0) {
         $Tadnews->set_view_ncsn($the_ncsn);
         $Tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
-        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn));
+        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn, true));
 
     } else {
         $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);

@@ -119,7 +119,7 @@ function import($topic_pid = 0, $new_topic_pid = 0)
     //匯入分類
     foreach ($_POST['cate'][$topic_pid] as $topic_id => $topic_title) {
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_cate') . "` (`of_ncsn`, `nc_title`, `enable_group`, `sort`) VALUES (?, ?, '', '')";
-        if (Utility::query($sql, 'is', [$new_topic_pid, $topic_title])) {
+        if (Utility::query($sql, 'is', [$new_topic_pid, $topic_title], true, false, null, true)) {
             $sub_new_topic_pid = $xoopsDB->getInsertId();
 
             //匯入文章

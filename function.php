@@ -93,7 +93,7 @@ function tad_news_cate_form($ncsn = '', $not_news = '0')
 
     //抓取預設值
     if (!empty($ncsn)) {
-        $DBV = $Tadnews->get_tad_news_cate($ncsn);
+        $DBV = $Tadnews->get_tad_news_cate($ncsn, true);
         $xoopsTpl->assign('cate', $DBV);
     } else {
         $DBV = [];
