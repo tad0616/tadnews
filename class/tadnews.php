@@ -664,18 +664,27 @@ class Tadnews
         }
 
         //判斷是否要檢查日期（自訂頁面不用）
-        if (!empty($this->view_month)) {
-            $date_chk = "and start_day like '{$this->view_month}%'";
-        } elseif ($this->admin_tool) {
+        if ($this->admin_tool) {
             $date_chk = '';
-        } elseif ($this->start_day and $this->end_day) {
-            $date_chk = "and start_day >= '" . $this->start_day . "' and start_day <= '" . $this->end_day . " 23:59:59'";
-        } elseif ($this->start_day) {
-            $date_chk = "and start_day >= '" . $this->start_day . "'";
-        } elseif ($this->end_day) {
-            $date_chk = "and start_day <= '" . $this->end_day . " 23:59:59' ";
-        } elseif ('news' === $this->kind) {
-            $date_chk = "and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') ";
+        } else {
+            $base_chk = "and start_day < '{$this->today}' and (end_day >= '{$this->today}' or end_day = '0000-00-00 00:00:00') ";
+
+            if (!empty($this->view_month)) {
+                $month_start = $this->view_month . '-01 00:00:00';
+                $month_end   = date('Y-m-d 00:00:00', strtotime($month_start . ' +1 month'));
+                $date_chk    = "{$base_chk} and start_day >= '{$month_start}' and start_day < '{$month_end}' ";
+            } else {
+                $date_chk = $base_chk;
+
+                if ($this->start_day) {
+                    $date_chk .= " and start_day >= '{$this->start_day}' ";
+                }
+
+                if ($this->end_day) {
+                    $end_day_next = date('Y-m-d 00:00:00', strtotime($this->end_day . ' +1 day'));
+                    $date_chk     .= " and start_day < '{$end_day_next}' ";
+                }
+            }
         }
 
         $and_enable = (1 == $this->show_enable) ? "and enable='1'" : '';
