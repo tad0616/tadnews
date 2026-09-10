@@ -150,3 +150,5 @@ define('_MD_TADNEWS_CONTENT_AT_TABS', 'Set the content of each tab');
 define('_MD_TADNEWS_SAME_UID', 'Maintain the original publisher, do not change the publisher to the current editor');
 define('_SEPARTE', '<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>');
 define('_SEPARTE2', '--summary--');
+define('_MD_TADNEWS_CANT_MOVE_TO_SELF', 'Cannot move a category into its own sub-category');
+define('_MD_TADNEWS_NO_DATA', 'No data');

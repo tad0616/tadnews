@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadnews\Sign;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
@@ -9,14 +10,14 @@ require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$kind = Request::getString('kind');
-$ncsn = Request::getInt('ncsn');
-$nsn = Request::getInt('nsn');
-$fsn = Request::getInt('fsn');
-$uid = Request::getInt('uid');
+$op       = Request::getString('op');
+$kind     = Request::getString('kind');
+$ncsn     = Request::getInt('ncsn');
+$nsn      = Request::getInt('nsn');
+$fsn      = Request::getInt('fsn');
+$uid      = Request::getInt('uid');
 $files_sn = Request::getInt('files_sn');
-$tag_sn = Request::getInt('tag_sn');
+$tag_sn   = Request::getInt('tag_sn');
 
 switch ($op) {
     //下載檔案
@@ -27,18 +28,19 @@ switch ($op) {
 
     //刪除資料
     case 'delete_tad_news':
+        Utility::xoops_security_check();
         $Tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 
     //已經閱讀
     case 'have_read':
-        have_read($nsn, $uid);
+        Sign::have_read($nsn, $uid);
         header('location: ' . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
 
     default:
-        list_tad_my_news();
+        list_tad_my_news($kind, $ncsn);
         break;
 }
 
@@ -57,9 +59,9 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 /*-----------function區--------------*/
 
 //列出某人所有新聞
-function list_tad_my_news()
+function list_tad_my_news($kind = '', $the_ncsn = 0)
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $xoopsUser, $Tadnews;
+    global $xoopsModuleConfig, $xoopsUser, $Tadnews;
     if (!$xoopsUser) {
         redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
     }
@@ -76,6 +78,4 @@ function list_tad_my_news()
         $Tadnews->set_view_ncsn($the_ncsn);
     }
     $Tadnews->get_news();
-
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 }

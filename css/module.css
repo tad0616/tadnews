@@ -251,3 +251,6 @@ table.table-shadow tr.my th a {
   width: 80%;
   display: inline-block;
 }
+.rss-icon {
+  width: 24px;
+}

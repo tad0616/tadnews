@@ -206,6 +206,9 @@ class Tools
         if (! isset($tadnews_adm)) {
             $tadnews_adm = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
+        // 初始化可操作分類陣列
+        $ok_cat = [];
+
         if ($tadnews_adm) {
             $ok_cat[] = 0;
         }

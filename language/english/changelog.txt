@@ -1,3 +1,13 @@
+TadNews 5.2 (Released 2026-09-08)
+====================================
+1. Preliminary module refactoring to enhance security
+
+TadNews 5.1 (Released 2026-08-21)
+====================================
+1. Fixed an issue where tabs could not be deleted
+2. Added the `tadnews_files_center` index to improve read speeds
+3. Enhanced security and efficiency
+
 TadNews 5.02 (Released 2025-10-30)
 ====================================
 1. Added tadnews_files_center index to improve read speed

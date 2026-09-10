@@ -35,7 +35,7 @@ function tadnews_cate_show($options)
 
         foreach ($cates['title'] as $ncsn => $title) {
             $nc_title = addslashes($title);
-            $c        = $counter[$ncsn] ? "({$counter[$ncsn]})" : '';
+            $c        = empty($counter[$ncsn]) ? '' : "({$counter[$ncsn]})";
             $data[]   = "{ id:{$ncsn}, pId:{$cates['of_ncsn'][$ncsn]}, name:'{$nc_title} {$c}', url:'{$cates['url'][$ncsn]}', open: true ,target:'_self' }";
         }
         // Utility::dd($data);

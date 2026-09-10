@@ -1,5 +1,7 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadnews\Sign;
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\StarRating;
 use XoopsModules\Tadtools\TadUpFiles;
@@ -33,27 +35,28 @@ switch ($op) {
 
     //刪除資料
     case 'delete_tad_news':
+        Utility::xoops_security_check();
         $Tadnews->delete_tad_news($nsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 
     //已經閱讀
     case 'have_read':
-        have_read($nsn, $uid);
+        Sign::have_read($nsn, $uid);
         header('location: ' . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
 
     //列出簽收狀況
     case 'list_sign':
         $op = 'list_sign';
-        list_sign($nsn);
+        Sign::list_sign($nsn);
         $xoopsTpl->assign('op', $op);
         break;
 
     //列出某人狀況
     case 'list_user_sign':
         $op = 'list_user_sign';
-        list_user_sign($uid);
+        Sign::list_user_sign($uid);
         $xoopsTpl->assign('op', $op);
         break;
 
@@ -64,7 +67,7 @@ switch ($op) {
 
         $xoopsTpl->assign('show_rss', $xoopsModuleConfig['show_rss']);
         //把過期的置頂文徹下
-        chk_always_top();
+        Tadnews::chk_always_top();
         if (!empty($nsn)) {
             $op = 'tadnews_show';
             show_news($nsn);
@@ -74,21 +77,21 @@ switch ($op) {
         } elseif (!empty($ncsn)) {
             if ('summary' === $xoopsModuleConfig['cate_show_mode']) {
                 $op = 'tadnews_summary';
-                list_tad_summary_news($ncsn);
+                list_index_news($ncsn, '', true);
             } else {
                 $op = 'tadnews_list';
-                list_tad_all_news($ncsn);
+                list_index_news($ncsn);
             }
         } else {
             if ('summary' === $xoopsModuleConfig['show_mode']) {
                 $op = 'tadnews_summary';
-                list_tad_summary_news(null, $show_uid);
+                list_index_news(null, $show_uid, true);
             } elseif ('cate' === $xoopsModuleConfig['show_mode']) {
                 $op = 'tadnews_cate';
-                list_tad_cate_news(null, null, $show_uid);
+                list_tad_cate_news($show_uid);
             } else {
                 $op = 'tadnews_list';
-                list_tad_all_news(null, $show_uid);
+                list_index_news(null, $show_uid);
             }
         }
 
@@ -108,74 +111,50 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------function區--------------*/
 
-//列出所有tad_news資料(summary模式)
-function list_tad_summary_news($the_ncsn = '', $show_uid = '')
+//指定分類時，assign 該分類的路徑導覽
+function assign_news_path($the_ncsn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $Tadnews;
+    global $xoopsTpl;
 
-    $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
-    $Tadnews->set_news_kind('news');
-    $Tadnews->set_summary('300');
-    if (!empty($show_uid)) {
-        $Tadnews->set_view_uid($show_uid);
+    if (empty($the_ncsn)) {
+        return;
     }
-    if ($the_ncsn > 0) {
-        $Tadnews->set_view_ncsn($the_ncsn);
-        $Tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
-        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn, true));
-    } else {
-        $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
-    }
-    $Tadnews->set_cover(true, 'db');
-
-    $Tadnews->get_news();
-    $xoopsTpl->assign('ncsn', $the_ncsn);
-
-    //目前路徑
-    if ($the_ncsn) {
-        $path           = [];
-        $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-        $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
-        $path           = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
-        $xoopsTpl->assign('path', $path);
-    }
+    $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
+    $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
+    $xoopsTpl->assign('path', Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title'));
 }
 
-//列出所有tad_news資料
-function list_tad_all_news($the_ncsn = '', $show_uid = '')
+//列出所有tad_news資料（$summary=true 為 summary 模式，多帶摘要與封面）
+function list_index_news($the_ncsn = '', $show_uid = '', $summary = false)
 {
     global $xoopsModuleConfig, $xoopsTpl, $Tadnews;
 
     $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
     $Tadnews->set_news_kind('news');
+    if ($summary) {
+        $Tadnews->set_summary('300');
+        $Tadnews->set_cover(true, 'db');
+    }
     if (!empty($show_uid)) {
         $Tadnews->set_view_uid($show_uid);
     }
     if ($the_ncsn > 0) {
         $Tadnews->set_view_ncsn($the_ncsn);
         $Tadnews->set_show_mode($xoopsModuleConfig['cate_show_mode']);
-        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn, true));
-
+        $xoopsTpl->assign('cate', $Tadnews->get_tad_news_cate($the_ncsn));
     } else {
         $Tadnews->set_show_mode($xoopsModuleConfig['show_mode']);
     }
+
     $Tadnews->get_news();
     $xoopsTpl->assign('ncsn', $the_ncsn);
-
-    //目前路徑
-    if ($the_ncsn) {
-        $path           = [];
-        $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-        $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
-        $path           = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
-        $xoopsTpl->assign('path', $path);
-    }
+    assign_news_path($the_ncsn);
 }
 
 //列出所有tad_news資料
 function list_tad_tag_news($tag_sn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $Tadnews;
+    global $xoopsModuleConfig, $Tadnews;
 
     $Tadnews->set_show_num($xoopsModuleConfig['show_num']);
     $Tadnews->set_news_kind('news');
@@ -184,8 +163,8 @@ function list_tad_tag_news($tag_sn = '')
     $Tadnews->get_news();
 }
 
-//列出所有tad_news資料
-function list_tad_cate_news($the_ncsn = 0, $the_level = 0, $show_uid = '')
+//以分類為單位列出tad_news資料
+function list_tad_cate_news($show_uid = '')
 {
     global $xoopsModuleConfig, $xoopsTpl, $Tadnews;
 
@@ -196,17 +175,7 @@ function list_tad_cate_news($the_ncsn = 0, $the_level = 0, $show_uid = '')
         $Tadnews->set_view_uid($show_uid);
     }
     $Tadnews->get_cate_news();
-    $xoopsTpl->assign('ncsn', $the_ncsn);
-
-    //目前路徑
-    if ($the_ncsn) {
-        $path = [];
-
-        $categoryHelper = new CategoryHelper('tad_news_cate', 'ncsn', 'of_ncsn', 'nc_title');
-        $arr            = $categoryHelper->getCategoryPath($the_ncsn, 'tad_news');
-        $path           = Utility::tad_breadcrumb($the_ncsn, $arr, 'index.php', 'ncsn', 'nc_title');
-        $xoopsTpl->assign('path', $path);
-    }
+    $xoopsTpl->assign('ncsn', '');
 }
 
 //顯示單一新聞
@@ -223,82 +192,4 @@ function show_news($nsn = '')
     $xoopsTpl->assign('uid', $uid);
     $xoopsTpl->assign('show_next_btn', $xoopsModuleConfig['show_next_btn']);
 
-}
-
-//已經讀過
-function have_read($nsn = '', $uid = '')
-{
-    global $xoopsDB, $xoopsUser;
-    //安全判斷
-    if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode('<br>', (Array) $GLOBALS['xoopsSecurity']->getErrors());
-        redirect_header('index.php', 3, $error);
-    }
-    $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_sign') . '` (`nsn`, `uid`, `sign_time`) VALUES (?, ?, ?)';
-    Utility::query($sql, 'iis', [$nsn, $uid, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-}
-
-//檢查置頂時間
-function chk_always_top()
-{
-    global $xoopsDB;
-    $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `always_top`=? WHERE `always_top_date` <=? AND `always_top_date`!=\'0000-00-00 00:00:00\'';
-    Utility::query($sql, 'ss', [0, $now]);
-
-}
-
-//列出簽收狀況
-function list_sign($nsn = '')
-{
-    global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
-    $news = $Tadnews->get_tad_news($nsn);
-
-    $sign   = [];
-    $i      = 0;
-    $sql    = 'SELECT `uid`, `sign_time` FROM `' . $xoopsDB->prefix('tad_news_sign') . '` WHERE `nsn`=? ORDER BY `sign_time`';
-    $result = Utility::query($sql, 'i', [$nsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    while (list($uid, $sign_time) = $xoopsDB->fetchRow($result)) {
-        $uid_name              = \XoopsUser::getUnameFromId($uid, 1);
-        $uid_name              = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
-        $sign[$i]['uid']       = $uid;
-        $sign[$i]['uid_name']  = $uid_name;
-        $sign[$i]['sign_time'] = $sign_time;
-        $i++;
-    }
-
-    $xoopsTpl->assign('news_title', sprintf(_MD_TADNEWS_SIGN_LOG, $news['news_title']));
-    $xoopsTpl->assign('nsn', $nsn);
-    $xoopsTpl->assign('sign', $sign);
-}
-
-//列出某人狀況
-function list_user_sign($uid = '')
-{
-    global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
-    $news = $Tadnews->get_tad_news($nsn);
-
-    $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-    $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
-
-    $sign   = [];
-    $i      = 0;
-    $sql    = 'SELECT a.nsn, a.sign_time, b.news_title FROM `' . $xoopsDB->prefix('tad_news_sign') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('tad_news') . '` AS b ON a.nsn = b.nsn WHERE a.uid =? ORDER BY a.sign_time DESC';
-    $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    $myts = \MyTextSanitizer::getInstance();
-    while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
-        $news_title             = $myts->htmlSpecialChars($news_title);
-        $sign[$i]['nsn']        = $nsn;
-        $sign[$i]['news_title'] = $news_title;
-        $sign[$i]['sign_time']  = $sign_time;
-        $i++;
-    }
-
-    $xoopsTpl->assign('uid', $uid);
-    $xoopsTpl->assign('sign', $sign);
-    $xoopsTpl->assign('uid_name', sprintf(_MD_TADNEWS_SIGN_LOG, $uid_name));
 }

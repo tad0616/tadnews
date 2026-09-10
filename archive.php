@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadnews\Tadnews;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
@@ -26,7 +27,7 @@ switch ($op) {
         exit;
 
     default:
-        month_list($date);
+        Tadnews::month_list($date);
         archive($date);
         $op = "archive";
         break;
@@ -45,31 +46,10 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------function區--------------*/
 
-//列出月份
-function month_list($now_date = '')
-{
-    global $xoopsDB, $xoopsTpl;
-
-    $sql = 'SELECT LEFT(`start_day`, 7), COUNT(*) FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `enable`=? GROUP BY LEFT(`start_day`, 7) ORDER BY `start_day` DESC';
-    $result = Utility::query($sql, 's', [1]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    $i = 1;
-    while (list($ym, $count) = $xoopsDB->fetchRow($result)) {
-        $opt[$i]['value'] = $ym;
-        $opt[$i]['count'] = $count;
-        $opt[$i]['text'] = str_replace('-', '' . _MD_TADNEWS_YEAR, $ym) . _MD_TADNEWS_MONTH;
-        $opt[$i]['selected'] = $now_date == $ym ? 'selected' : '';
-        $i++;
-    }
-
-    Utility::get_jquery();
-    $xoopsTpl->assign('opt', $opt);
-}
-
 //分月新聞
 function archive($date = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $interface_menu, $Tadnews;
+    global $xoopsTpl, $Tadnews;
 
     if (empty($date)) {
         $date = date('Y-m');
@@ -79,7 +59,6 @@ function archive($date = '')
     $Tadnews->set_show_month($date);
     $Tadnews->set_show_enable(1);
     $Tadnews->get_news();
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
     $date_title = Utility::to_utf8(str_replace('-', '' . _MD_TADNEWS_YEAR . ' ', $date) . _MD_TADNEWS_MONTH . _MD_TADNEWS_NEWS_TITLE);
     $xoopsTpl->assign('date_title', $date_title);
 }

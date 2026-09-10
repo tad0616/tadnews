@@ -30,7 +30,7 @@ function tadnews_tag_news($options)
         $Tadnews->set_view_tag($tag_sn);
         $Tadnews->set_show_num($options[1]);
         $block['all_news'][$tag_sn] = $Tadnews->get_news('return');
-        $block['tags'][$tag_sn] = $tags['tags'][$tag_sn];
+        $block['tags'][$tag_sn]     = $tags['tags'][$tag_sn];
     }
 
     if (empty($block['all_news'])) {
@@ -40,12 +40,12 @@ function tadnews_tag_news($options)
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     $randStr = Utility::randStr();
-    $EasyResponsiveTabs = new EasyResponsiveTabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $EasyResponsiveTabs->render();
+    $Tabs    = new EasyResponsiveTabs('#tag_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
+    $Tabs->render();
     $block['tag_news_name'] = 'tag_news_' . $randStr;
-    $block['min_height'] = 200;
+    $block['min_height']    = 200;
 
-    $tab_font_size = empty($options[8]) ? 16 : (int) $options[8];
+    $tab_font_size          = empty($options[8]) ? 16 : (int) $options[8];
     $block['tab_font_size'] = round($tab_font_size / 16, 1);
 
     if ('1' == $options[7]) {

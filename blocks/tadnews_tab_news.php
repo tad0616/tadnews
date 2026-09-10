@@ -33,13 +33,13 @@ function tadnews_tab_news($options)
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     $randStr = Utility::randStr();
-    $EasyResponsiveTabs = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
-    $EasyResponsiveTabs->render();
+    $Tabs    = new EasyResponsiveTabs('#tab_news_' . $randStr, $options[2], $options[3], $options[4], $options[5], $options[6]);
+    $Tabs->render();
     $block['tab_news_name'] = 'tab_news_' . $randStr;
-    $block['min_height'] = 200;
-    $tab_font_size = empty($options[8]) ? 16 : (int) $options[8];
+    $block['min_height']    = 200;
+    $tab_font_size          = empty($options[8]) ? 16 : (int) $options[8];
     $block['tab_font_size'] = round($tab_font_size / 16, 1);
-    $block['show_author'] = isset($options[9]) ? $options[9] : 0;
+    $block['show_author']   = isset($options[9]) ? $options[9] : 0;
 
     if ('1' == $options[7]) {
         $Tadnews = new Tadnews();
@@ -49,7 +49,7 @@ function tadnews_tab_news($options)
         $Tadnews->set_use_star_rating(false);
         $Tadnews->set_cover(false);
         $Tadnews->set_view_ncsn($ncsn_arr);
-        $news = $Tadnews->get_news('return');
+        $news                 = $Tadnews->get_news('return');
         $block['latest_news'] = $news['page'];
     }
 

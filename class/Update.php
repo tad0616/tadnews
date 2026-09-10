@@ -32,8 +32,8 @@ class Update
     public static function chk_tad_news()
     {
         global $xoopsDB;
-        $table = $xoopsDB->prefix('tad_news');
-        $sql = "SHOW FULL COLUMNS FROM `$table`";
+        $table  = $xoopsDB->prefix('tad_news');
+        $sql    = "SHOW FULL COLUMNS FROM `$table`";
         $result = $xoopsDB->queryF($sql);
         $fields = [];
         while ($row = $xoopsDB->fetchArray($result)) {
@@ -78,7 +78,7 @@ class Update
     public static function chk_tadnews_files_center()
     {
         global $xoopsDB;
-        $table = $xoopsDB->prefix('tadnews_files_center');
+        $table     = $xoopsDB->prefix('tadnews_files_center');
         $old_table = $xoopsDB->prefix('tad_news_files');
 
         // Check tables existence
@@ -121,10 +121,10 @@ class Update
             $sql = "update `$table` set `col_name`='nsn', `description`=`file_name`";
             $xoopsDB->queryF($sql);
 
-            $sql = "SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM `$table`";
+            $sql    = "SELECT files_sn,file_name,file_type,description,col_name,col_sn FROM `$table`";
             $result = $xoopsDB->queryF($sql);
             while (list($files_sn, $file_name, $file_type, $description, $col_name, $col_sn) = $xoopsDB->fetchRow($result)) {
-                $kind = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
+                $kind          = ('image' === mb_substr($file_type, 0, 5)) ? 'img' : 'file';
                 $new_file_name = "{$col_name}_{$col_sn}_{$files_sn}" . mb_substr($description, -4);
                 if ('file' === $kind) {
                     Utility::rename_win(XOOPS_ROOT_PATH . "/uploads/tadnews/file/{$col_sn}_{$description}", XOOPS_ROOT_PATH . "/uploads/tadnews/file/$new_file_name");
@@ -140,7 +140,7 @@ class Update
 
         // If table exists (either originally or after rename)
         if ($xoopsDB->queryF("SHOW TABLES LIKE '$table'")) {
-            $sql = "SHOW FULL COLUMNS FROM `$table`";
+            $sql    = "SHOW FULL COLUMNS FROM `$table`";
             $result = $xoopsDB->queryF($sql);
             $fields = [];
             while ($row = $xoopsDB->fetchArray($result)) {
@@ -160,8 +160,8 @@ class Update
             }
 
             // chk21: clean hash_filename for news_pic
-            $sql = "SELECT count(*) FROM `$table` WHERE `col_name`='news_pic' AND `hash_filename`!=''";
-            $result = $xoopsDB->queryF($sql);
+            $sql         = "SELECT count(*) FROM `$table` WHERE `col_name`='news_pic' AND `hash_filename`!=''";
+            $result      = $xoopsDB->queryF($sql);
             list($count) = $xoopsDB->fetchRow($result);
             if ($count > 0) {
                 $sql = "update `$table` set hash_filename='' where `col_name`='news_pic'";
@@ -192,7 +192,7 @@ class Update
     public static function chk_tad_news_tags()
     {
         global $xoopsDB;
-        $table = $xoopsDB->prefix('tad_news_tags');
+        $table          = $xoopsDB->prefix('tad_news_tags');
         $tad_news_table = $xoopsDB->prefix('tad_news');
 
         // chk15: Create table
@@ -207,24 +207,24 @@ class Update
             $xoopsDB->queryF($sql);
 
             // Migrate data
-            $sql = "SELECT DISTINCT prefix_tag FROM `$tad_news_table` WHERE `prefix_tag`!=''";
+            $sql    = "SELECT DISTINCT prefix_tag FROM `$tad_news_table` WHERE `prefix_tag`!=''";
             $result = $xoopsDB->query($sql);
             while (list($prefix_tag) = $xoopsDB->fetchRow($result)) {
                 $arr = [];
                 if (\preg_match("/color[\s]*=[\s]*'([#a-zA-Z0-9]+)'[\s]*>\[(.*)\]/", $prefix_tag, $arr)) {
                     $color = $arr[1];
-                    $tag = $arr[2];
-                    $sql = "insert into `$table` (`tag` , `color` , `enable`) values('{$tag}' , '{$color}' , '1')";
+                    $tag   = $arr[2];
+                    $sql   = "insert into `$table` (`tag` , `color` , `enable`) values('{$tag}' , '{$color}' , '1')";
                     $xoopsDB->queryF($sql);
                     $tag_sn = $xoopsDB->getInsertId();
-                    $sql = "update `$tad_news_table` set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
+                    $sql    = "update `$tad_news_table` set `prefix_tag`='$tag_sn' where `prefix_tag`='{$prefix_tag}'";
                     $xoopsDB->queryF($sql);
                 }
             }
         }
 
         // chk19: font_color
-        $sql = "SHOW FULL COLUMNS FROM `$table`";
+        $sql    = "SHOW FULL COLUMNS FROM `$table`";
         $result = $xoopsDB->queryF($sql);
         $fields = [];
         while ($row = $xoopsDB->fetchArray($result)) {
@@ -260,7 +260,7 @@ class Update
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;";
             $xoopsDB->queryF($sql);
         } else {
-            $sql = "SHOW FULL COLUMNS FROM `$table`";
+            $sql    = "SHOW FULL COLUMNS FROM `$table`";
             $result = $xoopsDB->queryF($sql);
             $fields = [];
             while ($row = $xoopsDB->fetchArray($result)) {
@@ -299,9 +299,9 @@ class Update
             $xoopsDB->queryF($sql);
         } else {
             // chk_uid
-            $sql = "SHOW FIELDS FROM `$table` WHERE `Field`='uid'";
+            $sql    = "SHOW FIELDS FROM `$table` WHERE `Field`='uid'";
             $result = $xoopsDB->queryF($sql);
-            $row = $xoopsDB->fetchArray($result);
+            $row    = $xoopsDB->fetchArray($result);
             if ($row && strpos($row['Type'], 'smallint') !== false) {
                 $sql = "ALTER TABLE `$table` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
                 $xoopsDB->queryF($sql);
@@ -335,9 +335,9 @@ class Update
             $xoopsDB->queryF($sql);
         } else {
             // chk_uid
-            $sql = "SHOW FIELDS FROM `$table` WHERE `Field`='uid'";
+            $sql    = "SHOW FIELDS FROM `$table` WHERE `Field`='uid'";
             $result = $xoopsDB->queryF($sql);
-            $row = $xoopsDB->fetchArray($result);
+            $row    = $xoopsDB->fetchArray($result);
             if ($row && strpos($row['Type'], 'smallint') !== false) {
                 $sql = "ALTER TABLE `$table` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
                 $xoopsDB->queryF($sql);
@@ -345,8 +345,8 @@ class Update
         }
 
         // chk17: tad_news_paper (np_title)
-        $table = $xoopsDB->prefix('tad_news_paper');
-        $sql = "SHOW FIELDS FROM `$table` WHERE `Field`='np_title'";
+        $table  = $xoopsDB->prefix('tad_news_paper');
+        $sql    = "SHOW FIELDS FROM `$table` WHERE `Field`='np_title'";
         $result = $xoopsDB->queryF($sql);
         if ($xoopsDB->getRowsNum($result) == 0) {
             $sql = "ALTER TABLE `$table` ADD `np_title` VARCHAR(255)  NOT NULL DEFAULT ''";
@@ -373,12 +373,12 @@ class Update
         $tpl_file_arr = [];
         $tpl_desc_arr = [];
         foreach ($modversion['blocks'] as $i => $block) {
-            $show_func = $block['show_func'];
+            $show_func                = $block['show_func'];
             $tpl_file_arr[$show_func] = $block['template'];
             $tpl_desc_arr[$show_func] = $block['description'];
         }
 
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
+        $sql    = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE `dirname` = 'tadnews' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             if (isset($tpl_file_arr[$show_func]) && $template != $tpl_file_arr[$show_func]) {
@@ -399,15 +399,15 @@ class Update
     {
         global $xoopsDB;
         $indexes = [
-            'ncsn' => 'ncsn',
-            'start_day' => 'start_day',
-            'end_day' => 'end_day',
+            'ncsn'                       => 'ncsn',
+            'start_day'                  => 'start_day',
+            'end_day'                    => 'end_day',
             'always_top_always_top_date' => ['always_top', 'always_top_date'],
-            'enable' => 'enable'
+            'enable'                     => 'enable',
         ];
 
-        $sql = "SHOW KEYS FROM `$table`";
-        $result = $xoopsDB->queryF($sql);
+        $sql           = "SHOW KEYS FROM `$table`";
+        $result        = $xoopsDB->queryF($sql);
         $existing_keys = [];
         while ($row = $xoopsDB->fetchArray($result)) {
             $existing_keys[$row['Key_name']] = true;
@@ -437,7 +437,7 @@ class Update
             WHERE TABLE_SCHEMA = DATABASE()
             AND TABLE_NAME = '{$table}'
             AND COLUMN_NAME = 'col_name'";
-        $result = $xoopsDB->queryF($sql);
+        $result       = $xoopsDB->queryF($sql);
         list($length) = $xoopsDB->fetchRow($result);
 
         if ($length > 100) {
@@ -449,7 +449,7 @@ class Update
         }
 
         // Check index
-        $sql = "SHOW INDEX FROM `{$table}` WHERE Key_name = 'col_name_col_sn'";
+        $sql    = "SHOW INDEX FROM `{$table}` WHERE Key_name = 'col_name_col_sn'";
         $result = $xoopsDB->queryF($sql);
         if ($xoopsDB->getRowsNum($result) == 0) {
             $sql = "ALTER TABLE `{$table}`

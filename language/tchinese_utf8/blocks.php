@@ -133,3 +133,9 @@ define('_MB_TADNEWS_COVERED_OPT6', '橫列模式的圖片寬度（BootStrap 的�
 define('_MB_TADNEWS_COVERED_OPT7', '橫列模式的圖片高度（用CSS設定）');
 
 define('_MB_TADNEWS_SHOW_AUTHOR', '使否顯示發布者');
+define('_MB_TADNEWS_MARQUEE_CSS_EXAMPLE', "width: 100%; /* 跑馬燈寬度 */<br>
+height:4rem; /* 跑馬燈高度 */<br>
+line-height:1.8; /* 跑馬燈行高 */<br>
+border:1px solid #cfcfcf; /* 跑馬燈邊框 */<br>
+background-color:#FCFCFC; /* 跑馬燈底色 */<br>
+box-shadow: 0px 1px 2px 1px #cfcfcf inset; /* 跑馬燈陰影 */");

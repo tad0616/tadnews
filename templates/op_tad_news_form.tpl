@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        <{if $cate.not_news=='1'}>
+        <{if $cate.not_news|default:''=='1'}>
             $("#add_page").show();
             $("#add_news").hide();
             $("#show_input_form").hide();
@@ -146,7 +146,7 @@
             <{/if}>
             <div class="col-md-10">
                 <{$smarty.const._TAD_EDIT}>
-                <{if $cate.not_news=='1'}>
+                <{if $cate.not_news|default:''=='1'}>
                     <{$smarty.const._MD_TADNEWS_KIND_PAGE}>
                 <{else}>
                     <{$smarty.const._MD_TADNEWS_KIND_NEWS}>
@@ -164,9 +164,9 @@
             </label>
             <div class="col-md-4">
                 <select name="kind" id="kind" class="form-control form-select">
-                    <option value="news"<{if $ncsn and $cate.not_news!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
+                    <option value="news"<{if $ncsn and $cate.not_news|default:''!='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_NEWS}></option>
                     <{if $page_cate_select || $creat_cate_tool}>
-                        <option value="page"<{if $ncsn and  $cate.not_news=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
+                        <option value="page"<{if $ncsn and  $cate.not_news|default:''=='1'}> selected<{/if}>><{$smarty.const._MD_TADNEWS_KIND_PAGE}></option>
                     <{/if}>
                 </select>
             </div>
@@ -195,13 +195,13 @@
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
                     <div class="col-md-3" id="new_folder_col" style="display: none;">
-                        <input type='text' name='new_cate' id='new_cate_input' class='form-control' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool|default:false}>
                     <div class="col-md-3">
-                        <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{/if}>
@@ -229,13 +229,13 @@
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
                     <div class="col-md-3" id="new_page_folder_col" style="display: none;">
-                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool|default:false}>
                     <div class="col-md-3" id="new_page_folder_col">
-                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' placeholder='<{$creat_new_cate|default:''}>'>
+                        <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{/if}>
@@ -279,7 +279,7 @@
                 <div class="alert alert-warning">
                     <div class="form-group row mb-3">
                         <div class="col-md-12">
-                        <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1}>">
+                        <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1|default:''}>">
                         </div>
                     </div>
                     <div class="form-group row mb-3">
@@ -376,7 +376,7 @@
         </div>
     </div>
 
-    <{if !$nsn or ($nsn and $cate.not_news=='1')}>
+    <{if !$nsn or ($nsn and $cate.not_news|default:''=='1')}>
     <div id="page_setup_form" style="margin-top:20px;display: none;">
         <div class="form-group row mb-3">
             <div class="col-md-2">
@@ -396,7 +396,7 @@
             <input type="hidden" name="uid" value="<{$uid|default:''}>">
             <input type="hidden" name="op" value="<{$op|default:''}>">
 
-            <{if $cate.not_news!='1'}>
+            <{if $cate.not_news|default:''!='1'}>
                 <button class="btn btn-success" type="button" id="show_input_form"><{$smarty.const._MD_TADNEWS_ADV_SETUP}></button>
             <{else}>
                 <input type="hidden" name="page_mode" id="page_mode" value="not_news">

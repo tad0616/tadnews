@@ -3,6 +3,15 @@ use Xmf\Request;
 use XoopsModules\Tadnews\TadNewsRest;
 
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+if (!class_exists('XoopsModules\Tadnews\TadNewsRest')) {
+    require __DIR__ . '/preloads/autoloader.php';
+}
+
+//回傳純 JSON：關掉 XOOPS 除錯模式的 logger，否則 HTML 會黏在 JSON 後面
+if (isset($GLOBALS['xoopsLogger'])) {
+    $GLOBALS['xoopsLogger']->activated        = false;
+    $GLOBALS['xoopsLogger']->renderingEnabled = false;
+}
 
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');

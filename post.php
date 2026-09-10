@@ -11,8 +11,8 @@ if (empty($xoopsUser)) {
 }
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$nsn = Request::getInt('nsn');
+$op   = Request::getString('op');
+$nsn  = Request::getInt('nsn');
 $ncsn = Request::getInt('ncsn');
 $sort = Request::getInt('sort');
 
@@ -29,6 +29,7 @@ switch ($op) {
 
     //更新資料
     case 'update_tad_news':
+        Utility::xoops_security_check('', '', 'index.php');
         $Tadnews->update_tad_news($nsn);
         break;
 
@@ -39,12 +40,17 @@ switch ($op) {
 
     //刪除頁籤
     case 'del_page_tab':
+        Utility::xoops_security_check();
+        //確認是本人或管理員，否則帶任意 nsn 就能刪掉別人文章的頁籤
+        $Tadnews->get_tad_news($nsn, true);
         $Tadnews->del_page_tab($nsn, $sort);
         header("location:post.php?op=tad_news_form&nsn=$nsn");
         exit;
 
     //刪除封面圖
     case 'delete_cover':
+        //同上，delete_cover() 本身被 delete_tad_news() 內部呼叫，故檢查放在入口
+        $Tadnews->get_tad_news($nsn, true);
         $Tadnews->delete_cover($nsn);
         header("location:post.php?op=tad_news_form&nsn=$nsn");
         exit;

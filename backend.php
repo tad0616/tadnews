@@ -6,7 +6,7 @@ echo mk_rss();
 
 function mk_rss()
 {
-    global $xoopsDB, $xoopsConfig;
+    global $xoopsConfig;
     xoops_load('XoopsLocal');
 
     $Tadnews = new Tadnews();

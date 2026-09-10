@@ -1,14 +1,6 @@
 <div class="container-fluid">
 
     <{if $op=="creat_newspaper" or $op=="modify"}>
-        <script type="text/javascript">
-            //bkLib.onDomLoaded(function() { nicEditors.allTextAreas()});
-            bkLib.onDomLoaded(function() {
-                new nicEditor({fullPanel : true}).panelInstance('head');
-                new nicEditor({fullPanel : true}).panelInstance('foot');
-            });
-        </script>
-
         <h1 class="my"><{$smarty.const._MA_TADNEWS_NP_STEP1}></h1>
 
         <form action="newspaper.php" method="post" id="myForm" role="form">
@@ -26,13 +18,13 @@
 
             <div class="form-group row mb-3">
                 <label for="head"><{$smarty.const._MA_TADNEWS_NP_CONTENT_HEAD}></label>
-                <textarea name="head" id="head" class="form-control"><{$head|default:''}></textarea>
+                <{$head_editor|default:''}>
                 <div class="alert alert-default"><{$smarty.const._MA_TADNEWS_NP_CONTENT_HEAD_DESC}></div>
             </div>
 
             <div class="form-group row mb-3">
                 <label for="foot"><{$smarty.const._MA_TADNEWS_NP_CONTENT_FOOT}></label>
-                <textarea name="foot" id="foot"  class="form-control"><{$foot|default:''}></textarea>
+                <{$foot_editor|default:''}>
                 <div class="alert alert-default"><{$smarty.const._MA_TADNEWS_NP_CONTENT_FOOT_DESC}></div>
             </div>
 

@@ -147,3 +147,5 @@ define('_MD_TADNEWS_CONTENT_AT_TABS', '設定各個頁籤內容');
 define('_MD_TADNEWS_SAME_UID', '維持原發布者，不將發布者改為目前編輯者');
 define('_SEPARTE', '<div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>');
 define('_SEPARTE2', '--summary--');
+define('_MD_TADNEWS_CANT_MOVE_TO_SELF', '不可移至自己的子目錄下');
+define('_MD_TADNEWS_NO_DATA', '無資料');

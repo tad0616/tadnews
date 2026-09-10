@@ -112,18 +112,16 @@ if (empty($all_news['page'])) {
     foreach ($all_news['page'] as $news) {
         $need_sign = (!empty($news['need_sign'])) ? "<img src='{$news['need_sign']}' align='absmiddle' hspace='3' alt='{$news['news_title']}'>" : '';
 
-        $start_day = "<td nowrap>{$news['post_date']}</td>";
-        $news_title = "<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>";
-
-        $uid = "<td nowrap class='c'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>";
-        $ncsn = "<td nowrap class='c'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>";
-        $counter = "<td nowrap>{$news['counter']}</td>";
-        $news_title = Utility::to_utf8($news_title);
-        $uid = Utility::to_utf8($uid);
-        $ncsn = Utility::to_utf8($ncsn);
+        $cell = [
+            'start_day'  => "<td nowrap>{$news['post_date']}</td>",
+            'news_title' => Utility::to_utf8("<td>{$news['prefix_tag']}{$need_sign}{$news['today_pic']} <a href='" . XOOPS_URL . "/modules/tadnews/index.php?nsn={$news['nsn']}'>{$news['news_title']}</a>{$news['files']}</td>"),
+            'uid'        => Utility::to_utf8("<td nowrap class='c'><a href='" . XOOPS_URL . "/userinfo.php?uid={$news['uid']}'>{$news['uid_name']}</a></td>"),
+            'ncsn'       => Utility::to_utf8("<td nowrap class='c'><a href='" . XOOPS_URL . "/modules/tadnews/index.php?ncsn={$news['ncsn']}'>{$news['cate_name']}</a></td>"),
+            'counter'    => "<td nowrap>{$news['counter']}</td>",
+        ];
         $block .= '<tr>';
         foreach ($show_col as $colname) {
-            $block .= $$colname;
+            $block .= $cell[$colname] ?? '';
         }
 
         $block .= '</tr>';

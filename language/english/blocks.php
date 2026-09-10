@@ -124,3 +124,9 @@ define('_MB_TADNEWS_COVERED_OPT6', 'Width of the picture in Horizontal column mo
 define('_MB_TADNEWS_COVERED_OPT7', 'Height of the picture in Horizontal column mode (set with CSS)');
 
 define('_MB_TADNEWS_SHOW_AUTHOR', 'Displays publishers');
+define('_MB_TADNEWS_MARQUEE_CSS_EXAMPLE', "width: 100%; /* width */<br>
+height:4rem; /* height */<br>
+line-height:1.8; /* line height */<br>
+border:1px solid #cfcfcf; /* border */<br>
+background-color:#FCFCFC; /* background */<br>
+box-shadow: 0px 1px 2px 1px #cfcfcf inset; /* shadow */");

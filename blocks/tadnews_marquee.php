@@ -88,14 +88,7 @@ function tadnews_marquee_edit($options)
             <lable class='my-label'>" . _MB_TADNEWS_MARQUEE_CSS . "</lable>
             <div class='my-content'>
             <textarea name='options[4]' class='my-input'>{$options[4]}</textarea>
-                <span class='my-example'><br>
-                width: 100%; /* 跑馬燈寬度 */<br>
-                height:4rem; /* 跑馬燈高度 */<br>
-                line-height:1.8; /* 跑馬燈行高 */<br>
-                border:1px solid #cfcfcf; /* 跑馬燈邊框 */<br>
-                background-color:#FCFCFC; /* 跑馬燈底色 */<br>
-                box-shadow: 0px 1px 2px 1px #cfcfcf inset; /* 跑馬燈陰影 */
-                </span>
+                <span class='my-example'><br>" . _MB_TADNEWS_MARQUEE_CSS_EXAMPLE . "</span>
             </div>
         </li>
         <li class='my-row'>

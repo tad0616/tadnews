@@ -52,13 +52,13 @@
             <div class="col-md-4">
                 <div class="form-check-inline radio-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="setup[only_title]" value="1" <{if $only_title!='0'}>checked<{/if}>>
+                        <input class="form-check-input" type="radio" name="setup[only_title]" value="1" <{if $only_title}>checked<{/if}>>
                         <{$smarty.const._MA_TADNEWS_DISPLAY_TITLE}>
                     </label>
                 </div>
                 <div class="form-check-inline radio-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="setup[only_title]" value="0" <{if $only_title=='1'}>checked<{/if}>>
+                        <input class="form-check-input" type="radio" name="setup[only_title]" value="0" <{if !$only_title}>checked<{/if}>>
                         <{$smarty.const._MA_TADNEWS_HIDE_ARTICLE}>
                     </label>
                 </div>
@@ -71,7 +71,7 @@
         <input type="hidden" name="ncsn" value="<{$ncsn|default:''}>">
         <input type="hidden" name="op" value="<{$cate_op|default:''}>">
         <{$XOOPS_TOKEN|default:''}>
-        <button type="submit" class="btn btn-info">
+        <button type="submit" class="btn btn-primary">
         <{if $ncsn==""}>
             <{$smarty.const._MA_TADNEWS_ADD_CATE}>
         <{else}>
