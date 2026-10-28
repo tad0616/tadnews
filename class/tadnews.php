@@ -700,25 +700,30 @@ class Tadnews
             $and_keyword = '';
         }
 
+        // 不需要顯示內文時（僅標題），不撈 news_content
+        $news_cols = empty($this->summary_num) ? '`nsn`, `ncsn`, `news_title`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`' : '*';
+
         // 初始化分頁條與總筆數
         $bar   = '';
         $total = 0;
         if (!empty($this->skip_news)) {
-            $sql    = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk $desc";
+            // 計算總數時只需要 nsn，避免把所有文章內容載入記憶體
+            $sql    = 'select `nsn` from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk $desc";
             $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
             $total  = $xoopsDB->getRowsNum($result);
 
             $limit = (empty($this->show_num) or 'none' === $this->show_num) ? '' : "limit {$this->skip_news} , {$this->show_num}";
-            $sql   = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc $limit";
+            $sql   = "select {$news_cols} from " . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc $limit";
         } else {
             $limit = empty($this->show_num) ? '10' : $this->show_num;
-            $sql   = 'select * from ' . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc";
+            $sql   = "select {$news_cols} from " . $xoopsDB->prefix('tad_news') . " where 1 $where_news $and_enable $where_uid $where_tag $where_cate $and_keyword $date_chk  $desc";
             if (empty($this->view_month) and 'none' !== $this->show_num) {
-                //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-                $PageBar = Utility::getPageBar($sql, $limit);
-                $bar     = $PageBar['bar'];
-                $sql     = $PageBar['sql'];
-                $total   = $PageBar['total'];
+                //getPageBar 會執行完整查詢來計算總數，故先以只取 nsn 的語法計算，再換回完整欄位
+                $count_sql = preg_replace('/^select .*? from /', 'select `nsn` from ', $sql, 1);
+                $PageBar   = Utility::getPageBar($count_sql, $limit);
+                $bar       = $PageBar['bar'];
+                $sql       = preg_replace('/^select `nsn` from /', "select {$news_cols} from ", $PageBar['sql'], 1);
+                $total     = $PageBar['total'];
             }
         }
 
@@ -750,7 +755,7 @@ class Tadnews
             $nsn             = $news['nsn'];
             $ncsn            = $news['ncsn'];
             $news_title      = $news['news_title'];
-            $news_content    = $news['news_content'];
+            $news_content    = $news['news_content'] ?? '';
             $start_day       = $news['start_day'];
             $end_day         = $news['end_day'];
             $enable          = $news['enable'];
@@ -1112,7 +1117,8 @@ class Tadnews
 
             $and_enable = (1 == $this->show_enable) ? "and enable='1'" : '';
 
-            $sql2    = ('page' === $this->kind) ? 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable order by page_sort" : 'select * from ' . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') order by always_top desc , start_day desc limit 0," . $this->show_num;
+            $cols2   = (is_numeric($this->summary_num) and !empty($this->summary_num)) ? '*' : '`nsn`, `ncsn`, `news_title`, `start_day`, `end_day`, `enable`, `uid`, `passwd`, `enable_group`, `counter`, `prefix_tag`, `always_top`, `always_top_date`, `have_read_group`, `page_sort`';
+            $sql2    = ('page' === $this->kind) ? "select {$cols2} from " . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable order by page_sort" : "select {$cols2} from " . $xoopsDB->prefix('tad_news') . " where ncsn='{$ncsn}' $and_enable and start_day < '" . $this->today . "' and (end_day > '" . $this->today . "' or end_day='0000-00-00 00:00:00') order by always_top desc , start_day desc limit 0," . $this->show_num;
             $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
 
             $j               = 0;
@@ -1124,7 +1130,7 @@ class Tadnews
                 $nsn             = $news['nsn'];
                 $ncsn            = $news['ncsn'];
                 $news_title      = $news['news_title'];
-                $news_content    = $news['news_content'];
+                $news_content    = $news['news_content'] ?? '';
                 $start_day       = $news['start_day'];
                 $end_day         = $news['end_day'];
                 $enable          = $news['enable'];

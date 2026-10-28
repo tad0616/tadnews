@@ -32,6 +32,7 @@
             <{$data.pic}>
             <{$data.content}>
         </div>
+        <{$data.files}>
         <div style="clear:both;"></div>
     </div>
 </div>
