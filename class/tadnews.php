@@ -2192,11 +2192,15 @@ class Tadnews
         $new_page_cate = (string) $_POST['new_page_cate'];
         $news_title    = (string) $_POST['news_title'];
 
+        $this->check_post_category_permission($ncsn);
+
         //新分類
         if (!empty($new_cate)) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_cate);
+            $this->check_post_category_permission($ncsn);
         } elseif (!empty($new_page_cate)) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_page_cate, 1);
+            $this->check_post_category_permission($ncsn);
         } else {
             $ncsn = (int) $ncsn;
         }
@@ -2217,7 +2221,7 @@ class Tadnews
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
 
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
-                $tab_title_div .= "<li>$tab_val</li>";
+                $tab_title_div .= '<li>' . htmlspecialchars((string) $tab_val, ENT_QUOTES, _CHARSET) . '</li>';
 
                 $tab_content_key                       = Wcag::amend($_POST['tab_content'][$tab_key]);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;
@@ -2340,6 +2344,14 @@ class Tadnews
         return $ncsn;
     }
 
+    private function check_post_category_permission($ncsn)
+    {
+        if (!in_array((int) $ncsn, Tools::chk_user_cate_power('post'), true)) {
+            redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+            exit;
+        }
+    }
+
     //自動取得新排序
     public function get_max_sort($of_ncsn = '', $not_news = 0)
     {
@@ -2408,6 +2420,14 @@ class Tadnews
         //確認有管理員或本人才能管理
         $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
 
+        $ncsn          = (int) $_POST['ncsn'];
+        $new_cate      = (string) $_POST['new_cate'];
+        $new_page_cate = (string) $_POST['new_page_cate'];
+        $category_changed = $ncsn !== (int) $news['ncsn'] || !empty($new_cate) || !empty($new_page_cate);
+        if ($category_changed) {
+            $this->check_post_category_permission($ncsn);
+        }
+
         //可讀群組
         if (empty($_POST['enable_group']) or in_array('', $_POST['enable_group'])) {
             $enable_group = '';
@@ -2422,13 +2442,12 @@ class Tadnews
             $have_read_group = implode(',', (Array) $_POST['have_read_group']);
         }
 
-        $ncsn          = (int) $_POST['ncsn'];
-        $new_cate      = (string) $_POST['new_cate'];
-        $new_page_cate = (string) $_POST['new_page_cate'];
         if (!empty($_POST['new_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_cate);
+            $this->check_post_category_permission($ncsn);
         } elseif (!empty($_POST['new_page_cate'])) {
             $ncsn = $this->creat_tad_news_cate($ncsn, $new_page_cate, 1);
+            $this->check_post_category_permission($ncsn);
         }
 
         $news_title = (string) $_POST['news_title'];
@@ -2448,7 +2467,7 @@ class Tadnews
             foreach ($_POST['tab_title'] as $tab_key => $tab_val) {
 
                 $tab_data_arr['tab_title'][$tab_key] = $tab_val;
-                $tab_title_div .= "<li>$tab_val</li>";
+                $tab_title_div .= '<li>' . htmlspecialchars((string) $tab_val, ENT_QUOTES, _CHARSET) . '</li>';
 
                 $tab_content_key                       = Wcag::amend($_POST['tab_content'][$tab_key]);
                 $tab_data_arr['tab_content'][$tab_key] = $tab_content_key;

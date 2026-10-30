@@ -25,6 +25,10 @@ class Sign
     public static function list_sign($nsn = '')
     {
         global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
+        if (empty(self::get_visible_news([(int) $nsn]))) {
+            redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+            exit;
+        }
         $news = $Tadnews->get_tad_news($nsn);
 
         $sign   = [];
@@ -49,28 +53,70 @@ class Sign
     //列出某人狀況
     public static function list_user_sign($uid = '')
     {
-        global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews;
-        $news = $Tadnews->get_tad_news($nsn);
+        global $xoopsDB, $xoopsUser, $xoopsOption, $xoopsTpl, $Tadnews, $tadnews_adm;
+        if (empty($xoopsUser)) {
+            redirect_header('index.php', 3, _MD_TADNEWS_NO_POST_POWER);
+            exit;
+        }
+        $isAdmin = !empty($tadnews_adm) || $xoopsUser->isAdmin();
+        if (!$isAdmin && (int) $uid !== (int) $xoopsUser->uid()) {
+            redirect_header('index.php', 3, _TADNEWS_NO_ADMIN_POWER);
+            exit;
+        }
 
         $uid_name = \XoopsUser::getUnameFromId($uid, 1);
         $uid_name = (empty($uid_name)) ? \XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
-        $sign   = [];
-        $i      = 0;
+        $records = [];
         $sql    = 'SELECT a.nsn, a.sign_time, b.news_title FROM `' . $xoopsDB->prefix('tad_news_sign') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('tad_news') . '` AS b ON a.nsn = b.nsn WHERE a.uid =? ORDER BY a.sign_time DESC';
         $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-        $myts = \MyTextSanitizer::getInstance();
         while (list($nsn, $sign_time, $news_title) = $xoopsDB->fetchRow($result)) {
-            $news_title             = $myts->htmlSpecialChars($news_title);
-            $sign[$i]['nsn']        = $nsn;
-            $sign[$i]['news_title'] = $news_title;
-            $sign[$i]['sign_time']  = $sign_time;
-            $i++;
+            $records[] = [
+                'nsn' => (int) $nsn,
+                'sign_time' => $sign_time,
+                'news_title' => $news_title,
+            ];
+        }
+
+        $news_ids = array_values(array_unique(array_column($records, 'nsn')));
+        $visible_news = self::get_visible_news($news_ids);
+        $visible_nsn = [];
+        foreach ($visible_news as $visible_news_item) {
+            if (isset($visible_news_item['nsn'])) {
+                $visible_nsn[(int) $visible_news_item['nsn']] = true;
+            }
+        }
+
+        $sign = [];
+        $myts = \MyTextSanitizer::getInstance();
+        foreach ($records as $record) {
+            if (!isset($visible_nsn[$record['nsn']])) {
+                continue;
+            }
+
+            $sign[] = [
+                'nsn' => $record['nsn'],
+                'news_title' => $myts->htmlSpecialChars($record['news_title']),
+                'sign_time' => $record['sign_time'],
+            ];
         }
 
         $xoopsTpl->assign('uid', $uid);
         $xoopsTpl->assign('sign', $sign);
         $xoopsTpl->assign('uid_name', sprintf(_MD_TADNEWS_SIGN_LOG, $uid_name));
+    }
+
+    private static function get_visible_news($nsn_list)
+    {
+        global $Tadnews;
+        if (empty($nsn_list)) {
+            return [];
+        }
+
+        $Tadnews->set_view_nsn(array_map('intval', $nsn_list));
+        $news = $Tadnews->get_news('return', false, false);
+
+        return $news['page'];
     }
 }
