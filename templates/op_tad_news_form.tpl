@@ -134,7 +134,7 @@
 
 </script>
 
-<h1>
+<h1 class="tadnews-editor-heading">
     <{if !$nsn}>
         <{$smarty.const._MD_TADNEWS_ADD_NEWS}>
     <{else}>
@@ -156,9 +156,9 @@
     <{/if}>
 </h1>
 
-<form action="<{$action|default:''}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+<form action="<{$action|default:''}>" method="post" id="myForm" name="myForm" enctype="multipart/form-data" class="form-horizontal tadnews-editor-form" role="form">
     <{if !$nsn}>
-        <div class="form-group row mb-3">
+        <div class="form-group row mb-3 tadnews-editor-kind">
             <label class="col-md-3 control-label col-form-label text-md-right text-md-end">
                 <{$smarty.const._MD_TADNEWS_KIND}>
             </label>
@@ -182,7 +182,7 @@
         <{/if}>
     <{/if}>
 
-    <div id="add_news">
+    <div id="add_news" class="tadnews-editor-fields">
         <div class="form-group row mb-3">
             <{if $news_cate_select|default:false}>
                 <div class="col-md-2">
@@ -211,12 +211,12 @@
             </div>
 
             <div class="col-md-<{if $creat_cate_tool|default:false}>7<{else}>8<{/if}>" id="news_title_input_col">
-                <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control" value="<{$news_title|default:''}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
+                <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control tadnews-editor-title" value="<{$news_title|default:''}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
             </div>
         </div>
     </div>
 
-    <div id="add_page">
+    <div id="add_page" class="tadnews-editor-fields">
         <div class="form-group row mb-3">
             <{if $page_cate_select|default:false}>
                 <div class="col-md-2">
@@ -240,16 +240,16 @@
                 <{/if}>
             <{/if}>
             <div class="col-md-<{if $creat_cate_tool|default:false}>9<{else}>10<{/if}>" id="page_title_input_col">
-                <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control" value="<{$news_title|default:''}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
+                <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control tadnews-editor-title" value="<{$news_title|default:''}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
             </div>
         </div>
     </div>
 
-    <div id="editor" <{if $tab_arr|default:false}>style="display: none;"<{/if}>>
+    <div id="editor" class="tadnews-editor-content" <{if $tab_arr|default:false}>style="display: none;"<{/if}>>
         <{$editor|default:''}>
     </div>
 
-    <div id="tab_editor" <{if !$tab_arr}>style="display: none;"<{/if}>>
+    <div id="tab_editor" class="tadnews-editor-content" <{if !$tab_arr}>style="display: none;"<{/if}>>
         <div class="input_fields_wrap">
             <h3><{$smarty.const._MD_TADNEWS_CONTENT_AT_TABS_TOP}></h3>
             <{$tab_editor0|default:''}>
@@ -348,7 +348,7 @@
 
 
 
-    <div id="setup_form" style="display: none;">
+    <div id="setup_form" class="tadnews-advanced-settings" style="display: none;">
         <div id="<{$jquery_tabs_id|default:''}>">
             <ul>
                 <li><a href="#fragment-1"><span><{$smarty.const._MD_TADNEWS_TIME_TAB}></span></a></li>
@@ -390,7 +390,7 @@
     <{/if}>
 
 
-    <div class="row" style="margin: 30px 0px;">
+    <div class="row tadnews-form-actions">
         <div class="col-md-12 text-center">
             <input type="hidden" name="nsn" value="<{$nsn|default:''}>">
             <input type="hidden" name="uid" value="<{$uid|default:''}>">
