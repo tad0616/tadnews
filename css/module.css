@@ -312,6 +312,22 @@ table.table-shadow tr.my th a {
   background: #f7f9fc;
 }
 
+#myForm.tadnews-editor-form .tadnews-editor-meta {
+  row-gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+#myForm.tadnews-editor-form .tadnews-editor-meta #new_folder_icon,
+#myForm.tadnews-editor-form .tadnews-editor-meta #new_page_folder_icon {
+  display: flex;
+  align-items: center;
+}
+
+#myForm.tadnews-editor-form .tadnews-editor-meta img {
+  max-width: 100%;
+  height: auto;
+}
+
 #myForm.tadnews-editor-form .tadnews-editor-fields {
   margin-bottom: 1rem;
   padding: 1rem;

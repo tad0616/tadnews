@@ -1855,9 +1855,12 @@ class Tadnews
         //取得分類數
         $cate_num = $this->get_cate_num();
 
-        $CkEditor = new CkEditor('tadnews', 'news_content', $news_content);
-        $CkEditor->setHeight(350);
-        $editor = $CkEditor->render();
+        $editor = '';
+        if (empty($tab_arr)) {
+            $CkEditor = new CkEditor('tadnews', 'news_content', $news_content);
+            $CkEditor->setHeight(350);
+            $editor = $CkEditor->render();
+        }
 
         // 頁籤頂部內容編輯器
         $tab_content0 = $tab_arr['tab_content'][0] ?? '';

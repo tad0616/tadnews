@@ -1,4 +1,32 @@
 <script type="text/javascript">
+    <{assign var="bootstrap" value=$smarty.session.bootstrap|default:$session.bootstrap}>
+    function initTadnewsTabEditor(editorId, editorHeight) {
+        if (CKEDITOR.instances[editorId]) {
+            return;
+        }
+
+        CKEDITOR.replace(editorId, {
+            height: editorHeight,
+            toolbar: 'my',
+            contentsCss: ['<{$xoops_url}>/modules/tadtools/bootstrap<{$bootstrap|default:''}>/css/bootstrap.css', '<{$xoops_url}>/media/font-awesome/css/font-awesome.min.css'],
+            extraPlugins: 'editorplaceholder,pasteUploadImage,sourcearea,font,syntaxhighlight,dialog,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet,undo,autoembed,autolink,clipboard,toolbar,button,dialogui,notification,textmatch,embed,embedbase,widgetselection,notificationaggregator,embedsemantic,panel,floatpanel,menu',
+            filebrowserBrowseUrl: '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=file&mod_dir=tadnews',
+            filebrowserImageBrowseUrl: '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=image&mod_dir=tadnews',
+            filebrowserFlashBrowseUrl: '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=flash&mod_dir=tadnews',
+            qtRows: 10,
+            qtColumns: 10,
+            qtBorder: '1',
+            qtWidth: '100%',
+            qtStyle: { 'border-collapse': 'collapse' },
+            qtClass: 'table table-bordered table-hover table-sm table-condensed',
+            qtCellPadding: '0',
+            qtCellSpacing: '0',
+            qtPreviewBorder: '1px double black',
+            qtPreviewSize: '15px',
+            qtPreviewBackground: '#c8def4'
+        });
+    }
+
     $(document).ready(function() {
         <{if $cate.not_news|default:''=='1'}>
             $("#add_page").show();
@@ -82,17 +110,20 @@
             $("#new_folder_icon").hide();
             $("#new_folder_col").show();
             $("<option value='0'>/</option>").prependTo("#news_ncsn");
-            $("#news_title_input_col").removeClass("col-md-7").addClass("col-md-5");
         });
 
         $("#new_page_folder_icon").click(function() {
             $("#new_page_folder_icon").hide();
             $("#new_page_folder_col").show();
             $("<option value='0'>/</option>").prependTo("#page_ncsn");
-            $("#page_title_input_col").removeClass("col-md-9").addClass("col-md-7");
         });
 
-        var $tabs = $("#<{$jquery_tabs_id|default:''}>").tabs({ cookie: { expires: 30 } });
+        var $advancedTabs;
+        function initAdvancedTabs() {
+            if (!$advancedTabs) {
+                $advancedTabs = $("#<{$jquery_tabs_id|default:''}>").tabs({ cookie: { expires: 30 } });
+            }
+        }
 
         <{if $use_pic_css==""}>
             $("#pic_css_set").hide();
@@ -118,7 +149,9 @@
             if ($("#setup_form").is(":visible")) {
                 $("#setup_form").slideUp();
             } else{
-                $("#setup_form").slideDown();
+                $("#setup_form").slideDown(function() {
+                    initAdvancedTabs();
+                });
             }
         });
 
@@ -183,9 +216,9 @@
     <{/if}>
 
     <div id="add_news" class="tadnews-editor-fields">
-        <div class="form-group row mb-3">
+        <div class="form-group row mb-3 tadnews-editor-meta">
             <{if $news_cate_select|default:false}>
-                <div class="col-md-2">
+                <div class="col-md-<{if $creat_cate_tool|default:false}>3<{else}>4<{/if}>">
                     <select name="ncsn" id="news_ncsn" class="form-control form-select">
                         <{$news_cate_select|default:''}>
                     </select>
@@ -194,32 +227,33 @@
                     <div class="col-md-1" id="new_folder_icon">
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
-                    <div class="col-md-3" id="new_folder_col" style="display: none;">
+                    <div class="col-md-4" id="new_folder_col" style="display: none;">
                         <input type='text' name='new_cate' id='new_cate_input' class='form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool|default:false}>
-                    <div class="col-md-3">
+                    <div class="col-md-8">
                         <input type='text' name='new_cate' id='new_cate_input' class='validate[required] form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{/if}>
 
-            <div class="col-md-2">
+            <div class="col-md-<{if $creat_cate_tool|default:false}>4<{else}>8<{/if}>">
                 <{$prefix_tag_menu|default:''}>
             </div>
-
-            <div class="col-md-<{if $creat_cate_tool|default:false}>7<{else}>8<{/if}>" id="news_title_input_col">
+        </div>
+        <div class="form-group row mb-3">
+            <div class="col-md-12">
                 <input type="text" name="news_title" id="news_title_input" class="validate[required] form-control tadnews-editor-title" value="<{$news_title|default:''}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
             </div>
         </div>
     </div>
 
     <div id="add_page" class="tadnews-editor-fields">
-        <div class="form-group row mb-3">
+        <div class="form-group row mb-3 tadnews-editor-meta">
             <{if $page_cate_select|default:false}>
-                <div class="col-md-2">
+                <div class="col-md-<{if $creat_cate_tool|default:false}>3<{else}>4<{/if}>">
                     <select name="ncsn" id="page_ncsn" class="form-control form-select">
                         <{$page_cate_select|default:''}>
                     </select>
@@ -228,18 +262,20 @@
                     <div class="col-md-1" id="new_page_folder_icon">
                         <img src="images/new_folder.png" alt="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" title="<{$smarty.const._TADNEWS_CREAT_FIRST_CATE}>" style="cursor: pointer;">
                     </div>
-                    <div class="col-md-3" id="new_page_folder_col" style="display: none;">
+                    <div class="col-md-8" id="new_page_folder_col" style="display: none;">
                         <input type='text' name='new_page_cate' id='new_page_cate_input' class='form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{else}>
                 <{if $creat_cate_tool|default:false}>
-                    <div class="col-md-3" id="new_page_folder_col">
+                    <div class="col-md-12" id="new_page_folder_col">
                         <input type='text' name='new_page_cate' id='new_page_cate_input' class='validate[required] form-control' value='<{$new_cate_input|default:''}>' placeholder='<{$creat_new_cate|default:''}>'>
                     </div>
                 <{/if}>
             <{/if}>
-            <div class="col-md-<{if $creat_cate_tool|default:false}>9<{else}>10<{/if}>" id="page_title_input_col">
+        </div>
+        <div class="form-group row mb-3">
+            <div class="col-md-12">
                 <input type="text" name="news_title" id="page_title_input" class="validate[required] form-control tadnews-editor-title" value="<{$news_title|default:''}>" placeholder="<{$smarty.const._MD_TADNEWS_NEWS_TITLE}>">
             </div>
         </div>
@@ -258,7 +294,7 @@
             <{if $tab_arr|default:false}>
                 <{foreach from=$tab_arr.tab_title key=k item=title}>
                     <{if $k >0}>
-                        <div class="alert alert-info">
+                        <div class="alert alert-info tadnews-tab-item">
                             <div class="form-group row mb-3">
                                 <div class="col-md-8">
                                     <input type="text" name="tab_title[<{$k|default:''}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title|default:''}>">
@@ -276,7 +312,7 @@
                     <{/if}>
                 <{/foreach}>
             <{else}>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning tadnews-tab-item">
                     <div class="form-group row mb-3">
                         <div class="col-md-12">
                         <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1|default:''}>">
@@ -291,50 +327,43 @@
             <{/if}>
         </div>
 
-        <button id="add_field_button" class="btn btn-primary"><{$smarty.const._MD_TADNEWS_ADD_TAB}></button>
+        <button id="add_field_button" class="btn btn-primary" type="button"><{$smarty.const._MD_TADNEWS_ADD_TAB}></button>
     </div>
     <script>
         $(document).ready(function() {
-            var max_fields      = 20; //maximum input boxes allowed
+            var max_fields      = 20;
             var wrapper         = $(".input_fields_wrap"); //Fields wrapper
             var add_button      = $("#add_field_button"); //Add button ID
-            <{if $tab_arr.tab_title|default:false}>
-            var x = <{$tab_arr.tab_title|@count}>-1; //初始值
-            <{else}>
-            var x = 1; //initlal text box count
-            <{/if}>
+            var activeTabCount = wrapper.find(".tadnews-tab-item").length;
+            var nextTabId = 1;
+            wrapper.find("input[name^='tab_title[']").each(function() {
+                var match = this.name.match(/\[(\d+)\]/);
+                if (match) {
+                    nextTabId = Math.max(nextTabId, parseInt(match[1], 10));
+                }
+            });
             $(add_button).click(function(e){ //on add input button click
                 e.preventDefault();
-                if(x < max_fields){ //max input box allowed
-                    x++; //text box increment
-                    var editorId = 'editor_' +x;
-                    $(wrapper).append('<div class="alert alert-success"><div class="form-group row mb-3"><div class="col-md-12"><input type="text" name="tab_title['+x+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+x+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row mb-3"><div class="col-md-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+x+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+x+'</a></div></div></div>'); //add input box
+                if(activeTabCount < max_fields){
+                    nextTabId++;
+                    activeTabCount++;
+                    var editorId = 'editor_' + nextTabId;
+                    $(wrapper).append('<div class="alert alert-success tadnews-tab-item"><div class="form-group row mb-3"><div class="col-md-12"><input type="text" name="tab_title['+nextTabId+']" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE1}> '+nextTabId+' <{$smarty.const._MD_TADNEWS_TAB_TITLE2}>"></div></div><div class="form-group row mb-3"><div class="col-md-12"><textarea id="'+editorId+'" class="ckeditor" name="tab_content['+nextTabId+']"></textarea><a href="#" class="remove_field"><{$smarty.const._MD_TADNEWS_DEL_TAB}> '+nextTabId+'</a></div></div></div>');
 
-                    CKEDITOR.replace(editorId, { height: 300 ,
-                    toolbar : 'my' ,
-                    <{assign var="bootstrap" value=$smarty.session.bootstrap|default:$session.bootstrap}>
-                    contentsCss : ['<{$xoops_url}>/modules/tadtools/bootstrap<{$bootstrap|default:''}>/css/bootstrap.css','<{$xoops_url}>/media/font-awesome/css/font-awesome.min.css'],
-                    extraPlugins: 'editorplaceholder,pasteUploadImage,sourcearea,font,syntaxhighlight,dialog,eqneditor,quicktable,imagerotate,fakeobjects,widget,lineutils,widgetbootstrap,widgettemplatemenu,pagebreak,fontawesome,prism,codesnippet,undo,autoembed,autolink,clipboard,toolbar,button,dialogui,notification,textmatch,embed,embedbase,widgetselection,notificationaggregator,embedsemantic,panel,floatpanel,menu',
-                    filebrowserBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=file&mod_dir=tadnews',
-                    filebrowserImageBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=image&mod_dir=tadnews',
-                    filebrowserFlashBrowseUrl : '<{$xoops_url}>/modules/tadtools/elFinder/elfinder.php?type=flash&mod_dir=tadnews',
-                    qtRows: 10, // Count of rows
-                    qtColumns: 10, // Count of columns
-                    qtBorder: '1', // Border of inserted table
-                    qtWidth: '100%', // Width of inserted table
-                    qtStyle: { 'border-collapse' : 'collapse' },
-                    qtClass: 'table table-bordered table-hover table-sm table-condensed', // Class of table
-                    qtCellPadding: '0', // Cell padding table
-                    qtCellSpacing: '0', // Cell spacing table
-                    qtPreviewBorder: '1px double black', // preview table border
-                    qtPreviewSize: '15px', // Preview table cell size
-                    qtPreviewBackground: '#c8def4' // preview table background (hover)
-                });
+                    initTadnewsTabEditor(editorId, 300);
                 }
             });
 
             $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-                e.preventDefault(); $(this).parent('div').remove(); x--;
+                e.preventDefault();
+                var $tabItem = $(this).closest(".tadnews-tab-item");
+                $tabItem.find("textarea").each(function() {
+                    if (CKEDITOR.instances[this.id]) {
+                        CKEDITOR.instances[this.id].destroy(true);
+                    }
+                });
+                $tabItem.remove();
+                activeTabCount--;
             });
             $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                 var order = $(this).sortable('serialize');
