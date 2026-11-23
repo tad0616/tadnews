@@ -1,3 +1,12 @@
+TadNews 5.3 (Released 2026-11-23)
+====================================
+1. The Focus News block can now display attachment thumbnails
+2. Adjusted how article start and end dates are checked
+3. Improved the loading efficiency of article lists
+4. Strengthened category permission checks when publishing articles
+5. Fixed a security issue in article title output
+6. Improved the layout of the article editing form
+
 TadNews 5.2 (Released 2026-09-08)
 ====================================
 1. Preliminary module refactoring to enhance security
