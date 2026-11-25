@@ -728,7 +728,6 @@ class Tadnews
         }
 
         $show_sql = $sql;
-        Utility::test($sql, 'sql', 'dd');
 
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -1027,7 +1026,6 @@ class Tadnews
         } elseif ('app' === $mode) {
             return $all_news;
         }
-        Utility::test($all_news, 'all_news', 'dd');
 
         $xoopsTpl->assign('page', $all_news);
         $xoopsTpl->assign('show_admin_tool_title', $this->admin_tool);
@@ -1514,7 +1512,6 @@ class Tadnews
                             $main = "
                         <form action='index.php' method='post' class='form-horizontal'>
                             <input type='hidden' name='nsn' value='$nsn'>
-                            <input type='hidden' name='uid' value='$this->uid'>
                             $XOOPS_TOKEN
                             <input type='hidden' name='op' value='have_read'>
                             <div style='text-align:center;'>
@@ -2054,6 +2051,8 @@ class Tadnews
 
         $xoopsTpl->assign('tab_arr', $tab_arr);
         $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
+        //頁籤拖曳排序（save_sort.php）用的 token
+        $xoopsTpl->assign('tadnews_token', $GLOBALS['xoopsSecurity']->createToken());
 
         // Utility::add_migrate();
     }
@@ -2262,7 +2261,7 @@ class Tadnews
         $always_top = (empty($_POST['always_top'])) ? '0' : '1';
         $pic_css    = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
-        if (!empty($_FILES['upfile2']) and empty($pic_css) and $_POST['pic_css']['use_pic_css']) { // xoops-lint-ignore  僅存在性檢查，實際上傳走下方 TadUpFiles->upload_file()
+        if (!empty($_FILES['upfile2']['name']) and empty($pic_css) and !empty($_POST['pic_css']['use_pic_css'])) { // xoops-lint-ignore  僅存在性檢查，實際上傳走下方 TadUpFiles->upload_file()
             $pic_css = $this->tadnewsConfig['cover_pic_css'];
         }
 
@@ -2292,21 +2291,23 @@ class Tadnews
         $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true, false, 'file_name', '', $xoopsModuleConfig['upload_deny']);
 
         //修改暫存封面圖
-        if ($_POST['files_sn']) {
+        if (!empty($_POST['files_sn']) && $this->is_cover_file_allowed((int) $_POST['files_sn'], $nsn)) {
             $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
             $files_sn = (int) $_POST['files_sn'];
             $sql      = 'UPDATE `' . $xoopsDB->prefix('tadnews_files_center') . '` SET `col_name`=\'news_pic\', `col_sn`=?, `description`=? WHERE `files_sn`=?';
             Utility::query($sql, 'isi', [$nsn, $pic_css, $files_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-            $pic = $this->get_news_doc_pic($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
+            $pic =$this->get_news_doc_pic($ncsn, 'news_pic', $nsn, 'big', 'db', true, 'demo_cover_pic');
 
-            $ff = explode('.', $_FILES['upfile2']['name']); // xoops-lint-ignore  僅取副檔名供 TadUpFiles->rename_file() 使用
-            foreach ($ff as $ext_name) {
-                $ext = mb_strtolower($ext_name);
+            if (!empty($_FILES['upfile2']['name'])) {
+                $ff  = explode('.', $_FILES['upfile2']['name']); // xoops-lint-ignore  僅取副檔名供 TadUpFiles->rename_file() 使用
+                $ext = mb_strtolower((string) end($ff));
+                if ('' !== $ext) {
+                    $new_name = "news_pic_{$nsn}_1.{$ext}";
+                    $this->TadUpFiles->rename_file($files_sn, $new_name);
+                }
             }
-            $new_name = "news_pic_{$nsn}_1.{$ext}";
-            $this->TadUpFiles->rename_file($files_sn, $new_name);
         }
 
         $xoopsUser->incrementPost();
@@ -2345,6 +2346,27 @@ class Tadnews
         $ncsn = $xoopsDB->getInsertId();
 
         return $ncsn;
+    }
+
+    //封面圖只能取用 demo_upload.php 產生的暫存檔，或本篇文章原有的封面，避免帶別人的 files_sn 把檔案搬走
+    private function is_cover_file_allowed(int $files_sn, int $nsn): bool
+    {
+        global $xoopsDB;
+        if ($files_sn <= 0) {
+            return false;
+        }
+        $sql    = 'SELECT `col_name`, `col_sn` FROM `' . $xoopsDB->prefix('tadnews_files_center') . '` WHERE `files_sn`=?';
+        $result = Utility::query($sql, 'i', [$files_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+        $row    = $xoopsDB->fetchRow($result);
+        if (!$row) {
+            return false;
+        }
+        list($col_name, $col_sn) = $row;
+        if ('tmp_news_pic' === $col_name) {
+            return true;
+        }
+
+        return 'news_pic' === $col_name && $nsn > 0 && (int) $col_sn === $nsn;
     }
 
     private function check_post_category_permission($ncsn)
@@ -2420,8 +2442,12 @@ class Tadnews
     {
         global $xoopsDB, $xoopsModuleConfig;
 
-        //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
+        //確認有管理員、本人，或（uid_chk=0 時）該分類發布權限者才能管理
+        $news = $this->get_tad_news($nsn, false);
+        if (empty($news) || !$this->can_manage_news($news)) {
+            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
+            exit;
+        }
 
         $ncsn          = (int) $_POST['ncsn'];
         $new_cate      = (string) $_POST['new_cate'];
@@ -2509,7 +2535,8 @@ class Tadnews
         $start_day = $_POST['page_mode'] == 'not_news' ? date("Y-m-d H:i:s") : (string) $_POST['start_day'];
         $end_day   = empty($_POST['end_day']) ? '0000-00-00 00:00:00' : (string) $_POST['end_day'];
 
-        $uid             = $_POST['same_uid'] ? (int) $_POST['uid'] : $this->uid;
+        //勾選「維持原發布者」時沿用資料庫中的原作者，不信任表單送來的 uid
+        $uid             = !empty($_POST['same_uid']) ? (int) $news['uid'] : $this->uid;
         $always_top_date = (string) $_POST['always_top_date'];
         $always_top      = (empty($_POST['always_top'])) ? '0' : '1';
 
@@ -2545,7 +2572,7 @@ class Tadnews
         $this->TadUpFiles->upload_file('upfile', $this->tadnewsConfig['pic_width'], $this->tadnewsConfig['thumb_width'], null, null, true, false, 'file_name', '', $xoopsModuleConfig['upload_deny']);
 
         //修改暫存封面圖
-        if ($_POST['files_sn']) {
+        if (!empty($_POST['files_sn']) && $this->is_cover_file_allowed((int) $_POST['files_sn'], (int) $nsn)) {
             $pic_css = empty($_POST['pic_css']['use_pic_css']) ? '' : $this->mk_pic_css($_POST['pic_css']);
 
             $files_sn = (int) $_POST['files_sn'];
@@ -2563,12 +2590,13 @@ class Tadnews
     //啟動tad_news某一筆資料
     public function enable_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsModuleConfig;
+        global $xoopsDB;
 
-        //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
-        if (!$this->chk_who($news['uid'])) {
-            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
+        //確認有管理員、本人，或（uid_chk=0 時）該分類發布權限者才能管理
+        $news = $this->get_tad_news($nsn, false);
+        if (empty($news) || !$this->can_manage_news($news)) {
+            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
+            exit;
         }
 
         $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news') . '` SET `enable` = ? WHERE `nsn` = ?';
@@ -2579,6 +2607,20 @@ class Tadnews
         $page = ('1' == $cate['not_news']) ? 'page' : 'index';
         header('location: ' . XOOPS_URL . "/modules/tadnews/{$page}.php?ncsn={$ncsn}&nsn={$nsn}");
         exit;
+    }
+
+    //檢查是否具備修改／啟用／刪除該文章的權限（uid_chk=1 限作者或管理員；uid_chk=0 另允許具該分類發布權限者）
+    private function can_manage_news(array $news): bool
+    {
+        global $xoopsModuleConfig;
+        if ($this->chk_who($news['uid'] ?? '')) {
+            return true;
+        }
+        if (empty($xoopsModuleConfig['uid_chk'])) {
+            return in_array((int) ($news['ncsn'] ?? 0), Tools::chk_user_cate_power('post'), true);
+        }
+
+        return false;
     }
 
     //身份查核
@@ -2606,12 +2648,13 @@ class Tadnews
     //刪除tad_news某筆資料資料
     public function delete_tad_news($nsn = '')
     {
-        global $xoopsDB, $xoopsModuleConfig;
+        global $xoopsDB;
 
-        //確認有管理員或本人才能管理
-        $news = $this->get_tad_news($nsn, $xoopsModuleConfig['uid_chk']);
-        if (!$this->chk_who($news['uid'])) {
-            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER . '<br>' . __FILE__ . ':' . __LINE__);
+        //確認有管理員、本人，或（uid_chk=0 時）該分類發布權限者才能管理
+        $news = $this->get_tad_news($nsn, false);
+        if (empty($news) || !$this->can_manage_news($news)) {
+            redirect_header($_SERVER['PHP_SELF'], 3, _TADNEWS_NO_ADMIN_POWER);
+            exit;
         }
 
         $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news') . '` WHERE `nsn`=?';

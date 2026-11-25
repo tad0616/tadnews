@@ -302,6 +302,7 @@ class Paper
         $xoopsTpl->assign('editor', $editor);
         $xoopsTpl->assign('npsn', $npsn);
         $xoopsTpl->assign('np_title', $newspaper['np_title']);
+        $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
     }
 
     //儲存所有內容
@@ -470,6 +471,13 @@ class Paper
         $xoopsTpl->assign('nps_sn', $nps_sn);
         $xoopsTpl->assign('title', $np['title']);
         $xoopsTpl->assign('back', sprintf(_MA_TADNEWS_BACK_TO, $np['title']));
+        $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
+
+        //刪除 email 的確認視窗（以 POST 送出 token）
+        $SweetAlert2         = new SweetAlert2();
+        $XOOPS_TOKEN_REQUEST = $GLOBALS['xoopsSecurity']->createToken();
+        $SweetAlert2->setVar('method', 'post');
+        $SweetAlert2->render('delete_tad_news_email_func', "newspaper.php?op=delete_tad_news_email&XOOPS_TOKEN_REQUEST={$XOOPS_TOKEN_REQUEST}&nps_sn={$nps_sn}&g2p={$g2p}&email=", 'email');
     }
 
     //檢查Email
@@ -499,10 +507,14 @@ class Paper
     {
         global $xoopsDB;
 
-        $email_part = mb_substr($email, 0, 15);
+        //email 為空時 LIKE '%' 會清空整組訂閱名單，合法操作不會傳空值
+        if ('' === trim((string) $email) || empty($nps_sn)) {
+            return;
+        }
 
-        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `email` LIKE ? AND `nps_sn`=?';
-        Utility::query($sql, 'si', [$email_part . '%', $nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+        //精確比對，避免以前綴 LIKE 誤刪其他相近的 email
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `email`=? AND `nps_sn`=?';
+        Utility::query($sql, 'si', [$email, $nps_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     }
 
@@ -603,19 +615,30 @@ class Paper
         return $data;
     }
 
-    //預覽電子報
-    public static function preview_newspaper($npsn = '')
+    //預覽電子報（$only_enabled=true 時，未啟用的電子報不允許前台檢視）
+    public static function preview_newspaper($npsn = '', $only_enabled = false)
     {
         global $xoopsDB;
         if (empty($npsn)) {
-            return;
+            return '';
         }
 
-        $np     = self::get_newspaper($npsn);
-        $sql    = 'SELECT `title`, `head`, `foot`, `themes` FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '` WHERE `nps_sn` =?';
+        $np = self::get_newspaper($npsn);
+        if (empty($np)) {
+            return '';
+        }
+        $sql    = 'SELECT `title`, `head`, `foot`, `themes`, `status` FROM `' . $xoopsDB->prefix('tad_news_paper_setup') . '` WHERE `nps_sn` =?';
         $result = Utility::query($sql, 'i', [$np['nps_sn']]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-        list($title, $head, $foot, $themes) = $xoopsDB->fetchRow($result);
+        $row = $xoopsDB->fetchRow($result);
+        if (!$row) {
+            return '';
+        }
+        list($title, $head, $foot, $themes, $status) = $row;
+        if ($only_enabled && '1' != $status) {
+            redirect_header('newspaper.php', 3, _TAD_PERMISSION_DENIED);
+            exit;
+        }
 
         $myts             = \MyTextSanitizer::getInstance();
         $title            = $myts->htmlSpecialChars($title);
@@ -647,39 +670,115 @@ class Paper
         return $main;
     }
 
-    //編輯工具
+    //訂閱或取消訂閱電子報（登入者操作本人信箱直接套用；其餘寄送限時確認信）
     public static function update_mail($nps_sn = '', $newspaper_email = '', $mode = '')
     {
-        global $xoopsDB, $xoopsUser;
-        $newspaper_set = self::get_newspaper_set($nps_sn);
+        global $xoopsUser;
+        $nps_sn          = (int) $nps_sn;
+        $newspaper_email = trim((string) $newspaper_email);
+        $newspaper_set   = self::get_newspaper_set($nps_sn);
 
-        if (empty($newspaper_email) or !self::check_email_format($newspaper_email)) {
-            redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ERROR_EMAIL, $newspaper_email));
+        if (empty($newspaper_set) || '1' != $newspaper_set['status'] || !in_array($mode, ['add', 'del'], true)) {
+            redirect_header(XOOPS_URL, 3, _TAD_PERMISSION_DENIED);
+            exit;
+        }
+
+        if (empty($newspaper_email) || !self::check_email_format($newspaper_email)) {
+            redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ERROR_EMAIL, htmlspecialchars($newspaper_email, ENT_QUOTES, _CHARSET)));
+            exit;
+        }
+
+        //已登入會員操作自己的帳號信箱，已具身分驗證，可直接執行
+        if ($xoopsUser && strcasecmp((string) $xoopsUser->email(), $newspaper_email) === 0) {
+            self::apply_mail_change($nps_sn, $newspaper_email, $mode, (string) $newspaper_set['title']);
             return;
         }
 
+        //匿名或非本人信箱改採限時確認信，避免被他人代訂或惡意退訂
+        $exp = time() + 86400;
+        $sig = self::mail_confirm_sig($nps_sn, $newspaper_email, $mode, $exp);
+        $confirm_url = XOOPS_URL . '/modules/tadnews/email.php?op=confirm'
+            . '&nps_sn=' . $nps_sn
+            . '&newspaper_email=' . rawurlencode($newspaper_email)
+            . '&mode=' . rawurlencode($mode)
+            . '&exp=' . $exp
+            . '&sig=' . rawurlencode($sig);
+
+        $title   = (string) $newspaper_set['title'];
+        $subject = sprintf(_MD_TADNEWS_NP_CONFIRM_SUBJECT, $title);
+        $body    = ('add' === $mode)
+            ? sprintf(_MD_TADNEWS_NP_CONFIRM_ADD_BODY, $title, $confirm_url)
+            : sprintf(_MD_TADNEWS_NP_CONFIRM_DEL_BODY, $title, $confirm_url);
+
+        $xoopsMailer = &getMailer();
+        $xoopsMailer->useMail();
+        $xoopsMailer->setToEmails($newspaper_email);
+        $xoopsMailer->setSubject($subject);
+        $xoopsMailer->setBody($body);
+        if ($xoopsMailer->send()) {
+            redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_NP_CONFIRM_SENT, htmlspecialchars($newspaper_email, ENT_QUOTES, _CHARSET)));
+        } else {
+            redirect_header(XOOPS_URL, 3, _MD_TADNEWS_NP_CONFIRM_SEND_FAIL);
+        }
+        exit;
+    }
+
+    //驗證確認信簽章並執行訂閱／退訂
+    public static function confirm_mail($nps_sn = '', $newspaper_email = '', $mode = '', $exp = 0, $sig = '')
+    {
+        $nps_sn          = (int) $nps_sn;
+        $newspaper_email = trim((string) $newspaper_email);
+        $exp             = (int) $exp;
+        $sig             = (string) $sig;
+        $newspaper_set   = self::get_newspaper_set($nps_sn);
+
+        if (empty($newspaper_set) || '1' != $newspaper_set['status'] || !in_array($mode, ['add', 'del'], true)
+            || empty($newspaper_email) || !self::check_email_format($newspaper_email)
+            || $exp < time() || '' === $sig) {
+            redirect_header(XOOPS_URL, 3, _MD_TADNEWS_NP_CONFIRM_INVALID);
+            exit;
+        }
+
+        $expected = self::mail_confirm_sig($nps_sn, $newspaper_email, $mode, $exp);
+        if (!hash_equals($expected, $sig)) {
+            redirect_header(XOOPS_URL, 3, _MD_TADNEWS_NP_CONFIRM_INVALID);
+            exit;
+        }
+
+        self::apply_mail_change($nps_sn, $newspaper_email, $mode, (string) $newspaper_set['title']);
+    }
+
+    //實際寫入或刪除指定電子報的訂閱 Email
+    private static function apply_mail_change(int $nps_sn, string $newspaper_email, string $mode, string $title): void
+    {
+        global $xoopsDB;
         if ('add' === $mode) {
             $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
             $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_news_paper_email') . '` (`nps_sn`, `email`, `order_date`) VALUES (?, ?, ?)';
-            Utility::query($sql, 'iss', [$nps_sn, $newspaper_email, $now]) or redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_ERROR, $newspaper_set['title']));
-            redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_SUCCESS, $newspaper_set['title']));
-        } elseif ('del' === $mode) {
-            $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `email`=?';
-            Utility::query($sql, 's', [$newspaper_email]) or redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_ERROR, $newspaper_set['title']));
-
-            redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_SUCCESS, $newspaper_set['title']));
+            Utility::query($sql, 'iss', [$nps_sn, $newspaper_email, $now]) or redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_ERROR, $title));
+            redirect_header(XOOPS_URL, 3, sprintf(_MD_TADNEWS_ORDER_SUCCESS, $title));
+            exit;
         }
+        if ('del' === $mode) {
+            $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_news_paper_email') . '` WHERE `nps_sn`=? AND `email`=?';
+            Utility::query($sql, 'is', [$nps_sn, $newspaper_email]) or redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_ERROR, $title));
+            redirect_header(XOOPS_URL, 3, sprintf(_TADNEWS_DEL_SUCCESS, $title));
+            exit;
+        }
+    }
+
+    //產生確認信連結用的 HMAC-SHA256 簽章
+    private static function mail_confirm_sig(int $nps_sn, string $email, string $mode, int $exp): string
+    {
+        $secret = (defined('XOOPS_DB_PASS') ? XOOPS_DB_PASS : '') . '|' . (defined('XOOPS_DB_NAME') ? XOOPS_DB_NAME : '') . '|' . XOOPS_URL . '|tadnews_np_mail';
+        $payload = $nps_sn . '|' . mb_strtolower($email) . '|' . $mode . '|' . $exp;
+        return hash_hmac('sha256', $payload, $secret);
     }
 
     //檢查 Email 格式（前台訂閱用；與 check_email_mx() 不同，刻意不做 DNS 查詢）
     public static function check_email_format($email)
     {
-        if ((preg_match('/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/', $email)) ||
-            (preg_match('/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/', $email))) {
-            return true;
-        }
-
-        return false;
+        return false !== filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     //列出newspaper資料

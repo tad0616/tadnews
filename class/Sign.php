@@ -13,12 +13,29 @@ class Sign
     //已經讀過
     public static function have_read($nsn = '', $uid = '')
     {
-        global $xoopsDB;
+        global $xoopsDB, $xoopsUser;
         Utility::xoops_security_check('', '', 'index.php');
+        if (empty($xoopsUser)) {
+            redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
+            exit;
+        }
+        $nsn = (int) $nsn;
+        $current_uid = (int) $xoopsUser->uid();
+        if ($nsn <= 0 || $current_uid <= 0) {
+            return;
+        }
+
+        //已簽收過就略過，避免重複寫入
+        $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_news_sign') . '` WHERE `nsn`=? AND `uid`=?';
+        $result = Utility::query($sql, 'ii', [$nsn, $current_uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+        list($count) = $xoopsDB->fetchRow($result);
+        if ($count > 0) {
+            return;
+        }
+
         $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_news_sign') . '` (`nsn`, `uid`, `sign_time`) VALUES (?, ?, ?)';
-        Utility::query($sql, 'iis', [$nsn, $uid, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
-
+        Utility::query($sql, 'iis', [$nsn, $current_uid, $now]) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 
     //列出簽收狀況

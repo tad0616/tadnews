@@ -24,7 +24,12 @@
                             <a href="javascript:delete_tad_news_func(<{$news.nsn}>);" class='btn btn-danger btn-sm btn-xs'><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
                             <a href="post.php?op=tad_news_form&nsn=<{$news.nsn}>" class="btn btn-warning btn-sm btn-xs"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
                             <{if $news.enable!='1'}>
-                            <a href="post.php?op=enable_news&nsn=<{$news.nsn}>" class="btn btn-success btn-sm btn-xs"><{$smarty.const._MD_TADNEWS_NEWS_ENABLE_OK}></a>
+                            <form action="post.php" method="post" class="d-inline">
+                                <input type="hidden" name="op" value="enable_news">
+                                <input type="hidden" name="nsn" value="<{$news.nsn}>">
+                                <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{$tadnews_token|default:''}>">
+                                <button type="submit" class="btn btn-success btn-sm btn-xs"><{$smarty.const._MD_TADNEWS_NEWS_ENABLE_OK}></button>
+                            </form>
                             <{/if}>
                         </td>
                     </tr>

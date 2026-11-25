@@ -42,7 +42,7 @@ switch ($op) {
 
     //已經閱讀
     case 'have_read':
-        Sign::have_read($nsn, $uid);
+        Sign::have_read($nsn);
         header('location: ' . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
 
@@ -181,15 +181,27 @@ function list_tad_cate_news($show_uid = '')
 //顯示單一新聞
 function show_news($nsn = '')
 {
-    global $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $Tadnews;
+    global $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $Tadnews, $tadnews_adm;
 
-    $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
-    $Tadnews->set_show_enable(0);
+    $uid = ($xoopsUser) ? (int) $xoopsUser->uid() : 0;
+    //未啟用的草稿只限管理員、作者本人，或（uid_chk=0 時）具該分類發布權限者檢視
+    $can_view_disabled = !empty($tadnews_adm);
+    if (!$can_view_disabled && $uid > 0) {
+        $news = $Tadnews->get_tad_news($nsn, false);
+        if (!empty($news)) {
+            if ((int) $news['uid'] === $uid) {
+                $can_view_disabled = true;
+            } elseif (empty($xoopsModuleConfig['uid_chk']) && in_array((int) $news['ncsn'], \XoopsModules\Tadnews\Tools::chk_user_cate_power('post'), true)) {
+                $can_view_disabled = true;
+            }
+        }
+    }
+    $Tadnews->set_show_enable($can_view_disabled ? 0 : 1);
     $Tadnews->set_view_nsn($nsn);
     $Tadnews->set_cover(true, 'db');
     $Tadnews->set_summary('full');
     $Tadnews->get_news();
-    $xoopsTpl->assign('uid', $uid);
+    $xoopsTpl->assign('uid', $uid ?: '');
     $xoopsTpl->assign('show_next_btn', $xoopsModuleConfig['show_next_btn']);
 
 }

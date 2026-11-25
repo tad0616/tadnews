@@ -59,9 +59,9 @@
                         <td>
                             <a href='tag.php?tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-xs btn-info'><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
                             <{if $tag.enable|default:false}>
-                                <a href='tag.php?op=stat&enable=0&tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-xs btn-warning'><{$smarty.const._MA_TADNEWS_TAG_UNABLE}></a>
+                                <button type="submit" form="tag_stat_<{$tag.tag_sn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._MA_TADNEWS_TAG_UNABLE}></button>
                             <{else}>
-                                <a href='tag.php?op=stat&enable=1&tag_sn=<{$tag.tag_sn}>' class='btn btn-sm btn-xs btn-success'><{$smarty.const._MA_TADNEWS_TAG_ABLE}></a>
+                                <button type="submit" form="tag_stat_<{$tag.tag_sn}>" class="btn btn-sm btn-xs btn-success"><{$smarty.const._MA_TADNEWS_TAG_ABLE}></button>
                             <{/if}>
                             <{if !$tag.enable and $tag.tag_amount == 0}>
                                 <a href='javascript:delete_tag(<{$tag.tag_sn}>);' class='btn btn-sm btn-xs btn-danger'><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
@@ -107,4 +107,15 @@
             <{/if}>
         </table>
     </form>
+    <{* 啟用／停用標籤的表單放在主表單外，避免巢狀 form；按鈕以 form 屬性指向這裡 *}>
+    <{foreach from=$tagarr item=stat_tag}>
+        <{if $stat_tag.mode!="edit"}>
+            <form id="tag_stat_<{$stat_tag.tag_sn}>" action="tag.php" method="post">
+                <input type="hidden" name="op" value="stat">
+                <input type="hidden" name="enable" value="<{if $stat_tag.enable|default:false}>0<{else}>1<{/if}>">
+                <input type="hidden" name="tag_sn" value="<{$stat_tag.tag_sn}>">
+                <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{$tadnews_token|default:''}>">
+            </form>
+        <{/if}>
+    <{/foreach}>
 </div>

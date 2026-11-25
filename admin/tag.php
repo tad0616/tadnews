@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadnews\Tag;
+use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_tag.tpl';
 require_once __DIR__ . '/header.php';
@@ -20,12 +21,14 @@ switch ($op) {
 
     //更新資料
     case 'update_tad_news_tags':
+        Utility::xoops_security_check();
         Tag::update_tad_news_tags($tag_sn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
 
     //關閉資料
     case 'stat':
+        Utility::xoops_security_check();
         Tag::tad_news_tags_stat($enable, $tag_sn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;

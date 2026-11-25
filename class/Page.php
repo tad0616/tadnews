@@ -61,6 +61,8 @@ class Page
         }
         $xoopsTpl->assign('link_cate_sn_arr', $link_cate_sn_arr);
         $xoopsTpl->assign('ok_cat', Tools::chk_user_cate_power('post'));
+        //拖曳排序與「加入選單」表單用的 token
+        $xoopsTpl->assign('tadnews_token', $GLOBALS['xoopsSecurity']->createToken());
 
         //工具列：單一分類看該分類設定（tool=0 才隱藏），列表全部分類時預設顯示
         $cate  = $Tadnews->get_tad_news_cate($the_ncsn);
@@ -76,10 +78,21 @@ class Page
         $result = Utility::query($sql, 'i', [$ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $cate = $xoopsDB->fetchArray($result);
+        if (empty($cate['ncsn'])) {
+            return;
+        }
 
         $moduleHandler   = xoops_getHandler('module');
         $TadThemesModule = $moduleHandler->getByDirname('tad_themes');
         if ($TadThemesModule) {
+            //已經加入過選單的分類不重複寫入
+            $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_themes_menu') . '` WHERE `link_cate_name`=? AND `link_cate_sn`=?';
+            $result = Utility::query($sql, 'si', ['tadnews_page_cate', $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+            list($menu_count) = $xoopsDB->fetchRow($result);
+            if ($menu_count > 0) {
+                return;
+            }
+
             $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_themes_menu') . '` (`of_level`, `position`, `itemname`, `itemurl`, `status`, `target`, `icon`, `link_cate_name`, `link_cate_sn`, `read_group`) VALUES (0, 1, ?, ?, 1, "_self", "", "tadnews_page_cate", ?, "")';
             Utility::query($sql, 'ssi', [$cate['nc_title'], XOOPS_URL . '/modules/tadnews/page.php?ncsn=' . $ncsn, $ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -104,6 +117,7 @@ class Page
         $xoopsTpl->assign('ncsn', $ncsn);
         $xoopsTpl->assign('nsn', $nsn);
         $xoopsTpl->assign('tab_div', $tab_div);
+        $xoopsTpl->assign('tadnews_token', $GLOBALS['xoopsSecurity']->createToken());
         Utility::get_jquery(true);
         $Tadnews->set_view_nsn($nsn);
         $Tadnews->set_news_kind('page');

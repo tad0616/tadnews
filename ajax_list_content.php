@@ -37,6 +37,11 @@ $start_day = $start_day ? date("Y-m-d H:i:s", strtotime($start_day)) : '';
 $end_day = $end_day ? date("Y-m-d H:i:s", strtotime($end_day)) : '';
 //randStr過濾
 $randStr = preg_replace("/[^a-zA-Z0-9]+/", "", $randStr);
+//CSS 會被放進 style='...' 屬性，只保留 CSS 宣告會用到的字元，避免以引號跳出屬性注入 HTML
+$summary_css = preg_replace('/[^a-zA-Z0-9\s:;#%.,()\/\-!]+/', '', $summary_css);
+if ('db' !== $cover_css) {
+    $cover_css = preg_replace('/[^a-zA-Z0-9\s:;#%.,()\/\-!]+/', '', $cover_css);
+}
 
 $b = $p - 1;
 $n = $p + 1;

@@ -29,10 +29,13 @@ switch ($op) {
 
     //批次管理
     case 'batch':
-        if ('move_news' === $_POST['act']) {
-            Cate::move_news($_POST['nsn_arr'], $ncsn);
-        } elseif ('del_news' === $_POST['act']) {
-            Cate::del_news($_POST['nsn_arr']);
+        Utility::xoops_security_check();
+        $act     = Request::getString('act', '', 'POST');
+        $nsn_arr = Request::getArray('nsn_arr', [], 'POST');
+        if ('move_news' === $act) {
+            Cate::move_news($nsn_arr, $ncsn);
+        } elseif ('del_news' === $act) {
+            Cate::del_news($nsn_arr);
         }
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
@@ -62,6 +65,7 @@ switch ($op) {
 
     //搬移資料
     case 'move_to':
+        Utility::xoops_security_check();
         Cate::move_to_cate($ncsn, $to_ncsn);
         header('location: ' . $_SERVER['PHP_SELF']);
         exit;
@@ -73,6 +77,7 @@ switch ($op) {
 
     //分類類型互轉
     case 'change_kind':
+        Utility::xoops_security_check();
         Cate::change_kind($ncsn, $not_news);
         break;
     default:

@@ -15,7 +15,7 @@ $npsn = Request::getInt('npsn');
 
 switch ($op) {
     case 'preview':
-        $main = Paper::preview_newspaper($npsn);
+        $main = Paper::preview_newspaper($npsn, !$tadnews_adm);
         break;
     default:
         $main = Paper::list_newspaper();

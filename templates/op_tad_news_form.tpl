@@ -297,10 +297,10 @@
                         <div class="alert alert-info tadnews-tab-item">
                             <div class="form-group row mb-3">
                                 <div class="col-md-8">
-                                    <input type="text" name="tab_title[<{$k|default:''}>]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:$k}>" value="<{$title|default:''}>">
+                                    <input type="text" name="tab_title[<{$k|default:''}>]" class="form-control" placeholder="<{$k|default:''|string_format:$smarty.const._MD_TADNEWS_TAB_TITLE}>" value="<{$title|default:''}>">
                                 </div>
                                 <div class="col-md-4">
-                                    <a href="javascript:del_page_tab('<{$k|default:''}>')" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$smarty.const._MD_TADNEWS_DELETE_TAB|sprintf:$title}></a>
+                                    <a href="javascript:del_page_tab('<{$k|default:''}>')" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-times"></i> <{$title|default:''|string_format:$smarty.const._MD_TADNEWS_DELETE_TAB}></a>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -315,7 +315,7 @@
                 <div class="alert alert-warning tadnews-tab-item">
                     <div class="form-group row mb-3">
                         <div class="col-md-12">
-                        <input type="text" name="tab_title[1]" class="form-control" placeholder="<{$smarty.const._MD_TADNEWS_TAB_TITLE|sprintf:1}>" value="<{$tab_arr.tab_title.1|default:''}>">
+                        <input type="text" name="tab_title[1]" class="form-control" placeholder="<{1|string_format:$smarty.const._MD_TADNEWS_TAB_TITLE}>" value="<{$tab_arr.tab_title.1|default:''}>">
                         </div>
                     </div>
                     <div class="form-group row mb-3">
@@ -367,7 +367,7 @@
             });
             $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                 var order = $(this).sortable('serialize');
-                $.post('save_sort.php?op=sort_tabs&nsn=<{$nsn|default:''}>', order, function(theResponse){
+                $.post('save_sort.php?op=sort_tabs&nsn=<{$nsn|default:''}>', order + '&XOOPS_TOKEN_REQUEST=<{$tadnews_token|default:''}>', function(theResponse){
                     $('#save_msg').html(theResponse);
                 });
             }

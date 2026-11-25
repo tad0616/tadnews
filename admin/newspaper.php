@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadnews\Paper;
+use XoopsModules\Tadtools\Utility;
 
 $xoopsOption['template_main'] = 'tadnews_adm_newspaper.tpl';
 require_once __DIR__ . '/header.php';
@@ -9,7 +10,8 @@ require_once dirname(__DIR__) . '/function.php';
 /*-----------執行動作判斷區----------*/
 $op     = Request::getString('op');
 $memail = Request::getString('memail');
-$mail   = Request::getString('mail');
+//刪除確認（SweetAlert2）送出的欄位名稱是 email
+$mail   = Request::getString('email');
 $nps_sn = Request::getInt('nps_sn');
 $npsn   = Request::getInt('npsn');
 $g2p    = Request::getInt('g2p');
@@ -43,6 +45,7 @@ switch ($op) {
         Paper::edit_newspaper($npsn);
         break;
     case 'save_all':
+        Utility::xoops_security_check();
         Paper::save_all($npsn);
         header("location: {$_SERVER['PHP_SELF']}?op=sendmail&npsn={$npsn}");
         exit;
@@ -58,6 +61,7 @@ switch ($op) {
         Paper::sendmail_form($npsn);
         break;
     case 'send_now':
+        Utility::xoops_security_check();
         Paper::send_now($npsn);
         header("location: {$_SERVER['PHP_SELF']}?op=sendmail_log&npsn={$npsn}");
         exit;
@@ -79,6 +83,7 @@ switch ($op) {
         break;
     //刪除電子郵件
     case 'delete_tad_news_email':
+        Utility::xoops_security_check();
         Paper::delete_tad_news_email($mail, $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
         exit;
@@ -92,13 +97,15 @@ switch ($op) {
 
     //更新電子郵件
     case 'update_email':
-        Paper::update_email($_POST['old_email'], $_POST['new_email'], $nps_sn);
+        Utility::xoops_security_check();
+        Paper::update_email(Request::getString('old_email', '', 'POST'), Request::getString('new_email', '', 'POST'), $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn&g2p={$g2p}");
         exit;
 
     //匯入電子郵件
     case 'email_import':
-        Paper::email_import($_POST['email_import'], $nps_sn);
+        Utility::xoops_security_check();
+        Paper::email_import(Request::getText('email_import', '', 'POST'), $nps_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=newspaper_email&nps_sn=$nps_sn");
         exit;
 

@@ -149,3 +149,9 @@ define('_SEPARTE', '<div style="page-break-after: always;"><span style="display:
 define('_SEPARTE2', '--summary--');
 define('_MD_TADNEWS_CANT_MOVE_TO_SELF', '不可移至自己的子目錄下');
 define('_MD_TADNEWS_NO_DATA', '無資料');
+define('_MD_TADNEWS_NP_CONFIRM_SUBJECT', '「%s」電子報訂閱確認通知');
+define('_MD_TADNEWS_NP_CONFIRM_ADD_BODY', "您好，\n\n有人以此信箱申請訂閱「%s」電子報。\n請於 24 小時內點擊以下連結完成訂閱：\n%s\n\n若非您本人操作，請忽略此信。");
+define('_MD_TADNEWS_NP_CONFIRM_DEL_BODY', "您好，\n\n有人以此信箱申請取消訂閱「%s」電子報。\n請於 24 小時內點擊以下連結完成退訂：\n%s\n\n若非您本人操作，請忽略此信。");
+define('_MD_TADNEWS_NP_CONFIRM_SENT', '確認信已寄至 %s，請至信箱點擊確認連結以完成操作。');
+define('_MD_TADNEWS_NP_CONFIRM_SEND_FAIL', '確認信寄送失敗，請稍後再試或聯絡網站管理員。');
+define('_MD_TADNEWS_NP_CONFIRM_INVALID', '確認連結無效或已過期，請重新操作。');

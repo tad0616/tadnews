@@ -26,6 +26,7 @@ $op = Request::getString('op');
 switch ($op) {
     //刪除資料
     case 'import':
+        Utility::xoops_security_check();
         Importer::import();
         header('location: index.php');
         exit;

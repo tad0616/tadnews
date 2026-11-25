@@ -1,7 +1,7 @@
 <{if $block.page|default:false}>
     <{if $block.display_mode==2}>
         <{foreach from=$block.page item=news  name=nn}>
-            <{assign var="i" value=$smarty.foreach.nn.iteration|substr:-1}>
+            <{assign var="i" value=$smarty.foreach.nn.iteration%10}>
             <div class="row" style="margin-bottom: 0.6rem;">
                 <div class="col-lg-<{$block.width_left}>">
                     <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>">
@@ -22,7 +22,7 @@
     <{else}>
         <div class="row">
             <{foreach from=$block.page item=news  name=nn}>
-                <{assign var="i" value=$smarty.foreach.nn.iteration|substr:-1}>
+                <{assign var="i" value=$smarty.foreach.nn.iteration%10}>
                 <div class="col-sm-<{$block.num}>" style="margin-bottom:16px;">
                     <a href="<{$xoops_url}>/modules/tadnews/index.php?nsn=<{$news.nsn}>">
                         <div style="height:150px;overflow:hidden;border:1px solid gray;background-image: url('<{if $news.image_big|default:false}><{$news.image_big}><{else}><{$block.demo_path}>/demo<{$i|default:''}>.jpg<{/if}>'); background-size: cover;background-position: center center; color: transparent;"><{$news.news_title}>

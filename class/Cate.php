@@ -54,6 +54,9 @@ class Cate
         $xoopsTpl->assign('ncsn', empty($the_ncsn) ? '' : (int) $the_ncsn);
         $cate = $Tadnews->get_tad_news_cate($the_ncsn);
         $xoopsTpl->assign('cate', $cate);
+        //批次管理表單、分類類型互轉、單頁拖曳排序用的 token
+        $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
+        $xoopsTpl->assign('tadnews_token', $GLOBALS['xoopsSecurity']->createToken());
 
         $SweetAlert2         = new SweetAlert2();
         $XOOPS_TOKEN_REQUEST = $GLOBALS['xoopsSecurity']->createToken();
@@ -212,9 +215,13 @@ class Cate
         //先找看看底下有無分類，若有將其也一起變
         $sub_cate = self::get_sub_cate($ncsn);
         if (!empty($sub_cate)) {
-            $sql = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `not_news`=? WHERE `ncsn` IN (?)';
-            Utility::query($sql, 'ss', [$not_news, $sub_cate]) or Utility::web_error($sql, __FILE__, __LINE__);
-
+            $sub_ids = array_values(array_filter(array_map('intval', explode(',', $sub_cate))));
+            if (!empty($sub_ids)) {
+                $placeholders = implode(',', array_fill(0, count($sub_ids), '?'));
+                $types        = 's' . str_repeat('i', count($sub_ids));
+                $sql          = 'UPDATE `' . $xoopsDB->prefix('tad_news_cate') . '` SET `not_news`=? WHERE `ncsn` IN (' . $placeholders . ')';
+                Utility::query($sql, $types, array_merge([(string) $not_news], $sub_ids)) or Utility::web_error($sql, __FILE__, __LINE__);
+            }
         }
 
         if (1 == $not_news) {
@@ -229,6 +236,7 @@ class Cate
     public static function get_sub_cate($of_ncsn = '')
     {
         global $xoopsDB;
+        $aaa    = [];
         $sql    = 'SELECT `ncsn` FROM `' . $xoopsDB->prefix('tad_news_cate') . '` WHERE `of_ncsn` = ?';
         $result = Utility::query($sql, 'i', [$of_ncsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -240,8 +248,7 @@ class Cate
 
             $aaa[] = $sub_ncsn;
         }
-        $bbb = implode(',', (Array) $aaa);
-        //echo "<p style='color:red;'>$bbb</p>";
+        $bbb = implode(',', $aaa);
 
         return $bbb;
     }
@@ -370,6 +377,7 @@ class Cate
     public static function update_tad_news_cate($ncsn = '')
     {
         global $xoopsDB, $xoopsModuleConfig, $tadnews_adm;
+        Utility::xoops_security_check('', '', 'index.php');
 
         $ok_cat  = Tools::chk_user_cate_power('post');
         $ncsn    = (int) $ncsn;
@@ -450,7 +458,16 @@ class Cate
         $json = implode(",\n", (Array) $data);
 
         $Ztree = new Ztree($tree_name, $json, 'save_drag.php', 'save_cate_sort.php', 'of_ncsn', 'ncsn');
-        $xoopsTpl->assign('ztree_code', $Ztree->render());
+        //tadtools 的 Ztree 拖曳 AJAX 不帶 token，在送往本模組兩支儲存程式時補上
+        $token     = $GLOBALS['xoopsSecurity']->createToken();
+        $token_js  = "<script>
+        $.ajaxPrefilter(function(options) {
+            if (/(^|\\/)save_(drag|cate_sort)\\.php/.test(options.url) && 'POST' === String(options.type).toUpperCase()) {
+                options.data = (options.data ? options.data + '&' : '') + 'XOOPS_TOKEN_REQUEST=' + encodeURIComponent('{$token}');
+            }
+        });
+        </script>";
+        $xoopsTpl->assign('ztree_code', $Ztree->render() . $token_js);
 
         return $data;
     }

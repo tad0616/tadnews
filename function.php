@@ -7,7 +7,7 @@ if (!class_exists('XoopsModules\Tadnews\Tadnews')) {
 }
 use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
-    require XOOPS_ROOT_PATH . '/modules/Tadtools/preloads/autoloader.php';
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
 
 $Tadnews = new Tadnews();

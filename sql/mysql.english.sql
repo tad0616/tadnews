@@ -38,7 +38,12 @@ CREATE TABLE `tad_news` (
   `always_top_date` datetime NOT NULL,
   `have_read_group` varchar(255) NOT NULL default '',
   `page_sort` SMALLINT(5) UNSIGNED NOT NULL default 0,
-  PRIMARY KEY  (`nsn`)
+  PRIMARY KEY  (`nsn`),
+  KEY `ncsn` (`ncsn`),
+  KEY `start_day` (`start_day`),
+  KEY `end_day` (`end_day`),
+  KEY `always_top_always_top_date` (`always_top`,`always_top_date`),
+  KEY `enable` (`enable`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 
@@ -94,7 +99,8 @@ CREATE TABLE `tad_news_sign` (
   `nsn` SMALLINT UNSIGNED NOT NULL  default 0,
   `uid` mediumint(8) UNSIGNED NOT NULL  default 0,
   `sign_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`sign_sn`)
+  PRIMARY KEY  (`sign_sn`),
+  KEY `nsn_uid` (`nsn`,`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `tad_news_paper_send_log` (

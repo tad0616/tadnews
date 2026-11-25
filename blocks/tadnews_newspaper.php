@@ -29,8 +29,9 @@ function tadnews_newspaper($options)
     }
 
     $block['counter'] = sprintf(_MB_TADNEWS_ORDER_COUNT, $counter);
-    $block['option'] = $option;
-    $block['email'] = $xoopsUser ? $xoopsUser->email() : '';
+    $block['option']  = $option;
+    $block['email']   = $xoopsUser ? $xoopsUser->email() : '';
+    $block['token']   = $GLOBALS['xoopsSecurity']->getTokenHTML();
 
     return $block;
 }

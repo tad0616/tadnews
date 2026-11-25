@@ -35,7 +35,7 @@ switch ($op) {
 
     //已經閱讀
     case 'have_read':
-        Sign::have_read($nsn, $uid);
+        Sign::have_read($nsn);
         header('location: ' . $_SERVER['PHP_SELF'] . "?nsn=$nsn");
         exit;
 
@@ -61,10 +61,12 @@ require_once XOOPS_ROOT_PATH . '/footer.php';
 //列出某人所有新聞
 function list_tad_my_news($kind = '', $the_ncsn = 0)
 {
-    global $xoopsModuleConfig, $xoopsUser, $Tadnews;
+    global $xoopsModuleConfig, $xoopsUser, $Tadnews, $xoopsTpl;
     if (!$xoopsUser) {
         redirect_header('index.php', 3, _TAD_PERMISSION_DENIED);
     }
+    //「啟用文章」表單用的 token
+    $xoopsTpl->assign('tadnews_token', $GLOBALS['xoopsSecurity']->createToken());
     $uid = $xoopsUser->uid();
     $Tadnews->set_show_enable(0);
     $Tadnews->set_view_uid($uid);

@@ -292,9 +292,10 @@ class Update
             $sql = "CREATE TABLE `$table` (
                 `sign_sn` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `nsn` SMALLINT UNSIGNED NOT NULL ,
-                `uid` SMALLINT UNSIGNED NOT NULL ,
+                `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 ,
                 `sign_time` DATETIME NOT NULL,
-                PRIMARY KEY  (`sign_sn`)
+                PRIMARY KEY  (`sign_sn`),
+                KEY `nsn_uid` (`nsn`, `uid`)
             )";
             $xoopsDB->queryF($sql);
         } else {
@@ -304,6 +305,14 @@ class Update
             $row    = $xoopsDB->fetchArray($result);
             if ($row && strpos($row['Type'], 'smallint') !== false) {
                 $sql = "ALTER TABLE `$table` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
+                $xoopsDB->queryF($sql);
+            }
+
+            // 補上 (nsn, uid) 索引供簽收查詢與重複簽收檢查使用
+            $sql    = "SHOW INDEX FROM `$table` WHERE Key_name = 'nsn_uid'";
+            $result = $xoopsDB->queryF($sql);
+            if ($result && $xoopsDB->getRowsNum($result) == 0) {
+                $sql = "ALTER TABLE `$table` ADD INDEX `nsn_uid` (`nsn`, `uid`)";
                 $xoopsDB->queryF($sql);
             }
         }

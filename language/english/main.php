@@ -152,3 +152,9 @@ define('_SEPARTE', '<div style="page-break-after: always;"><span style="display:
 define('_SEPARTE2', '--summary--');
 define('_MD_TADNEWS_CANT_MOVE_TO_SELF', 'Cannot move a category into its own sub-category');
 define('_MD_TADNEWS_NO_DATA', 'No data');
+define('_MD_TADNEWS_NP_CONFIRM_SUBJECT', 'Confirmation for "%s" Newsletter');
+define('_MD_TADNEWS_NP_CONFIRM_ADD_BODY', "Hello,\n\nA request was received to subscribe this email address to \"%s\".\nPlease click the link below within 24 hours to confirm:\n%s\n\nIf you did not request this, you can safely ignore this email.");
+define('_MD_TADNEWS_NP_CONFIRM_DEL_BODY', "Hello,\n\nA request was received to unsubscribe this email address from \"%s\".\nPlease click the link below within 24 hours to confirm:\n%s\n\nIf you did not request this, you can safely ignore this email.");
+define('_MD_TADNEWS_NP_CONFIRM_SENT', 'A confirmation email has been sent to %s. Please click the link inside to complete your request.');
+define('_MD_TADNEWS_NP_CONFIRM_SEND_FAIL', 'Failed to send the confirmation email. Please try again later or contact the administrator.');
+define('_MD_TADNEWS_NP_CONFIRM_INVALID', 'The confirmation link is invalid or has expired. Please try again.');

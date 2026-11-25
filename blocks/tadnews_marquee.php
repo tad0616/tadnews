@@ -31,14 +31,52 @@ function tadnews_marquee($options)
         return;
     }
 
-    $block['direction'] = empty($options[2]) ? 'down' : $options[2];
-    $block['duration'] = empty($options[3]) ? '5000' : $options[3];
-    $block['css'] = empty($options[4]) ? '' : $options[4];
-    $block['item_css'] = empty($options[5]) ? '' : $options[5];
-    $block['randStr'] = Utility::randStr();
-    $block['jquery'] = Utility::get_jquery();
+    $direction = in_array($options[2] ?? '', ['left', 'right', 'up', 'down'], true) ? $options[2] : 'down';
+    $raw_speed = (int) ($options[3] ?? 5000);
+    if ($raw_speed <= 0) {
+        $speed = 50;
+    } elseif ($raw_speed >= 500) {
+        // 相容舊版 jQuery.Marquee 的 duration（毫秒）設定，換算為 TadMarquee 的 px/s
+        $speed = max(20, min(200, (int) round(250000 / $raw_speed)));
+    } else {
+        $speed = $raw_speed;
+    }
+
+    $marquee_items = [];
+    foreach ($block['page'] as $page) {
+        // TadMarquee 設了 link 後外層就是 <a>，prefix_tag 原本是 <a> 需轉為 <span> 避免巢狀連結
+        $prefix_tag = preg_replace('/<a\b([^>]*)>(.*?)<\/a>/is', '<span$1>$2</span>', (string) ($page['prefix_tag'] ?? ''));
+        $prefix_tag = preg_replace('/\s+href=(["\']).*?\1/i', '', (string) $prefix_tag);
+
+        $item_html = trim(
+            (string) ($page['post_date'] ?? '') . ' '
+            . (string) ($page['pic'] ?? '') . ' '
+            . $prefix_tag . ' '
+            . (!empty($page['need_sign']) ? '<img src="' . htmlspecialchars((string) $page['need_sign'], ENT_QUOTES, _CHARSET) . '" alt="" style="margin:3px;"> ' : '')
+            . (string) ($page['enable_txt'] ?? '') . ' '
+            . (string) ($page['today_pic'] ?? '') . ' '
+            . (string) ($page['news_title'] ?? '')
+        );
+
+        $marquee_items[] = [
+            'type'      => 'html',
+            'content'   => $item_html,
+            'link'      => XOOPS_URL . '/modules/tadnews/' . $page['link_page'] . '?nsn=' . (int) $page['nsn'],
+            'target'    => '_self',
+            'ariaLabel' => strip_tags((string) ($page['news_title'] ?? '')),
+        ];
+    }
+
+    $block['direction']          = $direction;
+    $block['speed']              = $speed;
+    $block['css']                = empty($options[4]) ? '' : (string) $options[4];
+    $block['item_css']           = empty($options[5]) ? '' : (string) $options[5];
+    $block['randStr']            = Utility::randStr();
+    $block['marquee_items_json'] = json_encode($marquee_items, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP);
+
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-    $xoTheme->addScript('modules/tadnews/class/jQuery.Marquee/jquery.marquee.min.js');
+    $xoTheme->addStylesheet('modules/tadtools/tad_marquee/tad_marquee.css');
+    $xoTheme->addScript('modules/tadtools/tad_marquee/tad_marquee.js');
 
     return $block;
 }

@@ -35,6 +35,7 @@ switch ($op) {
 
     //啟用文章
     case 'enable_news':
+        Utility::xoops_security_check('', '', 'index.php');
         $Tadnews->enable_tad_news($nsn);
         break;
 

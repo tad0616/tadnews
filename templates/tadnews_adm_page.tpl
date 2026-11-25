@@ -20,7 +20,7 @@
 
         $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
             var order = $(this).sortable('serialize');
-            $.post('../save_sort.php', order, function(theResponse){
+            $.post('../save_sort.php', order + '&XOOPS_TOKEN_REQUEST=<{$tadnews_token|default:''}>', function(theResponse){
                 $('#save_msg').html(theResponse);
             });
             }
@@ -100,7 +100,13 @@
                             <div style="margin: 10px;">
                                 <{if $now_op!="tad_news_cate_form" and $ncsn}>
                                     <a href="javascript:delete_tad_news_cate_func(<{$cate.ncsn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-times"></i> <{$smarty.const._TAD_DEL}></a>
-                                    <a href="<{$php_self|default:''}>?not_news=0&op=change_kind&ncsn=<{$ncsn|default:''}>" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_NEWS}></a>
+                                    <form action="page.php" method="post" class="d-inline">
+                                        <input type="hidden" name="op" value="change_kind">
+                                        <input type="hidden" name="not_news" value="0">
+                                        <input type="hidden" name="ncsn" value="<{$ncsn|default:''}>">
+                                        <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{$tadnews_token|default:''}>">
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-retweet"></i> <{$smarty.const._MA_TADNEWS_CHANGE_TO_NEWS}></button>
+                                    </form>
                                     <a href="page.php?op=modify_page_cate&ncsn=<{$ncsn|default:''}>" class="btn btn-warning"><i class="fa fa-pencil"></i> <{$smarty.const._TAD_EDIT}></a>
                                 <{/if}>
                             </div>

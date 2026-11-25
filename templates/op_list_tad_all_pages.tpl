@@ -11,7 +11,7 @@
         $().ready(function(){
             $('#sort_<{$cate.ncsn}>').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                 var order = $(this).sortable('serialize');
-                $.post('save_sort.php', order, function(theResponse){
+                $.post('save_sort.php', order + '&XOOPS_TOKEN_REQUEST=<{$tadnews_token|default:''}>', function(theResponse){
                     $('#save_msg_<{$cate.ncsn}>').html(theResponse);
                 });
             }
@@ -24,7 +24,12 @@
         <{if $tadnews_adm or (isset($ok_cat) && $cate.ncsn|in_array:$ok_cat)}>
             <div class="pull-right float-right float-end">
                 <{if !$cate.ncsn|in_array:$link_cate_sn_arr}>
-                    <a href="page.php?op=add_to_menu&ncsn=<{$cate.ncsn}>" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></a>
+                    <form action="page.php" method="post" class="d-inline">
+                        <input type="hidden" name="op" value="add_to_menu">
+                        <input type="hidden" name="ncsn" value="<{$cate.ncsn}>">
+                        <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{$tadnews_token|default:''}>">
+                        <button type="submit" class="btn btn-success"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU}></button>
+                    </form>
                 <{/if}>
                 <a href="page.php?op=modify_page_cate&ncsn=<{$cate.ncsn}>" class="btn btn-warning"><{$smarty.const._MD_TADNEWS_EDIT_CATE}></a>
                 <a href="post.php?ncsn=<{$cate.ncsn}>" class="btn btn-primary"><{$smarty.const._MD_TADNEWS_POST}></a>
@@ -49,7 +54,7 @@
 
 
     <{if $cate.ncsn|in_array:$link_cate_sn_arr and ($tadnews_adm or (isset($ok_cat) && $cate.ncsn|in_array:$ok_cat))}>
-        <div class="alert alert-warning"><{$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT|sprintf:$cate.nc_title}></div>
+        <div class="alert alert-warning"><{$cate.nc_title|string_format:$smarty.const._MD_TADNEWS_ADD_TO_MENU_ALERT}></div>
     <{/if}>
 <{foreachelse}>
     <h3 class="sr-only visually-hidden"><{$smarty.const._MD_TADNEWS_KIND_PAGE}></h3>

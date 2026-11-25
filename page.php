@@ -2,6 +2,7 @@
 use Xmf\Request;
 use XoopsModules\Tadnews\Cate;
 use XoopsModules\Tadnews\Page;
+use XoopsModules\Tadnews\Tools;
 use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -35,6 +36,11 @@ switch ($op) {
 
     //新增至選單
     case 'add_to_menu':
+        Utility::xoops_security_check();
+        //加入選單會寫入佈景選單，只限管理員或該分類有發布權限者（與頁面上顯示按鈕的條件一致）
+        if (!$tadnews_adm && !in_array($ncsn, Tools::chk_user_cate_power('post'), true)) {
+            redirect_header('page.php', 3, _TADNEWS_NO_ADMIN_POWER);
+        }
         Page::add_to_menu($ncsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;

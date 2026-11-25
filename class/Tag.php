@@ -50,13 +50,15 @@ class Tag
         //新標籤列的「是否使用」預設值，樣板 tadnews_adm_tag.tpl 需要（官方版漏 assign）
         $xoopsTpl->assign('enable', $enable);
         $xoopsTpl->assign('XOOPS_TOKEN', Utility::token_form('return'));
+        //啟用／停用標籤表單用的 token
+        $xoopsTpl->assign('tadnews_token', $GLOBALS['xoopsSecurity']->createToken());
         $MColorPicker = new MColorPicker('.color-picker');
         $MColorPicker->render('bootstrap');
 
         $SweetAlert2         = new SweetAlert2();
         $XOOPS_TOKEN_REQUEST = $GLOBALS['xoopsSecurity']->createToken();
         $SweetAlert2->setVar('method', 'post');
-        $SweetAlert2->render('delete_tag', 'tag.php?op=del_tag&XOOPS_TOKEN_REQUEST={$XOOPS_TOKEN_REQUEST}&tag_sn=', 'tag_sn');
+        $SweetAlert2->render('delete_tag', "tag.php?op=del_tag&XOOPS_TOKEN_REQUEST={$XOOPS_TOKEN_REQUEST}&tag_sn=", 'tag_sn');
     }
 
     public static function insert_tad_news_tags()

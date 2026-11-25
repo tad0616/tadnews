@@ -32,6 +32,7 @@ class Importer
             <div class='bar m-3ß'>
                 <button type='submit' name='op' value='import' class='btn btn-primary'>" . _MA_TADNEWS_IMPORT . "</button>
             </div>
+            " . Utility::token_form('return') . "
             </form>";
 
             $main .= sprintf(_MA_TADNEWS_HAVE_NEWSMOD, $version, $_SESSION['total_cate'], $_SESSION['total_news']);

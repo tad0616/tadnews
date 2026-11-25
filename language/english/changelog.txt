@@ -1,3 +1,25 @@
+TadNews 5.4 (Released 2026-11-25)
+====================================
+1. Fixed an issue where visitors who are not logged in could change tab and custom page ordering
+2. Fixed an issue where visitors who are not logged in could add custom pages to the menu
+3. Fixed newspaper deletion not working and possibly deleting the wrong subscribers
+4. Strengthened security checks for create, update and delete actions on the front end and in the admin area
+5. Fixed tags not being deletable
+6. Fixed an issue where an article could be reassigned to another user as its author when edited
+7. Fixed an issue where a cover image could take another article's attachment
+8. Fixed a security issue in the style parameters of the list news block when paging
+9. Adjusted some templates for better Smarty 5 compatibility
+10. Fixed an issue where the main class might not be found on Linux servers
+11. Added verification for newsletter subscribe/unsubscribe and scoped unsubscribe to the selected newsletter
+12. Fixed an issue where read receipts could be submitted for another user or duplicated
+13. Unified category post-permission checks across edit, enable, and delete when author check is disabled
+14. Fixed category kind conversion not updating all subcategories and triggering PHP warnings
+15. Removed debug output from front-end news queries and removed the broken legacy backend RSS file
+16. Replaced the legacy jQuery Marquee plugin in the marquee block with the accessible TadMarquee library
+17. Added missing table indexes on fresh installs and added a composite index for read receipts
+18. Fixed PHP 8 undefined index warnings and case-sensitive autoloader path issues
+19. Restricted front-end preview of disabled newsletters and unpublished draft articles
+
 TadNews 5.3 (Released 2026-11-23)
 ====================================
 1. The Focus News block can now display attachment thumbnails

@@ -27,7 +27,7 @@
     $(document).ready(function() {
         $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
             var order = $(this).sortable('serialize');
-            $.post('save_sort.php?op=sort_tabs&nsn=<{$nsn|default:''}>', order, function(theResponse){
+            $.post('save_sort.php?op=sort_tabs&nsn=<{$nsn|default:''}>', order + '&XOOPS_TOKEN_REQUEST=<{$tadnews_token|default:''}>', function(theResponse){
                 $('#save_msg').html(theResponse);
             });
         }
